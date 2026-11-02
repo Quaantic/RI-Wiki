@@ -23,13 +23,13 @@
 export const UPDATE_LOG = [
   {
     version: '1',
-    date: '2026-10-30',
-    entries: [],
-  },
+    date: '2026-11-04',
+    entries: [{ context: 'Feature', title: 'Regrowth Incremental Wiki', description: 'The wiki was finally released.' },],
+},
 ];
 
 // ==== ID DA UPDATE (nao mexer enquanto nao lancar) ====
-export const LATEST_UPDATE_ID = '1';
+export const LATEST_UPDATE_ID = '1.01';
 
 export const LATEST_UPDATE = UPDATE_LOG[0];
 
