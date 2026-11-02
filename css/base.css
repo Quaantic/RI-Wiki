@@ -188,28 +188,30 @@ input {
   to { opacity: 1; transform: none; }
 }
 
+/* Entrada sequencial dos cards */
+@keyframes reveal-up {
+  from { opacity: 0; transform: translateY(24px); }
+}
+
 .reveal {
-  opacity: 0;
-  transform: translateY(20px);
-  transition:
-    opacity 500ms var(--ease-out),
-    transform 500ms var(--ease-out);
-  transition-delay: var(--reveal-delay, 0ms);
-  will-change: transform, opacity;
+  animation: reveal-up 650ms var(--ease-out) var(--reveal-delay, 0ms) backwards paused;
 }
 
 .reveal.is-visible {
-  opacity: 1;
-  transform: none;
+  animation-play-state: running;
 }
 
-/* Page transition */
+/* Escrita progressiva: texto ainda nao escrito fica transparente (js/ui.js, TYPE_HIGHLIGHT) */
+::highlight(ri-untyped) {
+  color: transparent;
+  background-color: transparent;
+  text-shadow: none;
+}
+
+/* Page transition: so um fade curto, para nao esconder o stagger dos elementos */
 .page-enter {
-  animation: page-in 450ms var(--ease-out) both;
+  animation: fade-in 220ms var(--ease-out) both;
 }
-
-/* Reduce motion do SO e ignorado de proposito:
-   o controle e feito pelo toggle nas Settings (:root.reduce-motion). */
 
 /* ---------- Utilities ---------- */
 
@@ -276,7 +278,7 @@ input {
 :root.reduce-motion {
   scroll-behavior: auto !important;
 }
-:root.reduce-motion .reveal { opacity: 1; transform: none; }
+:root.reduce-motion .reveal { animation: none; }
 
 /* Small hex bullet used as the wiki's section marker */
 .hex-dot {

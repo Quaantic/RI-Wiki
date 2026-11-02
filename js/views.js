@@ -1,13 +1,12 @@
 // ==== VIEWS: PAGINAS DO SITE ====
 
 import { html, esc, qs, qsa, debounce, countUp, fmtDate, fmtDateShort, fmtNum, fmtValue, fmtSuffix, evalFormula, readMinutes, markMatches, searchPages } from './utils.js';
-import { icon, emblem, categoryArt, articleCard, articleRow, categoryCard, infoCard, sectionHead, skeleton, renderBlocks, renderSection, renderStats, renderNote, wireBlocks, initReveal, setCrumbs, setActiveNav, markUpdateSeen } from './ui.js';
+import { icon, emblem, categoryArt, articleCard, articleRow, categoryCard, infoCard, sectionHead, skeleton, renderBlocks, renderSection, renderStats, wireBlocks, initReveal, setCrumbs, setActiveNav, markUpdateSeen } from './ui.js';
 import { dataProvider, getCategory, getSubcategory } from './services.js';
 import { CATEGORIES } from './data/wiki-data.js';
 import { getRuneFamily, FAMILY_COLORS } from './data/runes.js';
 import { ORE_DATA, MASTERY_DATA, getOrePage, getMasteryPage, getLayerPage } from './data/ores.js';
-import { getStagePage } from './data/stages.js';
-import { getRankPage, getAscensionPage, getLifeRankPage } from './data/progress.js';
+import { getStagePage, getBarnPage, getRankPage, getAscensionPage, getLifeRankPage} from './data/progress.js';
 import { getTrainingAreas, getGearPage, DUST_UNLOCK } from './data/dungeon.js';
 import { getFormulaPage } from './data/formulas.js';
 import { MINING_PRICES } from './data/mining-prices.js';
@@ -168,7 +167,6 @@ function masteryCard(o, i) {
           <div class="ore-upgrade">
             <span class="ore-upgrade__effect">
               <b>${colorizeResources(esc(u.effect))}</b>
-              ${u.note ? `<small>${esc(u.note)}</small>` : ''}
             </span>
             ${u.cap != null
               ? `<span class="ore-upgrade__val ore-upgrade__val--cap" title="Caps at this value">cap ${esc(fmtValue(u.cap))}</span>`
@@ -309,9 +307,8 @@ function upgradeCard(u, i, priceTable, node = false) {
   const rawMulti = u.multi && u.multi !== '-' && evalFormula(u.multi, { L: 0 }) == null ? u.multi : '';
   const priceAttr = priceTable ? '' : ` data-price="${esc(u.price || '')}"`;
   const tableAttr = priceTable ? ` data-price-table="${esc(priceTable)}" data-n="${n}"` : '';
-  const note = [u.note, rawMulti].filter(Boolean).join(' · ');
   return `
-    <article class="upgrade-card${node ? ' upgrade-card--node' : ''}" data-upgrade data-cap="${capMax}" data-multi="${esc(u.multi || '')}"${priceAttr}${tableAttr} style="--reveal-delay:${Math.min(i * 45, 400)}ms">
+        <article class="upgrade-card reveal${node ? ' upgrade-card--node' : ''}" data-upgrade data-cap="${capMax}" data-multi="${esc(u.multi || '')}"${priceAttr}${tableAttr} style="--reveal-delay:${Math.min(i * 45, 400)}ms">
       <header class="upgrade-card__head">
         <b><span class="upgrade-card__n">${n}.</span> ${colorizeResources(esc(u.name))}</b>
         <span class="upgrade-card__val"><b data-lvl>0</b> / ${u.cap == null ? '—' : esc(fmtValue(u.cap))}</span>
@@ -321,10 +318,9 @@ function upgradeCard(u, i, priceTable, node = false) {
         <input class="upgrade-card__num" type="number" min="0" max="${capMax}" step="1" value="0" data-upgrade-num aria-label="Type the level of ${esc(u.name)}">
       </div>
       <div class="upgrade-card__rows">
-        <div class="upgrade-card__row upgrade-card__row--price"><span class="upgrade-card__rowlabel">${icon('coin', 14)} Price (next lvl)</span><b data-price-out>—</b></div>
+        <div class="upgrade-card__row upgrade-card__row--price"><span class="upgrade-card__rowlabel">${icon('coins', 14)} Price (next lvl)</span><b data-price-out>—</b></div>
         <div class="upgrade-card__row upgrade-card__row--multi"><span class="upgrade-card__rowlabel">${icon('star', 14)} Multi</span><b data-multi-out>—</b></div>
       </div>
-      ${note ? `<small class="upgrade-card__note">${esc(note)}</small>` : ''}
     </article>`;
 }
 
@@ -373,7 +369,7 @@ function wireUpgrades(root) {
         }
       }
       const m = evalFormula(card.dataset.multi, { L });
-      multiOut.innerHTML = m != null ? esc(fmtSuffix(m)) : '<small class="upgrade-card__raw">—</small>';
+      multiOut.innerHTML = m != null ? esc(fmtSuffix(m)) : `<small class="upgrade-card__raw">${esc(card.dataset.multi || '—')}</small>`;
     };
     slider.addEventListener('input', () => update('slider'));
     num.addEventListener('input', () => update('num'));
@@ -382,12 +378,7 @@ function wireUpgrades(root) {
 }
 
 function formulaSections(section) {
-  const note = [section.note, 'Live stats (Fossils, Energy…) count as 0 in this preview.'].filter(Boolean).join(' · ');
   return `
-    <div class="callout callout--info sub-note">
-      ${icon('info', 18)}
-      <div><span class="callout__title">Notes</span>${esc(note)}</div>
-    </div>
     <section class="section">
       ${sectionHead('The upgrades')}
       <div class="rune-grid">
@@ -398,10 +389,6 @@ function formulaSections(section) {
 
 function upgradeTemplateSections() {
   return `
-    <div class="callout callout--info sub-note">
-      ${icon('info', 18)}
-      <div><span class="callout__title">Upgrade model</span>Every upgrade is a name + level + cap with a slider; formulas come from <code>js/data/formulas.js</code>.</div>
-    </div>
     <section class="section">
       ${sectionHead('Upgrades')}
       <div class="rune-grid">
@@ -437,10 +424,10 @@ function stageCard(s, i) {
           <div class="stage-unlocks">
             ${s.unlocks.area ? `<span class="stage-unlocks__area">${icon('map-pin', 12)} ${esc(s.unlocks.area)}</span>` : ''}
             <div class="stage-places">
-              ${s.unlocks.places.map((p) => `<span class="stage-place">${colorizeResources(esc(p))}</span>`).join('')}
+              ${(s.unlocks.places || []).map((p) => `<span class="stage-place">${colorizeResources(esc(p))}</span>`).join('')}
             </div>
             <div class="stage-features">
-              ${s.unlocks.features.map((f) => `
+              ${(s.unlocks.features || []).map((f) => `
                 <span class="stage-feature">
                   <b>${colorizeResources(esc(f.name))}</b>
                   ${(f.subs || []).map((x) => `<span class="stage-feature__sub">${colorizeResources(esc(x))}</span>`).join('')}
@@ -646,7 +633,7 @@ export const categoryView = {
               ${icon(s.icon, 19)}
               <span style="min-width:0">
                 <b>${esc(s.name)}</b>
-                <small>${esc(s.blurb)}</small>
+                <small>${esc(s.desc)}</small>
               </span>
               ${icon('arrow-right', 15, 'sub-link__go')}
             </a>`).join('')}
@@ -696,6 +683,7 @@ export const subcategoryView = {
     const masteryPage = getMasteryPage(cat.id, sub.id);
     const layerPage = getLayerPage(cat.id, sub.id);
     const stagePage = getStagePage(cat.id, sub.id);
+    const barnPage = getBarnPage(cat.id, sub.id);
     const trainingPage = getTrainingAreas(cat.id, sub.id);
     const gearPage = getGearPage(cat.id, sub.id);
     const formulaPage = getFormulaPage(cat.id, sub.id);
@@ -713,7 +701,9 @@ export const subcategoryView = {
             ? layerPageSections(layerPage.layers)
             : stagePage?.stages?.length
               ? stagePageSections(stagePage.stages)
-              : rankPage?.ranks?.length
+              : barnPage?.stages?.length
+                ? stagePageSections(barnPage.stages, 'Barns', true)
+                : rankPage?.ranks?.length
                 ? stagePageSections(rankPage.ranks, 'Ranks', true)
                 : ascensionPage?.ranks?.length
                   ? stagePageSections(ascensionPage.ranks, 'Ascensions', true)
@@ -733,8 +723,6 @@ export const subcategoryView = {
 
     window.__riPageNames = [cat.name, sub.name, ...(sub.parentChain || []).map((p) => p.name)];
 
-    const note = sub.note || null;
-
     const [articles] = await Promise.all([
       dataProvider.getArticles({ category: cat.id, subcategory: sub.id }),
     ]);
@@ -751,7 +739,7 @@ export const subcategoryView = {
             <span class="cat-hero__icon">${icon(sub.icon, 30)}</span>
             <h1 class="cat-hero__name">${colorizeResources(esc(sub.name))}</h1>
           </div>
-          <p class="cat-hero__tagline">${colorizeResources(esc(sub.blurb))} ${colorizeResources(esc(sub.intro[0] || ''))}</p>
+          <p class="cat-hero__tagline">${colorizeResources(esc(sub.desc))}</p>
           <div class="cat-hero__facts">
             ${articles.length ? `<span class="chip chip--accent">${icon('book', 13)} ${articles.length} article${articles.length === 1 ? '' : 's'}</span>` : ''}
             ${sub.facts.map((f) => `<span class="chip">${esc(f.label)}: <b style="color:var(--c-text)">&nbsp;${esc(f.value)}</b></span>`).join('')}
@@ -775,8 +763,6 @@ export const subcategoryView = {
         </nav>
       </div>
 
-      ${note ? `<div class="sub-note reveal">${renderNote(note)}</div>` : ''}
-
       ${sub.children?.length ? `
       <section class="section">
         ${sectionHead(familyBody ? `Inside ${sub.name}` : sub.name)}
@@ -786,7 +772,7 @@ export const subcategoryView = {
               ${icon(ch.icon, 19)}
               <span style="min-width:0">
                 <b>${colorizeResources(esc(ch.name))}</b>
-                <small>${esc(ch.blurb)}</small>
+                <small>${esc(ch.desc)}</small>
               </span>
               ${icon('arrow-right', 15, 'sub-link__go')}
             </a>`).join('')}
@@ -818,7 +804,7 @@ export const subcategoryView = {
                   ${icon(s.icon, 19)}
                   <span style="min-width:0">
                     <b>${esc(s.name)}</b>
-                    <small>${esc(s.blurb)}</small>
+                    <small>${esc(s.desc)}</small>
                   </span>
                   ${icon('arrow-right', 15, 'sub-link__go')}
                 </a>`).join('')}
@@ -1097,7 +1083,7 @@ export const searchView = {
             <a class="result-item reveal" style="--reveal-delay:0ms" href="#/${p.cat.id}/${p.sub.id}">
               <div class="result-item__top">${icon(p.cat.icon, 12)} ${esc(p.cat.name)} section</div>
               <div class="result-item__title">${markMatches(p.sub.name, st.q)}</div>
-              <div class="result-item__snippet">${esc(p.sub.blurb || '')}</div>
+              <div class="result-item__snippet">${esc(p.sub.desc || '')}</div>
             </a>`).join('')}
         </div>` : ''}
         ${results.length ? `

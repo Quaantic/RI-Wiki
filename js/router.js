@@ -1,7 +1,7 @@
 // ==== ROUTER ====
 
 import { qs } from './utils.js';
-import { setCrumbs, setActiveNav, emblem } from './ui.js';
+import { setCrumbs, setActiveNav, emblem, initReveal, resetReveal } from './ui.js';
 import {
   homeView, categoryView, subcategoryView, articleView,
   searchView, updatesView, creditsView, notFoundView,
@@ -58,6 +58,8 @@ async function renderView(view, params, query) {
     el.innerHTML = emblem(parseInt(el.dataset.emblem, 10) || 24);
   });
   viewEl.replaceChildren(container);
+  // Start reveal animations only after the rendered page is in the document.
+  initReveal(container);
   container.classList.add('page-enter');
   if (window.__riFlashNext) {
     delete window.__riFlashNext;
@@ -65,6 +67,8 @@ async function renderView(view, params, query) {
     setTimeout(() => container.classList.remove('page-flash'), 1000);
   }
   window.scrollTo({ top: 0, behavior: 'instant' });
+  resetReveal();
+  initReveal(container);
 }
 
 async function navigate(path, query) {

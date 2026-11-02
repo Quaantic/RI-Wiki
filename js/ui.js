@@ -5,91 +5,40 @@ import { CATEGORIES } from './data/wiki-data.js';
 import { colorizeResources, resourceColor } from './data/resource-colors.js';
 import { dataProvider } from './services.js';
 
-export const ICONS = {
-  "compass": `<path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z" /><circle cx="12" cy="12" r="10" />`,
-  "leaf": `<path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" /><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />`,
-  "branch": `<line x1="6" x2="6" y1="3" y2="15" /><circle cx="18" cy="6" r="3" /><circle cx="6" cy="18" r="3" /><path d="M18 9a9 9 0 0 1-9 9" />`,
-  "pickaxe": `<path d="M14.531 12.469 6.619 20.38a1 1 0 1 1-3-3l7.912-7.912" /><path d="M15.686 4.314A12.5 12.5 0 0 0 5.461 2.958 1 1 0 0 0 5.58 4.71a22 22 0 0 1 6.318 3.393" /><path d="M17.7 3.7a1 1 0 0 0-1.4 0l-4.6 4.6a1 1 0 0 0 0 1.4l2.6 2.6a1 1 0 0 0 1.4 0l4.6-4.6a1 1 0 0 0 0-1.4z" /><path d="M19.686 8.314a12.501 12.501 0 0 1 1.356 10.225 1 1 0 0 1-1.751-.119 22 22 0 0 0-3.393-6.319" />`,
-  "castle": `<path d="M22 20v-9H2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2Z" /><path d="M18 11V4H6v7" /><path d="M15 22v-4a3 3 0 0 0-3-3a3 3 0 0 0-3 3v4" /><path d="M22 11V9" /><path d="M2 11V9" /><path d="M6 4V2" /><path d="M18 4V2" /><path d="M10 4V2" /><path d="M14 4V2" />`,
-  "rune": `<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" /><path d="M10.5 7v10" /><path d="m10.5 11 4.6-2.8" /><path d="m10.5 14.6 4.6-2.8" /><path d="m10.5 11-2.6-1.6" /><path d="m10.5 14.6-2.6-1.6" />`,
-  "spark": `<path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z" />`,
-  "scroll": `<path d="M15 12h-5" /><path d="M15 8h-5" /><path d="M19 17V5a2 2 0 0 0-2-2H4" /><path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3" />`,
-  "search": `<path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" />`,
-  "menu": `<path d="M4 12h16" /><path d="M4 18h16" /><path d="M4 6h16" />`,
-  "x": `<path d="M18 6 6 18" /><path d="m6 6 12 12" />`,
-  "chevron-down": `<path d="m6 9 6 6 6-6" />`,
-  "chevron-right": `<path d="m9 18 6-6-6-6" />`,
-  "arrow-right": `<path d="M5 12h14" /><path d="m12 5 7 7-7 7" />`,
-  "arrow-up": `<path d="m5 12 7-7 7 7" /><path d="M12 19V5" />`,
-  "external": `<path d="M15 3h6v6" /><path d="M10 14 21 3" /><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />`,
-  "clock": `<path d="M12 6v6l4 2" /><circle cx="12" cy="12" r="10" />`,
-  "calendar": `<path d="M8 2v4" /><path d="M16 2v4" /><rect width="18" height="18" x="3" y="4" rx="2" /><path d="M3 10h18" />`,
-  "eye": `<path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" /><circle cx="12" cy="12" r="3" />`,
-  "star": `<path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" />`,
-  "flame": `<path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z" />`,
-  "sort": `<path d="m3 16 4 4 4-4" /><path d="M7 20V4" /><path d="m21 8-4-4-4 4" /><path d="M17 4v16" />`,
-  "book": `<path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20" />`,
-  "list": `<path d="M3 12h.01" /><path d="M3 18h.01" /><path d="M3 6h.01" /><path d="M8 12h13" /><path d="M8 18h13" /><path d="M8 6h13" />`,
-  "tag": `<path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z" /><circle cx="7.5" cy="7.5" r=".5" fill="currentColor" />`,
-  "info": `<circle cx="12" cy="12" r="10" /><path d="M12 16v-4" /><path d="M12 8h.01" />`,
-  "alert": `<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3" /><path d="M12 9v4" /><path d="M12 17h.01" />`,
-  "check": `<path d="M20 6 9 17l-5-5" />`,
-  "check-circle": `<circle cx="12" cy="12" r="10" /><path d="m9 12 2 2 4-4" />`,
-  "gem": `<path d="M6 3h12l4 6-10 13L2 9Z" /><path d="M11 3 8 9l4 13 4-13-3-6" /><path d="M2 9h20" />`,
-  "coin": `<circle cx="8" cy="8" r="6" /><path d="M18.09 10.37A6 6 0 1 1 10.34 18" /><path d="M7 6h1v4" /><path d="m16.71 13.88.7.71-2.82 2.82" />`,
-  "hammer": `<path d="m15 12-8.373 8.373a1 1 0 1 1-3-3L12 9" /><path d="m18 15 4-4" /><path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172V7l-2.26-2.26a6 6 0 0 0-4.202-1.756L9 2.96l.92.82A6.18 6.18 0 0 1 12 8.4V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5" />`,
-  "flask": `<path d="M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2" /><path d="M6.453 15h11.094" /><path d="M8.5 2h7" />`,
-  "skull": `<path d="m12.5 17-.5-1-.5 1h1z" /><path d="M15 22a1 1 0 0 0 1-1v-1a2 2 0 0 0 1.56-3.25 8 8 0 1 0-11.12 0A2 2 0 0 0 8 20v1a1 1 0 0 0 1 1z" /><circle cx="15" cy="12" r="1" /><circle cx="9" cy="12" r="1" />`,
-  "sword": `<polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5" /><line x1="13" x2="19" y1="19" y2="13" /><line x1="16" x2="20" y1="16" y2="20" /><line x1="19" x2="21" y1="21" y2="19" />`,
-  "shield": `<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" /><path d="m9 12 2 2 4-4" />`,
-  "drop": `<path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z" /><path d="M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97" />`,
-  "map-pin": `<path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" /><circle cx="12" cy="10" r="3" />`,
-  "users": `<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><path d="M16 3.128a4 4 0 0 1 0 7.744" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><circle cx="9" cy="7" r="4" />`,
-  "layers": `<path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z" /><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12" /><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17" />`,
-  "grid": `<rect width="7" height="7" x="3" y="3" rx="1" /><rect width="7" height="7" x="14" y="3" rx="1" /><rect width="7" height="7" x="14" y="14" rx="1" /><rect width="7" height="7" x="3" y="14" rx="1" />`,
-  "key": `<path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z" /><circle cx="16.5" cy="7.5" r=".5" fill="currentColor" />`,
-  "lock": `<rect width="18" height="11" x="3" y="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" />`,
-  "refresh": `<path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" /><path d="M21 3v5h-5" /><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" /><path d="M8 16H3v5" />`,
-  "target": `<circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" />`,
-  "dice": `<rect width="18" height="18" x="3" y="3" rx="2" ry="2" /><path d="M16 8h.01" /><path d="M8 8h.01" /><path d="M8 16h.01" /><path d="M16 16h.01" /><path d="M12 12h.01" />`,
-  "chart": `<path d="M3 3v16a2 2 0 0 0 2 2h16" /><path d="M18 17V9" /><path d="M13 17V5" /><path d="M8 17v-3" />`,
-  "package": `<path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z" /><path d="M12 22V12" /><polyline points="3.29 7 12 12 20.71 7" /><path d="m7.5 4.27 9 5.15" />`,
-  "book-open": `<path d="M12 7v14" /><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z" />`,
-  "gauge": `<path d="m12 14 4-4" /><path d="M3.34 19a10 10 0 1 1 17.32 0" />`,
-  "wrench": `<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />`,
-  "hourglass": `<path d="M5 22h14" /><path d="M5 2h14" /><path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22" /><path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2" />`,
-  "heart": `<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />`,
-  "filter": `<path d="M10 20a1 1 0 0 0 .553.895l2 1A1 1 0 0 0 14 21v-7a2 2 0 0 1 .517-1.341L21.74 4.67A1 1 0 0 0 21 3H3a1 1 0 0 0-.742 1.67l7.225 7.989A2 2 0 0 1 10 14z" />`,
-  "hex": `<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />`,
-  "banknote": `<rect width="20" height="12" x="2" y="6" rx="2" /><circle cx="12" cy="12" r="2" /><path d="M6 12h.01M18 12h.01" />`,
-  "card": `<rect width="20" height="14" x="2" y="5" rx="2" /><line x1="2" x2="22" y1="10" y2="10" />`,
-  "ingot": `<path d="M7 4h10l3 6H4l3-6Z" /><path d="M5.5 10h13l3.5 7H2l3.5-7Z" />`,
-  "diamond": `<path d="M2.7 10.3a2.41 2.41 0 0 0 0 3.41l7.59 7.59a2.41 2.41 0 0 0 3.41 0l7.59-7.59a2.41 2.41 0 0 0 0-3.41l-7.6-7.6a2.41 2.41 0 0 0-3.4 0Z" />`,
-  "crown": `<path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.735H5.81a1 1 0 0 1-.957-.735L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z" /><path d="M5 21h14" />`,
-  "cloud": `<path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" />`,
-  "magnet": `<path d="m6 15-4-4 6.4-6.4a8 8 0 1 1 11.3 11.3l-4.2 4.2a2.4 2.4 0 0 1-3.4 0l-3.6-3.6a2.4 2.4 0 0 1 0-3.4l6.4-6.4" /><path d="m14 7 3 3" /><path d="m9 6 1.5 1.5" />`,
-  "settings": `<line x1="21" x2="14" y1="4" y2="4" /><line x1="10" x2="3" y1="4" y2="4" /><line x1="21" x2="12" y1="12" y2="12" /><line x1="8" x2="3" y1="12" y2="12" /><line x1="21" x2="16" y1="20" y2="20" /><line x1="12" x2="3" y1="20" y2="20" /><line x1="14" x2="14" y1="2" y2="6" /><line x1="8" x2="8" y1="10" y2="14" /><line x1="16" x2="16" y1="18" y2="22" />`,
-  "zap": `<path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z" />`,
-  "hexagon": `<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />`,
-  "coins": `<circle cx="8" cy="8" r="6" /><path d="M18.09 10.37A6 6 0 1 1 10.34 18" /><path d="M7 6h1v4" /><path d="m16.71 13.88.7.71-2.82 2.82" />`,
-  "droplets": `<path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z" /><path d="M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97" />`,
-  "moon": `<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />`,
-  "orbit": `<circle cx="12" cy="12" r="3" /><circle cx="19" cy="5" r="2" /><circle cx="5" cy="19" r="2" /><path d="M10.4 21.9a10 10 0 0 0 9.941-15.416" /><path d="M13.5 2.1a10 10 0 0 0-9.841 15.416" />`,
-  "cloud-rain": `<path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" /><path d="M16 14v6" /><path d="M8 14v6" /><path d="M12 16v6" />`,
-  "cloud-lightning": `<path d="M6 16.326A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 .5 8.973" /><path d="m13 12-3 5h4l-3 5" />`,
-  "wind": `<path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2" /><path d="M9.6 4.6A2 2 0 1 1 11 8H2" /><path d="M12.6 19.4A2 2 0 1 0 14 16H2" />`,
-  "tornado": `<path d="M21 4H3" /><path d="M18 8H6" /><path d="M19 12H9" /><path d="M16 16h-6" /><path d="M11 20H9" />`,
-  "sprout": `<path d="M7 20h10" /><path d="M10 20c5.5-2.5.8-6.4 3-10" /><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z" /><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z" />`,
-  "mountain": `<path d="m8 3 4 8 5-5 5 15H2L8 3z" />`,
-  "atom": `<circle cx="12" cy="12" r="1" /><path d="M20.2 20.2c2.04-2.03.02-7.36-4.5-11.9-4.54-4.52-9.87-6.54-11.9-4.5-2.04 2.03-.02 7.36 4.5 11.9 4.54 4.52 9.87 6.54 11.9 4.5Z" /><path d="M15.7 15.7c4.52-4.54 6.54-9.87 4.5-11.9-2.03-2.04-7.36-.02-11.9 4.5-4.52 4.54-6.54 9.87-4.5 11.9 2.03 2.04 7.36.02 11.9-4.5Z" />`,
-  "sparkles": `<path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" /><path d="M20 3v4" /><path d="M22 5h-4" /><path d="M4 17v2" /><path d="M5 18H3" />`,
-  "bone": `<path d="M17 10c.7-.7 1.69 0 2.5 0a2.5 2.5 0 1 0 0-5 .5.5 0 0 1-.5-.5 2.5 2.5 0 1 0-5 0c0 .81.7 1.8 0 2.5l-7 7c-.7.7-1.69 0-2.5 0a2.5 2.5 0 0 0 0 5c.28 0 .5.22.5.5a2.5 2.5 0 1 0 5 0c0-.81-.7-1.8 0-2.5Z" />`,
-  "medal": `<path d="M7.21 15 2.66 7.14a2 2 0 0 1 .13-2.2L4.4 2.8A2 2 0 0 1 6 2h12a2 2 0 0 1 1.6.8l1.6 2.14a2 2 0 0 1 .14 2.2L16.79 15" /><path d="M11 12 5.12 2.2" /><path d="m13 12 5.88-9.8" /><path d="M8 7h8" /><circle cx="12" cy="17" r="5" /><path d="M12 18v-2h-.5" />`,
+import { LUCIDE_ICONS } from './lib/lucide-data.js';
+
+const ICON_ALIASES = {
+  rune: 'hexagon',
+  hex: 'hexagon',
+  ingot: 'gem',
+  branch: 'git-branch',
+  spark: 'sparkle',
+  coin: 'coins',
+  card: 'credit-card',
+  refresh: 'refresh-cw',
+  flask: 'flask-conical',
+  drop: 'droplet',
+  chart: 'chart-no-axes-column',
+  alert: 'triangle-alert',
+  sort: 'arrow-up-down',
+  fuck: 'infinity',
 };
 
+const ICON_STROKE = 2;
+
+function iconNode(name) {
+  const key = String(name || '').toLowerCase().trim();
+  return LUCIDE_ICONS[key] || LUCIDE_ICONS[ICON_ALIASES[key]] || LUCIDE_ICONS.circle;
+}
+
 export function icon(name, size = 20, cls = '') {
-  const body = ICONS[name] || ICONS.info;
-  return `<svg ${cls ? `class="${cls}" ` : ''}width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${body}</svg>`;
+  const body = iconNode(name)
+    .map(([tag, attrs]) => {
+      const a = Object.entries(attrs).map(([k, v]) => ` ${k}="${v}"`).join('');
+      return `<${tag}${a}/>`;
+    })
+    .join('');
+  return `<svg ${cls ? `class="${cls}" ` : ''}width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${ICON_STROKE}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${body}</svg>`;
 }
 
 let uid = 0;
@@ -176,25 +125,164 @@ export function categoryArt(categoryId, size = 160, cls = '') {
   return `<svg ${cls ? `class="${cls}" ` : ''}width="${size}" height="${size}" viewBox="0 0 160 160" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${body}</svg>`;
 }
 
+// ==== REVEAL: entrada em sequencia (stagger) + escrita progressiva ====
+
+const REVEAL_STEP = 70;        // intervalo entre elementos que entram na tela juntos (ms)
+const REVEAL_MAX_STEPS = 9;    // limite do atraso acumulado (~630 ms)
+const TYPE_MS_PER_CHAR = 26;   // velocidade base da escrita
+const TYPE_MIN_MS = 450;       // textos curtos nao terminam em menos que isso
+const TYPE_MAX_MS = 1300;      // textos longos nao passam disso
+const TYPE_HIGHLIGHT = 'ri-untyped';
+
+// Textos que "sao escritos". Para incluir outro elemento, basta dar data-type="" nele.
+const TYPE_SELECTOR = [
+  '[data-type]',
+  '.hero__title', '.hero__sub',
+  '.cat-hero__name', '.cat-hero__tagline',
+  '.article-head__title', '.article-head__desc',
+  '.page-head h1', '.page-head p',
+  '.section-title', '.article-section__title',
+].join(',');
+
 let observer = null;
+let revealToken = 0;               // invalida callbacks de uma pagina anterior
+let untypedHL = null;              // CSS Custom Highlight: pinta de transparente o texto ainda nao escrito
+let typeRaf = 0;
+const typeSeen = new WeakSet();    // elementos que ja foram preparados (nunca reescreve duas vezes)
+const typePending = new Map();     // elemento -> job (esperando entrar na tela)
+const typeActive = new Set();      // jobs escrevendo agora
+
+const motionOff = () => document.documentElement.classList.contains('reduce-motion');
+const canTypeText = () => typeof Highlight === 'function' && !!(window.CSS && CSS.highlights);
+
+// Escrita progressiva SEM dividir o texto em elementos: o texto continua inteiro no DOM
+// (layout fixo, sem espacos artificiais) e um Range "esconde" so a parte ainda nao escrita.
+function prepareTyping(el) {
+  if (typeSeen.has(el)) return false;
+  typeSeen.add(el);
+  const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+  const nodes = [];
+  let total = 0;
+  for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+    if (!n.nodeValue.trim()) continue;
+    nodes.push(n);
+    total += n.nodeValue.length;
+  }
+  if (!nodes.length) return false;
+
+  const range = document.createRange();
+  range.setStart(nodes[0], 0);
+  const last = nodes[nodes.length - 1];
+  range.setEnd(last, last.nodeValue.length);
+  if (!untypedHL) {
+    untypedHL = new Highlight();
+    CSS.highlights.set(TYPE_HIGHLIGHT, untypedHL);
+  }
+  untypedHL.add(range);
+
+  const duration = Math.min(TYPE_MAX_MS, Math.max(TYPE_MIN_MS, total * TYPE_MS_PER_CHAR));
+  typePending.set(el, { nodes, total, range, duration, begin: 0 });
+  return true;
+}
+
+function startTyping(el, delay) {
+  const job = typePending.get(el);
+  if (!job) return;
+  typePending.delete(el);
+  job.begin = performance.now() + delay;
+  typeActive.add(job);
+  if (!typeRaf) typeRaf = requestAnimationFrame(typeTick);
+}
+
+function typeTick(now) {
+  typeRaf = 0;
+  for (const job of typeActive) {
+    const p = (now - job.begin) / job.duration;
+    if (p <= 0) continue;                       // ainda no atraso do stagger
+    if (p >= 1) {                               // terminou: revela tudo
+      untypedHL.delete(job.range);
+      typeActive.delete(job);
+      continue;
+    }
+    let left = Math.floor(p * job.total);       // caracteres ja escritos
+    for (const node of job.nodes) {
+      const len = node.nodeValue.length;
+      if (left <= len) { job.range.setStart(node, left); break; }
+      left -= len;
+    }
+  }
+  if (typeActive.size) typeRaf = requestAnimationFrame(typeTick);
+}
+
+function onIntersect(entries, obs) {
+  const batch = entries
+    .filter((e) => e.isIntersecting && e.target.isConnected)
+    .sort((a, b) => (a.target.compareDocumentPosition(b.target) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1));
+
+  // Todos os elementos que entram juntos formam um lote: o atraso e a posicao no lote
+  // (e nao o indice no array de dados), entao o stagger funciona tambem ao rolar a pagina.
+  batch.forEach((entry, i) => {
+    const el = entry.target;
+    const delay = Math.min(i, REVEAL_MAX_STEPS) * REVEAL_STEP;
+    obs.unobserve(el);
+    if (el.classList.contains('reveal')) {
+      el.style.setProperty('--reveal-delay', `${delay}ms`);
+      el.classList.add('is-visible');
+    }
+    startTyping(el, delay);
+  });
+}
 
 function getObserver() {
-  if (observer) return observer;
-  observer = new IntersectionObserver((entries) => {
-    for (const entry of entries) {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        observer.unobserve(entry.target);
-      }
-    }
-  }, { rootMargin: '0px 0px -6% 0px', threshold: 0.06 });
+  if (!observer) {
+    observer = new IntersectionObserver(onIntersect, { rootMargin: '0px 0px -6% 0px', threshold: 0.06 });
+  }
   return observer;
 }
 
+// Na primeira carga a tela de boot cobre a pagina por ~0,5 s: espera ela sair para
+// a animacao de entrada nao acontecer escondida atras dela.
+function whenBootDone(cb) {
+  const boot = document.getElementById('boot');
+  if (!boot || boot.classList.contains('is-done')) { cb(); return; }
+  const mo = new MutationObserver(() => {
+    if (boot.classList.contains('is-done')) { mo.disconnect(); cb(); }
+  });
+  mo.observe(boot, { attributes: true, attributeFilter: ['class'] });
+}
+
+// Chamada pelo router a cada pagina nova: descarta tudo da pagina anterior.
+export function resetReveal() {
+  revealToken++;
+  if (observer) { observer.disconnect(); observer = null; }
+  typePending.clear();
+  typeActive.clear();
+  if (typeRaf) { cancelAnimationFrame(typeRaf); typeRaf = 0; }
+  if (untypedHL) untypedHL.clear();
+}
+
 export function initReveal(root = document) {
-  const els = root.querySelectorAll('.reveal:not(.is-visible)');
-  const io = getObserver();
-  els.forEach((el) => io.observe(el));
+  // Raiz ainda fora do DOM (as views chamam isto dentro de render()):
+  // nao da para medir nada, o router chama de novo depois de inserir a pagina.
+  if (!root.isConnected) return;
+
+  const reveals = [...root.querySelectorAll('.reveal:not(.is-visible)')];
+  const typers = !motionOff() && canTypeText()
+    ? [...root.querySelectorAll(TYPE_SELECTOR)].filter(prepareTyping)
+    : [];
+  if (!reveals.length && !typers.length) return;
+
+  const token = revealToken;
+  whenBootDone(() => {
+    if (token !== revealToken) return;          // o usuario ja navegou para outra pagina
+    if (!('IntersectionObserver' in window)) {  // navegador sem IO: mostra tudo de uma vez
+      reveals.forEach((el) => el.classList.add('is-visible'));
+      typers.forEach((el) => startTyping(el, 0));
+      return;
+    }
+    const io = getObserver();
+    [...reveals, ...typers].forEach((el) => { if (el.isConnected) io.observe(el); });
+  });
 }
 
 export function reveal(index = 0, extra = '') {
@@ -229,18 +317,6 @@ function renderList(b) {
   return `<ul class="${cls}">${items}</ul>`;
 }
 
-export function renderNote(b) {
-  const icons = { tip: 'check-circle', warning: 'alert', info: 'info' };
-  return `
-    <div class="callout callout--${esc(b.variant)}">
-      ${icon(icons[b.variant] || 'info', 18)}
-      <div>
-        <span class="callout__title">${esc(b.title)}</span>
-        ${colorizeResources(esc(b.text))}
-      </div>
-    </div>`;
-}
-
 function renderKv(b) {
   const rows = b.pairs
     .map((pr) => `<div class="kv-list__row"><span class="kv-list__key">${esc(pr.key)}</span><span>${colorizeResources(esc(pr.value))}</span></div>`)
@@ -255,7 +331,6 @@ export function renderBlocks(blocks = []) {
         case 'p': return `<p>${colorizeResources(esc(b.text))}</p>`;
         case 'list': return renderList(b);
         case 'table': return renderTable(b);
-        case 'note': return renderNote(b);
         case 'kv': return renderKv(b);
         default: return '';
       }
@@ -432,7 +507,7 @@ export function mountSearchBox(root) {
           <span class="searchbox__item-icon">${icon(p.cat.icon, 15)}</span>
           <span>
             <b>${markMatches(p.sub.name, query)}</b>
-            <small>${esc(p.cat.name)} · ${esc(p.sub.blurb || '')}</small>
+            <small>${esc(p.cat.name)} · ${esc(p.sub.desc || '')}</small>
           </span>
         </a>`).join('');
     }

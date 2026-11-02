@@ -1,11 +1,11 @@
 // ==== UPGRADE FORMULAS (EDITE AQUI) ====
 
-const u = (n, name, cap, price, multi, note) => ({ n, name, cap, price, multi, note });
+const u = (n, name, cap, price, multi) => ({ n, name, cap, price, multi });
 
 export const FORMULA_SECTIONS = {
   crystal: {
     name: 'Crystal Upgrades',
-    note: 'Caps dos #2, 4, 5, 6, 7, 9 ganham +5*(TreeUpgrade24 + ShardUpgrade4).',
+
     upgrades: [
       u(1, 'Crystal Tier', 15, '50*(4+L/4)^L', '2 ^ L'),
       u(2, 'More Crystals', 40, '5*(1+L/2)*(1.75+L/50)^L', '1 + L * 2 ^ math.floor(L / 20)'),
@@ -24,7 +24,7 @@ export const FORMULA_SECTIONS = {
   },
   jewels: {
     name: 'Jewels Upgrades',
-    note: 'Caps dos #1, 2, 7 ganham +5*(TreeUpgrade24 + ShardUpgrade4); requer CrystalBarn >= Barn.',
+
     upgrades: [
       u(1, 'More Crystals', 100, '2*(1+L/2)*(1.9+L/90)^L', '(1 + L / 2) * 2 ^ math.floor(L / 20)'),
       u(2, 'More Jewels', 100, '3*(1+L/2)*(2+L/75)^L', '(1 + L / 4) * 2 ^ math.floor(L / 25)'),
@@ -39,7 +39,7 @@ export const FORMULA_SECTIONS = {
   },
   platinum: {
     name: 'Platinum Upgrades',
-    note: '#9..11 desbloqueiam com 8+AdamantiumUpgrade9.',
+
     upgrades: [
       u(1, 'Crystals I', 10, '1 (fixo)', '1 + L / 10'),
       u(2, 'Energy I', 10, '2 (fixo)', '1 + L / 10'),
@@ -56,7 +56,7 @@ export const FORMULA_SECTIONS = {
   },
   life: {
     name: 'Life Upgrades (Life Shards)',
-    note: 'Desbloqueia 10 + 1 por TerraformLevel 1 e 2.',
+
     upgrades: [
       u(1, 'Life Shards', 20, '100*(1.6+L/15)^L', '(1 + L / 4) * 2 ^ math.floor(L / 10)'),
       u(2, 'Cell Softcap', 50, '250*(4+L/4)^L', 'Stats.CellLimit.Value * 3 ^ (L - Stats.LifeUpgrade2.Value)'),
@@ -74,7 +74,7 @@ export const FORMULA_SECTIONS = {
   },
   fossil: {
     name: 'Fossil Upgrades',
-    note: 'Limites dos #1, 2, 7 ganham +10*LifeUpgrade12; desbloqueia 7 + TerraformLevel 3/4/5.',
+
     upgrades: [
       u(1, 'Life Shards', 99, '2*(1.45+L/45)^L', '1.15 ^ L'),
       u(2, 'More Fossils', 99, '5*(1.75+L/30)^L', '(1 + L / 5) * 2 ^ math.floor(L / 15)'),
@@ -90,7 +90,7 @@ export const FORMULA_SECTIONS = {
   },
   research: {
     name: 'Research Upgrades',
-    note: 'Limite >=25 ganha +PrestigeUpgrade18 (+5 se GoldenMilestone>=3); #31+ gated por ResearchesUnlocked.',
+
     upgrades: [
       u(1, 'More Energy', 25, '1+L/10', '1 + L / 10'),
       u(2, 'More XP', 99, '1.15^L*(1+L/4)', '1.125 ^ L'),
@@ -140,7 +140,7 @@ export const FORMULA_SECTIONS = {
   },
   logs: {
     name: 'Logs Upgrades',
-    note: 'Se TreeTier>=4, #1 ganha +5 e #3 +50 de limite.',
+
     upgrades: [
       u(1, 'Axe', 15, 'L<15: 10*(5+L/4)^L | L>=15: 1e43*100^(L-13)', '2.75 ^ L'),
       u(2, 'Logs', 25, '15*(1+L/4)*(1.2+L/90)^L', '1.15 ^ L'),
@@ -160,7 +160,7 @@ export const FORMULA_SECTIONS = {
   },
   sap: {
     name: 'Sap Upgrades',
-    note: 'Desbloqueia 12 + 1 por TerraformLevel 2 e 3.',
+
     upgrades: [
       u(1, 'More Logs', 99, '3*(1+L/4)*(1.2+L/120)^L', '(1 + L / 2) * 2 ^ math.floor(L / 20)'),
       u(2, 'More Sap', 99, '5*(1+L/3.25)*(1.25+L/100)^L', '(1 + L / 5) * 2 ^ math.floor(L / 20)'),
@@ -180,7 +180,7 @@ export const FORMULA_SECTIONS = {
   },
   terraform: {
     name: 'Terraform Upgrades',
-    note: 'Requer TerraformLevel >= entry.Life.',
+
     upgrades: [
       u(1, 'Income Bonus I', 15, '150*(1.475+L/100)^L', '(1 + L * 0.1) * L ^ 0.05'),
       u(2, 'Inflation', 99, '100*(1.525+L/100)^L', '(1 + L * 0.175) * L ^ 0.075'),
@@ -207,7 +207,7 @@ export const FORMULA_SECTIONS = {
   },
   roots: {
     name: 'Roots Upgrades',
-    note: 'Requer TreeTier >= entry.TreeTier.',
+
     upgrades: [
       u(1, 'More Logs', 99, '2*(1+L/7)*(1.2+L/175)^L', '(1 + L / 2) * 2 ^ math.floor(L / 15)'),
       u(2, 'More Sap', 99, '3*(1+L/4)*(1.25+L/155)^L', '(1 + L / 3) * 2 ^ math.floor(L / 15)'),
@@ -229,7 +229,7 @@ export const FORMULA_SECTIONS = {
   },
   monster: {
     name: 'Monster Upgrades',
-    note: 'Requer MonsterEvolution >= entry.Evo.',
+
     upgrades: [
       u(1, 'Red Liquid', 99, '100*(1+L/100)^L', '(1 + L / 10) * 1.1 ^ L'),
       u(2, 'Monster Power', 10, '500*(100*2.5^L)^L', '1 + L / 20'),
@@ -243,7 +243,7 @@ export const FORMULA_SECTIONS = {
   },
   'upgrade-tree': {
     name: 'Upgrade Tree (Money)',
-    note: '83 nos; NeedToUnlock encadeia nos; #71..83 requerem TreeAscension.',
+
     upgrades: [
       u(1, 'Increase Money', 10, '3*(L+1)', '1 + L'),
       u(2, 'Multiply Money', 10, '10*1.6^L', '1 + L / 2'),
@@ -347,7 +347,7 @@ export const FORMULA_SECTIONS = {
   },
   prestige: {
     name: 'Prestige Upgrades',
-    note: '#33..37 desbloqueiam com TreeUpgrade62+32; NeedToUnlock encadeia.',
+
     upgrades: [
       u(1, 'Starter Kit', 1, '5 (fixo)', '0 + L'),
       u(2, 'More Prestige', 45, '25*1.35^L', '1 + L / 2 * 2 ^ math.floor(L / 15)'),
@@ -427,7 +427,7 @@ export const FORMULA_SECTIONS = {
   },
   'crystal-perks': {
     name: 'Crystal Perks',
-    note: '#5..8 desbloqueiam com 4+ShardUpgrade9.',
+
     upgrades: [
       u(1, 'Crystals', null, '(1+L/10)*(1+L/20)^3*1.15^L', '(1 + L / 12) ^ 2'),
       u(2, 'Crystal Shards', null, '(1+L/10)*(1+L/30)^3.2*1.15^L', '(1 + L / 10) ^ 2'),
@@ -441,7 +441,7 @@ export const FORMULA_SECTIONS = {
   },
   opal: {
     name: 'Opal Upgrades',
-    note: '#15,16 requerem CaliforniumMilestone>=13.',
+
     upgrades: [
       u(1, 'Crystal', 99, '3*(1+L/2)*(1.625+L/100)^L', '(1 + L / 10) * 1.1 ^ L'),
       u(2, 'Jewels', 49, '10*(1+L/2)*(1.75+L/90)^L', '(1 + L / 10) * 1.05 ^ L'),
@@ -463,7 +463,7 @@ export const FORMULA_SECTIONS = {
   },
   adamantium: {
     name: 'Adamantium Upgrades',
-    note: 'Limites (exceto #8,9,10,11,13) ganham +2*OpalUpgrade16 (+15 se CaliforniumMilestone>=8); #11+ gated por 10+CaliforniumUpgrade9.',
+
     upgrades: [
       u(1, 'Adamantium Chance', 15, '(1+L)*1.5^L', '1 + L / 5'),
       u(2, 'More Crystals', 30, '(1+L/3)*1.3^L', '1.125 ^ L'),
@@ -482,7 +482,7 @@ export const FORMULA_SECTIONS = {
   },
   quartz: {
     name: 'Quartz Upgrades (Merge)',
-    note: '#1 ganha +5 de limite se CaliforniumMilestone>=11.',
+
     upgrades: [
       u(1, 'Spawn Tier', 15, '1000*(5+L/7)^L', '1 + L'),
       u(2, 'More Quartz', 8, '2500*2.5^L', '1 + L / 2'),
@@ -498,7 +498,7 @@ export const FORMULA_SECTIONS = {
   },
   californium: {
     name: 'Californium Upgrades',
-    note: 'Limites (exceto #8,9,10) ganham +2*OpalUpgrade16 (+10 se CaliforniumMilestone>=9).',
+
     upgrades: [
       u(1, 'Californium Chance', 25, '(1+L)*1.375^L', '1 + L / 5'),
       u(2, 'More Adamantium', 50, '(1+L/2)*1.525^L', '1.1 ^ L'),
@@ -531,7 +531,7 @@ export const FORMULA_SECTIONS = {
   },
   training: {
     name: 'Training Upgrades',
-    note: 'Requer DungeonRank >= entry.Rank.',
+
     upgrades: [
       u(1, 'Strength Bonus', 90, '3000*(1+L/4)*(1.35+L/200)^L', '1 + L / 10'),
       u(2, 'Health Bonus', 90, '5000*(1+L/4)*(1.35+L/200)^L', '1 + L / 10'),
@@ -608,31 +608,33 @@ export const FORMULA_SECTIONS = {
   },
   tycoon: {
     name: 'Tycoon Machines (nivel)',
+    // Income real/s = Income base * (1 + L/2) * 1.7^floor(L/10) * N_maquinas * MoneyMulti.
+    // Cada tipo permite no maximo 5 maquinas; o custo de +1 maquina usa N atual.
     upgrades: [
-      u(1, 'BASIC EXTRACTOR', 100, 'floor(5*(1+L/2)*(1+0.165*1)^L)  (+1 maq: floor(10*(20*1)^(N+1)))', 'income 3'),
-      u(2, 'FAST EXTRACTOR', 100, 'floor(2500*(1+L/2)*(1+0.165*1.025)^L)  (+1 maq: floor(5000*(20*1.025)^(N+1)))', 'income 200'),
-      u(3, 'HEAVY EXTRACTOR', 100, 'floor(500000*(1+L/2)*(1+0.165*1.065)^L)  (+1 maq: floor(1000000*(20*1.065)^(N+1)))', 'income 6000'),
-      u(4, 'SUPER EXTRACTOR', 100, 'floor(100000000*(1+L/2)*(1+0.165*1.12)^L)  (+1 maq: floor(75000000*(20*1.12)^(N+1)))', 'income 250000'),
-      u(5, 'MEGA EXTRACTOR', 110, 'floor(1000000000000*(1+L/2)*(1+0.165*1.16)^L)  (+1 maq: floor(1000000000000*(20*1.16)^(N+1)))', 'income 5000000'),
-      u(6, 'LIGHTING EXTRACTOR', 110, 'floor(100000000000000*(1+L/2)*(1+0.165*1.21)^L)  (+1 maq: floor(100000000000000*(20*1.21)^(N+1)))', 'income 250000000'),
-      u(7, 'EXOTIC EXTRACTOR', 110, 'floor(20000000000000000*(1+L/2)*(1+0.165*1.25)^L)  (+1 maq: floor(20000000000000000*(20*1.25)^(N+1)))', 'income 10000000000'),
-      u(8, 'FINAL EXTRACTOR', 110, 'floor(1e+19*(1+L/2)*(1+0.165*1.31)^L)  (+1 maq: floor(1e+19*(20*1.31)^(N+1)))', 'income 1000000000000'),
-      u(9, 'BASIC COMBINE', 120, 'floor(1e+33*(1+L/2)*(1+0.165*1.36)^L)  (+1 maq: floor(1e+33*(20*1.36)^(N+1)))', 'income 300000000000000'),
-      u(10, 'FAST COMBINE', 120, 'floor(2e+37*(1+L/2)*(1+0.165*1.42)^L)  (+1 maq: floor(2e+37*(20*1.42)^(N+1)))', 'income 10000000000000000'),
-      u(11, 'HEAVY COMBINE', 120, 'floor(2e+42*(1+L/2)*(1+0.165*1.48)^L)  (+1 maq: floor(2e+42*(20*1.48)^(N+1)))', 'income 1e+18'),
-      u(12, 'SUPER COMBINE', 120, 'floor(1e+47*(1+L/2)*(1+0.165*1.55)^L)  (+1 maq: floor(1e+47*(20*1.55)^(N+1)))', 'income 1e+20'),
-      u(13, 'MEGA COMBINE', 130, 'floor(1e+58*(1+L/2)*(1+0.165*1.62)^L)  (+1 maq: floor(1e+58*(20*1.62)^(N+1)))', 'income 7.5e+22'),
-      u(14, 'LIGHTING COMBINE', 130, 'floor(1e+66*(1+L/2)*(1+0.165*1.75)^L)  (+1 maq: floor(1e+66*(20*1.75)^(N+1)))', 'income 2.4e+25'),
-      u(15, 'EXOTIC COMBINE', 130, 'floor(1e+77*(1+L/2)*(1+0.165*1.85)^L)  (+1 maq: floor(1e+77*(20*1.85)^(N+1)))', 'income 1.2e+28'),
-      u(16, 'FINAL COMBINE', 130, 'floor(1e+88*(1+L/2)*(1+0.165*1.95)^L)  (+1 maq: floor(1e+88*(20*1.95)^(N+1)))', 'income 1.5e+31'),
-      u(17, 'BASIC ATOMIZER', 140, 'floor(1e+112*(1+L/2)*(1+0.165*2)^L)  (+1 maq: floor(1e+112*(20*2)^(N+1)))', 'income 4e+35'),
-      u(18, 'FAST ATOMIZER', 140, 'floor(1e+122*(1+L/2)*(1+0.165*2.1)^L)  (+1 maq: floor(1e+122*(20*2.1)^(N+1)))', 'income 5e+38'),
-      u(19, 'HEAVY ATOMIZER', 140, 'floor(1e+132*(1+L/2)*(1+0.165*2.2)^L)  (+1 maq: floor(1e+132*(20*2.2)^(N+1)))', 'income 2e+41'),
-      u(20, 'SUPER ATOMIZER', 140, 'floor(1e+144*(1+L/2)*(1+0.165*2.3)^L)  (+1 maq: floor(1e+144*(20*2.3)^(N+1)))', 'income 1e+44'),
-      u(21, 'BASIC NEUTRONIZER', 150, 'floor(1e+160*(1+L/2)*(1+0.165*2.4)^L)  (+1 maq: floor(1e+160*(20*2.4)^(N+1)))', 'income 5e+46'),
-      u(22, 'FAST NEUTRONIZER', 150, 'floor(1e+174*(1+L/2)*(1+0.165*2.5)^L)  (+1 maq: floor(1e+174*(20*2.5)^(N+1)))', 'income 2e+49'),
-      u(23, 'HEAGVY NEUTRONIZER', 150, 'floor(1e+188*(1+L/2)*(1+0.165*2.6)^L)  (+1 maq: floor(1e+188*(20*2.6)^(N+1)))', 'income 1e+52'),
-      u(24, 'SUPER NEUTRONIZER', 150, 'floor(1e+215*(1+L/2)*(1+0.165*2.7)^L)  (+1 maq: floor(1e+215*(20*2.7)^(N+1)))', 'income 5.7e+54'),
+      u(1, 'BASIC EXTRACTOR', 100, 'floor(5*(1+L/2)*(1+0.165*1)^L)  (+1 maq: floor(10*(20*1)^(N+1)))', 'income base 3/s por maq'),
+      u(2, 'FAST EXTRACTOR', 100, 'floor(2500*(1+L/2)*(1+0.165*1.025)^L)  (+1 maq: floor(5000*(20*1.025)^(N+1)))', 'income base 200/s por maq'),
+      u(3, 'HEAVY EXTRACTOR', 100, 'floor(500000*(1+L/2)*(1+0.165*1.065)^L)  (+1 maq: floor(1000000*(20*1.065)^(N+1)))', 'income base 6000/s por maq'),
+      u(4, 'SUPER EXTRACTOR', 100, 'floor(100000000*(1+L/2)*(1+0.165*1.12)^L)  (+1 maq: floor(75000000*(20*1.12)^(N+1)))', 'income base 250000/s por maq'),
+      u(5, 'MEGA EXTRACTOR', 110, 'floor(1000000000000*(1+L/2)*(1+0.165*1.16)^L)  (+1 maq: floor(1000000000000*(20*1.16)^(N+1)))', 'income base 5000000/s por maq'),
+      u(6, 'LIGHTING EXTRACTOR', 110, 'floor(100000000000000*(1+L/2)*(1+0.165*1.21)^L)  (+1 maq: floor(100000000000000*(20*1.21)^(N+1)))', 'income base 250000000/s por maq'),
+      u(7, 'EXOTIC EXTRACTOR', 110, 'floor(20000000000000000*(1+L/2)*(1+0.165*1.25)^L)  (+1 maq: floor(20000000000000000*(20*1.25)^(N+1)))', 'income base 10000000000/s por maq'),
+      u(8, 'FINAL EXTRACTOR', 110, 'floor(1e+19*(1+L/2)*(1+0.165*1.31)^L)  (+1 maq: floor(1e+19*(20*1.31)^(N+1)))', 'income base 1000000000000/s por maq'),
+      u(9, 'BASIC COMBINE', 120, 'floor(1e+33*(1+L/2)*(1+0.165*1.36)^L)  (+1 maq: floor(1e+33*(20*1.36)^(N+1)))', 'income base 300000000000000/s por maq'),
+      u(10, 'FAST COMBINE', 120, 'floor(2e+37*(1+L/2)*(1+0.165*1.42)^L)  (+1 maq: floor(2e+37*(20*1.42)^(N+1)))', 'income base 10000000000000000/s por maq'),
+      u(11, 'HEAVY COMBINE', 120, 'floor(2e+42*(1+L/2)*(1+0.165*1.48)^L)  (+1 maq: floor(2e+42*(20*1.48)^(N+1)))', 'income base 1e+18/s por maq'),
+      u(12, 'SUPER COMBINE', 120, 'floor(1e+47*(1+L/2)*(1+0.165*1.55)^L)  (+1 maq: floor(1e+47*(20*1.55)^(N+1)))', 'income base 1e+20/s por maq'),
+      u(13, 'MEGA COMBINE', 130, 'floor(1e+58*(1+L/2)*(1+0.165*1.62)^L)  (+1 maq: floor(1e+58*(20*1.62)^(N+1)))', 'income base 7.5e+22/s por maq'),
+      u(14, 'LIGHTING COMBINE', 130, 'floor(1e+66*(1+L/2)*(1+0.165*1.75)^L)  (+1 maq: floor(1e+66*(20*1.75)^(N+1)))', 'income base 2.4e+25/s por maq'),
+      u(15, 'EXOTIC COMBINE', 130, 'floor(1e+77*(1+L/2)*(1+0.165*1.85)^L)  (+1 maq: floor(1e+77*(20*1.85)^(N+1)))', 'income base 1.2e+28/s por maq'),
+      u(16, 'FINAL COMBINE', 130, 'floor(1e+88*(1+L/2)*(1+0.165*1.95)^L)  (+1 maq: floor(1e+88*(20*1.95)^(N+1)))', 'income base 1.5e+31/s por maq'),
+      u(17, 'BASIC ATOMIZER', 140, 'floor(1e+112*(1+L/2)*(1+0.165*2)^L)  (+1 maq: floor(1e+112*(20*2)^(N+1)))', 'income base 4e+35/s por maq'),
+      u(18, 'FAST ATOMIZER', 140, 'floor(1e+122*(1+L/2)*(1+0.165*2.1)^L)  (+1 maq: floor(1e+122*(20*2.1)^(N+1)))', 'income base 5e+38/s por maq'),
+      u(19, 'HEAVY ATOMIZER', 140, 'floor(1e+132*(1+L/2)*(1+0.165*2.2)^L)  (+1 maq: floor(1e+132*(20*2.2)^(N+1)))', 'income base 2e+41/s por maq'),
+      u(20, 'SUPER ATOMIZER', 140, 'floor(1e+144*(1+L/2)*(1+0.165*2.3)^L)  (+1 maq: floor(1e+144*(20*2.3)^(N+1)))', 'income base 1e+44/s por maq'),
+      u(21, 'BASIC NEUTRONIZER', 150, 'floor(1e+160*(1+L/2)*(1+0.165*2.4)^L)  (+1 maq: floor(1e+160*(20*2.4)^(N+1)))', 'income base 5e+46/s por maq'),
+      u(22, 'FAST NEUTRONIZER', 150, 'floor(1e+174*(1+L/2)*(1+0.165*2.5)^L)  (+1 maq: floor(1e+174*(20*2.5)^(N+1)))', 'income base 2e+49/s por maq'),
+      u(23, 'HEAGVY NEUTRONIZER', 150, 'floor(1e+188*(1+L/2)*(1+0.165*2.6)^L)  (+1 maq: floor(1e+188*(20*2.6)^(N+1)))', 'income base 1e+52/s por maq'),
+      u(24, 'SUPER NEUTRONIZER', 150, 'floor(1e+215*(1+L/2)*(1+0.165*2.7)^L)  (+1 maq: floor(1e+215*(20*2.7)^(N+1)))', 'income base 5.7e+54/s por maq'),
     ],
   },
   factory: {
@@ -678,7 +680,7 @@ export const FORMULA_SECTIONS = {
   mining: {
     name: 'Mining Upgrades (Loja de Minerios)',
     priceTable: 'mining',
-    note: 'Cap real = min(HardLimit, StartLimit + MineStoreLevel * LevelLimitIncrease); #29 e #37 marcados [Coming Soon] no jogo; desconto do #28: preco/(1+L28/10); #34: 1=Green 2=Red 3=Void 4=Black 5=Transcend.',
+
     upgrades: [
       u(1, 'Pick Damage', 50, 'Tabela por nivel (ver mining_upgrade_prices.csv) / (1+MiningUpgrade28/10) de desconto', '1.15 ^ L'),
       u(2, 'Energy', 40, 'Tabela por nivel / (1+MiningUpgrade28/10) de desconto', '(1 + L * 0.2) * 1.15 ^ L'),
@@ -722,7 +724,7 @@ export const FORMULA_SECTIONS = {
   },
   'log-perks': {
     name: 'Log Perks',
-    note: 'Moeda = Log Perks (ganhas ao subir o nivel de Logs). Efeito = multiplicador (x). Preco exibido arredondado no cliente.',
+
     upgrades: [
       u(1, 'Logs', 150, '(1+L/10)*(1+L/20)^3*1.15^L', '(1+L/10)^2.05'),
       u(2, 'Sap', 150, '(1+L/10)*(1+L/20)^3*1.15^L', '(1+L/12)^1.95'),
@@ -734,7 +736,7 @@ export const FORMULA_SECTIONS = {
   },
   'sap-perks': {
     name: 'Sap Perks',
-    note: 'Moeda = Sap Perks (ganhas ao subir o nivel de Sap). Efeito = multiplicador (x).',
+
     upgrades: [
       u(1, 'Logs', 150, '(1+L/10)*(1+L/15)^3*1.15^L', '(1+L/10)^2.1'),
       u(2, 'Sap', 150, '(1+L/10)*(1+L/15)^3*1.15^L', '(1+L/14)^2'),
@@ -747,7 +749,7 @@ export const FORMULA_SECTIONS = {
   },
   'monster-perks': {
     name: 'Monster Perks',
-    note: 'Moeda = Red Perks (ganhas ao subir o nivel de Monster). Efeito = multiplicador (x).',
+
     upgrades: [
       u(1, 'Self Boost', 150, '(1+L/10)*(1+L/15)^3*1.15^L', '(1+L/12)^1.8'),
       u(2, 'Red Liquid', 150, '(1+L/10)*(1+L/15)^3*1.15^L', '(1+L/10)^2.1'),
@@ -758,7 +760,7 @@ export const FORMULA_SECTIONS = {
   },
   'mine-perks': {
     name: 'Mine Perks',
-    note: 'Moeda = Mine Perks (ganhas ao subir o Mining Level). Efeito = multiplicador (x).',
+
     upgrades: [
       u(1, 'Mining XP', 150, '(1+L/7.5)*(1+L/20)^3*1.15^L', '1.1^L*(1+L/10)'),
       u(2, 'Mining Damage', 150, '(1+L/6)*(1+L/15)^3*1.15^L', '1.05^L*(1+L/10)'),
@@ -781,7 +783,7 @@ export const FORMULA_SECTIONS = {
   },
   'merge-perks': {
     name: 'Merge Perks',
-    note: 'Moeda = Merge Perks (ganhas ao subir o Merge Level). Efeito = multiplicador (x), exceto #5.',
+
     upgrades: [
       u(1, 'Quartz', 150, '(1+L/10)*(1+L/25)^2.7*1.15^L', '(1+L/12)^2.05'),
       u(2, 'Bluesteel', 150, '(1+L/20)*(1+L/30)^3*1.15^L', '(1+L/10)^1.75'),
@@ -792,7 +794,7 @@ export const FORMULA_SECTIONS = {
   },
   'gears-machines': {
     name: 'Automation - Maquinas de Gears',
-    note: 'Produzem Gears/s. Preco do proximo nivel = floor(BASE*(1+Multi*L)*(Exp+L/1500)^L). Ganho = StartGain*(L/2)*TierBonus^floor(L/10) Gears/s. Tier = floor(L/10)+1.',
+
     upgrades: [
       u(1, 'Wrench', 100, '20*(1+0.2*L)*(1.07+L/1500)^L', '1*(L/2)*1.5^floor(L/10) Gears/s'),
       u(2, 'Generator', 110, '30000*(1+0.25*L)*(1.11+L/1500)^L', '750*(L/2)*1.55^floor(L/10) Gears/s', 'Req: nivel 50 da anterior'),
@@ -803,7 +805,7 @@ export const FORMULA_SECTIONS = {
   },
   'auto-buyers': {
     name: 'Automation - Auto Compradores',
-    note: 'Moeda = Gears (ilha da Automation). Preco = tabela fixa por nivel (lista separada por /). Cada nivel libera UnlocksPerLevel compras automaticas. Req = condicao pra desbloquear o auto.',
+
     upgrades: [
       u(1, 'AUTO MACHINES', 24, '10/20/40/70/200/500/750/1000/1500/2500/4000/7000/12000/20000/35000/75000/150000/400000/1000000/5000000/1e15/1e16/1e17/1e18', 'L x 1 (unlocks)'),
       u(2, 'AUTO FACTORY', 6, '500/2000/5000/10000/25000/1e15', 'L x 1 (unlocks)'),
@@ -831,11 +833,9 @@ export const FORMULA_SECTIONS = {
       u(24, 'AUTO CALIFORNIUM', 12, '2.5e17/4e17/7e17/1.2e18/1.75e18/2.5e18/5e18/7e18/1e19/1.5e19/2e19/3e19', 'L x 1 (unlocks)', 'Req: CrystalBarn >= 8'),
     ],
   },
-};
-
   'eternal-tree': {
     name: 'Eternal Shard Tree',
-    note: 'Moeda = Eternal Shards. Arvore em cadeia.',
+
     upgrades: [
       u(1, 'Base Energy', 10, '10+2*L', '1+0.2*L'),
       u(2, 'More Energy', 50, '10*1.25^L', '1.15^L'),
@@ -862,7 +862,7 @@ export const FORMULA_SECTIONS = {
   },
   astatine: {
     name: 'Astatine Upgrades (Crystalization)',
-    note: 'Moeda = Astatine. Gated por AstatineMilestone.',
+
     upgrades: [
       u(1, 'Astatine Chance', 18, '(1+L)*1.6^L', '0.5+L/4'),
       u(2, 'Faster Spawn', 29, '(1+L)*1.45^L', '1+L/2'),
@@ -878,7 +878,7 @@ export const FORMULA_SECTIONS = {
   },
   'magnets-upgrades': {
     name: 'Magnets Upgrades',
-    note: 'Moeda = Magnets. Requer Unlock Magnets.',
+
     upgrades: [
       u(1, 'More Magnets', 99, '2*(1+L/4)*(1.35+L/100)^L', '(1+L*0.15)*1.05^L'),
       u(2, 'More Bluesteel', 99, '5*(1+L/3)*(1.275+L/100)^L', '(1+L*0.1)*1.05^L'),
@@ -896,7 +896,7 @@ export const FORMULA_SECTIONS = {
   },
   'bluesteel-upgrades': {
     name: 'Bluesteel Upgrades',
-    note: 'Moeda = Bluesteel.',
+
     upgrades: [
       u(1, 'More Quartz', 100, '2*(1.55+L/100)^L', '(1+L/10)*1.1^L'),
       u(2, 'More Bluesteel', 100, '5*(1.45+L/100)^L', '(1+L/10)*1.05^L'),
@@ -910,7 +910,7 @@ export const FORMULA_SECTIONS = {
   },
   'souls-upgrades': {
     name: 'Souls Upgrades (Dungeon)',
-    note: 'Moeda = Souls. Requer Dungeon Rank 3.',
+
     upgrades: [
       u(1, 'Coins', 49, '5*(1+L/4)*(1.26+L/75)^L', '(1+L*0.15)*1.05^L'),
       u(2, 'Souls', 99, '10*(1+L/7)*(1.32+L/85)^L', '(1+L*0.07)*1.03^L'),
@@ -928,7 +928,7 @@ export const FORMULA_SECTIONS = {
   },
   'auto-mining-drills': {
     name: 'Auto Mining Drills',
-    note: '5 upgrades com moeda PROPRIA cada. Drills mineram sozinhos.',
+
     upgrades: [
       u(1, 'More Drills', 3, '1000000*100000^L', '1+L'),
       u(2, 'Drill Speed', 50, '2500*(2+L/10)^L', '(5+L)*1.125^L'),
@@ -937,6 +937,8 @@ export const FORMULA_SECTIONS = {
       u(5, 'Drill Mastery', 13, 'Tabela por nivel', 'Tabela por nivel'),
     ],
   },
+};
+
 export const FORMULA_PAGE_MAP = {
   'dungeon/training-upgrades': 'training',
   'dungeon/bones-upgrades': 'bones',
@@ -983,8 +985,7 @@ export const FORMULA_PAGE_MAP = {
   'main/magnets-upgrades': 'magnets-upgrades',
   'main/bluesteel-upgrades': 'bluesteel-upgrades',
   'dungeon/souls-upgrades': 'souls-upgrades',
-  'main/auto-mining-drills': 'auto-mining-drills',
-  'life/terra-life': 'life-rank',
+  'mining/auto-mining-drills': 'auto-mining-drills',
 };
 
 export function getFormulaPage(catId, subId) {

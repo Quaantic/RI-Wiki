@@ -445,7 +445,7 @@
 .cat-hero__tagline {
   margin-top: 10px;
   color: var(--c-text-2);
-  max-width: 62ch;
+  max-width: 222ch;
 }
 
 .cat-hero__facts {
@@ -859,7 +859,7 @@ mark {
 .sub-link:hover { border-color: var(--c-border-accent); background: var(--c-card-hover); transform: translateY(-2px); }
 .sub-link svg:first-child { color: var(--c-accent); flex: none; }
 .sub-link b { font-family: var(--font-display); font-size: 14px; color: var(--c-text); display: block; }
-.sub-link small { font-size: 12px; color: var(--c-text-3); display: block; line-height: 1.4; }
+.sub-link small {font-size: 12px;color: var(--c-text-3);display: -webkit-box;line-height: 1.4;-webkit-box-orient: vertical;-webkit-line-clamp: 3;line-clamp: 3;overflow: hidden;text-overflow: ellipsis;}
 .sub-link .sub-link__go { margin-left: auto; color: var(--c-text-4); transition: all var(--t-fast); }
 .sub-link:hover .sub-link__go { color: var(--c-accent); transform: translateX(3px); }
 

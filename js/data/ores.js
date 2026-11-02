@@ -92,7 +92,7 @@ export const MASTERY_DATA = {
         upgrades: [
           { effect: '25x Ruby', cap: 124800 },
           { effect: '100x Crit%', cap: 5000 },
-          { effect: 'Crit Dmg', req: 45, note: 'mult base 5x' },
+          { effect: 'Crit Dmg', req: 45 },
         ] },
       { id: 'emerald', name: 'Emerald', icon: 'gem', color: '#26D86B',
         upgrades: [

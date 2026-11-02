@@ -122,6 +122,7 @@ export function evalFormula(expr, vars = {}) {
   let s = String(expr).trim();
   if (!s || s === '-') return null;
   s = s.replace(/\(fixo\)/gi, '');
+  s = s.replace(/\s*\(\+\s*\d+\s*maq\b[\s\S]*\)\s*$/i, '');
   const se = s.match(/^(.+?)\s+se\s+L\s*=\s*(-?\d+)\s*;\s*senao\s+([\s\S]+)$/i);
   if (se) return vars.L === Number(se[2]) ? evalFormula(se[1], vars) : evalFormula(se[3], vars);
   if (s.includes('|')) {
@@ -191,7 +192,6 @@ function contentText(article) {
     parts.push(s.title);
     (s.blocks || []).forEach((b) => {
       if (b.text) parts.push(b.text);
-      if (b.title && b.type === 'note') parts.push(b.title);
       (b.items || []).forEach((it) => parts.push(typeof it === 'string' ? it : it.text || ''));
       (b.rows || []).forEach((r) => parts.push(Object.values(r).filter((v) => typeof v === 'string').join(' ')));
       (b.pairs || []).forEach((pr) => parts.push(`${pr.key} ${pr.value}`));
@@ -300,7 +300,7 @@ export function searchPages(query, { limit = 0 } = {}) {
     for (const s of c.subcategories) {
       for (const sub of [s, ...(s.children || [])]) {
         const name = sub.name.toLowerCase();
-        const blurb = (sub.blurb || '').toLowerCase();
+        const blurb = (sub.desc || '').toLowerCase();
         let score = 0;
         if (name === q) score += 100;
         else if (name.includes(q)) score += 50;

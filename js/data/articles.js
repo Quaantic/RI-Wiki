@@ -19,7 +19,6 @@
 //           [{ key: 'name', label: 'Nome' }, { key: 'value', label: 'Valor' }],
 //           [{ name: 'Exemplo', value: '10' }],
 //         ),
-//         note('tip', 'Titulo', 'Dica util.'),
 //       ]),
 //     ],
 //     related: ['outro-artigo'],
@@ -37,8 +36,6 @@ const list = (items, { ordered = false, checks = false } = {}) => ({
 });
 
 const table = (columns, rows) => ({ type: 'table', columns, rows });
-
-const note = (variant, title, text) => ({ type: 'note', variant, title, text });
 
 const kv = (pairs) => ({ type: 'kv', pairs });
 

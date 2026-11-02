@@ -1,10 +1,286 @@
-// ==== PROGRESS: RANKS E ASCENSIONS (EDITE AQUI) ====
-// Paginas que usam o mesmo visual dos Stages (requirements / boosts / unlocks).
-//   num    -> numero mostrado no hexagono
-//   title  -> titulo do card
-//   requirements -> lista de requisitos
-//   boosts       -> lista de boosts ('2x Strength')
-//   unlocks      -> { features: [{ name, subs: [...] }] }
+// ==== PROGRESSO: STAGES, BARN, RANKS, ASCENSIONS, LIFE RANKS (EDITE AQUI) ====
+// Todas essas paginas usam o mesmo visual de card (requirements / boosts / unlocks).
+//   num          -> numero/romano mostrado no hexagono
+//   title        -> titulo do card (opcional; padrao "Stage II" etc)
+//   requirements -> lista de requisitos ('200T Energy')
+//   boosts       -> lista de boosts ('3x Energy')
+//   boostsNote   -> texto pequeno ao lado de Boosts (opcional)
+//   unlocks      -> { area, places: [...], features: [{ name, subs: [...] }] }
+// Cada bloco e chaveado por 'categoria/subcategoria' (igual as rotas do site).
+
+export const STAGE_DATA = {
+  'main/stages': {
+    stages: [
+      {
+        num: 'II',
+        requirements: ['200T Energy', '250 Jewels'],
+        boosts: [
+          '3x Energy',
+          '2x Perks',
+          '2x Crystals',
+          '1.5x Jewels',
+          '1.25x Platinum',
+        ],
+        unlocks: {
+          area: 'Island',
+          places: ['Life Island'],
+          features: [
+            { name: 'Life Creation', subs: ['Cells', 'Life Shards'] },
+            { name: 'Fossils' },
+            { name: 'Research' },
+            { name: 'New Rune' },
+            { name: 'Log', subs: ['Log Perks'] },
+            { name: 'SAP', subs: ['SAP Perks'] },
+            { name: 'Terraform' },
+            { name: 'Gears' },
+            { name: 'Automations' },
+          ],
+        },
+      },
+      {
+        num: 'III',
+        requirements: ['500Oc Energy', '5M SAP'],
+        boostsNote: 'added with previous stage boosts',
+        boosts: [
+          '7x Energy',
+          '3x Perks',
+          '4x Crystals',
+          '2x Jewels',
+          '1.5x Platinum',
+          '2x Life Shards',
+          '1.35x Fossils',
+          '2x Log',
+          '1.4x SAP',
+          '1.5x Research',
+          '1.5x Gears',
+        ],
+        unlocks: {
+          area: 'Island',
+          places: ['Money Island'],
+          features: [
+            { name: 'Upgrade Tree' },
+            { name: 'Ascensions', subs: ['Ruby Energy', 'Golden Diamond'] },
+            { name: 'Money' },
+            { name: 'Gold Bars' },
+            { name: 'Emerald Coins' },
+            { name: 'Prestige' },
+            { name: 'Energy Shard' },
+            { name: 'Specials Energy', subs: ['Silver Energy', 'Golden Energy', 'Diamond Energy'] },
+            { name: 'New Rune' },
+          ],
+        },
+      },
+      {
+        num: 'IV',
+        requirements: ['250QaDe Energy', '5M Golden Bars'],
+        boostsNote: 'added with previous stage boosts',
+        boosts: [
+          '15x Energy',
+          '4x Perks',
+          '7x Crystals',
+          '2.5x Jewels',
+          '2x Platinum',
+          '4x Life Shards',
+          '1.75x Fossils',
+          '3.5x Log',
+          '2x SAP',
+          '2x Red Liquid',
+          '2.25x Research',
+          '2x Gears',
+          '2x Money',
+          '2x Energy Shards',
+          '1.5x Gold Bars',
+          '1.5x Silver Energy',
+          '1.3x Golden Energy',
+          '1.2x Emerald',
+        ],
+        unlocks: {
+          area: 'Area',
+          places: ['Crystal Barn'],
+          features: [
+            { name: 'Crystal Shards', subs: ['Crystal Perks'] },
+            { name: 'Opal' },
+            { name: 'Special Crystals', subs: ['Adamantium', 'Californium'] },
+          ],
+        },
+      },
+      {
+        num: 'V',
+        requirements: ['100UVg Energy', '500 Bluesteel'],
+        boosts: [
+          '30x Energy',
+          '6x Perks',
+          '10x Crystals',
+          '3x Jewels',
+          '2.75x Platinum',
+          '6x Life Shards',
+          '2.45x Fossils',
+          '5x Logs',
+          '3x Red Liquid',
+          '3.15x Research',
+          '4x Money',
+          '4x Energy Shards',
+          '2.25x Gold Bars',
+          '1.5x Opal',
+          '2x Silver Energy',
+          '1.6x Golden Energy',
+          '1.4x Emerald',
+          '3x Gears',
+        ],
+        unlocks: {
+          area: 'Island',
+          places: ['Mining Island'],
+          features: [
+            { name: 'Mining', subs: ['Mining Perks'] },
+            { name: 'Pickaxes' },
+            { name: 'Core Breaking' },
+            { name: 'Forge' },
+            { name: 'Mining Upgrades' },
+            { name: 'Ores' },
+            { name: 'Ores Mastery' },
+            { name: 'New Rune' },
+          ],
+        },
+      },
+      {
+        num: 'VI',
+        requirements: ['25qg Energy', '1M Uranium'],
+        boosts: [
+          '50x Energy',
+          '8x Perks',
+          '15x Crystals',
+          '4x Jewels',
+          '3.5x Platinum',
+          '8x Life Shards',
+          '3.25x Fossils',
+          '7.5x Log',
+          '4.5x SAP',
+          '5x Red Liquid',
+          '4.5x Research',
+          '7x Money',
+          '7x Energy Shards',
+          '3x Gold Bars',
+          '2x Opal',
+          '3x Silver Energy',
+          '2x Golden Energy',
+          '1.7x Emerald',
+          '4x Gears',
+        ],
+        unlocks: {
+          area: 'Island',
+          places: ['Training Island'],
+          features: [
+            { name: 'Training', subs: ['Health', 'Strength'] },
+            { name: 'Ranks' },
+            { name: 'Dungeon', subs: ['Coins', 'Bones', 'Drops', 'Dust', 'Souls'] },
+            { name: 'Dungeon Level' },
+            { name: 'New Rune' },
+          ],
+        },
+      },
+    ],
+  },
+};
+
+export const BARN_DATA = {
+  'main/barn': {
+    stages: [
+      {
+        num: 'I',
+        title: 'Barn I',
+        requirements: ['1Qa Crystals', 'XX Eternal Shards (No Reset)'],
+        boosts: [
+          '2x Crystals',
+          '2x Jewels',
+          '3x Platinum',
+          '7x Energy',
+          '2x Crystal Shards',
+          '1.2x Perks',
+        ],
+        unlocks: {
+          features: [{ name: 'Crystal Shards' }],
+        },
+      },
+      {
+        num: 'II',
+        title: 'Barn II',
+        requirements: ['100Qi Crystals', '69 Eternal Shards (No Reset)'],
+        boosts: [
+          '7x Crystals',
+          '3x Jewels',
+          '4x Platinum',
+          '15x Energy',
+          '4x Energy Shards',
+          '1.4x Perks',
+          '1.5x Crystal Perks',
+        ],
+        unlocks: {
+          features: [{ name: 'Crystal Level' }, { name: 'New Jewel Upgrade' }],
+        },
+      },
+      {
+        num: 'III',
+        title: 'Barn III',
+        requirements: ['10B Crystal Shards', '89 Eternal Shards (No Reset)'],
+        boosts: [
+          '10x Crystal',
+          '4x Jewels',
+          '6x Platinum',
+          '30x Energy',
+          '6x Crystal Shards',
+          '1.6x Perks',
+          '2x Crystal Perks',
+          '1.25x Life Gems',
+          '1.5x Money',
+        ],
+        unlocks: {
+          features: [{ name: 'Opal' }, { name: 'More Jewels Upgrades' }],
+        },
+      },
+      {
+        num: 'IV',
+        title: 'Barn IV',
+        requirements: ['50M Opal', '109 Eternal Shards (No Reset)'],
+        boosts: [
+          '15x Crystals',
+          '6x Jewels',
+          '8x Platinum',
+          '50x Energy',
+          '9x Crystal Shards',
+          '1.8x Perks',
+          '2.5x Crystal Perks',
+          '1.6x Life Gems',
+          '2.25x Money',
+        ],
+        unlocks: {
+          features: [{ name: 'More Opal Upgrades' }],
+        },
+      },
+      {
+        num: 'V',
+        title: 'Barn V',
+        requirements: ['50B Opal', '129 Eternal Shards (No Reset)'],
+        boosts: [
+          '20x Crystal',
+          '10x Jewels',
+          '10x Platinum',
+          '2x Perks',
+          '3x Crystal Perks',
+          '100x Energy',
+          '12x Crystal Shards',
+          '1.5x Adamantium',
+          '2x Life Gems',
+          '3x Money',
+          '1.5x Mining Damage',
+          '1.1x Ores',
+        ],
+        unlocks: {
+          features: [{ name: 'Adamantium' }, { name: 'More Opal Upgrades' }],
+        },
+      },
+    ],
+  },
+};
 
 export const RANK_DATA = {
   'dungeon/ranks': {
@@ -62,14 +338,6 @@ export const ASCENSION_DATA = {
   },
 };
 
-export function getRankPage(catId, subId) {
-  return RANK_DATA[`${catId}/${subId}`] || null;
-}
-
-export function getAscensionPage(catId, subId) {
-  return ASCENSION_DATA[`${catId}/${subId}`] || null;
-}
-
 export const LIFE_RANK_DATA = {
   'life/terra-life': {
     ranks: [
@@ -107,6 +375,13 @@ export const LIFE_RANK_DATA = {
   },
 };
 
-export function getLifeRankPage(catId, subId) {
-  return LIFE_RANK_DATA[`${catId}/${subId}`] || null;
+function pick(DATA, catId, subId, key) {
+  const page = DATA[`${catId}/${subId}`];
+  return page && page[key]?.length ? page : null;
 }
+
+export const getStagePage = (catId, subId) => pick(STAGE_DATA, catId, subId, 'stages');
+export const getBarnPage = (catId, subId) => pick(BARN_DATA, catId, subId, 'stages');
+export const getRankPage = (catId, subId) => pick(RANK_DATA, catId, subId, 'ranks');
+export const getAscensionPage = (catId, subId) => pick(ASCENSION_DATA, catId, subId, 'ranks');
+export const getLifeRankPage = (catId, subId) => pick(LIFE_RANK_DATA, catId, subId, 'ranks');
