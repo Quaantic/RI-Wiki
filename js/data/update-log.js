@@ -24,7 +24,7 @@ export const UPDATE_LOG = [
   {
     version: '1',
     date: '2026-10-30',
-    entries: [],
+    entries: [{ context: 'Feature', title: 'Release', description: 'Regrowth Incremental WIKI has been released' },],
   },
 ];
 
