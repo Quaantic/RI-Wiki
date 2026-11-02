@@ -238,9 +238,12 @@ input {
 
 /* Smart reference: recurso com pagina propria vira link clicavel */
 .res--link {
+  cursor: inherit;
+}
+[data-resource-links] .res--link {
   cursor: pointer;
 }
-.res--link:hover {
+[data-resource-links] .res--link:hover {
   text-decoration: underline;
   text-underline-offset: 3px;
   filter: brightness(1.2);

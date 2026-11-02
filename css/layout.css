@@ -185,7 +185,7 @@
 .nav-sub2__item.active { color: var(--c-accent); background: var(--c-accent-soft); }
 .nav-sub2__item.active .nav-sub__dot { background: var(--c-accent); transform: scale(1.25); }
 
-/* Nivel 3 (ex: Enemys > Upgrades > Drops) */
+/* Nivel 3 (ex: Enemies > Upgrades > Drops) */
 .nav-sub3 {
   display: grid;
   grid-template-rows: 0fr;

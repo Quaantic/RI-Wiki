@@ -12,7 +12,7 @@ async function boot() {
 
   document.addEventListener('click', (e) => {
     const link = e.target.closest('.res--link');
-    if (!link) return;
+    if (!link || !link.closest('[data-resource-links]')) return;
     e.preventDefault();
     e.stopPropagation();
     window.__riFlashNext = true;

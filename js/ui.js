@@ -1,7 +1,8 @@
 // ==== UI: ICONES, COMPONENTES E SHELL (nao precisa editar) ====
 
-import { qs, qsa, esc, html, debounce, fmtNum, fmtDateShort, markMatches, searchPages } from './utils.js';
-import { CATEGORIES } from './data/wiki-data.js';
+import { qs, qsa, esc, html, debounce, fmtNum, fmtDateShort, markMatches, searchPages, groupByCategory } from './utils.js';
+import { CATEGORIES, getSubcategory } from './data/wiki-data.js';
+import { getInlineUpgradePages } from './data/formulas.js';
 import { colorizeResources, resourceColor } from './data/resource-colors.js';
 import { dataProvider } from './services.js';
 
@@ -506,8 +507,8 @@ export function mountSearchBox(root) {
         <a class="searchbox__item" role="option" href="#/${p.cat.id}/${p.sub.id}">
           <span class="searchbox__item-icon">${icon(p.cat.icon, 15)}</span>
           <span>
-            <b>${markMatches(p.sub.name, query)}</b>
-            <small>${esc(p.cat.name)} · ${esc(p.sub.desc || '')}</small>
+            <b>${colorizeResources(markMatches(p.sub.name, query))}</b>
+            <small>${colorizeResources(esc(p.cat.name))} · ${colorizeResources(markMatches(p.sub.desc || '', query))}</small>
           </span>
         </a>`).join('');
     }
@@ -523,7 +524,7 @@ export function mountSearchBox(root) {
           <span class="searchbox__item-icon">${icon('book', 15)}</span>
           <span>
             <b>${markMatches(r.article.title, query)}</b>
-            <small>${markMatches(r.snippet, query)}</small>
+            <small>${colorizeResources(markMatches(r.snippet, query))}</small>
           </span>
         </a>`).join('');
     }
@@ -544,9 +545,9 @@ export function mountSearchBox(root) {
     const token = ++reqToken;
     panel.hidden = false;
     panel.innerHTML = `<div class="searchbox__loading"><span class="spinner"></span> Searching…</div>`;
-    const results = await dataProvider.search(q, { limit: 9 });
+    const results = await dataProvider.search(q);
     if (token !== reqToken) return;
-    renderPanel(results, q, results.length);
+    renderPanel(results.slice(0, 9), q, results.length + searchPages(q).length);
   }, 140);
 
   input.addEventListener('input', runSearch);
@@ -605,14 +606,16 @@ function renderSubTree(catId, items, depth) {
     <div class="${boxCls}" data-parent-sub="${items[0]?.__parentId || ''}"><div>
       <div class="${boxCls}__list">
         ${items.map((s) => {
+          const inlineUpgradeIds = new Set(getInlineUpgradePages(catId, s).map(({ child }) => child.id));
+          const children = (s.children || []).filter((child) => !inlineUpgradeIds.has(child.id));
           const color = resourceColor(s.name);
           const dotStyle = color ? ` style="background:${color}"` : '';
           return `
           <a class="${itemCls}" data-sub="${s.id}" href="#/${catId}/${s.id}">
             <span class="nav-sub__dot"${dotStyle}></span><span class="nav-sub__label">${colorizeResources(esc(s.name))}</span>
           </a>
-          ${(s.children || []).length
-            ? renderSubTree(catId, s.children.map((c) => ({ ...c, __parentId: s.id })), depth + 1)
+          ${children.length
+            ? renderSubTree(catId, children.map((c) => ({ ...c, __parentId: s.id })), depth + 1)
             : ''}`;
         }).join('')}
       </div>
@@ -638,8 +641,35 @@ export function buildNav() {
     }).join('');
 
   nav.addEventListener('click', (e) => {
+    const link = e.target.closest('a.nav-item, a[data-sub]');
+    if (!link) return;
+
     const item = e.target.closest('.nav-item');
-    if (item) { openGroup(item.dataset.cat); return; }
+    if (item) {
+      if (item.classList.contains('active')) {
+        e.preventDefault();
+        openGroup(null);
+        window.location.hash = '#/';
+        return;
+      }
+      openGroup(item.dataset.cat);
+      return;
+    }
+
+    if (link.hash === window.location.hash) {
+      e.preventDefault();
+      const [catId, subId] = link.hash.replace(/^#\/?/, '').split('/');
+      const sub = getSubcategory(catId, subId);
+      if (sub?.parentId) {
+        window.location.hash = `#/${catId}/${sub.parentId}`;
+        return;
+      }
+
+      const wrapper = nav.querySelector(`[data-parent-sub="${subId}"]`);
+      if (wrapper) wrapper.classList.toggle('open');
+      return;
+    }
+
     const subItem = e.target.closest('[data-sub]');
     if (subItem) {
       const wrapper = nav.querySelector(`[data-parent-sub="${subItem.dataset.sub}"]`);

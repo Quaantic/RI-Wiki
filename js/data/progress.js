@@ -375,6 +375,73 @@ export const LIFE_RANK_DATA = {
   },
 };
 
+export const CORE_DATA = {
+  'mining/cores': {
+    ranks: [
+      {
+        num: '2', title: 'Core Layer 2 — Core Crust',
+        requirements: ['Core Layer 3: 5K'],
+        boosts: ['1.32x Energy', '1.26x Money', '1.26x Ores', '1.15x Training', '1.2x Ruby E.'],
+      },
+      {
+        num: '3', title: 'Core Layer 3 — Exposed Core',
+        requirements: ['Core Layer 4: 20K'],
+        boosts: ['1.72x Energy', '1.57x Money', '1.53x Ores', '1.32x Training', '1.4x Ruby E.'],
+      },
+      {
+        num: '4', title: 'Core Layer 4 — Pure Core',
+        requirements: ['Core Layer 5: 100K'],
+        boosts: ['2.21x Energy', '1.93x Money', '1.81x Ores', '1.5x Training', '1.6x Ruby E.'],
+      },
+      {
+        num: '5', title: 'Core Layer 5 — Central Core',
+        requirements: ['Core Layer 6: 300K'],
+        boosts: ['2.8x Energy', '2.34x Money', '2.12x Ores', '1.68x Training', '1.8x Ruby E.'],
+      },
+      {
+        num: '6', title: 'Core Layer 6 — Final Core',
+        requirements: ['Core Layer 7: 1.25M'],
+        boosts: ['3.52x Energy', '2.82x Money', '2.43x Ores', '1.89x Training', '2x Ruby E.'],
+      },
+      {
+        num: '7', title: 'Core Layer 7 — Super Core',
+        requirements: ['Core Layer 8: 7M'],
+        boosts: ['4.39x Energy', '3.37x Money', '2.77x Ores', '2.1x Training', '2.2x Ruby E.'],
+      },
+      {
+        num: '8', title: 'Core Layer 8 — Dwarf Core',
+        requirements: ['Core Layer 9: 50M'],
+        boosts: ['5.45x Energy', '3.99x Money', '3.12x Ores', '2.33x Training', '2.4x Ruby E.'],
+      },
+      {
+        num: '9', title: 'Core Layer 9 — Strange Core',
+        requirements: ['Core Layer 10: 500M'],
+        boosts: ['6.73x Energy', '4.72x Money', '3.5x Ores', '2.57x Training', '2.6x Ruby E.'],
+      },
+      {
+        num: '10', title: 'Core Layer 10 — Exotic Core',
+        requirements: ['Core Layer 11: 5B'],
+        boosts: ['8.27x Energy', '5.54x Money', '3.89x Ores', '2.83x Training', '2.8x Ruby E.'],
+      },
+      {
+        num: '11', title: 'Core Layer 11 — Neutron Core',
+        requirements: ['Core Layer 12: 75B'],
+        boosts: ['10.11x Energy', '6.48x Money', '4.3x Ores', '3.11x Training', '3x Ruby E.'],
+      },
+      {
+        num: '12', title: 'Core Layer 12 — Quasar Core',
+        requirements: ['Core Layer 13: 1T'],
+        boosts: ['12.33x Energy', '7.56x Money', '4.73x Ores', '3.4x Training', '3.2x Ruby E.'],
+      },
+      {
+        num: '13', title: 'Core Layer 13 — More Cores Soon',
+        requirements: ['9DTg'],
+        boosts: ['14.98x Energy', '8.79x Money', '5.19x Ores', '3.71x Training', '3.4x Ruby E.'],
+      },
+    ],
+  },
+};
+
 function pick(DATA, catId, subId, key) {
   const page = DATA[`${catId}/${subId}`];
   return page && page[key]?.length ? page : null;
@@ -385,3 +452,4 @@ export const getBarnPage = (catId, subId) => pick(BARN_DATA, catId, subId, 'stag
 export const getRankPage = (catId, subId) => pick(RANK_DATA, catId, subId, 'ranks');
 export const getAscensionPage = (catId, subId) => pick(ASCENSION_DATA, catId, subId, 'ranks');
 export const getLifeRankPage = (catId, subId) => pick(LIFE_RANK_DATA, catId, subId, 'ranks');
+export const getCorePage = (catId, subId) => pick(CORE_DATA, catId, subId, 'ranks');

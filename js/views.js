@@ -6,24 +6,15 @@ import { dataProvider, getCategory, getSubcategory } from './services.js';
 import { CATEGORIES } from './data/wiki-data.js';
 import { getRuneFamily, FAMILY_COLORS } from './data/runes.js';
 import { ORE_DATA, MASTERY_DATA, getOrePage, getMasteryPage, getLayerPage } from './data/ores.js';
-import { getStagePage, getBarnPage, getRankPage, getAscensionPage, getLifeRankPage} from './data/progress.js';
+import { getStagePage, getBarnPage, getRankPage, getAscensionPage, getLifeRankPage, getCorePage} from './data/progress.js';
 import { getTrainingAreas, getGearPage, DUST_UNLOCK } from './data/dungeon.js';
-import { getFormulaPage } from './data/formulas.js';
+import { getFormulaPage, getInlineUpgradePages } from './data/formulas.js';
+import { RESET_LAYER_PAGES, minimumForTarget } from './data/reset-layers.js';
 import { MINING_PRICES } from './data/mining-prices.js';
 import { colorizeResources } from './data/resource-colors.js';
 import { LATEST_UPDATE_ID } from './data/update-log.js';
 
 // ==== PAGINA DE FAMILIA DE RUNAS (cards por runa) ====
-
-function runeBar(label, value, pct, rec = false) {
-  const width = pct == null ? 0 : Math.max(pct, 0.75);
-  return `
-    <div class="rune-bar${rec ? ' rune-bar--rec' : ''}${pct == null ? ' rune-bar--na' : ''}">
-      <span class="rune-bar__label">${esc(label)}</span>
-      <span class="rune-bar__track"><span class="rune-bar__fill" style="width:${width}%"></span></span>
-      <span class="rune-bar__val">${esc(value)}</span>
-    </div>`;
-}
 
 function runeCard(r, i, color) {
   return `
@@ -31,11 +22,11 @@ function runeCard(r, i, color) {
       <header class="rune-card__head">
         <span class="rune-card__icon" style="color:${esc(color)}">${icon(r.icon, 20)}</span>
         <span class="rune-card__name" style="color:${esc(color)}"><b>${esc(r.name)}</b></span>
-        <span class="rune-card__luck">Luck ${esc(fmtValue(r.luck))}</span>
+        <span class="rune-card__luck">Recommended Luck: ${esc(fmtValue(r.luck))}</span>
       </header>
-      <div class="rune-card__bars">
-        ${runeBar('Base', r.baseChance, r.basePct)}
-        ${runeBar('Rec. luck', r.recChance, r.recPct, true)}
+      <div class="rune-card__chances">
+        <div><span>Base chance</span><b>${esc(r.baseChance)}</b></div>
+        <div><span>Chance at recommended luck</span><b>${esc(r.recChance)}</b></div>
       </div>
       <div class="rune-card__boosts">
         <span class="rune-card__boosts-label">Boosts at cap</span>
@@ -302,9 +293,10 @@ const TEMPLATE_UPGRADES = [
 ];
 
 function upgradeCard(u, i, priceTable, node = false) {
+  const perkTier = String(u.multi || '').match(/MaxTier\s*=\s*min\([^,]+,\s*AbsoluteMax\s+(\d+)\)/i);
   const capMax = u.cap ?? 499;
   const n = u.n ?? i + 1;
-  const rawMulti = u.multi && u.multi !== '-' && evalFormula(u.multi, { L: 0 }) == null ? u.multi : '';
+  const rawMulti = !perkTier && u.multi && u.multi !== '-' && evalFormula(u.multi, { L: 0 }) == null ? u.multi : '';
   const priceAttr = priceTable ? '' : ` data-price="${esc(u.price || '')}"`;
   const tableAttr = priceTable ? ` data-price-table="${esc(priceTable)}" data-n="${n}"` : '';
   return `
@@ -319,21 +311,25 @@ function upgradeCard(u, i, priceTable, node = false) {
       </div>
       <div class="upgrade-card__rows">
         <div class="upgrade-card__row upgrade-card__row--price"><span class="upgrade-card__rowlabel">${icon('coins', 14)} Price (next lvl)</span><b data-price-out>—</b></div>
-        <div class="upgrade-card__row upgrade-card__row--multi"><span class="upgrade-card__rowlabel">${icon('star', 14)} Multi</span><b data-multi-out>—</b></div>
+        <div class="upgrade-card__row upgrade-card__row--multi"><span class="upgrade-card__rowlabel">${icon('star', 14)} ${perkTier ? 'Max Tier' : 'Multi'}</span><b data-multi-out>—</b></div>
       </div>
-    </article>`;
+    </article>`.replace('<article class="upgrade-card reveal', `<article data-perk-tiered="${perkTier ? 'true' : 'false'}" data-perk-abs-cap="${perkTier ? perkTier[1] : ''}" class="upgrade-card reveal`);
 }
 
 function wireUpgrades(root) {
+  const treeUpgrade15 = qs('[data-tree-upgrade15]', root);
+  const treeUpgrade51 = qs('[data-tree-upgrade51]', root);
+  const cardUpdates = [];
   qsa('[data-upgrade-slider]', root).forEach((slider) => {
     const card = slider.closest('[data-upgrade]');
     if (!card) return;
-    const cap = Number(card.dataset.cap) || 0;
     const num = card.querySelector('[data-upgrade-num]');
     const lvl = card.querySelector('[data-lvl]');
     const priceOut = card.querySelector('[data-price-out]');
     const multiOut = card.querySelector('[data-multi-out]');
     const update = (source) => {
+      const isPerkTiered = card.dataset.perkTiered === 'true';
+      const cap = Number(card.dataset.cap) || 0;
       let L = Math.round(Number(slider.value) || 0);
       if (source === 'num') L = Math.round(Number(num.value) || 0);
       L = Math.max(0, Math.min(cap, L));
@@ -363,28 +359,161 @@ function wireUpgrades(root) {
           priceOut.innerHTML = L >= cap ? '<small class="upgrade-card__raw">Maxed</small>' : esc(fmtSuffix(p));
           priceOut.classList.remove('has-res');
         } else {
-          const p = evalFormula(rawPrice, { L });
+          const p = evalFormula(rawPrice, {
+            L,
+            tier: isPerkTiered ? L + 1 : 0,
+            TreeUpgrade15: Number(treeUpgrade15?.value) || 0,
+          });
           priceOut.innerHTML = p != null ? esc(fmtSuffix(p)) : `<small class="upgrade-card__raw">${esc(rawPrice || '—')}</small>`;
           priceOut.classList.remove('has-res');
         }
       }
-      const m = evalFormula(card.dataset.multi, { L });
+      const maxTier = Math.min(70 + 10 * Math.max(0, Math.floor(Number(treeUpgrade51?.value) || 0)), Number(card.dataset.perkAbsCap));
+      const m = isPerkTiered ? maxTier : evalFormula(card.dataset.multi, { L });
       multiOut.innerHTML = m != null ? esc(fmtSuffix(m)) : `<small class="upgrade-card__raw">${esc(card.dataset.multi || '—')}</small>`;
     };
     slider.addEventListener('input', () => update('slider'));
     num.addEventListener('input', () => update('num'));
     update();
+    if (card.dataset.perkTiered === 'true') cardUpdates.push(update);
+  });
+  [treeUpgrade15, treeUpgrade51].filter(Boolean).forEach((input) => {
+    input.addEventListener('input', () => cardUpdates.forEach((update) => update()));
   });
 }
 
 function formulaSections(section) {
+  const isLevelPerks = section.upgrades.some((upgrade) => /MaxTier\s*=\s*min\(/i.test(upgrade.multi || ''));
   return `
     <section class="section">
       ${sectionHead('The upgrades')}
+      ${isLevelPerks ? `
+      <div class="perk-tree-controls">
+        <label>Tree Upgrade 15<input class="input" type="number" min="0" step="1" value="0" data-tree-upgrade15></label>
+        <label>Tree Upgrade 51<input class="input" type="number" min="0" max="3" step="1" value="0" data-tree-upgrade51></label>
+      </div>` : ''}
       <div class="rune-grid">
         ${section.upgrades.map((u2, i) => upgradeCard(u2, i, section.priceTable)).join('')}
       </div>
     </section>`;
+}
+
+function resetCalcCard(bonus, requiredLabel, index) {
+  return `
+    <article class="reset-calc-card reveal" data-reset-calculator data-bonus-id="${esc(bonus.id)}" data-required-label="${esc(requiredLabel)}" style="--reveal-delay:${Math.min(index * 45, 360)}ms">
+      <header class="reset-calc-card__head">
+        <span class="reset-calc-card__icon">${icon('target', 17)}</span>
+        <b>${colorizeResources(esc(bonus.name))}</b>
+        ${bonus.cap ? `<small>cap ${esc(fmtSuffix(bonus.cap))}x</small>` : ''}
+      </header>
+      <label class="reset-calc-field">
+        <span>Desired bonus</span>
+        <span class="reset-calc-input-wrap">
+          <input class="input reset-calc-input" type="number" min="1" step="0.01" value="1.5" data-reset-target aria-label="Desired ${esc(bonus.name)} bonus">
+          <span>x</span>
+        </span>
+      </label>
+      <div class="reset-calc-answer" data-reset-answer aria-live="polite"></div>
+    </article>`;
+}
+
+function resetLayerSections(page) {
+  if (page.kind === 'gears') {
+    return `
+      <section class="section reset-layer-page">
+        ${sectionHead(page.title)}
+        ${page.tiers.map((tier) => `
+          <section class="reset-layer-tier">
+            <h3>${esc(tier.name)}</h3>
+            <div class="reset-calc-grid">
+              ${tier.bonuses.map((bonus, i) => resetCalcCard(bonus, tier.name, i)).join('')}
+            </div>
+          </section>`).join('')}
+      </section>`;
+  }
+
+  if (page.kind === 'bone-dust') {
+    return `
+      <section class="section reset-layer-page">
+        ${sectionHead(page.title)}
+        <label class="reset-calc-power">
+          <span>Souls Upgrade 11 level</span>
+          <input class="input reset-calc-input" type="number" min="0" max="${page.powerLevelMax}" step="1" value="0" data-dust-power-level>
+        </label>
+        <div class="reset-calc-grid">
+          ${page.bonuses.map((bonus, i) => resetCalcCard(bonus, 'Bone Dust', i)).join('')}
+        </div>
+      </section>`;
+  }
+
+  return `
+    <section class="section reset-layer-page">
+      ${sectionHead(page.title)}
+      <div class="reset-calc-grid">
+        ${page.bonuses.map((bonus, i) => resetCalcCard(bonus, 'Dungeon Level', i)).join('')}
+      </div>
+    </section>`;
+}
+
+function wireResetCalculators(root, page) {
+  if (!page) return;
+  const cards = qsa('[data-reset-calculator]', root);
+  const powerInput = qs('[data-dust-power-level]', root);
+
+  const updateCard = (card) => {
+    const targetInput = qs('[data-reset-target]', card);
+    const answer = qs('[data-reset-answer]', card);
+    const target = Number(targetInput.value);
+    const bonusId = card.dataset.bonusId;
+    const tier = page.tiers?.find((item) => item.bonuses.some((bonus) => bonus.id === bonusId && item.name === card.dataset.requiredLabel));
+    const bonus = (tier?.bonuses || page.bonuses).find((item) => item.id === bonusId);
+
+    if (!Number.isFinite(target) || target < 1) {
+      answer.innerHTML = '<span class="reset-calc-error">Enter a bonus of at least 1x.</span>';
+      return;
+    }
+
+    if (page.kind === 'level') {
+      const level = minimumForTarget(bonus.value, target, bonus.unlockLevel, null, page.maxLevel);
+      if (level == null) {
+        answer.innerHTML = `<span class="reset-calc-error">Target exceeds the level limit (${page.maxLevel.toLocaleString()}).</span>`;
+        return;
+      }
+      let totalXp = 0;
+      for (let current = 1; current < level; current++) totalXp += page.xpToNextLevel(current);
+      answer.innerHTML = `
+        <div><span>Level required</span><b>${level.toLocaleString()}</b></div>
+        <div><span>Total XP to reach it</span><b>${esc(fmtSuffix(totalXp))}</b></div>
+        <div><span>XP to next level</span><b>${esc(fmtSuffix(page.xpToNextLevel(level)))}</b></div>`;
+      return;
+    }
+
+    if (page.kind === 'gears') {
+      const amount = minimumForTarget(bonus.value, target, 0, bonus.cap);
+      if (amount == null) {
+        answer.innerHTML = `<span class="reset-calc-error">Target is above the ${esc(fmtSuffix(bonus.cap))}x cap.</span>`;
+        return;
+      }
+      answer.innerHTML = `<div><span>${esc(card.dataset.requiredLabel)} required</span><b>${esc(fmtSuffix(amount))}</b></div>`;
+      return;
+    }
+
+    const powerLevel = Math.min(page.powerLevelMax, Math.max(0, Math.floor(Number(powerInput.value) || 0)));
+    const p = page.powerFromLevel(powerLevel);
+    const dust = minimumForTarget((amount) => bonus.value(amount, p), target, 0, bonus.cap);
+    if (dust == null) {
+      answer.innerHTML = `<span class="reset-calc-error">Target is above the ${esc(fmtSuffix(bonus.cap))}x cap.</span>`;
+      return;
+    }
+    answer.innerHTML = `
+      <div><span>Bone Dust required</span><b>${esc(fmtSuffix(dust))}</b></div>`;
+  };
+
+  cards.forEach((card) => {
+    qs('[data-reset-target]', card).addEventListener('input', () => updateCard(card));
+    updateCard(card);
+  });
+  powerInput?.addEventListener('input', () => cards.forEach(updateCard));
 }
 
 function upgradeTemplateSections() {
@@ -400,13 +529,15 @@ function upgradeTemplateSections() {
 // ==== PAGINA DE STAGES (Main) ====
 
 function stageCard(s, i) {
+  const unlocks = s.unlocks || {};
+  const hasUnlocks = Boolean(unlocks.area || unlocks.places?.length || unlocks.features?.length);
   return `
     <article class="stage-card reveal" style="--reveal-delay:${Math.min(i * 50, 400)}ms">
       <header class="stage-card__head">
         <span class="stage-card__num">${esc(s.num)}</span>
         <b class="stage-card__title">${esc(s.title || `Stage ${s.num}`)}</b>
       </header>
-      <div class="stage-card__cols">
+      <div class="stage-card__cols${hasUnlocks ? '' : ' stage-card__cols--two'}" data-resource-links>
         <div class="stage-card__col">
           <span class="stage-card__label">Requirements</span>
           <div class="stage-chips">
@@ -419,22 +550,23 @@ function stageCard(s, i) {
             ${s.boosts.map((b) => `<span class="stage-chip">${colorizeResources(esc(b))}</span>`).join('')}
           </div>
         </div>
+        ${hasUnlocks ? `
         <div class="stage-card__col stage-card__col--wide">
           <span class="stage-card__label">Unlocks</span>
           <div class="stage-unlocks">
-            ${s.unlocks.area ? `<span class="stage-unlocks__area">${icon('map-pin', 12)} ${esc(s.unlocks.area)}</span>` : ''}
+            ${unlocks.area ? `<span class="stage-unlocks__area">${icon('map-pin', 12)} ${esc(unlocks.area)}</span>` : ''}
             <div class="stage-places">
-              ${(s.unlocks.places || []).map((p) => `<span class="stage-place">${colorizeResources(esc(p))}</span>`).join('')}
+              ${(unlocks.places || []).map((p) => `<span class="stage-place">${colorizeResources(esc(p))}</span>`).join('')}
             </div>
             <div class="stage-features">
-              ${(s.unlocks.features || []).map((f) => `
+              ${(unlocks.features || []).map((f) => `
                 <span class="stage-feature">
                   <b>${colorizeResources(esc(f.name))}</b>
                   ${(f.subs || []).map((x) => `<span class="stage-feature__sub">${colorizeResources(esc(x))}</span>`).join('')}
                 </span>`).join('')}
             </div>
           </div>
-        </div>
+        </div>` : ''}
       </div>
     </article>`;
 }
@@ -451,7 +583,7 @@ function stagePageSections(stages, title = 'Stages', twoCol = false) {
 // ==== VIEWS: PAGINAS DO SITE ====
 
 export const homeView = {
-  title: () => 'RI Gaming Wiki — Regrowth Idle',
+  title: () => 'Regrowth Incremental - WIKI',
   crumbs: () => [],
   nav: () => null,
 
@@ -473,7 +605,7 @@ export const homeView = {
         <div class="hero__hex hex-texture"></div>
         <div class="hero__inner">
           <div>
-            <span class="hero__badge"><span class="hex-dot"></span> Regrowth Idle · Community Wiki</span>
+            <span class="hero__badge"><span class="hex-dot"></span> Regrowth Incremental · Community Wiki</span>
             <h1 class="hero__title">Grow your knowledge<br />alongside your valley.</h1>
             <p class="hero__sub">
               Every ore, rune, boss and perk — documented, cross-linked and searchable.
@@ -601,7 +733,7 @@ export const categoryView = {
             <span class="cat-hero__icon">${icon(cat.icon, 30)}</span>
             <h1 class="cat-hero__name">${colorizeResources(esc(cat.name))}</h1>
           </div>
-          <p class="cat-hero__tagline">${colorizeResources(esc(cat.tagline))}</p>
+          <p class="cat-hero__tagline" data-resource-links>${colorizeResources(esc(cat.tagline))}</p>
           <div class="cat-hero__facts">
             ${articles.length ? `<span class="chip chip--accent">${icon('book', 13)} ${articles.length} articles</span>` : ''}
             <span class="chip">${icon('layers', 13)} ${cat.subcategories.length} subsections</span>
@@ -633,7 +765,7 @@ export const categoryView = {
               ${icon(s.icon, 19)}
               <span style="min-width:0">
                 <b>${esc(s.name)}</b>
-                <small>${esc(s.desc)}</small>
+                <small data-resource-links>${colorizeResources(esc(s.desc))}</small>
               </span>
               ${icon('arrow-right', 15, 'sub-link__go')}
             </a>`).join('')}
@@ -677,6 +809,11 @@ export const subcategoryView = {
   async render(root, params) {
     const sub = getSubcategory(params[0], params[1]);
     if (!sub) throw new Error(`Unknown subcategory: ${params.join('/')}`);
+    const inlineUpgradeParent = sub.parentId && getSubcategory(sub.category.id, sub.parentId);
+    if (inlineUpgradeParent && getInlineUpgradePages(sub.category.id, inlineUpgradeParent).some(({ child }) => child.id === sub.id)) {
+      window.location.hash = `#/${sub.category.id}/${inlineUpgradeParent.id}`;
+      return;
+    }
     const cat = sub.category;
     const family = getRuneFamily(cat.id, sub.id);
     const orePage = getOrePage(cat.id, sub.id);
@@ -686,12 +823,20 @@ export const subcategoryView = {
     const barnPage = getBarnPage(cat.id, sub.id);
     const trainingPage = getTrainingAreas(cat.id, sub.id);
     const gearPage = getGearPage(cat.id, sub.id);
+    const inlineUpgradePages = getInlineUpgradePages(cat.id, sub);
+    const inlineUpgradeIds = new Set(inlineUpgradePages.map(({ child }) => child.id));
+    const visibleChildren = (sub.children || []).filter((child) => !inlineUpgradeIds.has(child.id));
     const formulaPage = getFormulaPage(cat.id, sub.id);
+    const inlineUpgradeSections = inlineUpgradePages.map(({ page }) => formulaSections(page)).join('');
+    const resetLayerPage = RESET_LAYER_PAGES[`${cat.id}/${sub.id}`];
     const rankPage = getRankPage(cat.id, sub.id);
     const ascensionPage = getAscensionPage(cat.id, sub.id);
     const lifeRankPage = getLifeRankPage(cat.id, sub.id);
+    const corePage = getCorePage(cat.id, sub.id);
     const isDustPage = sub.id === 'bone-dust';
-    const familyBody = family?.runes?.length
+    const familyBody = resetLayerPage
+      ? `${resetLayerSections(resetLayerPage)}${resetLayerPage.kind === 'bone-dust' ? dustSections() : ''}`
+      : family?.runes?.length
       ? runeFamilySections(family.runes, sub.id)
       : orePage?.ores?.length
         ? orePageSections(orePage.ores)
@@ -709,7 +854,9 @@ export const subcategoryView = {
                   ? stagePageSections(ascensionPage.ranks, 'Ascensions', true)
                   : lifeRankPage?.ranks?.length
                     ? stagePageSections(lifeRankPage.ranks, 'Life Ranks', true)
-                  : trainingPage?.groups?.length
+                    : corePage?.ranks?.length
+                      ? stagePageSections(corePage.ranks, 'Core Ranks', true)
+                      : trainingPage?.groups?.length
                     ? trainingSections(trainingPage.groups)
                     : gearPage?.gears?.length
                       ? gearSections(gearPage.gears)
@@ -739,7 +886,7 @@ export const subcategoryView = {
             <span class="cat-hero__icon">${icon(sub.icon, 30)}</span>
             <h1 class="cat-hero__name">${colorizeResources(esc(sub.name))}</h1>
           </div>
-          <p class="cat-hero__tagline">${colorizeResources(esc(sub.desc))}</p>
+          <p class="cat-hero__tagline" data-resource-links>${colorizeResources(esc(sub.desc))}</p>
           <div class="cat-hero__facts">
             ${articles.length ? `<span class="chip chip--accent">${icon('book', 13)} ${articles.length} article${articles.length === 1 ? '' : 's'}</span>` : ''}
             ${sub.facts.map((f) => `<span class="chip">${esc(f.label)}: <b style="color:var(--c-text)">&nbsp;${esc(f.value)}</b></span>`).join('')}
@@ -763,16 +910,16 @@ export const subcategoryView = {
         </nav>
       </div>
 
-      ${sub.children?.length ? `
+      ${visibleChildren.length ? `
       <section class="section">
         ${sectionHead(familyBody ? `Inside ${sub.name}` : sub.name)}
         <div class="link-grid">
-          ${sub.children.map((ch, i) => `
+          ${visibleChildren.map((ch, i) => `
             <a ${`class="sub-link reveal" style="--reveal-delay:${i * 35}ms"`} href="#/${cat.id}/${ch.id}">
               ${icon(ch.icon, 19)}
               <span style="min-width:0">
                 <b>${colorizeResources(esc(ch.name))}</b>
-                <small>${esc(ch.desc)}</small>
+                    <small data-resource-links>${colorizeResources(esc(ch.desc))}</small>
               </span>
               ${icon('arrow-right', 15, 'sub-link__go')}
             </a>`).join('')}
@@ -822,6 +969,8 @@ export const subcategoryView = {
         `))}
       `}
 
+  ${inlineUpgradeSections}
+
       ${(sub.prev || sub.next) ? `
       <nav class="sub-pager">
         ${sub.prev
@@ -834,6 +983,7 @@ export const subcategoryView = {
     `;
 
     wireUpgrades(root);
+    wireResetCalculators(root, resetLayerPage);
     initReveal(root);
   },
 };
@@ -896,7 +1046,7 @@ export const articleView = {
               <span class="crumbs__current">${esc(a.title)}</span>
             </nav>
             <h1 class="article-head__title">${colorizeResources(esc(a.title))}</h1>
-            <p class="article-head__desc">${esc(a.description)}</p>
+            <p class="article-head__desc" data-resource-links>${colorizeResources(esc(a.description))}</p>
             <div class="article-head__meta">
               <span class="meta-item">${icon('calendar', 13)} Updated ${fmtDate(a.updated)}</span>
               <span class="meta-item">${icon('eye', 13)} ${fmtNum(a.views)} views</span>
@@ -1065,7 +1215,7 @@ export const searchView = {
     };
 
     function renderResults(target, results, st) {
-      const pages = searchPages(st.q, { limit: 5 });
+      const pages = searchPages(st.q, { limit: 5, category: st.cat || null });
       if (!results.length && !pages.length) {
         target.innerHTML = `
           <div class="empty-state">
@@ -1082,8 +1232,8 @@ export const searchView = {
           ${pages.map((p) => `
             <a class="result-item reveal" style="--reveal-delay:0ms" href="#/${p.cat.id}/${p.sub.id}">
               <div class="result-item__top">${icon(p.cat.icon, 12)} ${esc(p.cat.name)} section</div>
-              <div class="result-item__title">${markMatches(p.sub.name, st.q)}</div>
-              <div class="result-item__snippet">${esc(p.sub.desc || '')}</div>
+              <div class="result-item__title">${colorizeResources(markMatches(p.sub.name, st.q))}</div>
+              <div class="result-item__snippet">${colorizeResources(markMatches(p.sub.desc || '', st.q))}</div>
             </a>`).join('')}
         </div>` : ''}
         ${results.length ? `
@@ -1098,7 +1248,7 @@ export const searchView = {
                 <span style="margin-left:auto">${icon('clock', 12)} ${fmtDateShort(r.article.updated)}</span>
               </div>
               <div class="result-item__title">${colorizeResources(markMatches(r.article.title, st.q))}</div>
-              <div class="result-item__snippet">${markMatches(r.snippet, st.q)}</div>
+              <div class="result-item__snippet">${colorizeResources(markMatches(r.snippet, st.q))}</div>
             </a>`;
           }).join('')}
         </div>` : `<p class="result-count">No article matches — the sections above are what we found.</p>`}

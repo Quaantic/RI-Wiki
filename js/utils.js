@@ -83,6 +83,27 @@ const SUFFIXES = [
   'Ng', 'UNg', 'DNg', 'TNg', 'QaNg', 'QiNg', 'SxNg', 'SpNg', 'OcNg', 'NoNg',
   'Ce', 'UCe',
 ];
+const SUFFIX_INDEX = new Map(SUFFIXES.flatMap((suffix, index) => suffix ? [[suffix.toLowerCase(), index]] : []));
+
+export function parseGameNumber(value) {
+  if (typeof value === 'number') return Number.isFinite(value) ? value : null;
+  const text = String(value ?? '').trim().replace(/,/g, '');
+  if (!text) return null;
+  const numeric = Number(text);
+  if (Number.isFinite(numeric)) return numeric;
+  const match = text.match(/^([+-]?(?:\d+(?:\.\d*)?|\.\d+))([a-z]+)$/i);
+  if (!match) return null;
+  const tier = SUFFIX_INDEX.get(match[2].toLowerCase());
+  return tier == null ? null : Number(match[1]) * 1000 ** tier;
+}
+
+export function formatNumericText(text = '') {
+  return String(text).replace(/(?<![A-Za-z0-9_.])[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+|[a-z]+)?(?![A-Za-z0-9_.])/gi, (token) => {
+    const value = parseGameNumber(token);
+    if (value == null || (/e/i.test(token) && Math.abs(value) < 1000)) return token;
+    return fmtSuffix(value);
+  });
+}
 
 export function fmtSuffix(n) {
   if (!Number.isFinite(n)) return String(n);
@@ -102,8 +123,8 @@ export function fmtValue(v) {
   if (v == null || v === '') return '';
   if (typeof v === 'number') return fmtSuffix(v);
   const s = String(v).trim();
-  const bare = s.replace(/[ ,]/g, '');
-  if (bare && /^-?\d+(\.\d+)?$/.test(bare)) return fmtSuffix(Number(bare));
+  const number = parseGameNumber(s);
+  if (number != null && !(/e/i.test(s) && Math.abs(number) < 1000)) return fmtSuffix(number);
   return s;
 }
 
@@ -137,10 +158,15 @@ export function evalFormula(expr, vars = {}) {
   }
   s = s.replace(/\s*\((?:unidade:[^)]*|segundos|cooldown|click power|auto power|unlocks)\)/gi, '');
   if (!s) return null;
+  s = s.replace(/(?<![A-Za-z0-9_.])([+-]?(?:\d+(?:\.\d*)?|\.\d+))([a-z]+)(?![A-Za-z0-9_.])/gi, (token, amount, suffix) => {
+    const value = parseGameNumber(`${amount}${suffix}`);
+    return value == null ? token : `(${value})`;
+  });
   const js = s
     .replace(/\^/g, '**')
     .replace(/\bmath\.(floor|ceil|min|max|round|abs|pow)\b/gi, (m, f) => `Math.${f.toLowerCase()}`)
-    .replace(/\b(floor|ceil|min|max|round|abs)\(/g, (m, f) => `Math.${f}(`)
+    .replace(/(?<![\w.])(floor|ceil|min|max|round|abs)\(/g, (m, f) => `Math.${f}(`)
+    .replace(/\b(TreeUpgrade\d+)\b/g, (name) => String(Number(vars[name]) || 0))
     .replace(LIVE_RE, '0')
     .replace(/(\d+(?:\.\d+)?)e([+-]?\d+)/gi, '$1__SCI__$2')
     .replace(/(\d)\s*([A-Za-z(])/g, '$1*$2')
@@ -179,6 +205,7 @@ export function markMatches(text = '', query = '') {
 
 
 import { CATEGORIES } from './data/wiki-data.js';
+import { getInlineUpgradePages } from './data/formulas.js';
 
 const CAT_NAME = new Map(CATEGORIES.flatMap((c) => [
   [c.id, c.name.toLowerCase()],
@@ -291,14 +318,17 @@ export function groupByCategory(results) {
 }
 
 // Busca tambem nas PAGINAS (categorias, subsecoes e sub-subs), nao so artigos
-export function searchPages(query, { limit = 0 } = {}) {
+export function searchPages(query, { limit = 0, category = null } = {}) {
   const q = String(query || '').trim().toLowerCase();
   if (!q) return [];
   const tokens = q.split(/\s+/).filter(Boolean);
   const results = [];
   for (const c of CATEGORIES) {
+    if (category && c.id !== category) continue;
     for (const s of c.subcategories) {
-      for (const sub of [s, ...(s.children || [])]) {
+      const inlineUpgradeIds = new Set(getInlineUpgradePages(c.id, s).map(({ child }) => child.id));
+      const children = (s.children || []).filter((child) => !inlineUpgradeIds.has(child.id));
+      for (const sub of [s, ...children]) {
         const name = sub.name.toLowerCase();
         const blurb = (sub.desc || '').toLowerCase();
         let score = 0;

@@ -44,7 +44,7 @@ export const CATEGORIES = [
         id: 'energy',
         name: 'Energy',
         icon: 'spark',
-        desc: 'Energy is the main tycoon currency, produced every second by your machines. It pays for new machines, machine and Factory upgrades, tycoon buttons and every stage gate. Stages, the Factory, Eternal Tree, Energys, Prestige, Terraform, runes and many other systems multiply its gain.',
+        desc: 'Energy is the main tycoon currency, produced every second by your machines. It pays for new machines, machine and Factory upgrades, tycoon buttons and every stage gate. Stages, the Factory, Eternal Tree, Energies, Prestige, Terraform, runes and many other systems multiply its gain.',
         highlights: [],
         facts: [],
         children: [
@@ -722,11 +722,11 @@ export const CATEGORIES = [
   {
     id: 'money-island',
     name: 'Money Island',
-    desc: 'Money Island is the third area, opened by the second stage gate for 5e29 Energy and 5 million Sap. It is the multiplier island: the 83-node Upgrade Tree is paid with Money, alongside Gold Bars, Emerald Coins, Golden Diamonds, Tree Ascension ranks and four special Energys. Each layer multiplies the previous one, rewarding you for stacking them.',
+    desc: 'Money Island is the third area, opened by the second stage gate for 5e29 Energy and 5 million Sap. It is the multiplier island: the 83-node Upgrade Tree is paid with Money, alongside Gold Bars, Emerald Coins, Golden Diamonds, Tree Ascension ranks and four special Energies. Each layer multiplies the previous one, rewarding you for stacking them.',
     icon: 'coin',
-    tagline: 'The money island: the 83-node Upgrade Tree, Gold Bars, Emeralds, Golden Diamond and the four special Energys.',
+    tagline: 'The money island: the 83-node Upgrade Tree, Gold Bars, Emeralds, Golden Diamond and the four special Energies.',
     vitals: [
-      { label: 'Tree nodes', value: '83' },
+      { label: 'Tree Upgrades', value: '83' },
       { label: 'Currencies', value: 'Gold · Emerald · G. Diamond' },
     ],
     subcategories: [
@@ -734,7 +734,7 @@ export const CATEGORIES = [
         id: 'upgrade-tree',
         name: 'Upgrade Tree',
         icon: 'branch',
-        desc: 'The Upgrade Tree is the main Money sink: 83 nodes bought with Money that boost Money, Energy, Perk Points, Crystals, Inflation, Crystal and Jewel multipliers, Opal, Stone, Prestige and Energys unlocks. Nodes chain through unlock requirements, and the final 13 appear only after your first Tree Ascension.',
+        desc: 'The Upgrade Tree is the main Money sink: 83 nodes bought with Money that boost Money, Energy, Perk Points, Crystals, Inflation, Crystal and Jewel multipliers, Opal, Stone, Prestige and Energies unlocks. Nodes chain through unlock requirements, and the final 13 appear only after your first Tree Ascension.',
         highlights: [],
         facts: [
           { label: 'Nodes', value: '83' },
@@ -804,13 +804,13 @@ export const CATEGORIES = [
         facts: [],
       },
       {
-        id: 'energys',
-        name: 'Energys',
+        id: 'energies',
+        name: 'Energies',
         icon: 'spark',
-        desc: 'The Energys are four special stats on Money Island that stack exponential multipliers onto Energy gain. Each unlocks through the Upgrade Tree or Ascension, is gained from its own nodes and chances, and is soft-capped to keep it balanced. They are among the strongest Energy boosts in the game.',
+        desc: 'The Energies are four special stats on Money Island that stack exponential multipliers onto Energy gain. Each unlocks through the Upgrade Tree or Ascension, is gained from its own nodes and chances, and is soft-capped to keep it balanced. They are among the strongest Energy boosts in the game.',
         highlights: [],
         facts: [
-          { label: 'Energys', value: '4' },
+          { label: 'Energies', value: '4' },
         ],
         children: [
           {
@@ -825,7 +825,7 @@ export const CATEGORIES = [
             id: 'gold-energy',
             name: 'Gold Energy',
             icon: 'spark',
-            desc: 'Gold Energy is the second Energy stat, unlocked deeper in the Upgrade Tree. Its multiplier scales up to a hard cap of 1000x and combines multiplicatively with the other Energys.',
+            desc: 'Gold Energy is the second Energy stat, unlocked deeper in the Upgrade Tree. Its multiplier scales up to a hard cap of 1000x and combines multiplicatively with the other Energies.',
             highlights: [],
             facts: [],
           },
@@ -841,7 +841,7 @@ export const CATEGORIES = [
             id: 'ruby-energy',
             name: 'Ruby Energy',
             icon: 'spark',
-            desc: 'Ruby Energy is the final Energy stat, unlocked by Tree Ascension Rank 2 and boosted by Golden Diamond upgrades and the Ruby Necklace item. It multiplies all other Energys at once with a 2.5x cap, so it is saved for endgame.',
+            desc: 'Ruby Energy is the final Energy stat, unlocked by Tree Ascension Rank 2 and boosted by Golden Diamond upgrades and the Ruby Necklace item. It multiplies all other Energies at once with a 2.5x cap, so it is saved for endgame.',
             highlights: [],
             facts: [],
           },
@@ -887,6 +887,14 @@ export const CATEGORIES = [
           { label: 'Ores', value: '26' },
           { label: 'Lines each', value: '3' },
         ],
+      },
+      {
+        id: 'cores',
+        name: 'Cores',
+        icon: 'atom',
+        desc: 'Core is the Limit Breaker for Layers, you break the core layers for benefits and to unlock more layers.',
+        highlights: [],
+        facts: [{ label: 'Cores', value: '12' },],
       },
       {
         id: 'layers',
@@ -992,8 +1000,8 @@ export const CATEGORIES = [
         ],
       },
       {
-        id: 'enemys',
-        name: 'Enemys',
+        id: 'enemies',
+        name: 'Enemies',
         icon: 'skull',
         desc: 'Dungeon enemies start at Starter with 1 million health and climb through Fighter, Trainer, Ninja, Samurai, Hunter, Titan and Gladiator with 10 billion health, with stronger enemies beyond. Defeat ten enemies at your highest unlocked level to unlock the next. Kills pay Bones and Dungeon Coins, with item drops and Souls multipliers from equipment.',
         highlights: [],
@@ -1186,7 +1194,7 @@ export const CATEGORIES = [
         id: 'bones',
         name: 'Bones',
         icon: 'skull',
-        desc: 'The Bones rune is paid with Bones at 2500 per roll, and it is the combat rune. Its seven rarities run from Basic, which boosts Strength and Health, through Shiny with Bones, Bluesteel and Californium, Metalic with Drop Luck, Gears and Bone Dust, Golden with Iron, Dungeon Coins and Runestone luck, Platinum with Souls, Strength and Health, up to Diamond and Shadow carrying the best combat multipliers in the game.',
+        desc: 'The Bones rune is paid with Bones at 2500 per roll, and it is the combat rune. Its seven rarities: from Basic, which boosts Strength and Health, through Shiny with Bones, Bluesteel and Californium, Metalic with Drop Luck, Gears and Bone Dust, Golden with Iron, Dungeon Coins and Runestone luck, Platinum with Souls, Strength and Health, up to Diamond and Shadow carrying the best combat multipliers in the game.',
         highlights: [],
         facts: [],
       },

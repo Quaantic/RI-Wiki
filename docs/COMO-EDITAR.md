@@ -9,7 +9,8 @@ Você edita o arquivo, salva, e o site atualiza sozinho (Live Server recarrega).
 |---|---|
 | Criar/alterar uma página ou seção do menu | `js/data/wiki-data.js` |
 | Colocar os upgrades de algo (com slider de nível) | `js/data/formulas.js` |
-| Colocar Stages, Barns, Ranks, Ascensions ou Life Ranks | `js/data/progress.js` |
+| Colocar Stages, Barns, Ranks, Ascensions, Life Ranks ou Core Ranks | `js/data/progress.js` |
+| Editar calculadoras de Dungeon Level, Special Gears ou Bone Dust | `js/data/reset-layers.js` |
 | Trocar a cor de um recurso (Energy, Bones...) | `js/data/resource-colors.js` |
 | Preços de upgrades de mineração por nível | `js/data/mining-prices.js` |
 | Runas / Ores / Bestiário / Espadas / Áreas | `runes.js`, `ores.js`, `dungeon.js` |
@@ -100,6 +101,11 @@ Sem essa linha a página existe mas não mostra os upgrades.
 3. `formulas.js` (final do arquivo) — adicione a linha no `FORMULA_PAGE_MAP`.
 4. Salve e abra `#/categoria/id` no site.
 
+Filhos com nome terminado em `Upgrades` e entrada no `FORMULA_PAGE_MAP` são
+incorporados à página principal automaticamente. Eles não aparecem separados
+no menu ou nas sugestões de busca; outros filhos, como `Golden Research`,
+continuam separados.
+
 ### Caso especial: preços por nível de mineração
 
 Se a seção usar `priceTable: 'mining'`, o preço de cada nível vem do
@@ -108,7 +114,7 @@ e o campo de preço do `u()` é ignorado.
 
 ---
 
-## 3. STAGES, BARNS, RANKS, ASCENSIONS, LIFE RANKS — `js/data/progress.js`
+## 3. STAGES, BARNS, RANKS, ASCENSIONS, LIFE RANKS E CORE RANKS — `js/data/progress.js`
 
 **Tudo fica neste único arquivo.** Todos usam o mesmo visual de card
 (requisitos / boosts / unlocks), só muda a lista onde você coloca os dados:
@@ -120,6 +126,7 @@ e o campo de preço do `u()` é ignorado.
 | Ranks (Dungeon › Training) | `RANK_DATA` | `'dungeon/ranks'` |
 | Ascensions (Money Island) | `ASCENSION_DATA` | `'money-island/ascensions'` |
 | Life Ranks (Life › Terraform) | `LIFE_RANK_DATA` | `'life/terra-life'` |
+| Core Ranks (Mining › Cores) | `CORE_DATA` | `'mining/cores'` |
 
 Como adicionar um card novo (exemplo: Barn VI):
 
@@ -147,7 +154,22 @@ Campos opcionais: `title`, `boostsNote` (textinho do lado de Boosts),
 A chave (`'main/barn'` etc.) é `categoria/id-da-subcategoria` — o mesmo
 `id` que existe no `wiki-data.js`. Nada mais precisa ser configurado:
 a página detecta sozinha e desenha os cards (Barns/Ranks/Ascensions/Life
-Ranks mostram 2 por linha; Stages em coluna única).
+Ranks/Core Ranks mostram 2 cards por linha; Stages ficam em coluna única).
+
+### Como adicionar Core Ranks
+
+1. Em `wiki-data.js`, confirme que existe a subcategoria `cores` dentro de
+  Mining. O ID precisa ser `cores`, pois a chave dos dados é `'mining/cores'`.
+2. Em `progress.js`, adicione os cards dentro da lista `CORE_DATA['mining/cores'].ranks`.
+  Cada item segue o mesmo formato dos outros ranks: `num`, `title`,
+  `requirements`, `boosts` e `unlocks`.
+3. Salve e abra `#/mining/cores`. A página seleciona e desenha os Core Ranks
+  automaticamente; não é necessário criar uma rota ou alterar `views.js`.
+
+Para incluir outro core, acrescente mais um objeto à lista `ranks`, mantendo
+os anteriores. Para usar Core Ranks em outra subcategoria, adicione uma
+entrada com a chave `'categoria/id-da-subcategoria'` em `CORE_DATA`; o getter
+e o renderer já atendem essas entradas automaticamente.
 
 ---
 
@@ -214,3 +236,10 @@ Trocar um ícone:
 
 1. Escolha o nome em https://lucide.dev/icons.
 2. Troque o `icon: '...'` no `wiki-data.js`.
+
+Editar as calculadoras de reset layer:
+
+1. `reset-layers.js` → altere os bônus e curvas de Dungeon Level, Special Gears
+  ou Bone Dust.
+2. A calculadora recebe o bônus desejado e busca a menor quantidade necessária.
+  No Bone Dust, `p = 1 + nível de Souls Upgrade 11 / 10` (níveis 0 a 6).

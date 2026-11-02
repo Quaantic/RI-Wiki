@@ -1,5 +1,7 @@
 // ==== CORES DOS RECURSOS (EDITE AQUI) ====
 
+import { formatNumericText } from '../utils.js';
+
 export const RESOURCE_COLORS = {
   'Diamond Apples': '#00A9FF',
   'Prestige': '#42C5FF',
@@ -25,6 +27,7 @@ export const RESOURCE_COLORS = {
   'Money': '#5CCB65',
   'Sap': '#F4A51C',
   'Energy': '#B04AFF',
+  'Energies': '#f8f6fa',
   'Stone': '#A8A8A8',
   'Emerald Coins': '#26D86B',
   'Tree': '#f7750b',  
@@ -88,6 +91,7 @@ export const RESOURCE_COLORS = {
   'Diamond': '#8FDDFF',
   'Tanzanite': '#897CC6',
   'Uranium': '#78B16F',
+  'Ascension': '#18b300',
   'Plutonium': '#9DDFCF',
   'Onyx': '#A53A3A',
   'Garnet': '#CB3131',
@@ -96,6 +100,8 @@ export const RESOURCE_COLORS = {
   'Rune Stone': '#CCB8FF',
   'Energy Shards': '#CF99FF',
   'Mastery': '#45A1F1',
+  'Layer': '#DADADA',
+  'Core': '#056ef8',  
   'Depth': '#DADADA',
   'Time': '#D9EFFC',
   'Log Perks': '#A6936E',
@@ -123,7 +129,7 @@ export const RESOURCE_COLORS = {
 'Upgrades': '#2bde07',
 'Dungeons': '#994cfd',
 'Training': '#870404',
-'Enemy': '#dba9eb',
+'Enemie': '#dba9eb',
 'Sword': '#968d99',
 'Shield': '#9db0a0',
 'Item': '#2f8099',
@@ -155,6 +161,7 @@ const PAGE_LINKS = {
   'main': '#/main',
   'stages': '#/main/stages',
   'energy': '#/main/energy',
+  'energies': '#/money-island/energies',
   'gears': '#/main/gears',
   'crystals': '#/main/crystals',
   'barn': '#/main/barn',
@@ -244,7 +251,7 @@ const VARIANTS_LOWER = new Map([...VARIANTS].map(([k, v]) => [k.toLowerCase(), v
 
 export function colorizeResources(escapedText = '') {
   if (!escapedText) return '';
-  return escapedText.replace(RE, (m) => {
+  return formatNumericText(escapedText).replace(RE, (m) => {
   const lower = m.toLowerCase();
   const color = VARIANTS_LOWER.get(lower) || '#fff';
   if (!isCurrentPage(lower)) {
