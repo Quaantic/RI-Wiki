@@ -1,0 +1,304 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--c-text-2);
+  background:
+    radial-gradient(1100px 480px at 88% -12%, rgba(168, 239, 69, 0.055), transparent 62%),
+    radial-gradient(900px 460px at -12% 18%, rgba(168, 239, 69, 0.035), transparent 58%),
+    var(--c-bg);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  position: relative;
+}
+
+/* ---- Texturas de fundo (leaves fixa na viewport) ---- */
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: url("../images/texture-leaves.png");
+  background-size: 640px auto;
+  background-attachment: fixed;
+  opacity: var(--tex-leaves);
+  mix-blend-mode: screen;
+}
+
+:root[data-theme='light'] body::before {
+  mix-blend-mode: multiply;
+  opacity: calc(var(--tex-leaves) * 0.9);
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  color: var(--c-text);
+  font-weight: 600;
+  line-height: 1.22;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+h1 { font-size: clamp(1.75rem, 3.4vw, 2.45rem); }
+h2 { font-size: clamp(1.3rem, 2.2vw, 1.6rem); }
+h3 { font-size: 1.13rem; }
+h4 { font-size: 1rem; }
+
+p {
+  max-width: 72ch;
+}
+
+a {
+  color: var(--c-accent);
+  text-decoration: none;
+  transition: color var(--t-fast) var(--ease-out);
+}
+
+a:hover {
+  color: var(--c-accent-light);
+}
+
+img, svg {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+input {
+  font: inherit;
+  color: inherit;
+}
+
+::selection {
+  background: var(--c-accent);
+  color: var(--c-on-accent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #333f34 transparent;
+}
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-thumb {
+  background: #333f34;
+  border-radius: 8px;
+  border: 3px solid var(--c-bg);
+}
+*::-webkit-scrollbar-thumb:hover { background: #465547; }
+*::-webkit-scrollbar-track { background: transparent; }
+
+:root[data-theme='light'] * {
+  scrollbar-color: #B9C6B2 transparent;
+}
+:root[data-theme='light'] *::-webkit-scrollbar-thumb {
+  background: #C4D2BC;
+  border-color: var(--c-bg);
+}
+:root[data-theme='light'] *::-webkit-scrollbar-thumb:hover { background: #AEBFA6; }
+
+/* Fundo claro: gradientes mais suaves */
+:root[data-theme='light'] body {
+  background:
+    radial-gradient(1100px 480px at 88% -12%, rgba(111, 191, 43, 0.10), transparent 62%),
+    radial-gradient(900px 460px at -12% 18%, rgba(111, 191, 43, 0.07), transparent 58%),
+    var(--c-bg);
+}
+
+/* ---------- Keyframes ---------- */
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes pop-in {
+  0% { opacity: 0; transform: scale(0.94); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(18px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes shimmer {
+  from { background-position: 200% 0; }
+  to { background-position: -200% 0; }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.82; transform: scale(0.985); }
+}
+
+@keyframes glow-breathe {
+  0%, 100% { filter: drop-shadow(0 0 6px rgba(168, 239, 69, 0.25)); }
+  50% { filter: drop-shadow(0 0 16px rgba(168, 239, 69, 0.5)); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+
+@keyframes page-in {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: none; }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 500ms var(--ease-out),
+    transform 500ms var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: transform, opacity;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Page transition */
+.page-enter {
+  animation: page-in 450ms var(--ease-out) both;
+}
+
+/* Reduce motion do SO e ignorado de proposito:
+   o controle e feito pelo toggle nas Settings (:root.reduce-motion). */
+
+/* ---------- Utilities ---------- */
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Nome de recurso colorido (js/data/resource-colors.js) */
+.res {
+  font-weight: 600;
+}
+
+/* Smart reference: recurso com pagina propria vira link clicavel */
+.res--link {
+  cursor: pointer;
+}
+.res--link:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  filter: brightness(1.2);
+}
+
+/* Flash ao chegar por um smart reference */
+.page-flash {
+  animation: page-flash 900ms var(--ease-out);
+}
+@keyframes page-flash {
+  0% { filter: brightness(1.9); }
+  100% { filter: brightness(1); }
+}
+
+/* Resource colors (Settings): desliga a cor dos nomes de recurso */
+:root.res-off .res {
+  color: inherit !important;
+}
+
+/* Background textures (Settings): desliga as texturas */
+:root.tex-off body::before,
+:root.tex-off .hero::before,
+:root.tex-off .cat-hero::before {
+  display: none;
+}
+
+/* Reduce motion (Settings): corta animacoes e transicoes */
+:root.reduce-motion *,
+:root.reduce-motion *::before,
+:root.reduce-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+:root.reduce-motion {
+  scroll-behavior: auto !important;
+}
+:root.reduce-motion .reveal { opacity: 1; transform: none; }
+
+/* Small hex bullet used as the wiki's section marker */
+.hex-dot {
+  display: inline-block;
+  width: 8px;
+  height: 9px;
+  background: var(--c-accent);
+  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  flex: none;
+}
+
+/* Subtle hex-grid texture for hero panels (slow drift) */
+.hex-texture {
+  background-image: url("../images/hex-pattern.svg");
+  background-size: 56px 97px;
+  animation: hex-drift 60s linear infinite;
+}
+
+@keyframes hex-drift {
+  from { background-position: 0 0; }
+  to { background-position: 280px 485px; }
+}
+
+/* "Latest" chip breathes */
+.upd-version__latest { animation: pulse-soft 2.6s ease-in-out infinite; }

@@ -1,0 +1,136 @@
+:root {
+  color-scheme: dark;
+
+  /* ---- Palette ---- */
+  --c-bg: #171B18;            /* main background */
+  --c-bg-2: #1D241F;          /* secondary background (sidebar, topbar) */
+  --c-card: #252D26;          /* card background */
+  --c-card-hover: #2A332B;
+  --c-inset: #121613;         /* deepest inset (table heads, code wells) */
+  --c-raised: #2E3830;        /* raised elements (pills, inputs) */
+
+  --c-accent: #A8EF45;        /* primary green */
+  --c-accent-light: #C9FF74;
+  --c-accent-deep: #7DC22B;
+  --c-accent-soft: rgba(168, 239, 69, 0.10);
+  --c-accent-soft-2: rgba(168, 239, 69, 0.18);
+  --c-accent-soft-3: rgba(168, 239, 69, 0.28);
+  --c-on-accent: #13180F;     /* text on green */
+
+  --c-text: #FFFFFF;
+  --c-text-2: #B2BFB4;        /* muted body */
+  --c-text-3: #7C8A7E;        /* faint meta */
+  --c-text-4: #5A665C;        /* disabled / hairline labels */
+
+  --c-border: #2A332C;
+  --c-border-2: #39453A;
+  --c-border-accent: rgba(168, 239, 69, 0.38);
+
+  --c-topbar: rgba(23, 27, 24, 0.82);
+
+  /* Update-log contexts */
+  --c-feature: #A8EF45;
+  --c-ui: #6FC7FF;
+  --c-bug: #FF7A6E;
+  --c-changes: #F2D3A0;
+  --c-credits: #FFD34D;
+  --c-feedback: #6FC7FF;
+
+  /* Texturas de fundo (opacity por tema) */
+  --tex-leaves: 0.07;
+  --tex-topo: 0.5;
+  --tex-grid: 0.035;
+
+  /* Rarity (game data only) */
+  --r-common: #9AA69C;
+  --r-uncommon: #A8EF45;
+  --r-rare: #58C7F3;
+  --r-epic: #B981F9;
+  --r-legendary: #FFB454;
+
+  /* ---- Typography ---- */
+  --font-display: 'Space Grotesk', 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: ui-monospace, 'Cascadia Code', 'SF Mono', Consolas, monospace;
+
+  /* ---- Radii ---- */
+  --r-xs: 6px;
+  --r-sm: 9px;
+  --r-md: 13px;
+  --r-lg: 17px;
+  --r-xl: 22px;
+  --r-pill: 999px;
+
+  /* ---- Elevation ---- */
+  --shadow-1: 0 1px 2px rgba(8, 10, 8, 0.45);
+  --shadow-2: 0 10px 30px -8px rgba(8, 10, 8, 0.55);
+  --shadow-3: 0 24px 60px -12px rgba(8, 10, 8, 0.65);
+  --inset-hi: inset 0 1px 0 rgba(255, 255, 255, 0.035);
+  --glow-accent: 0 0 0 1px var(--c-border-accent), 0 6px 26px -6px rgba(168, 239, 69, 0.22);
+
+  /* ---- Motion ---- */
+  --t-fast: 140ms;
+  --t-med: 230ms;
+  --t-slow: 420ms;
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.5, 1);
+
+  /* ---- Layout ---- */
+  --sidebar-w: 252px;
+  --topbar-h: 62px;
+  --content-max: 1600px;
+  --z-topbar: 40;
+  --z-sidebar: 50;
+  --z-overlay: 60;
+  --z-search: 70;
+  --z-toast: 90;
+}
+
+/* ================= TEMA CLARO (verde suave) =================
+   Ativado via <html data-theme="light"> (Settings). Dark e o padrao. */
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  --c-bg: #EFF4EA;
+  --c-bg-2: #F8FBF5;
+  --c-card: #FFFFFF;
+  --c-card-hover: #F3F8EF;
+  --c-inset: #E5EDDF;
+  --c-raised: #FFFFFF;
+
+  --c-accent: #4F9E1B;
+  --c-accent-light: #6FBF2B;
+  --c-accent-deep: #3D7F12;
+  --c-accent-soft: rgba(111, 191, 43, 0.12);
+  --c-accent-soft-2: rgba(111, 191, 43, 0.20);
+  --c-accent-soft-3: rgba(111, 191, 43, 0.28);
+  --c-on-accent: #FFFFFF;
+
+  --c-text: #1B241C;
+  --c-text-2: #46524A;
+  --c-text-3: #6D7B70;
+  --c-text-4: #97A49A;
+
+  --c-border: #DCE6D4;
+  --c-border-2: #C7D8BF;
+  --c-border-accent: rgba(79, 158, 27, 0.42);
+
+  --c-topbar: rgba(248, 251, 245, 0.85);
+
+  --c-feature: #4F9E1B;
+  --c-ui: #1D7FC2;
+  --c-bug: #C93A2E;
+  --c-changes: #A8761F;
+  --c-credits: #B8861F;
+  --c-feedback: #1D7FC2;
+
+  --tex-leaves: 0.05;
+  --tex-topo: 0.4;
+  --tex-grid: 0.04;
+
+  --shadow-1: 0 1px 2px rgba(38, 52, 36, 0.10);
+  --shadow-2: 0 10px 30px -8px rgba(38, 52, 36, 0.16);
+  --shadow-3: 0 24px 60px -12px rgba(38, 52, 36, 0.22);
+  --inset-hi: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  --glow-accent: 0 0 0 1px var(--c-border-accent), 0 6px 26px -6px rgba(79, 158, 27, 0.25);
+}

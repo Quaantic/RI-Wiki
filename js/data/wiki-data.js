@@ -1,0 +1,1477 @@
+﻿// ==== WIKI DATA - 7 CATEGORIAS E SUBSECOES (EDITE AQUI) ====
+
+export const CATEGORIES = [
+  {
+    id: 'main',
+    name: 'Main',
+    icon: 'compass',
+    tagline: 'The core islands: Stages, Energy, Gears, Crystals, Barn and Merge.',
+    vitals: [
+      { label: 'Islands', value: '6' },
+    ],
+    subcategories: [
+      {
+        id: 'stages',
+        name: 'Stages',
+        icon: 'spark',
+        blurb: 'Every stage from II to VI: requirements, boosts and unlocks.',
+        intro: [
+          'Stages are the big progression gates of the run: each one asks for huge amounts of Energy plus a second resource, multiplies your outputs and unlocks a whole island of new systems.',
+        ],
+        highlights: [],
+        facts: [
+          { label: 'Stages', value: 'II – VI' },
+          { label: 'Gate resource', value: 'Energy' },
+        ],
+      },
+      {
+        id: 'energy',
+        name: 'Energy',
+        icon: 'spark',
+        blurb: 'The energy island: tycoon machines, the factory and energy perks.',
+        intro: ['Machines produce energy passively — the factory and perks multiply it.'],
+        highlights: [],
+        facts: [],
+      },
+      {
+        id: 'gears',
+        name: 'Gears',
+        icon: 'settings',
+        blurb: 'The gears island: generators, special gears and the automation buyers.',
+        intro: ['Generators produce Gears/s — the automation buyers purchase everything for you.'],
+        highlights: [],
+        facts: [],
+        children: [
+          {
+            id: 'gears-generators',
+            name: 'Gears Generators',
+            icon: 'gauge',
+            blurb: 'The five generators producing Gears/s, from Wrench to Accelerator.',
+            intro: ['Each generator level raises its price and its Gears/s output.'],
+            highlights: [],
+            facts: [],
+          },
+          {
+            id: 'special-gears',
+            name: 'Special Gears',
+            icon: 'star',
+            blurb: 'The special gears and their systems.',
+            intro: ['Full breakdown coming soon.'],
+            highlights: [],
+            facts: [],
+          },
+          {
+            id: 'automations',
+            name: 'Automations',
+            icon: 'refresh',
+            blurb: 'The 24 auto buyers that automate every island purchase.',
+            intro: ['Each automation level unlocks more automatic purchases per tick.'],
+            highlights: [],
+            facts: [],
+          },
+        ],
+      },
+      {
+        id: 'crystals',
+        name: 'Crystals',
+        icon: 'gem',
+        blurb: 'Crystal, Jewels, Platinum, Adamantium, Californium and Astatine.',
+        intro: ['The crystal layers: each currency has its own chance and upgrade track.'],
+        highlights: [],
+        facts: [],
+        children: [
+          {
+            id: 'crystal',
+            name: 'Crystal',
+            icon: 'gem',
+            blurb: 'The base crystal system and its upgrades.',
+            intro: ['Crystals are the barn core currency.'],
+            highlights: [],
+            facts: [],
+            children: [
+              {
+                id: 'crystal-upgrades',
+                name: 'Crystal Upgrades',
+                icon: 'hammer',
+                blurb: 'The crystal upgrade track (name, level, price and multi).',
+                intro: ['Move the level slider and the site computes the next-level price and the multi.'],
+                highlights: [],
+                facts: [],
+              },
+            ],
+          },
+          {
+            id: 'jewels',
+            name: 'Jewels',
+            icon: 'gem',
+            blurb: 'Jewels and their upgrade track.',
+            intro: ['Jewels multiply the crystal systems.'],
+            highlights: [],
+            facts: [],
+            children: [
+              {
+                id: 'jewels-upgrades',
+                name: 'Jewels Upgrades',
+                icon: 'hammer',
+                blurb: 'The jewels upgrade track (name, level, price and multi).',
+                intro: ['Move the level slider and the site computes the next-level price and the multi.'],
+                highlights: [],
+                facts: [],
+              },
+            ],
+          },
+          {
+            id: 'platinum',
+            name: 'Platinum',
+            icon: 'coins',
+            blurb: 'Platinum and its upgrade track.',
+            intro: ['Platinum is the barn chance currency — its upgrades raise chance and gains.'],
+            highlights: [],
+            facts: [],
+            children: [
+              {
+                id: 'platinum-upgrades',
+                name: 'Platinum Upgrades',
+                icon: 'hammer',
+                blurb: 'The platinum upgrade track (name, level, price and multi).',
+                intro: ['Move the level slider and the site computes the next-level price and the multi.'],
+                highlights: [],
+                facts: [],
+              },
+            ],
+          },
+          {
+            id: 'adamantium',
+            name: 'Adamantium',
+            icon: 'shield',
+            blurb: 'Adamantium and its upgrade track.',
+            intro: ['Adamantium upgrades raise its chance, gains and caps.'],
+            highlights: [],
+            facts: [],
+            children: [
+              {
+                id: 'adamantium-upgrades',
+                name: 'Adamantium Upgrades',
+                icon: 'hammer',
+                blurb: 'The adamantium upgrade track (name, level, price and multi).',
+                intro: ['Move the level slider and the site computes the next-level price and the multi.'],
+                highlights: [],
+                facts: [],
+              },
+            ],
+          },
+          {
+            id: 'californium',
+            name: 'Californium',
+            icon: 'spark',
+            blurb: 'Californium, its upgrades and milestones.',
+            intro: ['Californium is the deep crystal layer with its own milestones.'],
+            highlights: [],
+            facts: [],
+            children: [
+              {
+                id: 'californium-upgrades',
+                name: 'Californium Upgrades',
+                icon: 'hammer',
+                blurb: 'The californium upgrade track (name, level, price and multi).',
+                intro: ['Move the level slider and the site computes the next-level price and the multi.'],
+                highlights: [],
+                facts: [],
+              },
+              {
+                id: 'californium-milestones',
+                name: 'Californium Milestones',
+                icon: 'star',
+                blurb: 'The californium milestones.',
+                intro: ['Full breakdown coming soon.'],
+                highlights: [],
+                facts: [],
+              },
+            ],
+          },
+          {
+            id: 'astatine',
+            name: 'Astatine',
+            icon: 'spark',
+            blurb: 'Astatine upgrades and its power.',
+            intro: ['The deepest crystal layer. Full breakdown coming soon.'],
+            highlights: [],
+            facts: [],
+            children: [
+              {
+                id: 'astatine-upgrades',
+                name: 'Astatine Upgrades',
+                icon: 'hammer',
+                blurb: 'The astatine upgrade track.',
+                intro: ['Full breakdown coming soon.'],
+                highlights: [],
+                facts: [],
+              },
+              {
+                id: 'astatine-power',
+                name: 'Astatine Power',
+                icon: 'spark',
+                blurb: 'Astatine power and what it multiplies.',
+                intro: ['Full breakdown coming soon.'],
+                highlights: [],
+                facts: [],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: 'barn',
+        name: 'Barn',
+        icon: 'package',
+        blurb: 'Crystal Shards, Crystal Perks and Opal.',
+        intro: ['The barn layers: shards feed perks, perks multiply outputs, opal goes deep.'],
+        highlights: [],
+        facts: [],
+        children: [
+          {
+            id: 'crystal-shards',
+            name: 'Crystal Shards',
+            icon: 'gem',
+            blurb: 'Crystal shards and their upgrade track.',
+            intro: ['Crystal Shards feed the shard systems and unlock the barn layers.'],
+            highlights: [],
+            facts: [],
+            children: [
+              {
+                id: 'crystal-shards-upgrades',
+                name: 'Crystal Shards Upgrades',
+                icon: 'hammer',
+                blurb: 'The crystal shards upgrade track (name, level, price and multi).',
+                intro: ['Move the level slider and the site computes the next-level price and the multi.'],
+                highlights: [],
+                facts: [],
+              },
+            ],
+          },
+          {
+            id: 'crystal-perks',
+            name: 'Crystal Perks',
+            icon: 'star',
+            blurb: 'Crystal perks and their upgrade track.',
+            intro: ['Crystal perks multiply every barn output.'],
+            highlights: [],
+            facts: [],
+            children: [
+              {
+                id: 'crystal-perks-upgrades',
+                name: 'Crystal Perks Upgrades',
+                icon: 'hammer',
+                blurb: 'The crystal perks upgrade track (name, level, price and multi).',
+                intro: ['Move the level slider and the site computes the next-level price and the multi.'],
+                highlights: [],
+                facts: [],
+              },
+            ],
+          },
+          {
+            id: 'opal',
+            name: 'Opal',
+            icon: 'gem',
+            blurb: 'Opal and its upgrade track.',
+            intro: ['Opal is the deep barn currency with its own income track.'],
+            highlights: [],
+            facts: [],
+            children: [
+              {
+                id: 'opal-upgrades',
+                name: 'Opal Upgrades',
+                icon: 'hammer',
+                blurb: 'The opal upgrade track (name, level, price and multi).',
+                intro: ['Move the level slider and the site computes the next-level price and the multi.'],
+                highlights: [],
+                facts: [],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: 'merge',
+        name: 'Merge',
+        icon: 'grid',
+        blurb: 'Quartz, Bluesteel, Merge Perks and Magnets.',
+        intro: ['The merge island: merge quartz, raise tiers and collect bluesteel.'],
+        highlights: [],
+        facts: [],
+        children: [
+          {
+            id: 'quartz',
+            name: 'Quartz',
+            icon: 'gem',
+            blurb: 'Quartz spawning and its upgrade track.',
+            intro: ['Merge quartz to raise tiers — the upgrades scale spawn, slots and tiers.'],
+            highlights: [],
+            facts: [],
+            children: [
+              {
+                id: 'quartz-upgrades',
+                name: 'Quartz Upgrades',
+                icon: 'hammer',
+                blurb: 'The quartz upgrade track (name, level, price and multi).',
+                intro: ['Move the level slider and the site computes the next-level price and the multi.'],
+                highlights: [],
+                facts: [],
+              },
+            ],
+          },
+          {
+            id: 'bluesteel',
+            name: 'Bluesteel',
+            icon: 'shield',
+            blurb: 'Bluesteel and its upgrade track.',
+            intro: ['Full breakdown coming soon.'],
+            highlights: [],
+            facts: [],
+            children: [
+              {
+                id: 'bluesteel-upgrades',
+                name: 'Bluesteel Upgrades',
+                icon: 'hammer',
+                blurb: 'The bluesteel upgrade track.',
+                intro: ['Full breakdown coming soon.'],
+                highlights: [],
+                facts: [],
+              },
+            ],
+          },
+          {
+            id: 'merge-perks',
+            name: 'Merge Perks',
+            icon: 'star',
+            blurb: 'Merge perks and their upgrade track.',
+            intro: ['Merge perks multiply the merge outputs.'],
+            highlights: [],
+            facts: [],
+            children: [
+              {
+                id: 'merge-perks-upgrades',
+                name: 'Merge Perks Upgrades',
+                icon: 'hammer',
+                blurb: 'The merge perks upgrade track (name, level, price and multi).',
+                intro: ['Move the level slider and the site computes the next-level price and the multi.'],
+                highlights: [],
+                facts: [],
+              },
+            ],
+          },
+          {
+            id: 'magnets',
+            name: 'Magnets',
+            icon: 'magnet',
+            blurb: 'Magnets and their upgrade track.',
+            intro: ['Full breakdown coming soon.'],
+            highlights: [],
+            facts: [],
+            children: [
+              {
+                id: 'magnets-upgrades',
+                name: 'Magnets Upgrades',
+                icon: 'hammer',
+                blurb: 'The magnets upgrade track.',
+                intro: ['Full breakdown coming soon.'],
+                highlights: [],
+                facts: [],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+
+  {
+    id: 'life',
+    name: 'Life Island',
+    icon: 'leaf',
+    tagline: 'The life island: Life Shards, Fossils, Research, the Tree, Terraform, Monsters and Frost.',
+    vitals: [
+      { label: 'Sections', value: '7' },
+      { label: 'Core currency', value: 'Life Shards' },
+    ],
+    subcategories: [
+      {
+        id: 'life-generation',
+        name: 'Life Generation',
+        icon: 'refresh',
+        blurb: 'Life Shards and the upgrades that multiply them.',
+        intro: ['Life Shards are the island core currency — the generation track scales everything else.'],
+        highlights: [],
+        facts: [],
+        children: [
+          {
+            id: 'life-shards',
+            name: 'Life Shards',
+            icon: 'spark',
+            blurb: 'The life shards track.',
+            intro: ['Life Shards feed the whole island.'],
+            highlights: [],
+            facts: [],
+            children: [
+              {
+                id: 'life-upgrades',
+                name: 'Life Upgrades',
+                icon: 'hammer',
+                blurb: 'The life shards upgrade track (name, level, price and multi).',
+                intro: ['Move the level slider and the site computes the next-level price and the multi.'],
+                highlights: [],
+                facts: [],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: 'fossil',
+        name: 'Fossil',
+        icon: 'hex',
+        blurb: 'Fossils and their upgrade track.',
+        intro: ['Fossils boost the island systems — the upgrade track scales their power.'],
+        highlights: [],
+        facts: [],
+        children: [
+          {
+            id: 'fossil-upgrades',
+            name: 'Fossil Upgrades',
+            icon: 'hammer',
+            blurb: 'The fossil upgrade track (name, level, price and multi).',
+            intro: ['Move the level slider and the site computes the next-level price and the multi.'],
+            highlights: [],
+            facts: [],
+          },
+        ],
+      },
+      {
+        id: 'research',
+        name: 'Research',
+        icon: 'flask',
+        blurb: 'Research points, Golden Research and its milestones.',
+        intro: ['Research multiplies almost every system — and unlocks Golden Research late.'],
+        highlights: [],
+        facts: [],
+        children: [
+          {
+            id: 'research-upgrades',
+            name: 'Research Upgrades',
+            icon: 'hammer',
+            blurb: 'The research upgrade track (44 upgrades).',
+            intro: ['Move the level slider and the site computes the next-level price and the multi.'],
+            highlights: [],
+            facts: [],
+          },
+          {
+            id: 'golden-research',
+            name: 'Golden Research',
+            icon: 'star',
+            blurb: 'Golden Research, its upgrades, milestones and points.',
+            intro: ['Golden Research is the late-research layer with its own points and milestones.'],
+            highlights: [],
+            facts: [],
+            children: [
+              {
+                id: 'golden-research-milestones',
+                name: 'Golden Research Milestones',
+                icon: 'star',
+                blurb: 'Milestones of the golden research track.',
+                intro: ['Full breakdown coming soon.'],
+                highlights: [],
+                facts: [],
+              },
+              {
+                id: 'golden-research-upgrades',
+                name: 'Golden Research Upgrades',
+                icon: 'hammer',
+                blurb: 'The golden research upgrade track (Otters).',
+                intro: ['Move the level slider and the site computes the next-level price and the multi.'],
+                highlights: [],
+                facts: [],
+              },
+              {
+                id: 'golden-points',
+                name: 'Golden Points',
+                icon: 'coin',
+                blurb: 'Golden points and what they buy.',
+                intro: ['Full breakdown coming soon.'],
+                highlights: [],
+                facts: [],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: 'tree',
+        name: 'Tree',
+        icon: 'branch',
+        blurb: 'Logs, Sap, Roots, Apples and the tree milestones.',
+        intro: ['The Great Tree produces Logs, Sap, Roots and Apples — each with its own upgrade track.'],
+        highlights: [],
+        facts: [],
+        children: [
+          {
+            id: 'logs',
+            name: 'Logs',
+            icon: 'leaf',
+            blurb: 'Logs and the axe that cuts them.',
+            intro: ['Logs fuel the tree systems.'],
+            highlights: [],
+            facts: [],
+            children: [
+              {
+                id: 'log-upgrades',
+                name: 'Log Upgrades',
+                icon: 'hammer',
+                blurb: 'The log upgrade track (name, level, price and multi).',
+                intro: ['Move the level slider and the site computes the next-level price and the multi.'],
+                highlights: [],
+                facts: [],
+              },
+            ],
+          },
+          {
+            id: 'tree-milestones',
+            name: 'Tree Milestones',
+            icon: 'star',
+            blurb: 'Tree level milestones and their rewards.',
+            intro: ['Full breakdown coming soon.'],
+            highlights: [],
+            facts: [],
+          },
+          {
+            id: 'sap',
+            name: 'Sap',
+            icon: 'drop',
+            blurb: 'Sap and its upgrade track.',
+            intro: ['Sap feeds the tree perks and upgrades.'],
+            highlights: [],
+            facts: [],
+            children: [
+              {
+                id: 'sap-upgrades',
+                name: 'Sap Upgrades',
+                icon: 'hammer',
+                blurb: 'The sap upgrade track (name, level, price and multi).',
+                intro: ['Move the level slider and the site computes the next-level price and the multi.'],
+                highlights: [],
+                facts: [],
+              },
+            ],
+          },
+          {
+            id: 'roots',
+            name: 'Roots',
+            icon: 'branch',
+            blurb: 'Roots and their upgrade track.',
+            intro: ['Roots multiply the tree outputs and unlock tree tiers.'],
+            highlights: [],
+            facts: [],
+            children: [
+              {
+                id: 'roots-upgrades',
+                name: 'Roots Upgrades',
+                icon: 'hammer',
+                blurb: 'The roots upgrade track (name, level, price and multi).',
+                intro: ['Move the level slider and the site computes the next-level price and the multi.'],
+                highlights: [],
+                facts: [],
+              },
+            ],
+          },
+          {
+            id: 'apples',
+            name: 'Apples',
+            icon: 'heart',
+            blurb: 'Default, Golden, Diamond and Void apples.',
+            intro: ['Four apple tiers drop from the tree — each with its own chance.'],
+            highlights: [],
+            facts: [],
+            children: [
+              { id: 'apples-default', name: 'Default', icon: 'leaf', blurb: 'The base apple.', intro: ['Full breakdown coming soon.'], highlights: [], facts: [] },
+              { id: 'apples-golden', name: 'Golden', icon: 'star', blurb: 'The golden apple.', intro: ['Full breakdown coming soon.'], highlights: [], facts: [] },
+              { id: 'apples-diamond', name: 'Diamond', icon: 'diamond', blurb: 'The diamond apple.', intro: ['Full breakdown coming soon.'], highlights: [], facts: [] },
+              { id: 'apples-void', name: 'Void', icon: 'moon', blurb: 'The void apple.', intro: ['Full breakdown coming soon.'], highlights: [], facts: [] },
+            ],
+          },
+        ],
+      },
+      {
+        id: 'terraforming',
+        name: 'Terraform',
+        icon: 'map-pin',
+        blurb: 'Terraform levels, Life Gems and its upgrades.',
+        intro: ['Terraform raises island caps — powered by Life Gems.'],
+        highlights: [],
+        facts: [],
+        children: [
+          {
+            id: 'terra-life',
+            name: 'Life',
+            icon: 'leaf',
+            blurb: 'The Life ranks: each level asks for Life Gems and boosts the island.',
+            intro: ['Each Life rank asks for Life Gems plus Eternal Shards (No Reset) and boosts the island.'],
+            highlights: [],
+            facts: [],
+          },
+          {
+            id: 'life-gems',
+            name: 'Life Gems',
+            icon: 'heart',
+            blurb: 'Life Gems and the terraform upgrade track.',
+            intro: ['Life Gems buy the terraform upgrades.'],
+            highlights: [],
+            facts: [],
+            children: [
+              {
+                id: 'terraform-upgrades',
+                name: 'Terraform Upgrades',
+                icon: 'hammer',
+                blurb: 'The terraform upgrade track (name, level, price and multi).',
+                intro: ['Move the level slider and the site computes the next-level price and the multi.'],
+                highlights: [],
+                facts: [],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: 'monster',
+        name: 'Monster',
+        icon: 'skull',
+        blurb: 'Red Liquid, evolutions, Sacrifice and Dark Liquid.',
+        intro: ['The monster grows with Red Liquid — Sacrifice trades it for Dark Liquid power.'],
+        highlights: [],
+        facts: [],
+        children: [
+          {
+            id: 'red-liquid',
+            name: 'Red Liquid',
+            icon: 'drop',
+            blurb: 'Red Liquid, evolutions and monster upgrades.',
+            intro: ['Red Liquid feeds the monster evolution track.'],
+            highlights: [],
+            facts: [],
+            children: [
+              {
+                id: 'monster-evolution',
+                name: 'Monster Evolution',
+                icon: 'refresh',
+                blurb: 'The monster evolution levels.',
+                intro: ['Full breakdown coming soon.'],
+                highlights: [],
+                facts: [],
+              },
+              {
+                id: 'monster-upgrades',
+                name: 'Monster Upgrades',
+                icon: 'hammer',
+                blurb: 'The monster upgrade track (name, level, price and multi).',
+                intro: ['Move the level slider and the site computes the next-level price and the multi.'],
+                highlights: [],
+                facts: [],
+              },
+            ],
+          },
+          {
+            id: 'sacrifice',
+            name: 'Sacrifice',
+            icon: 'skull',
+            blurb: 'Sacrifice, Dark Liquid and its upgrades.',
+            intro: ['Sacrificing the monster converts progress into Dark Liquid power.'],
+            highlights: [],
+            facts: [],
+            children: [
+              {
+                id: 'dark-liquid',
+                name: 'Dark Liquid',
+                icon: 'drop',
+                blurb: 'Dark Liquid and its systems.',
+                intro: ['Full breakdown coming soon.'],
+                highlights: [],
+                facts: [],
+              },
+              {
+                id: 'sacrifice-upgrades',
+                name: 'Sacrifice Upgrades',
+                icon: 'hammer',
+                blurb: 'The dark monster upgrade track (name, level, price and multi).',
+                intro: ['Move the level slider and the site computes the next-level price and the multi.'],
+                highlights: [],
+                facts: [],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: 'frost',
+        name: 'Frost',
+        icon: 'wind',
+        blurb: 'Frost generators, upgrades and conversions.',
+        intro: ['Frost is produced by generators and packed into denser forms by conversion.'],
+        highlights: [],
+        facts: [],
+        children: [
+          {
+            id: 'frost-generators',
+            name: 'Frost Generators',
+            icon: 'gauge',
+            blurb: 'The frost generators.',
+            intro: ['Full breakdown coming soon.'],
+            highlights: [],
+            facts: [],
+          },
+          {
+            id: 'frost-upgrades',
+            name: 'Frost Upgrades',
+            icon: 'hammer',
+            blurb: 'The frost upgrade track (name, level, price and multi).',
+            intro: ['Move the level slider and the site computes the next-level price and the multi.'],
+            highlights: [],
+            facts: [],
+          },
+          {
+            id: 'frost-conversion',
+            name: 'Frost Conversion',
+            icon: 'refresh',
+            blurb: 'Packed, Dense, Compact and Neutron Frost.',
+            intro: ['Each conversion tier compresses frost further.'],
+            highlights: [],
+            facts: [],
+            children: [
+              { id: 'packed-frost', name: 'Packed Frost', icon: 'spark', blurb: 'The first conversion tier.', intro: ['Full breakdown coming soon.'], highlights: [], facts: [] },
+              { id: 'dense-frost', name: 'Dense Frost', icon: 'spark', blurb: 'The second conversion tier.', intro: ['Full breakdown coming soon.'], highlights: [], facts: [] },
+              { id: 'compact-frost', name: 'Compact Frost', icon: 'spark', blurb: 'The third conversion tier.', intro: ['Full breakdown coming soon.'], highlights: [], facts: [] },
+              { id: 'neutron-frost', name: 'Neutron Frost', icon: 'spark', blurb: 'The last conversion tier.', intro: ['Full breakdown coming soon.'], highlights: [], facts: [] },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+
+  {
+    id: 'money-island',
+    name: 'Money Island',
+    icon: 'coin',
+    tagline: 'The money island: the 83-node Upgrade Tree, Gold Bars, Emeralds, Gold Diamond and the four special Energys.',
+    vitals: [
+      { label: 'Tree nodes', value: '83' },
+      { label: 'Currencies', value: 'Gold · Emerald · G. Diamond' },
+    ],
+    subcategories: [
+      {
+        id: 'upgrade-tree',
+        name: 'Upgrade Tree',
+        icon: 'branch',
+        blurb: 'The 83-node tree that shapes your whole run — chained, node by node.',
+        intro: [
+          'The Upgrade Tree is a chain of 83 nodes bought with Money. Each node unlocks the next: plan the order before you spend.',
+        ],
+        highlights: [],
+        facts: [
+          { label: 'Nodes', value: '83' },
+          { label: 'Currency', value: 'Money' },
+        ],
+      },
+      {
+        id: 'gold-bars',
+        name: 'Gold Bars',
+        icon: 'ingot',
+        blurb: 'The Gold Bars island system and its upgrades.',
+        intro: [
+          'Gold Bars fund the mid game. Its upgrade track multiplies gold output and everything around it.',
+        ],
+        highlights: [],
+        facts: [],
+        children: [
+          {
+            id: 'gold-upgrades',
+            name: 'Upgrades',
+            icon: 'hammer',
+            blurb: 'The gold bars upgrade track (name, level, price and multi).',
+            intro: [
+              'Move the level slider and the site computes the next-level price and the multi from the game formulas.',
+            ],
+            highlights: [],
+            facts: [],
+          },
+        ],
+      },
+      {
+        id: 'emeralds',
+        name: 'Emeralds',
+        icon: 'gem',
+        blurb: 'The Emerald Coins island system and its upgrades.',
+        intro: [
+          'Emerald Coins drive the money loop. Its upgrade track scales emerald income and buffs.',
+        ],
+        highlights: [],
+        facts: [],
+        children: [
+          {
+            id: 'emerald-upgrades',
+            name: 'Upgrades',
+            icon: 'hammer',
+            blurb: 'The emeralds upgrade track (name, level, price and multi).',
+            intro: [
+              'Move the level slider and the site computes the next-level price and the multi from the game formulas.',
+            ],
+            highlights: [],
+            facts: [],
+          },
+        ],
+      },
+      {
+        id: 'gold-diamond',
+        name: 'Gold Diamond',
+        icon: 'diamond',
+        blurb: 'The Golden Diamond island system and its upgrades.',
+        intro: [
+          'Golden Diamonds are the late-island currency, with caps and buffs of their own.',
+        ],
+        highlights: [],
+        facts: [],
+        children: [
+          {
+            id: 'gold-diamond-upgrades',
+            name: 'Upgrades',
+            icon: 'hammer',
+            blurb: 'The gold diamond upgrade track (name, level, price and multi).',
+            intro: [
+              'Move the level slider and the site computes the next-level price and the multi from the game formulas.',
+            ],
+            highlights: [],
+            facts: [],
+          },
+        ],
+      },
+      {
+        id: 'ascensions',
+        name: 'Ascensions',
+        icon: 'refresh',
+        blurb: 'The ascensions: reset the tree for permanent multipliers.',
+        intro: [
+          'Each ascension asks for Eternal Shards (No Reset) and permanently boosts the island.',
+        ],
+        highlights: [],
+        facts: [],
+      },
+      {
+        id: 'energys',
+        name: 'Energys',
+        icon: 'spark',
+        blurb: 'Silver, Gold, Diamond and Ruby Energy.',
+        intro: [
+          'The four special Energys unlock one by one on the island. Each has its own chance and gain track.',
+        ],
+        highlights: [],
+        facts: [
+          { label: 'Energys', value: '4' },
+        ],
+        children: [
+          {
+            id: 'silver-energy',
+            name: 'Silver Energy',
+            icon: 'spark',
+            blurb: 'The first special energy.',
+            intro: [
+              'Silver Energy unlocks on the island. Full breakdown coming soon.',
+            ],
+            highlights: [],
+            facts: [],
+          },
+          {
+            id: 'gold-energy',
+            name: 'Gold Energy',
+            icon: 'spark',
+            blurb: 'The second special energy.',
+            intro: [
+              'Gold Energy unlocks after Silver. Full breakdown coming soon.',
+            ],
+            highlights: [],
+            facts: [],
+          },
+          {
+            id: 'diamond-energy',
+            name: 'Diamond Energy',
+            icon: 'spark',
+            blurb: 'The third special energy.',
+            intro: [
+              'Diamond Energy unlocks after Gold. Full breakdown coming soon.',
+            ],
+            highlights: [],
+            facts: [],
+          },
+          {
+            id: 'ruby-energy',
+            name: 'Ruby Energy',
+            icon: 'spark',
+            blurb: 'The last special energy.',
+            intro: [
+              'Ruby Energy is the final unlock. Full breakdown coming soon.',
+            ],
+            highlights: [],
+            facts: [],
+          },
+        ],
+      },
+    ],
+  },
+
+  {
+    id: 'mining',
+    name: 'Mining',
+    icon: 'pickaxe',
+    tagline: 'Every ore, its upgrades and where to find them — plus mastery, layers and auto mining.',
+    vitals: [
+      { label: 'Ores', value: '26' },
+      { label: 'Subsections', value: '5' },
+    ],
+    subcategories: [
+      {
+        id: 'ores',
+        name: 'Ores',
+        icon: 'gem',
+        blurb: 'All 26 ores: where to find them, layer and best luck.',
+        intro: [
+          'Every ore spawns at a certain depth, in certain layers, and gets easier to find with Ore Luck. This tab is the map: what exists, where to get it and the luck that helps.',
+        ],
+        highlights: [],
+        facts: [
+          { label: 'Ores', value: '26' },
+          { label: 'Gated by', value: 'Depth & Luck' },
+        ],
+        vitals: [
+          { label: 'Ores', value: '26' },
+          { label: 'Deepest ore', value: 'Meteorite' },
+          { label: 'Layers', value: '20' },
+        ],
+      },
+      {
+        id: 'mastery',
+        name: 'Mastery',
+        icon: 'chart',
+        blurb: 'The three upgrade lines of every ore, with caps and REQs.',
+        intro: [
+          'Each ore has three mastery upgrade lines bought with the ore itself. [number] = the value where an upgrade caps; REQ = when it stops being 1x.',
+        ],
+        highlights: [],
+        facts: [
+          { label: 'Ores', value: '26' },
+          { label: 'Lines each', value: '3' },
+        ],
+        note: {
+          variant: 'info',
+          title: 'How to read the upgrades',
+          text: 'cap = the value where an upgrade stops growing. REQ = when the upgrade stops being 1x. Uncapped upgrades never stop growing.',
+        },
+      },
+      {
+        id: 'layers',
+        name: 'Layers',
+        icon: 'layers',
+        blurb: 'The 20 layers of the mine, from Soil to Deep Space II.',
+        intro: [
+          'The mine is split into 20 layers by depth — from Soil at depth 0 to Deep Space II at 250M. Each layer spawns its own set of ores.',
+        ],
+        highlights: [],
+        facts: [
+          { label: 'Layers', value: '20' },
+          { label: 'From', value: 'Soil' },
+          { label: 'To', value: 'Deep Space II' },
+        ],
+      },
+      {
+        id: 'upgrades',
+        name: 'Upgrades',
+        icon: 'hammer',
+        blurb: 'Mining Upgrade and Auto Mining.',
+        intro: [
+          'Everything that upgrades the mine itself lives here: the permanent Mining Upgrade track and the Auto Mining system.',
+        ],
+        highlights: [],
+        facts: [],
+        children: [
+          {
+            id: 'mining-upgrade',
+            name: 'Mining Upgrade',
+            icon: 'hammer',
+            blurb: 'The permanent upgrade track of the mine.',
+            intro: [
+              'The permanent upgrade track for the mine: damage, depth, luck and everything around the swing.',
+            ],
+            highlights: [],
+            facts: [],
+          },
+          {
+            id: 'auto-mining',
+            name: 'Auto Mining',
+            icon: 'refresh',
+            blurb: 'AFK mining: auto-swing and its perks.',
+            intro: [
+              'How auto mining works, what it needs and the upgrades that make AFK runs worth it.',
+            ],
+            highlights: [],
+            facts: [],
+          },
+        ],
+      },
+    ],
+  },
+
+  {
+    id: 'dungeon',
+    name: 'Dungeons',
+    icon: 'castle',
+    tagline: 'Training, enemies and loot: everything inside the dungeons — areas, gear, drops and upgrades.',
+    vitals: [
+      { label: 'Training areas', value: '28' },
+      { label: 'Gear pieces', value: '36' },
+      { label: 'T2 unlock', value: 'Dust' },
+    ],
+    subcategories: [
+      {
+        id: 'training',
+        name: 'Training',
+        icon: 'spark',
+        blurb: 'Strength and life areas, tiers and their upgrades.',
+        intro: [
+          'Training is where Health and Strength grow: each area multiplies your gains, and Tier 2 versions (unlocked with Dust) multiply them again.',
+        ],
+        highlights: [],
+        facts: [
+          { label: 'Areas', value: '28' },
+          { label: 'Tiers', value: 'T1 / T2' },
+        ],
+        children: [
+          {
+            id: 'training-areas',
+            name: 'Training Areas',
+            icon: 'gauge',
+            blurb: 'Every strength and life area, with requirements and multipliers.',
+            intro: [
+              'All 28 training areas in tier order: the requirement to enter (T1), the multiplier it gives, and the Tier 2 versions unlocked with Dust.',
+            ],
+            highlights: [],
+            facts: [
+              { label: 'Areas', value: '28' },
+              { label: 'Groups', value: 'Strength / Life' },
+            ],
+            note: {
+              variant: 'info',
+              title: 'T2 Areas',
+              text: 'T2 Areas are unlocked with Bone Dust.',
+            },
+          },
+          {
+            id: 'ranks',
+            name: 'Ranks',
+            icon: 'chart',
+            blurb: 'The dungeon ranks, from Stickman to Master.',
+            intro: [
+              'Each rank asks for trained stats plus Eternal Shards (No Reset) and multiplies your gains.',
+            ],
+            highlights: [],
+            facts: [],
+          },
+          {
+            id: 'training-upgrades',
+            name: 'Upgrades',
+            icon: 'hammer',
+            blurb: 'The training upgrade track (name, value and cap).',
+            intro: [
+              'Every training upgrade follows the same model: a current value and a cap — the bar shows how far you are.',
+            ],
+            highlights: [],
+            facts: [],
+          },
+        ],
+      },
+      {
+        id: 'enemys',
+        name: 'Enemys',
+        icon: 'skull',
+        blurb: 'Bestiary of the dungeons: enemies, bones, upgrades and drops.',
+        intro: [
+          'Everything the dungeons spawn: every enemy, the Bones they leave behind, the upgrade track and the drop tables behind each kill.',
+        ],
+        highlights: [],
+        facts: [],
+        children: [
+          {
+            id: 'bones',
+            name: 'Bones',
+            icon: 'bone',
+            blurb: 'Bones: what they are, where they come from and their upgrades.',
+            intro: [
+              'Bones drop from dungeon enemies and feed several systems. Full breakdown coming soon.',
+            ],
+            highlights: [],
+            facts: [],
+            children: [
+              {
+                id: 'bones-upgrades',
+                name: 'Upgrades',
+                icon: 'hammer',
+                blurb: 'The bones upgrade track (name, level, price and multi).',
+                intro: [
+                  'Every bones upgrade: move the level slider and the site computes the next-level price and the multi from the game formulas.',
+                ],
+                highlights: [],
+                facts: [],
+              },
+            ],
+          },
+          {
+            id: 'coins',
+            name: 'Coins',
+            icon: 'coins',
+            blurb: 'Dungeon Coins and their upgrades.',
+            intro: [
+              'Dungeon Coins are the dungeon currency. Shop prices and priorities coming soon.',
+            ],
+            highlights: [],
+            facts: [],
+            children: [
+              {
+                id: 'coins-upgrades',
+                name: 'Upgrades',
+                icon: 'hammer',
+                blurb: 'The dungeon coins upgrade track (name, level, price and multi).',
+                intro: [
+                  'Every coins upgrade: move the level slider and the site computes the next-level price and the multi from the game formulas.',
+                ],
+                highlights: [],
+                facts: [],
+              },
+            ],
+          },
+          {
+            id: 'bone-dust',
+            name: 'Bone Dust',
+            icon: 'flask',
+            blurb: 'Dust: what it does and the T2 unlock costs.',
+            intro: [
+              'Bone Dust comes from bones and unlocks the Tier 2 training areas — the full cost list is here.',
+            ],
+            highlights: [],
+            facts: [
+              { label: 'Unlocks', value: 'T2 areas' },
+            ],
+          },
+        ],
+      },
+      {
+        id: 'items',
+        name: 'Items',
+        icon: 'package',
+        blurb: 'Items, swords and shields: everything the dungeons drop.',
+        intro: [
+          'Everything else the dungeons drop: items with their stat multipliers, plus the sword and shield tracks.',
+        ],
+        highlights: [],
+        facts: [
+          { label: 'Items', value: '20' },
+        ],
+        children: [
+          {
+            id: 'swords',
+            name: 'Swords',
+            icon: 'sword',
+            blurb: 'Every sword: power, strength and rarity.',
+            intro: [
+              'The sword track from Wooden to Cobalt: what each one multiplies and the rarity of the drop.',
+            ],
+            highlights: [],
+            facts: [
+              { label: 'Swords', value: '8' },
+              { label: 'Top tier', value: 'Cobalt' },
+            ],
+          },
+          {
+            id: 'shield',
+            name: 'Shield',
+            icon: 'shield',
+            blurb: 'Every shield: defense, health and rarity.',
+            intro: [
+              'The shield track from Weak Wood to Titanium: defense, health and drop rarity.',
+            ],
+            highlights: [],
+            facts: [
+              { label: 'Shields', value: '8' },
+              { label: 'Top tier', value: 'Titanium' },
+            ],
+          },
+        ],
+      },
+      {
+        id: 'souls',
+        name: 'Souls',
+        icon: 'drop',
+        blurb: 'Souls, their upgrades and the Dungeon Level.',
+        intro: [
+          'Souls are the deep currency of the dungeons: they feed the upgrade track and drive the Dungeon Level itself.',
+        ],
+        highlights: [],
+        facts: [],
+        children: [
+          {
+            id: 'souls-upgrades',
+            name: 'Upgrades',
+            icon: 'hammer',
+            blurb: 'The souls upgrade track (name, value and cap).',
+            intro: [
+              'Every souls upgrade follows the same model: a current value and a cap — the bar shows how far you are.',
+            ],
+            highlights: [],
+            facts: [],
+          },
+          {
+            id: 'dungeon-level',
+            name: 'Dungeon Level',
+            icon: 'chart',
+            blurb: 'The dungeon itself levels up.',
+            intro: [
+              'The dungeon levels up as you play, unlocking deeper systems. Full table coming soon.',
+            ],
+            highlights: [],
+            facts: [],
+          },
+        ],
+      },
+    ],
+  },
+
+  {
+    id: 'runes',
+    name: 'Runes',
+    icon: 'rune',
+    tagline: 'Socketable stones grouped into six families — Energetic, Sky, Riches, Earth, Advanced and Bones. Every roll is gated by Rune Luck.',
+    overview: {
+      intro: [
+        'Runes are socketable stones that rewrite your stats while they are slotted. Every rune belongs to one of six families — Energetic, Sky, Riches, Earth, Advanced and Bones — and every roll is gated by Rune Luck: the more luck you stack, the deeper into a family\'s pool you can reach.',
+        'Each family page breaks its runes into cards showing the required luck, the base roll chance, the chance with recommended luck, and what each rune boosts at cap. The Riches family is documented first and sets the template for the rest.',
+      ],
+      highlights: [
+        { icon: 'rune', title: 'Six families', text: 'Energetic, Sky, Riches, Earth, Advanced and Bones — each with its own pool of runes.' },
+        { icon: 'star', title: 'Luck-gated rolls', text: 'Every rune has a luck requirement; the rarest rolls only appear as your luck grows.' },
+        { icon: 'chart', title: 'Boosts at cap', text: 'Each rune multiplies a target stat while socketed, with a cap value still being measured.' },
+      ],
+      facts: [
+        { label: 'Families', value: '6' },
+        { label: 'Documented', value: 'Riches' },
+      ],
+    },
+    vitals: [
+      { label: 'Families', value: '6' },
+      { label: 'Documented', value: 'Riches' },
+    ],
+    subcategories: [
+      {
+        id: 'energetic',
+        name: 'Energetic',
+        icon: 'spark',
+        blurb: 'Energy, shards and everything that keeps the grind running.',
+        intro: [
+          'The Energetic family feeds the systems that never sleep: energy regeneration, shard output and uptime. Its runes turn idle time into momentum.',
+        ],
+        highlights: [],
+        facts: [],
+      },
+      {
+        id: 'sky',
+        name: 'Sky',
+        icon: 'cloud',
+        blurb: 'Windfall bonuses and anything that falls from above.',
+        intro: [
+          'The Sky family rides the weather — windfall bonuses, drifting events and rewards that quite literally fall out of the clouds.',
+        ],
+        highlights: [],
+        facts: [],
+      },
+      {
+        id: 'money',
+        name: 'Riches',
+        icon: 'coin',
+        blurb: '9 runes.',
+        intro: [
+          'Riches runes are located at Upgrade Tree Island, costing 100 Gold.',
+        ],
+        highlights: [],
+        facts: [
+          { label: 'Runes', value: '9' },
+          { label: 'Gated by', value: 'Rune Luck' },
+        ],
+        vitals: [
+          { label: 'Location', value: 'Upgrade Tree Island' },
+          { label: 'Unlock cost', value: '100 Gold' },
+          { label: 'Runes', value: '9' },
+          { label: 'Gated by', value: 'Rune Luck' },
+        ],
+        note: {
+          variant: 'tip',
+          title: 'Still being measured',
+          text: 'Every "caps at" value is a placeholder for now. Power\'s chance with recommended luck depends on the player\'s total luck (∆).',
+        },
+      },
+      {
+        id: 'earth',
+        name: 'Earth',
+        icon: 'leaf',
+        blurb: 'Soil, sap and the slow compounding of the valley.',
+        intro: [
+          'The Earth family is the valley itself: soil, sap and the slow accumulation that compounds while you play.',
+        ],
+        highlights: [],
+        facts: [],
+      },
+      {
+        id: 'advanced',
+        name: 'Advanced',
+        icon: 'hex',
+        blurb: 'Endgame-only multipliers for broken limits.',
+        intro: [
+          'The Advanced family is endgame-only: multipliers on multipliers, reserved for runners who already pushed the valley past its limits.',
+        ],
+        highlights: [],
+        facts: [],
+      },
+      {
+        id: 'bones',
+        name: 'Bones',
+        icon: 'skull',
+        blurb: 'Trade life for power — risk-reward runes.',
+        intro: [
+          'The Bones family trades life for power — risk-reward runes that grow stronger the deeper you delve.',
+        ],
+        highlights: [],
+        facts: [],
+      },
+    ],
+  },
+
+  {
+    id: 'perks',
+    name: 'Perks',
+    icon: 'spark',
+    tagline: 'Permanent passives earned through play — one family per system: Perk, Crystal, Log, Sap, Monster, Mining and Merge.',
+    subcategories: [
+      {
+        id: 'perk',
+        name: 'Perk',
+        icon: 'spark',
+        blurb: 'The base perk tree: costs, effects and stacking.',
+        intro: [
+          'The base Perk family: every classic perk, its point cost, what it multiplies and how it stacks with the rest.',
+        ],
+        highlights: [],
+        facts: [],
+      },
+      {
+        id: 'crystal',
+        name: 'Crystal',
+        icon: 'gem',
+        blurb: 'Crystal perks unlocked in the Crystal Barn.',
+        intro: [
+          'Crystal perks come with the Crystal Shards system from Stage IV. This tab lists every crystal perk and its cap.',
+        ],
+        highlights: [],
+        facts: [],
+      },
+      {
+        id: 'log',
+        name: 'Log',
+        icon: 'book',
+        blurb: 'Log perks from the Life island.',
+        intro: [
+          'Log perks scale with your logging output — every Log Perk listed with cost and effect.',
+        ],
+        highlights: [],
+        facts: [],
+      },
+      {
+        id: 'sap',
+        name: 'Sap',
+        icon: 'drop',
+        blurb: 'SAP perks and the Sap Amber respec.',
+        intro: [
+          'SAP perks feed the tree itself — and Sap Amber is what lets you respec a branch.',
+        ],
+        highlights: [],
+        facts: [],
+      },
+      {
+        id: 'monster',
+        name: 'Monster',
+        icon: 'skull',
+        blurb: 'Monster perks earned from dungeon kills.',
+        intro: [
+          'Monster perks are earned through combat: every drop-based perk, its trigger and its cap.',
+        ],
+        highlights: [],
+        facts: [],
+      },
+      {
+        id: 'mining',
+        name: 'Mining',
+        icon: 'pickaxe',
+        blurb: 'Mine perks for the Mining island.',
+        intro: [
+          'Mine Perks boost every part of the swing — damage, depth, tier speed and more.',
+        ],
+        highlights: [],
+        facts: [],
+      },
+      {
+        id: 'merge',
+        name: 'Merge',
+        icon: 'grid',
+        blurb: 'Merge perks and the merge system.',
+        intro: [
+          'The Merge system has its own perk line. This tab covers the whole tree.',
+        ],
+        highlights: [],
+        facts: [],
+      },
+    ],
+  },
+];
+
+export const CATEGORY_IDS = CATEGORIES.map((c) => c.id);
+
+export function getCategory(categoryId) {
+  return CATEGORIES.find((c) => c.id === categoryId) || null;
+}
+
+export function getSubcategory(categoryId, subId) {
+  const cat = getCategory(categoryId);
+  if (!cat) return null;
+  const flat = [];
+  const walk = (items, chain) => {
+    for (const s of items) {
+      flat.push({ ...s, parentId: chain.length ? chain[chain.length - 1].id : null, parentChain: chain });
+      if (s.children?.length) walk(s.children, [...chain, { id: s.id, name: s.name }]);
+    }
+  };
+  walk(cat.subcategories, []);
+  const idx = flat.findIndex((s) => s.id === subId);
+  if (idx === -1) return null;
+  return {
+    ...flat[idx],
+    category: cat,
+    index: idx,
+    prev: flat[idx - 1] || null,
+    next: flat[idx + 1] || null,
+  };
+}
+
+export function isValidRoute(categoryId, subId) {
+  if (!subId) return !!getCategory(categoryId);
+  return !!getSubcategory(categoryId, subId);
+}

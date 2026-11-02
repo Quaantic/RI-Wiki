@@ -1,0 +1,2337 @@
+// ==== ARTIGOS - EDITE AQUI ====
+// article({ id, category, subcategory, title, description, stats, sections, related })
+// Blocos: p() list() table() note() kv() section(titulo, blocos, {collapsed:true})
+
+
+const p = (text) => ({ type: 'p', text });
+
+const list = (items, { ordered = false, checks = false } = {}) => ({
+  type: 'list',
+  items: items.map((it) => (typeof it === 'string' ? { text: it } : it)),
+  ordered,
+  checks,
+});
+
+const table = (columns, rows) => ({ type: 'table', columns, rows });
+
+const note = (variant, title, text) => ({ type: 'note', variant, title, text });
+
+const kv = (pairs) => ({ type: 'kv', pairs });
+
+const section = (title, blocks, { collapsed = false } = {}) => ({ title, blocks, collapsed });
+
+function article(a) {
+  return {
+    keywords: [],
+    stats: [],
+    sections: [],
+    related: [],
+    updated: '2026-10-20',
+    views: 0,
+    featured: false,
+    ...a,
+  };
+}
+
+const stat = (label, value, icon = 'info') => ({ label, value, icon });
+
+const resourceStats = (value, tier, smelts) => [
+  stat('Base value', value, 'coin'),
+  stat('Tier', tier, 'layers'),
+  stat('Smelts into', smelts, 'flask'),
+];
+
+const gearStats = (power, speed, perk) => [
+  stat('Power', power, 'hammer'),
+  stat('Speed', speed, 'gauge'),
+  stat('Signature perk', perk, 'star'),
+];
+
+const creatureStats = (hp, damage, drops) => [
+  stat('Health', hp, 'heart'),
+  stat('Damage', damage, 'sword'),
+  stat('Notable drop', drops, 'package'),
+];
+
+const locationStats = (region, unlock, ores) => [
+  stat('Region', region, 'map-pin'),
+  stat('Unlocked by', unlock, 'key'),
+  stat('Ore pool', ores, 'gem'),
+];
+
+
+// ==== ARTIGOS: MAIN ====
+
+
+
+
+const mainArticles = [
+
+  article({
+    id: 'first-hour',
+    category: 'main',
+    subcategory: 'getting-started',
+    title: 'Your First Hour',
+    description: 'A calm, waste-free path through the opening sixty minutes of Regrowth Idle.',
+    keywords: ['start', 'beginner', 'tutorial', 'opening', 'intro'],
+    updated: '2026-10-24',
+    views: 24800,
+    featured: true,
+    stats: [
+      stat('Goal', 'Restore 3 plots', 'leaf'),
+      stat('Time', '~60 min', 'clock'),
+      stat('Skill unlocked', 'Foraging', 'spark'),
+    ],
+    sections: [
+      section('Step by step', [
+        list([
+          'Follow the seedling prompt and plant your first Sprout — it starts the resource tick.',
+          'Gather 20 Twilight Dew from the glowing shrubs; do not sell any resources yet.',
+          'Open the Life tab and claim the Foraging tutorial reward (it also unlocks Farming).',
+          'Restore your first plot for 15 Wood and 10 Dew — plots are permanent, always buy them.',
+          'Place the second plot near the stream; streamside plots get a hidden +10% yield.',
+          'When the Great Sapling sprouts, put your first tree point into Dewcollector I.',
+        ], { ordered: true }),
+        note('tip', 'Do not spend sap yet', 'Sap becomes precious the moment the Upgrade Tree opens. Bank everything until you have 50 saved.'),
+      ]),
+      section('What to ignore', [
+        p('The mine entrance, the dungeon gate and the rune anvil are all visible from minute one — none of them can be used yet. They light up as the valley recovers; until then they are set dressing.'),
+        list([
+          { text: 'Mining entrance — activates after restoring 3 plots.' },
+          { text: 'Dungeon gate — activates after crafting any Iron tool.' },
+          { text: 'Rune Anvil — activates at Foraging Rank 3.' },
+        ], { checks: true }),
+      ]),
+    ],
+    related: ['controls-interface', 'resources-101', 'first-week-plan'],
+  }),
+
+  article({
+    id: 'controls-interface',
+    category: 'main',
+    subcategory: 'getting-started',
+    title: 'Controls & Interface',
+    description: 'Every panel, shortcut and gesture in the game — what each one does and when it starts to matter.',
+    keywords: ['ui', 'controls', 'hotkeys', 'interface', 'panels'],
+    updated: '2026-10-22',
+    views: 15200,
+    stats: [
+      stat('Panels', '9', 'grid'),
+      stat('Hotkeys', '14', 'target'),
+    ],
+    sections: [
+      section('The nine panels', [
+        table(
+          [
+            { key: 'panel', label: 'Panel' },
+            { key: 'key', label: 'Hotkey' },
+            { key: 'purpose', label: 'What it does' },
+          ],
+          [
+            { panel: 'Valley', key: '1', purpose: 'Main map; place plots and buildings here.' },
+            { panel: 'Life', key: '2', purpose: 'Skill ranks, XP and life-skill actions.' },
+            { panel: 'Sapling', key: '3', purpose: 'The upgrade tree; spend tree points.' },
+            { panel: 'Mine', key: '4', purpose: 'Mining regions and the ore ledger.' },
+            { panel: 'Depths', key: '5', purpose: 'Dungeon entry, torch and run history.' },
+            { panel: 'Runes', key: '6', purpose: 'Socketing, fusing and dust.' },
+            { panel: 'Perks', key: '7', purpose: 'Permanent passives and points.' },
+            { panel: 'Ledger', key: '8', purpose: 'Resource counts, income rates, history.' },
+            { panel: 'Settings', key: '9', purpose: 'Save tools, offline caps, reduced motion.' },
+          ]
+        ),
+      ]),
+      section('Gestures & shortcuts', [
+        list([
+          'Shift + click a resource node to queue ten gather actions.',
+          'Ctrl + drag over plots to assign workers in bulk.',
+          'Space pauses all timers — handy for reading tooltips calmly.',
+          'Middle-click any item anywhere to open its wiki-adjacent tooltip.',
+        ]),
+        note('info', 'Reduced motion', 'Settings → Accessibility swaps background motion for static art and shortens every transition.'),
+      ]),
+    ],
+    related: ['first-hour', 'what-is-regrowth'],
+  }),
+
+  article({
+    id: 'resources-101',
+    category: 'main',
+    subcategory: 'getting-started',
+    title: 'Resources 101',
+    description: 'The six base resources, where each comes from, and what they are actually for.',
+    keywords: ['resources', 'dew', 'wood', 'sap', 'ore', 'seeds'],
+    updated: '2026-10-21',
+    views: 18900,
+    stats: [
+      stat('Base resources', '6', 'package'),
+      stat('Special currencies', '5', 'coin'),
+    ],
+    sections: [
+      section('The base six', [
+        table(
+          [
+            { key: 'resource', label: 'Resource' },
+            { key: 'source', label: 'Primary source' },
+            { key: 'sink', label: 'Main use' },
+          ],
+          [
+            { resource: 'Twilight Dew', source: 'Shrubs, Dewcollector', sink: 'Plots, early nodes' },
+            { resource: 'Wood', source: 'Fallen branches, Foraging', sink: 'Buildings, tools' },
+            { resource: 'Sap', source: 'Great Sapling tick', sink: 'Upgrade Tree nodes' },
+            { resource: 'Ore / Bars', source: 'Mining', sink: 'Tools, dungeon keys' },
+            { resource: 'Seeds', source: 'Foraging, crates', sink: 'Farming plots' },
+            { resource: 'Harvest', source: 'Farming', sink: 'Cooking, crates' },
+          ]
+        ),
+        p('Everything else — Sap Amber, Rune Dust, Dungeon Sigils, Golden Seeds, Essence — is a special currency with exactly one sink each. Treat them as single-purpose and never "bank for later".'),
+      ]),
+      section('Income vs stockpile', [
+        p('The Ledger panel shows income per tick next to each resource. A healthy early valley produces at least 0.2 Dew and 0.1 Sap per tick; if a number is red, a worker assignment is missing.'),
+      ]),
+    ],
+    related: ['first-hour', 'glossary'],
+  }),
+
+  article({
+    id: 'first-week-plan',
+    category: 'main',
+    subcategory: 'getting-started',
+    title: 'Your First Week',
+    description: 'A day-by-day plan for the first seven days of a new valley, tuned for players with 20–30 minutes per day.',
+    keywords: ['plan', 'roadmap', 'week', 'progression', 'daily'],
+    updated: '2026-10-19',
+    views: 9400,
+    sections: [
+      section('The plan', [
+        table(
+          [
+            { key: 'day', label: 'Day' },
+            { key: 'focus', label: 'Focus' },
+            { key: 'milestone', label: 'Milestone' },
+          ],
+          [
+            { day: '1', focus: 'First hour guide + 3 plots', milestone: 'Mining entrance opens' },
+            { day: '2', focus: 'Foraging to Rank 3', milestone: 'Rune Anvil unlocked' },
+            { day: '3', focus: 'Copper pickaxe + first mine run', milestone: 'Ore income starts' },
+            { day: '4', focus: 'Growth path nodes 1–3', milestone: 'Dew income doubles' },
+            { day: '5', focus: 'Farming plots online', milestone: 'Cooking unlocked' },
+            { day: '6', focus: 'Iron tool + dungeon key', milestone: 'Mossy Depths opens' },
+            { day: '7', focus: 'First boss attempt', milestone: 'Rotmother scout run' },
+          ]
+        ),
+        note('tip', 'Fall behind? Fine.', 'The plan is a guideline. Daily crates and offline progress mean a missed day costs less than you fear.'),
+      ]),
+    ],
+    related: ['first-hour', 'daily-routine'],
+  }),
+
+  article({
+    id: 'what-is-regrowth',
+    category: 'main',
+    subcategory: 'game-information',
+    title: 'What Is Regrowth Idle?',
+    description: 'The pitch: an incremental game about restoring a withered valley, one system at a time.',
+    keywords: ['about', 'overview', 'genre', 'premise', 'idle'],
+    updated: '2026-10-18',
+    views: 21400,
+    featured: true,
+    sections: [
+      section('The premise', [
+        p('A valley has withered. You arrive with a single enchanted seedling — the Great Sapling — and slowly bring the land back to life. Every system in the game is a metaphor for recovery: gathering replants, farming restores soil, mining digs the valley\'s old bones, and the dungeons hold what rotted below.'),
+        p('Mechanically it is an incremental/idle game: numbers go up, systems unlock, prestige resets multiply everything. The regrowth theme gives it structure other idle games lack — you can literally watch the valley turn green.'),
+      ]),
+      section('Core loop', [
+        list([
+          { text: 'Gather — life skills and mining produce raw resources.' },
+          { text: 'Upgrade — the tree and perks convert resources into permanent power.' },
+          { text: 'Delve — dungeons convert power into uniques, runes and prestige materials.' },
+          { text: 'Regrow — prestige resets the valley but the land recovers faster each time.' },
+        ], { ordered: true }),
+      ]),
+      section('Session shape', [
+        p('Active sessions reward mining and dungeon runs. Away time is handled by offline progress (capped, see the dedicated article). Both styles reach the same content; idle players just get there on a longer clock.'),
+      ]),
+    ],
+    related: ['glossary', 'offline-progress', 'first-hour'],
+  }),
+
+  article({
+    id: 'glossary',
+    category: 'main',
+    subcategory: 'game-information',
+    title: 'Glossary',
+    description: 'Community vocabulary from "ticks" to "bloomed nodes" — every term you will see in chat and guides.',
+    keywords: ['terms', 'vocabulary', 'definitions', 'slang'],
+    updated: '2026-10-25',
+    views: 12800,
+    sections: [
+      section('Common terms', [
+        table(
+          [
+            { key: 'term', label: 'Term' },
+            { key: 'meaning', label: 'Meaning' },
+          ],
+          [
+            { term: 'Tick', meaning: 'One game-update step; most income is per tick.' },
+            { term: 'Bloomed node', meaning: 'A resource node at maximum regrowth bonus (+25% yield).' },
+            { term: 'Torch time', meaning: 'Total minutes a dungeon run can last before extraction.' },
+            { term: 'Dry run', meaning: 'A dungeon run with no boss kill; still pays chests.' },
+            { term: 'Roll', meaning: 'A random affix value on a rune (e.g. "+7.2% crit").' },
+            { term: 'God roll', meaning: 'A rune with near-maximum values in every affix.' },
+            { term: 'Respec', meaning: 'Refunding tree nodes (or perks) to rebuild.' },
+            { term: 'Prestige', meaning: 'Full valley reset for Essence and permanent multipliers.' },
+            { term: "VOID'd", meaning: 'Slang for a run lost to a Void rune risk effect.' },
+          ]
+        ),
+      ]),
+      section('Numbers shorthand', [
+        list([
+          'k / M — thousand / million (12.4k dew).',
+          'ppt — points per tick (income rate).',
+          'rph — runes per hour (farming efficiency).',
+        ]),
+      ]),
+    ],
+    related: ['what-is-regrowth', 'resources-101'],
+  }),
+
+  article({
+    id: 'offline-progress',
+    category: 'main',
+    subcategory: 'game-information',
+    title: 'Offline Progress',
+    description: 'How the valley keeps working while you are away — rates, caps and the catch-up mechanics.',
+    keywords: ['offline', 'idle', 'away', 'cap', 'catch-up'],
+    updated: '2026-10-17',
+    views: 17300,
+    stats: [
+      stat('Base cap', '8 hours', 'clock'),
+      stat('Utility perk cap', '12 hours', 'spark'),
+      stat('Efficiency', '60%', 'gauge'),
+    ],
+    sections: [
+      section('How it is calculated', [
+        p('When you return, the game simulates your offline time at 60% efficiency using your average income from the last 30 active minutes. Life skills, farm plots and mine nodes all keep producing; dungeons do not run offline.'),
+        table(
+          [
+            { key: 'system', label: 'System' },
+            { key: 'runs offline', label: 'Runs offline' },
+            { key: 'notes', label: 'Notes' },
+          ],
+          [
+            { system: 'Life skills (passive)', runs: 'Yes', notes: 'Auto-gatherers only, not manual actions' },
+            { system: 'Farm plots', runs: 'Yes', notes: 'Full rate' },
+            { system: 'Mine nodes', runs: 'Yes', notes: 'Only the Auto-swing perk\'s node' },
+            { system: 'Dungeon runs', runs: 'No', notes: 'Runs require an active torch' },
+            { system: 'Sap tick', runs: 'Yes', notes: 'Full rate' },
+          ]
+        ),
+      ]),
+      section('Extending the cap', [
+        list([
+          'Utility perk "Night Shift" — +4h cap (see Perks → Utility).',
+          'Bloom path node "Everwake" — offline efficiency 60% → 75%.',
+          'Golden Seed bonus — one per valley: first daily login back grants double offline payout.',
+        ], { checks: true }),
+        note('warning', 'Do not close mid-run', 'Closing the game during a dungeon run abandons the run and forfeits carried loot. Extract first.'),
+      ]),
+    ],
+    related: ['what-is-regrowth', 'utility-perks'],
+  }),
+
+  article({
+    id: 'save-backups',
+    category: 'main',
+    subcategory: 'game-information',
+    title: 'Saving & Backups',
+    description: 'Where saves live, how to export them, and the two-minute ritual that protects hundreds of hours.',
+    keywords: ['save', 'backup', 'export', 'cloud', 'settings'],
+    updated: '2026-10-15',
+    views: 7600,
+    sections: [
+      section('Export ritual', [
+        list([
+          'Settings → Save Data → Export produces a .regrowth file.',
+          'Name it with the version and date, e.g. valley-v1.2-2026-10-15.',
+          'Keep at least two generations — import bugs occasionally, and a second file is free insurance.',
+        ], { ordered: true, checks: true }),
+        note('warning', 'Before every version jump', 'Always export before updating the game. Downgrading without a backup corrupts the save.'),
+      ]),
+      section('What transfers', [
+        kv([
+          { key: 'Transfers with save', value: 'Resources, tree, perks, runes, uniques, prestige count' },
+          { key: 'Does not transfer', value: 'Daily crate timers, weekly sigil shop stock, active run state' },
+        ]),
+      ]),
+    ],
+    related: ['offline-progress', 'known-issues'],
+  }),
+
+  article({
+    id: 'common-mistakes',
+    category: 'main',
+    subcategory: 'important-information',
+    title: 'Five Costly Mistakes',
+    description: 'The mistakes that cost new players the most progress — and the one-line fix for each.',
+    keywords: ['mistakes', 'pitfalls', 'tips', 'beginner', 'avoid'],
+    updated: '2026-10-26',
+    views: 26100,
+    featured: true,
+    sections: [
+      section('The list', [
+        list([
+          { text: 'Selling raw ore early. Ore is the bottleneck for every tool upgrade; bars can wait, ore cannot.' },
+          { text: 'Spreading tree points across all three paths. One path to node 5 beats three paths to node 2 — multiplicative bonuses live deep.' },
+          { text: 'Ignoring cooking. A Rank 2 meal (+15% gather speed) pays for itself in a day and stacks with everything.' },
+          { text: 'Hoarding Dungeon Sigils. The weekly shop reset caps your income; spend on torch upgrades first.' },
+          { text: 'Prestiging before 10 boss kills. Each boss unique makes the next valley faster; prestige at zero uniques wastes a reset.' },
+        ], { ordered: true }),
+      ]),
+      section('Damage control', [
+        p('Made one of these already? All five are recoverable within a week using daily crates and the respec system. Nothing in Regrowth Idle is truly permanent except prestige count.'),
+      ]),
+    ],
+    related: ['first-week-plan', 'respec-rules', 'sigil-shop'],
+  }),
+
+  article({
+    id: 'known-issues',
+    category: 'main',
+    subcategory: 'important-information',
+    title: 'Roadmap & Known Issues',
+    description: 'What the developers have acknowledged, what is coming next, and the workarounds for live bugs.',
+    keywords: ['bugs', 'roadmap', 'issues', 'workaround', 'dev'],
+    updated: '2026-10-27',
+    views: 11200,
+    sections: [
+      section('Known issues (v1.2.0)', [
+        table(
+          [
+            { key: 'issue', label: 'Issue' },
+            { key: 'impact', label: 'Impact' },
+            { key: 'workaround', label: 'Workaround' },
+          ],
+          [
+            { issue: 'Fishing rods desync after 40+ casts', impact: 'Minor', workaround: 'Re-equip the rod' },
+            { issue: 'Rune dust counter flickers on fuse', impact: 'Cosmetic', workaround: 'None needed' },
+            { issue: 'Vault chest opened during torch death drops 0 loot', impact: 'Major', workaround: 'Extract before torch < 30s' },
+            { issue: 'Plot tooltip shows pre-bonus yield', impact: 'Minor', workaround: 'Trust the Ledger, not the tooltip' },
+          ]
+        ),
+      ]),
+      section('On the roadmap', [
+        list([
+          'Fourth mining region (dormant volcano) — announced.',
+          'Rune loadout presets — announced.',
+          'Dungeon daily challenges — in testing.',
+        ]),
+        note('info', 'Wiki accuracy', 'Numbers in this wiki are verified against v1.2.0. When the game updates, affected articles get an "updated" badge and appear in Recently Updated.'),
+      ]),
+    ],
+    related: ['save-backups', 'common-mistakes'],
+  }),
+
+  article({
+    id: 'wiki-conventions',
+    category: 'main',
+    subcategory: 'important-information',
+    title: 'Wiki Conventions',
+    description: 'How articles are organized, what the colored chips mean, and how numbers are cited.',
+    keywords: ['wiki', 'meta', 'conventions', 'formatting', 'contributing'],
+    updated: '2026-10-12',
+    views: 4300,
+    sections: [
+      section('Reading the wiki', [
+        list([
+          'Green chips mark the category and subsection an article belongs to.',
+          'Stat cards at the top always reflect the current game version.',
+          'Tables use tabular numbers; values are base values before multipliers.',
+          'Tip callouts (green) are safe to follow; warning callouts (amber) prevent losses.',
+        ]),
+      ]),
+      section('Citing versions', [
+        p('Every article carries an "Updated" date. Balance numbers change between versions — when a table disagrees with your game screen, check which version is newer and trust the article only if it matches your build.'),
+      ]),
+    ],
+    related: ['known-issues', 'glossary'],
+  }),
+];
+
+
+// ==== ARTIGOS: LIFE ====
+
+
+
+
+const lifeArticles = [
+
+  article({
+    id: 'skill-foraging',
+    category: 'life',
+    subcategory: 'life-skills',
+    title: 'Foraging',
+    description: 'The first life skill everyone unlocks — gathering dew, mushrooms and seeds from the recovering wilds.',
+    keywords: ['foraging', 'gathering', 'dew', 'mushroom', 'skill'],
+    updated: '2026-10-21',
+    views: 16800,
+    featured: true,
+    stats: [
+      stat('Unlock', 'Restore 1 plot', 'key'),
+      stat('Max rank', '10', 'chart'),
+      stat('Feeds into', 'Cooking, Farming', 'leaf'),
+    ],
+    sections: [
+      section('How it works', [
+        p('Foraging nodes respawn across the valley on a 2-minute tick. Each gather grants XP scaled by node rarity; shrubs and mushroom clusters are common, Golden Seed sprouts are the rare spawn everyone camps.'),
+        table(
+          [
+            { key: 'node', label: 'Node' },
+            { key: 'xp', label: 'XP' },
+            { key: 'yield', label: 'Typical yield' },
+          ],
+          [
+            { node: 'Dew shrub', xp: '4', yield: '3–5 Twilight Dew' },
+            { node: 'Mushroom cluster', xp: '6', yield: '2–4 mushrooms' },
+            { node: 'Bramble basket', xp: '9', yield: 'Seeds + fiber' },
+            { node: 'Golden sprout', xp: '40', yield: '1 Golden Seed' },
+          ]
+        ),
+      ]),
+      section('Rank milestones', [
+        list([
+          'Rank 3 — unlocks the Rune Anvil (the real gate, not the skill itself).',
+          'Rank 5 — Bramble Baskets appear on the valley map.',
+          'Rank 7 — Golden Sprout spawn rate doubles.',
+          'Rank 10 — mastery title "Verdant Hand", +10% forage yields permanently.',
+        ], { checks: true }),
+        note('tip', 'Forage on walks between systems', 'Foraging nodes are on the way to everything. The players with the highest foraging ranks are the ones who never make a dedicated trip.'),
+      ]),
+    ],
+    related: ['skill-farming', 'skill-cooking', 'golden-seeds'],
+  }),
+
+  article({
+    id: 'skill-farming',
+    category: 'life',
+    subcategory: 'life-skills',
+    title: 'Farming',
+    description: 'Plots, seeds and crop rotations — the passive backbone of your food economy.',
+    keywords: ['farming', 'plots', 'crops', 'seeds', 'harvest'],
+    updated: '2026-10-20',
+    views: 13900,
+    stats: [
+      stat('Unlock', 'Foraging Rank 2', 'key'),
+      stat('Plots', 'Up to 12', 'grid'),
+      stat('Cycle', '20 min/crop', 'clock'),
+    ],
+    sections: [
+      section('Plots and crops', [
+        table(
+          [
+            { key: 'crop', label: 'Crop' },
+            { key: 'grow', label: 'Grow time' },
+            { key: 'yield', label: 'Yield' },
+            { key: 'use', label: 'Best use' },
+          ],
+          [
+            { crop: 'Sungrain', grow: '20 min', yield: '6–8', use: 'Basic meals' },
+            { crop: 'Dew Berries', grow: '35 min', yield: '4–6', use: 'Stamina meals' },
+            { crop: 'Emberroot', grow: '50 min', yield: '3–5', use: 'Crit meals' },
+            { crop: 'Moongourd', grow: '80 min', yield: '2–3', use: 'Torch meals' },
+          ]
+        ),
+        p('Streamside plots carry a hidden +10% yield — visible only in the Ledger, not the plot tooltip. Prioritize them for Emberroot, where every crop counts.'),
+      ]),
+      section('Rotation strategy', [
+        p('Crops keep growing offline (see Offline Progress), so the optimal pattern for most players is planting Moongourd before logging off and Sungrain during active play. Two streamside plots of Emberroot cover a full dungeon session\'s meal needs.'),
+      ]),
+    ],
+    related: ['skill-cooking', 'offline-progress', 'harvest-crates'],
+  }),
+
+  article({
+    id: 'skill-fishing',
+    category: 'life',
+    subcategory: 'life-skills',
+    title: 'Fishing',
+    description: 'The patience skill — restored ponds, rare river fish and the buffs anglers bring back to camp.',
+    keywords: ['fishing', 'fish', 'pond', 'river', 'skill'],
+    updated: '2026-10-19',
+    views: 11700,
+    stats: [
+      stat('Unlock', 'Restore the stream', 'key'),
+      stat('Spots', '4 ponds', 'map-pin'),
+      stat('Bite window', '1.2s', 'clock'),
+    ],
+    sections: [
+      section('How it works', [
+        p('Cast into an unlocked pond, wait for the bobber dip, and hook within the 1.2-second bite window. Each pond has its own fish table and difficulty (window shrinks with fish rarity).'),
+        table(
+          [
+            { key: 'pond', label: 'Pond' },
+            { key: 'unlock', label: 'Unlock' },
+            { key: 'signature fish', label: 'Signature fish' },
+          ],
+          [
+            { pond: 'Willow Pond', unlock: 'Stream restored', signature: 'Silver Dace' },
+            { pond: 'Old Mill Pool', unlock: 'Mill rebuilt', signature: 'Bronze Carp' },
+            { pond: 'Hollows Spring', unlock: 'Hollows floor 1', signature: 'Blind Eel' },
+            { pond: 'Sky Mirror', unlock: 'Bloom node 5', signature: 'Star Koi' },
+          ]
+        ),
+      ]),
+      section('Why anglers eat first', [
+        list([
+          'River fish are the only ingredient for Torch-extension meals (+2 minutes torch time).',
+          'Star Koi scales are a Rune Anvil crafting reagent for Tide fuses.',
+          'Fishing XP is the slowest of the four skills — start early, even casually.',
+        ], { checks: true }),
+      ]),
+    ],
+    related: ['skill-cooking', 'loc-deep-hollows', 'rune-crafting'],
+  }),
+
+  article({
+    id: 'skill-cooking',
+    category: 'life',
+    subcategory: 'life-skills',
+    title: 'Cooking',
+    description: 'Turn harvests into timed buffs — the cheapest power spike in the game at every stage.',
+    keywords: ['cooking', 'meals', 'food', 'buffs', 'recipes'],
+    updated: '2026-10-25',
+    views: 15200,
+    featured: true,
+    stats: [
+      stat('Unlock', 'Any farm harvest', 'key'),
+      stat('Recipes', '18', 'book'),
+      stat('Buff cap', '1 meal', 'flame'),
+    ],
+    sections: [
+      section('How meals work', [
+        p('Meals grant a single timed buff; only one meal buff is active at a time and drinking a new meal replaces the old one. Buffs stack with runes, perks and tree nodes — they are additive sources in the speed formula, which makes them strongest early and still worthwhile late.'),
+        table(
+          [
+            { key: 'meal', label: 'Meal' },
+            { key: 'buff', label: 'Buff' },
+            { key: 'duration', label: 'Duration' },
+          ],
+          [
+            { meal: 'Sungrain Porridge', buff: '+10% gather speed', duration: '20 min' },
+            { meal: 'Berry Trail Mix', buff: '+25% stamina regen', duration: '25 min' },
+            { meal: 'Emberroot Stew', buff: '+12% crit chance', duration: '20 min' },
+            { meal: 'KoiSupreme', buff: '+2 min torch time', duration: 'Next run' },
+            { meal: 'Moongourd Feast', buff: '+30% offline efficiency', duration: 'Until next login' },
+          ]
+        ),
+      ]),
+      section('Cooking ranks', [
+        list([
+          'Rank 2 — meals can crit (double duration, 10% chance).',
+          'Rank 4 — unlocks the two-burner stove: cook while away marker. (cosmetic queue)',
+          'Rank 8 — Feasts: meals share with inactive skills for passive XP.',
+        ], { checks: true }),
+        note('tip', 'Eat before the mine, not after', 'Meal timers run in real time, including time in menus. Pop the buff at the mine entrance, not the kitchen.'),
+      ]),
+    ],
+    related: ['skill-farming', 'skill-fishing', 'mining-speed'],
+  }),
+
+  article({
+    id: 'skill-xp-table',
+    category: 'life',
+    subcategory: 'progression',
+    title: 'Skill XP Table',
+    description: 'Exact XP requirements for every life-skill rank, plus the sources that actually move the bar.',
+    keywords: ['xp', 'table', 'ranks', 'levels', 'progression'],
+    updated: '2026-10-18',
+    views: 9100,
+    sections: [
+      section('XP per rank', [
+        table(
+          [
+            { key: 'rank', label: 'Rank' },
+            { key: 'xp', label: 'Total XP' },
+            { key: 'delta', label: 'For this rank' },
+          ],
+          [
+            { rank: '1 → 2', xp: '100', delta: '100' },
+            { rank: '2 → 3', xp: '260', delta: '160' },
+            { rank: '3 → 4', xp: '520', delta: '260' },
+            { rank: '4 → 5', xp: '920', delta: '400' },
+            { rank: '5 → 6', xp: '1,520', delta: '600' },
+            { rank: '6 → 7', xp: '2,370', delta: '850' },
+            { rank: '7 → 8', xp: '3,570', delta: '1,200' },
+            { rank: '8 → 9', xp: '5,270', delta: '1,700' },
+            { rank: '9 → 10', xp: '7,870', delta: '2,600' },
+          ]
+        ),
+      ]),
+      section('Best XP sources', [
+        list([
+          'Foraging — bramble baskets during any walk; passive and constant.',
+          'Farming — harvest XP scales with plot count; plant before every login end.',
+          'Fishing — blind eels at Hollows Spring; highest XP per catch in the game.',
+          'Cooking — cook in batches of ten; rank-up meals crit double-duration more often than you need.',
+        ]),
+      ]),
+    ],
+    related: ['mastery-ranks', 'daily-routine'],
+  }),
+
+  article({
+    id: 'mastery-ranks',
+    category: 'life',
+    subcategory: 'progression',
+    title: 'Mastery Ranks',
+    description: 'What each of the ten mastery ranks actually grants — the hidden unlocks most players discover late.',
+    keywords: ['mastery', 'ranks', 'unlocks', 'titles', 'perks'],
+    updated: '2026-10-17',
+    views: 7800,
+    sections: [
+      section('The ten ranks', [
+        table(
+          [
+            { key: 'rank', label: 'Rank' },
+            { key: 'title', label: 'Title' },
+            { key: 'reward', label: 'Unlocks' },
+          ],
+          [
+            { rank: '1', title: 'Sprout', reward: 'Skill basics' },
+            { rank: '3', title: 'Tender', reward: 'Anvil access / tool upgrades' },
+            { rank: '5', title: 'Cultivator', reward: 'Rare node spawns +25%' },
+            { rank: '7', title: 'Verdant Hand', reward: 'Second passive slot for the skill' },
+            { rank: '10', title: 'Bloomwarden', reward: 'Permanent +10% skill yield, +1 perk point' },
+          ]
+        ),
+        p('Titles are cosmetic, rewards are not. Rank 7\'s second passive slot is the single most underrated power spike in the Life pillar — most builds run two passives from there on.'),
+      ]),
+    ],
+    related: ['skill-xp-table', 'gathering-perks'],
+  }),
+
+  article({
+    id: 'daily-routine',
+    category: 'life',
+    subcategory: 'progression',
+    title: 'The 15-Minute Daily Routine',
+    description: 'A tight daily loop that keeps all four life skills, crates and meals moving in a quarter of an hour.',
+    keywords: ['daily', 'routine', 'efficient', 'schedule', 'loop'],
+    updated: '2026-10-24',
+    views: 10400,
+    featured: true,
+    sections: [
+      section('The loop', [
+        list([
+          'Minute 0 — login: claim the offline report and the daily harvest crate.',
+          'Minute 1 — kitchen: cook today\'s meal (Emberroot Stew on mine days, Trail Mix on farm days).',
+          'Minute 3 — plots: harvest, replant Moongourd if it is your last login of the day.',
+          'Minute 5 — valley lap: one foraging circuit, hitting any bramble baskets that spawned.',
+          'Minute 9 — water: three casts per unlocked pond; blind eels if Hollows Spring is open.',
+          'Minute 12 — ledger check: anything red? Assign workers, then log off or head to the mine.',
+        ], { ordered: true }),
+      ]),
+      section('Why it works', [
+        p('The routine sequences actions by decay: meals first (they tick even in menus), plots second (grow timers are the longest), then active gathering last. Nothing waits idle and nothing overwrites a buff.'),
+        note('tip', 'Crate timing', 'Crates reset at midnight local time, not 24 hours after claim. Logging in after midnight first keeps the streak intact.'),
+      ]),
+    ],
+    related: ['harvest-crates', 'skill-xp-table', 'offline-progress'],
+  }),
+
+  article({
+    id: 'harvest-crates',
+    category: 'life',
+    subcategory: 'rewards',
+    title: 'Harvest Crates',
+    description: 'The daily crate system — how crate quality is scored and what each tier can contain.',
+    keywords: ['crates', 'daily', 'rewards', 'loot', 'streak'],
+    updated: '2026-10-16',
+    views: 8600,
+    sections: [
+      section('Crate quality', [
+        p('Crate tier is scored by your lowest life-skill rank, not your average. The system deliberately rewards balance: a 9/9/9/9 account opens Verdant Crates; a 9/9/9/2 account opens Splinter Crates.'),
+        table(
+          [
+            { key: 'tier', label: 'Crate' },
+            { key: 'requirement', label: 'Lowest rank' },
+            { key: 'contents', label: 'Typical contents' },
+          ],
+          [
+            { tier: 'Splinter', requirement: '1–2', contents: 'Seeds, small coin pouch' },
+            { tier: 'Woven', requirement: '3–4', contents: 'Seeds, rune dust, meals' },
+            { tier: 'Verdant', requirement: '5–7', contents: 'Rune fragments, golden seed chance' },
+            { tier: 'Bloom', requirement: '8–10', contents: 'Fragments, essence, guaranteed rare' },
+          ]
+        ),
+      ]),
+      section('Streaks', [
+        list([
+          'Day 3 streak — crate rolls twice, better table applies.',
+          'Day 7 streak — guaranteed rune fragment or golden seed.',
+          'Missed days reduce the streak by one, not to zero.',
+        ], { checks: true }),
+      ]),
+    ],
+    related: ['daily-routine', 'golden-seeds', 'skill-xp-table'],
+  }),
+
+  article({
+    id: 'golden-seeds',
+    category: 'life',
+    subcategory: 'rewards',
+    title: 'Golden Seeds',
+    description: 'The rare foraging find that permanently improves a plot — where they spawn and how to spend them.',
+    keywords: ['golden', 'seed', 'rare', 'permanent', 'plot'],
+    updated: '2026-10-14',
+    views: 7200,
+    sections: [
+      section('Sources', [
+        list([
+          'Golden Sprouts — rare foraging node, Rank 7 doubles the spawn rate.',
+          'Bloom crates — small chance from Verdant tier and above.',
+          'Sky Mirror pond — Star Koi occasionally carries one.',
+        ]),
+      ]),
+      section('Spending them', [
+        p('A Golden Seed permanently upgrades one plot: +15% yield and +1 crop quality tier. Upgrades apply to the plot, not the crop, and survive prestige. Spend them on streamside Emberroot plots first — quality tiers multiply the crops your meals actually need.'),
+        note('warning', 'One seed per valley', 'The "double offline payout" login bonus consumes a Golden Seed from your inventory, not from the bank. Keep at least two banked before spending freely.'),
+      ]),
+    ],
+    related: ['skill-foraging', 'harvest-crates', 'offline-progress'],
+  }),
+
+  article({
+    id: 'life-uniques',
+    category: 'life',
+    subcategory: 'rewards',
+    title: 'Life-Skill Uniques',
+    description: 'The three unique tools the Life pillar can craft — and why one of them outclasses dungeon gear.',
+    keywords: ['uniques', 'tools', 'gear', 'rewards', 'crafted'],
+    updated: '2026-10-12',
+    views: 6100,
+    sections: [
+      section('The three uniques', [
+        table(
+          [
+            { key: 'unique', label: 'Unique' },
+            { key: 'craft', label: 'Crafted with' },
+            { key: 'effect', label: 'Signature effect' },
+          ],
+          [
+            { unique: 'Verdant Sickle', craft: 'Rank 10 Foraging + 3 golden seeds', effect: 'Forage nodes never drop below 2 yield' },
+            { unique: 'Tidecall Rod', craft: 'Rank 10 Fishing + 5 star koi', effect: 'Bite window ×2, blind eel table unlocked anywhere' },
+            { unique: 'Hearth Pan', craft: 'Rank 10 Cooking + emberroot feast', effect: 'Meals crit duration 10% → 25%' },
+          ]
+        ),
+      ]),
+      section('Priority', [
+        p('The Verdant Sickle is the strongest unique in the Life pillar by a wide margin — its floor-yield guarantee compounds with every foraging bonus in the game. The rod is a luxury; the pan is a nice-to-have. Craft the sickle the week you hit Rank 10 foraging.'),
+      ]),
+    ],
+    related: ['skill-foraging', 'skill-fishing', 'skill-cooking'],
+  }),
+];
+
+
+// ==== ARTIGOS: UPGRADE TREE ====
+
+
+
+
+const treeArticles = [
+
+  article({
+    id: 'path-growth',
+    category: 'upgrade-tree',
+    subcategory: 'upgrade-paths',
+    title: 'Path of Growth',
+    description: 'The economy path — resource rates, tool efficiency and the nodes that make every other system faster.',
+    keywords: ['growth', 'path', 'economy', 'gathering', 'nodes'],
+    updated: '2026-10-19',
+    views: 14200,
+    featured: true,
+    stats: [
+      stat('Nodes', '16', 'branch'),
+      stat('Identity', 'Economy', 'leaf'),
+      stat('Cheapest capstone', 'Yes', 'coin'),
+    ],
+    sections: [
+      section('Signature nodes', [
+        table(
+          [
+            { key: 'node', label: 'Node' },
+            { key: 'effect per level', label: 'Effect (per level)' },
+            { key: 'max', label: 'Max' },
+          ],
+          [
+            { node: 'Dewcollector', effect: '+15% dew income', max: '5' },
+            { node: 'Green Thumb', effect: '+10% life-skill yield', max: '5' },
+            { node: 'Keen Edge', effect: '+12% mining speed', max: '5' },
+            { node: 'Deep Pockets', effect: '+25% resource cap', max: '3' },
+            { node: 'Verdant Engine', effect: 'Offline efficiency +5%', max: '3' },
+          ]
+        ),
+      ]),
+      section('Who takes it first', [
+        p('Growth is the recommended first path for every account: its bonuses are additive sources that multiply into everything you do, and its capstone (Verdant Engine III) effectively adds an hour of offline work per night. Bloom players regret skipping it; nobody regrets taking it first.'),
+        note('tip', 'Node order', 'Dewcollector → Green Thumb → Keen Edge is the standard first five levels. Deep Pockets only matters once you start banking for craft bills.'),
+      ]),
+    ],
+    related: ['path-roots', 'path-bloom', 'material-costs'],
+  }),
+
+  article({
+    id: 'path-roots',
+    category: 'upgrade-tree',
+    subcategory: 'upgrade-paths',
+    title: 'Path of Roots',
+    description: 'The survival path — stamina, defense and the dungeon safety nets that turn lethal runs into profitable ones.',
+    keywords: ['roots', 'path', 'defense', 'stamina', 'dungeon'],
+    updated: '2026-10-18',
+    views: 11600,
+    stats: [
+      stat('Nodes', '14', 'branch'),
+      stat('Identity', 'Survival', 'shield'),
+      stat('Dungeon uptime', '+40%', 'clock'),
+    ],
+    sections: [
+      section('Signature nodes', [
+        table(
+          [
+            { key: 'node', label: 'Node' },
+            { key: 'effect per level', label: 'Effect (per level)' },
+            { key: 'max', label: 'Max' },
+          ],
+          [
+            { node: 'Stamina Siphon', effect: '+10 max stamina', max: '5' },
+            { node: 'Bark Skin', effect: '−8% damage taken', max: '5' },
+            { node: 'Long Wick', effect: '+90s torch time', max: '5' },
+            { node: 'Second Wind', effect: 'Refill 20% stamina on boss phase change', max: '1' },
+            { node: 'Rootwall', effect: 'Survive one lethal hit per run (10 min cd)', max: '1' },
+          ]
+        ),
+      ]),
+      section('Who takes it first', [
+        p('Players dying in the Fungal Warren. If your runs end at floor 3 with an empty loot bag, Roots fixes the actual problem. Long Wick alone converts straight into boss attempts, and Rootwall pays for itself the first time it triggers.'),
+      ]),
+    ],
+    related: ['path-growth', 'milestone-nodes', 'respec-rules'],
+  }),
+
+  article({
+    id: 'path-bloom',
+    category: 'upgrade-tree',
+    subcategory: 'upgrade-paths',
+    title: 'Path of Bloom',
+    description: 'The transcendence path — late-game multipliers, prestige gains and the secret nodes nobody talks about.',
+    keywords: ['bloom', 'path', 'late game', 'prestige', 'void'],
+    updated: '2026-10-17',
+    views: 9900,
+    featured: true,
+    stats: [
+      stat('Nodes', '12', 'branch'),
+      stat('Identity', 'Scaling', 'spark'),
+      stat('Locked behind', 'Voidstone', 'gem'),
+    ],
+    sections: [
+      section('Signature nodes', [
+        table(
+          [
+            { key: 'node', label: 'Node' },
+            { key: 'effect', label: 'Effect' },
+            { key: 'max', label: 'Max' },
+          ],
+          [
+            { node: 'Overgrowth', effect: '×1.10 all resource income', max: '3' },
+            { node: 'Everwake', effect: 'Offline efficiency 60% → 75%', max: '1' },
+            { node: 'Sap Bloom', effect: 'Sap tick +50%', max: '3' },
+            { node: 'Root of the Void', effect: 'Prestige gains ×1.25', max: '1' },
+            { node: '??? (hidden)', effect: 'See Hidden Gates', max: '1' },
+          ]
+        ),
+      ]),
+      section('Why it waits', [
+        p('Bloom nodes cost gold and voidstone — currencies a new valley does not produce. The path also scales with how much game you have already built: Overgrowth multiplies an income you do not have yet. Standard advice holds: Growth to node 5, Roots as needed, Bloom from the first voidstone onward.'),
+      ]),
+    ],
+    related: ['ore-voidstone', 'hidden-gates', 'path-growth'],
+  }),
+
+  article({
+    id: 'node-tiers',
+    category: 'upgrade-tree',
+    subcategory: 'upgrade-levels',
+    title: 'Node Levels & Tiers',
+    description: 'How node levels 1–5 scale, what changes visually at level 4, and where doubling breakpoints live.',
+    keywords: ['levels', 'tiers', 'scaling', 'breakpoint', 'nodes'],
+    updated: '2026-10-15',
+    views: 8300,
+    sections: [
+      section('Level scaling', [
+        p('Most nodes follow the same curve: levels 1–3 grant the listed per-level effect, level 4 grants double the per-level effect, and level 5 (where it exists) changes the node\'s effect qualitatively — new behavior, not just bigger numbers.'),
+        table(
+          [
+            { key: 'level', label: 'Level' },
+            { key: 'pattern', label: 'Standard pattern' },
+            { key: 'example (Keen Edge)', label: 'Example' },
+          ],
+          [
+            { level: '1', pattern: 'Base effect', example: '+12% mining speed' },
+            { level: '2', pattern: 'Base effect', example: '+24%' },
+            { level: '3', pattern: 'Base effect', example: '+36%' },
+            { level: '4', pattern: 'Double effect', example: '+60% (24-point jump)' },
+            { level: '5', pattern: 'New behavior', example: '+60% and speed cap +10' },
+          ]
+        ),
+      ]),
+      section('Reading the tree', [
+        list([
+          'Bronze ring — levels with standard scaling.',
+          'Silver ring — level 4 (the doubling breakpoint).',
+          'Gold ring — level 5 / milestone (new behavior).',
+        ]),
+        note('info', 'Budget to the ring, not the node', 'Plan upgrades in ring units. Stopping at level 3 of a node you meant to max is the most common half-finished-build mistake.'),
+      ]),
+    ],
+    related: ['milestone-nodes', 'material-costs', 'respec-rules'],
+  }),
+
+  article({
+    id: 'milestone-nodes',
+    category: 'upgrade-tree',
+    subcategory: 'upgrade-levels',
+    title: 'Milestone Nodes',
+    description: 'The single-rank nodes that unlock systems rather than stats — and the order to take them in.',
+    keywords: ['milestone', 'unlock', 'single rank', 'systems', 'capstone'],
+    updated: '2026-10-14',
+    views: 7400,
+    sections: [
+      section('The milestone list', [
+        table(
+          [
+            { key: 'milestone', label: 'Milestone' },
+            { key: 'path', label: 'Path' },
+            { key: 'unlocks', label: 'Unlocks' },
+          ],
+          [
+            { milestone: 'First Sprout', path: 'Growth', unlocks: 'The tree itself (free)' },
+            { milestone: 'Dew Barons', path: 'Growth', unlocks: 'Auto-collect radius' },
+            { milestone: 'Torchbearer', path: 'Roots', unlocks: 'Second dungeon key slot' },
+            { milestone: 'Second Wind', path: 'Roots', unlocks: 'Boss-phase stamina refill' },
+            { milestone: 'Everwake', path: 'Bloom', unlocks: '75% offline efficiency' },
+            { milestone: 'Root of the Void', path: 'Bloom', unlocks: '×1.25 prestige gains' },
+          ]
+        ),
+      ]),
+      section('Take-order advice', [
+        p('Milestones gate systems, and systems compound: Torchbearer before your first Fungal key, Second Wind before the Undergrowth attempt, Everwake the moment Bloom is affordable. Root of the Void is a prestige-eve purchase — take it the session before you reset.'),
+      ]),
+    ],
+    related: ['node-tiers', 'path-bloom', 'hidden-gates'],
+  }),
+
+  article({
+    id: 'respec-rules',
+    category: 'upgrade-tree',
+    subcategory: 'upgrade-levels',
+    title: 'Respec & Node Resets',
+    description: 'How refunding a branch works: Sap Amber costs, the 24-hour cooldown, and what refunds return.',
+    keywords: ['respec', 'reset', 'refund', 'sap amber', 'cooldown'],
+    updated: '2026-10-13',
+    views: 6800,
+    sections: [
+      section('The rules', [
+        list([
+          'Respec refunds one entire path, not individual nodes.',
+          'Refunds return 90% of the sap spent; materials (ore, gold, voidstone) return in full.',
+          'Cost: 1 Sap Amber per 10 nodes refunded, rounded up.',
+          'Cooldown: 24 hours per path, independent timers.',
+        ]),
+        note('warning', 'Milestone nodes never refund', 'System-unlock milestones (Torchbearer, Everwake, etc.) are permanent purchases. Their cost is not returned on respec.'),
+      ]),
+      section('When to respec', [
+        p('Standard respec moments: switching from Growth to Bloom after the first voidstone (keep Growth — this is a trap, see below), and pre-prestige pruning of torch nodes you no longer need.'),
+        note('tip', 'Do not respec out of Growth', 'Growth\'s additive bonuses feed Bloom\'s multipliers. The classic mistake is refunding the economy to afford scaling — you end up with multipliers on nothing.'),
+      ]),
+    ],
+    related: ['node-tiers', 'path-bloom', 'material-costs'],
+  }),
+
+  article({
+    id: 'material-costs',
+    category: 'upgrade-tree',
+    subcategory: 'requirements',
+    title: 'Material Cost Tables',
+    description: 'Per-level material costs for all three paths — budget a whole branch before you swing an axe.',
+    keywords: ['costs', 'materials', 'table', 'budget', 'sap'],
+    updated: '2026-10-16',
+    views: 9200,
+    sections: [
+      section('Sap costs by level', [
+        table(
+          [
+            { key: 'level', label: 'Level' },
+            { key: 'growth', label: 'Growth nodes' },
+            { key: 'roots', label: 'Roots nodes' },
+            { key: 'bloom', label: 'Bloom nodes' },
+          ],
+          [
+            { level: '1', growth: '10 sap', roots: '15 sap', bloom: '25 sap' },
+            { level: '2', growth: '20 sap', roots: '30 sap', bloom: '50 sap' },
+            { level: '3', growth: '40 sap', roots: '60 sap', bloom: '100 sap' },
+            { level: '4', growth: '80 sap', roots: '120 sap', bloom: '200 sap' },
+            { level: '5', growth: '160 sap', roots: '240 sap', bloom: '—' },
+          ]
+        ),
+      ]),
+      section('Material add-ons', [
+        list([
+          'Keen Edge levels 4–5 — +40 iron total.',
+          'Long Wick level 5 — +10 gold bars.',
+          'Overgrowth level 3 — +60 gold ore.',
+          'Root of the Void — 25 voidstone, 5 gold bars.',
+        ], { checks: true }),
+        note('tip', 'Bloom budget', 'A full Bloom path (12 nodes) costs roughly 1,000 sap, 100 gold and 30 voidstone. Most accounts finish it in the third week.'),
+      ]),
+    ],
+    related: ['node-tiers', 'respec-rules', 'ore-gold'],
+  }),
+
+  article({
+    id: 'hidden-gates',
+    category: 'upgrade-tree',
+    subcategory: 'requirements',
+    title: 'Hidden Gates',
+    description: 'Three nodes that cannot be bought — the actions, not materials, that reveal them.',
+    keywords: ['hidden', 'secret', 'gates', 'unlock', 'actions'],
+    updated: '2026-10-11',
+    views: 6300,
+    sections: [
+      section('The three gates', [
+        table(
+          [
+            { key: 'node', label: 'Node' },
+            { key: 'revealed by', label: 'Revealed by' },
+            { key: 'hint', label: 'In-game hint' },
+          ],
+          [
+            { node: 'Listener (Roots)', revealed: 'Fish at Hollows Spring 30 times', hint: '"The roots remember songs."' },
+            { node: 'Nightbloom (Bloom)', revealed: 'Log in during a real-world rainstorm hour', hint: '"Some flowers open in the rain."' },
+            { node: 'The Empty Node', revealed: 'Stand at the tree with 0 of every resource', hint: '"Only the empty vessel fills."' },
+          ]
+        ),
+      ]),
+      section('Verification notes', [
+        p('All three gates are verified on v1.2.0. Nightbloom\'s "rainstorm hour" checks weather data once per login — it does not require playing in the rain, only logging in during one. The Empty Node is the community\'s favorite: it is free, it is permanent, and most players find it in week three by accident.'),
+      ]),
+    ],
+    related: ['path-bloom', 'milestone-nodes', 'skill-fishing'],
+  }),
+];
+
+
+// ==== ARTIGOS: MINING ====
+
+
+
+
+const miningArticles = [
+
+  article({
+    id: 'ore-copper',
+    category: 'mining',
+    subcategory: 'ores',
+    title: 'Copper Ore',
+    description: 'The valley\'s most forgiving ore — abundant in the Verdant Cave and the backbone of every early tool.',
+    keywords: ['copper', 'ore', 'smelt', 'bar', 'early'],
+    updated: '2026-10-20',
+    views: 19700,
+    stats: resourceStats('8 coins', 'T1', 'Copper Bar'),
+    sections: [
+      section('Where to find it', [
+        p('Copper nodes line the walls of the Verdant Cave and appear as surface boulders once three plots are restored. They respawn in about 40 seconds — fast enough to mine continuously.'),
+        table(
+          [
+            { key: 'node', label: 'Node type' },
+            { key: 'yield', label: 'Yield' },
+            { key: 'respawn', label: 'Respawn' },
+            { key: 'pickaxe', label: 'Min. pickaxe' },
+          ],
+          [
+            { node: 'Surface boulder', yield: '2–4', respawn: '40s', pickaxe: 'Rusted' },
+            { node: 'Cave vein', yield: '4–6', respawn: '60s', pickaxe: 'Rusted' },
+            { node: 'Rich vein (rare)', yield: '8–12', respawn: '4m', pickaxe: 'Rusted' },
+          ]
+        ),
+      ]),
+      section('What it is used for', [
+        list([
+          'Copper Bars — the Reinforced Pickaxe and every dungeon key needs them.',
+          'Dewcollector II — first big passive-income upgrade costs 30 ore.',
+          'Anvil of Renewal base cost — 25 ore to activate enchanting.',
+        ], { checks: true }),
+        note('tip', 'Never sell copper', 'Copper sells for almost nothing but gates every early upgrade. Bank it until Reinforced is crafted.'),
+      ]),
+    ],
+    related: ['ore-iron', 'pickaxe-rusted', 'loc-verdant-cave'],
+  }),
+
+  article({
+    id: 'ore-iron',
+    category: 'mining',
+    subcategory: 'ores',
+    title: 'Iron Ore',
+    description: 'The workhorse ore of the mid game — heavier swings required, far better rewards.',
+    keywords: ['iron', 'ore', 'smelt', 'midgame', 'steel'],
+    updated: '2026-10-19',
+    views: 16300,
+    stats: resourceStats('22 coins', 'T2', 'Iron Bar'),
+    sections: [
+      section('Where to find it', [
+        p('Iron appears deeper in the Verdant Cave and everywhere in the Deep Hollows. Nodes have more health than copper — bring at least a Reinforced Pickaxe or you will outlast the node\'s respawn timer.'),
+        table(
+          [
+            { key: 'node', label: 'Node type' },
+            { key: 'yield', label: 'Yield' },
+            { key: 'respawn', label: 'Respawn' },
+            { key: 'pickaxe', label: 'Min. pickaxe' },
+          ],
+          [
+            { node: 'Cave vein', yield: '3–5', respawn: '90s', pickaxe: 'Reinforced' },
+            { node: 'Hollows seam', yield: '5–8', respawn: '2m', pickaxe: 'Reinforced' },
+            { node: 'Iron heart (rare)', yield: '12–16', respawn: '8m', pickaxe: 'Reinforced' },
+          ]
+        ),
+      ]),
+      section('What it is used for', [
+        list([
+          'Iron Bars — Crystal Pickaxe, dungeon keys, anvil upgrades.',
+          'Stamina Siphon node (Roots path) — 40 iron per level.',
+          'Fishing rod upgrades — three tiers consume 90 iron total.',
+        ], { checks: true }),
+      ]),
+    ],
+    related: ['ore-copper', 'ore-gold', 'pickaxe-reinforced'],
+  }),
+
+  article({
+    id: 'ore-gold',
+    category: 'mining',
+    subcategory: 'ores',
+    title: 'Gold Ore',
+    description: 'Where mining starts paying rent — a mid-tier ore with the best coin-to-swing ratio in the game.',
+    keywords: ['gold', 'ore', 'coins', 'wealth', 'smelt'],
+    updated: '2026-10-18',
+    views: 14100,
+    stats: resourceStats('65 coins', 'T3', 'Gold Bar'),
+    sections: [
+      section('Where to find it', [
+        p('Gold veins concentrate in the Deep Hollows\' middle floors and the Crystal Caverns\' outer ring. Unlike copper and iron, gold is genuinely worth selling: coin income from a Hollows gold run outpaces farming at equal time investment.'),
+        table(
+          [
+            { key: 'node', label: 'Node type' },
+            { key: 'yield', label: 'Yield' },
+            { key: 'respawn', label: 'Respawn' },
+            { key: 'pickaxe', label: 'Min. pickaxe' },
+          ],
+          [
+            { node: 'Hollows seam', yield: '2–4', respawn: '3m', pickaxe: 'Reinforced' },
+            { node: 'Caverns ring vein', yield: '4–6', respawn: '4m', pickaxe: 'Crystal' },
+            { node: 'Gilded geode (rare)', yield: '10–14', respawn: '15m', pickaxe: 'Crystal' },
+          ]
+        ),
+      ]),
+      section('What it is used for', [
+        list([
+          'Gold Bars — sigil shop rerolls and late Rune Anvil recipes.',
+          'Bloom path nodes — two nodes each burn 60 gold.',
+          'Straight sale — the default choice until Bloom path node 4.',
+        ], { checks: true }),
+      ]),
+    ],
+    related: ['ore-iron', 'ore-voidstone', 'loc-crystal-caverns'],
+  }),
+
+  article({
+    id: 'ore-voidstone',
+    category: 'mining',
+    subcategory: 'ores',
+    title: 'Voidstone',
+    description: 'The rarest ore in the valley — reality-thin shards that power the Bloom path\'s most dangerous nodes.',
+    keywords: ['voidstone', 'rare', 'void', 'endgame', 'bloom'],
+    updated: '2026-10-16',
+    views: 9800,
+    featured: true,
+    stats: resourceStats('240 coins', 'T4', 'Cannot smelt'),
+    sections: [
+      section('Where to find it', [
+        p('Voidstone only drops from Void Touched nodes on the Deep Hollows\' third floor and below. These nodes fight back: each swing applies a stack of Unraveling (−2% max stamina, 10s). The stack falls off before the node breaks if your mining speed is high enough — that is the whole endgame gear check.'),
+        table(
+          [
+            { key: 'node', label: 'Node type' },
+            { key: 'yield', label: 'Yield' },
+            { key: 'respawn', label: 'Respawn' },
+            { key: 'pickaxe', label: 'Min. pickaxe' },
+          ],
+          [
+            { node: 'Void Touched seam', yield: '1–2', respawn: '30m', pickaxe: 'Crystal' },
+            { node: 'Null geode (rare)', yield: '3–5', respawn: '2h', pickaxe: 'Crystal +2 enchants' },
+            { node: 'Hollows boss nodules', yield: '2–4', respawn: 'Weekly', pickaxe: 'Crystal' },
+          ]
+        ),
+        note('warning', 'Unraveling stacks to 5', 'At 5 stacks your stamina bar greys out for 30 seconds. Escape the node and wait — mining through it wastes more time than the pause.'),
+      ]),
+      section('What it is used for', [
+        list([
+          'Bloom capstone "Root of the Void" — 25 voidstone, the gate to prestige multipliers.',
+          'Void runes — every fuse into the Void family consumes one shard.',
+          'Void Touched enchant — the only source of mining speed above the soft cap.',
+        ], { checks: true }),
+      ]),
+    ],
+    related: ['ore-gold', 'path-bloom', 'mining-speed'],
+  }),
+
+  article({
+    id: 'pickaxe-rusted',
+    category: 'mining',
+    subcategory: 'pickaxes',
+    title: 'Rusted Pickaxe',
+    description: 'Your first tool — slow, unreliable, and the reason every mining guide tells you to upgrade fast.',
+    keywords: ['rusted', 'pickaxe', 'starter', 'tool', 'tier 1'],
+    updated: '2026-10-14',
+    views: 11800,
+    stats: gearStats('6', '0.8/s', 'None'),
+    sections: [
+      section('Overview', [
+        p('Found at the mine entrance after restoring three plots. The Rusted Pickaxe breaks copper and iron, but slowly — a full cave loop takes about 12 minutes with it.'),
+        kv([
+          { key: 'Craft cost', value: 'Free (found)' },
+          { key: 'Upgrade path', value: 'Reinforced Pickaxe (15 copper, 8 wood)' },
+          { key: 'Enchant slots', value: '1' },
+        ]),
+      ]),
+      section('When to retire it', [
+        p('The moment you can afford the Reinforced Pickaxe. The rusted head has a hidden penalty — 10% chance a swing deals no damage — that no enchant removes. Keep it as a memento; it cannot be repaired.'),
+      ]),
+    ],
+    related: ['pickaxe-reinforced', 'ore-copper', 'mining-speed'],
+  }),
+
+  article({
+    id: 'pickaxe-reinforced',
+    category: 'mining',
+    subcategory: 'pickaxes',
+    title: 'Reinforced Pickaxe',
+    description: 'The dependable mid-game tool — iron-capped head, three enchant slots, and the first pickaxe with a signature perk.',
+    keywords: ['reinforced', 'pickaxe', 'iron', 'midgame', 'tool'],
+    updated: '2026-10-13',
+    views: 13600,
+    stats: gearStats('14', '1.1/s', 'Prospector: +10% rare node chance'),
+    sections: [
+      section('Overview', [
+        p('The Reinforced Pickaxe is where mining stops feeling like a chore. Its signature perk Prospector quietly rerolls the loot table on every broken node, which over a session is a double-digit increase in rare ore income.'),
+        kv([
+          { key: 'Craft cost', value: '15 copper ore, 8 wood, 200 coins' },
+          { key: 'Upgrade path', value: 'Crystal Pickaxe (25 iron bars, 5 gold bars)' },
+          { key: 'Enchant slots', value: '2' },
+        ]),
+      ]),
+      section('Recommended enchants', [
+        list([
+          'Sharp Head — +12% node damage (flat, stacks with everything).',
+          'Sweep — 15% chance a broken node damages the adjacent one.',
+        ], { checks: true }),
+        note('tip', 'Prospector scales with luck', 'Luck bonuses from Tide runes increase Prospector\'s reroll chance — the two systems were designed to pair.'),
+      ]),
+    ],
+    related: ['pickaxe-rusted', 'pickaxe-crystal', 'ore-iron'],
+  }),
+
+  article({
+    id: 'pickaxe-crystal',
+    category: 'mining',
+    subcategory: 'pickaxes',
+    title: 'Crystal Pickaxe',
+    description: 'The endgame tool — resonant crystal head, third enchant slot, and the only pickaxe that can break Void Touched nodes cleanly.',
+    keywords: ['crystal', 'pickaxe', 'endgame', 'void', 'tool'],
+    updated: '2026-10-20',
+    views: 10900,
+    featured: true,
+    stats: gearStats('26', '1.4/s', 'Resonance: +1 ore per node at full stamina'),
+    sections: [
+      section('Overview', [
+        p('Crafted at the Anvil of Renewal, the Crystal Pickaxe\'s Resonance perk converts full stamina into bonus yield — the reason stamina management matters in the endgame. Pair it with the Tide rune family and you mine at Resonance almost permanently.'),
+        kv([
+          { key: 'Craft cost', value: '25 iron bars, 5 gold bars, 1 Crystal Core' },
+          { key: 'Upgrade path', value: 'None — enchants are the progression' },
+          { key: 'Enchant slots', value: '3' },
+        ]),
+      ]),
+      section('Recommended enchants', [
+        list([
+          'Void Touched — +20% mining speed past the soft cap (costs 1 voidstone).',
+          'Resonant Echo — Resonance bonus applies at 80% stamina instead of 100%.',
+          'Sweep — adjacency damage, still the best quality-of-life enchant.',
+        ], { checks: true }),
+      ]),
+    ],
+    related: ['pickaxe-reinforced', 'ore-voidstone', 'mining-speed'],
+  }),
+
+  article({
+    id: 'pickaxe-enchants',
+    category: 'mining',
+    subcategory: 'pickaxes',
+    title: 'Pickaxe Enchantments',
+    description: 'How the Anvil of Renewal works, the full enchant pool, and reroll costs at every tier.',
+    keywords: ['enchant', 'anvil', 'reroll', 'sharp head', 'sweep'],
+    updated: '2026-10-11',
+    views: 8200,
+    sections: [
+      section('The enchant pool', [
+        table(
+          [
+            { key: 'enchant', label: 'Enchant' },
+            { key: 'effect', label: 'Effect' },
+            { key: 'slots', label: 'Stacks?' },
+          ],
+          [
+            { enchant: 'Sharp Head', effect: '+12% node damage', slots: 'Yes (multiplicative)' },
+            { enchant: 'Sweep', effect: '15% chance to damage adjacent node', slots: 'No' },
+            { enchant: 'Magnetic', effect: '+25% auto-collect radius', slots: 'No' },
+            { enchant: 'Resonant Echo', effect: 'Resonance threshold 100% → 80%', slots: 'No' },
+            { enchant: 'Void Touched', effect: '+20% speed past soft cap', slots: 'No' },
+            { enchant: 'Warm Grip', effect: 'Unraveling duration −50%', slots: 'Yes' },
+          ]
+        ),
+      ]),
+      section('Rerolling', [
+        p('Each reroll at the Anvil of Renewal costs 10 Rune Dust and replaces one random empty or chosen slot. Enchants never downgrade other slots — rerolls only touch the target slot.'),
+        note('warning', 'Void Touched consumes the shard', 'Rolling Void Touched eats one voidstone whether you keep the result or not. Reroll it last.'),
+      ]),
+    ],
+    related: ['pickaxe-crystal', 'rune-crafting', 'mining-speed'],
+  }),
+
+  article({
+    id: 'loc-verdant-cave',
+    category: 'mining',
+    subcategory: 'mining-locations',
+    title: 'Verdant Cave',
+    description: 'The sunlit surface mine where every miner starts — copper and iron in a safe, loop-friendly layout.',
+    keywords: ['verdant', 'cave', 'surface', 'copper', 'iron', 'location'],
+    updated: '2026-10-17',
+    views: 15400,
+    stats: locationStats('Surface', 'Restore 3 plots', 'Copper, Iron'),
+    sections: [
+      section('The layout', [
+        p('A single loop with two side pockets. Nodes are dense and respawn fast, so the optimal route is a steady circuit rather than a sprint: mine the outer ring, then cut through both pockets on the way back to the entrance.'),
+        list([
+          '12 copper nodes, 6 iron nodes on the standard loop.',
+          '1 Rich Vein spawns per loop at one of three fixed points.',
+          'No enemies, no hazards — the only cost is time.',
+        ]),
+      ]),
+      section('Efficient route', [
+        list([
+          'Enter and take the right wall — two copper nodes within the first ten seconds.',
+          'Mine the first pocket fully before the loop\'s midpoint; its iron respawns fastest.',
+          'End at the entrance-side rich vein spawn; if it did not spawn, exit and reset the loop.',
+        ], { ordered: true }),
+        note('tip', 'Bloomed nodes', 'Nodes left untouched for 10+ minutes bloom (+25% yield). On alt-account or return trips, always mine bloomed nodes first.'),
+      ]),
+    ],
+    related: ['loc-deep-hollows', 'ore-copper', 'mining-speed'],
+  }),
+
+  article({
+    id: 'loc-deep-hollows',
+    category: 'mining',
+    subcategory: 'mining-locations',
+    title: 'Deep Hollows',
+    description: 'The dark heart of the valley — iron and gold in abundance, voidstone for the brave, and darkness that taxes your torch.',
+    keywords: ['deep', 'hollows', 'gold', 'voidstone', 'dark', 'location'],
+    updated: '2026-10-16',
+    views: 13200,
+    stats: locationStats('Underground', 'Iron Pickaxe + torch', 'Iron, Gold, Voidstone'),
+    sections: [
+      section('The layout', [
+        p('Three descending floors connected by shafts. Light is the core mechanic: your torch radius shrinks as you descend, and unlit nodes cannot be targeted. Floor 3 adds Void Touched nodes and the Unraveling debuff.'),
+        table(
+          [
+            { key: 'floor', label: 'Floor' },
+            { key: 'pool', label: 'Ore pool' },
+            { key: 'hazard', label: 'Hazard' },
+          ],
+          [
+            { floor: '1 — Threshold', pool: 'Iron, some copper', hazard: 'None' },
+            { floor: '2 — Gilded Dark', pool: 'Iron, gold', hazard: 'Torch drain ×1.5' },
+            { floor: '3 — The Thin Place', pool: 'Gold, voidstone', hazard: 'Unraveling stacks' },
+          ]
+        ),
+      ]),
+      section('Preparation checklist', [
+        list([
+          'Torch upgraded to at least Oil-Fed (12 minutes of floor-3 light).',
+          'Warm Grip enchant if mining voidstone — halves Unraveling duration.',
+          'A cooked meal with stamina regen; Unraveling + empty stamina is a death loop.',
+        ], { checks: true }),
+        note('warning', 'Death is cheap here', 'Fainting in the Hollows teleports you to the entrance and costs nothing but the walk. Do not panic-exit over debuffs — only over lost time.'),
+      ]),
+    ],
+    related: ['ore-voidstone', 'loc-crystal-caverns', 'mining-speed'],
+  }),
+
+  article({
+    id: 'loc-crystal-caverns',
+    category: 'mining',
+    subcategory: 'mining-locations',
+    title: 'Crystal Caverns',
+    description: 'The resonant deep — the fastest XP and gold per hour in the game, locked behind the Crystal Pickaxe.',
+    keywords: ['crystal', 'caverns', 'xp', 'gold', 'endgame', 'location'],
+    updated: '2026-10-15',
+    views: 10100,
+    stats: locationStats('Deep underground', 'Crystal Pickaxe', 'Gold, Crystal Cores'),
+    sections: [
+      section('The layout', [
+        p('A wide outer ring of gold and crystal nodes around a still, glowing center. There are no hazards — the caverns\' challenge is economic: nodes are tanky and you are racing the respawn clock, not monsters.'),
+        list([
+          '16 ring veins (gold) + 4 Crystal Core nodes on a fixed 20-minute cycle.',
+          'Crystal Cores are the Crystal Pickaxe craft material and weekly rune-fuse fuel.',
+          'Fastest mining XP in the game: about 2.4× the Hollows on equal gear.',
+        ]),
+      ]),
+      section('The core cycle', [
+        p('Crystal Core nodes respawn every 20 minutes from server tick, not from when you mine them. The community rhythm is therefore "two loops, one core" — fill the ring twice, then grab whichever core is up. Three cores per hour is a good pace.'),
+      ]),
+    ],
+    related: ['ore-gold', 'pickaxe-crystal', 'node-respawn'],
+  }),
+
+  article({
+    id: 'mining-speed',
+    category: 'mining',
+    subcategory: 'mining-mechanics',
+    title: 'Mining Speed & Stamina',
+    description: 'The actual speed formula, what multiplies and what adds, and how stamina interacts with the Crystal Pickaxe.',
+    keywords: ['speed', 'stamina', 'formula', 'multiplier', 'mechanics'],
+    updated: '2026-10-23',
+    views: 8700,
+    stats: [
+      stat('Soft cap', '+150% speed', 'gauge'),
+      stat('Stamina pool', '100 base', 'heart'),
+      stat('Swing cost', '2 stamina', 'pickaxe'),
+    ],
+    sections: [
+      section('The formula', [
+        p('Break time = Node HP ÷ Effective Power, where Effective Power = Pickaxe Power × (1 + Speed Bonuses). Speed bonuses from perks and food are additive with each other, then multiply the pickaxe\'s base power once — which is why stacking small bonuses feels weak and why the Void Touched enchant feels huge.'),
+        table(
+          [
+            { key: 'source', label: 'Bonus source' },
+            { key: 'type', label: 'Type' },
+            { key: 'max', label: 'Typical max' },
+          ],
+          [
+            { source: 'Growth path nodes', type: 'Additive', max: '+60%' },
+            { source: 'Gathering perks', type: 'Additive', max: '+45%' },
+            { source: 'Cooked meals', type: 'Additive, timed', max: '+15%' },
+            { source: 'Void Touched enchant', type: 'Post-cap', max: '+20%' },
+            { source: 'Tide rune set (Riptide)', type: 'Multiplicative', max: '×1.25' },
+          ]
+        ),
+      ]),
+      section('Stamina economics', [
+        list([
+          'Every swing costs 2 stamina; the pool regenerates 1 per second, faster with Tide runes.',
+          'At zero stamina swings deal 30% damage — never fully empty the bar.',
+          'Resonance (Crystal Pickaxe) pays +1 ore per node while the bar is above 80% (or 100% without the echo enchant).',
+        ]),
+        note('tip', 'Pace, don\'t sprint', 'Mining at ~70% average stamina with Resonance active beats pure sprint mining by roughly 8% yield per hour.'),
+      ]),
+    ],
+    related: ['node-respawn', 'pickaxe-crystal', 'rune-ember'],
+  }),
+
+  article({
+    id: 'node-respawn',
+    category: 'mining',
+    subcategory: 'mining-mechanics',
+    title: 'Ore Respawn Timers',
+    description: 'Every node\'s respawn clock — from 40-second copper to the 2-hour null geodes — and how bloom bonuses work.',
+    keywords: ['respawn', 'timer', 'bloom', 'cycle', 'mechanics'],
+    updated: '2026-10-22',
+    views: 6900,
+    sections: [
+      section('Respawn table', [
+        table(
+          [
+            { key: 'node', label: 'Node' },
+            { key: 'respawn', label: 'Respawn' },
+            { key: 'bloom', label: 'Bloom time' },
+          ],
+          [
+            { node: 'Surface boulder (copper)', respawn: '40s', bloom: '10 min' },
+            { node: 'Cave vein (copper/iron)', respawn: '60–90s', bloom: '10 min' },
+            { node: 'Seam (iron/gold)', respawn: '2–3 min', bloom: '12 min' },
+            { node: 'Rich vein / geode', respawn: '4–15 min', bloom: '15 min' },
+            { node: 'Void Touched seam', respawn: '30 min', bloom: 'Never' },
+            { node: 'Null geode', respawn: '2 h', bloom: 'Never' },
+            { node: 'Crystal Core', respawn: '20 min (global clock)', bloom: 'Never' },
+          ]
+        ),
+      ]),
+      section('Bloom bonuses', [
+        p('A node left unmined for its bloom time grows flowering overgrowth and yields +25%. Bloomed nodes are the reason offline mining (the Auto-swing perk) often out-earns active loops: the perk pauses 90 seconds between nodes, quietly farming bloom.'),
+      ]),
+    ],
+    related: ['mining-speed', 'offline-progress', 'loc-crystal-caverns'],
+  }),
+];
+
+
+// ==== ARTIGOS: DUNGEON ====
+
+
+
+
+const dungeonArticles = [
+
+  article({
+    id: 'dun-mossy-depths',
+    category: 'dungeon',
+    subcategory: 'dungeons',
+    title: 'Mossy Depths',
+    description: 'The first dungeon — five gentle floors, one patient boss, and the loot table that teaches you how runs work.',
+    keywords: ['mossy', 'depths', 'dungeon', 'first', 'beginner'],
+    updated: '2026-10-18',
+    views: 15800,
+    stats: [
+      stat('Floors', '5', 'layers'),
+      stat('Torch base', '10 min', 'clock'),
+      stat('Boss', 'Rotmother', 'sword'),
+    ],
+    sections: [
+      section('Overview', [
+        p('The Mossy Depths is the tutorial dungeon, but it still teaches real mechanics: floor modifiers start here, elites start here, and the Rotmother is the first fight that punishes panic.'),
+        kv([
+          { key: 'Unlock', value: 'Iron Pickaxe + Mossy Key (1 iron bar, 2 copper bars)' },
+          { key: 'Modifier pool', value: 'Benign — longer respawns, fogged minimap' },
+          { key: 'Boss unique', value: 'Rotmother\'s Sigil (key material for Fungal Warren)' },
+        ]),
+      ]),
+      section('Run strategy', [
+        list([
+          'Floors 1–3: clear everything — this early, XP is worth more than speed.',
+          'Floor 4: skip the elite room unless your torch shows 6+ minutes left.',
+          'Floor 5: fight the boss; even a loss pays the floor chest.',
+        ], { ordered: true }),
+        note('tip', 'The torch is the real timer', 'Base torch is 10 minutes; the Depths is clearable in 7. Learn your pace here — the Warren will not be so kind.'),
+      ]),
+    ],
+    related: ['dun-fungal-warren', 'boss-rotmother', 'chest-tiers'],
+  }),
+
+  article({
+    id: 'dun-fungal-warren',
+    category: 'dungeon',
+    subcategory: 'dungeons',
+    title: 'Fungal Warren',
+    description: 'The rune dungeon — spore clouds, branching floors and the best runes-per-hour in the game.',
+    keywords: ['fungal', 'warren', 'dungeon', 'spore', 'runes'],
+    updated: '2026-10-17',
+    views: 13700,
+    featured: true,
+    stats: [
+      stat('Floors', '7', 'layers'),
+      stat('Torch base', '12 min', 'clock'),
+      stat('Boss', 'The Undergrowth', 'sword'),
+    ],
+    sections: [
+      section('Overview', [
+        p('The Warren\'s gimmick is spore density: rooms fill with drifting clouds that stack a slow on contact. Movement discipline matters more than damage here. It is also the community\'s rune farm of choice — Sporeling kills drop rune dust at absurd rates.'),
+        kv([
+          { key: 'Unlock', value: 'Rotmother\'s Sigil + Warren Key (2 iron bars)' },
+          { key: 'Modifier pool', value: 'Mixed — spore surges, dense elite floors, double elite rooms' },
+          { key: 'Boss unique', value: 'Undergrowth Heart (Sunken Vault key material)' },
+        ]),
+      ]),
+      section('Run strategy', [
+        list([
+          'Buy the Warren map from the sigil shop before your first run — branch choice is half the difficulty.',
+          'Take left branches on spore-surge floors: the surge spawns from the right vents.',
+          'Save the second wind meal for floor 6; the pre-boss elite room is the run-killer.',
+        ], { ordered: true }),
+        note('warning', 'Do not tank the clouds', 'The slow stacks to 80% movement reduction and outlasts any meal. Route around clouds; fight only what blocks the path.'),
+      ]),
+    ],
+    related: ['dun-sunken-vault', 'boss-undergrowth', 'rune-farms'],
+  }),
+
+  article({
+    id: 'dun-sunken-vault',
+    category: 'dungeon',
+    subcategory: 'dungeons',
+    title: 'Sunken Vault',
+    description: 'The final dungeon — ten floors of the old valley\'s archives, drowning in something that is not water.',
+    keywords: ['sunken', 'vault', 'dungeon', 'endgame', 'final'],
+    updated: '2026-10-16',
+    views: 11400,
+    stats: [
+      stat('Floors', '10', 'layers'),
+      stat('Torch base', '15 min', 'clock'),
+      stat('Boss', 'Mycelium King', 'sword'),
+    ],
+    sections: [
+      section('Overview', [
+        p('The Vault is the endgame check: ten floors, the harshest modifier pool, and the Mycelium King waiting at the bottom of a drowned archive. The dungeon pays in Essence on clear — the prestige currency — so even failed deep runs have value.'),
+        kv([
+          { key: 'Unlock', value: 'Undergrowth Heart + Vault Key (3 gold bars, 1 voidstone)' },
+          { key: 'Modifier pool', value: 'Hostile — cursed chests, darkness floors, elite packs' },
+          { key: 'Boss unique', value: 'Mycelium Crown (prestige multiplier +1%)' },
+        ]),
+      ]),
+      section('Run strategy', [
+        list([
+          'Floors 1–5: standard clear. Banking chests early funds the attempt even on death.',
+          'Floors 6–8: take only left branches — the right wing floods on darkness floors.',
+          'Floor 9: the Warden of Seeds miniboss guards the last torch refill. Win or extract.',
+          'Floor 10: the King. Bring Rootwall; his second phase one-shots anything without it.',
+        ], { ordered: true }),
+        note('warning', 'Cursed chests are honest', 'A cursed chest always states its price before you open it. Reading them is free. Not reading them is how runs die at floor 9.'),
+      ]),
+    ],
+    related: ['boss-mycelium-king', 'dun-fungal-warren', 'chest-tiers'],
+  }),
+
+  article({
+    id: 'enemy-husk-crawler',
+    category: 'dungeon',
+    subcategory: 'enemies',
+    title: 'Husk Crawler',
+    description: 'The Depths\' floor pest — fast, fragile, and the reason new runners learn to block-cancel.',
+    keywords: ['husk', 'crawler', 'enemy', 'bestiary', 'depths'],
+    updated: '2026-10-15',
+    views: 9400,
+    stats: creatureStats('45 HP', '6 per hit', 'Rune dust (15%)'),
+    sections: [
+      section('Behavior', [
+        p('Crawlers patrol in short bursts with a two-tell attack: a rear-leg scrape (wind-up) followed by a lunge. The lunge is interruptible — one hit during the scrape cancels it entirely.'),
+        kv([
+          { key: 'Found in', value: 'Depths floors 1–4, Warren floor 1' },
+          { key: 'Attack tell', value: 'Rear-leg scrape, 0.8s wind-up' },
+          { key: 'Kill priority', value: 'Low — free XP, minimal threat' },
+        ]),
+      ]),
+      section('Drops', [
+        list([
+          'Rune dust — 15% chance, 1–2 dust.',
+          'Torch shards — 8% chance on Depths floors.',
+          'Nothing else. Crawlers are the wiki\'s agreed "free dust" mob.',
+        ]),
+      ]),
+    ],
+    related: ['enemy-sporeling', 'dun-mossy-depths', 'rune-farms'],
+  }),
+
+  article({
+    id: 'enemy-sporeling',
+    category: 'dungeon',
+    subcategory: 'enemies',
+    title: 'Sporeling',
+    description: 'The Warren\'s walking mushroom — annoying in packs, lucrative in death, and the backbone of rune farming.',
+    keywords: ['sporeling', 'enemy', 'mushroom', 'rune dust', 'warren'],
+    updated: '2026-10-14',
+    views: 10600,
+    stats: creatureStats('70 HP', '9 per hit', 'Rune dust (45%)'),
+    sections: [
+      section('Behavior', [
+        p('Sporelings shamble toward you and burst at melee range, releasing a small cloud that stacks the same slow as the Warren\'s room hazards. The burst is survivable once; chained bursts in packs are the classic Warren death.'),
+        kv([
+          { key: 'Found in', value: 'Warren floors 1–6' },
+          { key: 'Attack tell', value: 'Cap inflates and glow brightens, 1.1s before burst' },
+          { key: 'Kill priority', value: 'Medium — kill at range or not at all' },
+        ]),
+      ]),
+      section('Farming value', [
+        p('At a 45% dust drop, a disciplined sporeling route clears 60–80 dust per run — the input cost of two rune rerolls. The community "dust circuit" (floor 2 loop, no boss) exists purely to harvest them.'),
+        note('tip', 'Ranged burst-cancels', 'A hit at range during the cap-inflate forces the sporeling to burst early, before it reaches you. The cloud then spawns where it stood — not where you stand.'),
+      ]),
+    ],
+    related: ['enemy-husk-crawler', 'dun-fungal-warren', 'rune-farms'],
+  }),
+
+  article({
+    id: 'enemy-thorn-beast',
+    category: 'dungeon',
+    subcategory: 'enemies',
+    title: 'Thorn Beast',
+    description: 'The Depths\' elite — a wall of bramble that punishes greedy damage windows and guards the best regular loot.',
+    keywords: ['thorn', 'beast', 'elite', 'enemy', 'bramble'],
+    updated: '2026-10-13',
+    views: 8100,
+    stats: creatureStats('260 HP', '18 per hit', 'Chest shard (100%)'),
+    sections: [
+      section('Behavior', [
+        p('An elite with three attacks: a wide root slam (dodge sideways), a thorn volley (block or eat it), and — at 30% HP — Retaliation Bloom, a room-wide burst that one-shots anyone standing inside its ring. The ring telegraphs for 1.5 seconds; that is your window to walk out.'),
+        kv([
+          { key: 'Found in', value: 'Depths floor 4+, Warren elite rooms' },
+          { key: 'Attack tell', value: 'Green ring bloom, 1.5s, room-wide' },
+          { key: 'Kill priority', value: 'High on loot runs — 100% chest shard' },
+        ]),
+      ]),
+      section('Loot logic', [
+        p('Chest shards open the Depths\' bonus chests without keys. One shard per kill, no cap per run — elite-hunting runs (four elites, four shards, two bonus chests) beat standard clears on loot per minute in every dungeon.'),
+      ]),
+    ],
+    related: ['chest-tiers', 'dun-mossy-depths', 'boss-warden-of-seeds'],
+  }),
+
+  article({
+    id: 'boss-rotmother',
+    category: 'dungeon',
+    subcategory: 'bosses',
+    title: 'Rotmother',
+    description: 'The Depths\' patient matron — a three-phase fight about patience, positioning and not greed-hitting the eggs.',
+    keywords: ['rotmother', 'boss', 'depths', 'first boss', 'strategy'],
+    updated: '2026-10-17',
+    views: 12300,
+    featured: true,
+    stats: [
+      stat('HP', '900', 'heart'),
+      stat('Phases', '3', 'layers'),
+      stat('Unique', 'Rotmother\'s Sigil', 'star'),
+    ],
+    sections: [
+      section('Phase guide', [
+        table(
+          [
+            { key: 'phase', label: 'Phase' },
+            { key: 'hp', label: 'HP window' },
+            { key: 'pattern', label: 'Pattern' },
+          ],
+          [
+            { phase: '1 — Creep', hp: '100–70%', pattern: 'Slow chase + spit volley; learn her spacing here' },
+            { phase: '2 — Brood', hp: '70–35%', pattern: 'Spawns 2 egg clusters — destroy them or she heals 5%/s near them' },
+            { phase: '3 — Desperation', hp: '35–0%', pattern: 'Enrage: faster, egg clusters respawn once; burst window after each spit' },
+          ]
+        ),
+      ]),
+      section('The one rule', [
+        p('Eggs are the fight. Phase 2 is not a damage race — it is an egg-clearing checklist with a boss in the way. Every Rotmother wipe in the game\'s history happened because someone tried to skip the eggs.'),
+        note('tip', 'Bring Bark Skin 2+', 'Phase 3\'s spit volley hurts through everything else. Roots path node 2 in Bark Skin turns her into a straight damage check you will pass.'),
+      ]),
+    ],
+    related: ['dun-mossy-depths', 'boss-undergrowth', 'path-roots'],
+  }),
+
+  article({
+    id: 'boss-undergrowth',
+    category: 'dungeon',
+    subcategory: 'bosses',
+    title: 'The Undergrowth',
+    description: 'The Warren\'s living maze — a four-phase hydra of vines that rewrites the arena while you fight in it.',
+    keywords: ['undergrowth', 'boss', 'warren', 'vines', 'strategy'],
+    updated: '2026-10-16',
+    views: 10800,
+    stats: [
+      stat('HP', '1,800', 'heart'),
+      stat('Phases', '4', 'layers'),
+      stat('Unique', 'Undergrowth Heart', 'star'),
+    ],
+    sections: [
+      section('Phase guide', [
+        table(
+          [
+            { key: 'phase', label: 'Phase' },
+            { key: 'hp', label: 'HP window' },
+            { key: 'pattern', label: 'Pattern' },
+          ],
+          [
+            { phase: '1 — Reach', hp: '100–75%', pattern: 'Vine whips from fixed nodes; destroy two nodes to shorten the reach' },
+            { phase: '2 — Maze', hp: '75–50%', pattern: 'Arena walls shift; whips continue — re-learn the room mid-fight' },
+            { phase: '3 — Bloom', hp: '50–20%', pattern: 'Sporelings spawn every 15s; kill only what blocks you' },
+            { phase: '4 — Heart', hp: '20–0%', pattern: 'Core exposed, all attacks stop except a 3-hit slam loop' },
+          ]
+        ),
+      ]),
+      section('The one rule', [
+        p('Phase 4 is a gift — a guaranteed damage window with no mechanics. The fight kills people in phase 2, when the maze shifts under their feet. Walk the new walls once, calmly, before re-engaging; the whips do not chase.'),
+      ]),
+    ],
+    related: ['dun-fungal-warren', 'boss-rotmother', 'enemy-sporeling'],
+  }),
+
+  article({
+    id: 'boss-warden-of-seeds',
+    category: 'dungeon',
+    subcategory: 'bosses',
+    title: 'Warden of Seeds',
+    description: 'The Vault\'s floor-9 miniboss — technically optional, practically mandatory, and the best meal-ingredient drop in the game.',
+    keywords: ['warden', 'seeds', 'miniboss', 'vault', 'optional'],
+    updated: '2026-10-15',
+    views: 7600,
+    stats: [
+      stat('HP', '2,400', 'heart'),
+      stat('Phases', '2', 'layers'),
+      stat('Unique', 'Warden\'s Pouch (materials)', 'star'),
+    ],
+    sections: [
+      section('Phase guide', [
+        table(
+          [
+            { key: 'phase', label: 'Phase' },
+            { key: 'hp', label: 'HP window' },
+            { key: 'pattern', label: 'Pattern' },
+          ],
+          [
+            { phase: '1 — Vigil', hp: '100–55%', pattern: 'Shield up; only vulnerable during seed-toss recovery (1.2s)' },
+            { phase: '2 — Germination', hp: '55–0%', pattern: 'Plants seed turrets; destroys them for 4s damage windows' },
+          ]
+        ),
+      ]),
+      section('Why fight it', [
+        p('Skipping the Warden is legal — the Vault exit is right there. But its Pouch carries Sunsquash seeds, the only ingredient for the Feast table\'s top-tier torch meals, and it guards the floor 9 torch refill. If your run plan includes floor 10, the Warden is not optional in practice.'),
+      ]),
+    ],
+    related: ['dun-sunken-vault', 'skill-cooking', 'boss-mycelium-king'],
+  }),
+
+  article({
+    id: 'boss-mycelium-king',
+    category: 'dungeon',
+    subcategory: 'bosses',
+    title: 'Mycelium King',
+    description: 'The final boss — a five-phase endurance fight where the arena itself is the health bar.',
+    keywords: ['mycelium', 'king', 'final boss', 'vault', 'endgame'],
+    updated: '2026-10-19',
+    views: 9700,
+    featured: true,
+    stats: [
+      stat('HP', '4,200', 'heart'),
+      stat('Phases', '5', 'layers'),
+      stat('Unique', 'Mycelium Crown', 'star'),
+    ],
+    sections: [
+      section('Phase guide', [
+        table(
+          [
+            { key: 'phase', label: 'Phase' },
+            { key: 'hp', label: 'HP window' },
+            { key: 'pattern', label: 'Pattern' },
+          ],
+          [
+            { phase: '1 — Audience', hp: '100–85%', pattern: 'Standard melee exchange; his combo has a guaranteed 3-hit block window' },
+            { phase: '2 — Court', hp: '85–65%', pattern: 'Summons 2 Husk Alpha adds; kill order is adds, always' },
+            { phase: '3 — Drowning', hp: '65–40%', pattern: 'Floor floods upward — stand on the rising spore pillars or take stacking damage' },
+            { phase: '4 — Crown', hp: '40–15%', pattern: 'Enrage slams; Rootwall check — without it, one slam kills' },
+            { phase: '5 — Garden', hp: '15–0%', pattern: 'Arena becomes a garden; all damage taken doubled, all damage dealt doubled' },
+          ]
+        ),
+      ]),
+      section('The one rule', [
+        p('Phase 3 ends runs, not phase 4. The pillar rhythm is fixed — two short, one tall, repeat — and learning it in a failed attempt costs one torch. Practice it once with an extraction planned at 70% and you will never see phase 4 unprepared again.'),
+        note('warning', 'Phase 5 is a coin flip you rig', 'Doubled damage both ways means the first hit wins. Enter phase 5 above 60% HP with a meal buff, or extract and bank the chests.'),
+      ]),
+    ],
+    related: ['dun-sunken-vault', 'boss-warden-of-seeds', 'path-roots'],
+  }),
+
+  article({
+    id: 'chest-tiers',
+    category: 'dungeon',
+    subcategory: 'rewards',
+    title: 'Chest Tiers',
+    description: 'Wooden to Vault — every chest tier, where it spawns and its expected value in coins and dust.',
+    keywords: ['chests', 'loot', 'tiers', 'value', 'rewards'],
+    updated: '2026-10-18',
+    views: 9200,
+    sections: [
+      section('The four tiers', [
+        table(
+          [
+            { key: 'chest', label: 'Chest' },
+            { key: 'found', label: 'Found' },
+            { key: 'expected value', label: 'Expected value' },
+          ],
+          [
+            { chest: 'Wooden', found: 'Depths floors 1–3', ev: '~90 coins, 5 dust' },
+            { chest: 'Ironbound', found: 'Depths 4–5, Warren 1–3', ev: '~210 coins, 14 dust' },
+            { chest: 'Gilded', found: 'Warren 4–7', ev: '~480 coins, 1 fragment' },
+            { chest: 'Vault', found: 'Vault floors 6+', ev: '~1,100 coins, 2 fragments, essence' },
+          ]
+        ),
+      ]),
+      section('Chest economics', [
+        p('Expected value scales super-linearly with depth: a Vault chest is worth twelve Wooden chests, but the floors leading to it cost barely twice the torch time. Deep runs win — the community extraction rule is "extract at floor 7 or don\'t extract at all."'),
+        note('warning', 'Torch-death forfeits', 'A chest opened while the torch is under 30 seconds sometimes drops zero (known issue). Extract early rather than racing the last seconds.'),
+      ]),
+    ],
+    related: ['dun-sunken-vault', 'sigil-shop', 'dungeon-drop-rates'],
+  }),
+
+  article({
+    id: 'sigil-shop',
+    category: 'dungeon',
+    subcategory: 'rewards',
+    title: 'The Sigil Shop',
+    description: 'What Dungeon Sigils buy, what to buy first, and the weekly rotation worth waiting for.',
+    keywords: ['sigils', 'shop', 'currency', 'weekly', 'rerolls'],
+    updated: '2026-10-17',
+    views: 8400,
+    sections: [
+      section('The standing stock', [
+        table(
+          [
+            { key: 'item', label: 'Item' },
+            { key: 'cost', label: 'Cost' },
+            { key: 'verdict', label: 'Verdict' },
+          ],
+          [
+            { item: 'Torch Upgrade Kit', cost: '15 sigils', verdict: 'Buy first, always' },
+            { item: 'Warren Map', cost: '10 sigils', verdict: 'One-time, essential' },
+            { item: 'Key material bundle', cost: '20 sigils', verdict: 'Only when short' },
+            { item: 'Rune fragment', cost: '35 sigils', verdict: 'Good value after maps' },
+            { item: 'Stock reroll', cost: '5 sigils', verdict: 'Rarely worth it' },
+          ]
+        ),
+      ]),
+      section('The weekly rotation', [
+        p('Friday resets bring one rotation slot: historically it has offered discounted uniques, essence bundles and — twice — the Golden Sapling cosmetic. Rotation essence bundles are the only sigil purchase that beats fragments; wait for Fridays if you can afford to.'),
+      ]),
+    ],
+    related: ['chest-tiers', 'dun-fungal-warren', 'common-mistakes'],
+  }),
+
+  article({
+    id: 'dungeon-drop-rates',
+    category: 'dungeon',
+    subcategory: 'rewards',
+    title: 'Drop Rates',
+    description: 'Community-verified drop rates for every dungeon reward source — the honest math behind loot feelings.',
+    keywords: ['drop rates', 'rng', 'loot', 'statistics', 'community'],
+    updated: '2026-10-21',
+    views: 6700,
+    sections: [
+      section('Verified rates', [
+        table(
+          [
+            { key: 'source', label: 'Source' },
+            { key: 'drop', label: 'Drop' },
+            { key: 'rate', label: 'Rate' },
+          ],
+          [
+            { source: 'Husk Crawler', drop: 'Rune dust', rate: '15%' },
+            { source: 'Sporeling', drop: 'Rune dust', rate: '45%' },
+            { source: 'Thorn Beast', drop: 'Chest shard', rate: '100%' },
+            { source: 'Boss first kill', drop: 'Unique', rate: '100%' },
+            { source: 'Boss repeat kill', drop: 'Unique', rate: '12%' },
+            { source: 'Vault chest', drop: 'Essence', rate: '38%' },
+          ]
+        ),
+        p('Rates are pooled from 40,000+ logged runs by the community tracker project. Sample sizes are large enough that these are accurate to within a fraction of a percent.'),
+      ]),
+      section('Reading RNG honestly', [
+        p('The 12% repeat-boss unique rate is the game\'s most misunderstood number. Over ten repeat kills, the chance of at least one unique is 72% — not 120%. Plan prestige timelines around the cumulative math, not the per-kill feeling.'),
+      ]),
+    ],
+    related: ['chest-tiers', 'boss-mycelium-king', 'rune-farms'],
+  }),
+];
+
+
+// (RUNES: os artigos placeholder das familias antigas foram removidos ao criar
+// as categorias reais - os dados das runas vivem agora em js/data/runes.js)
+
+// ==== ARTIGOS: PERKS ====
+
+
+
+
+const perkArticles = [
+
+  article({
+    id: 'gathering-perks',
+    category: 'perks',
+    subcategory: 'perk-types',
+    title: 'Gathering Perks',
+    description: 'The economy family of permanent passives — yields, speeds and drop rates that never turn off.',
+    keywords: ['gathering', 'perks', 'economy', 'yield', 'passive'],
+    updated: '2026-10-17',
+    views: 10100,
+    stats: [
+      stat('Perks in family', '11', 'list'),
+      stat('Point cost', '5–12 each', 'coin'),
+      stat('Synergy', 'Growth path', 'branch'),
+    ],
+    sections: [
+      section('The lineup', [
+        table(
+          [
+            { key: 'perk', label: 'Perk' },
+            { key: 'cost', label: 'Cost' },
+            { key: 'effect', label: 'Effect' },
+          ],
+          [
+            { perk: 'Green Thumb I–II', cost: '5 + 8', effect: '+8% / +15% life-skill yield' },
+            { perk: 'Ore Sense', cost: '6', effect: 'Rare nodes ping on the minimap' },
+            { perk: 'Quick Hands', cost: '7', effect: '+10% gathering action speed' },
+            { perk: 'Deep Veins', cost: '10', effect: '+12% ore yield' },
+            { perk: 'Harvest Cycle', cost: '12', effect: 'Farm plots grow 15% faster' },
+          ]
+        ),
+      ]),
+      section('Buying order', [
+        p('Quick Hands first — action speed multiplies every gather in the game, including the ones other perks boost. Ore Sense second: information is yield. The yield percentages last; they are additive sources and the tree already saturates that bucket.'),
+      ]),
+    ],
+    related: ['combat-perks', 'utility-perks', 'perk-stacking'],
+  }),
+
+  article({
+    id: 'combat-perks',
+    category: 'perks',
+    subcategory: 'perk-types',
+    title: 'Combat Perks',
+    description: 'The dungeon family — damage, defense and the torch perks that decide how deep a run can go.',
+    keywords: ['combat', 'perks', 'dungeon', 'damage', 'torch'],
+    updated: '2026-10-16',
+    views: 9400,
+    stats: [
+      stat('Perks in family', '10', 'list'),
+      stat('Point cost', '6–15 each', 'coin'),
+      stat('Synergy', 'Roots path', 'branch'),
+    ],
+    sections: [
+      section('The lineup', [
+        table(
+          [
+            { key: 'perk', label: 'Perk' },
+            { key: 'cost', label: 'Cost' },
+            { key: 'effect', label: 'Effect' },
+          ],
+          [
+            { perk: 'Keen Strikes I–II', cost: '6 + 9', effect: '+7% / +14% damage' },
+            { perk: 'Torchbearer\'s Toll', cost: '8', effect: '+60s torch time' },
+            { perk: 'Thick Hide', cost: '8', effect: '−10% damage taken' },
+            { perk: 'Adrenaline', cost: '11', effect: '+20% damage below 40% HP' },
+            { perk: 'Executioner', cost: '15', effect: 'Elite kills restore 10% torch' },
+          ]
+        ),
+      ]),
+      section('Buying order', [
+        p('Torchbearer\'s Toll is the best combat perk point-for-point — torch time converts directly into chest value. Keen Strikes next. Executioner is a luxury for Vault runners; Adrenaline only for Bleeding Edge socket builds.'),
+      ]),
+    ],
+    related: ['gathering-perks', 'utility-perks', 'chest-tiers'],
+  }),
+
+  article({
+    id: 'utility-perks',
+    category: 'perks',
+    subcategory: 'perk-types',
+    title: 'Utility Perks',
+    description: 'Quality-of-life permanents — auto-smelting, offline caps and the map tools that quietly save hours.',
+    keywords: ['utility', 'perks', 'qol', 'offline', 'auto'],
+    updated: '2026-10-15',
+    views: 8200,
+    stats: [
+      stat('Perks in family', '10', 'list'),
+      stat('Point cost', '5–12 each', 'coin'),
+      stat('Fan favorite', 'Night Shift', 'star'),
+    ],
+    sections: [
+      section('The lineup', [
+        table(
+          [
+            { key: 'perk', label: 'Perk' },
+            { key: 'cost', label: 'Cost' },
+            { key: 'effect', label: 'Effect' },
+          ],
+          [
+            { perk: 'Auto-Swing', cost: '10', effect: 'One mine node works offline' },
+            { perk: 'Night Shift', cost: '12', effect: 'Offline cap 8h → 12h' },
+            { perk: 'Ledger Memory', cost: '5', effect: 'Ledger shows 7-day history' },
+            { perk: 'Cartographer', cost: '7', effect: 'Dungeon maps persist per floor' },
+            { perk: 'Auto-Smelt', cost: '9', effect: 'Ore smelts on pickup when bars are needed' },
+          ]
+        ),
+      ]),
+      section('Buying order', [
+        p('Auto-Swing is the single strongest perk in the game for idle players and merely great for active ones — offline mining with bloom windows out-earns most active loops. Night Shift pairs with it. The rest are comfort; buy them when points are spare.'),
+      ]),
+    ],
+    related: ['offline-progress', 'gathering-perks', 'node-respawn'],
+  }),
+
+  article({
+    id: 'perk-stacking',
+    category: 'perks',
+    subcategory: 'perk-effects',
+    title: 'Stacking Order',
+    description: 'The order the game applies bonuses in — where perks sit relative to runes, tree nodes and food.',
+    keywords: ['stacking', 'order', 'multiplicative', 'additive', 'math'],
+    updated: '2026-10-19',
+    views: 7300,
+    sections: [
+      section('The pipeline', [
+        p('The game applies bonuses in a fixed order. Within each step, same-bucket sources are additive; each step then multiplies the result of the previous one.'),
+        list([
+          'Step 1 — Base value (tool power, crop yield, enemy damage).',
+          'Step 2 — Tree path nodes (additive bucket).',
+          'Step 3 — Perks (additive bucket).',
+          'Step 4 — Rune affixes (additive bucket).',
+          'Step 5 — Meals (additive bucket, timed).',
+          'Step 6 — Set bonuses and special multipliers (Riptide, Overgrowth, prestige) — multiplicative.',
+        ], { ordered: true }),
+      ]),
+      section('Why order matters', [
+        p('Because perks are additive with tree nodes and runes, a +10% perk on a heavily-invested account adds less than it looks — the bucket it joins is already +80%. But because set bonuses multiply the whole pipeline, the Riptide set is worth more to a maxed account than to a fresh one, in absolute terms.'),
+        note('info', 'One-line heuristic', 'Perks fill buckets; sets multiply them. Buy perks to fill your weakest bucket, then buy a set to multiply everything at once.'),
+      ]),
+    ],
+    related: ['diminishing-returns', 'set-bonuses', 'notable-combos'],
+  }),
+
+  article({
+    id: 'diminishing-returns',
+    category: 'perks',
+    subcategory: 'perk-effects',
+    title: 'Diminishing Returns & Hidden Caps',
+    description: 'The three effects that silently cap earlier than their tooltips claim, and the community-tested table.',
+    keywords: ['diminishing', 'returns', 'caps', 'tooltips', 'testing'],
+    updated: '2026-10-18',
+    views: 5900,
+    sections: [
+      section('The three caps', [
+        table(
+          [
+            { key: 'effect', label: 'Effect' },
+            { key: 'tooltip', label: 'Tooltip says' },
+            { key: 'actual', label: 'Actually caps at' },
+          ],
+          [
+            { effect: 'Gathering action speed', tooltip: 'No cap listed', actual: '+65% — extras convert to 1:2 stamina regen' },
+            { effect: 'Crit chance', tooltip: 'No cap listed', actual: '75% — Wildfire burn still triggers on capped crits' },
+            { effect: 'Offline efficiency', tooltip: 'Stacks freely', actual: '80% — Night Shift + Void Patience + Everwake overcap' },
+          ]
+        ),
+      ]),
+      section('Testing notes', [
+        p('All three caps are community-verified on v1.2.0 with the log-tracker project\'s dataset. The gathering-speed conversion is undocumented but consistent — overcapped Quick Hands builds still gain value, just in stamina rather than speed.'),
+      ]),
+    ],
+    related: ['perk-stacking', 'gathering-perks', 'offline-progress'],
+  }),
+
+  article({
+    id: 'perk-points',
+    category: 'perks',
+    subcategory: 'unlock-requirements',
+    title: 'Perk Points',
+    description: 'Every source of perk points in the game, the 62-point ceiling, and how respecs work.',
+    keywords: ['points', 'currency', 'sources', 'respec', 'ceiling'],
+    updated: '2026-10-16',
+    views: 8800,
+    sections: [
+      section('Point sources', [
+        table(
+          [
+            { key: 'source', label: 'Source' },
+            { key: 'points', label: 'Points' },
+            { key: 'repeatable', label: 'Repeatable' },
+          ],
+          [
+            { source: 'Achievement tiers', points: '18 total', repeat: 'No' },
+            { source: 'Life-skill Rank 10s', points: '4 (1 each)', repeat: 'Per skill' },
+            { source: 'Boss first kills', points: '4 (1 each)', repeat: 'No' },
+            { source: 'Prestige milestones', points: '24 total', repeat: 'Per prestige' },
+            { source: 'Hidden achievements', points: '12 total', repeat: 'No' },
+          ]
+        ),
+        p('Ceiling: 62 points across all sources. A full build costs 40–50 depending on family, which is why the buying-order articles exist — you will not afford everything for a long time.'),
+      ]),
+      section('Respec', [
+        p('Perk respecs are free and unlimited, unlike tree respecs. There is no reason to tolerate a bad build — respec before every dungeon session and after every new prestige if your setup changes.'),
+      ]),
+    ],
+    related: ['secret-perks', 'prestige-perks', 'respec-rules'],
+  }),
+
+  article({
+    id: 'prestige-perks',
+    category: 'perks',
+    subcategory: 'unlock-requirements',
+    title: 'Prestige-Gated Perks',
+    description: 'The six perks that only appear after prestige counts — and the counts that reveal them.',
+    keywords: ['prestige', 'gated', 'unlock', 'requirements', 'late'],
+    updated: '2026-10-14',
+    views: 6600,
+    sections: [
+      section('The gates', [
+        table(
+          [
+            { key: 'perk', label: 'Perk' },
+            { key: 'gate', label: 'Revealed at' },
+            { key: 'effect', label: 'Effect' },
+          ],
+          [
+            { perk: 'Old Roots', gate: 'Prestige 1', effect: 'Start each valley with 2 restored plots' },
+            { perk: 'Verdant Memory', gate: 'Prestige 2', effect: 'Keep 10% of sap on reset' },
+            { perk: 'Deep Acquaintance', gate: 'Prestige 3', effect: 'Dungeon keys cost 25% less' },
+            { perk: 'Seasoned Eye', gate: 'Prestige 5', effect: 'Rare node chance +15%' },
+            { perk: 'Valleyholder', gate: 'Prestige 8', effect: 'Start with the Ledger fully upgraded' },
+            { perk: 'Second Spring', gate: 'Prestige 10', effect: 'Prestige gains +25% (stacks with Root of the Void)' },
+          ]
+        ),
+      ]),
+      section('Prestige timing', [
+        p('The standard advice: first prestige at 10 boss kills or week 4, whichever arrives last. Earlier resets forfeit uniques that accelerate the next valley; later ones waste prestige-perk points you could be earning.'),
+      ]),
+    ],
+    related: ['perk-points', 'path-bloom', 'common-mistakes'],
+  }),
+
+  article({
+    id: 'secret-perks',
+    category: 'perks',
+    subcategory: 'unlock-requirements',
+    title: 'Secret Perks',
+    description: 'Four perks with undocumented triggers — the community\'s complete, verified list of how to find them.',
+    keywords: ['secret', 'hidden', 'perks', 'undocumented', 'verified'],
+    updated: '2026-10-20',
+    views: 11400,
+    featured: true,
+    sections: [
+      section('The four secrets', [
+        table(
+          [
+            { key: 'perk', label: 'Perk' },
+            { key: 'trigger', label: 'Trigger' },
+            { key: 'effect', label: 'Effect' },
+          ],
+          [
+            { perk: 'Nightbloom Oath', trigger: 'Unlock the Nightbloom node (see Hidden Gates)', effect: '+10% all yields during real-world night' },
+            { perk: 'The Empty Vessel', trigger: 'Unlock The Empty Node with 0 resources held', effect: 'Resource caps +20%' },
+            { perk: 'Song of Roots', trigger: '30 casts at Hollows Spring, then talk to the tree', effect: 'Torch time +10%' },
+            { perk: 'Cartographer\'s Debt', trigger: 'Die in all three dungeons once each', effect: 'Dungeon maps permanently revealed' },
+          ]
+        ),
+      ]),
+      section('Verification', [
+        p('All four triggers are verified on v1.2.0. Song of Roots is the fiddliest — the 30 casts must be before the conversation with the tree, in any order of days. Cartographer\'s Debt is the only one with no in-game hint at all; the community found it by diffing achievement flags.'),
+      ]),
+    ],
+    related: ['hidden-gates', 'perk-points', 'skill-fishing'],
+  }),
+];
+
+
+const ARTICLES = [
+  ...mainArticles, ...lifeArticles, ...treeArticles, ...miningArticles,
+  ...dungeonArticles, ...perkArticles,
+];
+
+const ARTICLE_INDEX = new Map(ARTICLES.map((a) => [a.id, a]));
+
+export { ARTICLES, ARTICLE_INDEX };

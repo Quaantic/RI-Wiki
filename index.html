@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#171B18" />
+  <meta
+    name="description"
+    content="RI Gaming Wiki — the community knowledge base for Regrowth Idle. Life skills, upgrade trees, mining, dungeons, runes and perks."
+  />
+  <title>RI Gaming Wiki</title>
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
+
+  <!-- Tema aplicado antes do CSS para nao piscar (padrao: dark) -->
+  <script>
+    try {
+      var t = localStorage.getItem('ri-theme');
+      if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+      if (localStorage.getItem('ri-motion') === '1') document.documentElement.classList.add('reduce-motion');
+      if (localStorage.getItem('ri-res-colors') === '0') document.documentElement.classList.add('res-off');
+      if (localStorage.getItem('ri-textures') === '0') document.documentElement.classList.add('tex-off');
+    } catch (e) {}
+  </script>
+
+  <!-- ================= Fonts ================= -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="css/tokens.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/pages.css" />
+</head>
+<body>
+  <a class="skip-link" href="#view">Skip to content</a>
+
+  <div class="app-shell">
+
+    <!-- ================= Sidebar ================= -->
+    <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+      <a class="sidebar__brand" href="#/">
+        <span data-emblem="32"></span>
+        <span class="sidebar__wordmark">
+          <b>RI&nbsp;Wiki</b>
+          <span>REGROWTH IDLE</span>
+        </span>
+      </a>
+
+      <nav class="sidebar__nav" id="sidebar-nav" aria-label="Wiki categories">
+        <span class="sidebar__label">Categories</span>
+      </nav>
+
+      <div class="sidebar__foot">
+        <a class="nav-item foot-link foot-link--updates" href="#/updates">
+          <span class="nav-item__icon" data-icon="scroll"></span>
+          <span>Update Log</span>
+          <span class="nav-badge" data-update-badge hidden>!</span>
+        </a>
+        <a class="nav-item foot-link foot-link--feedback" href="#/feedback">
+          <span class="nav-item__icon" data-icon="heart"></span>
+          <span>Feedback</span>
+        </a>
+        <a class="nav-item foot-link foot-link--credits" href="#/credits">
+          <span class="nav-item__icon" data-icon="star"></span>
+          <span>Credits</span>
+        </a>
+        <div class="sidebar__version">
+          <span>Wiki build</span>
+          <b id="wiki-version">v1</b>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ================= Main column ================= -->
+    <div class="main-col">
+
+      <header class="topbar">
+        <button class="icon-btn topbar__menu" id="menu-btn" aria-label="Open navigation menu" aria-expanded="false">
+          <span data-icon="menu"></span>
+        </button>
+
+        <nav class="crumbs topbar__crumbs" id="crumbs" aria-label="Breadcrumb"></nav>
+
+        <div class="topbar__search" id="search-root"></div>
+
+        <div class="topbar__actions topbar__hide-sm">
+          <a class="icon-btn" href="#/updates" data-icon-link="scroll" aria-label="Update log" title="Update Log">
+            <span class="nav-badge nav-badge--top" data-update-badge hidden>!</span>
+          </a>
+          <a class="icon-btn" href="#/feedback" data-icon-link="heart" aria-label="Feedback" title="Feedback"></a>
+          <div class="settings-wrap">
+            <button class="icon-btn" id="settings-btn" aria-haspopup="true" aria-expanded="false" aria-label="Settings" title="Settings">
+              <span data-icon="settings"></span>
+            </button>
+            <div class="dropdown settings-menu" id="settings-menu" role="menu" hidden>
+              <div class="dropdown__label">Settings</div>
+              <div class="settings-row">
+                <span class="settings-row__label">Theme</span>
+                <div class="seg" role="group" aria-label="Theme">
+                  <button class="seg__btn" data-set-theme="dark" role="menuitemradio">Dark</button>
+                  <button class="seg__btn" data-set-theme="light" role="menuitemradio">Light</button>
+                </div>
+              </div>
+              <button class="settings-row settings-row--btn" data-toggle="motion" role="switch" aria-checked="false">
+                <span class="settings-row__label">Reduce motion</span>
+                <span class="switch"><span class="switch__knob"></span></span>
+              </button>
+              <button class="settings-row settings-row--btn" data-toggle="res-colors" role="switch" aria-checked="true">
+                <span class="settings-row__label">Resource colors</span>
+                <span class="switch"><span class="switch__knob"></span></span>
+              </button>
+              <button class="settings-row settings-row--btn" data-toggle="textures" role="switch" aria-checked="true">
+                <span class="settings-row__label">Background textures</span>
+                <span class="switch"><span class="switch__knob"></span></span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="page" id="view" tabindex="-1"></main>
+
+      <footer class="site-footer" style="max-width: var(--content-max); width: 100%; margin-left: auto; margin-right: auto; padding-left: 26px; padding-right: 26px;">
+        <span class="site-footer__brand">
+          <span data-emblem="20"></span>
+          <span>RI Gaming Wiki — Regrowth Idle</span>
+        </span>
+        <nav class="site-footer__links" aria-label="Footer">
+          <a href="#/">Main</a>
+          <a href="#/mining">Mining</a>
+          <a href="#/money-island">Money Island</a>
+          <a href="#/dungeon">Dungeons</a>
+          <a href="#/runes">Runes</a>
+          <a href="#/perks">Perks</a>
+          <a href="#/updates">Update Log</a>
+          <a href="#/feedback">Feedback</a>
+          <a href="#/credits">Credits</a>
+        </nav>
+        <span>Frontend prototype · mock data</span>
+      </footer>
+    </div>
+  </div>
+
+  <button class="back-top" id="back-top" aria-label="Back to top">
+    <span data-icon="arrow-up"></span>
+  </button>
+
+  <!-- ================= Boot splash ================= -->
+  <div class="boot" id="boot" aria-hidden="true">
+    <span data-emblem="56" class="boot__emblem"></span>
+    <span class="boot__label">RI WIKI</span>
+  </div>
+
+  <noscript>
+    <div style="padding: 40px; text-align: center; font-family: sans-serif;">
+      The RI Gaming Wiki needs JavaScript enabled to render its articles.
+    </div>
+  </noscript>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
