@@ -438,6 +438,14 @@ export const CATEGORIES = [
             highlights: [],
             facts: [],
           },
+          {
+            id: 'power-of-fossils',
+            name: 'Power of Fossils',
+            icon: 'chart',
+            desc: 'Power of Fossils unlocks seven permanent bonuses at total Fossil milestones. Enter your total Fossils to see each unlocked bonus, including Sap chance and CAP effects.',
+            highlights: [],
+            facts: [],
+          },
         ],
       },
       {
@@ -530,7 +538,7 @@ export const CATEGORIES = [
             id: 'sap',
             name: 'Sap',
             icon: 'drop',
-            desc: 'Sap is the second tree currency, dropped alongside Logs. Sap Upgrades boost Logs, Sap, Apples, axe damage, Tree Level Perks, Auto Cut, Fossils, Research, Roots, Life Gems and tree XP and perks. Unlock Levels opens the tree leveling system; Sap Perks are earned whenever Sap Level rises.',
+            desc: 'Sap is the second tree currency, dropped alongside Logs. Sap Upgrades boost Logs, Sap, Apples, axe damage, Tree Level Perks, Auto Cut, Fossils, Research, Roots, Life Gems and tree XP and perks. Rare Silver, Golden, Diamond and Amethyst Saps also drop while cutting trees and grant bonuses based on how many you own. Unlock Levels opens the tree leveling system; Sap Perks are earned whenever Sap Level rises.',
             highlights: [],
             facts: [],
             children: [
@@ -541,6 +549,14 @@ export const CATEGORIES = [
                 desc: 'Move the level slider and the site computes the next-level price and the multi.',
                 highlights: [],
                 facts: [],
+              },
+              {
+                id: 'rare-saps',
+                name: 'Rare Saps',
+                icon: 'drop',
+                desc: 'Silver, Golden, Diamond and Amethyst Sap drop while cutting trees at flat chances of 1 / 100, 1 / 500, 1 / 1,500 and 1 / 5,000. Enter the owned amount for each sap to see its three bonuses. Whether a drop is per chop or per tree-fall is decided server-side and is not exposed.',
+                highlights: [],
+                facts: [{ label: 'Types', value: '4' }],
               },
             ],
           },

@@ -64,6 +64,74 @@ export const RESET_LAYER_PAGES = {
       { id: 'souls', name: 'Souls', cap: 5, value: (dust, p) => Math.min(5, (dust / 1e8 + 1) ** (0.12 * p)) },
     ],
   },
+  'life/rare-saps': {
+    kind: 'amount-groups',
+    title: 'Rare Saps',
+    groups: [
+      {
+        id: 'silver-sap',
+        name: 'Silver Sap',
+        color: '#C0C0C0',
+        dropChance: '1 / 100',
+        amountLabel: 'Silver Sap owned',
+        bonuses: [
+          { id: 'b1', name: 'More Logs', cap: 25, unit: 'x', value: (amount) => Math.min(25, Math.floor(amount / 2 + 1) ** 0.25) },
+          { id: 'b2', name: 'Axe Damage', cap: 7, unit: 'x', value: (amount) => Math.min(7, Math.floor(amount / 5 + 1) ** 0.135) },
+          { id: 'b3', name: 'More Energy', cap: 15, unit: 'x', value: (amount) => Math.min(15, Math.floor(amount / 7 + 1) ** 0.175) },
+        ],
+      },
+      {
+        id: 'golden-sap',
+        name: 'Golden Sap',
+        color: '#FFD700',
+        dropChance: '1 / 500',
+        amountLabel: 'Golden Sap owned',
+        bonuses: [
+          { id: 'b1', name: 'More Sap', cap: 25, unit: 'x', value: (amount) => Math.min(25, Math.floor(amount / 1 + 1) ** 0.225) },
+          { id: 'b2', name: 'More Life Gem', cap: 10, unit: 'x', value: (amount) => Math.min(10, Math.floor(amount / 3 + 1) ** 0.14) },
+          { id: 'b3', name: 'More Fossils', cap: 10, unit: 'x', value: (amount) => Math.min(10, Math.floor(amount / 4 + 1) ** 0.175) },
+        ],
+      },
+      {
+        id: 'diamond-sap',
+        name: 'Diamond Sap',
+        color: '#4F9DFF',
+        dropChance: '1 / 1,500',
+        amountLabel: 'Diamond Sap owned',
+        bonuses: [
+          { id: 'b1', name: 'More Roots', cap: 25, unit: 'x', value: (amount) => Math.min(25, Math.floor(amount / 0.75 + 1) ** 0.235) },
+          { id: 'b2', name: 'Mining Damage', cap: 10, unit: 'x', value: (amount) => Math.min(10, Math.floor(amount / 3 + 1) ** 0.13) },
+          { id: 'b3', name: 'More Tree Tier XP', cap: 15, unit: 'x', value: (amount) => Math.min(15, Math.floor(amount / 3 + 1) ** 0.175) },
+        ],
+      },
+      {
+        id: 'amethyst-sap',
+        name: 'Amethyst Sap',
+        color: '#A855F7',
+        dropChance: '1 / 5,000',
+        amountLabel: 'Amethyst Sap owned',
+        bonuses: [
+          { id: 'b1', name: 'More Void Apples', cap: 15, unit: 'x', value: (amount) => Math.min(15, Math.floor(amount / 0.5 + 1) ** 0.2) },
+          { id: 'b2', name: 'More Astatine', cap: 3, unit: 'x', value: (amount) => Math.min(3, Math.floor(amount / 2 + 1) ** 0.135) },
+          { id: 'b3', name: 'Mastery', cap: 2, unit: 'x', value: (amount) => Math.min(2, Math.floor(amount / 3 + 1) ** 0.125) },
+        ],
+      },
+    ],
+  },
+  'life/power-of-fossils': {
+    kind: 'amount',
+    title: 'Power of Fossils',
+    amountLabel: 'Total Fossils owned',
+    bonuses: [
+      { id: 'b1', name: 'More Life Gems', unlockAt: 1e38, unlockLabel: '1e38', unit: 'x', value: (amount) => (amount / 1e37 + 1) ** 0.115 },
+      { id: 'b2', name: 'More Tree Tier XP', unlockAt: 1e40, unlockLabel: '1e40', unit: 'x', value: (amount) => (amount / 1e39 + 1) ** 0.12 },
+      { id: 'b3', name: 'Better Sap Chance', unlockAt: 1e41, unlockLabel: '1e41', cap: 5, capUnit: '%', unit: '%', value: (amount) => Math.min(5, (amount / 1e39 + 1) ** 0.07) },
+      { id: 'b4', name: 'More Research Cap', unlockAt: 1e43, unlockLabel: '1e43', cap: 25, capUnit: 'CAP', unit: 'cap', value: (amount) => Math.min(25, Math.floor(Math.log10(amount / 1e40 + 1))) },
+      { id: 'b5', name: 'More Fossils', unlockAt: 1e44, unlockLabel: '1e44', cap: 25, unit: 'x', value: (amount) => Math.min(25, (amount / 5e42 + 1) ** 0.135) },
+      { id: 'b6', name: 'Better Sap Chance', unlockAt: 1e46, unlockLabel: '1e46', cap: 5, capUnit: '%', unit: '%', value: (amount) => Math.min(5, (amount / 1e44 + 1) ** 0.07) },
+      { id: 'b7', name: 'More Void Apples', unlockAt: 1e47, unlockLabel: '1e47', unit: 'x', value: (amount) => (amount / 1e46 + 1) ** 0.11 },
+    ],
+  },
 };
 
 export function minimumForTarget(valueAt, target, min = 0, cap = null, maxInput = 1e300) {

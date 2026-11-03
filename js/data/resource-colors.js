@@ -26,6 +26,14 @@ export const RESOURCE_COLORS = {
   'Life Generation': '#f70606',  
   'Money': '#5CCB65',
   'Sap': '#F4A51C',
+  'Rare Saps': '#C0C0C0',
+  'Silver Sap': '#C0C0C0',
+  'Golden Sap': '#FFD700',
+  'Diamond Sap': '#4F9DFF',
+  'Amethyst Sap': '#A855F7',
+  'Axe Damage': '#D18864',
+  'Tree Tier XP': '#F7750B',
+  'Research Cap': '#8BC5E8',
   'Energy': '#B04AFF',
   'Energies': '#f8f6fa',
   'Stone': '#A8A8A8',
@@ -189,6 +197,16 @@ const PAGE_LINKS = {
   'roots': '#/life/roots',
   'apples': '#/life/apples',
   'life gems': '#/life/life-gems',
+  'silver sap': '#/life/rare-saps',
+  'golden sap': '#/life/rare-saps',
+  'diamond sap': '#/life/rare-saps',
+  'amethyst sap': '#/life/rare-saps',
+  'void apples': '#/life/apples',
+  'astatine': '#/main/astatine',
+  'axe damage': '#/life/tree',
+  'tree tier xp': '#/life/tree-milestones',
+  'research cap': '#/life/research',
+  'mining damage': '#/mining/ores',
   'terraform': '#/life/terraforming',
   'monster': '#/life/monster',
   'red liquid': '#/life/red-liquid',
@@ -245,7 +263,10 @@ function currentPageNames() {
 }
 
 function isCurrentPage(matchLower) {
-  return currentPageNames().some((n) => n === matchLower || n.includes(matchLower) || matchLower.includes(n));
+  const href = pageHrefFor(matchLower);
+  const currentRoute = globalThis.location?.hash;
+  if (href && currentRoute) return currentRoute === href;
+  return currentPageNames().some((name) => name === matchLower);
 }
 const VARIANTS_LOWER = new Map([...VARIANTS].map(([k, v]) => [k.toLowerCase(), v]));
 

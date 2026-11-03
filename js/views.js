@@ -1,6 +1,6 @@
 // ==== VIEWS: PAGINAS DO SITE ====
 
-import { html, esc, qs, qsa, debounce, countUp, fmtDate, fmtDateShort, fmtNum, fmtValue, fmtSuffix, evalFormula, readMinutes, markMatches, searchPages } from './utils.js';
+import { html, esc, qs, qsa, debounce, countUp, fmtDate, fmtDateShort, fmtNum, fmtValue, fmtSuffix, parseGameNumber, evalFormula, readMinutes, markMatches, searchPages } from './utils.js';
 import { icon, emblem, categoryArt, articleCard, articleRow, categoryCard, infoCard, sectionHead, skeleton, renderBlocks, renderSection, renderStats, wireBlocks, initReveal, setCrumbs, setActiveNav, markUpdateSeen } from './ui.js';
 import { dataProvider, getCategory, getSubcategory } from './services.js';
 import { CATEGORIES } from './data/wiki-data.js';
@@ -398,14 +398,21 @@ function formulaSections(section) {
     </section>`;
 }
 
-function resetCalcCard(bonus, requiredLabel, index) {
+function resetCalcCard(bonus, requiredLabel, index, amountMode = false, accentColor = '') {
   return `
-    <article class="reset-calc-card reveal" data-reset-calculator data-bonus-id="${esc(bonus.id)}" data-required-label="${esc(requiredLabel)}" style="--reveal-delay:${Math.min(index * 45, 360)}ms">
+    <article class="reset-calc-card${amountMode ? ' reset-calc-card--amount' : ''} reveal" ${amountMode ? 'data-resource-links' : ''} data-reset-calculator data-bonus-id="${esc(bonus.id)}" data-required-label="${esc(requiredLabel)}" style="--reveal-delay:${Math.min(index * 45, 360)}ms;${accentColor ? `--reset-bonus-color:${esc(accentColor)};` : ''}">
       <header class="reset-calc-card__head">
         <span class="reset-calc-card__icon">${icon('target', 17)}</span>
         <b>${colorizeResources(esc(bonus.name))}</b>
-        ${bonus.cap ? `<small>cap ${esc(fmtSuffix(bonus.cap))}x</small>` : ''}
+        ${!amountMode && bonus.cap ? `<small>cap ${esc(fmtSuffix(bonus.cap))} ${esc(bonus.capUnit || 'x')}</small>` : ''}
+        ${!amountMode && bonus.unlockAt ? `<small>unlocks at ${esc(fmtSuffix(bonus.unlockAt))} Fossils</small>` : ''}
       </header>
+      ${amountMode ? `
+      <div class="reset-calc-card__meta">
+        ${bonus.cap ? `<small>Cap: ${esc(fmtSuffix(bonus.cap))} ${esc(bonus.capUnit || 'x')}</small>` : ''}
+        ${bonus.unlockAt ? `<small>Unlocks at ${esc(bonus.unlockLabel || fmtSuffix(bonus.unlockAt))} Fossils</small>` : ''}
+      </div>
+      <div class="reset-calc-answer" data-reset-answer aria-live="polite"></div>` : `
       <label class="reset-calc-field">
         <span>Desired bonus</span>
         <span class="reset-calc-input-wrap">
@@ -413,11 +420,43 @@ function resetCalcCard(bonus, requiredLabel, index) {
           <span>x</span>
         </span>
       </label>
-      <div class="reset-calc-answer" data-reset-answer aria-live="polite"></div>
+      <div class="reset-calc-answer" data-reset-answer aria-live="polite"></div>`}
     </article>`;
 }
 
 function resetLayerSections(page) {
+  if (page.kind === 'amount-groups') {
+    return `
+      <section class="section reset-layer-page">
+        ${sectionHead(page.title)}
+        ${page.groups.map((group) => `
+          <section class="reset-layer-tier rare-sap-group" style="--rare-sap-color:${esc(group.color)}">
+            <h3 data-resource-links>${colorizeResources(esc(group.name))} <small>Drop chance: ${esc(group.dropChance)}</small></h3>
+            <label class="reset-calc-power">
+              <span>${esc(group.amountLabel)}</span>
+              <input class="input reset-calc-input" type="text" inputmode="decimal" value="0" data-reset-amount data-group-id="${esc(group.id)}" aria-label="${esc(group.amountLabel)}">
+            </label>
+            <div class="reset-calc-grid">
+              ${group.bonuses.map((bonus, i) => resetCalcCard(bonus, group.amountLabel, i, true, group.color)).join('')}
+            </div>
+          </section>`).join('')}
+      </section>`;
+  }
+
+  if (page.kind === 'amount') {
+    return `
+      <section class="section reset-layer-page">
+        ${sectionHead(page.title)}
+        <label class="reset-calc-power">
+          <span>${esc(page.amountLabel)}</span>
+          <input class="input reset-calc-input" type="text" inputmode="decimal" value="0" data-reset-amount aria-label="${esc(page.amountLabel)}">
+        </label>
+        <div class="reset-calc-grid reset-calc-grid--amount">
+          ${page.bonuses.map((bonus, i) => resetCalcCard(bonus, page.amountLabel, i, true)).join('')}
+        </div>
+      </section>`;
+  }
+
   if (page.kind === 'gears') {
     return `
       <section class="section reset-layer-page">
@@ -459,6 +498,52 @@ function wireResetCalculators(root, page) {
   if (!page) return;
   const cards = qsa('[data-reset-calculator]', root);
   const powerInput = qs('[data-dust-power-level]', root);
+
+  if (page.kind === 'amount' || page.kind === 'amount-groups') {
+    const updateAmounts = (amountInput, group) => {
+      const inputValue = amountInput.value.trim();
+      const amount = inputValue ? parseGameNumber(inputValue) : 0;
+      const groupCards = group
+        ? cards.filter((card) => card.dataset.requiredLabel === group.amountLabel)
+        : cards;
+      if (amount == null || !Number.isFinite(amount) || amount < 0) {
+        groupCards.forEach((card) => {
+          qs('[data-reset-answer]', card).innerHTML = '<span class="reset-calc-error">Enter a valid amount of 0 or more.</span>';
+        });
+        return;
+      }
+
+      groupCards.forEach((card) => {
+        const answer = qs('[data-reset-answer]', card);
+        const bonuses = group?.bonuses || page.bonuses;
+        const bonus = bonuses.find((item) => item.id === card.dataset.bonusId);
+        if (bonus.unlockAt && amount < bonus.unlockAt) {
+          answer.innerHTML = `<span class="reset-calc-error">Locked — requires ${esc(bonus.unlockLabel || fmtSuffix(bonus.unlockAt))} Fossils.</span>`;
+          return;
+        }
+        const value = bonus.value(amount);
+        const display = bonus.unit === 'cap'
+          ? `+${fmtSuffix(value)} CAP`
+          : `${fmtSuffix(value)}${bonus.unit ? ` ${bonus.unit}` : ''}`;
+        answer.innerHTML = `<div><span>Current bonus</span><b>${esc(display)}</b></div>`;
+      });
+    };
+
+    if (page.kind === 'amount-groups') {
+      page.groups.forEach((group) => {
+        const amountInput = qs(`[data-reset-amount][data-group-id="${group.id}"]`, root);
+        const updateGroup = () => updateAmounts(amountInput, group);
+        amountInput.addEventListener('input', updateGroup);
+        updateGroup();
+      });
+    } else {
+      const amountInput = qs('[data-reset-amount]', root);
+      const updatePage = () => updateAmounts(amountInput);
+      amountInput.addEventListener('input', updatePage);
+      updatePage();
+    }
+    return;
+  }
 
   const updateCard = (card) => {
     const targetInput = qs('[data-reset-target]', card);
@@ -1298,10 +1383,10 @@ export const searchView = {
 };
 
 const CONTEXTS = [
-  { id: 'Feature', icon: 'spark', cls: 'feature', label: 'Feature' },
+  { id: 'Feature', icon: 'spark', cls: 'feature', label: 'Features' },
+  { id: 'Changes', icon: 'refresh', cls: 'changes', label: 'Changes' },
   { id: 'UI', icon: 'grid', cls: 'ui', label: 'UI' },
   { id: 'Bugs', icon: 'alert', cls: 'bug', label: 'Bugs' },
-  { id: 'Changes', icon: 'refresh', cls: 'changes', label: 'Changes' },
 ];
 
 export const updatesView = {
@@ -1311,17 +1396,40 @@ export const updatesView = {
 
   async render(root) {
     const versions = await dataProvider.getUpdateLog();
+    const displayVersions = versions.filter((version) => version.entries.length);
+    const totalEntries = displayVersions.reduce((total, version) => total + version.entries.length, 0);
 
     root.innerHTML = html`
-      <div class="page-head upd-hero">
-        <h1>Update Log</h1>
-      </div>
+      <header class="upd-hero">
+        <div class="upd-hero__intro">
+          <span class="upd-hero__eyebrow">${icon('spark', 14)} The valley keeps growing</span>
+          <h1>Update Log</h1>
+          <p>New features, improvements and fixes — all in one place. Select a category or follow a colored resource to explore the wiki.</p>
+        </div>
+        <div class="upd-hero__stats">
+          <div><b>${displayVersions.length}</b><span>Versions</span></div>
+          <div><b>${totalEntries}</b><span>Updates</span></div>
+          <div><b>v${esc(displayVersions[0]?.version || '—')}</b><span>Latest</span></div>
+        </div>
+      </header>
 
-      ${versions.map((v, vi) => `
-        <section class="upd-version reveal" style="--reveal-delay:${Math.min(vi * 55, 400)}ms">
+      <nav class="upd-filters" aria-label="Filter update categories">
+        <button class="upd-filter is-active" type="button" data-update-filter="all">All <b>${totalEntries}</b></button>
+        ${CONTEXTS.map((ctx) => {
+          const count = displayVersions.reduce((total, version) => total + version.entries.filter((entry) => entry.context === ctx.id).length, 0);
+          return `<button class="upd-filter upd-filter--${ctx.cls}" type="button" data-update-filter="${ctx.id}">${icon(ctx.icon, 14)} ${ctx.label} <b>${count}</b></button>`;
+        }).join('')}
+      </nav>
+
+      ${displayVersions.map((v, vi) => `
+        <section class="upd-version reveal" data-update-version style="--reveal-delay:${Math.min(vi * 55, 400)}ms">
           <div class="upd-version__head">
-            <span class="upd-version__num">${esc(v.version)}</span>
+            <div class="upd-version__identity">
+              <span class="upd-version__eyebrow">Release</span>
+              <span class="upd-version__num">${esc(v.version)}</span>
+            </div>
             <span class="upd-version__date">${icon('calendar', 13)} ${fmtDate(v.date)}</span>
+            <span class="upd-version__count">${v.entries.length} ${v.entries.length === 1 ? 'update' : 'updates'}</span>
             ${vi === 0 ? '<span class="chip chip--accent upd-version__latest">Latest</span>' : ''}
           </div>
 
@@ -1329,20 +1437,32 @@ export const updatesView = {
             const entries = v.entries.filter((e) => e.context === ctx.id);
             if (!entries.length) return '';
             return `
-              <div class="upd-group upd-group--${ctx.cls}">
+              <section class="upd-group upd-group--${ctx.cls}" data-update-group="${ctx.id}">
                 <div class="upd-group__label">${icon(ctx.icon, 14)} ${ctx.label}</div>
                 ${entries.map((e) => `
-                  <div class="upd-entry">
+                  <article class="upd-entry" data-resource-links>
                     ${icon(ctx.icon, 16)}
                     <div>
-                      <b>${esc(e.title)}</b>
-                      <span>${esc(e.description)}</span>
+                      ${e.href
+                        ? `<a class="upd-entry__title" href="${esc(e.href)}"><span class="upd-entry__title-text">${colorizeResources(esc(e.title))}</span>${icon('arrow-right', 13)}</a>`
+                        : `<b class="upd-entry__title upd-entry__title-text">${colorizeResources(esc(e.title))}</b>`}
+                      <p class="upd-entry__description">${colorizeResources(esc(e.description))}</p>
                     </div>
-                  </div>`).join('')}
-              </div>`;
+                  </article>`).join('')}
+              </section>`;
           }).join('')}
         </section>`).join('')}
     `;
+
+    qsa('[data-update-filter]', root).forEach((button) => {
+      button.addEventListener('click', () => {
+        const filter = button.dataset.updateFilter;
+        qsa('[data-update-filter]', root).forEach((item) => item.classList.toggle('is-active', item === button));
+        qsa('[data-update-group]', root).forEach((group) => {
+          group.hidden = filter !== 'all' && group.dataset.updateGroup !== filter;
+        });
+      });
+    });
 
     markUpdateSeen(LATEST_UPDATE_ID);
     initReveal(root);
