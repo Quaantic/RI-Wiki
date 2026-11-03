@@ -453,7 +453,6 @@ export function skeleton(kind, count = 3) {
   return `<div class="skeleton skeleton--title"></div><div class="skeleton skeleton--text" style="width:80%;margin-top:10px"></div>`;
 }
 
-const CAT_BY_ID = new Map(CATEGORIES.map((c) => [c.id, c]));
 
 export function mountSearchBox(root) {
   root.innerHTML = `
@@ -517,7 +516,8 @@ export function mountSearchBox(root) {
       return;
     }
     for (const [catId, entries] of groups) {
-      const cat = CAT_BY_ID.get(catId);
+      const cat = CATEGORIES.find((category) => category.id === catId);
+      if (!cat) return;
       body += `<div class="dropdown__label">${icon(cat.icon, 12)} ${esc(cat.name)}</div>`;
       body += entries.map((r, i) => `
         <a class="searchbox__item" role="option" href="#/article/${esc(r.article.id)}" data-idx="${items.length + i}">
@@ -829,6 +829,11 @@ const SETTINGS_TOGGLES = {
     default: true,
     apply: (on) => document.documentElement.classList.toggle('tex-off', !on),
   },
+  scientific: {
+    key: 'ri-scientific',
+    default: false,
+    apply: () => {},
+  },
 };
 
 function settingState(id) {
@@ -879,6 +884,9 @@ export function setupSettings() {
     if (row) {
       applySetting(row.dataset.toggle, !settingState(row.dataset.toggle));
       syncUI();
+      if (row.dataset.toggle === 'scientific') {
+        window.dispatchEvent(new Event('ri-number-format-change'));
+      }
     }
   });
   document.addEventListener('click', (e) => {
@@ -897,4 +905,3 @@ export function initShell() {
   window.addEventListener('resize', moveIndicator);
   if (document.fonts?.ready) document.fonts.ready.then(moveIndicator);
 }
-

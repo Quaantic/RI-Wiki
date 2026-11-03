@@ -57,8 +57,6 @@ function article(a) {
 const stat = (label, value, icon = 'info') => ({ label, value, icon });
 
 
-const ARTICLES = [];
+export const ARTICLES = [];
 
-const ARTICLE_INDEX = new Map(ARTICLES.map((a) => [a.id, a]));
-
-export { ARTICLES, ARTICLE_INDEX };
+export const ARTICLE_INDEX = new Map();

@@ -49,8 +49,15 @@ export const UPDATE_LOG = [
   },
 ];
 
-export const LATEST_UPDATE_ID = '1.01';
+export let LATEST_UPDATE_ID = UPDATE_LOG[0]?.version || '';
 
-export const LATEST_UPDATE = UPDATE_LOG[0];
+export let LATEST_UPDATE = UPDATE_LOG[0] || null;
 
-export const UPDATE_ENTRY_COUNT = UPDATE_LOG.reduce((n, v) => n + v.entries.length, 0);
+export let UPDATE_ENTRY_COUNT = UPDATE_LOG.reduce((n, v) => n + v.entries.length, 0);
+
+export function setUpdateLog(versions) {
+  UPDATE_LOG.splice(0, UPDATE_LOG.length, ...versions);
+  LATEST_UPDATE = UPDATE_LOG[0] || null;
+  LATEST_UPDATE_ID = LATEST_UPDATE?.version || '';
+  UPDATE_ENTRY_COUNT = UPDATE_LOG.reduce((total, version) => total + version.entries.length, 0);
+}

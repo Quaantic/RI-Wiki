@@ -410,7 +410,7 @@ function resetCalcCard(bonus, requiredLabel, index, amountMode = false, accentCo
       ${amountMode ? `
       <div class="reset-calc-card__meta">
         ${bonus.cap ? `<small>Cap: ${esc(fmtSuffix(bonus.cap))} ${esc(bonus.capUnit || 'x')}</small>` : ''}
-        ${bonus.unlockAt ? `<small>Unlocks at ${esc(bonus.unlockLabel || fmtSuffix(bonus.unlockAt))} Fossils</small>` : ''}
+        ${bonus.unlockAt ? `<small>Unlocks at ${esc(fmtValue(bonus.unlockLabel || bonus.unlockAt))} Fossils</small>` : ''}
       </div>
       <div class="reset-calc-answer" data-reset-answer aria-live="polite"></div>` : `
       <label class="reset-calc-field">
@@ -518,7 +518,7 @@ function wireResetCalculators(root, page) {
         const bonuses = group?.bonuses || page.bonuses;
         const bonus = bonuses.find((item) => item.id === card.dataset.bonusId);
         if (bonus.unlockAt && amount < bonus.unlockAt) {
-          answer.innerHTML = `<span class="reset-calc-error">Locked — requires ${esc(bonus.unlockLabel || fmtSuffix(bonus.unlockAt))} Fossils.</span>`;
+          answer.innerHTML = `<span class="reset-calc-error">Locked — requires ${esc(fmtValue(bonus.unlockLabel || bonus.unlockAt))} Fossils.</span>`;
           return;
         }
         const value = bonus.value(amount);

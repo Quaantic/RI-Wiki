@@ -1,0 +1,1492 @@
+{
+  "categories": [
+    {
+      "id": "main",
+      "name": "Main",
+      "desc": "Main is the starting island and the heart of the game, a tycoon that runs on Energy. You place machines that produce Energy every second, upgrade them through levels and tiers, and spend that Energy to open the Factory, Gears production, Crystals, the Barn, the Merge grid and the stage gates leading to Life Island, Money Island, Mining and the Dungeon. Almost every currency traces back to Energy, so growing the tycoon is the core loop.",
+      "icon": "compass",
+      "tagline": "The core islands: Stages, Energy, Gears, Crystals, Barn and Merge.",
+      "vitals": [
+        {
+          "label": "Islands",
+          "value": "6"
+        }
+      ],
+      "subcategories": [
+        {
+          "id": "stages",
+          "name": "Stages",
+          "icon": "compass",
+          "desc": "Stages are the big area gates of the game. Passing a stage requires a huge Energy payment plus a second currency: Stage 1 Life costs 200 billion Energy and 250 Jewels, Stage 2 Money Tree costs 5e29 Energy and 5 million Sap, Stage 3 Barn costs 2.5e47 Energy and 5 million Gold Bars, Stage 4 Mining costs 1e68 Energy and 500 Bluesteel, and Stage 5 Dungeon costs 2.5e124 Energy and 1 million Uranium. City and Industry are coming soon. Each stage permanently multiplies the gain of 22 currencies, so every gate is also a global boost.",
+          "highlights": [],
+          "facts": [
+            {
+              "label": "Stages",
+              "value": "II – VI"
+            },
+            {
+              "label": "Gate resource",
+              "value": "Energy"
+            }
+          ]
+        },
+        {
+          "id": "eternal-shards",
+          "name": "Eternal Shards",
+          "icon": "fuck",
+          "desc": "Eternal Shards are the premium slow currency. They accumulate automatically in real time and can also be bought with Robux. Their main use is skipping resets: pay shards to rank up Stage, Terraform, Dungeon, Barn or Tree Ascension without losing progress. They also buy the 21 Eternal Tree upgrades and store potions.",
+          "highlights": [],
+          "facts": [],
+          "children": [
+            {
+              "id": "eternal-tree",
+              "name": "Eternal Tree",
+              "icon": "branch",
+              "desc": "The Eternal Tree is a chain of 21 upgrades paid in Eternal Shards, with each node requiring the previous one. Its upgrades multiply Base Energy, Energy, Crystals, Life Shards, Logs, Pickaxe Damage, Ores, special crystal and Energy stats, Apples, XP, Perks, Eternal Shards, Life Gems, Money, Research, Golden Research, Prestige Points, Gold Bars and Emerald Coins. It is a long-term reward for saving shards.",
+              "highlights": [],
+              "facts": []
+            }
+          ]
+        },
+        {
+          "id": "energy",
+          "name": "Energy",
+          "icon": "spark",
+          "desc": "Energy is the main tycoon currency, produced every second by your machines. It pays for new machines, machine and Factory upgrades, tycoon buttons and every stage gate. Stages, the Factory, Eternal Tree, Energies, Prestige, Terraform, runes and many other systems multiply its gain.",
+          "highlights": [],
+          "facts": [],
+          "children": [
+            {
+              "id": "machines",
+              "name": "Machines",
+              "icon": "gauge",
+              "desc": "Machines are the Energy producers of the tycoon, bought and leveled with Energy. There are 24 machine types across four eras, from Basic Extractor to Super Neutronizer, and you can own up to five of each. Every level raises income; every 10 levels adds a tier worth a 1.7x boost. Extra copies cost exponentially more, and prices jump about 100x between eras.",
+              "highlights": [],
+              "facts": []
+            },
+            {
+              "id": "factory",
+              "name": "Factory",
+              "icon": "factory",
+              "desc": "The Factory is a tycoon building with six Energy-paid upgrades: Furnace, Pipes, Filtering, Overclock, Storage and Automator. Each multiplies the Energy production chain; Furnace and Overclock are the strongest, and Automator can reach level 150. It is also one of the first systems Automation can buy for you.",
+              "highlights": [],
+              "facts": []
+            }
+          ]
+        },
+        {
+          "id": "gears",
+          "name": "Gears",
+          "icon": "settings",
+          "desc": "Gears are the automation currency, produced by Gears Generators. They pay for every Automation upgrade and the Special Gears Frames tycoon button. Your Stage multiplies Gear production, so Gears continue scaling as you progress.",
+          "highlights": [],
+          "facts": [],
+          "children": [
+            {
+              "id": "gears-generators",
+              "name": "Gears Generators",
+              "icon": "gauge",
+              "desc": "Gears Generators are five production machines unlocked by the Unlock Gears Production button for 1e16 Energy: Wrench, Generator, Engine, Jet Engine and Accelerator. Each is leveled individually, produces Gears per second and gains a tier bonus every 10 levels. Each machine requires the previous one; Accelerator is the endgame generator.",
+              "highlights": [],
+              "facts": []
+            },
+            {
+              "id": "special-gears",
+              "name": "Special Gears",
+              "icon": "star",
+              "desc": "Special Gears are the prestige layer of the Gears system, unlocked by the Special Gears Frames button for 1.25 million Gears. The reset board converts Gears into special tiers: 2 million normal Gears become Shiny Gears, 10 thousand Shiny become Life Gears, and 10 thousand Life Gears become the final tier. The board previews the exact gain before resetting.",
+              "highlights": [],
+              "facts": []
+            },
+            {
+              "id": "automations",
+              "name": "Automations",
+              "icon": "refresh",
+              "desc": "Automations are 24 auto-buyers paid in Gears, unlocked by Autobuy Frames for 250 Gears. They automatically buy upgrades for Machines, Factory, Crystals, Jewels, Platinum, Life Shards, Fossils, Research, Logs, Sap, Terraform, Roots, Monster, Money, Gold, Prestige, Emeralds, Crystal Shards, Crystal Perks, Opal, Adamantium, Merge and Californium. Each level unlocks more automatic purchases per tick.",
+              "highlights": [],
+              "facts": []
+            }
+          ]
+        },
+        {
+          "id": "crystals",
+          "name": "Crystals",
+          "icon": "gem",
+          "desc": "The Crystals area is the crystal wing of the tycoon, opened with the Crystalization Extractor button for 500 thousand Energy. It contains the crystal board, collector box, Barn and upgrade lines for Crystal, Jewels, Platinum, Adamantium, Californium and Astatine. Nearly everything here is gated by Barn tiers.",
+          "highlights": [],
+          "facts": [],
+          "children": [
+            {
+              "id": "crystal",
+              "name": "Crystal",
+              "icon": "gem",
+              "desc": "Crystals are the base crystal currency, earned by collecting crystals that spawn on the crystal board. They feed Crystal Upgrades, the first Barn tiers and the Opal reset. Collecting them also builds Crystal Level, which awards Crystal Perks.",
+              "highlights": [],
+              "facts": [],
+              "children": [
+                {
+                  "id": "crystal-upgrades",
+                  "name": "Crystal Upgrades",
+                  "icon": "hammer",
+                  "desc": "Move the level slider and the site computes the next-level price and the multi.",
+                  "highlights": [],
+                  "facts": []
+                }
+              ]
+            },
+            {
+              "id": "jewels",
+              "name": "Jewels",
+              "icon": "gem",
+              "desc": "Jewels are the first special crystal currency, earned passively after unlocking them through crystal progression. Jewels Upgrades boost Energy, Money, Life Gems and more; each upgrade has its own Barn tier requirement. Jewels are also required for the first stage gate.",
+              "highlights": [],
+              "facts": [],
+              "children": [
+                {
+                  "id": "jewels-upgrades",
+                  "name": "Jewels Upgrades",
+                  "icon": "hammer",
+                  "desc": "Move the level slider and the site computes the next-level price and the multi.",
+                  "highlights": [],
+                  "facts": []
+                }
+              ]
+            },
+            {
+              "id": "platinum",
+              "name": "Platinum",
+              "icon": "coins",
+              "desc": "Platinum is a special crystal type that spawns on the board as you progress through the Barn. Collecting Platinum crystals earns the currency used for Platinum Upgrades, which boost Energy, Crystals, Jewels, Opal and other systems. The last Platinum upgrades unlock Adamantium.",
+              "highlights": [],
+              "facts": [],
+              "children": [
+                {
+                  "id": "platinum-upgrades",
+                  "name": "Platinum Upgrades",
+                  "icon": "hammer",
+                  "desc": "Move the level slider and the site computes the next-level price and the multi.",
+                  "highlights": [],
+                  "facts": []
+                }
+              ]
+            },
+            {
+              "id": "adamantium",
+              "name": "Adamantium",
+              "icon": "shield",
+              "desc": "Adamantium is a rarer crystal type unlocked deeper in the Barn. Its upgrades boost Crystals, Jewels, Opal, Crystal Shards, Energy and more, and raise caps that Opal and Californium milestones extend further. The line unlocks from Platinum Upgrade 9 and also requires Barn progression.",
+              "highlights": [],
+              "facts": [],
+              "children": [
+                {
+                  "id": "adamantium-upgrades",
+                  "name": "Adamantium Upgrades",
+                  "icon": "hammer",
+                  "desc": "Move the level slider and the site computes the next-level price and the multi.",
+                  "highlights": [],
+                  "facts": []
+                }
+              ]
+            },
+            {
+              "id": "californium",
+              "name": "Californium",
+              "icon": "spark",
+              "desc": "Californium is the strongest classic crystal type, spawning late in the Barn. Its upgrades boost Energy, Crystals, Opal, Platinum, Adamantium and more; its caps are raised by Opal and Golden Diamond upgrades. Californium is also the price of Barn Tier 9.",
+              "highlights": [],
+              "facts": [],
+              "children": [
+                {
+                  "id": "californium-upgrades",
+                  "name": "Californium Upgrades",
+                  "icon": "hammer",
+                  "desc": "Move the level slider and the site computes the next-level price and the multi.",
+                  "highlights": [],
+                  "facts": []
+                },
+                {
+                  "id": "californium-milestones",
+                  "name": "Californium Milestones",
+                  "icon": "star",
+                  "desc": "Californium Milestones are permanent global bonuses earned by reaching Californium amounts. Milestone 4 starts boosting Californium caps, milestone 8 raises Adamantium upgrade limits by 15, milestone 9 raises Californium limits by 10, milestone 11 gives the first Quartz upgrade five extra levels, and milestone 13 unlocks the final two Opal upgrades. They reward holding Californium instead of only spending it.",
+                  "highlights": [],
+                  "facts": []
+                }
+              ]
+            },
+            {
+              "id": "astatine",
+              "name": "Astatine",
+              "icon": "spark",
+              "desc": "Astatine is the newest and rarest crystal type, spawning on the crystal board. It feeds ten Astatine Upgrades gated by milestones, boosting crystal spawning, Astatine gain, Ore Mastery, Ruby Energy, Energy and Californium bonuses. The game auto-collect skips Astatine crystals, so collect them manually or with scripts.",
+              "highlights": [],
+              "facts": [],
+              "children": [
+                {
+                  "id": "astatine-upgrades",
+                  "name": "Astatine Upgrades",
+                  "icon": "hammer",
+                  "desc": "Full breakdown coming soon.",
+                  "highlights": [],
+                  "facts": []
+                },
+                {
+                  "id": "astatine-power",
+                  "name": "Astatine Power",
+                  "icon": "spark",
+                  "desc": "Astatine Power is a set of passive bonuses that scale with total Astatine. The first two apply from the start and grow with amounts over 50 and 100; two more unlock at milestones 7 and 8 and scale with amounts over 500 and 1000, with soft caps. Holding more Astatine strengthens crystal income.",
+                  "highlights": [],
+                  "facts": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "barn",
+          "name": "Barn",
+          "icon": "package",
+          "desc": "The Barn is the tier hub of the Crystals area, leveled with ten one-time purchases. Tiers 1–2 cost Crystals, Tier 3 Crystal Shards, Tiers 4–5 Opal, Tier 6 Adamantium, Tier 7 Platinum, Tier 8 Bluesteel and Tier 9 Californium. Each tier unlocks crystal features and types and raises Barn requirements for Jewels and Opal upgrades. Tier 3 opens the Opal reset.",
+          "highlights": [],
+          "facts": [],
+          "children": [
+            {
+              "id": "crystal-shards",
+              "name": "Crystal Shards",
+              "icon": "gem",
+              "desc": "Crystal Shards are a higher crystal currency earned through crystal progression, with Crystal, Platinum and Adamantium upgrades increasing their gain. They pay for Crystal Shards Upgrades, Barn Tier 3 and the Opal reset, which requires at least 1 million shards.",
+              "highlights": [],
+              "facts": [],
+              "children": [
+                {
+                  "id": "crystal-shards-upgrades",
+                  "name": "Crystal Shards Upgrades",
+                  "icon": "hammer",
+                  "desc": "Move the level slider and the site computes the next-level price and the multi.",
+                  "highlights": [],
+                  "facts": []
+                }
+              ]
+            },
+            {
+              "id": "crystal-perks",
+              "name": "Crystal Perks",
+              "icon": "star",
+              "desc": "Crystal Perks are earned from Crystal Level as you collect crystals. They are spent on a permanent perk board for Energy, Money and other stats, and are also consumed by the Opal reset, so you choose between spending them or sacrificing them.",
+              "highlights": [],
+              "facts": [],
+              "children": [
+                {
+                  "id": "crystal-perks-upgrades",
+                  "name": "Crystal Perks Upgrades",
+                  "icon": "hammer",
+                  "desc": "Move the level slider and the site computes the next-level price and the multi.",
+                  "highlights": [],
+                  "facts": []
+                }
+              ]
+            },
+            {
+              "id": "opal",
+              "name": "Opal",
+              "icon": "gem",
+              "desc": "Opal unlocks at Barn 3 and is the stat-reset layer of the crystal area. The reset consumes Crystal Shards, Crystals and Crystal Perks and converts them into passive Opal income based on the stats spent. Opal Upgrades add more Californium, Crystal and Opal, raise Adamantium and Californium caps, and more; the final two require Californium milestone 13.",
+              "highlights": [],
+              "facts": [],
+              "children": [
+                {
+                  "id": "opal-upgrades",
+                  "name": "Opal Upgrades",
+                  "icon": "hammer",
+                  "desc": "Move the level slider and the site computes the next-level price and the multi.",
+                  "highlights": [],
+                  "facts": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "merge",
+          "name": "Merge",
+          "icon": "grid",
+          "desc": "The Merge Grid unlocks through Barn progression. Elements appear over time and produce Quartz per second. Merge two elements of the same tier to create a higher tier, or move them into empty slots to organize the grid; higher tiers produce more Quartz. Quartz buys upgrades for starting tier, spawn speed, slots and income. Bluesteel later becomes the grid reset layer.",
+          "highlights": [],
+          "facts": [],
+          "children": [
+            {
+              "id": "quartz",
+              "name": "Quartz",
+              "icon": "gem",
+              "desc": "Quartz is the Merge Grid currency, produced every second by each element and multiplied by higher merge tiers. It is spent on Merge Upgrades, and 250 million Quartz is required for the Bluesteel reset.",
+              "highlights": [],
+              "facts": [],
+              "children": [
+                {
+                  "id": "quartz-upgrades",
+                  "name": "Quartz Upgrades",
+                  "icon": "hammer",
+                  "desc": "Move the level slider and the site computes the next-level price and the multi.",
+                  "highlights": [],
+                  "facts": []
+                }
+              ]
+            },
+            {
+              "id": "bluesteel",
+              "name": "Bluesteel",
+              "icon": "shield",
+              "desc": "Bluesteel is the Merge Grid reset layer, unlocked with a Merge Upgrade. Resetting at 250 million Quartz clears Quartz, Merge Upgrades and grid progress in exchange for Bluesteel, which permanently increases Quartz gain and buys Bluesteel Upgrades. Bluesteel is also needed for Barn Tier 8, the Mining stage gate and Magnets.",
+              "highlights": [],
+              "facts": [],
+              "children": [
+                {
+                  "id": "bluesteel-upgrades",
+                  "name": "Bluesteel Upgrades",
+                  "icon": "hammer",
+                  "desc": "Full breakdown coming soon.",
+                  "highlights": [],
+                  "facts": []
+                }
+              ]
+            },
+            {
+              "id": "merge-perks",
+              "name": "Merge Perks",
+              "icon": "star",
+              "desc": "Merge Perks are earned from Merge Level as you merge elements. They are spent on permanent multipliers that boost the grid, merging speed and Quartz.",
+              "highlights": [],
+              "facts": [],
+              "children": [
+                {
+                  "id": "merge-perks-upgrades",
+                  "name": "Merge Perks Upgrades",
+                  "icon": "hammer",
+                  "desc": "Move the level slider and the site computes the next-level price and the multi.",
+                  "highlights": [],
+                  "facts": []
+                }
+              ]
+            },
+            {
+              "id": "magnets",
+              "name": "Magnets",
+              "icon": "magnet",
+              "desc": "Magnets are collectibles unlocked through Merge Upgrades in the Bluesteel area, costing Bluesteel. They have a 15-second base spawn rate and a maximum of ten spawned at once. Their upgrades boost Quartz and Bluesteel, raise Californium, Adamantium and Platinum caps, and unlock future features.",
+              "highlights": [],
+              "facts": [],
+              "children": [
+                {
+                  "id": "magnets-upgrades",
+                  "name": "Magnets Upgrades",
+                  "icon": "hammer",
+                  "desc": "Full breakdown coming soon.",
+                  "highlights": [],
+                  "facts": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "life",
+      "name": "Life Island",
+      "desc": "Life Island is the second island, opened by the first stage gate for 200 billion Energy and 250 Jewels. It is an economy built around creating life: Cells accumulate and are spent to create creatures that pay Life Shards; upgrades use Life Gems. The island also hosts Research, Tree Cutting, Terraform, Monster and Frost, and boosts every other island.",
+      "icon": "leaf",
+      "tagline": "The life island: Life Shards, Fossils, Research, the Tree, Terraform, Monsters and Frost.",
+      "vitals": [
+        {
+          "label": "Sections",
+          "value": "7"
+        },
+        {
+          "label": "Core currency",
+          "value": "Life Shards"
+        }
+      ],
+      "subcategories": [
+        {
+          "id": "life-generation",
+          "name": "Life Generation",
+          "icon": "refresh",
+          "desc": "Life Generation is the core of the island. Cells accumulate over time with a slowdown limit. Choose one of 30 life forms, from Ant at 1 billion Cells to Ancient Cat at 2.5e40 Cells, then use Create Life to consume Cells and earn Life Shards multiplied by your bonuses. Every three creations advance your Life tier, which gates Terraform upgrades.",
+          "highlights": [],
+          "facts": [],
+          "children": [
+            {
+              "id": "life-shards",
+              "name": "Life Shards",
+              "icon": "spark",
+              "desc": "Life Shards are earned whenever you create life. They pay for a long board of upgrades boosting Energy, Crystals, Fossils, Logs, Research and more. Holding 250 thousand Life Shards unlocks the Fossil reset.",
+              "highlights": [],
+              "facts": [],
+              "children": [
+                {
+                  "id": "life-upgrades",
+                  "name": "Life Upgrades",
+                  "icon": "hammer",
+                  "desc": "Move the level slider and the site computes the next-level price and the multi.",
+                  "highlights": [],
+                  "facts": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "fossil",
+          "name": "Fossil",
+          "icon": "hex",
+          "desc": "The Fossil reset consumes 250 thousand Life Shards and converts them into Fossils; the True Fossil Gain is shown before confirmation. Fossils pay for upgrades that boost Life Shards, Energy, Logs, Research, Terraform and more. Some Life and Sap upgrade limits open only as Terraform level rises.",
+          "highlights": [],
+          "facts": [],
+          "children": [
+            {
+              "id": "fossil-upgrades",
+              "name": "Fossil Upgrades",
+              "icon": "hammer",
+              "desc": "Move the level slider and the site computes the next-level price and the multi.",
+              "highlights": [],
+              "facts": []
+            },
+            {
+              "id": "power-of-fossils",
+              "name": "Power of Fossils",
+              "icon": "chart",
+              "desc": "Power of Fossils unlocks seven permanent bonuses at total Fossil milestones. Enter your total Fossils to see each unlocked bonus, including Sap chance and CAP effects.",
+              "highlights": [],
+              "facts": []
+            }
+          ]
+        },
+        {
+          "id": "research",
+          "name": "Research",
+          "icon": "flask",
+          "desc": "Research Points are the currency of the Research board, unlocked with a tycoon button on Life Island. The board has 44 upgrades covering Energy, Super Trees, Mining, Emerald Coins, Souls and more, bought one level at a time or with Buy Max. Later researches require ResearchesUnlocked upgrades; Prestige upgrade 18 and Golden milestones extend board level limits.",
+          "highlights": [],
+          "facts": [],
+          "children": [
+            {
+              "id": "research-upgrades",
+              "name": "Research Upgrades",
+              "icon": "hammer",
+              "desc": "Move the level slider and the site computes the next-level price and the multi.",
+              "highlights": [],
+              "facts": []
+            },
+            {
+              "id": "golden-research",
+              "name": "Golden Research",
+              "icon": "star",
+              "desc": "Golden Research is a clicker minigame on the Otters board. Click to earn Golden RP; Click Power increases manual clicks, Auto Power clicks every second, and Auto Speed makes auto-clicks faster. Golden Research and Golden Research #2 multiply earnings, while the Unlocker opens more Golden Points investments.",
+              "highlights": [],
+              "facts": [],
+              "children": [
+                {
+                  "id": "golden-research-milestones",
+                  "name": "Golden Research Milestones",
+                  "icon": "star",
+                  "desc": "Golden Research Milestones are permanent bonuses tracked on the board. Early milestones boost Research limits; milestone 5 multiplies Golden Points investing power by 10x, the biggest jump in the minigame.",
+                  "highlights": [],
+                  "facts": []
+                },
+                {
+                  "id": "golden-research-upgrades",
+                  "name": "Golden Research Upgrades",
+                  "icon": "hammer",
+                  "desc": "Move the level slider and the site computes the next-level price and the multi.",
+                  "highlights": [],
+                  "facts": []
+                },
+                {
+                  "id": "golden-points",
+                  "name": "Golden Points",
+                  "icon": "coin",
+                  "desc": "Golden Points are invested on the Golden Point Investing board. Each point grows a permanent multiplier with soft caps. Early slots boost Energy, Research Points, Money, Life Gems and Mining Damage; the Unlocker opens more slots. Reinvest Golden Points as soon as you earn them.",
+                  "highlights": [],
+                  "facts": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "tree",
+          "name": "Tree",
+          "icon": "branch",
+          "desc": "The Tree is the Life Island forest, unlocked with the LogsUnlocked tycoon button. Swing your axe at 29 tree types, from Baby Tree with 10 health to Tiny Shadow Tree with 1e25 health. Trees drop Logs, Sap, Apples, Tree XP and, at higher tiers, Roots. Axe Damage, Critical Chance and Critical Damage speed up cutting; Autocut Power and Auto Cut Sap automate it.",
+          "highlights": [],
+          "facts": [],
+          "children": [
+            {
+              "id": "logs",
+              "name": "Logs",
+              "icon": "leaf",
+              "desc": "Logs are the main tree currency, dropped by every tree you cut. They pay for Logs Upgrades that boost axe damage, Logs gain, critical hits, Tree XP, Apple Chance, Sap, Research and more. Log Perks are earned whenever Log Level rises.",
+              "highlights": [],
+              "facts": [],
+              "children": [
+                {
+                  "id": "log-upgrades",
+                  "name": "Log Upgrades",
+                  "icon": "hammer",
+                  "desc": "Move the level slider and the site computes the next-level price and the multi.",
+                  "highlights": [],
+                  "facts": []
+                }
+              ]
+            },
+            {
+              "id": "tree-milestones",
+              "name": "Tree Milestones",
+              "icon": "star",
+              "desc": "Tree Milestones are Tree Tiers reached with Tree Tier XP. Thirteen tiers range from 25 thousand XP to 1e99 XP; each tier multiplies the trees you can cut and unlocks deeper Roots upgrades, including Golden, Diamond and Void Apple chances. Unlock Tree Tier and Tree Tier XP upgrades speed progression.",
+              "highlights": [],
+              "facts": []
+            },
+            {
+              "id": "sap",
+              "name": "Sap",
+              "icon": "drop",
+              "desc": "Sap is the second tree currency, dropped alongside Logs. Sap Upgrades boost Logs, Sap, Apples, axe damage, Tree Level Perks, Auto Cut, Fossils, Research, Roots, Life Gems and tree XP and perks. Rare Silver, Golden, Diamond and Amethyst Saps also drop while cutting trees and grant bonuses based on how many you own. Unlock Levels opens the tree leveling system; Sap Perks are earned whenever Sap Level rises.",
+              "highlights": [],
+              "facts": [],
+              "children": [
+                {
+                  "id": "sap-upgrades",
+                  "name": "Sap Upgrades",
+                  "icon": "hammer",
+                  "desc": "Move the level slider and the site computes the next-level price and the multi.",
+                  "highlights": [],
+                  "facts": []
+                },
+                {
+                  "id": "rare-saps",
+                  "name": "Rare Saps",
+                  "icon": "drop",
+                  "desc": "Silver, Golden, Diamond and Amethyst Sap drop while cutting trees at flat chances of 1 / 100, 1 / 500, 1 / 1,500 and 1 / 5,000. Enter the owned amount for each sap to see its three bonuses. Whether a drop is per chop or per tree-fall is decided server-side and is not exposed.",
+                  "highlights": [],
+                  "facts": [
+                    {
+                      "label": "Types",
+                      "value": "4"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "roots",
+              "name": "Roots",
+              "icon": "branch",
+              "desc": "Roots are the third tree currency, dropped at higher tree tiers and gated by Tree Tier requirements. Roots Upgrades boost Logs, Sap, Roots, Apples, Log and Sap Perks, Research, Life Gems, Golden Research and Autocut Power. This board also unlocks Golden Apple, Diamond Apple, More Golden Apples and Void Chance.",
+              "highlights": [],
+              "facts": [],
+              "children": [
+                {
+                  "id": "roots-upgrades",
+                  "name": "Roots Upgrades",
+                  "icon": "hammer",
+                  "desc": "Move the level slider and the site computes the next-level price and the multi.",
+                  "highlights": [],
+                  "facts": []
+                }
+              ]
+            },
+            {
+              "id": "apples",
+              "name": "Apples",
+              "icon": "heart",
+              "desc": "Apples drop randomly while cutting trees; Apple Chance and More Apples upgrades increase their drops. Every apple ever earned counts on the Apple Buffs board, where holding amounts of each type unlocks permanent multipliers across five milestones per type. Apples are never spent: they are milestone stats.",
+              "highlights": [],
+              "facts": [],
+              "children": [
+                {
+                  "id": "apples-default",
+                  "name": "Default",
+                  "icon": "leaf",
+                  "desc": "Default Apples are the base tier and drop from the start of tree cutting. Holding them unlocks the first Apple Buffs milestones, which boost tree gains and scale with the amount held up to a 1000 requirement.",
+                  "highlights": [],
+                  "facts": []
+                },
+                {
+                  "id": "apples-golden",
+                  "name": "Golden",
+                  "icon": "star",
+                  "desc": "Golden Apples are the second tier, unlocked with the Golden Apple Roots upgrade and increased by More Golden Apples. Their Apple Buffs milestones are among the strongest and scale up to 1000 held. The More Apples Eternal upgrade multiplies Red, Golden and Diamond apples together.",
+                  "highlights": [],
+                  "facts": []
+                },
+                {
+                  "id": "apples-diamond",
+                  "name": "Diamond",
+                  "icon": "diamond",
+                  "desc": "Diamond Apples are the third tier, unlocked with the Diamond Apple Roots upgrade. They are much rarer than Golden Apples, their bonuses scale up to a 100 thousand requirement, and they unlock Void Apples through the Void Chance upgrade.",
+                  "highlights": [],
+                  "facts": []
+                },
+                {
+                  "id": "apples-void",
+                  "name": "Void",
+                  "icon": "moon",
+                  "desc": "Void Apples are the final tier, unlocked with the Void Chance Roots upgrade, which starts at a 15 percent chance and grows with levels. Their five Apple Buffs milestones scale to 1000 Void Apples and give the strongest multipliers in the tree system.",
+                  "highlights": [],
+                  "facts": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "terraforming",
+          "name": "Terraform",
+          "icon": "map-pin",
+          "desc": "The Terraform board is Life Island’s upgrade hub, paid with Life Gems. Its 20 upgrades require Life levels and boost Life Gem income, Energy inflation, Research Points, Life Pack resources, Crystal Shards, Rune Luck, Money, Prestige Points, Emerald and Gold, Mining Damage, Red Liquid, Roots, Mining Ores, Mining Mastery, Tree Tier XP, Gemstones and Californium.",
+          "highlights": [],
+          "facts": [],
+          "children": [
+            {
+              "id": "terra-life",
+              "name": "Life",
+              "icon": "leaf",
+              "desc": "Life is the creation-tier stat shown on your nametag milestone. It rises every three lives created in Life Generation and gates Terraform upgrades, Life upgrade limits and the Fossil board. It can also be ranked up without losing progress by paying Eternal Shards.",
+              "highlights": [],
+              "facts": []
+            },
+            {
+              "id": "life-gems",
+              "name": "Life Gems",
+              "icon": "heart",
+              "desc": "Life Gems are Life Island’s main currency, earned passively and multiplied by Terraform income bonuses, Monster, Fossils and other upgrades. They pay for every Terraform upgrade and Advanced runes, and have a leaderboard for the highest amounts held.",
+              "highlights": [],
+              "facts": [],
+              "children": [
+                {
+                  "id": "terraform-upgrades",
+                  "name": "Terraform Upgrades",
+                  "icon": "hammer",
+                  "desc": "Move the level slider and the site computes the next-level price and the multi.",
+                  "highlights": [],
+                  "facts": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "monster",
+          "name": "Monster",
+          "icon": "skull",
+          "desc": "The Monster is your dragon pet in the Terraform area. Clicking it feeds the monster and generates Monster Points, which multiply stats with soft caps. It grows through 20 tiers, from Tiny Egg to King Dragon at 1e200 points. Monster Upgrades boost Red Liquid, stat bonuses, Life Gems, tier bonuses, Energy, Money and Monster Perks.",
+          "highlights": [],
+          "facts": [],
+          "children": [
+            {
+              "id": "red-liquid",
+              "name": "Red Liquid",
+              "icon": "drop",
+              "desc": "Red Liquid is the Monster area’s feed currency, earned through the monster and boosted by the first Monster Upgrade. The Terraform Red Liquid upgrade converts it into faster Monster Points gain, and the Level Perk Tree has a permanent Red Liquid perk.",
+              "highlights": [],
+              "facts": [],
+              "children": [
+                {
+                  "id": "monster-evolution",
+                  "name": "Monster Evolution",
+                  "icon": "refresh",
+                  "desc": "Monster Evolution upgrades evolve your monster permanently. There are six evolutions with escalating prices; each multiplies monster gains, with the first five doubling it and the last ones growing by 25 percent. Every Monster Upgrade also requires a minimum evolution level, so evolving is mandatory for further upgrades.",
+                  "highlights": [],
+                  "facts": []
+                },
+                {
+                  "id": "monster-upgrades",
+                  "name": "Monster Upgrades",
+                  "icon": "hammer",
+                  "desc": "Move the level slider and the site computes the next-level price and the multi.",
+                  "highlights": [],
+                  "facts": []
+                }
+              ]
+            },
+            {
+              "id": "sacrifice",
+              "name": "Sacrifice",
+              "icon": "skull",
+              "desc": "The Sacrifice board lets you sacrifice your monster for Dark Liquid. It shows the gain before confirmation and tracks every sacrifice. It unlocks through Terraform progression and has Sacrifice Upgrades that increase Dark Liquid gained per sacrifice.",
+              "highlights": [],
+              "facts": [],
+              "children": [
+                {
+                  "id": "dark-liquid",
+                  "name": "Dark Liquid",
+                  "icon": "drop",
+                  "desc": "Dark Liquid is the currency earned by sacrificing monsters. It pays for the separate Dark Monster Upgrades board, which further boosts the monster area, and is tracked in your Life Island inventory.",
+                  "highlights": [],
+                  "facts": []
+                },
+                {
+                  "id": "sacrifice-upgrades",
+                  "name": "Sacrifice Upgrades",
+                  "icon": "hammer",
+                  "desc": "Move the level slider and the site computes the next-level price and the multi.",
+                  "highlights": [],
+                  "facts": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "frost",
+          "name": "Frost",
+          "icon": "wind",
+          "desc": "The Frost area is Life Island’s frozen wing. Three machines produce IceShard every few seconds; Frost Upgrades improve income, machine speed, Tree Roots, Dark Liquid and Golden Research. The conversion chain turns IceShard into four higher frost tiers, each adding permanent global multipliers.",
+          "highlights": [],
+          "facts": [],
+          "children": [
+            {
+              "id": "frost-generators",
+              "name": "Frost Generators",
+              "icon": "gauge",
+              "desc": "Frost Generators are three machines: the first is free, the second costs 10 thousand IceShard and the third 10 million. Each has Tier, Level and Speed upgrade tracks. Tier caps at 3; Level caps at 50, 60 or 75; Speed caps at 10, 20 or 30. Every track increases IceShard production.",
+              "highlights": [],
+              "facts": []
+            },
+            {
+              "id": "frost-upgrades",
+              "name": "Frost Upgrades",
+              "icon": "hammer",
+              "desc": "Move the level slider and the site computes the next-level price and the multi.",
+              "highlights": [],
+              "facts": []
+            },
+            {
+              "id": "frost-conversion",
+              "name": "Frost Conversion",
+              "icon": "refresh",
+              "desc": "Frost Conversion is the board that trades frost currency up the chain. Each conversion is one-way into the next tier, and every higher tier permanently multiplies several stats while also serving as the input for the next conversion.",
+              "highlights": [],
+              "facts": [],
+              "children": [
+                {
+                  "id": "packed-frost",
+                  "name": "Packed Frost",
+                  "icon": "spark",
+                  "desc": "Packed Frost is the second frost tier, converted from IceShard. Each one held adds a soft-capped multiplier of up to 50x to your stats, and Packed Frost is the input for Dense Frost.",
+                  "highlights": [],
+                  "facts": []
+                },
+                {
+                  "id": "dense-frost",
+                  "name": "Dense Frost",
+                  "icon": "spark",
+                  "desc": "Dense Frost is the third frost tier, converted from Packed Frost, with two bonus lines scaling up to 500x. It feeds Compact Frost.",
+                  "highlights": [],
+                  "facts": []
+                },
+                {
+                  "id": "compact-frost",
+                  "name": "Compact Frost",
+                  "icon": "spark",
+                  "desc": "Compact Frost is the fourth frost tier, converted from Dense Frost. It carries three bonus lines scaling with logarithmic and power formulas and is the input for the final tier.",
+                  "highlights": [],
+                  "facts": []
+                },
+                {
+                  "id": "neutron-frost",
+                  "name": "Neutron Frost",
+                  "icon": "spark",
+                  "desc": "Neutron Frost is the fifth and final frost tier, converted from Compact Frost. Its two strong bonus lines cap at 100x. Holding the highest tiers you can afford is the endgame of the Frost area.",
+                  "highlights": [],
+                  "facts": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "money-island",
+      "name": "Money Island",
+      "desc": "Money Island is the third area, opened by the second stage gate for 5e29 Energy and 5 million Sap. It is the multiplier island: the 83-node Upgrade Tree is paid with Money, alongside Gold Bars, Emerald Coins, Golden Diamonds, Tree Ascension ranks and four special Energies. Each layer multiplies the previous one, rewarding you for stacking them.",
+      "icon": "coin",
+      "tagline": "The money island: the 83-node Upgrade Tree, Gold Bars, Emeralds, Golden Diamond and the four special Energies.",
+      "vitals": [
+        {
+          "label": "Tree Upgrades",
+          "value": "83"
+        },
+        {
+          "label": "Currencies",
+          "value": "Gold · Emerald · G. Diamond"
+        }
+      ],
+      "subcategories": [
+        {
+          "id": "upgrade-tree",
+          "name": "Upgrade Tree",
+          "icon": "branch",
+          "desc": "The Upgrade Tree is the main Money sink: 83 nodes bought with Money that boost Money, Energy, Perk Points, Crystals, Inflation, Crystal and Jewel multipliers, Opal, Stone, Prestige and Energies unlocks. Nodes chain through unlock requirements, and the final 13 appear only after your first Tree Ascension.",
+          "highlights": [],
+          "facts": [
+            {
+              "label": "Nodes",
+              "value": "83"
+            },
+            {
+              "label": "Currency",
+              "value": "Money"
+            }
+          ]
+        },
+        {
+          "id": "gold-bars",
+          "name": "Gold Bars",
+          "icon": "ingot",
+          "desc": "Gold Bars are the first Money Island reset layer, converting Money into Gold Bars. They pay for upgrades including Starter Money, More Gold, Money Inflation, Energy Shards, Sap Inflation, Rune Bulk and Gold Buff. The Silver Energy unlock is also on this board. Gold Bars are spent on the Riches rune and consumed by the Emerald reset.",
+          "highlights": [],
+          "facts": [],
+          "children": [
+            {
+              "id": "gold-upgrades",
+              "name": "Upgrades",
+              "icon": "hammer",
+              "desc": "Move the level slider and the site computes the next-level price and the multi from the game formulas.",
+              "highlights": [],
+              "facts": []
+            }
+          ]
+        },
+        {
+          "id": "emeralds",
+          "name": "Emeralds",
+          "icon": "gem",
+          "desc": "The Emerald Reset consumes Money and Gold Bars and grants Emerald Coins. Emerald Upgrades boost Starter Money, Gold Bars, Emerald Coins, Money and Energy inflation, Energy Shards, Mining Ores and more. Emerald Coins are also a stage bonus currency and appear in the Eternal Tree.",
+          "highlights": [],
+          "facts": [],
+          "children": [
+            {
+              "id": "emerald-upgrades",
+              "name": "Upgrades",
+              "icon": "hammer",
+              "desc": "Move the level slider and the site computes the next-level price and the multi from the game formulas.",
+              "highlights": [],
+              "facts": []
+            }
+          ]
+        },
+        {
+          "id": "golden-diamond",
+          "name": "Golden Diamond",
+          "icon": "diamond",
+          "desc": "The Golden Diamond Reset is the third reset layer, consuming previous layers and granting Golden Diamonds. It first unlocks through Tree Ascension Rank 1. Its upgrades boost Money, Gold Bars, Emerald Coins, Golden Diamonds, Energy inflation, Gemstone and Forge Luck, passive Gold Bars and Emerald Coins, Diamond Chance, Adamantium and Californium caps, Ruby Energy and the Golden Diamond Buff.",
+          "highlights": [],
+          "facts": [],
+          "children": [
+            {
+              "id": "gold-diamond-upgrades",
+              "name": "Upgrades",
+              "icon": "hammer",
+              "desc": "Move the level slider and the site computes the next-level price and the multi from the game formulas.",
+              "highlights": [],
+              "facts": []
+            }
+          ]
+        },
+        {
+          "id": "ascensions",
+          "name": "Ascensions",
+          "icon": "refresh",
+          "desc": "Tree Ascension is Money Island’s rank system, paid in Money. Rank 1 costs 1e51 Money and unlocks Golden Diamonds plus five tree upgrades; Rank 2 costs 1e72 and unlocks Ruby Energy plus seven more upgrades. Further ranks are coming soon. Ranks appear on your nametag and can be bought without resetting by paying Eternal Shards.",
+          "highlights": [],
+          "facts": []
+        },
+        {
+          "id": "energies",
+          "name": "Energies",
+          "icon": "spark",
+          "desc": "The Energies are four special stats on Money Island that stack exponential multipliers onto Energy gain. Each unlocks through the Upgrade Tree or Ascension, is gained from its own nodes and chances, and is soft-capped to keep it balanced. They are among the strongest Energy boosts in the game.",
+          "highlights": [],
+          "facts": [
+            {
+              "label": "Energies",
+              "value": "4"
+            }
+          ],
+          "children": [
+            {
+              "id": "silver-energy",
+              "name": "Silver Energy",
+              "icon": "spark",
+              "desc": "Silver Energy unlocks with a 100 trillion Money node in the Upgrade Tree and is gained through Silver Chance and Better Silver upgrades. It multiplies Energy with a soft-capped power formula that grows with the amount held.",
+              "highlights": [],
+              "facts": []
+            },
+            {
+              "id": "gold-energy",
+              "name": "Gold Energy",
+              "icon": "spark",
+              "desc": "Gold Energy is the second Energy stat, unlocked deeper in the Upgrade Tree. Its multiplier scales up to a hard cap of 1000x and combines multiplicatively with the other Energies.",
+              "highlights": [],
+              "facts": []
+            },
+            {
+              "id": "diamond-energy",
+              "name": "Diamond Energy",
+              "icon": "spark",
+              "desc": "Diamond Energy is the third Energy stat, unlocked with a 1e23 Money node. Its bonus caps at 100x, is cheaper to push than Gold Energy, and Better Diamond Energy raises its gain per level.",
+              "highlights": [],
+              "facts": []
+            },
+            {
+              "id": "ruby-energy",
+              "name": "Ruby Energy",
+              "icon": "spark",
+              "desc": "Ruby Energy is the final Energy stat, unlocked by Tree Ascension Rank 2 and boosted by Golden Diamond upgrades and the Ruby Necklace item. It multiplies all other Energies at once with a 2.5x cap, so it is saved for endgame.",
+              "highlights": [],
+              "facts": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mining",
+      "name": "Mining",
+      "desc": "Mining is the fourth area, opened by the fourth stage gate for 1e68 Energy and 500 Bluesteel. Break ores with your pickaxe across depth layers, earn Mining XP and Mining Perks, build Ore Mastery, collect Gemstones for the Forge and fight the Core. Breaking its first six stages removes the 6.25 million depth limit and opens the deepest layers.",
+      "icon": "pickaxe",
+      "tagline": "Every ore, its upgrades and where to find them — plus mastery, layers and auto mining.",
+      "vitals": [
+        {
+          "label": "Ores",
+          "value": "26"
+        },
+        {
+          "label": "Subsections",
+          "value": "5"
+        }
+      ],
+      "subcategories": [
+        {
+          "id": "ores",
+          "name": "Ores",
+          "icon": "gem",
+          "desc": "Ores are the 32 mineable materials of Mining, from Stone, Coal and Tin to Painite, Meteorite, Amethyst and five diamond ores: Green, Red, Void, Black and Transcend Diamond. Each ore has its own rarity per layer and Mastery track; rarer ores pay more currency, XP and Gemstones.",
+          "highlights": [],
+          "facts": [
+            {
+              "label": "Ores",
+              "value": "26"
+            },
+            {
+              "label": "Gated by",
+              "value": "Depth & Luck"
+            }
+          ],
+          "vitals": [
+            {
+              "label": "Ores",
+              "value": "26"
+            },
+            {
+              "label": "Deepest ore",
+              "value": "Meteorite"
+            },
+            {
+              "label": "Layers",
+              "value": "20"
+            }
+          ]
+        },
+        {
+          "id": "mastery",
+          "name": "Mastery",
+          "icon": "chart",
+          "desc": "Ore Mastery rewards repeatedly mining the same ores. Each ore has its own progress and first and second bonuses at set counts. Rewards boost systems such as Mining Damage, Gemstones, Forge Quality, Rune Luck and other currencies. The Mining Mastery Terraform upgrade speeds the whole track.",
+          "highlights": [],
+          "facts": [
+            {
+              "label": "Ores",
+              "value": "26"
+            },
+            {
+              "label": "Lines each",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "id": "cores",
+          "name": "Cores",
+          "icon": "atom",
+          "desc": "Core is the Limit Breaker for Layers, you break the core layers for benefits and to unlock more layers.",
+          "highlights": [],
+          "facts": [
+            {
+              "label": "Cores",
+              "value": "12"
+            }
+          ]
+        },
+        {
+          "id": "layers",
+          "name": "Layers",
+          "icon": "layers",
+          "desc": "Mine Layers are depth zones, each holding rarer and richer ores. Progression is limited by a 6.25 million depth cap until you break the first six Core stages; the best ores appear in the deepest layers beyond that limit.",
+          "highlights": [],
+          "facts": [
+            {
+              "label": "Layers",
+              "value": "20"
+            },
+            {
+              "label": "From",
+              "value": "Soil"
+            },
+            {
+              "label": "To",
+              "value": "Deep Space II"
+            }
+          ]
+        },
+        {
+          "id": "upgrades",
+          "name": "Upgrades",
+          "icon": "hammer",
+          "desc": "Everything that upgrades the mine itself lives here: the permanent Mining Upgrade store and the Auto Mining system. Mining upgrades use mined ores as currency, while Auto Mining keeps ore production running without manual swings.",
+          "highlights": [],
+          "facts": [],
+          "children": [
+            {
+              "id": "mining-upgrade",
+              "name": "Mining Upgrade",
+              "icon": "hammer",
+              "desc": "The Mining Upgrade store holds 38 upgrades paid with mined ores such as Tin, Iron, Silver, Gold and Uranium, with multi-currency prices per level. It covers Mining Damage, Pickaxe power, Gemstones, Forge Luck and Quality, XP and critical hits. Upgrade 28 discounts every price by 5 percent per level; upgrade 34 unlocks five colored diamond picks.",
+              "highlights": [],
+              "facts": []
+            },
+            {
+              "id": "auto-mining",
+              "name": "Auto Mining",
+              "icon": "refresh",
+              "desc": "Auto Mining is the automation wing of Mining, unlocked with tycoon buttons. It contains Auto Mining Drills and their auto-upgrade system, keeping your mining economy running while you play elsewhere. Auto Mining Upgrades also affect Mining store prices, and drills can be bought with Buy Max.",
+              "highlights": [],
+              "facts": [],
+              "children": [
+                {
+                  "id": "auto-mining-drills",
+                  "name": "Auto Mining Drills",
+                  "icon": "drill",
+                  "desc": "Auto Mining Drills are five drills, for Coal, Iron, Fossils, Gold and Stone, each paid with its own mined currency. Every drill levels automatically once unlocked. They produce ores without requiring you to swing the pickaxe.",
+                  "highlights": [],
+                  "facts": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dungeon",
+      "name": "Dungeons",
+      "desc": "The Dungeon is the combat area, opened by the fifth stage gate for 2.5e124 Energy and 1 million Uranium, plus Dungeon Rank 3. Train Strength and Health to rank up, fight enemies for Dungeon Coins, Bones and item drops, and defeat ten enemies at your highest unlocked level to unlock the next. Everything feeds the Souls reset.",
+      "icon": "castle",
+      "tagline": "Training, enemies and loot: everything inside the dungeons — areas, gear, drops and upgrades.",
+      "vitals": [
+        {
+          "label": "Training areas",
+          "value": "28"
+        },
+        {
+          "label": "Gear pieces",
+          "value": "36"
+        },
+        {
+          "label": "T2 unlock",
+          "value": "Dust"
+        }
+      ],
+      "subcategories": [
+        {
+          "id": "training",
+          "name": "Training",
+          "icon": "spark",
+          "desc": "Training builds your two combat stats, Strength and Health. Stand in a training station and your character trains automatically. Strength deals damage in the Dungeon, Health keeps you alive, and both are required to rank up.",
+          "highlights": [],
+          "facts": [
+            {
+              "label": "Areas",
+              "value": "28"
+            },
+            {
+              "label": "Tiers",
+              "value": "T1 / T2"
+            }
+          ],
+          "children": [
+            {
+              "id": "training-areas",
+              "name": "Training Areas",
+              "icon": "gauge",
+              "desc": "Training Areas are the stations themselves, split into Strength and Health zones and gated by stats into tiers. Higher tiers give larger gains per tick. Training Upgrades improve gains and speed and are gated by Dungeon Rank; area tier can also be raised automatically.",
+              "highlights": [],
+              "facts": [
+                {
+                  "label": "Areas",
+                  "value": "28"
+                },
+                {
+                  "label": "Groups",
+                  "value": "Strength / Life"
+                }
+              ]
+            },
+            {
+              "id": "ranks",
+              "name": "Ranks",
+              "icon": "chart",
+              "desc": "Dungeon Ranks are the combat prestige: Stickman, Noob, Weak, Trainer, Hunter and Master. Ranking up requires Strength and Health at the threshold, from 5 thousand to 250 trillion. Normal rank-ups reset training progress, which can be skipped with Eternal Shards. Rank 3 unlocks the Dungeon; higher ranks unlock more Training Upgrades and content.",
+              "highlights": [],
+              "facts": []
+            },
+            {
+              "id": "training-upgrades",
+              "name": "Upgrades",
+              "icon": "hammer",
+              "desc": "Every training upgrade follows the same model: a current value and a cap — the bar shows how far you are.",
+              "highlights": [],
+              "facts": []
+            }
+          ]
+        },
+        {
+          "id": "enemies",
+          "name": "Enemies",
+          "icon": "skull",
+          "desc": "Dungeon enemies start at Starter with 1 million health and climb through Fighter, Trainer, Ninja, Samurai, Hunter, Titan and Gladiator with 10 billion health, with stronger enemies beyond. Defeat ten enemies at your highest unlocked level to unlock the next. Kills pay Bones and Dungeon Coins, with item drops and Souls multipliers from equipment.",
+          "highlights": [],
+          "facts": [],
+          "children": [
+            {
+              "id": "bones",
+              "name": "Bones",
+              "icon": "bone",
+              "desc": "Bones are the basic enemy drop, earned from every enemy defeated. They pay for Bones Upgrades that boost Strength, Health, Dungeon Coins and drop luck; they are one of the three Souls reset costs and can be converted into Bone Dust for passive income.",
+              "highlights": [],
+              "facts": [],
+              "children": [
+                {
+                  "id": "bones-upgrades",
+                  "name": "Upgrades",
+                  "icon": "hammer",
+                  "desc": "Every bones upgrade: move the level slider and the site computes the next-level price and the multi from the game formulas.",
+                  "highlights": [],
+                  "facts": []
+                }
+              ]
+            },
+            {
+              "id": "coins",
+              "name": "Coins",
+              "icon": "coins",
+              "desc": "Dungeon Coins are the second enemy drop, earned from every kill. They pay for Coin Upgrades that boost training, enemies and drops, and are consumed by the Souls reset. Balance spending against saving them for resets.",
+              "highlights": [],
+              "facts": [],
+              "children": [
+                {
+                  "id": "coins-upgrades",
+                  "name": "Upgrades",
+                  "icon": "hammer",
+                  "desc": "Every coins upgrade: move the level slider and the site computes the next-level price and the multi from the game formulas.",
+                  "highlights": [],
+                  "facts": []
+                }
+              ]
+            },
+            {
+              "id": "bone-dust",
+              "name": "Bone Dust",
+              "icon": "flask",
+              "desc": "Bone Dust is made by converting all your Bones at the dust board, unlocked from 100 thousand Bones. The conversion sets passive Bone Dust income per second scaled by multipliers, and your best conversion is remembered. Dust boosts stats through Dust Upgrades and is the third Souls reset cost.",
+              "highlights": [],
+              "facts": [
+                {
+                  "label": "Unlocks",
+                  "value": "T2 areas"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "items",
+          "name": "Items",
+          "icon": "package",
+          "desc": "Dungeon Items are equipment drops in three categories: Swords, Shields and Accessories. Every item has a rarity and can be equipped in loadout slots. Bonuses include Power, Strength, Defense, Health and currency multipliers such as Money, Energy, Iron, Dungeon Coins, Bones and Souls. The best Souls accessories are worth equipping before a reset.",
+          "highlights": [],
+          "facts": [
+            {
+              "label": "Items",
+              "value": "20"
+            }
+          ],
+          "children": [
+            {
+              "id": "swords",
+              "name": "Swords",
+              "icon": "sword",
+              "desc": "Swords are the Power and Strength equipment, from Wooden and Steel through Iron, Titanium and stronger blades. Power multiplies Dungeon damage, while higher-rarity swords also carry Strength multipliers.",
+              "highlights": [],
+              "facts": [
+                {
+                  "label": "Swords",
+                  "value": "8"
+                },
+                {
+                  "label": "Top tier",
+                  "value": "Cobalt"
+                }
+              ]
+            },
+            {
+              "id": "shield",
+              "name": "Shield",
+              "icon": "shield",
+              "desc": "Shields provide Defense and Health, such as Iron Shield and Titanium Shield. Defense reduces enemy damage; Health raises survivability. Both stats are needed to survive higher enemy levels.",
+              "highlights": [],
+              "facts": [
+                {
+                  "label": "Shields",
+                  "value": "8"
+                },
+                {
+                  "label": "Top tier",
+                  "value": "Titanium"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "souls",
+          "name": "Souls",
+          "icon": "drop",
+          "desc": "The Souls Reset consumes Dungeon Coins, Bones and Bone Dust and grants Souls, with a cooldown. Souls pay for 12 upgrades that boost Coins, Souls, Strength, Health, Bones, drop luck, Dungeon XP, Bone Dust and more. Equipping your best Souls accessory before resetting multiplies the gain; upgrades use Buy Max.",
+          "highlights": [],
+          "facts": [],
+          "children": [
+            {
+              "id": "souls-upgrades",
+              "name": "Upgrades",
+              "icon": "hammer",
+              "desc": "Every souls upgrade follows the same model: a current value and a cap — the bar shows how far you are.",
+              "highlights": [],
+              "facts": []
+            },
+            {
+              "id": "dungeon-level",
+              "name": "Dungeon Level",
+              "icon": "chart",
+              "desc": "Dungeon Levels are enemy levels. Defeat ten enemies at your current highest level to unlock the next. Each level raises enemy health but also increases Bones, Coins and drop rewards, scaling the combat economy.",
+              "highlights": [],
+              "facts": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "runes",
+      "name": "Runes",
+      "desc": "Runes are permanent stat multipliers bought at rune boards. Each rune type uses a different currency and each purchase rolls a random rarity from Basic to super-rare tiers. Runes permanently multiply stats on their boost list; higher rarities are dramatically rarer. Rune Luck from upgrades and items improves rolls, and the Golden rarity of the Bones rune also multiplies Runestone luck.",
+      "icon": "rune",
+      "tagline": "Socketable stones grouped into six families — Energetic, Sky, Riches, Earth, Advanced and Bones. Every roll is gated by Rune Luck.",
+      "overview": {
+        "desc": "Runes are socketable stones that rewrite your stats while they are slotted. Every rune belongs to one of six families — Energetic, Sky, Riches, Earth, Advanced and Bones — and every roll is gated by Rune Luck: the more luck you stack, the deeper into a family's pool you can reach. Each family page breaks its runes into cards showing the required luck, the base roll chance, the chance with recommended luck, and what each rune boosts at cap. The Riches family is documented first and sets the template for the rest.",
+        "highlights": [
+          {
+            "icon": "rune",
+            "title": "Six families",
+            "text": "Energetic, Sky, Riches, Earth, Advanced and Bones — each with its own pool of runes."
+          },
+          {
+            "icon": "star",
+            "title": "Luck-gated rolls",
+            "text": "Every rune has a luck requirement; the rarest rolls only appear as your luck grows."
+          },
+          {
+            "icon": "chart",
+            "title": "Boosts at cap",
+            "text": "Each rune multiplies a target stat while socketed, with a cap value still being measured."
+          }
+        ],
+        "facts": [
+          {
+            "label": "Families",
+            "value": "6"
+          },
+          {
+            "label": "Documented",
+            "value": "Riches"
+          }
+        ]
+      },
+      "vitals": [
+        {
+          "label": "Families",
+          "value": "6"
+        },
+        {
+          "label": "Documented",
+          "value": "Riches"
+        }
+      ],
+      "subcategories": [
+        {
+          "id": "energetic",
+          "name": "Energetic",
+          "icon": "spark",
+          "desc": "The Energetic rune is paid with Energy at 1 million per roll. Its rarities boost Energy, Crystals, Perk Points, Jewels, Platinum, Crystal Shards and Quartz, from Basic through Charged, Voltic, Special, Hexa, Dark, Omega and Prismatic.",
+          "highlights": [],
+          "facts": []
+        },
+        {
+          "id": "sky",
+          "name": "Sky",
+          "icon": "cloud",
+          "desc": "The Sky rune is paid with Research Points at 25 per roll, making it one of the cheapest. It boosts Research-related stats and Life Island currencies, scaling from Basic to its highest rarities.",
+          "highlights": [],
+          "facts": []
+        },
+        {
+          "id": "money",
+          "name": "Riches",
+          "icon": "coin",
+          "desc": "The Riches rune is paid with Gold Bars at 100 per roll. It boosts Money Island stats, including Money, Gold Bars and Emerald Coins; higher rarities carry several boosts at once.",
+          "highlights": [],
+          "facts": [
+            {
+              "label": "Runes",
+              "value": "9"
+            },
+            {
+              "label": "Gated by",
+              "value": "Rune Luck"
+            }
+          ],
+          "vitals": [
+            {
+              "label": "Location",
+              "value": "Upgrade Tree Island"
+            },
+            {
+              "label": "Unlock cost",
+              "value": "100 Gold"
+            },
+            {
+              "label": "Runes",
+              "value": "9"
+            },
+            {
+              "label": "Gated by",
+              "value": "Rune Luck"
+            }
+          ]
+        },
+        {
+          "id": "earth",
+          "name": "Earth",
+          "icon": "leaf",
+          "desc": "The Earth rune is paid with Stone at 250 thousand per roll. It boosts Stone, Mining and mined ore currencies, making it a natural sink for early Mining income.",
+          "highlights": [],
+          "facts": []
+        },
+        {
+          "id": "advanced",
+          "name": "Advanced",
+          "icon": "hex",
+          "desc": "The Advanced rune is paid with Life Gems at 1e26 per roll, the most expensive rune. It boosts the strongest Life Island and crystal stats, including Terraform Gems, and is intended for late-game players.",
+          "highlights": [],
+          "facts": []
+        },
+        {
+          "id": "bones",
+          "name": "Bones",
+          "icon": "skull",
+          "desc": "The Bones rune is paid with Bones at 2500 per roll, and it is the combat rune. Its seven rarities: from Basic, which boosts Strength and Health, through Shiny with Bones, Bluesteel and Californium, Metalic with Drop Luck, Gears and Bone Dust, Golden with Iron, Dungeon Coins and Runestone luck, Platinum with Souls, Strength and Health, up to Diamond and Shadow carrying the best combat multipliers in the game.",
+          "highlights": [],
+          "facts": []
+        }
+      ]
+    },
+    {
+      "id": "perks",
+      "name": "Perks",
+      "desc": "Perks are permanent multipliers earned by leveling stats. Every major system has a level that pays its own perk currency and its own perk board. The main Level Perk Tree has 20 perk lines covering Energy, Crystals, Jewels, Platinum, Life Shards, Fossils, Research Points, Logs, Money, Stone, Perk Points, Opal, Crystal Shards, Adamantium, Californium, Life Gems, Golden Research, Sap, Roots and Red Liquid.",
+      "icon": "spark",
+      "tagline": "Permanent passives earned through play — one family per system: Perk, Crystal, Log, Sap, Monster, Mining and Merge.",
+      "subcategories": [
+        {
+          "id": "perk",
+          "name": "Perk",
+          "icon": "spark",
+          "desc": "Perk Points are earned from your main player Level. They buy the Level Perk Tree’s 20 perk lines, each with seven tiers and a level cap. Every tier multiplies its currency more strongly and requires previous perks to unlock. Prestige and Research upgrades raise perk limits and Perk Point gain.",
+          "highlights": [],
+          "facts": []
+        },
+        {
+          "id": "crystal",
+          "name": "Crystal",
+          "icon": "gem",
+          "desc": "Crystal Perks are earned from your Crystal Level as you collect crystals. They buy permanent multipliers for the crystal economy, and the first four Crystal Perk upgrades are bought with Crystal Shards; Upgrade 9 holds the unlock for the rest.",
+          "highlights": [],
+          "facts": []
+        },
+        {
+          "id": "log",
+          "name": "Log",
+          "icon": "book",
+          "desc": "Log Perks are earned each time Log Level rises from cutting trees. They buy permanent Log Perk multipliers for the forest; the More Log Perks upgrade in the Logs board raises their limits.",
+          "highlights": [],
+          "facts": []
+        },
+        {
+          "id": "sap",
+          "name": "Sap",
+          "icon": "drop",
+          "desc": "Sap Perks are earned each time your Sap Level rises. They buy Sap Perk multipliers; the Sap Perks upgrade in Roots and the Sap and Log Perks upgrade in Sap push their limits further.",
+          "highlights": [],
+          "facts": []
+        },
+        {
+          "id": "monster",
+          "name": "Monster",
+          "icon": "skull",
+          "desc": "Monster Perks are the Red Perks, earned each time Monster Level rises. They buy permanent multipliers for the monster and Red Liquid economy; the Monster Perks upgrade in the Monster board raises their gain.",
+          "highlights": [],
+          "facts": []
+        },
+        {
+          "id": "mining",
+          "name": "Mining",
+          "icon": "pickaxe",
+          "desc": "Mine Perks are earned each time Mining Level rises from breaking ores. They buy the Mining Perk board for damage, ores, Gemstones, Forge and XP boosts. MoreLevels extends caps, and newer perks cover Pickaxe XP, Training Stats, Ruby Energy, Rare Diamonds and Astatine.",
+          "highlights": [],
+          "facts": []
+        },
+        {
+          "id": "merge",
+          "name": "Merge",
+          "icon": "grid",
+          "desc": "Merge Perks are earned each time your Merge Level rises on the grid. They buy the Merge Perk multipliers for the merge economy, and the Merge Perks upgrade inside the Quartz board holds the unlock for the rest of the line.",
+          "highlights": [],
+          "facts": []
+        }
+      ]
+    }
+  ]
+}

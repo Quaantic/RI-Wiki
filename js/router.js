@@ -87,6 +87,10 @@ export async function initRouter() {
     const { path, query } = parseHash();
     void navigate(path, query);
   });
+  window.addEventListener('ri-number-format-change', () => {
+    const { path, query } = parseHash();
+    void navigate(path, query);
+  });
   const { path, query } = parseHash();
   await navigate(path, query);
 }

@@ -1,0 +1,244 @@
+backend:
+  name: github
+  repo: Quaantic/RI-Wiki
+  branch: main
+  base_url: https://regrowthinc.vercel.app
+  auth_endpoint: api/auth
+  commit_messages:
+    create: 'Add {{collection}} content'
+    update: 'Update {{collection}} content'
+    delete: 'Remove {{collection}} content'
+
+publish_mode: editorial_workflow
+media_folder: images/uploads
+public_folder: /images/uploads
+
+collections:
+  - name: wiki
+    label: Wiki pages
+    files:
+      - name: wiki-data
+        label: Categories and pages
+        file: content/wiki-data.json
+        fields:
+          - label: Categories
+            name: categories
+            widget: list
+            summary: '{{fields.name}}'
+            fields:
+              - { label: URL ID, name: id, widget: string, hint: 'Short URL key; keep existing IDs unchanged.' }
+              - { label: Name, name: name, widget: string }
+              - { label: Description, name: desc, widget: text }
+              - { label: Icon name, name: icon, widget: string, required: false }
+              - label: Overview panel
+                name: overview
+                widget: object
+                required: false
+                fields:
+                  - { label: Description, name: desc, widget: text }
+                  - label: Highlights
+                    name: highlights
+                    widget: list
+                    required: false
+                    fields:
+                      - { label: Title, name: title, widget: string }
+                      - { label: Text, name: text, widget: text }
+                      - { label: Icon name, name: icon, widget: string, required: false }
+                  - label: Facts
+                    name: facts
+                    widget: list
+                    required: false
+                    fields:
+                      - { label: Label, name: label, widget: string }
+                      - { label: Value, name: value, widget: string }
+              - { label: Tagline, name: tagline, widget: string }
+              - label: Key information
+                name: vitals
+                widget: list
+                required: false
+                fields:
+                  - { label: Label, name: label, widget: string }
+                  - { label: Value, name: value, widget: string }
+              - label: Sections
+                name: subcategories
+                widget: list
+                summary: '{{fields.name}}'
+                fields:
+                  - { label: URL ID, name: id, widget: string, hint: 'Short URL key; keep existing IDs unchanged.' }
+                  - { label: Name, name: name, widget: string }
+                  - { label: Description, name: desc, widget: text }
+                  - { label: Icon name, name: icon, widget: string, required: false }
+                  - label: Highlights
+                    name: highlights
+                    widget: list
+                    required: false
+                    fields:
+                      - { label: Title, name: title, widget: string }
+                      - { label: Text, name: text, widget: text }
+                      - { label: Icon name, name: icon, widget: string, required: false }
+                  - label: Facts
+                    name: facts
+                    widget: list
+                    required: false
+                    fields:
+                      - { label: Label, name: label, widget: string }
+                      - { label: Value, name: value, widget: string }
+                  - label: Key information
+                    name: vitals
+                    widget: list
+                    required: false
+                    fields:
+                      - { label: Label, name: label, widget: string }
+                      - { label: Value, name: value, widget: string }
+                  - label: Subpages
+                    name: children
+                    widget: list
+                    required: false
+                    summary: '{{fields.name}}'
+                    fields:
+                      - { label: URL ID, name: id, widget: string, hint: 'Short URL key; keep existing IDs unchanged.' }
+                      - { label: Name, name: name, widget: string }
+                      - { label: Description, name: desc, widget: text }
+                      - { label: Icon name, name: icon, widget: string, required: false }
+                      - label: Highlights
+                        name: highlights
+                        widget: list
+                        required: false
+                        fields:
+                          - { label: Title, name: title, widget: string }
+                          - { label: Text, name: text, widget: text }
+                          - { label: Icon name, name: icon, widget: string, required: false }
+                      - label: Facts
+                        name: facts
+                        widget: list
+                        required: false
+                        fields:
+                          - { label: Label, name: label, widget: string }
+                          - { label: Value, name: value, widget: string }
+                      - label: Subpages
+                        name: children
+                        widget: list
+                        required: false
+                        summary: '{{fields.name}}'
+                        fields:
+                          - { label: URL ID, name: id, widget: string, hint: 'Short URL key; keep existing IDs unchanged.' }
+                          - { label: Name, name: name, widget: string }
+                          - { label: Description, name: desc, widget: text }
+                          - { label: Icon name, name: icon, widget: string, required: false }
+                          - label: Highlights
+                            name: highlights
+                            widget: list
+                            required: false
+                            fields:
+                              - { label: Title, name: title, widget: string }
+                              - { label: Text, name: text, widget: text }
+                              - { label: Icon name, name: icon, widget: string, required: false }
+                          - label: Facts
+                            name: facts
+                            widget: list
+                            required: false
+                            fields:
+                              - { label: Label, name: label, widget: string }
+                              - { label: Value, name: value, widget: string }
+
+  - name: articles
+    label: Articles
+    files:
+      - name: articles
+        label: Articles
+        file: content/articles.json
+        fields:
+          - label: Articles
+            name: articles
+            widget: list
+            summary: '{{fields.title}}'
+            fields:
+              - { label: URL ID, name: id, widget: string, hint: 'Use lowercase letters, numbers, and hyphens.' }
+              - label: Category
+                name: category
+                widget: select
+                options:
+                  - { label: Main, value: main }
+                  - { label: Life Island, value: life }
+                  - { label: Money Island, value: money-island }
+                  - { label: Mining, value: mining }
+                  - { label: Dungeon, value: dungeon }
+                  - { label: Runes, value: runes }
+                  - { label: Perks, value: perks }
+              - { label: Section ID, name: subcategory, widget: string, hint: 'Copy the section URL ID from the Wiki pages editor.' }
+              - { label: Title, name: title, widget: string }
+              - { label: Description, name: description, widget: text }
+              - { label: Keywords, name: keywords, widget: list, field: { label: Keyword, name: keyword, widget: string }, required: false }
+              - { label: Last updated, name: updated, widget: datetime, date_format: 'YYYY-MM-DD', time_format: false }
+              - { label: Featured on home page, name: featured, widget: boolean, default: false }
+              - { label: Views, name: views, widget: number, value_type: int, default: 0 }
+              - label: Highlight statistics
+                name: stats
+                widget: list
+                required: false
+                fields:
+                  - { label: Label, name: label, widget: string }
+                  - { label: Value, name: value, widget: string }
+                  - { label: Icon name, name: icon, widget: string, required: false }
+              - label: Sections
+                name: sections
+                widget: list
+                summary: '{{fields.title}}'
+                fields:
+                  - { label: Section title, name: title, widget: string }
+                  - { label: Collapsed by default, name: collapsed, widget: boolean, default: false }
+                  - label: Content blocks
+                    name: blocks
+                    widget: list
+                    types:
+                      - label: Paragraph
+                        name: p
+                        widget: object
+                        fields:
+                          - { label: Text, name: text, widget: text }
+                      - label: Bullet or numbered list
+                        name: list
+                        widget: object
+                        fields:
+                          - { label: Numbered, name: ordered, widget: boolean, default: false }
+                          - { label: Checklist, name: checks, widget: boolean, default: false }
+                          - { label: Items, name: items, widget: list, field: { label: Item, name: item, widget: string } }
+                      - label: Key/value details
+                        name: kv
+                        widget: object
+                        fields:
+                          - label: Items
+                            name: pairs
+                            widget: list
+                            fields:
+                              - { label: Name, name: key, widget: string }
+                              - { label: Value, name: value, widget: string }
+              - { label: Related article IDs, name: related, widget: list, field: { label: Article ID, name: id, widget: string }, required: false }
+
+  - name: updates
+    label: Update log
+    files:
+      - name: update-log
+        label: Releases and changes
+        file: content/update-log.json
+        fields:
+          - label: Releases
+            name: versions
+            widget: list
+            hint: Keep the newest release at the top.
+            summary: 'Version {{fields.version}}'
+            fields:
+              - { label: Version, name: version, widget: string }
+              - { label: Release date, name: date, widget: datetime, date_format: 'YYYY-MM-DD', time_format: false }
+              - label: Updates in this release
+                name: entries
+                widget: list
+                summary: '{{fields.title}}'
+                fields:
+                  - label: Category
+                    name: context
+                    widget: select
+                    options: ['Feature', 'Changes', 'UI', 'Bugs']
+                  - { label: Title, name: title, widget: string }
+                  - { label: Page link (optional), name: href, widget: string, required: false, hint: 'For example: #/life/power-of-fossils' }
+                  - { label: What changed, name: description, widget: text }

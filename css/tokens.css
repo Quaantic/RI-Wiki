@@ -30,9 +30,9 @@
 
   /* Update-log contexts */
   --c-feature: #A8EF45;
+  --c-changes: #F2D3A0;
   --c-ui: #6FC7FF;
   --c-bug: #FF7A6E;
-  --c-changes: #F2D3A0;
   --c-credits: #FFD34D;
   --c-feedback: #6FC7FF;
 
@@ -118,9 +118,9 @@
   --c-topbar: rgba(248, 251, 245, 0.85);
 
   --c-feature: #4F9E1B;
+  --c-changes: #A8761F;
   --c-ui: #1D7FC2;
   --c-bug: #C93A2E;
-  --c-changes: #A8761F;
   --c-credits: #B8861F;
   --c-feedback: #1D7FC2;
 

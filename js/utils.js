@@ -64,8 +64,9 @@ export function fmtDateShort(iso) {
 
 export function fmtNum(n) {
   if (n == null) return '';
-  if (n >= 1_000_000) return (n / 1_000_000).toFixed(1).replace(/\.0$/, '') + 'M';
-  if (n >= 1_000) return (n / 1_000).toFixed(1).replace(/\.0$/, '') + 'k';
+  if (scientificNotationEnabled() && Math.abs(n) >= 1000) return formatScientific(n);
+  if (n >= 1_000_000) return formatPlainDecimal(n / 1_000_000, 1) + 'M';
+  if (n >= 1_000) return formatPlainDecimal(n / 1_000, 1) + 'k';
   return String(n);
 }
 
@@ -85,6 +86,48 @@ const SUFFIXES = [
 ];
 const SUFFIX_INDEX = new Map(SUFFIXES.flatMap((suffix, index) => suffix ? [[suffix.toLowerCase(), index]] : []));
 
+function scientificNotationEnabled() {
+  try {
+    return localStorage.getItem('ri-scientific') === '1';
+  } catch {
+    return false;
+  }
+}
+
+function formatScientific(n) {
+  return n.toExponential(2)
+    .replace(/(\.\d*?[1-9])0+e/, '$1e')
+    .replace(/\.0+e/, 'e')
+    .replace(/e([+-])0+(\d+)/, 'e$1$2')
+    .replace(/e\+/, 'e');
+}
+
+function formatPlainDecimal(n, fractionDigits) {
+  if (Math.abs(n) >= 1e21) {
+    return new Intl.NumberFormat('en-US', {
+      notation: 'standard',
+      useGrouping: false,
+      maximumFractionDigits: fractionDigits,
+    }).format(n);
+  }
+  return n.toFixed(fractionDigits).replace(/\.0+$/, '').replace(/(\.\d*?)0+$/, '$1');
+}
+
+function expandScientificNotation(text) {
+  const match = String(text).match(/^([+-]?)(\d*\.?\d+)e([+-]?\d+)$/i);
+  if (!match) return text;
+  const [, sign, coefficient, exponentText] = match;
+  const exponent = Number(exponentText);
+  if (!Number.isSafeInteger(exponent) || Math.abs(exponent) > 1000) return text;
+
+  const point = coefficient.indexOf('.') < 0 ? coefficient.length : coefficient.indexOf('.');
+  const digits = coefficient.replace('.', '');
+  const shiftedPoint = point + exponent;
+  if (shiftedPoint <= 0) return `${sign}0.${'0'.repeat(-shiftedPoint)}${digits}`;
+  if (shiftedPoint >= digits.length) return `${sign}${digits}${'0'.repeat(shiftedPoint - digits.length)}`;
+  return `${sign}${digits.slice(0, shiftedPoint)}.${digits.slice(shiftedPoint)}`;
+}
+
 export function parseGameNumber(value) {
   if (typeof value === 'number') return Number.isFinite(value) ? value : null;
   const text = String(value ?? '').trim().replace(/,/g, '');
@@ -100,20 +143,24 @@ export function parseGameNumber(value) {
 export function formatNumericText(text = '') {
   return String(text).replace(/(?<![A-Za-z0-9_.])[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+|[a-z]+)?(?![A-Za-z0-9_.])/gi, (token) => {
     const value = parseGameNumber(token);
-    if (value == null || (/e/i.test(token) && Math.abs(value) < 1000)) return token;
+    if (value == null) return token;
+    if (/e/i.test(token) && Math.abs(value) < 1000) {
+      return scientificNotationEnabled() ? token : expandScientificNotation(token);
+    }
     return fmtSuffix(value);
   });
 }
 
 export function fmtSuffix(n) {
   if (!Number.isFinite(n)) return String(n);
+  if (scientificNotationEnabled() && Math.abs(n) >= 1000) return formatScientific(n);
   if (Math.abs(n) < 1000) {
     if (Number.isInteger(n)) return String(n);
     return String(parseFloat(n.toFixed(3)));
   }
   const tier = Math.min(Math.floor(Math.log10(Math.abs(n)) / 3), SUFFIXES.length - 1);
   const scaled = n / Math.pow(1000, tier);
-  const str = scaled.toFixed(2).replace(/(\.\d*?)0+$/, '$1').replace(/\.$/, '');
+  const str = formatPlainDecimal(scaled, 2);
   return str + SUFFIXES[tier];
 }
 
@@ -124,7 +171,12 @@ export function fmtValue(v) {
   if (typeof v === 'number') return fmtSuffix(v);
   const s = String(v).trim();
   const number = parseGameNumber(s);
-  if (number != null && !(/e/i.test(s) && Math.abs(number) < 1000)) return fmtSuffix(number);
+  if (number != null) {
+    if (/e/i.test(s) && Math.abs(number) < 1000) {
+      return scientificNotationEnabled() ? s : expandScientificNotation(s);
+    }
+    return fmtSuffix(number);
+  }
   return s;
 }
 
@@ -207,10 +259,18 @@ export function markMatches(text = '', query = '') {
 import { CATEGORIES } from './data/wiki-data.js';
 import { getInlineUpgradePages } from './data/formulas.js';
 
-const CAT_NAME = new Map(CATEGORIES.flatMap((c) => [
-  [c.id, c.name.toLowerCase()],
-  ...c.subcategories.map((s) => [`${c.id}/${s.id}`, s.name.toLowerCase()]),
-]));
+function categoryNameMap() {
+  const names = new Map();
+  for (const category of CATEGORIES) {
+    names.set(category.id, category.name.toLowerCase());
+    const visit = (items) => items.forEach((item) => {
+      names.set(`${category.id}/${item.id}`, item.name.toLowerCase());
+      visit(item.children || []);
+    });
+    visit(category.subcategories);
+  }
+  return names;
+}
 
 function contentText(article) {
   if (article._contentText) return article._contentText;
@@ -253,6 +313,7 @@ export function searchArticles(articles, query, { category = null, subcategory =
   if (!q) return [];
 
   const tokens = q.split(/\s+/).filter(Boolean);
+  const categoryNames = categoryNameMap();
 
   let results = [];
   for (const a of articles) {
@@ -263,8 +324,8 @@ export function searchArticles(articles, query, { category = null, subcategory =
     const desc = (a.description || '').toLowerCase();
     const keywords = (a.keywords || []).join(' ').toLowerCase();
     const content = contentText(a);
-    const catName = CAT_NAME.get(a.category) || '';
-    const subName = CAT_NAME.get(`${a.category}/${a.subcategory}`) || '';
+    const catName = categoryNames.get(a.category) || '';
+    const subName = categoryNames.get(`${a.category}/${a.subcategory}`) || '';
 
     let score = 0;
 

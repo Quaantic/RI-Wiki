@@ -1,7 +1,16 @@
 # COMO EDITAR A WIKI (guia completo e simples)
 
-Tudo na wiki é controlado por arquivos dentro de `js/data/`.
-Você edita o arquivo, salva, e o site atualiza sozinho (Live Server recarrega).
+Para editar páginas, artigos e o Update Log, abra `/admin/` e use o editor visual.
+Depois de salvar e publicar as alterações, o Vercel atualiza o site.
+O editor precisa ser configurado pelo dono do site antes do primeiro login.
+Veja [docs/ADMIN_SETUP.md](./ADMIN_SETUP.md) para os passos.
+
+Os dados avançados de jogo ainda ficam em arquivos dentro de `js/data/`.
+
+## Preferência de notação científica
+
+Cada visitante pode ativar ou desativar **Scientific notation** no menu **Settings**.
+Ela vem desativada por padrão e a preferência fica salva naquele navegador.
 
 **Índice rápido — "quero..."**
 
