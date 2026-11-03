@@ -9,9 +9,9 @@ function readCookie(req, name) {
 
 function sendPopup(res, payload, status = 200) {
   const nonce = require('node:crypto').randomBytes(16).toString('base64');
-  const message = JSON.stringify(payload).replace(/</g, '\\u003c');
   const result = status === 200 ? 'success' : 'error';
-  const script = `if(window.opener){window.opener.postMessage("authorizing:github",${JSON.stringify(SITE_ORIGIN)});window.opener.postMessage("authorization:github:${result}:"+${message},${JSON.stringify(SITE_ORIGIN)});window.close();}else{document.body.textContent="GitHub sign-in could not connect to the editor. Close this window and try again.";}`;
+  const protocolMessage = `authorization:github:${result}:${JSON.stringify(payload)}`;
+  const script = `if(window.opener){window.opener.postMessage("authorizing:github",${JSON.stringify(SITE_ORIGIN)});window.opener.postMessage(${JSON.stringify(protocolMessage)},${JSON.stringify(SITE_ORIGIN)});window.close();}else{document.body.textContent="GitHub sign-in could not connect to the editor. Close it and try again.";}`;
 
   res.status(status);
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
@@ -34,7 +34,9 @@ module.exports = async function callback(req, res) {
   const code = requestUrl.searchParams.get('code');
   const returnedState = requestUrl.searchParams.get('state') || '';
   const savedState = readCookie(req, 'ri-cms-oauth-state');
-  if (requestUrl.searchParams.has('error') || !code || !savedState
+  const issuer = requestUrl.searchParams.get('iss');
+  if (requestUrl.searchParams.has('error') || (issuer && issuer !== 'https://github.com')
+    || !code || !savedState
     || !/^[a-f0-9]{64}$/.test(returnedState)
     || returnedState.length !== savedState.length
     || !require('node:crypto').timingSafeEqual(Buffer.from(returnedState), Buffer.from(savedState))) {
