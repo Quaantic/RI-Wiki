@@ -1,7 +1,7 @@
 // ==== VIEWS: PAGINAS DO SITE ====
 
-import { html, esc, qs, qsa, debounce, countUp, fmtDate, fmtDateShort, fmtNum, fmtValue, fmtSuffix, parseGameNumber, evalFormula, readMinutes, markMatches, searchPages } from './utils.js';
-import { icon, emblem, categoryArt, articleCard, articleRow, categoryCard, infoCard, sectionHead, skeleton, renderBlocks, renderSection, renderStats, wireBlocks, initReveal, setCrumbs, setActiveNav, markUpdateSeen } from './ui.js';
+import { html, esc, qs, qsa, debounce, countUp, fmtDate, fmtValue, fmtSuffix, parseGameNumber, evalFormula, markMatches } from './utils.js';
+import { icon, emblem, categoryCard, infoCard, sectionHead, initReveal, setCrumbs, setActiveNav, markUpdateSeen } from './ui.js';
 import { dataProvider, getCategory, getSubcategory } from './services.js';
 import { CATEGORIES } from './data/wiki-data.js';
 import { getRuneFamily, FAMILY_COLORS } from './data/runes.js';
@@ -673,12 +673,9 @@ export const homeView = {
   nav: () => null,
 
   async render(root) {
-    const [stats, cats, featured, recent, popular, updates] = await Promise.all([
+    const [stats, cats, updates] = await Promise.all([
       dataProvider.getWikiStats(),
       dataProvider.getCategories(),
-      dataProvider.getFeaturedArticles(3),
-      dataProvider.getRecentlyUpdated(6),
-      dataProvider.getPopularArticles(6),
       dataProvider.getUpdateLog(),
     ]);
     const latest = updates[0];
@@ -713,7 +710,7 @@ export const homeView = {
           </div>
         </div>
         <div class="hero__stats">
-          <div class="hero__stat"><b data-count="${stats.articles}">0</b><span>Articles</span></div>
+          <div class="hero__stat"><b data-count="${stats.pages}">0</b><span>Wiki pages</span></div>
           <div class="hero__stat"><b data-count="${stats.categories}">0</b><span>Categories</span></div>
           <div class="hero__stat"><b>v${stats.updateVersion}</b><span>Latest update</span></div>
           <div class="hero__stat"><b data-count="${stats.updateCount}">0</b><span>Logged changes</span></div>
@@ -724,39 +721,7 @@ export const homeView = {
       <section class="section">
         ${sectionHead('Explore the wiki')}
         <div class="grid grid--cards">
-          ${cats.map((c, i) => categoryCard(c, c.articleCount, i)).join('')}
-        </div>
-      </section>
-
-      <!-- ============ Featured ============ -->
-      <section class="section">
-        ${sectionHead('Featured articles', '#/search?q=&sort=updated', 'Browse all')}
-        <div class="grid grid--cards">
-          ${featured.map((a, i) => articleCard(a, i)).join('')}
-        </div>
-      </section>
-
-      <!-- ============ Recent + Popular ============ -->
-      <section class="section grid grid--home-cols">
-        <div>
-          ${sectionHead('Recently updated', '#/updates', 'Update log')}
-          <div style="display:flex;flex-direction:column;gap:9px">
-            ${recent.map((a, i) => articleRow(a, i)).join('')}
-          </div>
-        </div>
-        <div>
-          ${sectionHead('Popular right now')}
-          <div style="display:flex;flex-direction:column;gap:9px">
-            ${popular.map((a, i) => `
-              <a class="article-row reveal" style="--reveal-delay:${i * 35}ms" href="#/article/${a.id}">
-                <span class="article-row__icon">${icon('flame', 17)}</span>
-                <span style="min-width:0">
-                  <span class="article-row__title">${esc(a.title)}</span>
-                  <span class="article-row__meta">${a.views.toLocaleString()} views</span>
-                </span>
-                ${icon('arrow-right', 15)}
-              </a>`).join('')}
-          </div>
+          ${cats.map((c, i) => categoryCard(c, i)).join('')}
         </div>
       </section>
 
@@ -804,9 +769,8 @@ export const categoryView = {
   async render(root, params) {
     const cat = getCategory(params[0]);
     if (!cat) throw new Error(`Unknown category: ${params[0]}`);
-    const [articles] = await Promise.all([
-      dataProvider.getArticles({ category: cat.id }),
-    ]);
+    const overview = cat.overview || {};
+    const hasOverview = overview.desc || overview.highlights?.length || overview.facts?.length;
 
     root.innerHTML = html`
       <section class="cat-hero${cat.vitals?.length ? ' cat-hero--split' : ''}">
@@ -819,8 +783,8 @@ export const categoryView = {
             <h1 class="cat-hero__name">${colorizeResources(esc(cat.name))}</h1>
           </div>
           <p class="cat-hero__tagline" data-resource-links>${colorizeResources(esc(cat.tagline))}</p>
+          ${cat.desc ? `<p class="cat-hero__description" data-resource-links>${colorizeResources(esc(cat.desc))}</p>` : ''}
           <div class="cat-hero__facts">
-            ${articles.length ? `<span class="chip chip--accent">${icon('book', 13)} ${articles.length} articles</span>` : ''}
             <span class="chip">${icon('layers', 13)} ${cat.subcategories.length} subsections</span>
           </div>
         </div>
@@ -834,6 +798,14 @@ export const categoryView = {
             </div>`).join('')}
         </aside>` : ''}
       </section>
+
+      ${hasOverview ? `
+      <section class="section category-overview">
+        ${sectionHead('Overview')}
+        ${overview.desc ? `<p class="category-overview__desc" data-resource-links>${colorizeResources(esc(overview.desc))}</p>` : ''}
+        ${overview.facts?.length ? `<div class="cat-hero__facts">${overview.facts.map((fact) => `<span class="chip">${esc(fact.label)}: <b style="color:var(--c-text)">&nbsp;${colorizeResources(esc(fact.value))}</b></span>`).join('')}</div>` : ''}
+        ${overview.highlights?.length ? `<div class="highlight-grid">${overview.highlights.map((highlight, index) => infoCard(highlight, index)).join('')}</div>` : ''}
+      </section>` : ''}
 
       <div class="sub-pills-wrap">
         <nav class="pill-nav" aria-label="Subsections of ${esc(cat.name)}">
@@ -857,13 +829,6 @@ export const categoryView = {
         </div>
       </section>
 
-      ${articles.length ? `
-      <section class="section">
-        ${sectionHead('Newest in this category')}
-        <div class="grid grid--cards">
-          ${articles.slice(0, 4).map((a, i) => articleCard(a, i)).join('')}
-        </div>
-      </section>` : ''}
     `;
 
     initReveal(root);
@@ -955,10 +920,6 @@ export const subcategoryView = {
 
     window.__riPageNames = [cat.name, sub.name, ...(sub.parentChain || []).map((p) => p.name)];
 
-    const [articles] = await Promise.all([
-      dataProvider.getArticles({ category: cat.id, subcategory: sub.id }),
-    ]);
-
     root.innerHTML = html`
       <section class="cat-hero${sub.vitals?.length ? ' cat-hero--split' : ''}">
         <div class="cat-hero__main">
@@ -973,7 +934,6 @@ export const subcategoryView = {
           </div>
           <p class="cat-hero__tagline" data-resource-links>${colorizeResources(esc(sub.desc))}</p>
           <div class="cat-hero__facts">
-            ${articles.length ? `<span class="chip chip--accent">${icon('book', 13)} ${articles.length} article${articles.length === 1 ? '' : 's'}</span>` : ''}
             ${sub.facts.map((f) => `<span class="chip">${esc(f.label)}: <b style="color:var(--c-text)">&nbsp;${esc(f.value)}</b></span>`).join('')}
           </div>
         </div>
@@ -1011,23 +971,16 @@ export const subcategoryView = {
         </div>
       </section>` : ''}
 
-      ${familyBody ? familyBody : `
-        ${sub.highlights.length ? `
-        <section class="section">
-          ${sectionHead('Highlights')}
-          <div class="highlight-grid">
-            ${sub.highlights.map((h, i) => infoCard(h, i)).join('')}
-          </div>
-        </section>` : ''}
+      ${familyBody || ''}
+      ${sub.highlights?.length ? `
+      <section class="section">
+        ${sectionHead('Highlights')}
+        <div class="highlight-grid">
+          ${sub.highlights.map((h, i) => infoCard(h, i)).join('')}
+        </div>
+      </section>` : ''}
 
-        ${articles.length ? `
-          <section class="section">
-            ${sectionHead('Articles', '', '')}
-            <div class="grid grid--cards">
-              ${articles.map((a, i) => articleCard(a, i)).join('')}
-            </div>
-          </section>
-        ` : (sub.id === 'overview' ? `
+      ${!familyBody && sub.id === 'overview' ? `
           <section class="section">
             ${sectionHead('Where to next')}
             <div class="link-grid">
@@ -1042,17 +995,17 @@ export const subcategoryView = {
                 </a>`).join('')}
             </div>
           </section>
-        ` : (sub.children?.length ? '' : `
+      ` : ''}
+      ${!familyBody && sub.id !== 'overview' && !sub.children?.length ? `
           <section class="section">
             <div class="empty-state">
-              ${icon('book', 26)}
-              <h3>Articles coming soon</h3>
-              <p style="max-width:42ch">This subsection is scaffolded and waiting for content. Try the overview or check back after the next update.</p>
+              ${icon('info', 26)}
+              <h3>More details coming soon</h3>
+              <p style="max-width:42ch">This Wiki page is ready for more information. Its description and key details are available above.</p>
               <a class="btn btn--ghost" href="#/${cat.id}">${icon('arrow-right', 15)} Back to ${esc(cat.name)}</a>
             </div>
           </section>
-        `))}
-      `}
+      ` : ''}
 
   ${inlineUpgradeSections}
 
@@ -1073,149 +1026,8 @@ export const subcategoryView = {
   },
 };
 
-export const articleView = {
-  title: (p) => 'RI Gaming Wiki',
-  crumbs: (p) => [{ label: 'Main', href: '#/', icon: 'compass' }, { label: '…' }],
-  nav: () => null,
-
-  async render(root, params) {
-
-    root.innerHTML = `
-      <div class="skeleton skeleton--title"></div>
-      <div class="skeleton skeleton--text" style="width:60%;margin-top:12px"></div>
-      <div class="skeleton" style="height:168px;margin-top:24px;border-radius:17px"></div>
-      <div class="section">${skeleton('cards', 4)}</div>`;
-
-    const a = await dataProvider.getArticle(params[0]);
-    if (!a) {
-      root.innerHTML = `
-        <div class="notfound">
-          <span style="display:inline-flex">${icon('book', 44)}</span>
-          <h1>Article not found</h1>
-          <p style="color:var(--c-text-3)">No article with id "${esc(params[0])}".</p>
-          <a class="btn btn--primary" href="#/">Back to Main</a>
-        </div>`;
-      return;
-    }
-
-    const cat = getCategory(a.category);
-    const sub = cat?.subcategories.find((s) => s.id === a.subcategory);
-    const related = await dataProvider.getRelated(a);
-
-    const siblings = (await dataProvider.getArticles({ category: a.category, subcategory: a.subcategory }))
-      .filter((x) => x.id !== a.id);
-    const prev = siblings[0] || null;
-    const next = siblings[1] || null;
-
-    document.title = `${a.title} — RI Gaming Wiki`;
-    setActiveNav(a.category, a.subcategory);
-    setCrumbs([
-      { label: 'Main', href: '#/', icon: 'compass' },
-      ...(cat ? [{ label: cat.name, href: `#/${cat.id}` }] : []),
-      ...(cat && sub ? [{ label: sub.name, href: `#/${cat.id}/${sub.id}` }] : []),
-      { label: a.title },
-    ]);
-
-    const tocSections = a.sections
-      .map((s, i) => ({ s, i }))
-      .filter((x) => !x.s.collapsed);
-
-    root.innerHTML = html`
-      <div class="article-layout">
-        <article class="article-main">
-          <header class="article-head">
-            <nav class="crumbs article-head__crumbs">
-              <a href="#/">Main</a> ${icon('chevron-right', 12)}
-              <a href="#/${cat?.id}">${esc(cat?.name)}</a> ${icon('chevron-right', 12)}
-              <a href="#/${cat?.id}/${sub?.id}">${esc(sub?.name)}</a> ${icon('chevron-right', 12)}
-              <span class="crumbs__current">${esc(a.title)}</span>
-            </nav>
-            <h1 class="article-head__title">${colorizeResources(esc(a.title))}</h1>
-            <p class="article-head__desc" data-resource-links>${colorizeResources(esc(a.description))}</p>
-            <div class="article-head__meta">
-              <span class="meta-item">${icon('calendar', 13)} Updated ${fmtDate(a.updated)}</span>
-              <span class="meta-item">${icon('eye', 13)} ${fmtNum(a.views)} views</span>
-              <span class="meta-item">${icon('clock', 13)} ~${readMinutes(a)} min read</span>
-            </div>
-            <div class="article-head__chips">
-              <a class="chip chip--accent" href="#/${cat?.id}">${icon(cat?.icon, 12)} ${esc(cat?.name)}</a>
-              <a class="chip" href="#/${cat?.id}/${sub?.id}">${esc(sub?.name)}</a>
-              ${(a.keywords || []).slice(0, 4).map((k) => `<a class="tag" href="#/search?q=${encodeURIComponent(k)}">${esc(k)}</a>`).join('')}
-            </div>
-          </header>
-
-          <div class="article-hero">
-            <div class="hex-texture"></div>
-            ${categoryArt(a.category, 210)}
-          </div>
-
-          ${renderStats(a.stats)}
-
-          <div class="prose article-blocks" data-article-body>
-            ${a.sections.map((s, i) => renderSection(s, i)).join('')}
-          </div>
-
-          ${(prev || next) ? `
-          <nav class="art-pager">
-            ${prev ? `<a href="#/article/${prev.id}"><small>Previous</small><b>${esc(prev.title)}</b></a>` : '<span></span>'}
-            ${next ? `<a href="#/article/${next.id}"><small>Up next</small><b>${esc(next.title)}</b></a>` : '<span></span>'}
-          </nav>` : ''}
-
-          ${related.length ? `
-          <section class="section">
-            <h2 class="section-title" style="margin-bottom:16px"><span class="hex-dot"></span>Related articles</h2>
-            <div class="grid grid--cards">
-              ${related.map((r, i) => articleCard(r, i)).join('')}
-            </div>
-          </section>` : ''}
-        </article>
-
-        ${tocSections.length ? `
-        <aside class="toc" aria-label="On this page">
-          <div class="toc__label">On this page</div>
-          <nav class="toc__list" data-toc>
-            ${tocSections.map(({ s, i }) => `<a href="#/article/${a.id}" data-target="s-${i}">${esc(s.title)}</a>`).join('')}
-          </nav>
-        </aside>` : ''}
-      </div>
-    `;
-
-    wireBlocks(root);
-    initReveal(root);
-    wireToc(root);
-  },
-};
-
-function wireToc(root) {
-  const links = qsa('[data-toc] a', root);
-  if (!links.length) return;
-
-  links.forEach((link) => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      const target = qs(`[data-toc-anchor="${link.dataset.target}"]`, root);
-      target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-  });
-
-  const sections = links
-    .map((l) => qs(`[data-toc-anchor="${l.dataset.target}"]`, root))
-    .filter(Boolean);
-
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
-      const idx = sections.indexOf(entry.target);
-      links.forEach((l, i) => l.classList.toggle('active', i === idx));
-    });
-  }, { rootMargin: '-72px 0px -66% 0px' });
-
-  sections.forEach((s) => io.observe(s));
-}
-
 const SORTS = [
   { id: 'relevance', label: 'Best match' },
-  { id: 'updated', label: 'Recently updated' },
   { id: 'title', label: 'Title A–Z' },
 ];
 
@@ -1235,7 +1047,7 @@ export const searchView = {
       <div class="search-page__head">
         <h1>Search the wiki</h1>
         <p style="color:var(--c-text-2);margin-top:8px;max-width:60ch">
-          Titles, descriptions, keywords, categories and full article content — across all seven sections.
+          Search across every Wiki category and page description.
         </p>
         <form class="search-page__input" id="search-page-form">
           <div class="input-wrap">
@@ -1290,7 +1102,7 @@ export const searchView = {
           <div class="empty-state">
             ${icon('search', 26)}
             <h3>Type something to search</h3>
-            <p>Every article, table and keyword is indexed. Press <span class="kbd">Ctrl</span> <span class="kbd">K</span> anywhere for the quick search.</p>
+            <p>Every category and page description is indexed. Press <span class="kbd">Ctrl</span> <span class="kbd">K</span> anywhere for the quick search.</p>
           </div>`;
         return;
       }
@@ -1300,8 +1112,7 @@ export const searchView = {
     };
 
     function renderResults(target, results, st) {
-      const pages = searchPages(st.q, { limit: 5, category: st.cat || null });
-      if (!results.length && !pages.length) {
+      if (!results.length) {
         target.innerHTML = `
           <div class="empty-state">
             ${icon('info', 26)}
@@ -1311,32 +1122,15 @@ export const searchView = {
         return;
       }
       target.innerHTML = `
-        ${pages.length ? `
-        <p class="result-count" style="margin-bottom:12px">${icon('grid', 12)} Matching sections</p>
-        <div class="result-list" style="margin-bottom:22px">
-          ${pages.map((p) => `
-            <a class="result-item reveal" style="--reveal-delay:0ms" href="#/${p.cat.id}/${p.sub.id}">
-              <div class="result-item__top">${icon(p.cat.icon, 12)} ${esc(p.cat.name)} section</div>
-              <div class="result-item__title">${colorizeResources(markMatches(p.sub.name, st.q))}</div>
-              <div class="result-item__snippet">${colorizeResources(markMatches(p.sub.desc || '', st.q))}</div>
-            </a>`).join('')}
-        </div>` : ''}
-        ${results.length ? `
-        <p class="result-count" style="margin-bottom:12px">${results.length} article result${results.length === 1 ? '' : 's'}${st.cat ? ` in <b style="color:var(--c-accent)">${esc(CATEGORIES.find((c) => c.id === st.cat)?.name)}</b>` : ''} · sorted by "${esc(SORTS.find((s) => s.id === st.sort)?.label)}"</p>
+        <p class="result-count" style="margin-bottom:12px">${results.length} Wiki result${results.length === 1 ? '' : 's'}${st.cat ? ` in <b style="color:var(--c-accent)">${esc(CATEGORIES.find((c) => c.id === st.cat)?.name)}</b>` : ''} · sorted by "${esc(SORTS.find((s) => s.id === st.sort)?.label)}"</p>
         <div class="result-list">
-          ${results.map((r, i) => {
-            const cat = CATEGORIES.find((c) => c.id === r.article.category);
-            return `
-            <a class="result-item reveal" style="--reveal-delay:${Math.min(i * 40, 320)}ms" href="#/article/${esc(r.article.id)}">
-              <div class="result-item__top">
-                ${icon(cat.icon, 12)} ${esc(cat.name)} / ${esc(r.article.subcategory.replace(/-/g, ' '))}
-                <span style="margin-left:auto">${icon('clock', 12)} ${fmtDateShort(r.article.updated)}</span>
-              </div>
-              <div class="result-item__title">${colorizeResources(markMatches(r.article.title, st.q))}</div>
-              <div class="result-item__snippet">${colorizeResources(markMatches(r.snippet, st.q))}</div>
-            </a>`;
-          }).join('')}
-        </div>` : `<p class="result-count">No article matches — the sections above are what we found.</p>`}
+          ${results.map((result, i) => `
+            <a class="result-item reveal" style="--reveal-delay:${Math.min(i * 40, 320)}ms" href="${esc(result.href)}">
+              <div class="result-item__top">${icon(result.cat.icon, 12)} ${esc(result.cat.name)} ${result.kind === 'category' ? 'category' : 'page'}</div>
+              <div class="result-item__title">${colorizeResources(markMatches(result.sub.name, st.q))}</div>
+              <div class="result-item__snippet">${colorizeResources(markMatches(result.sub.desc || result.sub.tagline || '', st.q))}</div>
+            </a>`).join('')}
+        </div>
       `;
       initReveal(target);
     }

@@ -448,6 +448,14 @@
   max-width: 222ch;
 }
 
+.cat-hero__description {
+  margin-top: 8px;
+  color: var(--c-text-3);
+  max-width: 72ch;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
 .cat-hero__facts {
   display: flex;
   flex-wrap: wrap;
@@ -473,6 +481,13 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 14px;
+}
+
+.category-overview__desc {
+  max-width: 76ch;
+  color: var(--c-text-2);
+  line-height: 1.7;
+  margin-bottom: 14px;
 }
 
 /* Sub pager (prev / next) */
@@ -502,153 +517,6 @@
 .sub-pager b { font-family: var(--font-display); color: var(--c-text); font-size: 14px; }
 .sub-pager a:hover b { color: var(--c-accent); }
 
-/* ================= ARTICLE ================= */
-
-.article-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 218px;
-  gap: 36px;
-  align-items: start;
-}
-
-.article-main { min-width: 0; }
-
-.article-head { margin-bottom: 22px; }
-
-.article-head__crumbs { margin-bottom: 18px; }
-
-.article-head__title {
-  font-size: clamp(1.7rem, 3.4vw, 2.4rem);
-  letter-spacing: -0.02em;
-  line-height: 1.14;
-}
-
-.article-head__desc {
-  margin-top: 10px;
-  font-size: 15px;
-  color: var(--c-text-2);
-  max-width: 64ch;
-}
-
-.article-head__meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px 14px;
-  margin-top: 16px;
-  font-size: 12.5px;
-  color: var(--c-text-3);
-  font-family: var(--font-display);
-}
-.article-head__meta .meta-item { display: inline-flex; align-items: center; gap: 6px; }
-.article-head__meta svg { color: var(--c-text-4); }
-
-.article-head__chips { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
-
-.article-hero {
-  position: relative;
-  height: 168px;
-  border: 1px solid var(--c-border);
-  border-radius: var(--r-lg);
-  overflow: hidden;
-  margin-bottom: 26px;
-  background:
-    radial-gradient(480px 220px at 85% 10%, rgba(168, 239, 69, 0.14), transparent 60%),
-    linear-gradient(120deg, rgba(168, 239, 69, 0.05), transparent 45%),
-    var(--c-bg-2);
-}
-.article-hero svg {
-  position: absolute;
-  right: 20px;
-  bottom: -26px;
-  opacity: 0.32;
-  transition: transform 700ms var(--ease-out);
-}
-.article-hero:hover svg { transform: translateY(-6px) rotate(-2deg); }
-.article-hero .hex-texture { position: absolute; inset: 0; opacity: 0.06; }
-
-.article-stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 12px;
-  margin-bottom: 28px;
-}
-
-.article-section { margin-top: 30px; }
-.article-section__title {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 1.22rem;
-  margin-bottom: 14px;
-}
-.article-section__title .hex-dot { width: 9px; height: 10px; }
-
-.article-blocks > * + * { margin-top: 14px; }
-
-/* TOC */
-
-.toc {
-  position: sticky;
-  top: calc(var(--topbar-h) + 20px);
-  display: none;
-}
-@media (min-width: 1080px) { .toc { display: block; } }
-
-.toc__label {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--c-text-4);
-  font-family: var(--font-display);
-  margin-bottom: 10px;
-  padding-left: 13px;
-}
-
-.toc__list {
-  display: flex;
-  flex-direction: column;
-  border-left: 1px solid var(--c-border);
-}
-
-.toc__list a {
-  position: relative;
-  padding: 7px 13px;
-  font-size: 13px;
-  color: var(--c-text-3);
-  border-left: 2px solid transparent;
-  margin-left: -1.5px;
-  transition: color var(--t-fast) var(--ease-out), border-color var(--t-fast);
-  line-height: 1.4;
-}
-.toc__list a:hover { color: var(--c-text); }
-.toc__list a.active {
-  color: var(--c-accent);
-  border-left-color: var(--c-accent);
-}
-
-/* Prev / next article */
-
-.art-pager {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  margin-top: 40px;
-  padding-top: 22px;
-  border-top: 1px solid var(--c-border);
-}
-.art-pager a {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  color: inherit;
-  min-width: 0;
-}
-.art-pager a:last-child { text-align: right; align-items: flex-end; }
-.art-pager small { font-size: 11.5px; color: var(--c-text-4); font-family: var(--font-display); letter-spacing: 0.04em; }
-.art-pager b { font-family: var(--font-display); font-size: 14px; color: var(--c-text); transition: color var(--t-fast); }
-.art-pager a:hover b { color: var(--c-accent); }
 
 /* ================= UPDATE LOG ================= */
 

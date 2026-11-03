@@ -1,11 +1,20 @@
 # COMO EDITAR A WIKI (guia completo e simples)
 
-Para editar páginas, artigos e o Update Log, abra `/admin/` e use o editor visual.
-Depois de salvar e publicar as alterações, o Vercel atualiza o site.
-O editor precisa ser configurado pelo dono do site antes do primeiro login.
-Veja [docs/ADMIN_SETUP.md](./ADMIN_SETUP.md) para os passos.
+Para editar conteúdo sem tocar no código, abra `/admin/` no site publicado e
+conecte uma conta GitHub com permissão **Write** no repositório `Quaantic/RI-Wiki`.
+Use **Wiki pages** para navegar por todas as categorias e páginas, ou **Update
+log** para as notas de versão. A árvore começa expandida; use **Collapse all**
+ou **Expand all** para organizar a navegação. Em uma categoria ou página,
+**View live page** abre a rota correspondente na Wiki publicada.
 
-Os dados avançados de jogo ainda ficam em arquivos dentro de `js/data/`.
+O painel carrega `content/wiki-data.json` e `content/update-log.json` do
+repositório e salva as alterações diretamente no branch principal. Esses são
+os mesmos arquivos consumidos pelo site; a Vercel publica cada alteração.
+Atualmente a árvore contém 7 categorias e 136 páginas.
+
+O painel controla textos e dados editoriais. Fórmulas, calculadoras, recursos,
+regras de jogo e layout ainda são código e precisam de uma alteração técnica.
+Os arquivos JSON em `content/` são a fonte única dos textos editáveis.
 
 ## Preferência de notação científica
 
@@ -16,23 +25,26 @@ Ela vem desativada por padrão e a preferência fica salva naquele navegador.
 
 | Quero... | Edite |
 |---|---|
-| Criar/alterar uma página ou seção do menu | `js/data/wiki-data.js` |
+| Criar/alterar uma página, seção ou subpágina | **Wiki pages** no painel (`content/wiki-data.json`) |
 | Colocar os upgrades de algo (com slider de nível) | `js/data/formulas.js` |
 | Colocar Stages, Barns, Ranks, Ascensions, Life Ranks ou Core Ranks | `js/data/progress.js` |
 | Editar calculadoras de Dungeon Level, Special Gears ou Bone Dust | `js/data/reset-layers.js` |
 | Trocar a cor de um recurso (Energy, Bones...) | `js/data/resource-colors.js` |
 | Preços de upgrades de mineração por nível | `js/data/mining-prices.js` |
 | Runas / Ores / Bestiário / Espadas / Áreas | `runes.js`, `ores.js`, `dungeon.js` |
-| Log de updates | `js/data/update-log.js` |
-| Escrever artigos | `js/data/articles.js` |
+| Log de updates | **Update log** no painel (`content/update-log.json`) |
 
 ---
 
-## 1. PÁGINAS E MENU — `js/data/wiki-data.js`
+## 1. PÁGINAS E MENU — painel **Wiki pages**
 
-A wiki tem 7 categorias (Main, Life Island, Riches, Mining, Dungeon, Runes, Perks).
-Cada categoria tem `subcategories`, e cada subcategoria pode ter `children`
-(sub-páginas de dentro), que também podem ter filhos — quantos níveis quiser.
+No painel, abra **Wiki pages**. A árvore lateral mostra categorias, páginas e
+subpáginas; selecione uma para editar nome, URL ID, descrição, ícone,
+highlights, fatos e informações importantes. Os botões **+** criam categorias,
+páginas e níveis aninhados. Use as setas ao lado de cada item para mudar a
+ordem; a árvore define a ordem do menu.
+
+O painel salva esses dados em `content/wiki-data.json`.
 
 ```js
 {
@@ -100,12 +112,12 @@ No final do arquivo tem o `FORMULA_PAGE_MAP`. Ele diz qual seção abre em qual 
 'main/crystal-upgrades': 'crystal-upgrades',
 ```
 
-A chave é `categoria/id-da-subcategoria` (igual ao `id` do wiki-data.js).
+A chave é `categoria/id-da-subcategoria` (igual ao `id` da página no painel).
 Sem essa linha a página existe mas não mostra os upgrades.
 
 ### Passo a passo para criar uma página nova de upgrades
 
-1. `wiki-data.js` — crie a subcategoria com `id`, `name`, `icon`, `desc`.
+1. Painel — crie a subcategoria com URL ID, nome, ícone e descrição.
 2. `formulas.js` — crie a seção com os `u(...)`.
 3. `formulas.js` (final do arquivo) — adicione a linha no `FORMULA_PAGE_MAP`.
 4. Salve e abra `#/categoria/id` no site.
@@ -161,13 +173,13 @@ Campos opcionais: `title`, `boostsNote` (textinho do lado de Boosts),
 `unlocks.area` e `unlocks.places` (para "Island: Life Island" nos Stages).
 
 A chave (`'main/barn'` etc.) é `categoria/id-da-subcategoria` — o mesmo
-`id` que existe no `wiki-data.js`. Nada mais precisa ser configurado:
+`id` que existe na árvore da Wiki. Nada mais precisa ser configurado:
 a página detecta sozinha e desenha os cards (Barns/Ranks/Ascensions/Life
 Ranks/Core Ranks mostram 2 cards por linha; Stages ficam em coluna única).
 
 ### Como adicionar Core Ranks
 
-1. Em `wiki-data.js`, confirme que existe a subcategoria `cores` dentro de
+1. No painel, confirme que existe a subcategoria `cores` dentro de
   Mining. O ID precisa ser `cores`, pois a chave dos dados é `'mining/cores'`.
 2. Em `progress.js`, adicione os cards dentro da lista `CORE_DATA['mining/cores'].ranks`.
   Cada item segue o mesmo formato dos outros ranks: `num`, `title`,
@@ -198,7 +210,7 @@ projeto (`js/lib/lucide-data.js`) — funciona offline, sem CDN, sem SVG à mão
   `flask`, `drop`, `chart`, `alert`, `sort`.
 
 Para escolher: abra https://lucide.dev/icons, ache o ícone, copie o nome
-(ex.: `pickaxe`) e cole no campo `icon` do wiki-data.js.
+(ex.: `pickaxe`) e cole no campo **Icon name** do painel.
 
 ---
 
@@ -213,10 +225,10 @@ Para escolher: abra https://lucide.dev/icons, ache o ícone, copie o nome
 
 ## 6. PUBLICAR UMA UPDATE
 
-1. Adicione a entrada em `UPDATE_LOG` no `update-log.js` (o de cima é o mais
-   recente). Contextos: `Feature`, `UI`, `Bugs`, `Changes`.
-2. Suba o `LATEST_UPDATE_ID`.
-3. Quem já visitou vê o **(!) vermelho** até abrir a página de updates.
+1. Abra **Update log** no painel e crie uma release.
+2. Adicione entradas e escolha o contexto: `Feature`, `UI`, `Bugs` ou `Changes`.
+3. Salve. A primeira release na lista é tratada como a mais recente.
+   Quem já visitou vê o **(!) vermelho** até abrir a página de updates.
 
 ---
 
@@ -232,7 +244,7 @@ antes do CSS carregar. Cores dos temas: `css/tokens.css`.
 
 Criar página nova com upgrades:
 
-1. `wiki-data.js` → subcategoria com `id`, `name`, `icon`, `desc`.
+1. Painel Wiki pages → subcategoria com URL ID, nome, ícone e descrição.
 2. `formulas.js` → seção com os `u(...)` + linha no `FORMULA_PAGE_MAP`.
 3. Teste a URL `#/categoria/id`.
 
@@ -244,7 +256,7 @@ Adicionar um Stage/Barn/Rank novo:
 Trocar um ícone:
 
 1. Escolha o nome em https://lucide.dev/icons.
-2. Troque o `icon: '...'` no `wiki-data.js`.
+2. No painel Wiki pages, altere o campo Icon name.
 
 Editar as calculadoras de reset layer:
 

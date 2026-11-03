@@ -1,6 +1,6 @@
 // ==== UI: ICONES, COMPONENTES E SHELL (nao precisa editar) ====
 
-import { qs, qsa, esc, html, debounce, fmtNum, fmtDateShort, markMatches, searchPages, groupByCategory } from './utils.js';
+import { qs, qsa, esc, html, debounce, markMatches } from './utils.js';
 import { CATEGORIES, getSubcategory } from './data/wiki-data.js';
 import { getInlineUpgradePages } from './data/formulas.js';
 import { colorizeResources, resourceColor } from './data/resource-colors.js';
@@ -61,71 +61,6 @@ export function emblem(size = 32, cls = '') {
 </svg>`;
 }
 
-const ART = {
-  main: `
-    <circle cx="80" cy="80" r="62"/>
-    <circle cx="80" cy="80" r="40" opacity=".55"/>
-    <path d="M80 10v16M80 134v16M10 80h16M134 80h16M31 31l11 11M118 118l11 11M129 31l-11 11M42 118l-11 11" opacity=".7"/>
-    <path d="M97 63 87 87 63 97 73 73Z" fill="currentColor" stroke="none"/>
-    <path d="M80 74l2.5 3.5L86 80l-3.5 2.5L80 86l-2.5-3.5L74 80l3.5-2.5Z" fill="currentColor" stroke="none" opacity=".7"/>`,
-
-  life: `
-    <path d="M40 122C40 74 72 42 120 42c0 48-32 80-80 80Z"/>
-    <path d="M40 122c20-38 44-60 70-70" opacity=".55"/>
-    <path d="M92 132c0-20 14-34 34-34 0 20-14 34-34 34Z" opacity=".7"/>
-    <path d="M118 60v0" opacity="0"/>
-    <circle cx="30" cy="46" r="2.5" fill="currentColor" stroke="none" opacity=".6"/>
-    <circle cx="136" cy="112" r="2.5" fill="currentColor" stroke="none" opacity=".6"/>
-    <circle cx="112" cy="24" r="2.5" fill="currentColor" stroke="none" opacity=".6"/>`,
-
-  'upgrade-tree': `
-    <path d="M80 128V100M80 100 46 64M80 100l34-36M46 64 28 40M46 64l22-20M114 64 96 44M114 64l20-24" opacity=".85"/>
-    <circle cx="80" cy="134" r="8"/>
-    <circle cx="46" cy="64" r="7"/>
-    <circle cx="114" cy="64" r="7"/>
-    <circle cx="26" cy="36" r="5.5"/><circle cx="70" cy="40" r="5.5"/><circle cx="94" cy="40" r="5.5"/><circle cx="136" cy="36" r="5.5"/>
-    <path d="M26 30v12M20 36h12" opacity=".5"/><path d="M136 30v12M130 36h12" opacity=".5"/>`,
-
-  mining: `
-    <path d="M56 134 42 88l14-38 14 38Z" opacity=".85"/>
-    <path d="M80 140 60 80 80 24l20 56Z"/>
-    <path d="M108 134 96 98l12-30 12 30Z" opacity=".85"/>
-    <path d="M60 80h40" opacity=".5"/><path d="M80 24v116" opacity=".35"/>
-    <path d="M26 134h108" opacity=".4"/>
-    <path d="M24 60v12M18 66h12" opacity=".6"/><path d="M136 88v12M130 94h12" opacity=".6"/>`,
-
-  dungeon: `
-    <path d="M26 138V56h6V44h8v12h6v94"/>
-    <path d="M134 138V56h-6V44h-8v12h-6v94"/>
-    <path d="M52 138V90h56v48" opacity=".8"/>
-    <path d="M66 138v-20a14 14 0 0 1 28 0v20"/>
-    <path d="M73 122v16M80 119v19M87 122v16" opacity=".7"/>
-    <path d="M112 26h16l-5 6 5 6h-16" opacity=".8"/>
-    <path d="M112 26v18"/>
-    <path d="M18 138h124" opacity=".4"/>`,
-
-  runes: `
-    <path d="M30 134V72a11 11 0 0 1 22 0v62Z" opacity=".85"/>
-    <path d="M64 134V58a13 13 0 0 1 26 0v76Z"/>
-    <path d="M100 134V80a10 10 0 0 1 20 0v54Z" opacity=".85"/>
-    <path d="M76 74v40M68 88h16M68 102h16" opacity=".75"/>
-    <path d="M41 92v28M35 104l12-8" opacity=".6"/>
-    <path d="M110 98v22M104 110h12" opacity=".6"/>
-    <path d="M20 134h122" opacity=".4"/>`,
-
-  perks: `
-    <path d="M80 24 92 68l44 12-44 12-12 44-12-44-44-12 44-12Z"/>
-    <circle cx="80" cy="80" r="15" opacity=".6"/>
-    <path d="M28 28l3 8 8 3-8 3-3 8-3-8-8-3 8-3Z" opacity=".65"/>
-    <path d="M126 108l2.5 6.5 6.5 2.5-6.5 2.5-2.5 6.5-2.5-6.5-6.5-2.5 6.5-2.5Z" opacity=".65"/>
-    <path d="M122 30v10M117 35h10" opacity=".5"/><path d="M30 116v10M25 121h10" opacity=".5"/>`,
-};
-
-export function categoryArt(categoryId, size = 160, cls = '') {
-  const body = ART[categoryId] || ART.main;
-  return `<svg ${cls ? `class="${cls}" ` : ''}width="${size}" height="${size}" viewBox="0 0 160 160" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${body}</svg>`;
-}
-
 // ==== REVEAL: entrada em sequencia (stagger) + escrita progressiva ====
 
 const REVEAL_STEP = 70;        // intervalo entre elementos que entram na tela juntos (ms)
@@ -140,9 +75,8 @@ const TYPE_SELECTOR = [
   '[data-type]',
   '.hero__title', '.hero__sub',
   '.cat-hero__name', '.cat-hero__tagline',
-  '.article-head__title', '.article-head__desc',
   '.page-head h1', '.page-head p',
-  '.section-title', '.article-section__title',
+  '.section-title',
 ].join(',');
 
 let observer = null;
@@ -290,130 +224,9 @@ export function reveal(index = 0, extra = '') {
   return `class="reveal ${extra}" style="--reveal-delay: ${Math.min(index * 55, 500)}ms"`;
 }
 
-const NUMERIC = /^[\d.,]+(k|M)?%?$/;
-
-function cellHTML(v) {
-  const s = String(v ?? '');
-  return `<td${NUMERIC.test(s) ? ' class="num"' : ''}>${colorizeResources(esc(s))}</td>`;
-}
-
-function renderTable(b) {
-  const head = b.columns
-    .map((c) => `<th${c.align ? ` style="text-align:${c.align}"` : ''}>${esc(c.label)}</th>`)
-    .join('');
-  const rows = b.rows
-    .map((r) => `<tr>${b.columns.map((c) => cellHTML(r[c.key])).join('')}</tr>`)
-    .join('');
-  return `<div class="table-wrap"><table class="data-table"><thead><tr>${head}</tr></thead><tbody>${rows}</tbody></table></div>`;
-}
-
-function renderList(b) {
-  const cls = b.ordered ? 'block-list block-list--ordered' : 'block-list';
-  const marker = b.ordered
-    ? '' // ordered markers come from CSS counters
-    : icon(b.checks ? 'check-circle' : 'hex', 15);
-  const items = b.items
-    .map((it) => `<li>${b.ordered ? '' : marker}<span>${colorizeResources(esc(it.text || it))}</span></li>`)
-    .join('');
-  return `<ul class="${cls}">${items}</ul>`;
-}
-
-function renderKv(b) {
-  const rows = b.pairs
-    .map((pr) => `<div class="kv-list__row"><span class="kv-list__key">${esc(pr.key)}</span><span>${colorizeResources(esc(pr.value))}</span></div>`)
-    .join('');
-  return `<div class="kv-list">${rows}</div>`;
-}
-
-export function renderBlocks(blocks = []) {
-  return blocks
-    .map((b) => {
-      switch (b.type) {
-        case 'p': return `<p>${colorizeResources(esc(b.text))}</p>`;
-        case 'list': return renderList(b);
-        case 'table': return renderTable(b);
-        case 'kv': return renderKv(b);
-        default: return '';
-      }
-    })
-    .join('');
-}
-
-export function renderSection(s, i = 0) {
-  const body = `<div class="x-section__body"><div><div class="prose article-blocks x-section__inner">${renderBlocks(s.blocks)}</div></div></div>`;
-
-  if (s.collapsed) {
-    return `
-      <div class="x-section${s.collapsed ? '' : ' x-section--open'}" data-x-section>
-        <button class="x-section__head" type="button" aria-expanded="false">
-          <span class="hex-dot"></span>
-          <span>${esc(s.title)}</span>
-          ${icon('chevron-down', 18, 'x-section__chevron')}
-        </button>
-        ${body}
-      </div>`;
-  }
-  return `
-    <div class="article-section" data-toc-anchor="s-${i}">
-      <h2 class="article-section__title"><span class="hex-dot"></span>${esc(s.title)}</h2>
-      <div class="prose article-blocks">${renderBlocks(s.blocks)}</div>
-    </div>`;
-}
-
-export function renderStats(stats = []) {
-  if (!stats.length) return '';
-  return `<div class="article-stats">${stats.map(statCard).join('')}</div>`;
-}
-
-export function statCard(s) {
-  return `
-    <div class="stat-card">
-      <span class="stat-card__icon">${icon(s.icon || 'info', 20)}</span>
-      <span>
-        <span class="stat-card__value">${esc(s.value)}</span>
-        <span class="stat-card__label">${esc(s.label)}</span>
-      </span>
-    </div>`;
-}
-
-export function wireBlocks(root) {
-  root.querySelectorAll('[data-x-section] .x-section__head').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const box = btn.closest('[data-x-section]');
-      const open = box.classList.toggle('x-section--open');
-      btn.setAttribute('aria-expanded', String(open));
-    });
-  });
-}
-
-export function articleCard(a, i = 0) {
-  return `
-  <a ${`class="article-card reveal" style="--reveal-delay: ${Math.min(i * 50, 400)}ms"`} href="#/article/${esc(a.id)}">
-    <div class="article-card__art">${categoryArt(a.category, 120)}</div>
-    <div class="article-card__body">
-      <span class="article-card__meta">${icon('clock', 12)} ${fmtDateShort(a.updated)}</span>
-      <span class="article-card__title">${colorizeResources(esc(a.title))}</span>
-      <span class="article-card__desc">${esc(a.description)}</span>
-      <span class="article-card__foot">
-        ${icon('eye', 13)} ${fmtNum(a.views)} views
-      </span>
-    </div>
-  </a>`;
-}
-
-export function articleRow(a, i = 0) {
-  return `
-  <a ${`class="article-row reveal" style="--reveal-delay: ${Math.min(i * 50, 400)}ms"`} href="#/article/${esc(a.id)}">
-    <span class="article-row__icon">${icon('book', 17)}</span>
-    <span style="min-width:0">
-      <span class="article-row__title">${colorizeResources(esc(a.title))}</span>
-      <span class="article-row__meta">${fmtDateShort(a.updated)} · ${fmtNum(a.views)} views</span>
-    </span>
-    ${icon('arrow-right', 15)}
-  </a>`;
-}
-
-export function categoryCard(cat, articleCount, i = 0) {
+export function categoryCard(cat, i = 0) {
+  const countPages = (pages) => pages.reduce((count, page) => count + 1 + countPages(page.children || []), 0);
+  const totalPages = countPages(cat.subcategories || []);
   return `
   <a ${`class="cat-card reveal" style="--reveal-delay: ${Math.min(i * 50, 400)}ms"`} href="#/${esc(cat.id)}">
     <span class="cat-card__top">
@@ -422,7 +235,7 @@ export function categoryCard(cat, articleCount, i = 0) {
     </span>
     <span class="cat-card__name">${esc(cat.name)}</span>
     <span class="cat-card__blurb">${esc(cat.tagline.split('.')[0])}.</span>
-    <span class="cat-card__count">${articleCount} article${articleCount === 1 ? '' : 's'} · ${cat.subcategories.length} subsections</span>
+    <span class="cat-card__count">${totalPages} wiki pages</span>
   </a>`;
 }
 
@@ -442,17 +255,6 @@ export function sectionHead(title, linkHref = '', linkLabel = 'View all') {
     ${linkHref ? `<a class="section-link" href="${esc(linkHref)}">${esc(linkLabel)} ${icon('arrow-right', 14)}</a>` : ''}
   </div>`;
 }
-
-export function skeleton(kind, count = 3) {
-  if (kind === 'cards') {
-    return `<div class="grid grid--cards">${'<div class="skeleton skeleton--card"></div>'.repeat(count)}</div>`;
-  }
-  if (kind === 'rows') {
-    return `<div style="display:flex;flex-direction:column;gap:10px">${'<div class="skeleton skeleton--row"></div>'.repeat(count)}</div>`;
-  }
-  return `<div class="skeleton skeleton--title"></div><div class="skeleton skeleton--text" style="width:80%;margin-top:10px"></div>`;
-}
-
 
 export function mountSearchBox(root) {
   root.innerHTML = `
@@ -493,46 +295,27 @@ export function mountSearchBox(root) {
     els[focusedIdx].scrollIntoView({ block: 'nearest' });
   };
 
-  const renderPanel = (results, query, total) => {
+  const renderPanel = (results, query) => {
     if (!query) { close(); return; }
     open();
 
-    const groups = groupByCategory(results);
-    let body = '';
-    const pages = searchPages(query, { limit: 4 });
-    if (pages.length) {
-      body += `<div class="dropdown__label">${icon('grid', 12)} Sections</div>`;
-      body += pages.map((p) => `
-        <a class="searchbox__item" role="option" href="#/${p.cat.id}/${p.sub.id}">
-          <span class="searchbox__item-icon">${icon(p.cat.icon, 15)}</span>
-          <span>
-            <b>${colorizeResources(markMatches(p.sub.name, query))}</b>
-            <small>${colorizeResources(esc(p.cat.name))} · ${colorizeResources(markMatches(p.sub.desc || '', query))}</small>
-          </span>
-        </a>`).join('');
-    }
-    if (!results.length && !pages.length) {
+    if (!results.length) {
       panel.innerHTML = `<div class="searchbox__empty">No results for <b>"${esc(query)}"</b>.<br><small>Try a keyword like "voidstone", "respawn" or "crit".</small></div>`;
       return;
     }
-    for (const [catId, entries] of groups) {
-      const cat = CATEGORIES.find((category) => category.id === catId);
-      if (!cat) return;
-      body += `<div class="dropdown__label">${icon(cat.icon, 12)} ${esc(cat.name)}</div>`;
-      body += entries.map((r, i) => `
-        <a class="searchbox__item" role="option" href="#/article/${esc(r.article.id)}" data-idx="${items.length + i}">
-          <span class="searchbox__item-icon">${icon('book', 15)}</span>
+    const body = `<div class="dropdown__label">${icon('grid', 12)} Wiki pages</div>${results.map((result) => `
+        <a class="searchbox__item" role="option" href="${esc(result.href)}">
+          <span class="searchbox__item-icon">${icon(result.cat.icon, 15)}</span>
           <span>
-            <b>${markMatches(r.article.title, query)}</b>
-            <small>${colorizeResources(markMatches(r.snippet, query))}</small>
+            <b>${colorizeResources(markMatches(result.sub.name, query))}</b>
+            <small>${colorizeResources(esc(result.cat.name))} · ${colorizeResources(markMatches(result.sub.desc || result.sub.tagline || '', query))}</small>
           </span>
-        </a>`).join('');
-    }
+        </a>`).join('')}`;
 
     panel.innerHTML = body + `
       <div class="searchbox__footer">
         <a href="#/search?q=${encodeURIComponent(query)}">
-          See all ${total} result${total === 1 ? '' : 's'} for "${esc(query)}" ${icon('arrow-right', 13)}
+          See all ${results.length} result${results.length === 1 ? '' : 's'} for "${esc(query)}" ${icon('arrow-right', 13)}
         </a>
       </div>`;
 
@@ -547,7 +330,7 @@ export function mountSearchBox(root) {
     panel.innerHTML = `<div class="searchbox__loading"><span class="spinner"></span> Searching…</div>`;
     const results = await dataProvider.search(q);
     if (token !== reqToken) return;
-    renderPanel(results.slice(0, 9), q, results.length + searchPages(q).length);
+    renderPanel(results.slice(0, 9), q);
   }, 140);
 
   input.addEventListener('input', runSearch);

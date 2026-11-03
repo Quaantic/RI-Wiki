@@ -3,7 +3,7 @@
 import { qs } from './utils.js';
 import { setCrumbs, setActiveNav, emblem, initReveal, resetReveal } from './ui.js';
 import {
-  homeView, categoryView, subcategoryView, articleView,
+  homeView, categoryView, subcategoryView,
   searchView, updatesView, creditsView, notFoundView,
 } from './views.js';
 import { feedbackView } from './feedback.js';
@@ -14,7 +14,6 @@ const ROUTES = [
   { pattern: /^feedback$/, view: feedbackView },
   { pattern: /^credits$/, view: creditsView },
   { pattern: /^search$/, view: searchView },
-  { pattern: /^article\/([\w-]+)$/, view: articleView },
   { pattern: /^([\w-]+)$/, view: categoryView },
   { pattern: /^([\w-]+)\/([\w-]+)$/, view: subcategoryView },
 ];

@@ -6,7 +6,7 @@ Rode com qualquer servidor estático (VS Code Live Server, `npx serve`, GitHub P
 ## Estrutura
 
 ```
-index.html            página única (SPA por hash: #/mining, #/article/ore-iron…)
+index.html            página única (SPA por hash: categorias, páginas e busca)
 css/                  tokens, base, components, layout, pages
 images/               favicon, hex-pattern, hex-badge
 content/              conteúdo editável em JSON
@@ -20,20 +20,19 @@ js/
   views.js            páginas (não editar)
   services.js         camada de dados (dataProvider) + placeholder do Excel
   data/
-    wiki-data.js      estrutura inicial das categorias
-    articles.js       estrutura inicial dos artigos
-    update-log.js     estrutura inicial do update log
+    wiki-data.js      carregamento da árvore JSON da Wiki
+    update-log.js     estado derivado do JSON do update log
 ```
 
 ## Como editar o conteúdo
 
-- Abra `/admin/` no site e entre com uma conta convidada do GitHub.
-- Use **Wiki pages**, **Articles** ou **Update log** para editar os textos pelos formulários.
-- Salvar cria um rascunho para revisão; o site é atualizado pelo Vercel após a publicação.
+- Abra `/admin/` no site e conecte uma conta GitHub com permissão de escrita no repositório.
+- Use **Wiki pages** para editar a estrutura, descrições e informações das páginas; use **Update log** para as notas de versão.
+- **Save changes** grava os JSON diretamente no branch principal; o Vercel publica a atualização.
 
-O dono precisa configurar o OAuth do GitHub e as variáveis do Vercel uma vez. Veja
-[`docs/ADMIN_SETUP.md`](docs/ADMIN_SETUP.md). O GitHub exige acesso de escrita
-ao repositório para cada editor convidado; consulte as limitações de acesso no guia.
+O dono do site configura o OAuth do GitHub e as variáveis do Vercel uma vez.
+Cada editor precisa de acesso de escrita ao repositório. Os textos ficam em
+`content/*.json`; calculadoras e regras de jogo continuam em `js/data/`.
 
 ## Excel (fase futura)
 

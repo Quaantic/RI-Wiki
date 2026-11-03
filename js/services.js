@@ -1,9 +1,8 @@
 // ==== SERVICES: DATA PROVIDER (fonte unica de dados) + EXCEL (futuro) ====
 
-import { ARTICLES, ARTICLE_INDEX } from './data/articles.js';
 import { UPDATE_LOG, LATEST_UPDATE, setUpdateLog } from './data/update-log.js';
 import { CATEGORIES, CATEGORY_IDS, getCategory, getSubcategory } from './data/wiki-data.js';
-import { searchArticles } from './utils.js';
+import { searchPages } from './utils.js';
 
 export const DATA_SOURCES = { MOCK: 'mock', EXCEL: 'excel' };
 
@@ -44,19 +43,14 @@ function validatePageTree(items, categoryId, routes) {
 }
 
 export async function loadEditableContent() {
-  const [wikiContent, articleContent, updateContent] = await Promise.all([
+  const [wikiContent, updateContent] = await Promise.all([
     fetchContent('../content/wiki-data.json'),
-    fetchContent('../content/articles.json'),
     fetchContent('../content/update-log.json'),
   ]);
   const categories = wikiContent?.categories;
-  const articles = articleContent?.articles;
   const versions = updateContent?.versions;
 
   assertUniqueIds(categories, 'Wiki categories');
-  assertUniqueIds(articles, 'Articles');
-  const categoryIds = new Set(categories.map((category) => category.id));
-  const routesByCategory = new Map();
   for (const category of categories) {
     if (!/^[\w-]+$/.test(category.id) || typeof category.name !== 'string'
       || typeof category.desc !== 'string' || typeof category.tagline !== 'string') {
@@ -64,15 +58,6 @@ export async function loadEditableContent() {
     }
     const routes = new Set();
     validatePageTree(category.subcategories, category.id, routes);
-    routesByCategory.set(category.id, routes);
-  }
-  for (const article of articles) {
-    if (!/^[\w-]+$/.test(article.id) || typeof article.title !== 'string'
-      || !categoryIds.has(article.category)
-      || !routesByCategory.get(article.category)?.has(article.subcategory)
-      || !Array.isArray(article.sections)) {
-      throw new Error(`[content] Article "${article.id}" needs a valid ID, title, category, section, and sections list.`);
-    }
   }
   if (!Array.isArray(versions) || !versions.length || versions.some((version) =>
     !version || typeof version.version !== 'string' || !Array.isArray(version.entries))) {
@@ -93,18 +78,6 @@ export async function loadEditableContent() {
 
   CATEGORIES.splice(0, CATEGORIES.length, ...categories);
   CATEGORY_IDS.splice(0, CATEGORY_IDS.length, ...categories.map((category) => category.id));
-  ARTICLES.splice(0, ARTICLES.length, ...articles.map((article) => ({
-    keywords: [],
-    stats: [],
-    sections: [],
-    related: [],
-    views: 0,
-    featured: false,
-    updated: '',
-    ...article,
-  })));
-  ARTICLE_INDEX.clear();
-  ARTICLES.forEach((article) => ARTICLE_INDEX.set(article.id, article));
   setUpdateLog(versions);
 }
 
@@ -127,58 +100,25 @@ const MOCK_LATENCY = 120;
 const delay = (value) =>
   new Promise((resolve) => setTimeout(() => resolve(value), MOCK_LATENCY));
 
-const byUpdatedDesc = (a, b) => b.updated.localeCompare(a.updated);
-const byViewsDesc = (a, b) => b.views - a.views;
-
 const mockBackend = {
   async getCategories() {
-    return delay(CATEGORIES.map((c) => ({
-      ...c,
-      articleCount: ARTICLES.filter((a) => a.category === c.id).length,
-    })));
-  },
-
-  async getArticles({ category, subcategory } = {}) {
-    let list = ARTICLES;
-    if (category) list = list.filter((a) => a.category === category);
-    if (subcategory) list = list.filter((a) => a.subcategory === subcategory);
-    return delay([...list].sort(byUpdatedDesc));
-  },
-
-  async getArticle(id) {
-    return delay(ARTICLE_INDEX.get(id) || null);
-  },
-
-  async getRelated(article) {
-    const related = (article?.related || [])
-      .map((id) => ARTICLE_INDEX.get(id))
-      .filter(Boolean);
-    return delay(related);
-  },
-
-  async getFeaturedArticles(limit = 3) {
-    return delay(ARTICLES.filter((a) => a.featured).sort(byUpdatedDesc).slice(0, limit));
-  },
-
-  async getPopularArticles(limit = 6) {
-    return delay([...ARTICLES].sort(byViewsDesc).slice(0, limit));
-  },
-
-  async getRecentlyUpdated(limit = 6) {
-    return delay([...ARTICLES].sort(byUpdatedDesc).slice(0, limit));
+    return delay(CATEGORIES);
   },
 
   async getWikiStats() {
     return delay({
-      articles: ARTICLES.length,
       categories: CATEGORIES.length,
+      pages: CATEGORIES.reduce((total, category) => {
+        const countPages = (pages) => pages.reduce((count, page) => count + 1 + countPages(page.children || []), 0);
+        return total + countPages(category.subcategories || []);
+      }, 0),
       updateVersion: LATEST_UPDATE.version,
       updateCount: UPDATE_LOG.reduce((n, v) => n + v.entries.length, 0),
     });
   },
 
   async search(query, opts) {
-    return delay(searchArticles(ARTICLES, query, opts));
+    return delay(searchPages(query, opts));
   },
 
   async getUpdateLog() {
@@ -192,12 +132,6 @@ export const dataProvider = {
   getDataSource,
 
   getCategories: (...args) => backend().getCategories(...args),
-  getArticles: (...args) => backend().getArticles(...args),
-  getArticle: (...args) => backend().getArticle(...args),
-  getRelated: (...args) => backend().getRelated(...args),
-  getFeaturedArticles: (...args) => backend().getFeaturedArticles(...args),
-  getPopularArticles: (...args) => backend().getPopularArticles(...args),
-  getRecentlyUpdated: (...args) => backend().getRecentlyUpdated(...args),
   getWikiStats: (...args) => backend().getWikiStats(...args),
   search: (...args) => backend().search(...args),
   getUpdateLog: (...args) => backend().getUpdateLog(...args),
@@ -217,11 +151,6 @@ export const excelProvider = {
   isConfigured: () => false,
   endpoint: null,
   getCategories: NOT_IMPLEMENTED('getCategories'),
-  getArticles: NOT_IMPLEMENTED('getArticles'),
-  getArticle: NOT_IMPLEMENTED('getArticle'),
-  getFeaturedArticles: NOT_IMPLEMENTED('getFeaturedArticles'),
-  getPopularArticles: NOT_IMPLEMENTED('getPopularArticles'),
-  getRecentlyUpdated: NOT_IMPLEMENTED('getRecentlyUpdated'),
   getWikiStats: NOT_IMPLEMENTED('getWikiStats'),
   search: NOT_IMPLEMENTED('search'),
 };

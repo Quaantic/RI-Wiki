@@ -56,20 +56,6 @@ export function fmtDate(iso) {
   return `${MONTHS[(m || 1) - 1]} ${d}, ${y}`;
 }
 
-export function fmtDateShort(iso) {
-  if (!iso) return '';
-  const [, m, d] = iso.split('-').map(Number);
-  return `${MONTHS[(m || 1) - 1]} ${d}`;
-}
-
-export function fmtNum(n) {
-  if (n == null) return '';
-  if (scientificNotationEnabled() && Math.abs(n) >= 1000) return formatScientific(n);
-  if (n >= 1_000_000) return formatPlainDecimal(n / 1_000_000, 1) + 'M';
-  if (n >= 1_000) return formatPlainDecimal(n / 1_000, 1) + 'k';
-  return String(n);
-}
-
 // ==== SUFFIXES DO JOGO (K, M, B, T, Qa, Qi, ...) ====
 const SUFFIXES = [
   '', 'K', 'M', 'B', 'T', 'Qa', 'Qi', 'Sx', 'Sp', 'Oc', 'No', 'De',
@@ -231,19 +217,6 @@ export function evalFormula(expr, vars = {}) {
   }
 }
 
-export function readMinutes(article) {
-  let words = 0;
-  const countText = (t) => { if (typeof t === 'string') words += t.split(/\s+/).length; };
-  countText(article.description);
-  (article.sections || []).forEach((s) => {
-    (s.blocks || []).forEach((b) => {
-      countText(b.text);
-      (b.items || []).forEach((it) => countText(typeof it === 'string' ? it : it.text));
-    });
-  });
-  return Math.max(2, Math.round(words / 180) || 2);
-}
-
 export function markMatches(text = '', query = '') {
   const safe = String(text).replace(/[&<>"']/g, (c) => (
     { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
@@ -259,150 +232,46 @@ export function markMatches(text = '', query = '') {
 import { CATEGORIES } from './data/wiki-data.js';
 import { getInlineUpgradePages } from './data/formulas.js';
 
-function categoryNameMap() {
-  const names = new Map();
-  for (const category of CATEGORIES) {
-    names.set(category.id, category.name.toLowerCase());
-    const visit = (items) => items.forEach((item) => {
-      names.set(`${category.id}/${item.id}`, item.name.toLowerCase());
-      visit(item.children || []);
-    });
-    visit(category.subcategories);
-  }
-  return names;
-}
-
-function contentText(article) {
-  if (article._contentText) return article._contentText;
-  const parts = [];
-  (article.sections || []).forEach((s) => {
-    parts.push(s.title);
-    (s.blocks || []).forEach((b) => {
-      if (b.text) parts.push(b.text);
-      (b.items || []).forEach((it) => parts.push(typeof it === 'string' ? it : it.text || ''));
-      (b.rows || []).forEach((r) => parts.push(Object.values(r).filter((v) => typeof v === 'string').join(' ')));
-      (b.pairs || []).forEach((pr) => parts.push(`${pr.key} ${pr.value}`));
-    });
-  });
-  article._contentText = parts.join(' ').toLowerCase();
-  return article._contentText;
-}
-
-function bestSnippet(article, tokens) {
-  const text = contentText(article);
-  const sentences = text.split(/(?<=[.!?])\s+/);
-  let best = '', bestScore = 0;
-  for (const s of sentences) {
-    let score = 0;
-    for (const t of tokens) if (s.includes(t)) score += 1;
-    if (score > bestScore) { bestScore = score; best = s; }
-  }
-  if (!best) best = sentences[0] || article.description || '';
-
-  const idx = best.length && tokens.length
-    ? Math.max(0, best.search(new RegExp(tokens.filter(Boolean).slice(0, 2).join('|'), 'i')))
-    : 0;
-  let out = best.slice(Math.max(0, idx - 40), idx + 160).trim();
-  if (idx > 40) out = '…' + out;
-  if (idx + 160 < best.length) out += '…';
-  return out;
-}
-
-export function searchArticles(articles, query, { category = null, subcategory = null, sort = 'relevance', limit = 0 } = {}) {
-  const q = String(query || '').trim().toLowerCase();
-  if (!q) return [];
-
-  const tokens = q.split(/\s+/).filter(Boolean);
-  const categoryNames = categoryNameMap();
-
-  let results = [];
-  for (const a of articles) {
-    if (category && a.category !== category) continue;
-    if (subcategory && a.subcategory !== subcategory) continue;
-
-    const title = a.title.toLowerCase();
-    const desc = (a.description || '').toLowerCase();
-    const keywords = (a.keywords || []).join(' ').toLowerCase();
-    const content = contentText(a);
-    const catName = categoryNames.get(a.category) || '';
-    const subName = categoryNames.get(`${a.category}/${a.subcategory}`) || '';
-
-    let score = 0;
-
-    if (title === q) score += 120;
-    else if (title.includes(q)) score += 60;
-    for (const t of tokens) if (title.includes(t)) score += 14;
-
-    if (keywords.includes(q)) score += 30;
-    for (const t of tokens) if (keywords.includes(t)) score += 9;
-
-    if (desc.includes(q)) score += 22;
-    for (const t of tokens) if (desc.includes(t)) score += 6;
-
-    if (catName.includes(q)) score += 8;
-    if (subName.includes(q)) score += 10;
-
-    let contentHits = 0;
-    for (const t of tokens) if (content.includes(t)) contentHits += 1;
-    score += Math.min(contentHits, 4) * 2;
-    if (content.includes(q)) score += 4;
-
-    if (score > 0) {
-      results.push({ article: a, score, snippet: bestSnippet(a, tokens) });
-    }
-  }
-
-  results.sort((x, y) => {
-    if (y.score !== x.score) return y.score - x.score;
-    return y.article.views - x.article.views;
-  });
-
-  if (sort === 'updated') {
-    results.sort((x, y) => y.score - x.score);
-    results.sort((x, y) => y.article.updated.localeCompare(x.article.updated));
-  } else if (sort === 'title') {
-    results.sort((x, y) => y.score - x.score);
-    results.sort((x, y) => x.article.title.localeCompare(y.article.title));
-  }
-
-  return limit ? results.slice(0, limit) : results;
-}
-
-export function groupByCategory(results) {
-  const groups = new Map();
-  for (const r of results) {
-    const id = r.article.category;
-    if (!groups.has(id)) groups.set(id, []);
-    groups.get(id).push(r);
-  }
-  return groups;
-}
-
-// Busca tambem nas PAGINAS (categorias, subsecoes e sub-subs), nao so artigos
 export function searchPages(query, { limit = 0, category = null } = {}) {
   const q = String(query || '').trim().toLowerCase();
   if (!q) return [];
   const tokens = q.split(/\s+/).filter(Boolean);
   const results = [];
+  const scoreItem = (name, description, categoryName = '') => {
+    const title = String(name || '').toLowerCase();
+    const content = String(description || '').toLowerCase();
+    let score = title === q ? 100 : title.includes(q) ? 50 : 0;
+    for (const token of tokens) {
+      if (title.includes(token)) score += 12;
+      if (content.includes(token)) score += 4;
+    }
+    if (content.includes(q)) score += 15;
+    if (categoryName.toLowerCase().includes(q)) score += 3;
+    return score;
+  };
+  const searchableText = (item) => [
+    item.desc,
+    item.tagline,
+    item.overview?.desc,
+    ...(item.highlights || []).flatMap((highlight) => [highlight.title, highlight.text]),
+    ...(item.facts || []).flatMap((fact) => [fact.label, fact.value]),
+    ...(item.vitals || []).flatMap((vital) => [vital.label, vital.value]),
+  ].filter(Boolean).join(' ');
+
   for (const c of CATEGORIES) {
     if (category && c.id !== category) continue;
-    for (const s of c.subcategories) {
-      const inlineUpgradeIds = new Set(getInlineUpgradePages(c.id, s).map(({ child }) => child.id));
-      const children = (s.children || []).filter((child) => !inlineUpgradeIds.has(child.id));
-      for (const sub of [s, ...children]) {
-        const name = sub.name.toLowerCase();
-        const blurb = (sub.desc || '').toLowerCase();
-        let score = 0;
-        if (name === q) score += 100;
-        else if (name.includes(q)) score += 50;
-        for (const t of tokens) if (name.includes(t)) score += 12;
-        if (blurb.includes(q)) score += 15;
-        for (const t of tokens) if (blurb.includes(t)) score += 4;
-        if (c.name.toLowerCase().includes(q)) score += 3;
-        if (score > 0) results.push({ cat: c, sub, score });
+    const categoryScore = scoreItem(c.name, searchableText(c));
+    if (categoryScore) results.push({ cat: c, sub: c, score: categoryScore, href: `#/${c.id}`, kind: 'category' });
+    const visit = (pages) => {
+      for (const sub of pages || []) {
+        const score = scoreItem(sub.name, searchableText(sub), c.name);
+        if (score) results.push({ cat: c, sub, score, href: `#/${c.id}/${sub.id}`, kind: 'page' });
+        const inlineIds = new Set(getInlineUpgradePages(c.id, sub).map(({ child }) => child.id));
+        visit((sub.children || []).filter((child) => !inlineIds.has(child.id)));
       }
-    }
+    };
+    visit(c.subcategories);
   }
-  results.sort((a, b) => b.score - a.score);
+  results.sort((a, b) => b.score - a.score || a.sub.name.localeCompare(b.sub.name));
   return limit ? results.slice(0, limit) : results;
 }

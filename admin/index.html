@@ -4,9 +4,58 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
-  <title>RI Wiki Content Editor</title>
+  <meta name="theme-color" content="#171b18">
+  <title>Wiki Studio | RI Wiki</title>
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="./admin.css">
 </head>
 <body>
-  <script src="https://cdn.jsdelivr.net/npm/decap-cms@3.8.3/dist/decap-cms.js"></script>
+  <main id="app" class="studio">
+    <header class="topbar">
+      <a class="brand" href="../" aria-label="RI Wiki home">
+        <span class="brand-mark">RI</span>
+        <span><strong>RI Wiki</strong><small>CONTENT STUDIO</small></span>
+      </a>
+      <div class="topbar__status" id="status" role="status">Connecting to GitHub…</div>
+      <div class="topbar__actions">
+        <span id="account" class="account" hidden></span>
+        <button id="login" class="button button--primary" type="button">Connect GitHub</button>
+        <button id="logout" class="button button--quiet" type="button" hidden>Sign out</button>
+        <button id="save" class="button button--primary" type="button" disabled>Save changes</button>
+      </div>
+    </header>
+
+    <section id="login-screen" class="login-screen" hidden>
+      <div class="login-card">
+        <span class="eyebrow">YOUR WIKI, YOUR WAY</span>
+        <h1>Welcome to Wiki Studio</h1>
+        <p>Edit the categories, pages, descriptions and release notes shown on the live Wiki. Changes are committed to the Wiki repository when you save.</p>
+        <button id="login-card-button" class="button button--primary button--large" type="button">Continue with GitHub</button>
+        <p class="login-note">Only GitHub accounts with write access to RI-Wiki can publish edits.</p>
+      </div>
+    </section>
+
+    <div id="workspace" class="workspace" hidden>
+      <aside class="sidebar">
+        <div class="sidebar__heading">WORKSPACE</div>
+        <nav class="tabs" aria-label="Content sections">
+          <button class="tab is-active" data-screen="wiki" type="button"><span>◇</span> Wiki pages</button>
+          <button class="tab" data-screen="updates" type="button"><span>◷</span> Update log</button>
+        </nav>
+        <div class="sidebar__heading sidebar__heading--tree"><span id="tree-heading">WIKI STRUCTURE</span><div class="sidebar__tree-actions"><button id="toggle-tree" class="tree-toggle" type="button">Collapse all</button><button id="add-category" class="icon-button" aria-label="Add category" title="Add category" type="button">+</button></div></div>
+        <div id="tree" class="tree"></div>
+        <div class="sidebar__footer">
+          <span class="connection-dot"></span>
+          <span>Connected to <b>Quaantic/RI-Wiki</b></span>
+        </div>
+      </aside>
+
+      <section class="editor">
+        <div id="screen-content" class="screen-content"></div>
+      </section>
+    </div>
+  </main>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="./app.js"></script>
 </body>
 </html>
