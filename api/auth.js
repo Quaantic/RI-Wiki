@@ -1,5 +1,6 @@
 const SITE_ORIGIN = 'https://regrowthinc.vercel.app';
 const SITE_ID = new URL(SITE_ORIGIN).host;
+const { createState } = require('./oauth-state');
 
 module.exports = function auth(req, res) {
   if (req.method !== 'GET') {
@@ -9,7 +10,8 @@ module.exports = function auth(req, res) {
   }
 
   const clientId = process.env.OAUTH_CLIENT_ID;
-  if (!clientId) {
+  const clientSecret = process.env.OAUTH_CLIENT_SECRET;
+  if (!clientId || !clientSecret) {
     res.status(503).send('GitHub sign-in is not configured.');
     return;
   }
@@ -21,7 +23,7 @@ module.exports = function auth(req, res) {
     return;
   }
 
-  const state = require('node:crypto').randomBytes(32).toString('hex');
+  const state = createState(clientSecret);
   const authorizationUrl = new URL('https://github.com/login/oauth/authorize');
   authorizationUrl.searchParams.set('client_id', clientId);
   authorizationUrl.searchParams.set('redirect_uri', `${SITE_ORIGIN}/api/callback`);
@@ -29,6 +31,5 @@ module.exports = function auth(req, res) {
   authorizationUrl.searchParams.set('state', state);
 
   res.setHeader('Cache-Control', 'no-store');
-  res.setHeader('Set-Cookie', `ri-cms-oauth-state=${state}; Max-Age=600; Path=/api/callback; HttpOnly; Secure; SameSite=Lax`);
   res.redirect(302, authorizationUrl.toString());
 };

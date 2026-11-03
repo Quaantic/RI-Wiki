@@ -4,7 +4,9 @@ const vm = require('node:vm');
 
 const auth = require('../api/auth.js');
 const callback = require('../api/callback.js');
+const { createState, verifyState } = require('../api/oauth-state.js');
 const SITE_ORIGIN = 'https://regrowthinc.vercel.app';
+const CLIENT_SECRET = 'server-only-test-secret';
 
 function createResponse() {
   return {
@@ -31,11 +33,11 @@ function createResponse() {
   };
 }
 
-function callbackRequest(state, cookie, extra = '') {
+function callbackRequest(state, extra = '') {
   return {
     method: 'GET',
     url: `/api/callback?code=one-time-code&state=${state}${extra}`,
-    headers: { cookie },
+    headers: {},
   };
 }
 
@@ -61,7 +63,7 @@ function runPopupScript(html) {
 
 test('OAuth callback returns the Decap protocol JSON as an origin-bound string', async () => {
   process.env.OAUTH_CLIENT_ID = 'test-client-id';
-  process.env.OAUTH_CLIENT_SECRET = 'server-only-test-secret';
+  process.env.OAUTH_CLIENT_SECRET = CLIENT_SECRET;
   const begin = createResponse();
 
   auth({
@@ -77,8 +79,8 @@ test('OAuth callback returns the Decap protocol JSON as an origin-bound string',
   assert.equal(authorizationUrl.searchParams.get('redirect_uri'), `${SITE_ORIGIN}/api/callback`);
   assert.equal(authorizationUrl.searchParams.get('scope'), 'public_repo,read:user');
   const state = authorizationUrl.searchParams.get('state');
-  assert.match(state, /^[a-f0-9]{64}$/);
-  const cookie = begin.headers['Set-Cookie'].split(';')[0];
+  assert.ok(verifyState(state, CLIENT_SECRET));
+  assert.equal(begin.headers['Set-Cookie'], undefined);
 
   const originalFetch = global.fetch;
   const exchanges = [];
@@ -92,7 +94,7 @@ test('OAuth callback returns the Decap protocol JSON as an origin-bound string',
 
   try {
     const response = createResponse();
-    await callback(callbackRequest(state, cookie, '&iss=https%3A%2F%2Fgithub.com'), response);
+    await callback(callbackRequest(state, '&iss=https%3A%2F%2Fgithub.com'), response);
 
     assert.equal(response.code, 200);
     assert.equal(exchanges.length, 1);
@@ -117,22 +119,20 @@ test('OAuth callback returns the Decap protocol JSON as an origin-bound string',
     assert.equal(closed, true);
     assert.doesNotMatch(response.body, /server-only-test-secret/);
     assert.match(response.headers['Content-Security-Policy'], /frame-ancestors 'none'/);
-    assert.match(response.headers['Set-Cookie'], /Max-Age=0/);
   } finally {
     global.fetch = originalFetch;
   }
 });
 
-test('callback rejects an invalid state or unexpected GitHub issuer before exchange', async () => {
+test('callback rejects invalid, expired or tampered state and unexpected issuer before exchange', async () => {
   process.env.OAUTH_CLIENT_ID = 'test-client-id';
-  process.env.OAUTH_CLIENT_SECRET = 'server-only-test-secret';
+  process.env.OAUTH_CLIENT_SECRET = CLIENT_SECRET;
   const begin = createResponse();
   auth({
     method: 'GET',
     url: '/api/auth?provider=github&site_id=regrowthinc.vercel.app',
   }, begin);
   const state = new URL(begin.location).searchParams.get('state');
-  const cookie = begin.headers['Set-Cookie'].split(';')[0];
   const originalFetch = global.fetch;
   let exchanges = 0;
   global.fetch = async () => {
@@ -141,12 +141,20 @@ test('callback rejects an invalid state or unexpected GitHub issuer before excha
   };
 
   try {
+    const [timestamp, nonce, signature] = state.split('.');
+    const tamperedState = `${timestamp}.${'0'.repeat(64)}.${signature}`;
+    const expiredState = createState(CLIENT_SECRET);
+    const [expiredTimestamp, expiredNonce, expiredSignature] = expiredState.split('.');
+    const pastState = `${Number(expiredTimestamp) - 11 * 60 * 1000}.${expiredNonce}.${expiredSignature}`;
+
     for (const [returnedState, extra] of [
-      ['0'.repeat(64), ''],
+      ['invalid-state', ''],
+      [tamperedState, ''],
+      [pastState, ''],
       [state, '&iss=https%3A%2F%2Fevil.example'],
     ]) {
       const response = createResponse();
-      await callback(callbackRequest(returnedState, cookie, extra), response);
+      await callback(callbackRequest(returnedState, extra), response);
       assert.equal(response.code, 400);
       const { messages } = runPopupScript(response.body);
       assert.equal(messages[1].targetOrigin, SITE_ORIGIN);
@@ -154,6 +162,7 @@ test('callback rejects an invalid state or unexpected GitHub issuer before excha
       assert.ok(decapError.message);
     }
     assert.equal(exchanges, 0);
+    assert.equal(verifyState(state, 'different-secret'), false);
   } finally {
     global.fetch = originalFetch;
   }

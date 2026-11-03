@@ -1,11 +1,5 @@
 const SITE_ORIGIN = 'https://regrowthinc.vercel.app';
-
-function readCookie(req, name) {
-  const cookieHeader = req.headers.cookie || '';
-  const prefix = `${name}=`;
-  const value = cookieHeader.split(';').map((part) => part.trim()).find((part) => part.startsWith(prefix));
-  return value ? value.slice(prefix.length) : '';
-}
+const { verifyState } = require('./oauth-state');
 
 function sendPopup(res, payload, status = 200) {
   const nonce = require('node:crypto').randomBytes(16).toString('base64');
@@ -19,7 +13,6 @@ function sendPopup(res, payload, status = 200) {
   res.setHeader('Content-Security-Policy', `default-src 'none'; script-src 'nonce-${nonce}'; base-uri 'none'; frame-ancestors 'none'`);
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('Referrer-Policy', 'no-referrer');
-  res.setHeader('Set-Cookie', 'ri-cms-oauth-state=; Max-Age=0; Path=/api/callback; HttpOnly; Secure; SameSite=Lax');
   res.end(`<!doctype html><html lang="en"><meta charset="utf-8"><title>GitHub sign-in</title><body><script nonce="${nonce}">${script}</script></body></html>`);
 }
 
@@ -33,14 +26,21 @@ module.exports = async function callback(req, res) {
   const requestUrl = new URL(req.url, SITE_ORIGIN);
   const code = requestUrl.searchParams.get('code');
   const returnedState = requestUrl.searchParams.get('state') || '';
-  const savedState = readCookie(req, 'ri-cms-oauth-state');
   const issuer = requestUrl.searchParams.get('iss');
-  if (requestUrl.searchParams.has('error') || (issuer && issuer !== 'https://github.com')
-    || !code || !savedState
-    || !/^[a-f0-9]{64}$/.test(returnedState)
-    || returnedState.length !== savedState.length
-    || !require('node:crypto').timingSafeEqual(Buffer.from(returnedState), Buffer.from(savedState))) {
-    sendPopup(res, { message: 'GitHub sign-in was cancelled or could not be verified.' }, 400);
+  if (requestUrl.searchParams.has('error')) {
+    sendPopup(res, { message: 'GitHub sign-in was cancelled.' }, 400);
+    return;
+  }
+
+  if (issuer && issuer !== 'https://github.com') {
+    console.warn('[cms-auth] OAuth callback rejected: unexpected issuer.');
+    sendPopup(res, { message: 'GitHub sign-in could not be verified. Please try again.' }, 400);
+    return;
+  }
+
+  if (!code) {
+    console.warn('[cms-auth] OAuth callback rejected: authorization code is missing.');
+    sendPopup(res, { message: 'GitHub did not return an authorization code. Please try again.' }, 400);
     return;
   }
 
@@ -48,6 +48,12 @@ module.exports = async function callback(req, res) {
   const clientSecret = process.env.OAUTH_CLIENT_SECRET;
   if (!clientId || !clientSecret) {
     sendPopup(res, { message: 'GitHub sign-in is not configured.' }, 503);
+    return;
+  }
+
+  if (!verifyState(returnedState, clientSecret)) {
+    console.warn('[cms-auth] OAuth callback rejected: state signature is invalid or expired.');
+    sendPopup(res, { message: 'GitHub sign-in could not be verified. Please close this window and try again.' }, 400);
     return;
   }
 
