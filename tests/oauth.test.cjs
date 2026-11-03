@@ -77,7 +77,7 @@ test('OAuth callback returns the Decap protocol JSON as an origin-bound string',
   assert.equal(authorizationUrl.pathname, '/login/oauth/authorize');
   assert.equal(authorizationUrl.searchParams.get('client_id'), 'test-client-id');
   assert.equal(authorizationUrl.searchParams.get('redirect_uri'), `${SITE_ORIGIN}/api/callback`);
-  assert.equal(authorizationUrl.searchParams.get('scope'), 'public_repo,read:user');
+  assert.equal(authorizationUrl.searchParams.get('scope'), 'repo,read:user');
   const state = authorizationUrl.searchParams.get('state');
   assert.ok(verifyState(state, CLIENT_SECRET));
   assert.equal(begin.headers['Set-Cookie'], undefined);

@@ -27,7 +27,7 @@ module.exports = function auth(req, res) {
   const authorizationUrl = new URL('https://github.com/login/oauth/authorize');
   authorizationUrl.searchParams.set('client_id', clientId);
   authorizationUrl.searchParams.set('redirect_uri', `${SITE_ORIGIN}/api/callback`);
-  authorizationUrl.searchParams.set('scope', 'public_repo,read:user');
+  authorizationUrl.searchParams.set('scope', 'repo,read:user');
   authorizationUrl.searchParams.set('state', state);
 
   res.setHeader('Cache-Control', 'no-store');
