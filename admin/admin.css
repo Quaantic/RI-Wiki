@@ -158,11 +158,18 @@ button { color: inherit; }
 .tree-item:hover .tree-item__add { opacity: 1; }
 .tree-row { display: flex; align-items: center; gap: 2px; }
 .tree-row > .tree-item { flex: 1; min-width: 0; }
+.tree-expand { display: inline-grid; width: 22px; height: 25px; flex: none; place-items: center; border: 0; border-radius: 6px; color: #87958a; background: transparent; cursor: pointer; font-size: 12px; }
+.tree-expand:not(:disabled):hover { color: var(--studio-accent); background: rgba(168,239,69,.08); }
+.tree-expand:disabled { cursor: default; opacity: .5; }
 .tree-add { display: inline-grid; width: 23px; height: 23px; flex: none; place-items: center; border: 0; border-radius: 6px; color: var(--studio-accent); background: transparent; cursor: pointer; font-size: 16px; opacity: .55; }
 .tree-add:hover { background: rgba(168,239,69,.1); opacity: 1; }
 .tree-order { display: inline-grid; width: 20px; height: 23px; flex: none; place-items: center; border: 0; border-radius: 5px; color: #87958a; background: transparent; cursor: pointer; font-size: 12px; opacity: .6; }
 .tree-order:hover { color: var(--studio-accent); background: rgba(168,239,69,.08); opacity: 1; }
 .tree-children { margin-left: 11px; padding-left: 9px; border-left: 1px solid #303a32; }
+.tree-data-group { margin: 4px 0 11px; padding-bottom: 7px; border-bottom: 1px solid rgba(48,58,50,.6); }
+.tree-data-heading { display: flex; align-items: center; justify-content: space-between; min-height: 28px; padding: 0 5px 0 8px; color: #7f8e81; font-size: 10px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; }
+.tree-data-group > .tree-item { min-height: 29px; padding-left: 11px; font-size: 11px; }
+.tree-empty { padding: 10px 8px; color: #879489; font-size: 11px; }
 .sidebar__footer { display: flex; align-items: center; gap: 8px; padding: 14px 16px; border-top: 1px solid var(--studio-border); color: #869187; font-size: 10px; }
 .sidebar__footer b { color: #bbc5bc; font-weight: 600; }
 .connection-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--studio-accent); box-shadow: 0 0 10px rgba(168,239,69,.4); }
@@ -215,6 +222,24 @@ h3 { color: var(--studio-text); font: 650 15px/1.4 "Space Grotesk", "Segoe UI", 
 .repeat-empty { padding: 18px; border: 1px dashed #3b473d; border-radius: 9px; color: #829084; text-align: center; }
 .nested-list { display: grid; gap: 10px; margin-top: 14px; padding-left: 16px; border-left: 1px solid #3c493d; }
 .section-title { margin: 0 0 12px; color: #8d9b8e; font-size: 10px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+.game-data-panel > .notice { margin-bottom: 17px; }
+.game-object { margin-top: 15px; padding: 15px; border: 1px solid #374238; border-radius: 10px; background: rgba(18,22,19,.25); }
+.game-object--nested { margin-top: 0; padding: 11px; border-color: rgba(55,66,56,.65); background: rgba(18,22,19,.2); }
+.game-object__heading, .game-array__heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+.game-object__heading h3, .game-array__heading h3 { margin: 0; }
+.game-object__fields { display: grid; gap: 14px; }
+.game-field { position: relative; min-width: 0; padding-right: 28px; }
+.game-field__remove { position: absolute; top: 20px; right: 0; width: 24px; height: 24px; border: 1px solid transparent; border-radius: 6px; color: #78857a; background: transparent; cursor: pointer; font-size: 17px; }
+.game-field__remove:hover { border-color: rgba(255,130,117,.3); color: var(--studio-red); background: rgba(255,130,117,.08); }
+.game-object__heading + .game-object__fields > .game-field > .game-object,
+.game-object__heading + .game-object__fields > .game-field > .game-array { margin-top: 0; }
+.game-array { margin-top: 15px; padding: 15px; border: 1px solid #374238; border-radius: 10px; background: rgba(18,22,19,.25); }
+.game-array__items { display: grid; gap: 12px; }
+.game-item { padding: 12px; border: 1px solid rgba(55,66,56,.8); border-radius: 9px; background: rgba(18,22,19,.35); }
+.game-item__tools { display: flex; align-items: center; justify-content: flex-end; gap: 5px; margin-bottom: 9px; }
+.game-item__tools span { margin-right: auto; color: #9eaaa0; font-size: 11px; font-weight: 700; }
+.game-array__heading .count { margin-left: 5px; }
+.game-data-panel .field input[type="number"] { font-variant-numeric: tabular-nums; }
 .notice { padding: 13px 15px; border: 1px solid rgba(168,239,69,.18); border-radius: 9px; color: #aeb9af; background: rgba(168,239,69,.055); font-size: 12px; }
 .empty-state { padding: 54px 25px; border: 1px dashed #3b473d; border-radius: 14px; color: #96a297; text-align: center; }
 .empty-state h2 { margin-bottom: 9px; }
@@ -243,8 +268,9 @@ h3 { color: var(--studio-text); font: 650 15px/1.4 "Space Grotesk", "Segoe UI", 
   .tabs { display: flex; overflow: auto; padding: 12px 12px 7px; }
   .tab { flex: 0 0 auto; }
   .sidebar__heading--tree { padding: 12px 17px 6px; }
-  .tree { display: flex; max-height: 175px; gap: 5px; overflow: auto; padding: 0 12px 12px; }
+  .tree { display: flex; max-height: 260px; gap: 5px; overflow: auto; padding: 0 12px 12px; }
   .tree-category { flex: 0 0 210px; }
+  .tree-data-group { flex: 0 0 220px; overflow: auto; }
   .tree-children { margin-left: 12px; }
   .screen-content { padding: 26px 17px 65px; }
   .panel { padding: 16px; }

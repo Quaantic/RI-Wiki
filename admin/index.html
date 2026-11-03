@@ -29,7 +29,7 @@
       <div class="login-card">
         <span class="eyebrow">YOUR WIKI, YOUR WAY</span>
         <h1>Welcome to Wiki Studio</h1>
-        <p>Edit the categories, pages, descriptions and release notes shown on the live Wiki. Changes are committed to the Wiki repository when you save.</p>
+        <p>Edit the Wiki, upgrade formulas, progression, ores, runes, dungeon data, calculators and release notes. The panel saves changes to the Wiki repository and keeps restorable backups before each save.</p>
         <button id="login-card-button" class="button button--primary button--large" type="button">Continue with GitHub</button>
         <p class="login-note">Only GitHub accounts with write access to RI-Wiki can publish edits.</p>
       </div>
@@ -40,7 +40,9 @@
         <div class="sidebar__heading">WORKSPACE</div>
         <nav class="tabs" aria-label="Content sections">
           <button class="tab is-active" data-screen="wiki" type="button"><span>◇</span> Wiki pages</button>
+          <button class="tab" data-screen="game" type="button"><span>⚙</span> Game data</button>
           <button class="tab" data-screen="updates" type="button"><span>◷</span> Update log</button>
+          <button class="tab" data-screen="versions" type="button"><span>↶</span> Versions</button>
         </nav>
         <div class="sidebar__heading sidebar__heading--tree"><span id="tree-heading">WIKI STRUCTURE</span><div class="sidebar__tree-actions"><button id="toggle-tree" class="tree-toggle" type="button">Collapse all</button><button id="add-category" class="icon-button" aria-label="Add category" title="Add category" type="button">+</button></div></div>
         <div id="tree" class="tree"></div>

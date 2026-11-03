@@ -42,6 +42,11 @@
           "description": "Added a version overview, entry counts, category filters and colorful, clickable resource references throughout the release notes."
         }
       ]
+    },
+    {
+      "version": "1",
+      "date": "2026-10-30",
+      "entries": []
     }
   ]
 }
