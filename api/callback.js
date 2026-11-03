@@ -1,6 +1,18 @@
 const SITE_ORIGIN = 'https://regrowthinc.vercel.app';
 const { verifyState } = require('./oauth-state');
 
+function isGitHubIssuer(issuer) {
+  try {
+    const parsedIssuer = new URL(issuer);
+    return parsedIssuer.origin === 'https://github.com'
+      && parsedIssuer.pathname === '/'
+      && !parsedIssuer.search
+      && !parsedIssuer.hash;
+  } catch {
+    return false;
+  }
+}
+
 function sendPopup(res, payload, status = 200) {
   const nonce = require('node:crypto').randomBytes(16).toString('base64');
   const result = status === 200 ? 'success' : 'error';
@@ -32,7 +44,7 @@ module.exports = async function callback(req, res) {
     return;
   }
 
-  if (issuer && issuer !== 'https://github.com') {
+  if (issuer && !isGitHubIssuer(issuer)) {
     console.warn('[cms-auth] OAuth callback rejected: unexpected issuer.');
     sendPopup(res, { message: 'GitHub sign-in could not be verified. Please try again.' }, 400);
     return;

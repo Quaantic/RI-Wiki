@@ -152,6 +152,7 @@ test('callback rejects invalid, expired or tampered state and unexpected issuer 
       [tamperedState, ''],
       [pastState, ''],
       [state, '&iss=https%3A%2F%2Fevil.example'],
+      [state, '&iss=https%3A%2F%2Fgithub.com%2F%40evil.example'],
     ]) {
       const response = createResponse();
       await callback(callbackRequest(returnedState, extra), response);
@@ -163,6 +164,14 @@ test('callback rejects invalid, expired or tampered state and unexpected issuer 
     }
     assert.equal(exchanges, 0);
     assert.equal(verifyState(state, 'different-secret'), false);
+
+    const slashIssuerResponse = createResponse();
+    global.fetch = async () => new Response(JSON.stringify({ access_token: 'gho-test-access-token' }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    });
+    await callback(callbackRequest(state, '&iss=https%3A%2F%2Fgithub.com%2F'), slashIssuerResponse);
+    assert.equal(slashIssuerResponse.code, 200);
   } finally {
     global.fetch = originalFetch;
   }
