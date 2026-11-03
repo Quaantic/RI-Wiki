@@ -2,6 +2,14 @@
 
 import { UPDATE_LOG, LATEST_UPDATE, setUpdateLog } from './data/update-log.js';
 import { CATEGORIES, CATEGORY_IDS, getCategory, getSubcategory } from './data/wiki-data.js';
+import { FORMULA_SECTIONS, FORMULA_PAGE_MAP } from './data/formulas.js';
+import { STAGE_DATA, BARN_DATA, RANK_DATA, ASCENSION_DATA, LIFE_RANK_DATA, CORE_DATA } from './data/progress.js';
+import { ORE_DATA, MASTERY_DATA, LAYER_DATA } from './data/ores.js';
+import { RUNE_FAMILIES, FAMILY_COLORS } from './data/runes.js';
+import { TRAINING_AREAS, DUST_UNLOCK, GEARS } from './data/dungeon.js';
+import { RESET_LAYER_PAGES, setResetLayerPages } from './data/reset-layers.js';
+import { MINING_PRICES } from './data/mining-prices.js';
+import { setResourceColors } from './data/resource-colors.js';
 import { searchPages } from './utils.js';
 
 export const DATA_SOURCES = { MOCK: 'mock', EXCEL: 'excel' };
@@ -42,10 +50,43 @@ function validatePageTree(items, categoryId, routes) {
   }
 }
 
+function replaceObject(target, source, label) {
+  if (!source || typeof source !== 'object' || Array.isArray(source)) {
+    throw new Error(`[content] ${label} must be an object.`);
+  }
+  for (const key of Object.keys(target)) delete target[key];
+  Object.assign(target, source);
+}
+
+function applyGameData(data) {
+  if (!data || typeof data !== 'object') throw new Error('[content] Game data is missing or invalid.');
+  replaceObject(FORMULA_SECTIONS, data.upgrades?.sections, 'Upgrade sections');
+  replaceObject(FORMULA_PAGE_MAP, data.upgrades?.routes, 'Upgrade page routes');
+  replaceObject(STAGE_DATA, data.progression?.stages, 'Stages');
+  replaceObject(BARN_DATA, data.progression?.barns, 'Barns');
+  replaceObject(RANK_DATA, data.progression?.ranks, 'Ranks');
+  replaceObject(ASCENSION_DATA, data.progression?.ascensions, 'Ascensions');
+  replaceObject(LIFE_RANK_DATA, data.progression?.lifeRanks, 'Life ranks');
+  replaceObject(CORE_DATA, data.progression?.cores, 'Core ranks');
+  replaceObject(ORE_DATA, data.mining?.ores, 'Ores');
+  replaceObject(MASTERY_DATA, data.mining?.mastery, 'Mining mastery');
+  replaceObject(LAYER_DATA, data.mining?.layers, 'Mining layers');
+  replaceObject(MINING_PRICES, data.mining?.prices, 'Mining upgrade prices');
+  replaceObject(RUNE_FAMILIES, data.runes?.families, 'Rune families');
+  replaceObject(FAMILY_COLORS, data.runes?.colors, 'Rune colors');
+  replaceObject(TRAINING_AREAS, data.dungeon?.training, 'Training areas');
+  if (!Array.isArray(data.dungeon?.dustUnlock)) throw new Error('[content] Bone dust unlock levels must be a list.');
+  DUST_UNLOCK.splice(0, DUST_UNLOCK.length, ...data.dungeon.dustUnlock);
+  replaceObject(GEARS, data.dungeon?.gear, 'Dungeon gear');
+  setResetLayerPages(data.calculators?.pages);
+  setResourceColors(data.resources?.colors, data.resources?.pageLinks);
+}
+
 export async function loadEditableContent() {
-  const [wikiContent, updateContent] = await Promise.all([
+  const [wikiContent, updateContent, gameData] = await Promise.all([
     fetchContent('../content/wiki-data.json'),
     fetchContent('../content/update-log.json'),
+    fetchContent('../content/game-data.json'),
   ]);
   const categories = wikiContent?.categories;
   const versions = updateContent?.versions;
@@ -76,6 +117,7 @@ export async function loadEditableContent() {
     }
   }
 
+  applyGameData(gameData);
   CATEGORIES.splice(0, CATEGORIES.length, ...categories);
   CATEGORY_IDS.splice(0, CATEGORY_IDS.length, ...categories.map((category) => category.id));
   setUpdateLog(versions);

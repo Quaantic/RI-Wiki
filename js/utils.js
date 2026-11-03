@@ -170,7 +170,22 @@ const LIVE_RE = /\b(?:Stats\.[\w.]+|TreeUpgrade\d+|ShardUpgrade\d+|LifeUpgrade\d
 
 function evalCondition(cond, vars) {
   try {
-    return !!new Function('L', 'tier', 'N', `"use strict"; return (${cond});`)(vars.L, vars.tier, vars.N);
+    const expression = String(cond)
+      .replace(/\b(TreeUpgrade\d+)\b/g, (name) => String(Number(vars[name]) || 0))
+      .replace(LIVE_RE, '0');
+    const comparison = expression.match(/^([\s\S]+?)\s*(>=|<=|==|!=|>|<|=)\s*([\s\S]+)$/);
+    const values = { L: vars.L, tier: vars.tier, N: vars.N };
+    if (!comparison) return evaluateExpression(expression, values) !== 0;
+    const left = evaluateExpression(comparison[1], values);
+    const right = evaluateExpression(comparison[3], values);
+    switch (comparison[2]) {
+      case '>': return left > right;
+      case '<': return left < right;
+      case '>=': return left >= right;
+      case '<=': return left <= right;
+      case '!=': return left !== right;
+      default: return left === right;
+    }
   } catch {
     return false;
   }
@@ -201,20 +216,99 @@ export function evalFormula(expr, vars = {}) {
     return value == null ? token : `(${value})`;
   });
   const js = s
-    .replace(/\^/g, '**')
-    .replace(/\bmath\.(floor|ceil|min|max|round|abs|pow)\b/gi, (m, f) => `Math.${f.toLowerCase()}`)
-    .replace(/(?<![\w.])(floor|ceil|min|max|round|abs)\(/g, (m, f) => `Math.${f}(`)
+    .replace(/\bmath\.(floor|ceil|min|max|round|abs|pow|log10|sqrt)\b/gi, (m, f) => `Math.${f.toLowerCase()}`)
+    .replace(/(?<![\w.])(floor|ceil|min|max|round|abs|pow|log10|sqrt)\(/g, (m, f) => `Math.${f}(`)
     .replace(/\b(TreeUpgrade\d+)\b/g, (name) => String(Number(vars[name]) || 0))
     .replace(LIVE_RE, '0')
     .replace(/(\d+(?:\.\d+)?)e([+-]?\d+)/gi, '$1__SCI__$2')
     .replace(/(\d)\s*([A-Za-z(])/g, '$1*$2')
     .replace(/__SCI__/g, 'e');
   try {
-    const v = new Function('L', 'tier', 'N', `"use strict"; return (${js});`)(vars.L || 0, vars.tier || 0, vars.N || 0);
+    const v = evaluateExpression(js, { L: vars.L || 0, tier: vars.tier || 0, N: vars.N || 0 });
     return Number.isFinite(v) ? v : null;
   } catch {
     return null;
   }
+}
+
+export function evaluateExpression(expression, variables = {}) {
+  const source = String(expression || '').replace(/\bMath\./g, '').replace(/\*\*/g, '^');
+  const tokens = source.match(/(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?|[A-Za-z][A-Za-z0-9]*|[()+\-*/^,]/gi) || [];
+  if (tokens.join('').toLowerCase() !== source.replace(/\s+/g, '').toLowerCase()) {
+    throw new Error('Formula contains unsupported syntax.');
+  }
+  let index = 0;
+  const peek = () => tokens[index];
+  const take = () => tokens[index++];
+  const parsePrimary = () => {
+    const token = take();
+    if (token === '(') {
+      const value = parseSum();
+      if (take() !== ')') throw new Error('Formula has unmatched parentheses.');
+      return value;
+    }
+    if (/^(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?$/i.test(token || '')) return Number(token);
+    if (/^[A-Za-z][A-Za-z0-9]*$/.test(token || '')) {
+      const name = token.toLowerCase();
+      if (peek() !== '(') {
+        const key = Object.keys(variables).find((candidate) => candidate.toLowerCase() === name);
+        if (!key) throw new Error(`Unknown formula variable "${token}".`);
+        return Number(variables[key]);
+      }
+      take();
+      const args = [];
+      if (peek() !== ')') {
+        do {
+          args.push(parseSum());
+          if (peek() !== ',') break;
+          take();
+        } while (true);
+      }
+      if (take() !== ')') throw new Error('Formula function has unmatched parentheses.');
+      const functions = {
+        abs: Math.abs, ceil: Math.ceil, floor: Math.floor, log10: Math.log10,
+        max: Math.max, min: Math.min, pow: Math.pow, round: Math.round, sqrt: Math.sqrt,
+      };
+      if (!functions[name]) throw new Error(`Unsupported formula function "${token}".`);
+      return functions[name](...args);
+    }
+    throw new Error(`Unexpected formula token "${token || ''}".`);
+  };
+  const parsePower = () => {
+    let value = parsePrimary();
+    if (peek() === '^') {
+      take();
+      value **= parseUnary();
+    }
+    return value;
+  };
+  const parseUnary = () => {
+    if (peek() === '+') { take(); return parseUnary(); }
+    if (peek() === '-') { take(); return -parseUnary(); }
+    return parsePower();
+  };
+  const parseProduct = () => {
+    let value = parseUnary();
+    while (peek() === '*' || peek() === '/') {
+      const operator = take();
+      const right = parseUnary();
+      value = operator === '*' ? value * right : value / right;
+    }
+    return value;
+  };
+  const parseSum = () => {
+    let value = parseProduct();
+    while (peek() === '+' || peek() === '-') {
+      const operator = take();
+      const right = parseProduct();
+      value = operator === '+' ? value + right : value - right;
+    }
+    return value;
+  };
+  if (!tokens.length) throw new Error('Formula is empty.');
+  const result = parseSum();
+  if (index !== tokens.length) throw new Error('Formula has extra or misplaced tokens.');
+  return result;
 }
 
 export function markMatches(text = '', query = '') {
