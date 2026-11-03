@@ -1,13 +1,18 @@
 const SITE_ORIGIN = 'https://regrowthinc.vercel.app';
 const { verifyState } = require('./oauth-state');
 
+// GitHub sends iss per RFC 9207. Its issuer is https://github.com/login/oauth
+// (older redirects used https://github.com). Both are accepted; nothing else is.
+const GITHUB_ISSUERS = new Set(['https://github.com', 'https://github.com/login/oauth']);
+
 function isGitHubIssuer(issuer) {
   try {
     const parsedIssuer = new URL(issuer);
-    return parsedIssuer.origin === 'https://github.com'
-      && parsedIssuer.pathname === '/'
-      && !parsedIssuer.search
-      && !parsedIssuer.hash;
+    if (parsedIssuer.search || parsedIssuer.hash || parsedIssuer.username || parsedIssuer.password) {
+      return false;
+    }
+    const normalized = `${parsedIssuer.origin}${parsedIssuer.pathname.replace(/\/+$/, '')}`;
+    return GITHUB_ISSUERS.has(normalized);
   } catch {
     return false;
   }
@@ -45,7 +50,7 @@ module.exports = async function callback(req, res) {
   }
 
   if (issuer && !isGitHubIssuer(issuer)) {
-    console.warn('[cms-auth] OAuth callback rejected: unexpected issuer.');
+    console.warn('[cms-auth] OAuth callback rejected: unexpected issuer.', issuer);
     sendPopup(res, { message: 'GitHub sign-in could not be verified. Please try again.' }, 400);
     return;
   }
