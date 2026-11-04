@@ -16,6 +16,8 @@ import { CATEGORIES, getSubcategory, getSubcategoryDocPath, collectSubtreeIds } 
 import { buildNav } from '../ui.js';
 import * as draft from './draft.js';
 import { rerender, registerRoute } from '../router.js';
+import { pinContentKeys, resolveContentKey } from '../page-content.js';
+import { nextReleaseVersion } from '../releases.js';
 
 const LUCIDE_ICON_NAMES = Object.keys(LUCIDE_ICONS);
 
@@ -38,6 +40,21 @@ let popState = null;
 
 // Listas aninhadas em uma linha por item ("Target | mult | caps").
 const LIST_PARSERS = {
+  'mastery-list': {
+    print: (value) => (value || []).map((item) => [item.effect,item.cap ?? '',item.req ?? ''].join(' | ')).join('\n'),
+    parse: (text) => text.split('\n').filter((line)=>line.trim()).map((line)=>{
+      const [effect,cap,req] = line.split('|').map((part)=>part.trim());
+      return { effect, cap:cap ? Number(cap) || cap : null, req:req ? Number(req) || req : null };
+    }),
+  },
+  'stats-list': {
+    print: (value) => Object.entries(value || {}).map(([name, amount]) => `${name} | ${amount}`).join('\n'),
+    parse: (text) => Object.fromEntries(text.split('\n').filter((line) => line.trim()).map((line) => {
+      const [name, value] = line.split('|').map((part) => part.trim());
+      if (!name || !value) throw new Error('Use one stat per line: name | value.');
+      return [name, Number.isFinite(Number(value)) ? Number(value) : value];
+    })),
+  },
   'area-list': {
     print: (v) => (Array.isArray(v) ? v.join('\n') : ''),
     parse: (text) => text.split('\n').map((line) => line.trim()).filter(Boolean),
@@ -120,6 +137,13 @@ const SCHEMAS = {
     { key: 'name', label: 'Name', type: 'line' },
     { key: 'num', label: 'Layer number', type: 'line' },
     { key: 'depth', label: 'Depth', type: 'line' },
+    { key: 'ores', label: 'Ores found here (one per line)', type: 'area-list' },
+  ],
+  'game:mastery': [
+    { key:'name',label:'Ore name',type:'line' },
+    { key:'icon',label:'Icon',type:'line',picker:'icon' },
+    { key:'color',label:'Color',type:'line' },
+    { key:'upgrades',label:'Upgrades (one per line: effect | cap | requirement)',type:'mastery-list' },
   ],
   'game:stage': [
     { key: 'title', label: 'Title', type: 'line' },
@@ -141,6 +165,7 @@ const SCHEMAS = {
   'game:gear': [
     { key: 'name', label: 'Name', type: 'line' },
     { key: 'rarity', label: 'Rarity', type: 'line' },
+    { key: 'stats', label: 'Stats (one per line: name | multiplier)', type: 'stats-list' },
   ],
   'game:upgrade': [
     { key: 'name', label: 'Name', type: 'line' },
@@ -148,6 +173,7 @@ const SCHEMAS = {
     { key: 'cap', label: 'Cap (empty = no cap)', type: 'line' },
     { key: 'price', label: 'Price formula (L = level)', type: 'line', mono: true },
     { key: 'multi', label: 'Effect formula (L = level)', type: 'line', mono: true },
+    { key: 'requirement', label: 'Unlock requirement (optional)', type: 'line' },
   ],
   'game:rune': [
     { key: 'name', label: 'Name', type: 'line' },
@@ -170,12 +196,27 @@ const SCHEMAS = {
     { key: 'title', label: 'Heading or question', type: 'line' },
     { key: 'text', label: 'Description or answer', type: 'area' },
   ],
+  'table-section': [
+    { key: 'title', label: 'Table heading', type: 'line' },
+    { key: 'columns', label: 'Column headings (one per line)', type: 'area-list' },
+    { key: 'text', label: 'Notes (optional)', type: 'area' },
+  ],
+  'game:progression-page': [
+    { key: 'title', label: 'Section heading (Stages, Evolutions, Milestones…)', type: 'line' },
+    { key: 'itemLabel', label: 'Item name (Stage, Evolution, Milestone…)', type: 'line' },
+  ],
+  'game:calculator-settings': [
+    { key: 'title', label: 'Calculator heading', type: 'line' },
+    { key: 'amountLabel', label: 'Owned amount label (optional)', type: 'line' },
+    { key: 'showAmount', label: 'Owned amount field', type: 'select', options: () => [{ id: 'true', label: 'Show input' }, { id: 'false', label: 'Hide input — use the default amount' }] },
+    { key: 'defaultAmount', label: 'Default amount', type: 'line', numeric: true },
+  ],
   'game:bonus-group': [
-    { key: 'id', label: 'Unique group ID', type: 'line' },
     { key: 'name', label: 'Name', type: 'line' },
     { key: 'color', label: 'Color (#hex)', type: 'line' },
     { key: 'dropChance', label: 'Drop chance', type: 'line' },
     { key: 'amountLabel', label: 'Amount label', type: 'line' },
+    { key: 'description', label: 'Notes (optional)', type: 'area' },
   ],
   'game:tier': [
     { key: 'name', label: 'Name', type: 'line' },
@@ -278,21 +319,25 @@ function buildToolbar() {
   layer.bar.innerHTML = `
     <span class="ri-edit-bar__brand">${icon('edit', 14)} Inline editor</span>
     <span class="chip ri-edit-bar__status" data-edit-status>Checking sign-in…</span>
-    <span style="flex:1"></span>
+    <span class="ri-edit-bar__spacer" style="flex:1"></span>
     <button class="btn btn--ghost btn--sm" data-edit-toggle title="Toggle between edit and preview (Alt+E)">
       <span data-edit-mode-label>Edit</span>
     </button>
     <button class="btn btn--ghost btn--sm" data-edit-undo title="Undo the last change in the draft (Ctrl+Z)">${icon('undo-2', 13)} Undo</button>
-    <button class="btn btn--ghost btn--sm" data-edit-save title="Merge the latest shared changes and save for all editors">${icon('save', 13)} Save for everyone</button>
+    <button class="btn btn--ghost btn--sm" data-edit-save title="Merge the latest shared changes and save for all editors">${icon('save', 13)} <span class="ri-save-full">Save for everyone</span><span class="ri-save-short">Save</span></button>
     <button class="btn btn--ghost btn--sm" data-edit-download title="Download a recovery copy of your current draft">${icon('download', 13)} Download draft</button>
     <button class="btn btn--ghost btn--sm" data-edit-discard title="Discard the draft and return to the published content">${icon('rotate-ccw', 13)} Discard</button>
     <button class="btn btn--primary btn--sm" data-edit-publish title="Publish the changes to the live Wiki (creates a backup first)">${icon('upload', 13)} Publish</button>
+    <button class="btn btn--ghost btn--sm ri-edit-more" data-edit-more aria-expanded="false">${icon('menu', 13)} More</button>
     <span class="ri-edit-bar__user" data-edit-user hidden></span>
     <button class="btn btn--ghost btn--sm" data-edit-signout title="End this edit session">${icon('log-out', 13)} Sign out</button>`;
   document.body.appendChild(layer.bar);
+  const resizeToolbar = () => document.documentElement.style.setProperty('--ri-edit-bar-h', `${Math.ceil(layer.bar.getBoundingClientRect().height) || 46}px`);
+  if (typeof ResizeObserver !== 'undefined') new ResizeObserver(resizeToolbar).observe(layer.bar);
+  window.addEventListener('resize', resizeToolbar);
 
   layer.bar.addEventListener('click', (event) => {
-    const action = event.target.closest('[data-edit-toggle],[data-edit-undo],[data-edit-save],[data-edit-publish],[data-edit-discard],[data-edit-signout],[data-edit-download]');
+    const action = event.target.closest('[data-edit-toggle],[data-edit-undo],[data-edit-save],[data-edit-publish],[data-edit-discard],[data-edit-signout],[data-edit-download],[data-edit-more]');
     if (!action) return;
     onToolbarAction(action);
   });
@@ -356,6 +401,11 @@ function buildToolbar() {
 
 function onToolbarAction(button) {
   if (session.busy) return;
+  if (button.hasAttribute('data-edit-more')) {
+    const expanded = layer.bar.classList.toggle('is-expanded');
+    button.setAttribute('aria-expanded', String(expanded));
+    return;
+  }
   if (button.hasAttribute('data-edit-download')) {
     const url = URL.createObjectURL(new Blob([JSON.stringify(draft.snapshotDocs(), null, 2)], { type: 'application/json' }));
     const link = document.createElement('a');
@@ -488,7 +538,7 @@ async function startSession(token) {
     const signinRow = qs('[data-ri-edit-signin]');
     if (signinRow) signinRow.hidden = true;
     installSidebarTools();
-    if (info.draftLoaded || info.recovered) {
+    {
       draft.applyDraftToSite();
       await rerender({ scroll: 'preserve' });
       notify(info.recovered ? 'Your unsaved work was recovered from this browser.' : 'The shared draft is ready.');
@@ -604,7 +654,9 @@ function hideChip() {
 
 function openPopover(binding) {
   if (popState) closePopover(true);
-  const fields = binding.kind === 'game:bonus' ? bonusFields(binding) : fieldsFor(binding.kind);
+  const fields = binding.kind === 'game:bonus' ? bonusFields(binding)
+    : binding.kind === 'table-row' ? (draft.getValue(binding.docName, binding.valuePath.replace(/\.rows\.\d+$/, '.columns')) || []).map((label, i) => ({ key: `cells.${i}`, label, type: 'area' }))
+    : fieldsFor(binding.kind);
   popState = { ...binding, fields };
   const body = qs('[data-edit-pop-body]', layer.popover);
   const title = qs('[data-edit-pop-title]', layer.popover);
@@ -630,7 +682,7 @@ function openPopover(binding) {
     }
   }
   const lastSegment = binding.valuePath.split('.').at(-1) || '';
-  qs('[data-edit-pop-delete]', layer.popover).hidden = !/^\d+$/.test(lastSegment);
+  qs('[data-edit-pop-delete]', layer.popover).hidden = !/^\d+$/.test(lastSegment) && binding.kind !== 'game:calculator-settings';
   layer.popover.hidden = false;
   // O popover edita o item (binding.el), mas pode ser ancorado em outro
   // elemento (ex.: o botao "+ New" que o abriu) para aparecer perto dele.
@@ -643,14 +695,15 @@ async function deletePopoverItem() {
   const state = popState;
   const path = state.valuePath;
   const lastSegment = path.split('.').at(-1) || '';
-  if (!/^\d+$/.test(lastSegment)) {
+  if (!/^\d+$/.test(lastSegment) && state.kind !== 'game:calculator-settings') {
     notify('Only list items can be deleted.', true);
     return;
   }
   const okDelete = window.confirm(`Remove "${state.label || 'this item'}" from the list? It stays in the draft until you publish.`);
   if (!okDelete) return;
   try {
-    draft.removeValue(state.docName, path);
+    if (state.kind === 'game:calculator-settings') draft.setValue(state.docName, path, undefined);
+    else draft.removeValue(state.docName, path);
     draft.applyDraftToSite();
     await rerender({ scroll: 'preserve' });
     window.dispatchEvent(new CustomEvent('ri-edit-content'));
@@ -859,6 +912,11 @@ async function applyPopover() {
       if (input.value === readValueForInput(type, draft.getValue(docName, path))) continue;
       const numeric = input.dataset.editFieldNumeric === '1';
       let value = input.value;
+      if (state.kind === 'game:calculator-settings' && path.endsWith('.showAmount')) value = value !== 'false';
+      if (docName === 'updates' && /versions\.\d+\.version$/.test(path)) {
+        value = value.trim();
+        if (draft.doc('updates').versions.some((release, i) => i !== Number(path.split('.')[1]) && release.version.trim() === value)) throw new Error('That version already exists. Choose a different release version.');
+      }
       if (type === 'formula') {
         value = `formula: ${value.replace(/^formula:\s*/, '').trim()}`;
       } else if (LIST_PARSERS[type]) {
@@ -872,6 +930,7 @@ async function applyPopover() {
       }
       if (state.kind === 'game:bonus' && /\.(unlockAt|unlockLevel)$/.test(path)) draft.setValue(docName, `${state.valuePath}.unlockLabel`, undefined);
       if (state.kind === 'game:bonus' && path.endsWith('.unit')) draft.setValue(docName, `${state.valuePath}.capUnit`, value === 'cap' ? 'CAP' : value || 'x');
+      if (docName === 'wiki' && path.endsWith('.id')) pinContentKeys(draft.doc('wiki'));
       draft.setValue(docName, path, value);
     }
     try {
@@ -886,6 +945,10 @@ async function applyPopover() {
       warn.textContent = error.message || 'The content is invalid, but it stays in your draft.';
       warn.hidden = false;
     }
+  } catch (error) {
+    const warn = qs('[data-edit-pop-warn]', layer.popover);
+    warn.textContent = error.message || 'Check the entered values.';
+    warn.hidden = false;
   } finally {
     applyButton.disabled = false;
   }
@@ -1458,8 +1521,7 @@ function openManageAdd(anchor = null) {
   typeSel.setAttribute('data-ri-manage-type', '');
   typeSel.innerHTML = [
     ['generic', 'Generic page (text, facts, highlights)'],
-    ['stages', 'Stages page (like Main › Stages)'],
-    ['evolutions', 'Evolutions (requirements and boosts)'],
+    ['stages', 'Stages / Evolutions / Milestones (requirements and rewards)'],
     ['barns', 'Barns page'],
     ['ranks', 'Ranks page'],
     ['ascensions', 'Ascensions page'],
@@ -1643,7 +1705,8 @@ function createGamePageContainer(gameKey, pageName, type) {
     const path = `progression.${bucket}.${gameKey}`;
     if (existing(path)) return 'exists';
     const listKey = bucket === 'stages' || bucket === 'barns' ? 'stages' : 'ranks';
-    draft.setValue('game', path, { ...(type === 'evolutions' ? { title: 'Evolutions' } : {}), [listKey]: [{ ...STAGE_TEMPLATE(), ...(type === 'evolutions' ? { title: 'Evolution 1' } : {}) }] });
+    const itemLabel = type === 'evolutions' || /evolution/i.test(pageName) ? 'Evolution' : /milestone/i.test(pageName) ? 'Milestone' : ({ barns:'Barn',ranks:'Rank',ascensions:'Ascension',lifeRanks:'Life Rank',cores:'Core Rank' }[type] || 'Stage');
+    draft.setValue('game', path, { title: `${itemLabel}s`, itemLabel, [listKey]: [{ ...STAGE_TEMPLATE(), title: `${itemLabel} 1` }] });
     return 'created';
   }
   if (type === 'upgrades') {
@@ -1665,7 +1728,7 @@ function createGamePageContainer(gameKey, pageName, type) {
   if (existing(calcPath)) return 'exists';
   if (type === 'calc-amount') {
     draft.setValue('game', calcPath, {
-      kind: 'amount', title: pageName, amountLabel: `Total ${pageName} owned`, bonuses: [BONUS_TEMPLATE()],
+      kind: 'amount', title: pageName, amountLabel: `${pageName} owned`, showAmount: true, defaultAmount: 0, bonuses: [BONUS_TEMPLATE()],
     });
   } else if (type === 'calc-groups') {
     draft.setValue('game', calcPath, {
@@ -1807,6 +1870,7 @@ function planCategoryToPage(srcIndex, toPath, toIndex, dstCatId) {
   const cat = locate(draft.doc('wiki'), `categories.${srcIndex}`);
   if (!cat) throw new Error('The category vanished from the list. Try again.');
   const converted = {
+    ...cat,
     id: cat.id,
     name: cat.name,
     icon: cat.icon || 'sparkles',
@@ -1817,6 +1881,7 @@ function planCategoryToPage(srcIndex, toPath, toIndex, dstCatId) {
     facts: Array.isArray(cat.overview?.facts) ? cat.overview.facts : [],
     vitals: Array.isArray(cat.vitals) ? cat.vitals : [],
   };
+  delete converted.subcategories;
   return {
     converts: [{ path: `categories.${srcIndex}`, value: converted }],
     move: { fromPath: 'categories', fromIndex: srcIndex, toPath, toIndex },
@@ -1903,6 +1968,13 @@ async function runHierarchyDrop(src, target) {
   }
 
   try {
+    pinContentKeys(draft.doc('wiki'));
+    // The conversion was planned before pinning: keep the newly pinned data
+    // identities on the converted category and all of its descendants.
+    for (const conv of plan.converts || []) {
+      conv.value = { ...draft.getValue('wiki', conv.path), ...conv.value };
+      delete conv.value.subcategories;
+    }
     for (const conv of plan.converts || []) draft.setValue('wiki', conv.path, conv.value);
     draft.moveValue('wiki', plan.move.fromPath, plan.move.fromIndex, plan.move.toPath, plan.move.toIndex);
     draft.applyDraftToSite();
@@ -1947,6 +2019,18 @@ function uniqueIn(base, used) {
 function buildAddValue(docName, trail, template) {
   const doc = draft.doc(docName);
   if (!doc) return null;
+  const simple = {
+    ore: { name:'New ore',icon:'gem',color:'#86d62b',depth:'0',luck:'0' },
+    layer: { name:'New layer',num:'1',depth:'0',ores:[] },
+    'mastery-ore': { name:'New mastery ore',icon:'gem',color:'#86d62b',upgrades:[] },
+    rune: { name:'New rune',icon:'sparkles',luck:'0',baseChance:'1 in 100',recChance:'1 in 100',boosts:[{target:'Energy',mult:'1x'}] },
+    area: { name:'New area',reqT1:0,multiT1:1,reqT2:0,multiT2:1 },
+    gear: { name:'New gear',rarity:1,stats:{Energy:1} },
+    pair: { label:'New fact',value:'Value' },
+    card: { title:'New highlight',icon:'sparkles',text:'Describe this highlight.' },
+    credit: { name:'New contributor',handle:'',role:'Contributor',avatar:'',banner:'#355528' },
+  };
+  if (simple[template]) return structuredClone(simple[template]);
   if (template === 'category') {
     const id = uniqueIn('new-category', new Set((doc.categories || []).map((c) => c.id)));
     return {
@@ -1976,10 +2060,10 @@ function buildAddValue(docName, trail, template) {
     };
   }
   if (template === 'version') {
-    return { version: 'v0.0', date: new Date().toISOString().slice(0, 10), entries: [] };
+    return { version: nextReleaseVersion(doc.versions), date: new Date().toISOString().slice(0, 10), entries: [] };
   }
   if (template === 'entry') {
-    return { context: 'Feature', title: 'New update', href: '', description: 'What changed in the game.' };
+    return { id: `entry-${crypto.randomUUID()}`, context: 'Feature', title: 'New update', href: '', description: 'What changed in the game.' };
   }
   if (template === 'upgrade') {
     const list = locate(doc, trail) || [];
@@ -1996,16 +2080,23 @@ function buildAddValue(docName, trail, template) {
   if (template === 'text-section') {
     return { id: `text-${crypto.randomUUID()}`, title: 'New section', text: 'Write a description or FAQ answer here.' };
   }
+  if (template === 'table-section') return { id: `table-${crypto.randomUUID()}`, title: 'New table', columns: ['Name', 'Requirement', 'Effect'], rows: [], text: '' };
+  if (template === 'table-row') {
+    const columns = locate(doc, trail.replace(/\.rows$/, '.columns')) || [];
+    return { id: `row-${crypto.randomUUID()}`, cells: columns.map(() => '') };
+  }
   if (template === 'bonus-group') {
     const used = new Set((locate(doc, trail) || []).map((group) => group.id));
-    return { id: uniqueIn('sap', used), name: 'New sap', color: '#86d62b', dropChance: '1 in 100', amountLabel: 'Amount owned', bonuses: [BONUS_TEMPLATE()] };
+    return { id: uniqueIn('group', used), name: 'New group', color: '#86d62b', dropChance: '', amountLabel: 'Amount owned', bonuses: [BONUS_TEMPLATE()] };
   }
   if (template === 'stage') {
     const list = locate(doc, trail) || [];
-    const isEvolution = locate(doc, trail.replace(/\.stages$/, ''))?.title === 'Evolutions';
+    const next = Math.max(0, ...list.map((item) => Number(item.num)).filter(Number.isFinite)) + 1;
+    const parent = locate(doc, trail.replace(/\.(stages|ranks)$/, ''));
+    const itemLabel = parent?.itemLabel || (parent?.title === 'Evolutions' ? 'Evolution' : 'Stage');
     return {
-      ...(isEvolution ? { title: `Evolution ${list.length + 1}` } : {}),
-      num: String(list.length + 1),
+      title: `${itemLabel} ${next}`,
+      num: String(next),
       requirements: ['1M Energy'],
       boosts: ['2x Energy'],
       unlocks: { area: '', places: [], features: [] },
@@ -2029,7 +2120,11 @@ async function addItemFromTrigger(trigger) {
       return;
     }
     if (!Array.isArray(draft.getValue(docName, trail))) draft.setValue(docName, trail, []);
-    const index = draft.pushValue(docName, trail, value);
+    let index = draft.pushValue(docName, trail, value);
+    if (template === 'version' && index > 0) {
+      draft.moveValue(docName, trail, index, trail, 0);
+      index = 0;
+    }
     draft.applyDraftToSite();
     window.dispatchEvent(new CustomEvent('ri-edit-content'));
     await rerender({ scroll: 'preserve' });
@@ -2052,11 +2147,20 @@ async function addItemFromTrigger(trigger) {
 export function addContentToPage(gameKey, wikiPath, type) {
   const page = draft.getValue('wiki', wikiPath);
   if (!page) throw new Error('This page no longer exists.');
-  if (type === 'text') {
+  if (type === 'fact' || type === 'highlight') {
+    const field = type === 'fact' ? 'facts' : 'highlights';
+    const kind = type === 'fact' ? 'pair' : 'card';
+    const path = `${wikiPath}.${field}`;
+    if (!Array.isArray(draft.getValue('wiki',path))) draft.setValue('wiki',path,[]);
+    const index = draft.pushValue('wiki',path,buildAddValue('wiki',path,kind));
+    return { docName:'wiki',valuePath:`${path}.${index}`,kind,label:type === 'fact' ? 'Page fact' : 'Highlight' };
+  }
+  if (type === 'text' || type === 'table') {
     const path = `${wikiPath}.sections`;
     if (!Array.isArray(draft.getValue('wiki', path))) draft.setValue('wiki', path, []);
-    const index = draft.pushValue('wiki', path, buildAddValue('wiki', path, 'text-section'));
-    return { docName: 'wiki', valuePath: `${path}.${index}`, kind: 'text-section', label: 'Text / FAQ section' };
+    const kind = type === 'table' ? 'table-section' : 'text-section';
+    const index = draft.pushValue('wiki', path, buildAddValue('wiki', path, kind));
+    return { docName: 'wiki', valuePath: `${path}.${index}`, kind, label: type === 'table' ? 'Table' : 'Text / FAQ section' };
   }
   const created = createGamePageContainer(gameKey, page.name, type);
   let listPath, kind, label;
@@ -2067,6 +2171,12 @@ export function addContentToPage(gameKey, wikiPath, type) {
     const section = draft.getValue('game', `upgrades.routes.${gameKey}`);
     listPath = `upgrades.sections.${section}.upgrades`;
     kind = 'game:upgrade'; label = 'Upgrade';
+  } else if (type === 'calc-groups') {
+    const calc = draft.getValue('game', `calculators.pages.${gameKey}`);
+    if (calc.kind !== 'amount-groups') throw new Error('This page already has a calculator. Keep its content or remove it through Calculator settings before adding grouped bonuses.');
+    const path = `calculators.pages.${gameKey}.groups`;
+    const index = created === 'exists' ? draft.pushValue('game', path, buildAddValue('game', path, 'bonus-group')) : 0;
+    return { docName: 'game', valuePath: `${path}.${index}`, kind: 'game:bonus-group', label: 'Bonus group' };
   } else if (type === 'calc-amount') {
     const calc = draft.getValue('game', `calculators.pages.${gameKey}`);
     if (calc.kind !== 'amount') throw new Error('This page already has a calculator. Use its New bonus button to add bonuses.');

@@ -3,29 +3,30 @@ import { evaluateExpression } from '../utils.js';
 export const RESET_LAYER_PAGES = {};
 
 export function setResetLayerPages(pages) {
-  const formula = (value, names) => {
+  const formula = (value, names, defaults = {}) => {
     if (typeof value !== 'string' || !value.startsWith('formula: ')) {
       throw new Error('Calculator formulas must be saved as formula expressions.');
     }
     const expression = value.slice('formula: '.length);
-    const calculate = (...args) => evaluateExpression(
-      expression,
-      Object.fromEntries(names.map((name, index) => [name, args[index]])),
-    );
+    const calculate = (...args) => {
+      const context = typeof args.at(-1) === 'object' ? args.at(-1) : {};
+      return evaluateExpression(expression, { ...defaults, ...context, ...Object.fromEntries(names.map((name, index) => [name, args[index] ?? 0])) });
+    };
     calculate(...names.map(() => 1));
     return calculate;
   };
 
   const hydrated = JSON.parse(JSON.stringify(pages));
   for (const [path, page] of Object.entries(hydrated)) {
+    const defaults = Object.fromEntries([...(page.groups || []).map((group) => [group.id, 0]), ...(page.inputs || []).map((input) => [input.id, input.default ?? 0])]);
     if (page.xpToNextLevel) page.xpToNextLevel = formula(page.xpToNextLevel, ['level']);
     if (page.powerFromLevel) page.powerFromLevel = formula(page.powerFromLevel, ['level']);
     for (const bonus of page.bonuses || []) {
-      if (bonus.value) bonus.value = formula(bonus.value, page.kind === 'level' ? ['level'] : page.kind === 'bone-dust' ? ['dust', 'p'] : ['amount']);
+      if (bonus.value) bonus.value = formula(bonus.value, page.kind === 'level' ? ['level'] : page.kind === 'bone-dust' ? ['dust', 'p'] : ['amount'], defaults);
     }
     for (const group of page.groups || []) {
       for (const bonus of group.bonuses || []) {
-        if (bonus.value) bonus.value = formula(bonus.value, ['amount']);
+        if (bonus.value) bonus.value = formula(bonus.value, ['amount'], defaults);
       }
     }
     for (const tier of page.tiers || []) {

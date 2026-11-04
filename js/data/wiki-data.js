@@ -1,6 +1,7 @@
 ﻿// Wiki content is loaded from content/wiki-data.json during application boot.
 
 export const CATEGORIES = [];
+export const PAGE_REDIRECTS = {};
 
 // Creditos da comunidade (content/wiki-data.json -> "credits").
 // Mutado no lugar por services.applyWikiContent para a views renderizarem
@@ -32,7 +33,20 @@ export function getCategory(categoryId) {
 
 export function getSubcategory(categoryId, subId) {
   const cat = getCategory(categoryId);
-  if (!cat) return null;
+  const moved = () => {
+    const candidates = [];
+    for (const category of CATEGORIES) {
+      const walk = (nodes) => {
+        for (const node of nodes || []) {
+          if (node.contentKey === `${categoryId}/${subId}` || node.id === subId) candidates.push({ cat: category.id, id: node.id });
+          walk(node.children);
+        }
+      };
+      walk(category.subcategories);
+    }
+    return candidates.length === 1 && (candidates[0].cat !== categoryId || candidates[0].id !== subId) ? getSubcategory(candidates[0].cat, candidates[0].id) : null;
+  };
+  if (!cat) return moved();
   const flat = [];
   const walk = (items, chain) => {
     for (const s of items) {
@@ -42,7 +56,7 @@ export function getSubcategory(categoryId, subId) {
   };
   walk(cat.subcategories, []);
   const idx = flat.findIndex((s) => s.id === subId);
-  if (idx === -1) return null;
+  if (idx === -1) return moved();
   return {
     ...flat[idx],
     category: cat,

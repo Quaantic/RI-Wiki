@@ -5,7 +5,7 @@ export const FORMULA_SECTIONS = {};
 export const FORMULA_PAGE_MAP = {};
 
 export function getFormulaPage(catId, subId) {
-  const slug = FORMULA_PAGE_MAP[`${catId}/${subId}`];
+  const slug = FORMULA_PAGE_MAP[resolveContentKey(catId, subId)];
   return slug ? FORMULA_SECTIONS[slug] || null : null;
 }
 
@@ -16,3 +16,4 @@ export function getInlineUpgradePages(catId, sub) {
     return page ? [{ child, page }] : [];
   });
 }
+import { resolveContentKey } from '../page-content.js';

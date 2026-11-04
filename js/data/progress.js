@@ -13,8 +13,8 @@ export const LIFE_RANK_DATA = {};
 export const CORE_DATA = {};
 
 function pick(DATA, catId, subId, key) {
-  const page = DATA[`${catId}/${subId}`];
-  return page && page[key]?.length ? page : null;
+  const page = DATA[resolveContentKey(catId, subId)];
+  return page && Array.isArray(page[key]) ? page : null;
 }
 
 export const getStagePage = (catId, subId) => pick(STAGE_DATA, catId, subId, 'stages');
@@ -23,3 +23,4 @@ export const getRankPage = (catId, subId) => pick(RANK_DATA, catId, subId, 'rank
 export const getAscensionPage = (catId, subId) => pick(ASCENSION_DATA, catId, subId, 'ranks');
 export const getLifeRankPage = (catId, subId) => pick(LIFE_RANK_DATA, catId, subId, 'ranks');
 export const getCorePage = (catId, subId) => pick(CORE_DATA, catId, subId, 'ranks');
+import { resolveContentKey } from '../page-content.js';

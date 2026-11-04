@@ -2326,3 +2326,13 @@ mark {
     var(--c-card);
 }
 .ri-text-section__body { white-space: pre-wrap; overflow-wrap: anywhere; color: var(--c-text-2); line-height: 1.8; }
+@media (max-width: 560px) {
+  .reset-calc-grid--amount, .rare-sap-group .reset-calc-grid, .stage-grid-2 { grid-template-columns: minmax(0, 1fr); }
+  .table-wrap { max-width: 100%; overflow-x: auto; }
+  .cat-hero, .cat-hero__main, .section, .reset-layer-tier { min-width: 0; }
+  .reset-calc-power { grid-template-columns: minmax(0, 1fr); }
+  .reset-calc-power .input { max-width: 100%; width: 100%; font-size: 16px; }
+}
+.reset-calc-power[hidden] { display: none !important; }
+.section-title { min-width: 0; overflow-wrap: anywhere; white-space: normal; }
+.section-head { min-width: 0; }

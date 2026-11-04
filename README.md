@@ -106,6 +106,41 @@ Para testar a interface sem login nem gravações no GitHub, rode
 `node tests/admin-preview.cjs` e abra `http://127.0.0.1:4173/`.
 Esse servidor usa somente dados em memória e deve ser encerrado após o teste.
 
+## Edição no celular e novos conteúdos
+
+No celular, a barra tem **Preview**, **Save**, **Publish** e **More** (Undo,
+Download, Discard e Sign out). O menu **Add content** expande dentro da página;
+os formulários abrem como painéis com botões sempre acessíveis.
+
+**Stage / evolution / milestone** usa um único formato. Clique no título da
+seção para definir o nome da seção e o nome dos itens. **Table** permite editar
+colunas e adicionar linhas; **Fact**, **Highlight** e **Grouped bonuses** também
+podem ser adicionados à página existente. Listas de ores, mastery, layers, runes,
+training e gear têm controles para adicionar itens. O campo de quantidade da
+calculadora pode ser renomeado ou ocultado em **Calculator settings**, mantendo
+os bônus e usando uma quantidade padrão.
+
+As páginas mantêm uma referência estável ao conteúdo do jogo ao mudar de
+categoria ou de URL; isso também vale para os filhos. Conteúdo antigo sem essa
+referência é localizado pelo ID quando não há ambiguidade.
+
+O Update Log preserva releases vazias no modo Edit, tem **Add update** em cada
+release, sugere uma versão inédita e recupera releases duplicadas mantendo as
+entradas. As entradas têm IDs estáveis para combinar adições de colaboradores.
+Os rascunhos registram os SHAs do conteúdo publicado que lhes serviu de base,
+para combinar novas publicações com alterações ainda não publicadas.
+
+Os cinco arquivos de referência fornecidos foram importados para Energies,
+Golden Points, Frost Generators, Frost Conversion e os milestones de Golden
+Research, Californium e Astatine Power. Energies e Frost Conversion concentram
+seus tipos em uma página; URLs antigas redirecionam para a página agrupada.
+Fórmulas e tabelas mantêm as ressalvas da fonte, incluindo efeitos não
+identificados e multiplicadores exclusivos do servidor.
+
+O importador reproduzível é `scripts/import-game-notes.cjs`. Ele recebe a pasta
+dos cinco Markdown como argumento, valida o resultado e grava somente
+`content/wiki-data.json` e `content/game-data.json`; não grava o Update Log.
+
 Ver `docs/COMO-EDITAR.md` para o passo a passo.
 
 O dono do site configura o OAuth do GitHub e as variáveis do Vercel uma vez.

@@ -5,5 +5,6 @@ export const FAMILY_COLORS = {};
 export const RUNE_FAMILIES = {};
 
 export function getRuneFamily(catId, subId) {
-  return RUNE_FAMILIES[`${catId}/${subId}`] || null;
+  return RUNE_FAMILIES[resolveContentKey(catId, subId)] || null;
 }
+import { resolveContentKey } from '../page-content.js';

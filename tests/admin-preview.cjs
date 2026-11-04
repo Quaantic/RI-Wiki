@@ -12,9 +12,14 @@ let revision = 0;
 http.createServer(async (req, res) => {
   const url = new URL(req.url, 'http://127.0.0.1:4173');
   const json = (value, status = 200) => { res.writeHead(status, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }); res.end(JSON.stringify(value)); };
+  if (url.pathname === '/__mobile') {
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    return res.end('<!doctype html><meta name="viewport" content="width=device-width"><body style="margin:0;background:#161b17;display:grid;justify-content:center"><iframe title="390px mobile admin preview" src="/#/life/frost-conversion" style="width:390px;height:100dvh;border:0;max-width:100vw"></iframe>');
+  }
   if (url.pathname.startsWith('/__github/')) {
     const api = url.pathname.slice('/__github'.length);
     if (api === '/user') return json({ login: 'preview-editor', avatar_url: '' });
+    if (api.endsWith('/commits')) return json([{ sha: 'preview-baseline' }]);
     if (api.endsWith('/permission')) return json({ permission: 'write' });
     const file = decodeURIComponent(api.split('/contents/')[1] || '');
     if (req.method === 'PUT' || req.method === 'DELETE') {

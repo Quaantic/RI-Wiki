@@ -34,3 +34,13 @@ test('a deletion is applied only when the other editor left that entry unchanged
   assert.throws(() => mergeDocuments(base, [base[0]], [base[0], { ...base[1], name: 'Edited' }]), /Both editors changed/);
   assert.deepEqual(mergeDocuments(base, [base[0]], [...base, { id: 'new', name: 'New' }]), [base[0], { id: 'new', name: 'New' }]);
 });
+
+test('collaborators can add separate updates to the same release',async()=>{
+  const {mergeDocuments}=await import('../js/edit/merge.js');
+  const {normalizeReleases}=await import('../js/releases.js');
+  const base=normalizeReleases([{version:'1.01',entries:[{context:'Feature',title:'Existing',description:'Existing',href:''}]}]);
+  const local=structuredClone(base),remote=structuredClone(base);
+  local[0].entries.push({id:'local-update',context:'Feature',title:'Local',description:'L',href:''});
+  remote[0].entries.push({id:'remote-update',context:'Bugs',title:'Remote',description:'R',href:''});
+  assert.equal(mergeDocuments(base,local,remote)[0].entries.length,3);
+});

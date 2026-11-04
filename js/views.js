@@ -3,7 +3,7 @@
 import { html, esc, qs, qsa, debounce, countUp, fmtDate, fmtValue, fmtSuffix, parseGameNumber, evalFormula, markMatches } from './utils.js';
 import { icon, emblem, categoryCard, infoCard, sectionHead, initReveal, setCrumbs, setActiveNav, markUpdateSeen } from './ui.js';
 import { dataProvider, getCategory, getSubcategory } from './services.js';
-import { CATEGORIES, CREDITS, getSubcategoryDocPath } from './data/wiki-data.js';
+import { CATEGORIES, CREDITS, PAGE_REDIRECTS, getSubcategoryDocPath } from './data/wiki-data.js';
 import { ed } from './edit/ed-attr.js';
 import { getRuneFamily, FAMILY_COLORS } from './data/runes.js';
 import { ORE_DATA, MASTERY_DATA, getOrePage, getMasteryPage, getLayerPage } from './data/ores.js';
@@ -15,6 +15,7 @@ import { MINING_PRICES } from './data/mining-prices.js';
 import { colorizeResources } from './data/resource-colors.js';
 import { UI_COPY } from './data/ui-copy.js';
 import { LATEST_UPDATE_ID } from './data/update-log.js';
+import { resolveContentKey } from './page-content.js';
 
 // ==== PAGINA DE FAMILIA DE RUNAS (cards por runa) ====
 
@@ -153,7 +154,7 @@ function orePageSections(ores, listPath = '') {
 
 function masteryCard(o, i, itemPath = '') {
   return `
-    <article class="ore-card mastery-card reveal" ${itemPath ? ed(itemPath, 'game:ore', esc(o.name)) : ''} style="--reveal-delay:${Math.min(i * 50, 400)}ms">
+    <article class="ore-card mastery-card reveal" ${itemPath ? ed(itemPath, 'game:mastery', esc(o.name)) : ''} style="--reveal-delay:${Math.min(i * 50, 400)}ms">
       <header class="ore-card__head">
         <span class="ore-card__icon" style="color:${esc(o.color)}">${icon(o.icon, 20)}</span>
         <span class="ore-card__name" style="color:${esc(o.color)}">${esc(o.name)}</span>
@@ -233,6 +234,7 @@ function trainingSections(groups, listPath = '') {
   return groups.map((g, gi) => `
     <section class="section">
       ${sectionHead(g.name)}
+      ${listPath ? `<button type="button" class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="${listPath}.${gi}.areas" data-edit-add-template="area">${icon('plus',13)} Add training area</button>` : ''}
       <div class="rune-grid area-grid">
         ${g.areas.map((a, i) => areaCard(a, i, itemListPath(listPath, gi) ? `${itemListPath(listPath, gi)}.areas.${i}` : '')).join('')}
       </div>
@@ -311,6 +313,7 @@ function upgradeCard(u, i, priceTable, itemPath = '') {
         <b><span class="upgrade-card__n">${n}.</span> ${colorizeResources(esc(u.name))}</b>
         <span class="upgrade-card__val"><b data-lvl>0</b> / ${u.cap == null ? '—' : esc(fmtValue(u.cap))}</span>
       </header>
+      ${u.requirement ? `<p class="ri-form-help">Requires ${esc(u.requirement)}</p>` : ''}
       <div class="upgrade-card__slider-row">
         <input class="upgrade-card__slider" type="range" min="0" max="${capMax}" step="1" value="0" data-upgrade-slider aria-label="Level of ${esc(u.name)}">
         <input class="upgrade-card__num" type="number" min="0" max="${capMax}" step="1" value="0" data-upgrade-num aria-label="Type the level of ${esc(u.name)}">
@@ -415,12 +418,12 @@ function resetCalcCard(bonus, requiredLabel, index, amountMode = false, accentCo
         <span class="reset-calc-card__icon">${icon('target', 17)}</span>
         <b>${colorizeResources(esc(bonus.name))}</b>
         ${!amountMode && bonus.cap ? `<small>cap ${esc(fmtSuffix(bonus.cap))} ${esc(bonus.capUnit || 'x')}</small>` : ''}
-        ${!amountMode && bonus.unlockAt ? `<small>unlocks at ${esc(fmtSuffix(bonus.unlockAt))} Fossils</small>` : ''}
+        ${!amountMode && bonus.unlockAt ? `<small>unlocks at ${esc(fmtSuffix(bonus.unlockAt))} ${esc(bonus.unlockResource || requiredLabel)}</small>` : ''}
       </header>
       ${amountMode ? `
       <div class="reset-calc-card__meta">
         ${bonus.cap ? `<small>Cap: ${esc(fmtSuffix(bonus.cap))} ${esc(bonus.capUnit || 'x')}</small>` : ''}
-        ${bonus.unlockAt ? `<small>Unlocks at ${esc(fmtValue(bonus.unlockLabel || bonus.unlockAt))} Fossils</small>` : ''}
+        ${bonus.unlockAt ? `<small>Unlocks at ${esc(fmtValue(bonus.unlockLabel || bonus.unlockAt))} ${esc(bonus.unlockResource || requiredLabel)}</small>` : ''}
       </div>
       <div class="reset-calc-answer" data-reset-answer aria-live="polite"></div>` : `
       <label class="reset-calc-field">
@@ -435,23 +438,26 @@ function resetCalcCard(bonus, requiredLabel, index, amountMode = false, accentCo
 }
 
 function resetLayerSections(page, basePath = '') {
+  const inputs = (page.inputs || []).map((input, i) => `<label class="reset-calc-power"><span ${basePath ? ed(`${basePath}.inputs.${i}.label`, 'text', 'Calculator input label') : ''}>${esc(input.label)}</span><input class="input reset-calc-input" value="${esc(String(input.default || 0))}" inputmode="decimal" data-calc-variable="${esc(input.id)}" aria-label="${esc(input.label)}"></label>`).join('');
+  const settings = basePath ? `<button class="btn btn--ghost btn--sm ri-edit-add" ${ed(basePath, 'game:calculator-settings', 'Calculator settings')}>${icon('settings', 13)} Calculator settings</button>` : '';
   const bonusAdd = (listPath) => listPath
     ? `<button type="button" class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="${esc(listPath)}" data-edit-add-template="bonus">${icon('plus', 13)} New bonus</button>`
     : '';
   if (page.kind === 'amount-groups') {
     return `
       <section class="section reset-layer-page">
-        ${sectionHead(page.title)}
-        ${basePath ? `<div class="ri-add-row"><button type="button" class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="${esc(basePath)}.groups" data-edit-add-template="bonus-group">${icon('plus', 13)} Add sap group</button><small class="ri-edit-help">Add a sap, then add its bonuses. Click a group heading to edit its name, color and drop chance.</small></div>` : ''}
+        ${sectionHead(page.title)}${settings}${inputs}
+        ${basePath ? `<div class="ri-add-row"><button type="button" class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="${esc(basePath)}.groups" data-edit-add-template="bonus-group">${icon('plus', 13)} Add group</button><small class="ri-edit-help">Group related resources on this page. Edit a heading to change its name, owned amount label and notes.</small></div>` : ''}
         ${page.groups.map((group, gi) => `
-          <section class="reset-layer-tier rare-sap-group" style="--rare-sap-color:${esc(group.color)}" ${basePath ? ed(`${basePath}.groups.${gi}`, 'game:bonus-group', esc(group.name)) : ''}>
+          <section class="reset-layer-tier rare-sap-group" style="--rare-sap-color:${esc(group.color || '#86d62b')}">
             <div class="reset-tier-head">
-              <h3 data-resource-links>${colorizeResources(esc(group.name))} <small>Drop chance: ${esc(group.dropChance)}</small></h3>
+              <h3 data-resource-links ${basePath ? ed(`${basePath}.groups.${gi}`, 'game:bonus-group', esc(group.name)) : ''}>${colorizeResources(esc(group.name))} ${group.dropChance ? `<small>Drop chance: ${esc(group.dropChance)}</small>` : ''}</h3>
               ${bonusAdd(basePath ? `${basePath}.groups.${gi}.bonuses` : '')}
             </div>
-            <label class="reset-calc-power">
-              <span>${esc(group.amountLabel)}</span>
-              <input class="input reset-calc-input" type="text" inputmode="decimal" value="0" data-reset-amount data-group-id="${esc(group.id)}" aria-label="${esc(group.amountLabel)}">
+            ${group.description ? `<p class="ri-form-help" ${basePath ? ed(`${basePath}.groups.${gi}.description`, 'long', 'Group notes') : ''}>${esc(group.description)}</p>` : ''}
+            <label class="reset-calc-power" ${page.showAmount === false ? 'hidden' : ''}>
+              <span ${basePath ? ed(`${basePath}.groups.${gi}.amountLabel`, 'text', 'Owned amount label') : ''}>${esc(group.amountLabel)}</span>
+              <input class="input reset-calc-input" type="text" inputmode="decimal" value="${esc(String(group.defaultAmount || page.defaultAmount || 0))}" data-reset-amount data-group-id="${esc(group.id)}" aria-label="${esc(group.amountLabel || 'Amount owned')}">
             </label>
             <div class="reset-calc-grid">
               ${group.bonuses.map((bonus, i) => resetCalcCard(bonus, group.amountLabel, i, true, group.color, itemListPath(basePath ? `${basePath}.groups.${gi}.bonuses` : '', i))).join('')}
@@ -463,11 +469,11 @@ function resetLayerSections(page, basePath = '') {
   if (page.kind === 'amount') {
     return `
       <section class="section reset-layer-page">
-        ${sectionHead(page.title)}
+        ${sectionHead(page.title)}${settings}${inputs}
         <div class="ri-add-row">${bonusAdd(basePath ? `${basePath}.bonuses` : '')}</div>
-        <label class="reset-calc-power">
-          <span>${esc(page.amountLabel)}</span>
-          <input class="input reset-calc-input" type="text" inputmode="decimal" value="0" data-reset-amount aria-label="${esc(page.amountLabel)}">
+        <label class="reset-calc-power" ${page.showAmount === false ? 'hidden' : ''}>
+          <span ${basePath ? ed(`${basePath}.amountLabel`, 'text', 'Owned amount label') : ''}>${esc(page.amountLabel)}</span>
+          <input class="input reset-calc-input" type="text" inputmode="decimal" value="${esc(String(page.defaultAmount || 0))}" data-reset-amount aria-label="${esc(page.amountLabel || 'Amount owned')}">
         </label>
         <div class="reset-calc-grid reset-calc-grid--amount">
           ${page.bonuses.map((bonus, i) => resetCalcCard(bonus, page.amountLabel, i, true, '', itemListPath(basePath ? `${basePath}.bonuses` : '', i))).join('')}
@@ -523,6 +529,12 @@ function wireResetCalculators(root, page) {
   const powerInput = qs('[data-dust-power-level]', root);
 
   if (page.kind === 'amount' || page.kind === 'amount-groups') {
+    const context = () => {
+      const values = Object.fromEntries((page.inputs || []).map((input) => [input.id, input.default || 0]));
+      qsa('[data-calc-variable]', root).forEach((input) => { values[input.dataset.calcVariable] = parseGameNumber(input.value) ?? 0; });
+      qsa('[data-reset-amount][data-group-id]', root).forEach((input) => { values[input.dataset.groupId] = parseGameNumber(input.value) ?? 0; });
+      return values;
+    };
     const updateAmounts = (amountInput, group) => {
       const inputValue = amountInput.value.trim();
       const amount = inputValue ? parseGameNumber(inputValue) : 0;
@@ -541,10 +553,10 @@ function wireResetCalculators(root, page) {
         const bonuses = group?.bonuses || page.bonuses;
         const bonus = bonuses.find((item) => item.id === card.dataset.bonusId);
         if (bonus.unlockAt && amount < bonus.unlockAt) {
-          answer.innerHTML = `<span class="reset-calc-error">Locked — requires ${esc(fmtValue(bonus.unlockLabel || bonus.unlockAt))} Fossils.</span>`;
+          answer.innerHTML = `<span class="reset-calc-error">Locked — requires ${esc(fmtValue(bonus.unlockLabel || bonus.unlockAt))} ${esc(bonus.unlockResource || group?.name || page.amountLabel || 'owned')}.</span>`;
           return;
         }
-        const value = bonus.value(amount);
+        const value = Math.min(bonus.cap ?? Infinity, bonus.value(amount, context()));
         const display = bonus.unit === 'cap'
           ? `+${fmtSuffix(value)} CAP`
           : `${fmtSuffix(value)}${bonus.unit ? ` ${bonus.unit}` : ''}`;
@@ -553,17 +565,20 @@ function wireResetCalculators(root, page) {
     };
 
     if (page.kind === 'amount-groups') {
+      const updateAll = () => page.groups.forEach((group) => updateAmounts(qs(`[data-reset-amount][data-group-id="${group.id}"]`, root), group));
       page.groups.forEach((group) => {
         const amountInput = qs(`[data-reset-amount][data-group-id="${group.id}"]`, root);
-        const updateGroup = () => updateAmounts(amountInput, group);
+        const updateGroup = updateAll;
         amountInput.addEventListener('input', updateGroup);
         updateGroup();
       });
+      qsa('[data-calc-variable]', root).forEach((input) => input.addEventListener('input', updateAll));
     } else {
       const amountInput = qs('[data-reset-amount]', root);
       const updatePage = () => updateAmounts(amountInput);
       amountInput.addEventListener('input', updatePage);
       updatePage();
+      qsa('[data-calc-variable]', root).forEach((input) => input.addEventListener('input', updatePage));
     }
     return;
   }
@@ -687,7 +702,7 @@ function stagePageSections(stages, title = 'Stages', twoCol = false, listPath = 
     : '';
   return `
     <section class="section">
-      ${sectionHead(title)}
+      <div ${listPath ? ed(listPath.replace(/\.(stages|ranks)$/, ''), 'game:progression-page', 'Section heading and item name') : ''}>${sectionHead(title)}</div>
       ${add}
       ${twoCol ? `<div class="stage-grid-2">${cards}</div>` : cards}
     </section>`;
@@ -892,6 +907,8 @@ export const subcategoryView = {
   nav: (p) => [p[0], p[1]],
 
   async render(root, params) {
+    const redirect = PAGE_REDIRECTS[params.join('/')];
+    if (redirect && /^#\/[\w-]+\/[\w-]+$/.test(redirect) && redirect !== `#/${params.join('/')}`) { window.location.hash = redirect; return; }
     const sub = getSubcategory(params[0], params[1]);
     if (!sub) throw new Error(`Unknown subcategory: ${params.join('/')}`);
     const inlineUpgradeParent = sub.parentId && getSubcategory(sub.category.id, sub.parentId);
@@ -900,7 +917,8 @@ export const subcategoryView = {
       return;
     }
     const cat = sub.category;
-    const gameKey = `${cat.id}/${sub.id}`;
+    if (cat.id !== params[0] || sub.id !== params[1]) { window.location.hash = `#/${cat.id}/${sub.id}`; return; }
+    const gameKey = resolveContentKey(cat.id, sub.id);
     const ci = CATEGORIES.findIndex((c) => c.id === cat.id);
     const wikiPath = `wiki:${getSubcategoryDocPath(cat.id, sub.id)}`;
     const family = getRuneFamily(cat.id, sub.id);
@@ -916,39 +934,39 @@ export const subcategoryView = {
     const visibleChildren = (sub.children || []).filter((child) => !inlineUpgradeIds.has(child.id));
     const formulaPage = getFormulaPage(cat.id, sub.id);
     const upgradesListPath = (pageId) => {
-      const sectionKey = FORMULA_PAGE_MAP[`${cat.id}/${pageId}`];
+      const sectionKey = FORMULA_PAGE_MAP[resolveContentKey(cat.id, pageId)];
       return sectionKey ? `game:upgrades.sections.${sectionKey}.upgrades` : '';
     };
     const inlineUpgradeSections = inlineUpgradePages
       .map(({ child, page }) => formulaSections(page, upgradesListPath(child.id)))
       .join('');
-    const resetLayerPage = RESET_LAYER_PAGES[`${cat.id}/${sub.id}`];
-    const resetLayerPath = resetLayerPage ? `game:calculators.pages.${cat.id}/${sub.id}` : '';
+    const resetLayerPage = RESET_LAYER_PAGES[gameKey];
+    const resetLayerPath = resetLayerPage ? `game:calculators.pages.${gameKey}` : '';
     const rankPage = getRankPage(cat.id, sub.id);
     const ascensionPage = getAscensionPage(cat.id, sub.id);
     const lifeRankPage = getLifeRankPage(cat.id, sub.id);
     const corePage = getCorePage(cat.id, sub.id);
     const isDustPage = sub.id === 'bone-dust';
     let familyBody = family?.runes?.length
-      ? runeFamilySections(family.runes, sub.id, `${cat.id}/${sub.id}`)
+      ? runeFamilySections(family.runes, sub.id, gameKey)
       : orePage?.ores?.length
         ? orePageSections(orePage.ores, `game:mining.ores.${gameKey}.ores`)
         : masteryPage?.ores?.length
           ? masteryPageSections(masteryPage.ores, `game:mining.mastery.${gameKey}.ores`)
           : layerPage?.layers?.length
             ? layerPageSections(layerPage.layers, `game:mining.layers.${gameKey}.layers`)
-            : stagePage?.stages?.length
+            : stagePage?.stages
               ? stagePageSections(stagePage.stages, stagePage.title || 'Stages', false, `game:progression.stages.${gameKey}.stages`)
-              : barnPage?.stages?.length
-                ? stagePageSections(barnPage.stages, 'Barns', true, `game:progression.barns.${gameKey}.stages`)
-                : rankPage?.ranks?.length
-                ? stagePageSections(rankPage.ranks, 'Ranks', true, `game:progression.ranks.${gameKey}.ranks`)
-                : ascensionPage?.ranks?.length
-                  ? stagePageSections(ascensionPage.ranks, 'Ascensions', true, `game:progression.ascensions.${gameKey}.ranks`)
-                  : lifeRankPage?.ranks?.length
-                    ? stagePageSections(lifeRankPage.ranks, 'Life Ranks', true, `game:progression.lifeRanks.${gameKey}.ranks`)
-                    : corePage?.ranks?.length
-                      ? stagePageSections(corePage.ranks, 'Core Ranks', true, `game:progression.cores.${gameKey}.ranks`)
+              : barnPage?.stages
+                ? stagePageSections(barnPage.stages, barnPage.title || 'Barns', true, `game:progression.barns.${gameKey}.stages`)
+                : rankPage?.ranks
+                ? stagePageSections(rankPage.ranks, rankPage.title || 'Ranks', true, `game:progression.ranks.${gameKey}.ranks`)
+                : ascensionPage?.ranks
+                  ? stagePageSections(ascensionPage.ranks, ascensionPage.title || 'Ascensions', true, `game:progression.ascensions.${gameKey}.ranks`)
+                  : lifeRankPage?.ranks
+                    ? stagePageSections(lifeRankPage.ranks, lifeRankPage.title || 'Life Ranks', true, `game:progression.lifeRanks.${gameKey}.ranks`)
+                    : corePage?.ranks
+                      ? stagePageSections(corePage.ranks, corePage.title || 'Core Ranks', true, `game:progression.cores.${gameKey}.ranks`)
                       : trainingPage?.groups?.length
                     ? trainingSections(trainingPage.groups, `game:dungeon.training.${gameKey}.groups`)
                     : gearPage?.gears?.length
@@ -964,6 +982,13 @@ export const subcategoryView = {
       familyBody += formulaSections(formulaPage, upgradesListPath(sub.id));
     }
     if (resetLayerPage) familyBody = `${resetLayerSections(resetLayerPage, resetLayerPath)}${resetLayerPage.kind === 'bone-dust' ? dustSections() : ''}${familyBody}`;
+    for (const [container, list, template, label] of [
+      [family,`runes.families.${gameKey}.runes`,'rune','Add rune'],
+      [orePage,`mining.ores.${gameKey}.ores`,'ore','Add ore'],
+      [masteryPage,`mining.mastery.${gameKey}.ores`,'mastery-ore','Add mastery ore'],
+      [layerPage,`mining.layers.${gameKey}.layers`,'layer','Add layer'],
+      [gearPage,`dungeon.gear.${gameKey}.gears`,'gear','Add gear'],
+    ]) if (container) familyBody += `<div class="ri-add-row"><button type="button" class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="game:${list}" data-edit-add-template="${template}">${icon('plus',13)} ${label}</button></div>`;
     const showChildrenSection = visibleChildren.length > 0
       || document.documentElement.classList.contains('ri-edit-on');
 
@@ -1003,10 +1028,13 @@ export const subcategoryView = {
         <details class="ri-content-menu"><summary class="btn btn--primary btn--sm">${icon('plus', 13)} Add content</summary>
           <div class="ri-content-menu__items">${[
             ['text', 'Text / FAQ', 'A heading and a normal description or answer'],
-            ['evolutions', 'Evolution', 'Requirements, boosts and unlocks'],
-            ['stages', 'Stage', 'Another stage with requirements and boosts'],
+            ['fact', 'Fact', 'A short label and value beside the description'],
+            ['highlight', 'Highlight', 'A card with a heading, icon and description'],
+            ['table', 'Table', 'Editable columns and rows for prices, machines or comparisons'],
+            ['stages', 'Stage / evolution / milestone', 'One progression section with a customizable heading'],
             ['upgrades', 'Upgrade', 'Price and effect formulas'],
             ['calc-amount', 'Bonus', 'A bonus based on an owned amount'],
+            ['calc-groups', 'Grouped bonuses', 'Several resources and their bonuses together on this page'],
           ].map(([type, label, help]) => `<button type="button" data-page-content="${type}" data-page-key="${esc(gameKey)}" data-wiki-path="${esc(wikiPath.slice(5))}"><b>${label}</b><small>${help}</small></button>`).join('')}</div>
         </details>
       </div>
@@ -1039,9 +1067,10 @@ export const subcategoryView = {
 
       ${familyBody || ''}
       ${(sub.sections || []).map((section, i) => `
-        <section class="section ri-text-section" ${ed(`${wikiPath}.sections.${i}`, 'text-section', section.title || 'Text / FAQ')}>
-          ${sectionHead(section.title || '')}
-          <div class="ri-text-section__body" data-resource-links>${colorizeResources(esc(section.text || ''))}</div>
+        <section class="section ri-text-section">
+          <div ${ed(`${wikiPath}.sections.${i}`, section.columns ? 'table-section' : 'text-section', section.title || 'Text / FAQ')}>${sectionHead(section.title || '')}</div>
+          ${section.columns ? `<div class="table-wrap"><table class="data-table"><thead><tr>${section.columns.map((label) => `<th>${esc(label)}</th>`).join('')}</tr></thead><tbody>${(section.rows || []).map((row, ri) => `<tr ${ed(`${wikiPath}.sections.${i}.rows.${ri}`, 'table-row', `${section.title} · row ${ri + 1}`)}>${section.columns.map((_, ci) => `<td>${esc(row.cells[ci] || '')}</td>`).join('')}</tr>`).join('')}</tbody></table></div><button type="button" class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="${wikiPath}.sections.${i}.rows" data-edit-add-template="table-row">${icon('plus', 13)} Add row</button>` : ''}
+          <div class="ri-text-section__body" data-resource-links ${ed(`${wikiPath}.sections.${i}.text`, 'long', 'Section description')}>${colorizeResources(esc(section.text || ''))}</div>
         </section>`).join('')}
       ${sub.highlights?.length ? `
       <section class="section">
@@ -1263,7 +1292,7 @@ export const updatesView = {
     const versions = await dataProvider.getUpdateLog();
     const displayVersions = versions
       .map((v, docIndex) => ({ v, docIndex }))
-      .filter(({ v }) => v.entries.length);
+      .filter(({ v }) => v.entries.length || document.documentElement.classList.contains('ri-edit-on'));
     const totalEntries = displayVersions.reduce((total, { v }) => total + v.entries.length, 0);
 
     root.innerHTML = html`
@@ -1299,6 +1328,7 @@ export const updatesView = {
             <span class="upd-version__date">${icon('calendar', 13)} ${fmtDate(v.date)}</span>
             <span class="upd-version__count">${v.entries.length} ${v.entries.length === 1 ? 'update' : 'updates'}</span>
             ${vi === 0 ? '<span class="chip chip--accent upd-version__latest">Latest</span>' : ''}
+            <button type="button" class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="updates:versions.${docIndex}.entries" data-edit-add-template="entry">${icon('plus', 12)} Add update</button>
           </div>
 
           ${CONTEXTS.map((ctx) => {
@@ -1319,7 +1349,6 @@ export const updatesView = {
                       <p class="upd-entry__description">${colorizeResources(esc(e.description))}</p>
                     </div>
                   </article>`).join('')}
-                <button type="button" class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="updates:versions.${docIndex}.entries" data-edit-add-template="entry">${icon('plus', 12)} New update</button>
               </section>`;
           }).join('')}
         </section>`).join('')}
@@ -1400,6 +1429,7 @@ export const creditsView = {
       <section class="section credits-grid">
         ${CREDITS.staff.map((p, i) => profileCard(p, i, true, 'wiki:credits.staff')).join('')}
         ${CREDITS.contributors.map((p, i) => profileCard(p, i, false, 'wiki:credits.contributors')).join('')}
+        <button type="button" class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="wiki:credits.contributors" data-edit-add-template="credit">${icon('plus',13)} Add contributor</button>
       </section>
 
       <div class="callout callout--tip credits-thanks reveal" style="--reveal-delay:160ms" ${ed('wiki:credits.thanks', 'long', 'Special thanks')}>

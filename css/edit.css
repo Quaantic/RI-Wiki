@@ -640,3 +640,32 @@ html.ri-edit-bar .sub-pills-wrap {
 .ri-content-menu__items button:hover, .ri-content-menu__items button:focus-visible { background: var(--c-accent-soft-2); }
 .ri-form-help { font-size: 12px; color: var(--c-text-3); line-height: 1.6; margin: 0; }
 @media (max-width: 600px) { .ri-history-row { flex-wrap: wrap; } .ri-history-row__date { min-width: 0; } }
+.ri-edit-more, .ri-save-short { display: none; }
+.ri-edit-popover:not([hidden]) ~ .ri-edit-toast { display: none; }
+.ri-edit-toast { pointer-events: none; }
+@media (max-width: 720px) {
+  :root { --ri-edit-bar-h: 100px; }
+  .ri-edit-bar { height: auto; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; padding: 8px 10px; overflow: visible; }
+  .ri-edit-bar__brand, .ri-edit-bar__spacer, .ri-save-full, .ri-edit-bar__user { display: none; }
+  .ri-edit-bar__status { order: -1; grid-column: 1 / -1; min-width: 0; width: 100%; overflow: hidden; text-overflow: ellipsis; padding: 2px 6px; font-size: 11px; }
+  .ri-edit-bar .btn { min-height: 44px; justify-content: center; min-width: 0; padding: 8px 4px; font-size: 12px; }
+  .ri-edit-more { display: inline-flex; order: 4; }
+  .ri-save-short { display: inline; }
+  [data-edit-toggle] { order: 1; } [data-edit-save] { order: 2; } [data-edit-publish] { order: 3; }
+  .ri-edit-bar [data-edit-undo], .ri-edit-bar [data-edit-download], .ri-edit-bar [data-edit-discard], .ri-edit-bar [data-edit-signout] { display: none; order: 5; grid-column: span 2; }
+  .ri-edit-bar.is-expanded [data-edit-undo], .ri-edit-bar.is-expanded [data-edit-download], .ri-edit-bar.is-expanded [data-edit-discard], .ri-edit-bar.is-expanded [data-edit-signout] { display: inline-flex; }
+  .ri-edit-on .ri-page-content-tools { display: grid; grid-template-columns: 1fr; padding: 12px; }
+  .ri-page-content-tools > div:first-child { min-width: 0; }
+  .ri-content-menu { width: 100%; }
+  .ri-content-menu summary { min-height: 44px; justify-content: center; }
+  .ri-content-menu__items { position: static; width: 100%; margin-top: 8px; box-shadow: none; }
+  .ri-content-menu__items button { min-height: 56px; }
+  .ri-edit-popover { inset: auto 8px max(8px, env(safe-area-inset-bottom)) 8px !important; width: auto; max-width: none; max-height: calc(100dvh - var(--ri-edit-bar-h) - 24px); }
+  .ri-edit-popover__body { min-height: 0; overscroll-behavior: contain; }
+  .ri-edit-popover__head, .ri-edit-popover__foot { flex: none; }
+  .ri-edit-popover__foot { flex-wrap: wrap; padding-bottom: max(10px, env(safe-area-inset-bottom)); }
+  .ri-edit-popover__foot .btn, .ri-edit-popover__close { min-height: 44px; min-width: 44px; }
+  .ri-edit-popover__warn { flex: 0 0 100%; }
+  .ri-edit-field .input { font-size: 16px; }
+  .ri-version-row { flex-wrap: wrap; }
+}

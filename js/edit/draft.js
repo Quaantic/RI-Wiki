@@ -16,6 +16,8 @@ import {
 } from '../github.js';
 import { applyWikiContent, applyUpdateContent, applyGameData } from '../services.js';
 import { mergeDocuments } from './merge.js';
+import { pinContentKeys } from '../page-content.js';
+import { readSharedDraft } from './shared-draft.js';
 
 const draftState = {
   token: '',
@@ -239,6 +241,7 @@ function undoPush(entry) {
 
 // Move um item entre listas (reordenar páginas, trocar de categoria/nível).
 export function moveValue(name, fromPath, fromIndex, toPath, toIndex, skipHistory = false) {
+  if (name === 'wiki' && draftState.docs?.wiki) pinContentKeys(draftState.docs.wiki);
   const root = draftState.docs?.[name];
   if (!root) throw new Error(`Unknown document: ${name}`);
   const source = walkTo(root, fromPath);
@@ -410,6 +413,7 @@ export async function initSession(token, actor = '') {
     draftState.shas[name] = result.sha;
     draftState.baseDocs[name] = JSON.parse(decodeBase64Content(result.content));
   }));
+  validateDocuments(draftState.baseDocs);
   draftState.docs = clone(draftState.baseDocs);
   let draftLoaded = false;
   try {
@@ -419,7 +423,7 @@ export async function initSession(token, actor = '') {
       console.info('[inline-editor] No inline draft on GitHub yet — that is normal before the first "Save draft".');
       draftLoaded = false;
     } else if (result?.type === 'file' && typeof result.content === 'string') {
-      const remote = JSON.parse(decodeBase64Content(result.content));
+      const remote = await readSharedDraft(result, draftState.baseDocs, draftState.shas, token);
       validateDocuments(remote);
       draftState.draftSha = result.sha;
       draftState.savedDraftRaw = `${JSON.stringify(remote, null, 2)}\n`;
@@ -477,7 +481,7 @@ export async function saveDraft(token) {
     method: 'PUT',
     body: JSON.stringify({
       message: 'Save inline draft',
-      content: encodeBase64Content(raw),
+      content: encodeBase64Content(`${JSON.stringify({ ...JSON.parse(raw), _baseShas: draftState.shas }, null, 2)}\n`),
       sha: draftState.draftSha || undefined,
       branch: BRANCH,
     }),
@@ -616,7 +620,8 @@ async function readAndMergeRemote(token) {
   const changed = draftState.needsMerge || (remoteDraft?.sha || null) !== draftState.draftSha || files.some(([name, file]) => file.sha !== draftState.shas[name]);
   if (!changed) return false;
   const published = Object.fromEntries(files.map(([name, file]) => [name, JSON.parse(decodeBase64Content(file.content))]));
-  const remote = remoteDraft ? JSON.parse(decodeBase64Content(remoteDraft.content)) : published;
+  const shas = Object.fromEntries(files.map(([name, file]) => [name, file.sha]));
+  const remote = remoteDraft ? await readSharedDraft(remoteDraft, published, shas, token) : published;
   validateDocuments(remote);
   const merged = mergeDocuments(draftState.sharedBase, draftState.docs, remote);
   validateDocuments(merged);

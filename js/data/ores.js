@@ -7,13 +7,14 @@ export const MASTERY_DATA = {};
 export const LAYER_DATA = {};
 
 export function getOrePage(catId, subId) {
-  return ORE_DATA[`${catId}/${subId}`] || null;
+  return ORE_DATA[resolveContentKey(catId, subId)] || null;
 }
 
 export function getMasteryPage(catId, subId) {
-  return MASTERY_DATA[`${catId}/${subId}`] || null;
+  return MASTERY_DATA[resolveContentKey(catId, subId)] || null;
 }
 
 export function getLayerPage(catId, subId) {
-  return LAYER_DATA[`${catId}/${subId}`] || null;
+  return LAYER_DATA[resolveContentKey(catId, subId)] || null;
 }
+import { resolveContentKey } from '../page-content.js';

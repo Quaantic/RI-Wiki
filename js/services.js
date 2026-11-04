@@ -82,6 +82,7 @@ export function applyGameData(data) {
   setResetLayerPages(data.calculators?.pages);
   setResourceColors(data.resources?.colors, data.resources?.pageLinks);
   setUiCopy(data.uiCopy);
+  setContentKeys(data);
 }
 
 function applyCredits(content) {
@@ -94,6 +95,8 @@ function applyCredits(content) {
 }
 
 export function applyWikiContent(wikiContent) {
+  for (const key of Object.keys(PAGE_REDIRECTS)) delete PAGE_REDIRECTS[key];
+  Object.assign(PAGE_REDIRECTS, wikiContent.redirects || {});
   const categories = wikiContent?.categories;
   assertUniqueIds(categories, 'Wiki categories');
   for (const category of categories) {
@@ -110,6 +113,7 @@ export function applyWikiContent(wikiContent) {
 }
 
 export function applyUpdateContent(versions) {
+  versions = normalizeReleases(versions);
   if (!Array.isArray(versions) || !versions.length || versions.some((version) =>
     !version || typeof version.version !== 'string' || !Array.isArray(version.entries))) {
     throw new Error('[content] Update log must contain releases with a version and entries list.');
@@ -216,3 +220,6 @@ export const excelProvider = {
 };
 
 export { getCategory, getSubcategory, CATEGORIES };
+import { setContentKeys } from './page-content.js';
+import { normalizeReleases } from './releases.js';
+import { PAGE_REDIRECTS } from './data/wiki-data.js';

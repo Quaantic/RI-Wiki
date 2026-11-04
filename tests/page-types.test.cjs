@@ -177,7 +177,7 @@ test('Rare Saps can add groups and bonuses with unique IDs and visible controls'
   const views = await import('../js/views.js');
   const root = mkEl();
   await views.subcategoryView.render(root, ['mining', 'rare-saps'], new URLSearchParams());
-  assert.match(root.innerHTML, /Add sap group/);
+  assert.match(root.innerHTML, /Add group/);
   assert.match(root.innerHTML, /New bonus/);
 });
 
@@ -207,5 +207,106 @@ test('existing pages accept evolutions, upgrades, bonuses and FAQ text together'
   assert.equal(draft.getValue('game', `upgrades.routes.${key}`), 'base');
   assert.equal(draft.getValue('game', 'upgrades.sections.base.upgrades.0.name'), 'U');
   assert.equal(draft.getValue('game', 'upgrades.sections.base.upgrades').length, 2);
+});
+
+test('every current wiki page renders and has an editor content entry point', async () => {
+  const draft = await import('../js/edit/draft.js');
+  const { validateDocuments } = await import('../js/content-schema.js');
+  const views = await import('../js/views.js');
+  const docs = { wiki: JSON.parse(fs.readFileSync('content/wiki-data.json')), game: JSON.parse(fs.readFileSync('content/game-data.json')), updates: JSON.parse(fs.readFileSync('content/update-log.json')) };
+  validateDocuments(docs);
+  draft.__testInjectDocs(docs); draft.applyDraftToSite();
+  let count = 0;
+  for (const category of docs.wiki.categories) {
+    const walk = async (pages) => {
+      for (const page of pages || []) {
+        const root = mkEl();
+        await views.subcategoryView.render(root, [category.id,page.id], new URLSearchParams());
+        if (root.innerHTML) assert.match(root.innerHTML, /Add content/, `${category.id}/${page.id}`);
+        count++;
+        await walk(page.children);
+      }
+    };
+    await walk(category.subcategories);
+  }
+  assert.ok(count > 100);
+});
+
+test('moving Eternal Shards preserves Eternal Tree data and editable bindings', async () => {
+  const draft = await import('../js/edit/draft.js');
+  const views = await import('../js/views.js');
+  const { getFormulaPage } = await import('../js/data/formulas.js');
+  const docs = { wiki: JSON.parse(fs.readFileSync('content/wiki-data.json')), game: JSON.parse(fs.readFileSync('content/game-data.json')), updates: JSON.parse(fs.readFileSync('content/update-log.json')) };
+  draft.__testInjectDocs(docs); draft.applyDraftToSite();
+  const original = structuredClone(getFormulaPage('main','eternal-tree'));
+  draft.pushValue('wiki','categories',{id:'miscellaneous',name:'Miscellaneous',desc:'',tagline:'',subcategories:[]});
+  const from = docs.wiki.categories[0].subcategories.findIndex((page)=>page.id==='eternal-shards');
+  draft.moveValue('wiki','categories.0.subcategories',from,`categories.${docs.wiki.categories.length-1}.subcategories`,0);
+  draft.applyDraftToSite();
+  assert.deepEqual(getFormulaPage('miscellaneous','eternal-tree'), original);
+  const root = mkEl();
+  await views.subcategoryView.render(root,['miscellaneous','eternal-tree'],new URLSearchParams());
+  assert.match(root.innerHTML,/game:upgrades.sections.eternal-tree.upgrades/);
+  assert.ok(!root.innerHTML.includes('More details coming soon'));
+});
+
+test('new release versions are unique, and text/table rows are editable', async () => {
+  const draft = await import('../js/edit/draft.js');
+  const { buildAddValue, addContentToPage } = await import('../js/edit/edit-mode.js');
+  draft.__testInjectDocs(baseDocs());
+  const first = buildAddValue('updates','versions','version');
+  draft.pushValue('updates','versions',first);
+  const second = buildAddValue('updates','versions','version');
+  assert.notEqual(first.version, second.version);
+  draft.pushValue('updates','versions',second);
+  draft.pushValue('updates','versions.1.entries',buildAddValue('updates','versions.1.entries','entry'));
+  assert.equal(draft.doc('updates').versions[1].entries.length,1);
+  const binding = addContentToPage('mining/ores-main','categories.0.subcategories.0','table');
+  const path = binding.valuePath + '.rows';
+  const row = buildAddValue('wiki',path,'table-row');
+  assert.equal(row.cells.length,3);
+  draft.pushValue('wiki',path,row);
+  draft.setValue('wiki',path+'.0.cells.0','Machine 1');
+  assert.equal(row.cells[0],'Machine 1');
+});
+
+test('an empty new release stays visible to editors and offers Add update', async () => {
+  const draft = await import('../js/edit/draft.js');
+  const {buildAddValue}=await import('../js/edit/edit-mode.js');
+  const views=await import('../js/views.js');
+  draft.__testInjectDocs(baseDocs());
+  const release=buildAddValue('updates','versions','version');
+  draft.pushValue('updates','versions',release);
+  draft.applyDraftToSite();
+  const previous=document.documentElement.classList.contains;
+  document.documentElement.classList.contains=()=>true;
+  try{
+    const root=mkEl();
+    await views.updatesView.render(root,[],new URLSearchParams());
+    assert.ok(root.innerHTML.includes(`Release ${release.version}`));
+    assert.ok(root.innerHTML.includes('data-edit-add="updates:versions.1.entries"'));
+    assert.match(root.innerHTML,/Add update/);
+  }finally{document.documentElement.classList.contains=previous;}
+});
+
+test('new list-item templates render in their existing game pages', async () => {
+  const draft=await import('../js/edit/draft.js');
+  const {buildAddValue}=await import('../js/edit/edit-mode.js');
+  const views=await import('../js/views.js');
+  const docs={wiki:JSON.parse(fs.readFileSync('content/wiki-data.json')),game:JSON.parse(fs.readFileSync('content/game-data.json')),updates:JSON.parse(fs.readFileSync('content/update-log.json'))};
+  draft.__testInjectDocs(docs);
+  for(const [route,list,template] of [
+    ['mining/ores','mining.ores.mining/ores.ores','ore'],
+    ['mining/mastery','mining.mastery.mining/mastery.ores','mastery-ore'],
+    ['mining/layers','mining.layers.mining/layers.layers','layer'],
+    ['runes/energetic','runes.families.runes/energetic.runes','rune'],
+    ['dungeon/swords','dungeon.gear.dungeon/swords.gears','gear'],
+  ]){
+    draft.pushValue('game',list,buildAddValue('game',list,template));
+    draft.applyDraftToSite();
+    const root=mkEl();
+    await views.subcategoryView.render(root,route.split('/'),new URLSearchParams());
+    assert.match(root.innerHTML,/New (ore|mastery ore|layer|rune|gear)/,route);
+  }
 });
 

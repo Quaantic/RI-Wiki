@@ -2,6 +2,7 @@
 // Usado pelo Editor inline (js/edit/*) e pelos testes.
 
 import { evaluateExpression } from './utils.js';
+import { normalizeReleases } from './releases.js';
 
 export const REPOSITORY = 'Quaantic/RI-Wiki';
 export const BRANCH = 'main';
@@ -67,6 +68,7 @@ function flattenPageIds(category) {
 }
 
 export function validateDocuments(documents) {
+  if (documents?.updates) documents.updates.versions = normalizeReleases(documents.updates.versions);
   const categories = documents?.wiki?.categories;
   const versions = documents?.updates?.versions;
   const game = documents?.game;
@@ -151,7 +153,15 @@ function validateGameData(game) {
       for (const [key, child] of Object.entries(value)) validateFormulas(child, `${path}.${key}`);
     }
   };
-  validateFormulas(game.calculators?.pages, 'calculators.pages');
+  for (const [key, page] of Object.entries(game.calculators?.pages || {})) {
+    const extra = [...(page.groups || []).map((group) => group.id).filter((id) => /^[A-Za-z][A-Za-z0-9]*$/.test(id)), ...(page.inputs || []).map((input) => input.id)];
+    for (const name of extra) {
+      if (!/^[A-Za-z][A-Za-z0-9]*$/.test(name)) throw new Error(`Calculator input "${name}" must use letters and numbers, starting with a letter.`);
+      variables[name] = 1;
+    }
+    validateFormulas(page, `calculators.pages.${key}`);
+    for (const name of extra) delete variables[name];
+  }
 }
 
 export function decodeBase64Content(content) {

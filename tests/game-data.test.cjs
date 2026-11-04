@@ -26,7 +26,8 @@ test('editable game data hydrates all page modules and calculator expressions sa
     assert.equal(Object.keys(formulas.FORMULA_SECTIONS).length, 45);
     assert.equal(formulas.FORMULA_SECTIONS.crystal.upgrades.length, 13);
     assert.equal(formulas.FORMULA_PAGE_MAP['main/crystal-upgrades'], 'crystal');
-    assert.equal(Object.keys(progress.STAGE_DATA).length, 1);
+    assert.equal(progress.STAGE_DATA['main/stages'].stages.length > 0, true);
+    assert.equal(progress.STAGE_DATA['main/californium-milestones'].stages.length, 16);
     assert.equal(ores.ORE_DATA['mining/ores'].ores.length, 26);
     assert.equal(Object.keys(runes.RUNE_FAMILIES).length, 6);
     assert.equal(Object.keys(dungeon.GEARS).length, 3);

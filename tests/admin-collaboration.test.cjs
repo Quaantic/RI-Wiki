@@ -23,6 +23,7 @@ test('sync keeps concurrent categories, detects conflicts, and recovers local wo
   global.sessionStorage = { getItem: (key) => storage.get(key) || null, setItem: (key, value) => storage.set(key, value), removeItem: (key) => storage.delete(key) };
   const file = (content, revision) => ({ type: 'file', sha: revision, content: Buffer.from(JSON.stringify(content)).toString('base64') });
   global.fetch = async (url, options = {}) => {
+    if (String(url).includes('/commits?')) return new Response(JSON.stringify([{ sha: 'baseline' }]));
     const target = new URL(url).pathname.split('/contents/')[1];
     if (options.method === 'PUT') {
       const body = JSON.parse(options.body);
@@ -97,6 +98,7 @@ test('shared save preserves GitHub attribution, deduplicates history and merges 
   const originalFetch = global.fetch;
   let serial = 0;
   global.fetch = async (url, options = {}) => {
+    if (String(url).includes('/commits?')) return new Response(JSON.stringify([{ sha: 'baseline' }]));
     const file = new URL(url).pathname.split('/contents/')[1];
     if (options.method === 'DELETE') {
       repo.delete(file);
