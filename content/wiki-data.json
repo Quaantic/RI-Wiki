@@ -1488,5 +1488,17 @@
         }
       ]
     }
-  ]
+  ],
+  "credits": {
+    "staff": [
+      { "name": "Zeno", "handle": "im_zenoir", "role": "Web Designer · Wiki Manager", "avatar": "images/credits/zeno.png", "banner": "#86D62B" },
+      { "name": "Zinss", "handle": "zinss", "role": "Wiki Manager", "avatar": "images/credits/zinss.png", "banner": "#E05252" }
+    ],
+    "contributors": [
+      { "name": "Qbeekr", "handle": "", "role": "Contributor", "avatar": "images/credits/qbeekr.png", "banner": "#F5D442" },
+      { "name": "Azure", "handle": "", "role": "Contributor", "avatar": "images/credits/azure.png", "banner": "#4A9DE8" },
+      { "name": "Otter", "handle": "", "role": "Contributor", "avatar": "images/credits/otter.png", "banner": "#1A1D1F" }
+    ],
+    "thanks": "To everyone in the RI Gaming community logging drops and sharing finds — this wiki runs on that."
+  }
 }

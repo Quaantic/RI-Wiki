@@ -1,37 +1,7 @@
 import { evaluateExpression } from '../js/utils.js';
-
-const SITE_ORIGIN = 'https://regrowthinc.vercel.app';
-const REPOSITORY = 'Quaantic/RI-Wiki';
-const BRANCH = 'main';
-const FILES = {
-  wiki: 'content/wiki-data.json',
-  updates: 'content/update-log.json',
-  game: 'content/game-data.json',
-};
-const BACKUP_DIRECTORY = 'content/backups';
-const CONTEXTS = ['Feature', 'Changes', 'UI', 'Bugs'];
-const GAME_GROUPS = [
-  { id: 'formula-sections', label: 'Upgrade sections', path: 'upgrades.sections', mode: 'map' },
-  { id: 'formula-routes', label: 'Upgrade page links', path: 'upgrades.routes', mode: 'map' },
-  { id: 'stages', label: 'Stages', path: 'progression.stages', mode: 'map' },
-  { id: 'barns', label: 'Barns', path: 'progression.barns', mode: 'map' },
-  { id: 'ranks', label: 'Ranks', path: 'progression.ranks', mode: 'map' },
-  { id: 'ascensions', label: 'Ascensions', path: 'progression.ascensions', mode: 'map' },
-  { id: 'life-ranks', label: 'Life ranks', path: 'progression.lifeRanks', mode: 'map' },
-  { id: 'cores', label: 'Core ranks', path: 'progression.cores', mode: 'map' },
-  { id: 'ores', label: 'Ores', path: 'mining.ores', mode: 'map' },
-  { id: 'mastery', label: 'Mining mastery', path: 'mining.mastery', mode: 'map' },
-  { id: 'layers', label: 'Mining layers', path: 'mining.layers', mode: 'map' },
-  { id: 'mining-prices', label: 'Mining upgrade prices', path: 'mining.prices', mode: 'map' },
-  { id: 'rune-families', label: 'Rune families', path: 'runes.families', mode: 'map' },
-  { id: 'rune-colors', label: 'Rune family colors', path: 'runes.colors', mode: 'single' },
-  { id: 'training', label: 'Training areas', path: 'dungeon.training', mode: 'map' },
-  { id: 'dust-unlock', label: 'Bone dust unlock levels', path: 'dungeon.dustUnlock', mode: 'single' },
-  { id: 'gear', label: 'Dungeon gear', path: 'dungeon.gear', mode: 'map' },
-  { id: 'calculators', label: 'Bonus calculators', path: 'calculators.pages', mode: 'map' },
-  { id: 'resource-colors', label: 'Resource colors', path: 'resources.colors', mode: 'single' },
-  { id: 'resource-links', label: 'Resource page links', path: 'resources.pageLinks', mode: 'single' },
-];
+import { REPOSITORY, BRANCH, FILES, BACKUP_DIRECTORY, CONTEXTS, GAME_GROUPS,
+  validateDocuments, encodeBase64Content, decodeBase64Content } from '../js/content-schema.js';
+import { SITE_ORIGIN, githubContentsUrl, githubRequest, githubSignIn } from '../js/github.js';
 
 const state = {
   token: '',
@@ -47,6 +17,8 @@ const state = {
   backups: [],
   selectedBackup: '',
   toastTimer: 0,
+  searchQuery: '',
+  searchOpen: false,
 };
 
 const $ = (selector) => document.querySelector(selector);
@@ -57,6 +29,16 @@ function escapeHtml(value = '') {
   return String(value).replace(/[&<>"']/g, (char) => ({
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
   })[char]);
+}
+
+function highlightText(text, query) {
+  if (!query) return escapeHtml(text);
+  const regex = new RegExp(`(${escapeRegExp(query)})`, 'gi');
+  return String(text).replace(regex, (match) => `<mark>${escapeHtml(match)}</mark>`);
+}
+
+function escapeRegExp(value) {
+  return String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 function setStatus(message, kind = '') {
@@ -75,12 +57,7 @@ function toast(message, error = false) {
 }
 
 function setConnected(connected) {
-  $('#login').hidden = connected;
-  $('#logout').hidden = !connected;
-  $('#account').hidden = !connected;
   $('#workspace').hidden = !connected;
-  $('#login-screen').hidden = connected;
-  $('#account').textContent = state.user ? `@${state.user}` : '';
   $('#save').disabled = !connected || !state.dirty.size;
   if (!connected) {
     setStatus('Connect GitHub to edit content');
@@ -115,7 +92,7 @@ function setPath(path, value) {
 
 function markDirty(documentName) {
   state.dirty.add(documentName);
-  $('#save').disabled = false;
+  $('#save').disabled = !state.token;
   setStatus('Unsaved changes');
 }
 
@@ -224,7 +201,7 @@ function pageName(node) {
   return node?.name || node?.id || 'Untitled page';
 }
 
-function renderTreeNode(node, path, branchPath, depth = 0) {
+function renderTreeNode(node, path, branchPath, depth = 0, query = '') {
   const isExpanded = state.expanded.has(path);
   const selected = state.selected === path;
   const childrenPath = `${path}.children`;
@@ -233,13 +210,13 @@ function renderTreeNode(node, path, branchPath, depth = 0) {
   const index = Number(path.split('.').at(-1));
   return `<div class="tree-category">
     <div class="tree-row">
-      <button class="tree-expand" data-action="toggle-node" data-path="${escapeHtml(path)}" type="button" aria-label="${isExpanded ? 'Collapse' : 'Expand'} ${escapeHtml(pageName(node))}"${children.length ? '' : ' disabled'} style="margin-left:${depth * 5}px">${children.length ? (isExpanded ? '▾' : '▸') : '·'}</button>
-      <button class="tree-item${selected ? ' is-selected' : ''}" data-action="select" data-path="${escapeHtml(path)}" type="button"><span class="tree-item__name">${escapeHtml(pageName(node))}</span></button>
-      ${index ? `<button class="tree-order" data-action="move" data-list="${escapeHtml(branchPath)}" data-index="${index}" data-delta="-1" type="button" title="Move up">↑</button>` : ''}
-      ${index < siblings.length - 1 ? `<button class="tree-order" data-action="move" data-list="${escapeHtml(branchPath)}" data-index="${index}" data-delta="1" type="button" title="Move down">↓</button>` : ''}
-      <button class="tree-add" data-action="add-page" data-list="${escapeHtml(childrenPath)}" data-parent="${escapeHtml(path)}" type="button" title="Add subpage">+</button>
+      <button class="tree-expand" data-action="toggle-node" data-path="${escapeHtml(path)}" type="button" aria-label="${isExpanded ? 'Colapsar' : 'Expandir'} ${escapeHtml(pageName(node))}"${children.length ? '' : ' disabled'} style="margin-left:${depth * 5}px">${children.length ? (isExpanded ? '▾' : '▸') : '·'}</button>
+      <button class="tree-item${selected ? ' is-selected' : ''}" data-action="select" data-path="${escapeHtml(path)}" type="button"><span class="tree-item__name">${highlightText(pageName(node), query)}</span></button>
+      ${index ? `<button class="tree-order" data-action="move" data-list="${escapeHtml(branchPath)}" data-index="${index}" data-delta="-1" type="button" title="Mover para cima">↑</button>` : ''}
+      ${index < siblings.length - 1 ? `<button class="tree-order" data-action="move" data-list="${escapeHtml(branchPath)}" data-index="${index}" data-delta="1" type="button" title="Mover para baixo">↓</button>` : ''}
+      <button class="tree-add" data-action="add-page" data-list="${escapeHtml(childrenPath)}" data-parent="${escapeHtml(path)}" type="button" title="Adicionar subpágina">+</button>
     </div>
-    ${isExpanded && children.length ? `<div class="tree-children">${children.map((child, index) => renderTreeNode(child, `${childrenPath}.${index}`, childrenPath, depth + 1)).join('')}</div>` : ''}
+    ${isExpanded && children.length ? `<div class="tree-children">${children.map((child, index) => renderTreeNode(child, `${childrenPath}.${index}`, childrenPath, depth + 1, query)).join('')}</div>` : ''}
   </div>`;
 }
 
@@ -264,29 +241,64 @@ function pageCount(categories) {
   return treePaths(categories).length - categories.length;
 }
 
+function matchesQuery(itemText, query) {
+  if (!query) return true;
+  return String(itemText).toLowerCase().includes(query.toLowerCase());
+}
+
 function renderTree() {
   const tree = $('#tree');
   const categories = state.documents.wiki?.categories || [];
+  const query = state.searchQuery.trim();
+  const searching = !!query;
+
   if (state.screen === 'wiki') {
-    const paths = treePaths(categories);
-    $('#tree-heading').textContent = `WIKI · ${categories.length} categories · ${pageCount(categories)} pages`;
-    $('#toggle-tree').hidden = !paths.length;
-    $('#toggle-tree').textContent = paths.every((path) => state.expanded.has(path)) ? 'Collapse all' : 'Expand all';
-    $('#add-category').hidden = false;
-    tree.innerHTML = categories.map((category, index) => {
-      const path = `categories.${index}`;
+    $('#toggle-tree').hidden = searching;
+    $('#add-category').hidden = searching;
+    if (searching) {
+      $('#toggle-tree').hidden = true;
+      $('#add-category').hidden = true;
+    }
+
+    const matched = [];
+    categories.forEach((category, catIndex) => {
+      const catMatch = matchesQuery(pageName(category), query);
+      const matchingPages = [];
+      (category.subcategories || []).forEach((page, pageIndex) => {
+        if (matchesQuery(pageName(page), query)) {
+          matchingPages.push({ page, pageIndex, catIndex, path: `categories.${catIndex}.subcategories.${pageIndex}` });
+        }
+      });
+      if (catMatch || matchingPages.length) {
+        matched.push({ category, catIndex, path: `categories.${catIndex}`, catMatch, matchingPages, expanded: catMatch || matchingPages.length > 0 });
+      }
+    });
+
+    $('#tree-heading').textContent = searching
+      ? `WIKI · ${matched.length} result${matched.length !== 1 ? 's' : ''} for "${escapeHtml(query)}"`
+      : `WIKI · ${categories.length} categories · ${pageCount(categories)} pages`;
+
+    if (!matched.length) {
+      tree.innerHTML = `<div class="tree-empty">No pages or categories found for “${escapeHtml(query)}”.</div>`;
+      return;
+    }
+
+    tree.innerHTML = matched.map(({ category, catIndex, path, catMatch, matchingPages, expanded }) => {
       const selected = state.selected === path;
-      const expanded = state.expanded.has(path);
       const sections = category.subcategories || [];
       return `<div class="tree-category">
         <div class="tree-row">
           <button class="tree-expand" data-action="toggle-node" data-path="${path}" type="button" aria-label="${expanded ? 'Collapse' : 'Expand'} ${escapeHtml(pageName(category))}"${sections.length ? '' : ' disabled'}>${sections.length ? (expanded ? '▾' : '▸') : '·'}</button>
-          <button class="tree-item${selected ? ' is-selected' : ''}" data-action="select" data-path="${path}" type="button"><span class="tree-item__name">${escapeHtml(pageName(category))}</span></button>
-          ${index ? `<button class="tree-order" data-action="move" data-list="categories" data-index="${index}" data-delta="-1" type="button" title="Move up">↑</button>` : ''}
-          ${index < categories.length - 1 ? `<button class="tree-order" data-action="move" data-list="categories" data-index="${index}" data-delta="1" type="button" title="Move down">↓</button>` : ''}
+          <button class="tree-item${selected ? ' is-selected' : ''}${catMatch ? ' tree-match' : ''}" data-action="select" data-path="${path}" type="button"><span class="tree-item__name">${highlightText(pageName(category), query)}</span></button>
+          ${catIndex ? `<button class="tree-order" data-action="move" data-list="categories" data-index="${catIndex}" data-delta="-1" type="button" title="Move up">↑</button>` : ''}
+          ${catIndex < categories.length - 1 ? `<button class="tree-order" data-action="move" data-list="categories" data-index="${catIndex}" data-delta="1" type="button" title="Move down">↓</button>` : ''}
           <button class="tree-add" data-action="add-page" data-list="${path}.subcategories" data-parent="${path}" type="button" title="Add page">+</button>
         </div>
-        ${expanded && sections.length ? `<div class="tree-children">${sections.map((page, pageIndex) => renderTreeNode(page, `${path}.subcategories.${pageIndex}`, `${path}.subcategories`)).join('')}</div>` : ''}
+        ${expanded && matchingPages.length ? `<div class="tree-children">${matchingPages.map(({ page, pageIndex }) => {
+          const pagePath = `categories.${catIndex}.subcategories.${pageIndex}`;
+          const pageSelected = state.selected === pagePath;
+          return renderTreeNode(page, pagePath, `categories.${catIndex}.subcategories`, true, query);
+        }).join('')}</div>` : ''}
       </div>`;
     }).join('');
     return;
@@ -294,29 +306,42 @@ function renderTree() {
   $('#add-category').hidden = true;
   $('#toggle-tree').hidden = true;
   if (state.screen === 'game') {
-    $('#tree-heading').textContent = 'GAME DATA';
-    tree.innerHTML = GAME_GROUPS.map((group) => {
+    $('#tree-heading').textContent = searching ? `GAME DATA · search "${escapeHtml(query)}"` : 'GAME DATA';
+    const matchedGroups = GAME_GROUPS.flatMap((group) => {
       const value = getPath(`game.${group.path}`);
       const keys = group.mode === 'map' ? Object.keys(value || {}) : [];
+      const matchingKeys = keys.filter((key) => matchesQuery(key, query));
+      if (!matchingKeys.length && (!query || !matchesQuery(group.label, query))) return null;
+      return { group, keys: searching ? matchingKeys : keys, labelMatch: matchesQuery(group.label, query) };
+    }).filter(Boolean);
+
+    if (!matchedGroups.length) {
+      tree.innerHTML = `<div class="tree-empty">No game items found for “${escapeHtml(query)}”.</div>`;
+      return;
+    }
+
+    tree.innerHTML = matchedGroups.map(({ group, keys, labelMatch }) => {
       const selectedKey = state.gameSelection?.group === group.id ? state.gameSelection.key : undefined;
       const selected = (key) => selectedKey === key;
       return `<section class="tree-data-group">
-        <div class="tree-data-heading"><span>${escapeHtml(group.label)}</span>${group.mode === 'map' ? `<button class="tree-add" data-action="add-game-entry" data-group="${group.id}" type="button" title="Add ${escapeHtml(group.label)} item">+</button>` : ''}</div>
+        <div class="tree-data-heading"><span class="${labelMatch ? 'tree-match' : ''}">${highlightText(group.label, query)}</span>${group.mode === 'map' ? `<button class="tree-add" data-action="add-game-entry" data-group="${group.id}" type="button" title="Add ${escapeHtml(group.label)}">+</button>` : ''}</div>
         ${group.mode === 'map'
-          ? keys.map((key) => `<button class="tree-item${selected(key) ? ' is-selected' : ''}" data-action="select-game" data-group="${group.id}" data-key="${escapeHtml(key)}" type="button"><span class="tree-item__name">${escapeHtml(key)}</span></button>`).join('')
+          ? keys.map((key) => `<button class="tree-item${selected(key) ? ' is-selected' : ''}" data-action="select-game" data-group="${group.id}" data-key="${escapeHtml(key)}" type="button"><span class="tree-item__name">${highlightText(key, query)}</span></button>`).join('')
           : `<button class="tree-item${selected(null) ? ' is-selected' : ''}" data-action="select-game" data-group="${group.id}" type="button"><span class="tree-item__name">${escapeHtml(group.label)}</span></button>`}
       </section>`;
     }).join('');
     return;
   }
   if (state.screen === 'versions') {
-    $('#tree-heading').textContent = 'BACKUPS';
-    tree.innerHTML = `<button class="button button--primary button--small" data-action="create-backup" type="button">+ Create backup now</button>${state.backups.map((backup) => `<button class="tree-item${state.selectedBackup === backup.name ? ' is-selected' : ''}" data-action="select-backup" data-name="${escapeHtml(backup.name)}" type="button"><span class="tree-item__chevron">◷</span><span class="tree-item__name">${escapeHtml(backup.name.replace(/^backup-/, '').replace(/\.json$/, '').replace(/-/g, ' '))}</span></button>`).join('') || '<p class="tree-empty">No backups yet. A backup is also created before every save.</p>'}`;
+    $('#tree-heading').textContent = searching ? `BACKUPS · search "${escapeHtml(query)}"` : 'BACKUPS';
+    const filteredBackups = state.backups.filter((backup) => matchesQuery(backup.name, query));
+    tree.innerHTML = `<button class="button button--primary button--small" data-action="create-backup" type="button">+ Create backup now</button>${filteredBackups.map((backup) => `<button class="tree-item${state.selectedBackup === backup.name ? ' is-selected' : ''}" data-action="select-backup" data-name="${escapeHtml(backup.name)}" type="button"><span class="tree-item__chevron">◷</span><span class="tree-item__name">${highlightText(backup.name.replace(/^backup-/, '').replace(/\.json$/, '').replace(/-/g, ' '), query)}</span></button>`).join('') || '<div class="tree-empty">No backups found.</div>'}`;
     return;
   }
   const versions = state.documents.updates?.versions || [];
-  $('#tree-heading').textContent = 'RELEASES';
-  tree.innerHTML = `<button class="button button--primary button--small" data-action="new-release" type="button">+ New release</button>${versions.map((version, index) => `<button class="tree-item${state.selected === `versions.${index}` ? ' is-selected' : ''}" data-action="select" data-path="versions.${index}" type="button"><span class="tree-item__chevron">·</span><span class="tree-item__name">Version ${escapeHtml(version.version || '—')}</span></button>`).join('')}`;
+  $('#tree-heading').textContent = searching ? `RELEASES · search "${escapeHtml(query)}"` : 'RELEASES';
+  const filteredVersions = versions.filter((version) => matchesQuery(version.version || '', query));
+  tree.innerHTML = `<button class="button button--primary button--small" data-action="new-release" type="button">+ New version</button>${filteredVersions.map((version, index) => `<button class="tree-item${state.selected === `versions.${index}` ? ' is-selected' : ''}" data-action="select" data-path="versions.${index}" type="button"><span class="tree-item__chevron">·</span><span class="tree-item__name">Version ${highlightText(version.version || '—', query)}</span></button>`).join('') || '<div class="tree-empty">No versions found.</div>'}`;
 }
 
 const CATEGORY_FIELDS = [
@@ -527,7 +552,7 @@ function renderVersionsScreen() {
 }
 
 function render() {
-  if (!state.token || !state.documents.wiki) return;
+  if (!state.documents.wiki) return;
   document.querySelectorAll('.tab').forEach((item) => item.classList.toggle('is-active', item.dataset.screen === state.screen));
   renderTree();
   if (state.screen === 'wiki') renderWikiScreen();
@@ -538,50 +563,17 @@ function render() {
   setStatus(state.dirty.size ? 'Unsaved changes' : 'All changes saved', state.dirty.size ? '' : 'saved');
 }
 
-function apiHeaders(json = false) {
-  return {
-    Authorization: `Bearer ${state.token}`,
-    Accept: 'application/vnd.github+json',
-    'X-GitHub-Api-Version': '2022-11-28',
-    ...(json ? { 'Content-Type': 'application/json' } : {}),
-  };
-}
-
-async function githubRequest(url, options = {}) {
-  const { allowNotFound = false, ...requestOptions } = options;
-  const response = await fetch(url, { ...requestOptions, headers: { ...apiHeaders(Boolean(requestOptions.body)), ...requestOptions.headers } });
-  if (response.status === 404 && allowNotFound) return null;
-  const payload = await response.json().catch(() => ({}));
-  if (!response.ok) {
-    const message = payload.message || `GitHub returned HTTP ${response.status}.`;
-    if ([401, 403, 404].includes(response.status)) {
-      throw new Error(`${message} Check that this GitHub account can access ${REPOSITORY} and has write permission.`);
-    }
-    if (response.status === 409 || response.status === 422) {
-      throw new Error(`${message} The file may have changed on GitHub. Reload the editor before saving again.`);
-    }
-    throw new Error(message);
-  }
-  return payload;
-}
-
-function decodeBase64Content(content) {
-  const binary = atob(content.replace(/\s/g, ''));
-  const bytes = Uint8Array.from(binary, (character) => character.charCodeAt(0));
-  return new TextDecoder().decode(bytes);
-}
-
 async function loadDocuments() {
   setStatus('Loading Wiki content…');
   const loaded = await Promise.all(Object.entries(FILES).map(async ([name, path]) => {
-    const result = await githubRequest(`https://api.github.com/repos/${REPOSITORY}/contents/${path}?ref=${BRANCH}`);
+    const result = await gh(githubContentsUrl(path));
     if (result.type !== 'file' || typeof result.content !== 'string') throw new Error(`GitHub did not return ${path} as a file.`);
     state.shas[name] = result.sha;
     return [name, JSON.parse(decodeBase64Content(result.content))];
   }));
   state.documents = Object.fromEntries(loaded);
   state.originalDocuments = JSON.parse(JSON.stringify(state.documents));
-  validateDocuments();
+  validateDocuments(state.documents);
   state.screen = 'wiki';
   state.selected = state.documents.wiki.categories.length ? 'categories.0' : '';
   state.expanded = new Set(treePaths(state.documents.wiki.categories));
@@ -592,8 +584,44 @@ async function loadDocuments() {
   render();
 }
 
+const gh = (url, options = {}) => githubRequest(url, state.token, options);
+
+/**
+ * Loads content from the local content/ JSON files instead of the GitHub API.
+ * Used when there is no GitHub token (local development / offline), so the
+ * editor UI still opens in read-only mode. Publishing still requires sign-in.
+ */
+async function loadLocalDocuments() {
+  setStatus('Loading Wiki content…');
+  const documents = {};
+  for (const [name, path] of Object.entries(FILES)) {
+    const response = await fetch(`../${path}`, { cache: 'no-store' });
+    if (!response.ok) {
+      throw new Error(`Failed to load ${path}: HTTP ${response.status}`);
+    }
+    documents[name] = await response.json();
+  }
+  state.documents = documents;
+  state.originalDocuments = JSON.parse(JSON.stringify(documents));
+  state.shas = {};
+  validateDocuments(documents);
+  state.screen = 'wiki';
+  state.selected = state.documents.wiki.categories.length ? 'categories.0' : '';
+  state.expanded = new Set(treePaths(state.documents.wiki.categories));
+  const firstGroup = GAME_GROUPS[0];
+  state.gameSelection = {
+    group: firstGroup.id,
+    key: Object.keys(getPath(`game.${firstGroup.path}`))[0] || '',
+  };
+  state.backups = [];
+  $('#workspace').hidden = false;
+  $('#save').disabled = true;
+  setStatus('Local content loaded (read-only)', 'saved');
+  render();
+}
+
 async function loadBackups() {
-  const result = await githubRequest(`https://api.github.com/repos/${REPOSITORY}/contents/${BACKUP_DIRECTORY}?ref=${BRANCH}`, { allowNotFound: true });
+  const result = await gh(githubContentsUrl(BACKUP_DIRECTORY), { allowNotFound: true });
   state.backups = Array.isArray(result)
     ? result.filter((item) => item.type === 'file' && /^backup-.*\.json$/.test(item.name)).sort((a, b) => b.name.localeCompare(a.name))
     : [];
@@ -607,7 +635,7 @@ async function createBackup(documents = state.documents) {
     createdAt: new Date().toISOString(),
     documents: JSON.parse(JSON.stringify(documents)),
   };
-  await githubRequest(`https://api.github.com/repos/${REPOSITORY}/contents/${BACKUP_DIRECTORY}/${name}`, {
+  await gh(githubContentsUrl(`${BACKUP_DIRECTORY}/${name}`), {
     method: 'PUT',
     body: JSON.stringify({
       message: `Create content backup ${timestamp}`,
@@ -621,24 +649,15 @@ async function createBackup(documents = state.documents) {
 
 async function restoreBackup(name) {
   if (!window.confirm(`Restore ${name}? This will replace the live Wiki, upgrade data, calculators and update log. A backup of the current content will be created first.`)) return;
-  const result = await githubRequest(`https://api.github.com/repos/${REPOSITORY}/contents/${BACKUP_DIRECTORY}/${encodeURIComponent(name)}?ref=${BRANCH}`);
+  const result = await gh(githubContentsUrl(`${BACKUP_DIRECTORY}/${encodeURIComponent(name)}`));
   const backup = JSON.parse(decodeBase64Content(result.content));
   if (backup.format !== 1 || !backup.documents?.wiki || !backup.documents?.updates || !backup.documents?.game) {
     throw new Error('This backup is incomplete or has an unsupported format.');
   }
   state.documents = backup.documents;
-  validateDocuments();
+  validateDocuments(state.documents);
   state.dirty = new Set(Object.keys(FILES));
   await saveDocuments();
-}
-
-function encodeBase64Content(text) {
-  const bytes = new TextEncoder().encode(text);
-  let binary = '';
-  for (let offset = 0; offset < bytes.length; offset += 0x8000) {
-    binary += String.fromCharCode(...bytes.subarray(offset, Math.min(offset + 0x8000, bytes.length)));
-  }
-  return btoa(binary);
 }
 
 async function saveDocuments() {
@@ -646,12 +665,12 @@ async function saveDocuments() {
   $('#save').disabled = true;
   const pending = [...state.dirty];
   try {
-    validateDocuments();
+    validateDocuments(state.documents);
     await createBackup(state.originalDocuments);
     for (const name of pending) {
       const path = FILES[name];
       const content = `${JSON.stringify(state.documents[name], null, 2)}\n`;
-      const response = await githubRequest(`https://api.github.com/repos/${REPOSITORY}/contents/${path}`, {
+      const response = await gh(githubContentsUrl(path), {
         method: 'PUT',
         body: JSON.stringify({
           message: `Update ${path.split('/').at(-1).replace('.json', '')} content`,
@@ -672,109 +691,6 @@ async function saveDocuments() {
     setStatus('Save failed', 'error');
     toast(error.message || 'Could not save your changes.', true);
   }
-}
-
-function flattenPageIds(category) {
-  const ids = new Set();
-  const walk = (nodes) => {
-    for (const node of nodes || []) {
-      if (!node || !/^[\w-]+$/.test(node.id || '')) throw new Error(`Page "${node?.name || 'Untitled'}" needs a URL ID using letters, numbers, underscores, or hyphens.`);
-      if (ids.has(node.id)) throw new Error(`The page ID "${node.id}" appears more than once in category ${category.name}.`);
-      ids.add(node.id);
-      if (!node.name?.trim() || typeof node.desc !== 'string') throw new Error(`Page "${node.id}" needs a name and a description.`);
-      walk(node.children);
-    }
-  };
-  walk(category.subcategories);
-  return ids;
-}
-
-function validateDocuments() {
-  const categories = state.documents.wiki.categories;
-  const versions = state.documents.updates.versions;
-  const game = state.documents.game;
-  if (!Array.isArray(categories) || !Array.isArray(versions)) throw new Error('A content file is missing its expected list.');
-  validateGameData(game);
-  const categoryIds = new Set();
-  for (const category of categories) {
-    if (!/^[\w-]+$/.test(category.id || '') || !category.name?.trim() || typeof category.desc !== 'string' || typeof category.tagline !== 'string') {
-      throw new Error(`Category "${category.name || 'Untitled'}" needs a valid URL ID, name, description, and tagline.`);
-    }
-    if (categoryIds.has(category.id)) throw new Error(`The category ID "${category.id}" is used more than once.`);
-    categoryIds.add(category.id);
-    flattenPageIds(category);
-  }
-  if (!versions.length) throw new Error('The update log must contain at least one release.');
-  const releaseIds = new Set();
-  for (const version of versions) {
-    if (!version.version?.trim() || !Array.isArray(version.entries)) throw new Error('Each release needs a version and an update list.');
-    if (releaseIds.has(version.version)) throw new Error(`Release version "${version.version}" appears more than once.`);
-    releaseIds.add(version.version);
-    for (const entry of version.entries) {
-      if (!CONTEXTS.includes(entry.context) || !entry.title?.trim() || typeof entry.description !== 'string') throw new Error(`An update in release ${version.version} needs a category, title, and description.`);
-      if (entry.href && !/^#\/[\w-]+(?:\/[\w-]+)*$/.test(entry.href)) throw new Error(`The Wiki link "${entry.href}" is invalid; use a route like #/life/power-of-fossils.`);
-    }
-  }
-}
-
-function validateGameData(game) {
-  if (!game || typeof game !== 'object') throw new Error('Game data is missing or invalid.');
-  for (const group of GAME_GROUPS) {
-    const value = getPath(`game.${group.path}`);
-    if (group.mode === 'map' && (!value || typeof value !== 'object' || Array.isArray(value))) {
-      throw new Error(`${group.label} must be a collection of named entries.`);
-    }
-    if (group.mode === 'single' && (!value || typeof value !== 'object')) {
-      throw new Error(`${group.label} is missing or invalid.`);
-    }
-  }
-  const sections = game.upgrades?.sections;
-  for (const [sectionId, section] of Object.entries(sections || {})) {
-    if (!section.name?.trim() || !Array.isArray(section.upgrades)) throw new Error(`Upgrade section "${sectionId}" needs a name and upgrades list.`);
-    const upgradeNumbers = new Set();
-    for (const upgrade of section.upgrades) {
-      if (!Number.isInteger(Number(upgrade.n)) || !upgrade.name?.trim() || !String(upgrade.price ?? '').trim() || !String(upgrade.multi ?? '').trim()) {
-        throw new Error(`Every upgrade in "${section.name}" needs a number, name, price formula, and effect formula.`);
-      }
-      if (upgradeNumbers.has(Number(upgrade.n))) throw new Error(`Upgrade number ${upgrade.n} is repeated in "${section.name}".`);
-      upgradeNumbers.add(Number(upgrade.n));
-    }
-  }
-  for (const [route, sectionId] of Object.entries(game.upgrades?.routes || {})) {
-    if (!/^[\w-]+\/[\w-]+$/.test(route) || !sections[sectionId]) {
-      throw new Error(`Upgrade page link "${route}" must point to an existing upgrade section.`);
-    }
-  }
-  for (const [name, color] of Object.entries(game.resources?.colors || {})) {
-    if (!name.trim() || typeof color !== 'string'
-      || !/^#(?:[\da-f]{3}|[\da-f]{4}|[\da-f]{6}|[\da-f]{8})$/i.test(color)) {
-      throw new Error(`Resource "${name}" needs a valid hex color.`);
-    }
-  }
-  for (const [name, route] of Object.entries(game.resources?.pageLinks || {})) {
-    if (!name.trim() || typeof route !== 'string' || !/^#\/[\w-]+(?:\/[\w-]+)*$/.test(route)) {
-      throw new Error(`Resource page link "${name}" needs a valid Wiki route.`);
-    }
-  }
-  const variables = { L: 1, tier: 1, N: 1, level: 1, G: 1, dust: 1, p: 1, amount: 1 };
-  const validateFormulas = (value, path = 'game') => {
-    if (typeof value === 'string' && value.startsWith('formula: ')) {
-      try {
-        evaluateExpression(value.slice('formula: '.length), variables);
-      } catch (error) {
-        throw new Error(`Invalid formula at ${path}: ${error.message}`);
-      }
-      return;
-    }
-    if (Array.isArray(value)) {
-      value.forEach((item, index) => validateFormulas(item, `${path}.${index}`));
-      return;
-    }
-    if (value && typeof value === 'object') {
-      for (const [key, child] of Object.entries(value)) validateFormulas(child, `${path}.${key}`);
-    }
-  };
-  validateFormulas(game.calculators?.pages, 'calculators.pages');
 }
 
 function newPage() {
@@ -956,65 +872,27 @@ function createLogin() {
     toast('For secure sign-in, open https://regrowthinc.vercel.app/admin/.', true);
     return;
   }
-  const url = `${SITE_ORIGIN}/api/auth?provider=github&site_id=${encodeURIComponent(new URL(SITE_ORIGIN).host)}`;
-  const popup = window.open(url, 'RIWikiAuthorization', 'popup,width=960,height=650');
-  if (!popup) {
-    toast('The browser blocked the sign-in popup. Allow pop-ups for regrowthinc.vercel.app and try again.', true);
-    return;
-  }
   setStatus('Waiting for GitHub authorization…');
-  const listener = async (event) => {
-    if (event.origin !== SITE_ORIGIN || event.source !== popup || typeof event.data !== 'string') return;
-    if (event.data === 'authorizing:github') {
-      popup.postMessage(event.data, event.origin);
-      return;
-    }
-    if (!event.data.startsWith('authorization:github:')) return;
-    window.removeEventListener('message', listener);
-    try { popup.close(); } catch {}
-    const result = event.data.match(/^authorization:github:(success|error):(.+)$/);
-    if (!result) {
-      setStatus('Sign-in response was not recognized', 'error');
-      toast('GitHub returned an unrecognized sign-in response.', true);
-      return;
-    }
-    const [, status, payloadText] = result;
-    let payload;
-    try { payload = JSON.parse(payloadText); } catch {
-      setStatus('Sign-in response was invalid', 'error');
-      toast('GitHub returned invalid sign-in data. Please try again.', true);
-      return;
-    }
-    if (status === 'error') {
-      setStatus('GitHub sign-in failed', 'error');
-      toast(payload.message || 'GitHub could not sign you in.', true);
-      return;
-    }
-    if (!payload.token || payload.provider !== 'github') {
-      setStatus('Sign-in response was invalid', 'error');
-      toast('GitHub did not return a usable access token.', true);
-      return;
-    }
-    state.token = payload.token;
-    try {
-      const user = await githubRequest('https://api.github.com/user');
-      state.user = user.login;
-      await loadDocuments();
-    } catch (error) {
-      state.token = '';
-      setConnected(false);
-      setStatus('Could not load repository content', 'error');
-      toast(error.message || 'Could not load the Wiki from GitHub.', true);
-    }
-  };
-  window.addEventListener('message', listener);
-  const popupWatcher = setInterval(() => {
-    if (popup.closed) {
-      clearInterval(popupWatcher);
-      window.removeEventListener('message', listener);
-      if (!state.token) setStatus('Sign-in window was closed');
-    }
-  }, 600);
+  githubSignIn()
+    .then(async (token) => {
+      state.token = token;
+      try {
+        const user = await githubRequest('https://api.github.com/user', token);
+        state.user = user.login;
+        await loadDocuments();
+      } catch (error) {
+        state.token = '';
+        setConnected(false);
+        setStatus('Could not load repository content', 'error');
+        toast(error.message || 'Could not load the Wiki from GitHub.', true);
+      }
+    })
+    .catch((error) => {
+      if (!state.token) {
+        setStatus('Sign-in window was closed', 'error');
+        toast(error.message || 'GitHub sign-in was cancelled.', true);
+      }
+    });
 }
 
 function signOut() {
@@ -1034,6 +912,10 @@ function signOut() {
 
 document.addEventListener('input', (event) => {
   if (event.target.matches('[data-bind]')) markInputDirty(event.target);
+  if (event.target.matches('#studio-search')) {
+    state.searchQuery = event.target.value;
+    renderTree();
+  }
 });
 document.addEventListener('change', (event) => {
   const target = event.target;
@@ -1045,13 +927,18 @@ document.addEventListener('click', (event) => {
   const tab = event.target.closest('[data-screen]');
   if (tab) {
     state.screen = tab.dataset.screen;
+    state.searchQuery = '';
+    state.searchOpen = false;
+    $('#studio-search').hidden = true;
+    $('#studio-search').value = '';
     if (state.screen === 'updates') {
-      state.selected = state.documents.updates.versions.length ? 'versions.0' : '';
+      state.selected = state.documents.updates?.versions?.length ? 'versions.0' : '';
     } else if (state.screen === 'wiki') {
-      state.selected = state.documents.wiki.categories.length ? 'categories.0' : '';
+      state.selected = state.documents.wiki?.categories?.length ? 'categories.0' : '';
     } else if (state.screen === 'game' && !state.gameSelection) {
       const firstGroup = GAME_GROUPS[0];
-      state.gameSelection = { group: firstGroup.id, key: Object.keys(getPath(`game.${firstGroup.path}`))[0] || null };
+      const gameValue = getPath(`game.${firstGroup.path}`);
+      state.gameSelection = { group: firstGroup.id, key: gameValue ? Object.keys(gameValue)[0] || null : null };
     } else if (state.screen === 'versions') {
       state.selectedBackup = '';
     }
@@ -1068,13 +955,32 @@ document.addEventListener('click', (event) => {
     return;
   }
   if (event.target.closest('#save')) {
+    if (!state.token) {
+      toast('Save requires GitHub sign-in. Connect to publish changes.', true);
+      return;
+    }
     saveDocuments();
     return;
   }
   if (event.target.closest('#toggle-tree')) {
-    const paths = treePaths(state.documents.wiki.categories);
+    const categories = state.documents.wiki?.categories || [];
+    const paths = treePaths(categories);
     state.expanded = paths.every((path) => state.expanded.has(path)) ? new Set() : new Set(paths);
     renderTree();
+    return;
+  }
+  if (event.target.closest('#toggle-search')) {
+    const btn = $('#toggle-search');
+    state.searchOpen = !state.searchOpen;
+    btn.classList.toggle('is-active', state.searchOpen);
+    $('#studio-search').hidden = !state.searchOpen;
+    if (state.searchOpen) {
+      $('#studio-search').focus();
+    } else {
+      state.searchQuery = '';
+      $('#studio-search').value = '';
+      renderTree();
+    }
     return;
   }
   const actionButton = event.target.closest('[data-action]');
@@ -1087,4 +993,15 @@ $('#add-category').addEventListener('click', () => {
   try { handleAction({ dataset: { action: 'add-category' } }); } catch (error) { toast(error.message, true); }
 });
 
-setConnected(false);
+if (state.token) {
+  loadDocuments().catch((error) => {
+    setStatus('Could not load repository content', 'error');
+    toast(error.message || 'Could not load the Wiki from GitHub.', true);
+  });
+} else {
+  // Local development: no GitHub token -> load from local content/ JSON files.
+  loadLocalDocuments().catch((error) => {
+    setStatus('Could not load local content', 'error');
+    toast(error.message || 'Could not load the local Wiki content.', true);
+  });
+}

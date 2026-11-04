@@ -5,6 +5,7 @@ import { CATEGORIES, getSubcategory } from './data/wiki-data.js';
 import { getInlineUpgradePages } from './data/formulas.js';
 import { colorizeResources, resourceColor } from './data/resource-colors.js';
 import { dataProvider } from './services.js';
+import { ed } from './edit/ed-attr.js';
 
 import { LUCIDE_ICONS } from './lib/lucide-data.js';
 
@@ -227,8 +228,9 @@ export function reveal(index = 0, extra = '') {
 export function categoryCard(cat, i = 0) {
   const countPages = (pages) => pages.reduce((count, page) => count + 1 + countPages(page.children || []), 0);
   const totalPages = countPages(cat.subcategories || []);
+  const ci = CATEGORIES.indexOf(cat);
   return `
-  <a ${`class="cat-card reveal" style="--reveal-delay: ${Math.min(i * 50, 400)}ms"`} href="#/${esc(cat.id)}">
+  <a ${`class="cat-card reveal" style="--reveal-delay: ${Math.min(i * 50, 400)}ms"`}${ed(`wiki:categories.${ci}`, 'category-card', cat.name || 'Category')} href="#/${esc(cat.id)}">
     <span class="cat-card__top">
       <span class="cat-card__icon">${icon(cat.icon, 22)}</span>
       ${icon('arrow-right', 18, 'cat-card__arrow')}
@@ -239,9 +241,9 @@ export function categoryCard(cat, i = 0) {
   </a>`;
 }
 
-export function infoCard(h, i = 0) {
+export function infoCard(h, i = 0, prefix = '') {
   return `
-  <div ${`class="info-card reveal" style="--reveal-delay: ${Math.min(i * 50, 400)}ms"`}>
+  <div ${`class="info-card reveal" style="--reveal-delay: ${Math.min(i * 50, 400)}ms"`}${prefix ? ed(prefix, 'card', h.title || 'Highlight') : ''}>
     <span class="info-card__icon">${icon(h.icon || 'star', 18)}</span>
     <span class="info-card__title">${esc(h.title)}</span>
     <span class="info-card__text">${colorizeResources(esc(h.text))}</span>
@@ -405,8 +407,11 @@ function renderSubTree(catId, items, depth) {
     </div></div>`;
 }
 
+let navWired = false;
+
 export function buildNav() {
   const nav = qs('#sidebar-nav');
+  if (!nav) return;
   nav.innerHTML =
     '<span class="sidebar__label">Categories</span>' +
     CATEGORIES.map((c) => {
@@ -423,6 +428,8 @@ export function buildNav() {
       </div>`;
     }).join('');
 
+  if (navWired) return;
+  navWired = true;
   nav.addEventListener('click', (e) => {
     const link = e.target.closest('a.nav-item, a[data-sub]');
     if (!link) return;

@@ -1,0 +1,246 @@
+/* ==== EDITOR INLINE: barra, chips, popover e overrides por sessão ==== */
+
+:root {
+  --z-edit: 80;
+  --z-edit-popover: 85;
+  --ri-edit-bar-h: 46px;
+}
+
+/* Sem layout shift: offsets de sidebar/topbar enquanto a barra existe. */
+html.ri-edit-bar .app-shell { padding-top: var(--ri-edit-bar-h); }
+html.ri-edit-bar .topbar { top: var(--ri-edit-bar-h); }
+html.ri-edit-bar .sidebar { top: var(--ri-edit-bar-h); }
+
+/* ---------- Barra fixa ---------- */
+
+.ri-edit-bar {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: var(--ri-edit-bar-h);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 16px;
+  background: #10160f;
+  color: var(--c-text);
+  border-bottom: 1px solid var(--c-border);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+  z-index: var(--z-edit);
+}
+
+.ri-edit-bar.is-hidden { display: none; }
+
+.ri-edit-bar__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.2px;
+  color: var(--c-accent-light);
+  white-space: nowrap;
+}
+
+.ri-edit-bar__status {
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0.85;
+}
+.ri-edit-bar__status.is-dirty { color: #ffd966; }
+.ri-edit-bar__status.is-busy { opacity: 0.6; }
+
+.ri-edit-bar__user {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--c-text-2);
+  white-space: nowrap;
+}
+
+.ri-edit-bar__avatar {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* ---------- Chip de hover ---------- */
+
+#ri-edit-chip {
+  position: fixed;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--c-accent, #86d62b);
+  color: #10160f;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  pointer-events: none;
+  z-index: var(--z-edit);
+  white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  animation: fade-in var(--t-fast, 120ms) both;
+}
+
+/* ---------- Popover ---------- */
+
+.ri-edit-popover {
+  position: fixed;
+  width: 380px;
+  max-width: calc(100vw - 24px);
+  max-height: min(70vh, 560px);
+  display: flex;
+  flex-direction: column;
+  background: var(--c-panel, #121812);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-md, 12px);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.5);
+  z-index: var(--z-edit-popover);
+  overflow: hidden;
+  animation: fade-in var(--t-fast, 120ms) both;
+}
+
+.ri-edit-popover__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--c-border);
+  font-size: 13px;
+}
+
+.ri-edit-popover__head b {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ri-edit-popover__close {
+  border: 0;
+  background: transparent;
+  color: var(--c-text-2);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  display: inline-flex;
+}
+.ri-edit-popover__close:hover { color: var(--c-text); background: rgba(255, 255, 255, 0.06); }
+
+.ri-edit-popover__body {
+  padding: 12px 14px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  scrollbar-width: thin;
+}
+
+.ri-edit-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.ri-edit-field__label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--c-text-3);
+  font-weight: 600;
+}
+.ri-edit-field__label small { color: #ffb08a; text-transform: none; }
+
+.ri-edit-field .input { width: 100%; font-size: 13px; }
+.ri-edit-field textarea.input { resize: vertical; min-height: 64px; line-height: 1.5; }
+
+.ri-edit-field__image {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.ri-edit-field__image img {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 1px solid var(--c-border);
+  flex: none;
+}
+.ri-edit-field__image > div { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.ri-edit-field__image small { font-size: 11px; color: var(--c-text-3); }
+.ri-edit-field__image input[type="file"] { font-size: 11px; color: var(--c-text-2); max-width: 100%; }
+
+.ri-edit-popover__foot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-top: 1px solid var(--c-border);
+}
+
+.ri-edit-popover__warn {
+  font-size: 12px;
+  color: #ffb08a;
+  min-width: 0;
+  display: block;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* ---------- Toast ---------- */
+
+.ri-edit-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%) translateY(8px);
+  background: var(--c-panel, #121812);
+  color: var(--c-text);
+  border: 1px solid var(--c-border);
+  border-left: 3px solid var(--c-accent, #86d62b);
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--t-med, 180ms), transform var(--t-med, 180ms);
+  z-index: 95;
+  max-width: min(92vw, 560px);
+}
+.ri-edit-toast.is-on { opacity: 1; transform: translateX(-50%) translateY(0); }
+.ri-edit-toast--error { border-left-color: #ff6b5e; }
+
+/* ---------- Corpo em modo edição ---------- */
+
+/* Revelações ficam instantâneas (elementos novos precisam ser clicáveis). */
+html.ri-edit-on .reveal { animation: none !important; opacity: 1 !important; transform: none !important; }
+html.ri-edit-on .page-enter { animation: none !important; opacity: 1 !important; }
+html.ri-edit-on ::highlight(ri-untyped) { color: inherit !important; }
+
+/* Contorno sutil e cursor nas regiões editáveis. */
+html.ri-edit-on [data-edit] {
+  cursor: pointer;
+  outline-offset: 2px;
+}
+html.ri-edit-on [data-edit]:hover {
+  outline: 1.5px dashed color-mix(in srgb, var(--c-accent, #86d62b) 80%, transparent);
+}
+html.ri-edit-on a[data-edit] { text-decoration-color: transparent; }
+
+html.reduce-motion .ri-edit-toast,
+html.reduce-motion .ri-edit-popover,
+html.reduce-motion #ri-edit-chip { animation: none; transition: none; }
+
+/* ---------- Mobile ---------- */
+
+@media (max-width: 720px) {
+  .ri-edit-bar { gap: 6px; padding: 0 8px; overflow-x: auto; }
+  .ri-edit-bar__brand span { display: none; }
+  .ri-edit-bar .btn { padding: 6px 10px; }
+  .ri-edit-bar__user { display: none; }
+}

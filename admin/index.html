@@ -8,6 +8,7 @@
   <title>Wiki Studio | RI Wiki</title>
   <link rel="stylesheet" href="../css/tokens.css">
   <link rel="stylesheet" href="./admin.css">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
 </head>
 <body>
   <main id="app" class="studio">
@@ -17,25 +18,17 @@
         <span><strong>RI Wiki</strong><small>CONTENT STUDIO</small></span>
       </a>
       <div class="topbar__status" id="status" role="status">Connecting to GitHub…</div>
+      <div class="topbar__search">
+        <label class="search-label" for="studio-search" hidden>Search</label>
+        <input class="search-input" id="studio-search" type="search" placeholder="Search pages, items, releases…" aria-label="Search" hidden>
+        <button class="icon-button" id="toggle-search" type="button" title="Search">🔍</button>
+      </div>
       <div class="topbar__actions">
-        <span id="account" class="account" hidden></span>
-        <button id="login" class="button button--primary" type="button">Connect GitHub</button>
-        <button id="logout" class="button button--quiet" type="button" hidden>Sign out</button>
-        <button id="save" class="button button--primary" type="button" disabled>Save changes</button>
+        <button id="save" class="button button--primary" type="button">Save changes</button>
       </div>
     </header>
 
-    <section id="login-screen" class="login-screen" hidden>
-      <div class="login-card">
-        <span class="eyebrow">YOUR WIKI, YOUR WAY</span>
-        <h1>Welcome to Wiki Studio</h1>
-        <p>Edit the Wiki, upgrade formulas, progression, ores, runes, dungeon data, calculators and release notes. The panel saves changes to the Wiki repository and keeps restorable backups before each save.</p>
-        <button id="login-card-button" class="button button--primary button--large" type="button">Continue with GitHub</button>
-        <p class="login-note">Only GitHub accounts with write access to RI-Wiki can publish edits.</p>
-      </div>
-    </section>
-
-    <div id="workspace" class="workspace" hidden>
+    <div id="workspace" class="workspace">
       <aside class="sidebar">
         <div class="sidebar__heading">WORKSPACE</div>
         <nav class="tabs" aria-label="Content sections">

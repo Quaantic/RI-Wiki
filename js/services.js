@@ -1,7 +1,7 @@
 // ==== SERVICES: DATA PROVIDER (fonte unica de dados) + EXCEL (futuro) ====
 
 import { UPDATE_LOG, LATEST_UPDATE, setUpdateLog } from './data/update-log.js';
-import { CATEGORIES, CATEGORY_IDS, getCategory, getSubcategory } from './data/wiki-data.js';
+import { CATEGORIES, CATEGORY_IDS, CREDITS, getCategory, getSubcategory } from './data/wiki-data.js';
 import { FORMULA_SECTIONS, FORMULA_PAGE_MAP } from './data/formulas.js';
 import { STAGE_DATA, BARN_DATA, RANK_DATA, ASCENSION_DATA, LIFE_RANK_DATA, CORE_DATA } from './data/progress.js';
 import { ORE_DATA, MASTERY_DATA, LAYER_DATA } from './data/ores.js';
@@ -58,7 +58,7 @@ function replaceObject(target, source, label) {
   Object.assign(target, source);
 }
 
-function applyGameData(data) {
+export function applyGameData(data) {
   if (!data || typeof data !== 'object') throw new Error('[content] Game data is missing or invalid.');
   replaceObject(FORMULA_SECTIONS, data.upgrades?.sections, 'Upgrade sections');
   replaceObject(FORMULA_PAGE_MAP, data.upgrades?.routes, 'Upgrade page routes');
@@ -82,15 +82,17 @@ function applyGameData(data) {
   setResourceColors(data.resources?.colors, data.resources?.pageLinks);
 }
 
-export async function loadEditableContent() {
-  const [wikiContent, updateContent, gameData] = await Promise.all([
-    fetchContent('../content/wiki-data.json'),
-    fetchContent('../content/update-log.json'),
-    fetchContent('../content/game-data.json'),
-  ]);
-  const categories = wikiContent?.categories;
-  const versions = updateContent?.versions;
+function applyCredits(content) {
+  const credits = content?.credits || {};
+  const staff = Array.isArray(credits.staff) ? credits.staff : [];
+  const contributors = Array.isArray(credits.contributors) ? credits.contributors : [];
+  CREDITS.staff.splice(0, CREDITS.staff.length, ...staff);
+  CREDITS.contributors.splice(0, CREDITS.contributors.length, ...contributors);
+  CREDITS.thanks = typeof credits.thanks === 'string' ? credits.thanks : '';
+}
 
+export function applyWikiContent(wikiContent) {
+  const categories = wikiContent?.categories;
   assertUniqueIds(categories, 'Wiki categories');
   for (const category of categories) {
     if (!/^[\w-]+$/.test(category.id) || typeof category.name !== 'string'
@@ -100,6 +102,12 @@ export async function loadEditableContent() {
     const routes = new Set();
     validatePageTree(category.subcategories, category.id, routes);
   }
+  CATEGORIES.splice(0, CATEGORIES.length, ...categories);
+  CATEGORY_IDS.splice(0, CATEGORY_IDS.length, ...categories.map((category) => category.id));
+  applyCredits(wikiContent);
+}
+
+export function applyUpdateContent(versions) {
   if (!Array.isArray(versions) || !versions.length || versions.some((version) =>
     !version || typeof version.version !== 'string' || !Array.isArray(version.entries))) {
     throw new Error('[content] Update log must contain releases with a version and entries list.');
@@ -116,11 +124,19 @@ export async function loadEditableContent() {
       }
     }
   }
-
-  applyGameData(gameData);
-  CATEGORIES.splice(0, CATEGORIES.length, ...categories);
-  CATEGORY_IDS.splice(0, CATEGORY_IDS.length, ...categories.map((category) => category.id));
   setUpdateLog(versions);
+}
+
+export async function loadEditableContent() {
+  const [wikiContent, updateContent, gameData] = await Promise.all([
+    fetchContent('../content/wiki-data.json'),
+    fetchContent('../content/update-log.json'),
+    fetchContent('../content/game-data.json'),
+  ]);
+
+  applyWikiContent(wikiContent);
+  applyUpdateContent(updateContent.versions);
+  applyGameData(gameData);
 }
 
 export function setDataSource(source) {

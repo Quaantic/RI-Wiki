@@ -1,7 +1,7 @@
 // ==== APP ENTRY ====
 
 import { esc, qs } from './utils.js';
-import { initShell, initUpdateBadge } from './ui.js';
+import { initShell, initUpdateBadge, buildNav } from './ui.js';
 import { initRouter } from './router.js';
 import { LATEST_UPDATE, LATEST_UPDATE_ID } from './data/update-log.js';
 import { loadEditableContent } from './services.js';
@@ -24,6 +24,13 @@ async function boot() {
   qs('#wiki-version').textContent = `v${LATEST_UPDATE?.version || '—'}`;
   initUpdateBadge(LATEST_UPDATE_ID);
 
+  // Editor inline: reconstrói a sidebar/versão quando aplicado um rascunho.
+  window.addEventListener('ri-edit-content', () => {
+    buildNav();
+    qs('#wiki-version').textContent = `v${LATEST_UPDATE?.version || '—'}`;
+    initUpdateBadge(LATEST_UPDATE_ID);
+  });
+
   document.addEventListener('click', (e) => {
     const link = e.target.closest('.res--link');
     if (!link || !link.closest('[data-resource-links]')) return;
@@ -36,6 +43,13 @@ async function boot() {
 
   const t0 = performance.now();
   await initRouter();
+
+  try {
+    const { initEditMode } = await import('./edit/edit-mode.js');
+    initEditMode();
+  } catch (error) {
+    console.error('[main] Inline edit mode failed to start:', error);
+  }
 
   const wait = Math.max(0, 520 - (performance.now() - t0));
   setTimeout(() => {

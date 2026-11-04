@@ -3,7 +3,8 @@
 import { html, esc, qs, qsa, debounce, countUp, fmtDate, fmtValue, fmtSuffix, parseGameNumber, evalFormula, markMatches } from './utils.js';
 import { icon, emblem, categoryCard, infoCard, sectionHead, initReveal, setCrumbs, setActiveNav, markUpdateSeen } from './ui.js';
 import { dataProvider, getCategory, getSubcategory } from './services.js';
-import { CATEGORIES } from './data/wiki-data.js';
+import { CATEGORIES, CREDITS, getSubcategoryDocPath } from './data/wiki-data.js';
+import { ed } from './edit/ed-attr.js';
 import { getRuneFamily, FAMILY_COLORS } from './data/runes.js';
 import { ORE_DATA, MASTERY_DATA, getOrePage, getMasteryPage, getLayerPage } from './data/ores.js';
 import { getStagePage, getBarnPage, getRankPage, getAscensionPage, getLifeRankPage, getCorePage} from './data/progress.js';
@@ -89,13 +90,14 @@ function runePlaceholderSection(sub) {
 
 // ==== PAGINA DE ORES (onde pegar: depth, luck e layers) ====
 
-const ORE_COLORS = new Map((ORE_DATA['mining/ores']?.ores || []).map((o) => [o.name, o.color]));
 const LAYERS_LIST = () => (getLayerPage('mining', 'layers')?.layers || []);
+const oreColor = (name) => ((ORE_DATA['mining/ores']?.ores || []).find((o) => o.name === name)?.color || 'inherit');
+const itemListPath = (listPath, i) => (listPath ? `${listPath}.${i}` : '');
 
-function oreCard(o, i) {
+function oreCard(o, i, itemPath = '') {
   const mineLayers = LAYERS_LIST().filter((l) => l.ores.includes(o.name));
   return `
-    <article class="ore-card reveal" style="--reveal-delay:${Math.min(i * 50, 400)}ms">
+    <article class="ore-card reveal" ${itemPath ? ed(itemPath, 'game:ore', esc(o.name)) : ''} style="--reveal-delay:${Math.min(i * 50, 400)}ms">
       <header class="ore-card__head">
         <span class="ore-card__icon" style="color:${esc(o.color)}">${icon(o.icon, 20)}</span>
         <span class="ore-card__name" style="color:${esc(o.color)}">${esc(o.name)}</span>
@@ -112,13 +114,13 @@ function oreCard(o, i) {
     </article>`;
 }
 
-function oreTableHTML(ores) {
+function oreTableHTML(ores, listPath = '') {
   return `
     <div class="table-wrap"><table class="data-table">
       <thead><tr><th>Ore</th><th>Depth</th><th>Best luck</th></tr></thead>
       <tbody>
-        ${ores.map((o) => `
-          <tr>
+        ${ores.map((o, i) => `
+          <tr ${itemListPath(listPath, i) ? ed(itemListPath(listPath, i), 'game:ore', esc(o.name)) : ''}>
             <td class="cell-strong"><span class="ore-cell-name" style="color:${esc(o.color)}">${icon(o.icon, 14)} ${esc(o.name)}</span></td>
             <td class="num">${esc(fmtValue(o.depth))}</td>
             <td class="num">${esc(fmtValue(o.luck))}</td>
@@ -127,27 +129,27 @@ function oreTableHTML(ores) {
     </table></div>`;
 }
 
-function orePageSections(ores) {
+function orePageSections(ores, listPath = '') {
   return `
     <section class="section">
       ${sectionHead('The ores')}
       <div class="rune-grid">
-        ${ores.map((o, i) => oreCard(o, i)).join('')}
+        ${ores.map((o, i) => oreCard(o, i, itemListPath(listPath, i))).join('')}
       </div>
     </section>
 
     <section class="section">
       ${sectionHead('Where to find')}
       <p class="ore-find-note">Where each ore spawns (depth) and the luck that helps you find it.</p>
-      ${oreTableHTML(ores)}
+      ${oreTableHTML(ores, listPath)}
     </section>`;
 }
 
 // ==== PAGINA DE MASTERY (upgrades de cada ore) ====
 
-function masteryCard(o, i) {
+function masteryCard(o, i, itemPath = '') {
   return `
-    <article class="ore-card mastery-card reveal" style="--reveal-delay:${Math.min(i * 50, 400)}ms">
+    <article class="ore-card mastery-card reveal" ${itemPath ? ed(itemPath, 'game:ore', esc(o.name)) : ''} style="--reveal-delay:${Math.min(i * 50, 400)}ms">
       <header class="ore-card__head">
         <span class="ore-card__icon" style="color:${esc(o.color)}">${icon(o.icon, 20)}</span>
         <span class="ore-card__name" style="color:${esc(o.color)}">${esc(o.name)}</span>
@@ -167,21 +169,21 @@ function masteryCard(o, i) {
     </article>`;
 }
 
-function masteryPageSections(ores) {
+function masteryPageSections(ores, listPath = '') {
   return `
     <section class="section">
       ${sectionHead('Ore mastery upgrades')}
       <div class="rune-grid">
-        ${ores.map((o, i) => masteryCard(o, i)).join('')}
+        ${ores.map((o, i) => masteryCard(o, i, itemListPath(listPath, i))).join('')}
       </div>
     </section>`;
 }
 
 // ==== PAGINA DE LAYERS (camadas da mina) ====
 
-function layerCard(l, i) {
+function layerCard(l, i, itemPath = '') {
   return `
-    <article class="layer-card reveal" style="--reveal-delay:${Math.min(i * 50, 400)}ms">
+    <article class="layer-card reveal" ${itemPath ? ed(itemPath, 'game:layer', esc(l.name)) : ''} style="--reveal-delay:${Math.min(i * 50, 400)}ms">
       <header class="layer-card__head">
         <span class="layer-card__num">L${l.num}</span>
         <b class="layer-card__name">${esc(l.name)}</b>
@@ -189,24 +191,24 @@ function layerCard(l, i) {
       </header>
       <div class="layer-card__ores">
         ${l.ores.map((n) => `
-          <span class="ore-layer-chip" style="color:${esc(ORE_COLORS.get(n) || 'inherit')}">${esc(n)}</span>`).join('')}
+          <span class="ore-layer-chip" style="color:${esc(oreColor(n))}">${esc(n)}</span>`).join('')}
       </div>
     </article>`;
 }
 
-function layerPageSections(layers) {
+function layerPageSections(layers, listPath = '') {
   return `
     <section class="section">
       ${sectionHead('The layers')}
       <div class="layer-grid">
-        ${layers.map((l, i) => layerCard(l, i)).join('')}
+        ${layers.map((l, i) => layerCard(l, i, itemListPath(listPath, i))).join('')}
       </div>
     </section>`;
 }
 
 // ==== PAGINA DE TRAINING AREAS (forca / vida) ====
 
-function areaCard(a, i) {
+function areaCard(a, i, itemPath = '') {
   const row = (tier, req, mult) => `
     <div class="area-row${req == null ? ' area-row--na' : ''}">
       <span class="area-row__tier">${tier}</span>
@@ -214,7 +216,7 @@ function areaCard(a, i) {
       <span class="area-row__mult">×${mult == null ? '—' : esc(fmtValue(mult))}</span>
     </div>`;
   return `
-    <article class="area-card reveal" style="--reveal-delay:${Math.min(i * 50, 400)}ms">
+    <article class="area-card reveal" ${itemPath ? ed(itemPath, 'game:area', esc(a.name)) : ''} style="--reveal-delay:${Math.min(i * 50, 400)}ms">
       <header class="area-card__head"><b>${esc(a.name)}</b></header>
       <div class="area-card__rows">
         ${row('T1', a.reqT1, a.multiT1)}
@@ -223,12 +225,12 @@ function areaCard(a, i) {
     </article>`;
 }
 
-function trainingSections(groups) {
-  return groups.map((g) => `
+function trainingSections(groups, listPath = '') {
+  return groups.map((g, gi) => `
     <section class="section">
       ${sectionHead(g.name)}
       <div class="rune-grid area-grid">
-        ${g.areas.map((a, i) => areaCard(a, i)).join('')}
+        ${g.areas.map((a, i) => areaCard(a, i, itemListPath(listPath, gi) ? `${itemListPath(listPath, gi)}.areas.${i}` : '')).join('')}
       </div>
     </section>`).join('');
 }
@@ -257,9 +259,9 @@ function dustSections() {
 
 // ==== GEARS (swords, shield, items) ====
 
-function gearCard(g, i) {
+function gearCard(g, i, itemPath = '') {
   return `
-    <article class="gear-card reveal" style="--reveal-delay:${Math.min(i * 50, 400)}ms">
+    <article class="gear-card reveal" ${itemPath ? ed(itemPath, 'game:gear', esc(g.name)) : ''} style="--reveal-delay:${Math.min(i * 50, 400)}ms">
       <header class="gear-card__head">
         <b>${esc(g.name)}</b>
         <span class="gear-card__rarity">Rarity ${esc(fmtValue(g.rarity))}</span>
@@ -274,12 +276,12 @@ function gearCard(g, i) {
     </article>`;
 }
 
-function gearSections(gears) {
+function gearSections(gears, listPath = '') {
   return `
     <section class="section">
       ${sectionHead('The gear')}
       <div class="rune-grid">
-        ${gears.map((g, i) => gearCard(g, i)).join('')}
+        ${gears.map((g, i) => gearCard(g, i, itemListPath(listPath, i))).join('')}
       </div>
     </section>`;
 }
@@ -613,11 +615,11 @@ function upgradeTemplateSections() {
 
 // ==== PAGINA DE STAGES (Main) ====
 
-function stageCard(s, i) {
+function stageCard(s, i, itemPath = '') {
   const unlocks = s.unlocks || {};
   const hasUnlocks = Boolean(unlocks.area || unlocks.places?.length || unlocks.features?.length);
   return `
-    <article class="stage-card reveal" style="--reveal-delay:${Math.min(i * 50, 400)}ms">
+    <article class="stage-card reveal" ${itemPath ? ed(itemPath, 'game:stage', esc(s.title || `Stage ${s.num}`)) : ''} style="--reveal-delay:${Math.min(i * 50, 400)}ms">
       <header class="stage-card__head">
         <span class="stage-card__num">${esc(s.num)}</span>
         <b class="stage-card__title">${esc(s.title || `Stage ${s.num}`)}</b>
@@ -656,8 +658,8 @@ function stageCard(s, i) {
     </article>`;
 }
 
-function stagePageSections(stages, title = 'Stages', twoCol = false) {
-  const cards = stages.map((s, i) => stageCard(s, i)).join('');
+function stagePageSections(stages, title = 'Stages', twoCol = false, listPath = '') {
+  const cards = stages.map((s, i) => stageCard(s, i, itemListPath(listPath, i))).join('');
   return `
     <section class="section">
       ${sectionHead(title)}
@@ -700,8 +702,8 @@ export const homeView = {
               </div>
             </form>
             <div class="hero__chips">
-              ${CATEGORIES.map((c) => `
-                <a class="chip chip--accent" href="#/${c.id}">${icon(c.icon, 13)} ${c.name}</a>`).join('')}
+              ${CATEGORIES.map((c, i) => `
+                <a class="chip chip--accent" href="#/${c.id}" ${ed(`wiki:categories.${i}`, 'category-card', c.name)}>${icon(c.icon, 13)} ${c.name}</a>`).join('')}
             </div>
           </div>
           <div class="hero__art" aria-hidden="true">
@@ -736,7 +738,7 @@ export const homeView = {
           </div>
           <div class="upd-preview">
             ${latest.entries.slice(0, 4).map((e, i) => `
-              <div class="upd-mini upd-mini--${e.context.toLowerCase()} reveal" style="--reveal-delay:${i * 35}ms">
+              <div class="upd-mini upd-mini--${e.context.toLowerCase()} reveal" ${ed(`updates:versions.0.entries.${i}`, 'entry', esc(e.title))} style="--reveal-delay:${i * 35}ms">
                 ${icon(CONTEXT_ICONS[e.context], 17)}
                 <span><b>${esc(e.title)}</b><span>${esc(e.description)}</span></span>
               </div>`).join('')}
@@ -769,6 +771,8 @@ export const categoryView = {
   async render(root, params) {
     const cat = getCategory(params[0]);
     if (!cat) throw new Error(`Unknown category: ${params[0]}`);
+    const ci = CATEGORIES.findIndex((c) => c.id === cat.id);
+    const catPath = `wiki:categories.${ci}`;
     const overview = cat.overview || {};
     const hasOverview = overview.desc || overview.highlights?.length || overview.facts?.length;
 
@@ -780,10 +784,10 @@ export const categoryView = {
           </div>
           <div class="cat-hero__title">
             <span class="cat-hero__icon">${icon(cat.icon, 30)}</span>
-            <h1 class="cat-hero__name">${colorizeResources(esc(cat.name))}</h1>
+            <h1 class="cat-hero__name" ${ed(`${catPath}.name`, 'text', `${cat.name} · page title`)}>${colorizeResources(esc(cat.name))}</h1>
           </div>
-          <p class="cat-hero__tagline" data-resource-links>${colorizeResources(esc(cat.tagline))}</p>
-          ${cat.desc ? `<p class="cat-hero__description" data-resource-links>${colorizeResources(esc(cat.desc))}</p>` : ''}
+          <p class="cat-hero__tagline" data-resource-links ${ed(`${catPath}.tagline`, 'long', `${cat.name} · tagline`)}>${colorizeResources(esc(cat.tagline))}</p>
+          ${cat.desc ? `<p class="cat-hero__description" data-resource-links ${ed(`${catPath}.desc`, 'long', `${cat.name} · description`)}>${colorizeResources(esc(cat.desc))}</p>` : ''}
           <div class="cat-hero__facts">
             <span class="chip">${icon('layers', 13)} ${cat.subcategories.length} subsections</span>
           </div>
@@ -791,8 +795,8 @@ export const categoryView = {
         ${cat.vitals?.length ? `
         <aside class="vitals" aria-label="Key information">
           <span class="vitals__label">Key info</span>
-          ${cat.vitals.map((v) => `
-            <div class="vitals__row">
+          ${cat.vitals.map((v, vi) => `
+            <div class="vitals__row" ${ed(`${catPath}.vitals.${vi}`, 'pair', `Key info · ${esc(v.label)}`)}>
               <span class="vitals__key">${esc(v.label)}</span>
               <span class="vitals__val">${colorizeResources(esc(v.value))}</span>
             </div>`).join('')}
@@ -802,15 +806,15 @@ export const categoryView = {
       ${hasOverview ? `
       <section class="section category-overview">
         ${sectionHead('Overview')}
-        ${overview.desc ? `<p class="category-overview__desc" data-resource-links>${colorizeResources(esc(overview.desc))}</p>` : ''}
-        ${overview.facts?.length ? `<div class="cat-hero__facts">${overview.facts.map((fact) => `<span class="chip">${esc(fact.label)}: <b style="color:var(--c-text)">&nbsp;${colorizeResources(esc(fact.value))}</b></span>`).join('')}</div>` : ''}
-        ${overview.highlights?.length ? `<div class="highlight-grid">${overview.highlights.map((highlight, index) => infoCard(highlight, index)).join('')}</div>` : ''}
+        ${overview.desc ? `<p class="category-overview__desc" data-resource-links ${ed(`${catPath}.overview.desc`, 'long', `${cat.name} · overview`)}>${colorizeResources(esc(overview.desc))}</p>` : ''}
+        ${overview.facts?.length ? `<div class="cat-hero__facts">${overview.facts.map((fact, fi) => `<span class="chip" ${ed(`${catPath}.overview.facts.${fi}`, 'pair', `Overview fact · ${esc(fact.label)}`)}>${esc(fact.label)}: <b style="color:var(--c-text)">&nbsp;${colorizeResources(esc(fact.value))}</b></span>`).join('')}</div>` : ''}
+        ${overview.highlights?.length ? `<div class="highlight-grid">${overview.highlights.map((highlight, index) => infoCard(highlight, index, `${catPath}.overview.highlights.${index}`)).join('')}</div>` : ''}
       </section>` : ''}
 
       <div class="sub-pills-wrap">
         <nav class="pill-nav" aria-label="Subsections of ${esc(cat.name)}">
-          ${cat.subcategories.map((s) => `
-            <a class="pill" href="#/${cat.id}/${s.id}"><span class="pill__label">${colorizeResources(esc(s.name))}</span></a>`).join('')}
+          ${cat.subcategories.map((s, sIdx) => `
+            <a class="pill" href="#/${cat.id}/${s.id}" ${ed(`${catPath}.subcategories.${sIdx}.name`, 'text', `${s.name} · sidebar name`)}><span class="pill__label">${colorizeResources(esc(s.name))}</span></a>`).join('')}
         </nav>
       </div>
 
@@ -818,7 +822,7 @@ export const categoryView = {
         ${sectionHead('Subsections')}
         <div class="link-grid">
           ${cat.subcategories.map((s, i) => `
-            <a ${`class="sub-link reveal" style="--reveal-delay:${i * 35}ms"`} href="#/${cat.id}/${s.id}">
+            <a ${`class="sub-link reveal" style="--reveal-delay:${i * 35}ms"`}${ed(`${catPath}.subcategories.${i}`, 'sub-card', s.name)} href="#/${cat.id}/${s.id}">
               ${icon(s.icon, 19)}
               <span style="min-width:0">
                 <b>${esc(s.name)}</b>
@@ -865,6 +869,9 @@ export const subcategoryView = {
       return;
     }
     const cat = sub.category;
+    const gameKey = `${cat.id}/${sub.id}`;
+    const ci = CATEGORIES.findIndex((c) => c.id === cat.id);
+    const wikiPath = `wiki:${getSubcategoryDocPath(cat.id, sub.id)}`;
     const family = getRuneFamily(cat.id, sub.id);
     const orePage = getOrePage(cat.id, sub.id);
     const masteryPage = getMasteryPage(cat.id, sub.id);
@@ -889,27 +896,27 @@ export const subcategoryView = {
       : family?.runes?.length
       ? runeFamilySections(family.runes, sub.id)
       : orePage?.ores?.length
-        ? orePageSections(orePage.ores)
+        ? orePageSections(orePage.ores, `game:mining.ores.${gameKey}.ores`)
         : masteryPage?.ores?.length
-          ? masteryPageSections(masteryPage.ores)
+          ? masteryPageSections(masteryPage.ores, `game:mining.mastery.${gameKey}.ores`)
           : layerPage?.layers?.length
-            ? layerPageSections(layerPage.layers)
+            ? layerPageSections(layerPage.layers, `game:mining.layers.${gameKey}.layers`)
             : stagePage?.stages?.length
-              ? stagePageSections(stagePage.stages)
+              ? stagePageSections(stagePage.stages, 'Stages', false, `game:progression.stages.${gameKey}.stages`)
               : barnPage?.stages?.length
-                ? stagePageSections(barnPage.stages, 'Barns', true)
+                ? stagePageSections(barnPage.stages, 'Barns', true, `game:progression.barns.${gameKey}.stages`)
                 : rankPage?.ranks?.length
-                ? stagePageSections(rankPage.ranks, 'Ranks', true)
+                ? stagePageSections(rankPage.ranks, 'Ranks', true, `game:progression.ranks.${gameKey}.ranks`)
                 : ascensionPage?.ranks?.length
-                  ? stagePageSections(ascensionPage.ranks, 'Ascensions', true)
+                  ? stagePageSections(ascensionPage.ranks, 'Ascensions', true, `game:progression.ascensions.${gameKey}.ranks`)
                   : lifeRankPage?.ranks?.length
-                    ? stagePageSections(lifeRankPage.ranks, 'Life Ranks', true)
+                    ? stagePageSections(lifeRankPage.ranks, 'Life Ranks', true, `game:progression.lifeRanks.${gameKey}.ranks`)
                     : corePage?.ranks?.length
-                      ? stagePageSections(corePage.ranks, 'Core Ranks', true)
+                      ? stagePageSections(corePage.ranks, 'Core Ranks', true, `game:progression.cores.${gameKey}.ranks`)
                       : trainingPage?.groups?.length
-                    ? trainingSections(trainingPage.groups)
+                    ? trainingSections(trainingPage.groups, `game:dungeon.training.${gameKey}.groups`)
                     : gearPage?.gears?.length
-                      ? gearSections(gearPage.gears)
+                      ? gearSections(gearPage.gears, `game:dungeon.gear.${gameKey}.gears`)
                       : formulaPage
                         ? formulaSections(formulaPage)
                         : sub.name === 'Upgrades' && !sub.children?.length
@@ -930,18 +937,18 @@ export const subcategoryView = {
           </div>
           <div class="cat-hero__title">
             <span class="cat-hero__icon">${icon(sub.icon, 30)}</span>
-            <h1 class="cat-hero__name">${colorizeResources(esc(sub.name))}</h1>
+            <h1 class="cat-hero__name" ${ed(`${wikiPath}.name`, 'text', `${sub.name} · page title`)}>${colorizeResources(esc(sub.name))}</h1>
           </div>
-          <p class="cat-hero__tagline" data-resource-links>${colorizeResources(esc(sub.desc))}</p>
+          <p class="cat-hero__tagline" data-resource-links ${ed(`${wikiPath}.desc`, 'long', `${sub.name} · description`)}>${colorizeResources(esc(sub.desc))}</p>
           <div class="cat-hero__facts">
-            ${sub.facts.map((f) => `<span class="chip">${esc(f.label)}: <b style="color:var(--c-text)">&nbsp;${esc(f.value)}</b></span>`).join('')}
+            ${sub.facts.map((f, fi) => `<span class="chip" ${ed(`${wikiPath}.facts.${fi}`, 'pair', `Fact · ${esc(f.label)}`)}>${esc(f.label)}: <b style="color:var(--c-text)">&nbsp;${esc(f.value)}</b></span>`).join('')}
           </div>
         </div>
         ${sub.vitals?.length ? `
         <aside class="vitals" aria-label="Key information">
           <span class="vitals__label">Key info</span>
-          ${sub.vitals.map((v) => `
-            <div class="vitals__row">
+          ${sub.vitals.map((v, vi) => `
+            <div class="vitals__row" ${ed(`${wikiPath}.vitals.${vi}`, 'pair', `Key info · ${esc(v.label)}`)}>
               <span class="vitals__key">${esc(v.label)}</span>
               <span class="vitals__val">${colorizeResources(esc(v.value))}</span>
             </div>`).join('')}
@@ -950,8 +957,8 @@ export const subcategoryView = {
 
       <div class="sub-pills-wrap">
         <nav class="pill-nav" aria-label="Subsections of ${esc(cat.name)}">
-          ${cat.subcategories.map((s) => `
-            <a class="pill${s.id === sub.id || s.id === sub.parentId ? ' active' : ''}" href="#/${cat.id}/${s.id}"><span class="pill__label">${colorizeResources(esc(s.name))}</span></a>`).join('')}
+          ${cat.subcategories.map((s, sIdx) => `
+            <a class="pill${s.id === sub.id || s.id === sub.parentId ? ' active' : ''}" href="#/${cat.id}/${s.id}" ${ed(`wiki:categories.${ci}.subcategories.${sIdx}.name`, 'text', `${s.name} · sidebar name`)}><span class="pill__label">${colorizeResources(esc(s.name))}</span></a>`).join('')}
         </nav>
       </div>
 
@@ -960,7 +967,7 @@ export const subcategoryView = {
         ${sectionHead(familyBody ? `Inside ${sub.name}` : sub.name)}
         <div class="link-grid">
           ${visibleChildren.map((ch, i) => `
-            <a ${`class="sub-link reveal" style="--reveal-delay:${i * 35}ms"`} href="#/${cat.id}/${ch.id}">
+            <a ${`class="sub-link reveal" style="--reveal-delay:${i * 35}ms"`}${ed(`wiki:${getSubcategoryDocPath(cat.id, ch.id)}`, 'sub-card', ch.name)} href="#/${cat.id}/${ch.id}">
               ${icon(ch.icon, 19)}
               <span style="min-width:0">
                 <b>${colorizeResources(esc(ch.name))}</b>
@@ -976,7 +983,7 @@ export const subcategoryView = {
       <section class="section">
         ${sectionHead('Highlights')}
         <div class="highlight-grid">
-          ${sub.highlights.map((h, i) => infoCard(h, i)).join('')}
+          ${sub.highlights.map((h, i) => infoCard(h, i, `${wikiPath}.highlights.${i}`)).join('')}
         </div>
       </section>` : ''}
 
@@ -984,8 +991,8 @@ export const subcategoryView = {
           <section class="section">
             ${sectionHead('Where to next')}
             <div class="link-grid">
-              ${cat.subcategories.filter((s) => s.id !== 'overview').map((s, i) => `
-                <a ${`class="sub-link reveal" style="--reveal-delay:${i * 35}ms"`} href="#/${cat.id}/${s.id}">
+              ${cat.subcategories.map((s, sIdx) => ({ s, sIdx })).filter(({ s }) => s.id !== 'overview').map(({ s, sIdx }, i) => `
+                <a ${`class="sub-link reveal" style="--reveal-delay:${i * 35}ms"`}${ed(`wiki:${getSubcategoryDocPath(cat.id, s.id)}`, 'sub-card', s.name)} href="#/${cat.id}/${s.id}">
                   ${icon(s.icon, 19)}
                   <span style="min-width:0">
                     <b>${esc(s.name)}</b>
@@ -1190,8 +1197,10 @@ export const updatesView = {
 
   async render(root) {
     const versions = await dataProvider.getUpdateLog();
-    const displayVersions = versions.filter((version) => version.entries.length);
-    const totalEntries = displayVersions.reduce((total, version) => total + version.entries.length, 0);
+    const displayVersions = versions
+      .map((v, docIndex) => ({ v, docIndex }))
+      .filter(({ v }) => v.entries.length);
+    const totalEntries = displayVersions.reduce((total, { v }) => total + v.entries.length, 0);
 
     root.innerHTML = html`
       <header class="upd-hero">
@@ -1203,20 +1212,20 @@ export const updatesView = {
         <div class="upd-hero__stats">
           <div><b>${displayVersions.length}</b><span>Versions</span></div>
           <div><b>${totalEntries}</b><span>Updates</span></div>
-          <div><b>v${esc(displayVersions[0]?.version || '—')}</b><span>Latest</span></div>
+          <div><b>v${esc(displayVersions[0]?.v.version || '—')}</b><span>Latest</span></div>
         </div>
       </header>
 
       <nav class="upd-filters" aria-label="Filter update categories">
         <button class="upd-filter is-active" type="button" data-update-filter="all">All <b>${totalEntries}</b></button>
         ${CONTEXTS.map((ctx) => {
-          const count = displayVersions.reduce((total, version) => total + version.entries.filter((entry) => entry.context === ctx.id).length, 0);
+          const count = displayVersions.reduce((total, { v }) => total + v.entries.filter((entry) => entry.context === ctx.id).length, 0);
           return `<button class="upd-filter upd-filter--${ctx.cls}" type="button" data-update-filter="${ctx.id}">${icon(ctx.icon, 14)} ${ctx.label} <b>${count}</b></button>`;
         }).join('')}
       </nav>
 
-      ${displayVersions.map((v, vi) => `
-        <section class="upd-version reveal" data-update-version style="--reveal-delay:${Math.min(vi * 55, 400)}ms">
+      ${displayVersions.map(({ v, docIndex }, vi) => `
+        <section class="upd-version reveal" ${ed(`updates:versions.${docIndex}`, 'version', `Release ${v.version}`)} data-update-version style="--reveal-delay:${Math.min(vi * 55, 400)}ms">
           <div class="upd-version__head">
             <div class="upd-version__identity">
               <span class="upd-version__eyebrow">Release</span>
@@ -1228,13 +1237,15 @@ export const updatesView = {
           </div>
 
           ${CONTEXTS.map((ctx) => {
-            const entries = v.entries.filter((e) => e.context === ctx.id);
+            const entries = v.entries
+              .map((e, entryIndex) => ({ e, entryIndex }))
+              .filter(({ e }) => e.context === ctx.id);
             if (!entries.length) return '';
             return `
               <section class="upd-group upd-group--${ctx.cls}" data-update-group="${ctx.id}">
                 <div class="upd-group__label">${icon(ctx.icon, 14)} ${ctx.label}</div>
-                ${entries.map((e) => `
-                  <article class="upd-entry" data-resource-links>
+                ${entries.map(({ e, entryIndex }) => `
+                  <article class="upd-entry" ${ed(`updates:versions.${docIndex}.entries.${entryIndex}`, 'entry', esc(e.title))} data-resource-links>
                     ${icon(ctx.icon, 16)}
                     <div>
                       ${e.href
@@ -1288,25 +1299,13 @@ export const notFoundView = {
 
 // ==== CREDITS ====
 
-const CREDITS = {
-  staff: [
-    { name: 'Zeno', handle: 'im_zenoir', role: 'Web Designer · Wiki Manager', avatar: 'images/credits/zeno.png', banner: '#86D62B' },
-    { name: 'Zinss', handle: 'zinss', role: 'Wiki Manager', avatar: 'images/credits/zinss.png', banner: '#E05252' },
-  ],
-  contributors: [
-    { name: 'Qbeekr', avatar: 'images/credits/qbeekr.png', banner: '#F5D442' },
-    { name: 'Azure', avatar: 'images/credits/azure.png', banner: '#4A9DE8' },
-    { name: 'Otter', avatar: 'images/credits/otter.png', banner: '#1A1D1F' },
-  ],
-};
-
 function initials(name = '') {
   return name.split(/[\s_-]+/).filter(Boolean).slice(0, 2).map((w) => w[0].toUpperCase()).join('');
 }
 
-function profileCard(p, i, featured = false) {
+function profileCard(p, i, featured = false, listPath = '') {
   return `
-    <article class="credit-card${featured ? ' credit-card--featured' : ''} reveal" style="--reveal-delay:${Math.min(i * 50, 400)}ms">
+    <article class="credit-card${featured ? ' credit-card--featured' : ''} reveal" ${listPath ? ed(`${listPath}.${i}`, 'credit', esc(p.name)) : ''} style="--reveal-delay:${Math.min(i * 50, 400)}ms">
       <div class="credit-card__banner" style="--banner:${esc(p.banner || 'var(--c-accent)')}"></div>
       <div class="credit-card__avatar">
         <span class="credit-card__fallback">${initials(p.name)}</span>
@@ -1333,15 +1332,15 @@ export const creditsView = {
       </div>
 
       <section class="section credits-grid">
-        ${CREDITS.staff.map((p, i) => profileCard(p, i, true)).join('')}
-        ${CREDITS.contributors.map((p, i) => profileCard(p, CREDITS.staff.length + i)).join('')}
+        ${CREDITS.staff.map((p, i) => profileCard(p, i, true, 'wiki:credits.staff')).join('')}
+        ${CREDITS.contributors.map((p, i) => profileCard(p, i, false, 'wiki:credits.contributors')).join('')}
       </section>
 
-      <div class="callout callout--tip credits-thanks reveal" style="--reveal-delay:160ms">
+      <div class="callout callout--tip credits-thanks reveal" style="--reveal-delay:160ms" ${ed('wiki:credits.thanks', 'long', 'Special thanks')}>
         ${icon('heart', 18)}
         <div>
           <span class="callout__title">Special thanks</span>
-          To everyone in the RI Gaming community logging drops and sharing finds — this wiki runs on that.
+          ${CREDITS.thanks}
         </div>
       </div>
     `;

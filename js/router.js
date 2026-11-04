@@ -28,6 +28,7 @@ function parseHash() {
 }
 
 let renderSeq = 0;
+let pendingScrollAfterRender = null;
 
 async function renderView(view, params, query) {
   const seq = ++renderSeq;
@@ -65,7 +66,13 @@ async function renderView(view, params, query) {
     container.classList.add('page-flash');
     setTimeout(() => container.classList.remove('page-flash'), 1000);
   }
-  window.scrollTo({ top: 0, behavior: 'instant' });
+  if (pendingScrollAfterRender === 'preserve') {
+    pendingScrollAfterRender = null;
+  } else {
+    const target = pendingScrollAfterRender?.top;
+    pendingScrollAfterRender = null;
+    window.scrollTo({ top: target ?? 0, behavior: 'instant' });
+  }
   resetReveal();
   initReveal(container);
 }
@@ -79,6 +86,27 @@ async function navigate(path, query) {
     }
   }
   await renderView(notFoundView, [path], query);
+}
+
+/**
+ * Re-renders the current page in place without recreating browser history.
+ * Usado pelo modo de edicao para refletir conteudo salvo sem recarregar.
+ * @param {{ scroll?: 'top' | 'preserve', scrollTop?: number }} [opts]
+ */
+export async function rerender(opts = {}) {
+  const { path, query } = parseHash();
+  pendingScrollAfterRender = opts.scroll === 'preserve'
+    ? 'preserve'
+    : { top: opts.scrollTop ?? null };
+  for (const route of ROUTES) {
+    const match = path.match(route.pattern);
+    if (match) {
+      await renderView(route.view, match.slice(1), query);
+      return true;
+    }
+  }
+  await renderView(notFoundView, [path], query);
+  return true;
 }
 
 export async function initRouter() {
