@@ -949,7 +949,7 @@ export const subcategoryView = {
                             ? dustSections()
                             : (cat.id === 'runes' ? runePlaceholderSection(sub) : '');
     const showChildrenSection = visibleChildren.length > 0
-      || document.documentElement.classList.contains('ri-edit-bar');
+      || document.documentElement.classList.contains('ri-edit-on');
 
     window.__riPageNames = [cat.name, sub.name, ...(sub.parentChain || []).map((p) => p.name)];
 

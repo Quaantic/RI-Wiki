@@ -401,6 +401,66 @@ html.ri-edit-bar .sub-pills-wrap {
   outline-offset: -2px;
   background: var(--c-accent-soft, rgba(168, 239, 69, 0.12)) !important;
 }
+/* Linha de insercao: soltar entre dois itens = reordenar. */
+.ri-drop-before { box-shadow: inset 0 3px 0 0 var(--c-accent); }
+.ri-drop-after { box-shadow: inset 0 -3px 0 0 var(--c-accent); }
+
+/* ---------- Cores dos recursos ---------- */
+
+.ri-color-note {
+  font-size: 12px;
+  color: var(--c-text-3);
+  margin: 0 0 10px;
+  line-height: 1.45;
+}
+.ri-color-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--c-border);
+}
+.ri-color-row__swatch {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--c-border);
+  border-radius: 8px;
+  background: none;
+  cursor: pointer;
+}
+.ri-color-row__main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.ri-color-row__main b { font-size: 12.5px; letter-spacing: 0.2px; }
+.ri-color-row__main .input { font-size: 12px; padding: 4px 8px; }
+.ri-color-row__remove {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border: 1px solid var(--c-border);
+  border-radius: 8px;
+  background: none;
+  color: var(--c-text-3);
+  cursor: pointer;
+}
+.ri-color-row__remove:hover { color: #ff9d9d; border-color: #ff9d9d; }
+.ri-color-row__empty { font-size: 12px; color: var(--c-text-3); padding: 6px 0; margin: 0; }
+.ri-color-add {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+.ri-color-add .input { flex: 1; min-width: 0; font-size: 12.5px; }
 
 .ri-edit-popover__delete { flex: none; }
 .ri-edit-popover__delete[hidden] { display: none !important; }

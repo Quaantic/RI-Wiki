@@ -742,6 +742,13 @@ async function applyPopover() {
     await applyManageAdd();
     return;
   }
+  if (popState.colors) {
+    // As cores sao aplicadas ao vivo a cada mudanca; o Apply apenas fecha.
+    closePopover(true);
+    updateToolbar();
+    notify('Colors applied. Remember to save/publish.');
+    return;
+  }
   const state = popState;
   const applyButton = layer.popover.querySelector('[data-edit-pop-apply]');
   applyButton.disabled = true;
@@ -861,9 +868,11 @@ function installSidebarTools() {
     box.innerHTML = `
       <button type="button" class="ri-nav-tool" data-ri-nav-tool="add">${icon('plus', 14)} Add pages</button>
       <button type="button" class="ri-nav-tool" data-ri-nav-tool="drag" aria-pressed="false">${icon('folder-tree', 14)} Reorder / nest</button>
-      <small class="ri-nav-tools__hint" hidden>Drag page names: drop onto a page to place it after, onto a category to move inside it. Only in Edit mode.</small>`;
+      <button type="button" class="ri-nav-tool" data-ri-nav-tool="colors">${icon('palette', 14)} Colors</button>
+      <small class="ri-nav-tools__hint" hidden>Drag a page between two items to reposition it. Drop it on the middle of a category header to make it a child of that category. Only in Edit mode.</small>`;
     nav.appendChild(box);
     box.querySelector('[data-ri-nav-tool="add"]').addEventListener('click', () => openManageAdd());
+    box.querySelector('[data-ri-nav-tool="colors"]').addEventListener('click', () => openColorsManager());
     box.querySelector('[data-ri-nav-tool="drag"]').addEventListener('click', () => {
       dragArmed = !dragArmed;
       if (!dragArmed) {
@@ -875,6 +884,145 @@ function installSidebarTools() {
     bindSidebarDnd(nav);
   }
   applyDragMode();
+}
+
+// ==== GERENCIADOR DE CORES DOS RECURSOS ====
+// Cada recurso tem uma cor (resources.colors.<nome>) e um link opcional
+// (resources.pageLinks.<nome>) que transforma o nome em atalho para a pagina.
+
+const RESERVED_KEYS = ['__proto__', 'constructor', 'prototype'];
+
+function hexTo6(hex) {
+  let h = String(hex || '').replace('#', '').trim();
+  if (h.length === 3) h = [...h].map((c) => c + c).join('');
+  else if (h.length === 4) h = h.slice(0, 3).split('').map((c) => c + c).join('');
+  else if (h.length === 8) h = h.slice(0, 6);
+  return `#${h.toLowerCase()}`;
+}
+
+function resourceLinkOptions(selected) {
+  const options = ['<option value="">No page link</option>'];
+  for (const cat of CATEGORIES) {
+    const base = `#/${cat.id}`;
+    options.push(`<option value="${base}"${selected === base ? ' selected' : ''}>${esc(cat.name)} (category)</option>`);
+    for (const s of cat.subcategories || []) {
+      const route = `${base}/${s.id}`;
+      options.push(`<option value="${route}"${selected === route ? ' selected' : ''}>${esc(cat.name)} › ${esc(s.name)}</option>`);
+      for (const ch of s.children || []) {
+        const childRoute = `${base}/${ch.id}`;
+        options.push(`<option value="${childRoute}"${selected === childRoute ? ' selected' : ''}>${esc(cat.name)} › ${esc(ch.name)}</option>`);
+      }
+    }
+  }
+  return options.join('');
+}
+
+function renderColorsRows() {
+  const body = qs('[data-edit-pop-body]', layer.popover);
+  if (!body || !popState?.colors) return;
+  const list = qs('[data-ri-color-list]', body);
+  if (!list) return;
+  list.innerHTML = '';
+  const names = Object.keys(locate(draft.doc('game'), 'resources.colors') || {})
+    .sort((a, b) => a.localeCompare(b));
+  if (!names.length) {
+    const empty = document.createElement('p');
+    empty.className = 'ri-color-row__empty';
+    empty.textContent = 'No colored resources yet. Add one below.';
+    list.appendChild(empty);
+  }
+  for (const name of names) {
+    const color = hexTo6(locate(draft.doc('game'), `resources.colors.${name}`) || '#ffffff');
+    const link = locate(draft.doc('game'), `resources.pageLinks.${name}`) || '';
+    const row = document.createElement('div');
+    row.className = 'ri-color-row';
+    row.innerHTML = `
+      <input type="color" class="ri-color-row__swatch" value="${esc(color)}" data-ri-color-swatch aria-label="${esc(name)} color">
+      <div class="ri-color-row__main">
+        <b style="color:${esc(color)}">${esc(name)}</b>
+        <select class="input" data-ri-color-link aria-label="${esc(name)} page link">${resourceLinkOptions(link)}</select>
+      </div>
+      <button type="button" class="ri-color-row__remove" data-ri-color-remove title="Remove this resource">${icon('trash-2', 13)}</button>`;
+    row.querySelector('[data-ri-color-swatch]').addEventListener('change', (event) => {
+      applyResourceChange(name, { color: event.target.value });
+      row.querySelector('b').style.color = event.target.value;
+    });
+    row.querySelector('[data-ri-color-link]').addEventListener('change', (event) => {
+      applyResourceChange(name, { link: event.target.value });
+    });
+    row.querySelector('[data-ri-color-remove]').addEventListener('click', () => {
+      if (!window.confirm(`Remove "${name}" from the colored resources?`)) return;
+      applyResourceChange(name, { color: undefined, link: undefined });
+      renderColorsRows();
+    });
+    list.appendChild(row);
+  }
+}
+
+function openColorsManager() {
+  if (!session.ready || !session.allowed) return;
+  if (popState) closePopover(true);
+  if (!session.editing) setEditing(true);
+  popState = { colors: true, label: 'Colors' };
+  const body = qs('[data-edit-pop-body]', layer.popover);
+  const title = qs('[data-edit-pop-title]', layer.popover);
+  const warn = qs('[data-edit-pop-warn]', layer.popover);
+  title.textContent = 'Resource colors & links';
+  warn.hidden = true;
+  const deleteBtn = qs('[data-edit-pop-delete]', layer.popover);
+  if (deleteBtn) deleteBtn.hidden = true;
+
+  body.innerHTML = `
+    <p class="ri-color-note">Each entry colors the resource name everywhere in texts and can link it to a wiki page.</p>
+    <div data-ri-color-list></div>
+    <div class="ri-color-add">
+      <input type="text" class="input" data-ri-color-name placeholder="Resource name (ex.: Bone Dust)">
+      <input type="color" class="ri-color-row__swatch" data-ri-color-new-color value="#86d62b" aria-label="New resource color">
+      <button type="button" class="btn btn--ghost btn--sm" data-ri-color-add>${icon('plus', 13)} Add</button>
+    </div>`;
+
+  const addResource = () => {
+    const nameIn = qs('[data-ri-color-name]', body);
+    const colorIn = qs('[data-ri-color-new-color]', body);
+    const name = (nameIn?.value || '').trim();
+    const fail = (msg) => { warn.textContent = msg; warn.hidden = false; };
+    if (name.length < 2) return fail('Give the resource a name (2+ letters).');
+    if (name.includes('.')) return fail('The resource name cannot contain dots.');
+    if (RESERVED_KEYS.includes(name)) return fail('That name is not allowed.');
+    const colorsNow = locate(draft.doc('game'), 'resources.colors') || {};
+    if (Object.keys(colorsNow).some((k) => k.toLowerCase() === name.toLowerCase())) {
+      return fail(`"${name}" is already listed.`);
+    }
+    draft.setValue('game', `resources.colors.${name}`, colorIn?.value || '#86d62b');
+    draft.applyDraftToSite();
+    void rerender({ scroll: 'preserve' });
+    updateToolbar();
+    warn.hidden = true;
+    nameIn.value = '';
+    renderColorsRows();
+  };
+
+  qs('[data-ri-color-add]', body).addEventListener('click', addResource);
+  qs('[data-ri-color-name]', body).addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') { event.preventDefault(); addResource(); }
+  });
+
+  renderColorsRows();
+  layer.popover.hidden = false;
+}
+
+// Aplica a mudanca de um recurso (cor e/ou link) e reflete na hora.
+// undefined remove a chave do rascunho (o undo guarda o valor anterior).
+function applyResourceChange(name, { color, link } = {}) {
+  if (color !== undefined) draft.setValue('game', `resources.colors.${name}`, color);
+  if (link !== undefined) draft.setValue('game', `resources.pageLinks.${name}`, link || undefined);
+  if (color === undefined && link === undefined) {
+    draft.setValue('game', `resources.colors.${name}`, undefined);
+    draft.setValue('game', `resources.pageLinks.${name}`, undefined);
+  }
+  draft.applyDraftToSite();
+  void rerender({ scroll: 'preserve' });
+  updateToolbar();
 }
 
 // Popover de criação: nova categoria ou nova página dentro de uma categoria.
@@ -1040,18 +1188,29 @@ function slotFor(kind, catId, subId) {
   return { parentPath: segments.slice(0, -1).join('.'), index: Number(segments.at(-1)) };
 }
 
-function resolveDropTarget(target) {
-  const subItem = target.closest('[data-sub]');
-  if (subItem) return { type: 'sub-after', catId: subItem.closest('.nav-group')?.dataset.cat, subId: subItem.dataset.sub };
-  const catItem = target.closest('.nav-item[data-cat]');
-  if (catItem) return { type: 'cat', catId: catItem.dataset.cat };
-  if (target.closest('.sidebar__label')) return { type: 'top' };
-  return null;
+function clearDndMarks() {
+  qsa('.ri-drop-on, .ri-drop-before, .ri-drop-after, .ri-drag-src', document)
+    .forEach((el) => el.classList.remove('ri-drop-on', 'ri-drop-before', 'ri-drop-after', 'ri-drag-src'));
+  dropTarget = null;
 }
 
-function clearDndMarks() {
-  qsa('.ri-drop-on, .ri-drag-src').forEach((el) => el.classList.remove('ri-drop-on', 'ri-drag-src'));
-  dropTarget = null;
+// Zona do cursor sobre o alvo: antes/depois (reordenar) ou dentro (nestar).
+function dropBand(el, clientY) {
+  const rect = el.getBoundingClientRect();
+  const y = (clientY - rect.top) / Math.max(rect.height, 1);
+  if (y < 0.32) return 'before';
+  if (y > 0.68) return 'after';
+  return 'inside';
+}
+
+function markDrop(el, band) {
+  qsa('.ri-drop-on, .ri-drop-before, .ri-drop-after', navEl()).forEach((x) => {
+    x.classList.remove('ri-drop-on', 'ri-drop-before', 'ri-drop-after');
+  });
+  if (!el) return;
+  if (band === 'inside') el.classList.add('ri-drop-on');
+  else if (band === 'before') el.classList.add('ri-drop-before');
+  else if (band === 'after') el.classList.add('ri-drop-after');
 }
 
 function bindSidebarDnd(nav) {
@@ -1081,17 +1240,34 @@ function bindSidebarDnd(nav) {
 
   nav.addEventListener('dragover', (event) => {
     if (!dragArmed || !dragSource || !session.editing) return;
-    const info = resolveDropTarget(event.target);
-    if (!info) return;
+    const subItem = event.target.closest('[data-sub]');
+    const catItem = subItem ? null : event.target.closest('.nav-item[data-cat]');
+    const labelItem = !subItem && !catItem ? event.target.closest('.sidebar__label') : null;
+    if (!subItem && !catItem && !labelItem) return;
     event.preventDefault();
     event.dataTransfer.dropEffect = 'move';
-    dropTarget = {
-      info,
-      src: dragSource,
-      el: event.target.closest('.nav-item[data-cat], [data-sub], .sidebar__label'),
-    };
-    qsa('.ri-drop-on', nav).forEach((el) => el.classList.remove('ri-drop-on'));
-    dropTarget.el?.classList.add('ri-drop-on');
+    let info = null;
+    let el = null;
+    if (subItem) {
+      // Paginas so reordenam (antes/depois). Atravessar categorias continua funcando.
+      info = {
+        type: 'sub',
+        catId: subItem.closest('.nav-group')?.dataset.cat,
+        subId: subItem.dataset.sub,
+        pos: dropBand(subItem, event.clientY) === 'before' ? 'before' : 'after',
+      };
+      el = subItem;
+    } else if (catItem) {
+      // Ponta = reordenar a categoria; meio = nestar dentro dela.
+      const band = dropBand(catItem, event.clientY);
+      info = { type: 'cat', catId: catItem.dataset.cat, pos: band === 'inside' ? 'inside' : band };
+      el = catItem;
+    } else {
+      info = { type: 'top' };
+      el = labelItem;
+    }
+    dropTarget = { info, src: dragSource, el };
+    markDrop(el, info.type === 'top' ? 'inside' : info.pos);
   });
 
   nav.addEventListener('drop', (event) => {
@@ -1106,37 +1282,77 @@ function bindSidebarDnd(nav) {
   });
 }
 
+// Converte uma categoria em pagina (children) para poder nasar dentro de outra.
+// Feita como um setValue proprio no historico: o undo restaura o formato original.
+function planCategoryToPage(srcIndex, targetCatIndex, toIndex) {
+  const cat = locate(draft.doc('wiki'), `categories.${srcIndex}`);
+  if (!cat) throw new Error('The category vanished from the list. Try again.');
+  if (cat.id === CATEGORIES[targetCatIndex]?.id) throw new Error('Pick a different category.');
+  const converted = {
+    id: cat.id,
+    name: cat.name,
+    icon: cat.icon || 'sparkles',
+    desc: cat.desc || cat.tagline || 'Describe this page here.',
+    tagline: cat.tagline || '',
+    children: Array.isArray(cat.subcategories) ? cat.subcategories : [],
+    highlights: Array.isArray(cat.overview?.highlights) ? cat.overview.highlights : [],
+    facts: Array.isArray(cat.overview?.facts) ? cat.overview.facts : [],
+    vitals: Array.isArray(cat.vitals) ? cat.vitals : [],
+  };
+  return {
+    converts: [{ path: `categories.${srcIndex}`, value: converted }],
+    move: {
+      fromPath: 'categories',
+      fromIndex: srcIndex,
+      toPath: `categories.${targetCatIndex}.subcategories`,
+      toIndex,
+    },
+    dstCatId: CATEGORIES[targetCatIndex]?.id,
+  };
+}
+
 async function runHierarchyDrop(src, target) {
   const srcSlot = slotFor(src.kind, src.catId, src.subId);
   if (!srcSlot) { notify('The page to move vanished from the list. Try again.', true); return; }
 
-  let dst = null;
+  let plan = null;
   let dstCatId = src.catId;
   if (target.type === 'top') {
     if (src.kind !== 'cat') { notify('Only categories can sit at the top level (use /admin/ for deeper moves).', true); return; }
-    dst = { parentPath: 'categories', index: 0 };
-    dstCatId = src.catId;
+    plan = { move: { fromPath: 'categories', fromIndex: srcSlot.index, toPath: 'categories', toIndex: 0 }, dstCatId: src.catId };
   } else if (target.type === 'cat') {
     const ti = CATEGORIES.findIndex((c) => c.id === target.catId);
     if (ti === -1) { notify('The target category vanished. Try again.', true); return; }
-    if (src.kind === 'cat') {
-      if (src.catId === target.catId) return;
-      dst = { parentPath: 'categories', index: ti + 1 };
+    if (target.pos === 'inside') {
+      if (src.kind === 'cat') {
+        if (src.catId === target.catId) return;
+        const inside = locate(draft.doc('wiki'), `categories.${ti}.subcategories`) || [];
+        plan = planCategoryToPage(srcSlot.index, ti, inside.length);
+      } else {
+        const insidePath = `categories.${ti}.subcategories`;
+        if (srcSlot.parentPath === insidePath) return;
+        const inside = locate(draft.doc('wiki'), insidePath) || [];
+        plan = { move: { fromPath: srcSlot.parentPath, fromIndex: srcSlot.index, toPath: insidePath, toIndex: inside.length }, dstCatId: target.catId };
+      }
+      dstCatId = plan.dstCatId;
     } else {
-      dst = { parentPath: `categories.${ti}.subcategories`, index: (locate(draft.doc('wiki'), `categories.${ti}.subcategories`) || []).length };
-      dstCatId = target.catId;
+      if (src.kind !== 'cat') { notify('Drop onto the middle of the category header to nest this page inside it.', true); return; }
+      if (src.catId === target.catId) return;
+      plan = { move: { fromPath: 'categories', fromIndex: srcSlot.index, toPath: 'categories', toIndex: target.pos === 'before' ? ti : ti + 1 }, dstCatId: src.catId };
     }
   } else {
-    if (src.kind === 'cat') { notify('Turning a category into a subpage is done in /admin/ (Content Studio).', true); return; }
+    if (src.kind === 'cat') { notify('Drop the category on a category header (middle = nest inside) instead.', true); return; }
     const dstSlot = slotFor('sub', target.catId, target.subId);
     if (!dstSlot) { notify('The target page vanished. Try again.', true); return; }
     if (dstSlot.parentPath === srcSlot.parentPath && dstSlot.index === srcSlot.index) return;
-    dst = { parentPath: dstSlot.parentPath, index: dstSlot.index + 1 };
-    dstCatId = target.catId;
+    const toIndex = target.pos === 'before' ? dstSlot.index : dstSlot.index + 1;
+    if (dstSlot.parentPath === srcSlot.parentPath && toIndex === srcSlot.index) return;
+    plan = { move: { fromPath: srcSlot.parentPath, fromIndex: srcSlot.index, toPath: dstSlot.parentPath, toIndex }, dstCatId: target.catId };
   }
 
   try {
-    draft.moveValue('wiki', srcSlot.parentPath, srcSlot.index, dst.parentPath, dst.index);
+    for (const conv of plan.converts || []) draft.setValue('wiki', conv.path, conv.value);
+    draft.moveValue('wiki', plan.move.fromPath, plan.move.fromIndex, plan.move.toPath, plan.move.toIndex);
     draft.applyDraftToSite();
     buildNav();
     applyDragMode();
