@@ -32,24 +32,6 @@
             ]
           },
           {
-            "id": "eternal-shards",
-            "name": "Eternal Shards",
-            "icon": "fuck",
-            "desc": "Eternal Shards are the premium slow currency. They accumulate automatically in real time and can also be bought with Robux. Their main use is skipping resets: pay shards to rank up Stage, Terraform, Dungeon, Barn or Tree Ascension without losing progress. They also buy the 21 Eternal Tree upgrades and store potions.",
-            "highlights": [],
-            "facts": [],
-            "children": [
-              {
-                "id": "eternal-tree",
-                "name": "Eternal Tree",
-                "icon": "branch",
-                "desc": "The Eternal Tree is a chain of 21 upgrades paid in Eternal Shards, with each node requiring the previous one. Its upgrades multiply Base Energy, Energy, Crystals, Life Shards, Logs, Pickaxe Damage, Ores, special crystal and Energy stats, Apples, XP, Perks, Eternal Shards, Life Gems, Money, Research, Golden Research, Prestige Points, Gold Bars and Emerald Coins. It is a long-term reward for saving shards.",
-                "highlights": [],
-                "facts": []
-              }
-            ]
-          },
-          {
             "id": "energy",
             "name": "Energy",
             "icon": "spark",
@@ -1547,6 +1529,24 @@
         "icon": "blend",
         "vitals": [],
         "subcategories": [
+          {
+            "id": "eternal-shards",
+            "name": "Eternal Shards",
+            "icon": "fuck",
+            "desc": "Eternal Shards are the premium slow currency. They accumulate automatically in real time and can also be bought with Robux. Their main use is skipping resets: pay shards to rank up Stage, Terraform, Dungeon, Barn or Tree Ascension without losing progress. They also buy the 21 Eternal Tree upgrades and store potions.",
+            "highlights": [],
+            "facts": [],
+            "children": [
+              {
+                "id": "eternal-tree",
+                "name": "Eternal Tree",
+                "icon": "branch",
+                "desc": "The Eternal Tree is a chain of 21 upgrades paid in Eternal Shards, with each node requiring the previous one. Its upgrades multiply Base Energy, Energy, Crystals, Life Shards, Logs, Pickaxe Damage, Ores, special crystal and Energy stats, Apples, XP, Perks, Eternal Shards, Life Gems, Money, Research, Golden Research, Prestige Points, Gold Bars and Emerald Coins. It is a long-term reward for saving shards.",
+                "highlights": [],
+                "facts": []
+              }
+            ]
+          },
           {
             "id": "Gamepasses",
             "name": "Gamepasses",
