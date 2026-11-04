@@ -1,6 +1,6 @@
 // ==== EDIT MODE: sessao, barra, chips e popover de edicao inline ====
 
-import { esc, qs } from '../utils.js';
+import { esc, qs, qsa } from '../utils.js';
 import { icon } from '../ui.js';
 import {
   githubRequest,
@@ -11,8 +11,13 @@ import {
   hasWriteAccess,
 } from '../github.js';
 import { CONTEXTS } from '../content-schema.js';
+import { LUCIDE_ICONS } from '../lib/lucide-data.js';
+import { CATEGORIES, getSubcategory, getSubcategoryDocPath } from '../data/wiki-data.js';
+import { buildNav } from '../ui.js';
 import * as draft from './draft.js';
 import { rerender } from '../router.js';
+
+const LUCIDE_ICON_NAMES = Object.keys(LUCIDE_ICONS);
 
 const TOKEN_KEY = 'ri-edit-token';
 
@@ -70,20 +75,20 @@ const SCHEMAS = {
   ],
   card: [
     { key: 'title', label: 'Title', type: 'line' },
-    { key: 'icon', label: 'Icon name (lucide)', type: 'line', mono: true },
+    { key: 'icon', label: 'Icon (lucide)', type: 'line', mono: true, picker: 'icon' },
     { key: 'text', label: 'Text', type: 'area' },
   ],
   'category-card': [
     { key: 'id', label: 'URL id (letters, numbers, -)', type: 'line', mono: true },
     { key: 'name', label: 'Name', type: 'line' },
     { key: 'tagline', label: 'Tagline', type: 'area' },
-    { key: 'icon', label: 'Icon name (lucide)', type: 'line', mono: true },
+    { key: 'icon', label: 'Icon (lucide)', type: 'line', mono: true, picker: 'icon' },
   ],
   'sub-card': [
     { key: 'id', label: 'URL id (letters, numbers, -)', type: 'line', mono: true },
     { key: 'name', label: 'Name', type: 'line' },
     { key: 'desc', label: 'Description', type: 'area' },
-    { key: 'icon', label: 'Icon name (lucide)', type: 'line', mono: true },
+    { key: 'icon', label: 'Icon (lucide)', type: 'line', mono: true, picker: 'icon' },
   ],
   entry: [
     { key: 'context', label: 'Category', type: 'select', options: () => CONTEXTS.map((id) => ({ id, label: id })) },
@@ -104,7 +109,7 @@ const SCHEMAS = {
   ],
   'game:ore': [
     { key: 'name', label: 'Name', type: 'line' },
-    { key: 'icon', label: 'Icon name (lucide)', type: 'line', mono: true },
+    { key: 'icon', label: 'Icon (lucide)', type: 'line', mono: true, picker: 'icon' },
     { key: 'color', label: 'Color (CSS color)', type: 'line', mono: true },
     { key: 'depth', label: 'Depth', type: 'line' },
     { key: 'luck', label: 'Best luck', type: 'line' },
@@ -144,7 +149,7 @@ const SCHEMAS = {
   ],
   'game:rune': [
     { key: 'name', label: 'Name', type: 'line' },
-    { key: 'icon', label: 'Icon name (lucide)', type: 'line', mono: true },
+    { key: 'icon', label: 'Icon (lucide)', type: 'line', mono: true, picker: 'icon' },
     { key: 'luck', label: 'Recommended luck', type: 'line' },
     { key: 'baseChance', label: 'Base chance', type: 'line' },
     { key: 'recChance', label: 'Chance at rec. luck', type: 'line' },
@@ -222,6 +227,7 @@ function updateToolbar() {
     : '';
 
   layer.bar.querySelector('[data-edit-toggle]').disabled = !ready;
+  layer.bar.querySelector('[data-edit-undo]').disabled = !ready || !draft.canUndo();
   layer.bar.querySelector('[data-edit-save]').disabled = !ready;
   layer.bar.querySelector('[data-edit-publish]').disabled = !ready;
   layer.bar.querySelector('[data-edit-discard]').disabled = !ready;
@@ -251,6 +257,7 @@ function buildToolbar() {
     <button class="btn btn--ghost btn--sm" data-edit-toggle title="Toggle between edit and preview (Alt+E)">
       <span data-edit-mode-label>Edit</span>
     </button>
+    <button class="btn btn--ghost btn--sm" data-edit-undo title="Undo the last change in the draft (Ctrl+Z)">${icon('undo-2', 13)} Undo</button>
     <button class="btn btn--ghost btn--sm" data-edit-save title="Save a draft on GitHub so no change is lost">${icon('save', 13)} Save draft</button>
     <button class="btn btn--ghost btn--sm" data-edit-discard title="Discard the draft and return to the published content">${icon('rotate-ccw', 13)} Discard</button>
     <button class="btn btn--primary btn--sm" data-edit-publish title="Publish the changes to the live Wiki (creates a backup first)">${icon('upload', 13)} Publish</button>
@@ -259,7 +266,7 @@ function buildToolbar() {
   document.body.appendChild(layer.bar);
 
   layer.bar.addEventListener('click', (event) => {
-    const action = event.target.closest('[data-edit-toggle],[data-edit-save],[data-edit-publish],[data-edit-discard],[data-edit-signout]');
+    const action = event.target.closest('[data-edit-toggle],[data-edit-undo],[data-edit-save],[data-edit-publish],[data-edit-discard],[data-edit-signout]');
     if (!action) return;
     onToolbarAction(action);
   });
@@ -324,15 +331,21 @@ function buildToolbar() {
 function onToolbarAction(button) {
   const act = button.getAttribute('data-edit-toggle') != null
     ? 'toggle'
-    : button.getAttribute('data-edit-save') != null
-      ? 'save'
-      : button.getAttribute('data-edit-publish') != null
-        ? 'publish'
-        : button.getAttribute('data-edit-discard') != null
-          ? 'discard'
-          : 'signout';
+    : button.getAttribute('data-edit-undo') != null
+      ? 'undo'
+      : button.getAttribute('data-edit-save') != null
+        ? 'save'
+        : button.getAttribute('data-edit-publish') != null
+          ? 'publish'
+          : button.getAttribute('data-edit-discard') != null
+            ? 'discard'
+            : 'signout';
   if (act === 'toggle') {
     if (session.ready && session.allowed) setEditing(!session.editing);
+    return;
+  }
+  if (act === 'undo') {
+    void doUndo();
     return;
   }
   if (act === 'signout') {
@@ -412,6 +425,7 @@ async function startSession(token) {
     session.ready = true;
     const signinRow = qs('[data-ri-edit-signin]');
     if (signinRow) signinRow.hidden = true;
+    installSidebarTools();
     if (info.draftLoaded) {
       draft.applyDraftToSite();
       await rerender({ scroll: 'preserve' });
@@ -448,6 +462,32 @@ function setEditing(on) {
     if (popState) closePopover(true);
   }
   updateToolbar();
+}
+
+// ==== DESFAZER (Ctrl+Z / botão Undo) ====
+
+async function doUndo() {
+  if (!session.ready || !session.allowed) return;
+  if (!draft.canUndo()) {
+    notify('Nothing left to undo.', true);
+    return;
+  }
+  if (popState) closePopover(true);
+  try {
+    const result = draft.undoLast();
+    if (!result) {
+      notify('Nothing left to undo.', true);
+      return;
+    }
+    draft.applyDraftToSite();
+    await rerender({ scroll: 'preserve' });
+    window.dispatchEvent(new CustomEvent('ri-edit-content'));
+    updateToolbar();
+    notify(`Undone: ${result.message}.`);
+  } catch (error) {
+    updateToolbar();
+    notify(error.message || 'The undo failed, but the draft is intact.', true);
+  }
 }
 
 // ==== CHIPS DE HOVER ====
@@ -529,11 +569,17 @@ function readValueForInput(type, original) {
 }
 
 function createField(meta, path, docName) {
+  if (meta.picker === 'icon') return createIconField(meta, path, docName);
   const original = draft.getValue(docName, path);
-  const warn = original === undefined ? 'This field does not exist in the content.' : '';
   const wrap = document.createElement('label');
   wrap.className = 'ri-edit-field';
-  wrap.innerHTML = `<span class="ri-edit-field__label">${esc(meta.label)}${warn ? ` <small>(missing)</small>` : ''}</span>`;
+  if (meta.label) {
+    const label = document.createElement('span');
+    label.className = 'ri-edit-field__label';
+    label.textContent = meta.label;
+    if (original === undefined) label.appendChild(Object.assign(document.createElement('small'), { textContent: ' (missing)' }));
+    wrap.appendChild(label);
+  }
   const numeric = typeof original === 'number';
 
   let input;
@@ -579,6 +625,97 @@ function createField(meta, path, docName) {
   return wrap;
 }
 
+// Campo com o seletor visual de ícones: mostra o ícone atual e abre uma
+// grade pesquisável (com preview) de todos os ícones lucide disponíveis.
+function makeIconPicker(initialValue) {
+  const row = document.createElement('div');
+  row.className = 'ri-icon-row';
+
+  const preview = document.createElement('span');
+  preview.className = 'ri-icon-row__preview';
+  preview.innerHTML = icon(initialValue || 'circle', 22);
+
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.className = 'input';
+  input.value = String(initialValue || '');
+  input.placeholder = 'circle';
+
+  const browse = document.createElement('button');
+  browse.type = 'button';
+  browse.className = 'btn btn--ghost btn--sm';
+  browse.textContent = 'Browse';
+
+  row.appendChild(preview);
+  row.appendChild(input);
+  row.appendChild(browse);
+
+  const panel = document.createElement('div');
+  panel.className = 'ri-icon-picker';
+  panel.hidden = true;
+  panel.innerHTML = `
+    <div class="ri-icon-picker__search">
+      <input class="input" type="search" placeholder="Search icons (type a word)…" aria-label="Search icons" />
+      <small>Click an icon to select it.</small>
+    </div>
+    <div class="ri-icon-picker__grid"></div>`;
+
+  const grid = panel.querySelector('.ri-icon-picker__grid');
+  const search = panel.querySelector('input');
+  const renderGrid = () => {
+    const query = search.value.trim().toLowerCase();
+    const all = LUCIDE_ICON_NAMES;
+    const names = (query ? all.filter((name) => name.includes(query)) : all).slice(0, 400);
+    grid.innerHTML = names
+      .map((name) => `<button type="button" class="ri-icon-cell${name === input.value ? ' is-on' : ''}" title="${esc(name)}" data-icon-name="${esc(name)}">${icon(name, 18)}<span>${esc(name)}</span></button>`)
+      .join('');
+  };
+
+  grid.addEventListener('click', (event) => {
+    const cell = event.target.closest('[data-icon-name]');
+    if (!cell) return;
+    input.value = cell.dataset.iconName;
+    preview.innerHTML = icon(input.value || 'circle', 22);
+    grid.querySelectorAll('.ri-icon-cell').forEach((el) => el.classList.toggle('is-on', el === cell));
+  });
+
+  input.addEventListener('input', () => {
+    preview.innerHTML = icon(input.value.trim() || 'circle', 22);
+  });
+  browse.addEventListener('click', (event) => {
+    event.preventDefault();
+    panel.hidden = !panel.hidden;
+    if (!panel.hidden) {
+      search.value = '';
+      renderGrid();
+      search.focus({ preventScroll: true });
+    }
+  });
+  search.addEventListener('input', renderGrid);
+
+  return { row, panel, input, preview };
+}
+
+function createIconField(meta, path, docName) {
+  const original = String(draft.getValue(docName, path) ?? '');
+  const wrap = document.createElement('div');
+  wrap.className = 'ri-edit-field';
+
+  const label = document.createElement('span');
+  label.className = 'ri-edit-field__label';
+  label.textContent = `${meta.label} — click Browse and pick`;
+  wrap.appendChild(label);
+
+  const picker = makeIconPicker(original);
+  picker.input.dataset.editFieldPath = path.replace(/\./g, '·');
+  picker.input.dataset.editFieldDoc = docName;
+  picker.input.dataset.editFieldType = 'line';
+  picker.input.dataset.editFieldNumeric = '0';
+  wrap.appendChild(picker.row);
+  wrap.appendChild(picker.panel);
+  return wrap;
+}
+
 function positionPopover(el) {
   if (!layer.popover || layer.popover.hidden || !el) return;
   const rect = el.getBoundingClientRect();
@@ -601,6 +738,10 @@ function closePopover(silent = false) {
 
 async function applyPopover() {
   if (!popState) return;
+  if (popState.manage) {
+    await applyManageAdd();
+    return;
+  }
   const state = popState;
   const applyButton = layer.popover.querySelector('[data-edit-pop-apply]');
   applyButton.disabled = true;
@@ -682,6 +823,336 @@ async function onImagePicked(inputEl) {
     }
   } catch (error) {
     notify(error.message || 'Image upload failed.', true);
+  }
+}
+
+// ==== BARRA LATERAL DO EDITOR: adicionar páginas e reordenar com drag ====
+
+let dragArmed = false;
+let dragSource = null;
+let dropTarget = null;
+let sidebarDndBound = false;
+
+function navEl() {
+  return qs('#sidebar-nav');
+}
+
+function slugify(value) {
+  return String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+}
+
+function applyDragMode() {
+  const nav = navEl();
+  if (!nav) return;
+  qsa('.nav-item, [data-sub]', nav).forEach((el) => { el.draggable = dragArmed && session.editing; });
+  const hint = nav.querySelector('.ri-nav-tools__hint');
+  const dragBtn = nav.querySelector('[data-ri-nav-tool="drag"]');
+  if (hint) hint.hidden = !dragArmed;
+  if (dragBtn) dragBtn.classList.toggle('is-on', dragArmed);
+}
+
+function installSidebarTools() {
+  const nav = navEl();
+  if (!nav || !session.ready || !session.allowed) return;
+  let box = nav.querySelector('[data-ri-nav-tools]');
+  if (!box) {
+    box = document.createElement('div');
+    box.setAttribute('data-ri-nav-tools', '');
+    box.innerHTML = `
+      <button type="button" class="ri-nav-tool" data-ri-nav-tool="add">${icon('plus', 14)} Add pages</button>
+      <button type="button" class="ri-nav-tool" data-ri-nav-tool="drag" aria-pressed="false">${icon('folder-tree', 14)} Reorder / nest</button>
+      <small class="ri-nav-tools__hint" hidden>Drag page names: drop onto a page to place it after, onto a category to move inside it. Only in Edit mode.</small>`;
+    nav.appendChild(box);
+    box.querySelector('[data-ri-nav-tool="add"]').addEventListener('click', () => openManageAdd());
+    box.querySelector('[data-ri-nav-tool="drag"]').addEventListener('click', () => {
+      dragArmed = !dragArmed;
+      if (!dragArmed) {
+        clearDndMarks();
+        dragSource = null;
+      }
+      applyDragMode();
+    });
+    bindSidebarDnd(nav);
+  }
+  applyDragMode();
+}
+
+// Popover de criação: nova categoria ou nova página dentro de uma categoria.
+function openManageAdd() {
+  if (!session.ready || !session.allowed) return;
+  if (popState) closePopover(true);
+  if (!session.editing) setEditing(true);
+  popState = { manage: true, label: 'Add pages' };
+  const body = qs('[data-edit-pop-body]', layer.popover);
+  const title = qs('[data-edit-pop-title]', layer.popover);
+  const warn = qs('[data-edit-pop-warn]', layer.popover);
+  title.textContent = 'Add pages';
+  warn.hidden = true;
+  body.innerHTML = '';
+
+  const field = (label) => {
+    const wrap = document.createElement('label');
+    wrap.className = 'ri-edit-field';
+    const span = document.createElement('span');
+    span.className = 'ri-edit-field__label';
+    span.textContent = label;
+    wrap.appendChild(span);
+    body.appendChild(wrap);
+    return wrap;
+  };
+
+  const kindWrap = field('What are you adding?');
+  const kindSel = document.createElement('select');
+  kindSel.className = 'input';
+  kindSel.setAttribute('data-ri-manage-kind', '');
+  kindSel.innerHTML = '<option value="sub">Page inside a category</option><option value="cat">Top-level category</option>';
+  kindWrap.appendChild(kindSel);
+
+  const parentWrap = field('Parent category');
+  const parentSel = document.createElement('select');
+  parentSel.className = 'input';
+  parentSel.setAttribute('data-ri-manage-parent', '');
+  CATEGORIES.forEach((c) => {
+    const option = document.createElement('option');
+    option.value = c.id;
+    option.textContent = c.name;
+    parentSel.appendChild(option);
+  });
+  parentWrap.appendChild(parentSel);
+
+  const nameWrap = field('Name');
+  const nameIn = document.createElement('input');
+  nameIn.type = 'text';
+  nameIn.className = 'input';
+  nameIn.setAttribute('data-ri-manage-name', '');
+  nameIn.placeholder = 'Ex.: Mining';
+  nameWrap.appendChild(nameIn);
+
+  const idWrap = field('URL id (auto from the name)');
+  const idIn = document.createElement('input');
+  idIn.type = 'text';
+  idIn.className = 'input';
+  idIn.setAttribute('data-ri-manage-id', '');
+  idIn.placeholder = 'mining';
+  idWrap.appendChild(idIn);
+  let idTouched = false;
+  nameIn.addEventListener('input', () => { if (!idTouched) idIn.value = slugify(nameIn.value); });
+  idIn.addEventListener('input', () => { idTouched = true; });
+
+  const tagWrap = field('Tagline (category)');
+  const tagIn = document.createElement('textarea');
+  tagIn.className = 'input';
+  tagIn.rows = 2;
+  tagWrap.appendChild(tagIn);
+
+  const descWrap = field('Short description (page)');
+  const descIn = document.createElement('textarea');
+  descIn.className = 'input';
+  descIn.rows = 3;
+  descWrap.appendChild(descIn);
+
+  const iconWrap = field('Icon');
+  const picker = makeIconPicker('sprout');
+  iconWrap.appendChild(picker.row);
+  iconWrap.appendChild(picker.panel);
+
+  kindSel.addEventListener('change', () => {
+    const isCat = kindSel.value === 'cat';
+    parentWrap.hidden = isCat;
+    tagWrap.hidden = !isCat;
+    descWrap.hidden = isCat;
+    picker.input.value = isCat ? 'sprout' : 'sparkles';
+    picker.preview.innerHTML = icon(picker.input.value, 22);
+  });
+  kindSel.dispatchEvent(new Event('change'));
+
+  const deleteBtn = qs('[data-edit-pop-delete]', layer.popover);
+  if (deleteBtn) deleteBtn.hidden = true;
+
+  layer.popover.hidden = false;
+  body.scrollTop = 0;
+  nameIn.focus({ preventScroll: true });
+}
+
+async function applyManageAdd() {
+  const body = qs('[data-edit-pop-body]', layer.popover);
+  const kind = body.querySelector('[data-ri-manage-kind]')?.value || 'sub';
+  const parentId = body.querySelector('[data-ri-manage-parent]')?.value || CATEGORIES[0]?.id;
+  const pageName = (body.querySelector('[data-ri-manage-name]')?.value || '').trim();
+  const pageId = slugify(body.querySelector('[data-ri-manage-id]')?.value || pageName);
+  const iconName = (body.querySelector('.ri-icon-row input')?.value || '').trim() || (kind === 'cat' ? 'sprout' : 'sparkles');
+  const areas = [...body.querySelectorAll('textarea.input')];
+  const warn = qs('[data-edit-pop-warn]', layer.popover);
+  warn.hidden = true;
+
+  if (!pageName || !pageId) {
+    warn.textContent = 'Give the page a name (and a URL id made of letters/numbers/dashes).';
+    warn.hidden = false;
+    return;
+  }
+
+  try {
+    let trail;
+    let value;
+    if (kind === 'cat') {
+      trail = 'categories';
+      value = buildAddValue('wiki', trail, 'category');
+      value.id = pageId;
+      value.name = pageName;
+      value.icon = iconName;
+      value.tagline = areas[0]?.value?.trim() || 'What this category is about.';
+      if (areas[1]?.value?.trim()) value.desc = areas[1].value.trim();
+    } else {
+      const ci = CATEGORIES.findIndex((c) => c.id === parentId);
+      if (ci === -1) throw new Error('Pick a parent category.');
+      trail = `categories.${ci}.subcategories`;
+      value = buildAddValue('wiki', trail, 'sub-card');
+      value.id = pageId;
+      value.name = pageName;
+      value.icon = iconName;
+      if (areas[0]?.value?.trim()) value.desc = areas[0].value.trim();
+    }
+    draft.pushValue('wiki', trail, value);
+    draft.applyDraftToSite();
+    buildNav();
+    applyDragMode();
+    window.dispatchEvent(new CustomEvent('ri-edit-content'));
+    closePopover(true);
+    updateToolbar();
+    window.location.hash = kind === 'cat' ? `#/${pageId}` : `#/${parentId}/${pageId}`;
+    notify('Page added to the draft. Edit it in place and remember to save.');
+  } catch (error) {
+    warn.textContent = error.message || 'Could not create the page.';
+    warn.hidden = false;
+  }
+}
+
+// ==== DRAG PARA REORDENAR / NESTAR PÁGINAS ====
+
+function slotFor(kind, catId, subId) {
+  if (kind === 'cat') {
+    const ci = CATEGORIES.findIndex((c) => c.id === catId);
+    return ci === -1 ? null : { parentPath: 'categories', index: ci };
+  }
+  const path = getSubcategoryDocPath(catId, subId);
+  if (!path) return null;
+  const segments = path.split('.');
+  return { parentPath: segments.slice(0, -1).join('.'), index: Number(segments.at(-1)) };
+}
+
+function resolveDropTarget(target) {
+  const subItem = target.closest('[data-sub]');
+  if (subItem) return { type: 'sub-after', catId: subItem.closest('.nav-group')?.dataset.cat, subId: subItem.dataset.sub };
+  const catItem = target.closest('.nav-item[data-cat]');
+  if (catItem) return { type: 'cat', catId: catItem.dataset.cat };
+  if (target.closest('.sidebar__label')) return { type: 'top' };
+  return null;
+}
+
+function clearDndMarks() {
+  qsa('.ri-drop-on, .ri-drag-src').forEach((el) => el.classList.remove('ri-drop-on', 'ri-drag-src'));
+  dropTarget = null;
+}
+
+function bindSidebarDnd(nav) {
+  if (sidebarDndBound || !nav) return;
+  sidebarDndBound = true;
+
+  nav.addEventListener('dragstart', (event) => {
+    if (!dragArmed || !session.editing) return;
+    const item = event.target.closest('.nav-item[data-cat], [data-sub]');
+    if (!item) return;
+    event.stopPropagation();
+    const catGroup = item.closest('.nav-group');
+    const catId = catGroup?.dataset.cat;
+    if (!catId) return;
+    dragSource = item.classList.contains('nav-item')
+      ? { kind: 'cat', catId }
+      : { kind: 'sub', catId, subId: item.dataset.sub };
+    item.classList.add('ri-drag-src');
+    event.dataTransfer.effectAllowed = 'move';
+    event.dataTransfer.setData('text/plain', `${catId}${dragSource.subId ? `/${dragSource.subId}` : ''}`);
+  });
+
+  nav.addEventListener('dragend', () => {
+    clearDndMarks();
+    dragSource = null;
+  });
+
+  nav.addEventListener('dragover', (event) => {
+    if (!dragArmed || !dragSource || !session.editing) return;
+    const info = resolveDropTarget(event.target);
+    if (!info) return;
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'move';
+    dropTarget = {
+      info,
+      src: dragSource,
+      el: event.target.closest('.nav-item[data-cat], [data-sub], .sidebar__label'),
+    };
+    qsa('.ri-drop-on', nav).forEach((el) => el.classList.remove('ri-drop-on'));
+    dropTarget.el?.classList.add('ri-drop-on');
+  });
+
+  nav.addEventListener('drop', (event) => {
+    if (!dragArmed || !session.editing) return;
+    if (!dropTarget) return;
+    event.preventDefault();
+    const { info, src } = dropTarget;
+    clearDndMarks();
+    dragSource = null;
+    if (!info || !src) return;
+    void runHierarchyDrop(src, info);
+  });
+}
+
+async function runHierarchyDrop(src, target) {
+  const srcSlot = slotFor(src.kind, src.catId, src.subId);
+  if (!srcSlot) { notify('The page to move vanished from the list. Try again.', true); return; }
+
+  let dst = null;
+  let dstCatId = src.catId;
+  if (target.type === 'top') {
+    if (src.kind !== 'cat') { notify('Only categories can sit at the top level (use /admin/ for deeper moves).', true); return; }
+    dst = { parentPath: 'categories', index: 0 };
+    dstCatId = src.catId;
+  } else if (target.type === 'cat') {
+    const ti = CATEGORIES.findIndex((c) => c.id === target.catId);
+    if (ti === -1) { notify('The target category vanished. Try again.', true); return; }
+    if (src.kind === 'cat') {
+      if (src.catId === target.catId) return;
+      dst = { parentPath: 'categories', index: ti + 1 };
+    } else {
+      dst = { parentPath: `categories.${ti}.subcategories`, index: (locate(draft.doc('wiki'), `categories.${ti}.subcategories`) || []).length };
+      dstCatId = target.catId;
+    }
+  } else {
+    if (src.kind === 'cat') { notify('Turning a category into a subpage is done in /admin/ (Content Studio).', true); return; }
+    const dstSlot = slotFor('sub', target.catId, target.subId);
+    if (!dstSlot) { notify('The target page vanished. Try again.', true); return; }
+    if (dstSlot.parentPath === srcSlot.parentPath && dstSlot.index === srcSlot.index) return;
+    dst = { parentPath: dstSlot.parentPath, index: dstSlot.index + 1 };
+    dstCatId = target.catId;
+  }
+
+  try {
+    draft.moveValue('wiki', srcSlot.parentPath, srcSlot.index, dst.parentPath, dst.index);
+    draft.applyDraftToSite();
+    buildNav();
+    applyDragMode();
+    window.dispatchEvent(new CustomEvent('ri-edit-content'));
+    const hashParts = window.location.hash.replace(/^#\/?/, '').split('/');
+    const subId = hashParts[1];
+    const stillThere = subId ? getSubcategory(hashParts[0], subId) : true;
+    if (!stillThere) {
+      window.location.hash = `#/${dstCatId}/${subId}`;
+    } else {
+      await rerender({ scroll: 'preserve' });
+    }
+    updateToolbar();
+    notify('Hierarchy updated. Remember to save/publish.');
+  } catch (error) {
+    notify(error.message || 'Could not move that item.', true);
   }
 }
 
@@ -840,6 +1311,14 @@ function installInteraction() {
       if (session.editing) setEditing(false);
       return;
     }
+    if ((event.ctrlKey || event.metaKey) && (event.key === 'z' || event.key === 'Z') && !event.shiftKey) {
+      const tag = event.target?.tagName;
+      const typing = tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || event.target?.isContentEditable;
+      if (typing) return;
+      event.preventDefault();
+      void doUndo();
+      return;
+    }
     if (event.altKey && (event.key === 'e' || event.key === 'E')) {
       event.preventDefault();
       if (!session.ready || !session.allowed) { void enterWithSignIn(); return; }
@@ -860,6 +1339,11 @@ export function initEditMode() {
   session.started = true;
   buildToolbar();
   installInteraction();
+  installSidebarTools();
+  window.addEventListener('ri-edit-content', () => {
+    installSidebarTools();
+    applyDragMode();
+  });
   layer.bar.classList.add('is-hidden');
   try {
     const stored = sessionStorage.getItem(TOKEN_KEY);

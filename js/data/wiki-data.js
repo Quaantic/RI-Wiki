@@ -56,3 +56,21 @@ export function isValidRoute(categoryId, subId) {
   if (!subId) return !!getCategory(categoryId);
   return !!getSubcategory(categoryId, subId);
 }
+
+// Ids de uma pagina e de tudo abaixo dela (evita aninhar uma coisa nela mesma).
+export function collectSubtreeIds(categoryId, subId = null) {
+  const cat = getCategory(categoryId);
+  const out = new Set();
+  if (!cat) return out;
+  const walk = (node) => {
+    if (!node) return;
+    out.add(node.id);
+    (node.children || []).forEach(walk);
+  };
+  if (subId) walk(getSubcategory(categoryId, subId));
+  else {
+    out.add(cat.id);
+    (cat.subcategories || []).forEach(walk);
+  }
+  return out;
+}

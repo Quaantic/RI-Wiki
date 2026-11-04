@@ -38,7 +38,29 @@ function walkTo(docs, path) {
   return node;
 }
 
-export function setValue(name, path, value) {
+// Histórico para o undo (Ctrl+Z / botão Undo). Alvos explícitos para não
+// depender da ordem das edições: cada entrada sabe desfazer sozinha.
+const history = [];
+const HISTORY_MAX = 80;
+
+function remember(entry) {
+  history.push(entry);
+  if (history.length > HISTORY_MAX) history.shift();
+}
+
+export function canUndo() {
+  return history.length > 0;
+}
+
+function readAt(name, path) {
+  try {
+    return walkTo(draftState.docs?.[name] ?? {}, path);
+  } catch {
+    return undefined;
+  }
+}
+
+function writeAt(name, path, value) {
   const segments = path.split('.');
   if (!segments.length) throw new Error(`Invalid path: ${path}`);
   const root = draftState.docs?.[name];
@@ -61,6 +83,23 @@ export function setValue(name, path, value) {
   holder[segments.at(-1)] = value;
 }
 
+export function setValue(name, path, value) {
+  const prev = readAt(name, path);
+  writeAt(name, path, value);
+  remember({ type: 'set', name, path, value: prev === undefined ? undefined : clone(prev) });
+}
+
+function undoSet(entry) {
+  if (entry.value === undefined) {
+    const segments = entry.path.split('.');
+    const parent = walkTo(draftState.docs[entry.name], segments.slice(0, -1).join('.'));
+    delete parent[segments.at(-1)];
+    return 'field removed';
+  }
+  writeAt(entry.name, entry.path, entry.value);
+  return 'field restored';
+}
+
 export function removeValue(name, path) {
   const segments = path.split('.');
   if (segments.length < 2) throw new Error(`"${path}" is not inside a list.`);
@@ -72,7 +111,15 @@ export function removeValue(name, path) {
   if (!Number.isInteger(index) || index < 0 || index >= parent.length) {
     throw new Error(`Nothing to delete at "${path}".`);
   }
-  parent.splice(index, 1);
+  const [value] = parent.splice(index, 1);
+  remember({ type: 'remove', name, parentPath: segments.slice(0, -1).join('.'), index, value: clone(value) });
+}
+
+function undoRemove(entry) {
+  const list = walkTo(draftState.docs[entry.name], entry.parentPath);
+  if (!Array.isArray(list)) throw new Error(`Cannot undo the removal (list no longer exists).`);
+  list.splice(entry.index, 0, entry.value);
+  return 'restored item';
 }
 
 export function getValue(name, path) {
@@ -86,8 +133,78 @@ export function pushValue(name, path, value) {
   if (!root) throw new Error(`Unknown document: ${name}`);
   const list = walkTo(root, path);
   if (!Array.isArray(list)) throw new Error(`"${path}" is not a list.`);
+  const index = list.length;
   list.push(value);
-  return list.indexOf(value);
+  remember({ type: 'push', name, path, index });
+  return index;
+}
+
+function undoPush(entry) {
+  const list = walkTo(draftState.docs[entry.name], entry.path);
+  if (!Array.isArray(list) || entry.index >= list.length) {
+    throw new Error('Cannot undo that addition (the list changed).');
+  }
+  list.splice(entry.index, 1);
+  return 'item removed';
+}
+
+// Move um item entre listas (reordenar páginas, trocar de categoria/nível).
+export function moveValue(name, fromPath, fromIndex, toPath, toIndex, skipHistory = false) {
+  const root = draftState.docs?.[name];
+  if (!root) throw new Error(`Unknown document: ${name}`);
+  const source = walkTo(root, fromPath);
+  if (!Array.isArray(source) || fromIndex < 0 || fromIndex >= source.length) {
+    throw new Error(`Origin list is invalid.`);
+  }
+  if (fromPath === toPath && toIndex === fromIndex) return false;
+  let destIndex = toIndex;
+  if (fromPath === toPath && destIndex > fromIndex) destIndex -= 1;
+  const [item] = source.splice(fromIndex, 1);
+  if (item == null || typeof item !== 'object') {
+    throw new Error('Only items can be moved (the origin list is odd).');
+  }
+  try {
+    const dest = fromPath === toPath ? source : walkTo(root, toPath);
+    if (!Array.isArray(dest)) throw new Error(`Destination "${toPath}" is not a list.`);
+    dest.splice(destIndex, 0, item);
+  } catch (error) {
+    source.splice(fromIndex, 0, item);
+    throw error;
+  }
+  if (!skipHistory) {
+    remember({ type: 'move', name, fromPath, fromIndex, toPath, toIndex: destIndex });
+  }
+  return true;
+}
+
+function undoMove(entry) {
+  moveValue(
+    entry.name,
+    entry.toPath,
+    entry.toIndex,
+    entry.fromPath,
+    entry.fromIndex,
+    true,
+  );
+  return 'restored position';
+}
+
+// Desfaz a última ação do rascunho. Retorna uma mensagem curta ou null
+// quando não havia o que desfazer. Quem chama deve re-aplicar + re-renderizar.
+export function undoLast() {
+  const entry = history.pop();
+  if (!entry) return null;
+  try {
+    if (entry.type === 'set') return { message: undoSet(entry) };
+    if (entry.type === 'push') return { message: undoPush(entry) };
+    if (entry.type === 'remove') return { message: undoRemove(entry) };
+    if (entry.type === 'move') return { message: undoMove(entry) };
+    history.push(entry);
+    return null;
+  } catch (error) {
+    history.push(entry);
+    throw error;
+  }
 }
 
 export function doc(name) {
@@ -257,4 +374,12 @@ export function uploadStatus() {
     draftOnline: draftState.savedDraftRaw !== '',
     hasUnsavedChanges: draftState.docs ? changedFiles().length > 0 : false,
   };
+}
+
+// SOMENTE TESTES: injeta documentos simulados (mesmo fluxo do editor,
+// sem GitHub). Zera o histórico para recomeçar limpo.
+export function __testInjectDocs(docs) {
+  draftState.docs = docs;
+  draftState.baseDocs = JSON.parse(JSON.stringify(docs));
+  history.length = 0;
 }
