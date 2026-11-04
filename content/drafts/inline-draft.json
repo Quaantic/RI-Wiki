@@ -1555,7 +1555,14 @@
             "highlights": [],
             "facts": [],
             "vitals": [],
-            "children": []
+            "children": [],
+            "sections": [
+              {
+                "id": "text-06f85a05-93a3-4451-acef-4f3ca75f14cf",
+                "title": "Name",
+                "text": "Price: xxx Robux\n\nBoosts: x stat, x stat, x stat, x stat"
+              }
+            ]
           }
         ],
         "overview": {
