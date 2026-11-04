@@ -15,7 +15,7 @@ async function main(){
   })));
   const summary=()=>IMPORTED_NOTES.pages.map(({route})=>{
     const [cat,id]=route.split('/');const page=find(docs.wiki.categories.find(c=>c.id===cat)?.subcategories,id);
-    return {route,sections:page?.sections?.length||0,children:(page?.children||[]).map(p=>p.id),bonusGroups:docs.game.calculators.pages[route]?.groups?.length||0,milestones:docs.game.progression.stages[route]?.stages?.length||0};
+    return {route,sections:page?.sections?.length||0,children:(page?.children||[]).map(p=>p.id),bonusGroups:docs.game.calculators.pages[route]?.groups?.length||0,machines:docs.game.calculators.pages[route]?.machines?.length||0,milestones:docs.game.progression.stages[route]?.stages?.length||0};
   });
   const before=summary();
   const updatesBefore=JSON.stringify(docs.updates);
@@ -23,7 +23,7 @@ async function main(){
   if(JSON.stringify(docs.updates)!==updatesBefore)throw new Error('Update log changed');
   validateDocuments(docs);
   const after=summary();
-  for(const page of after)if(!page.sections)throw new Error(`Still empty: ${page.route}`);
+  for(const page of after)if(!page.sections&&!page.bonusGroups&&!page.milestones&&!page.machines)throw new Error(`Still empty: ${page.route}`);
   for(const route of ['life/frost-conversion','money-island/energies'])if(after.find(p=>p.route===route).children.length)throw new Error(`Child tabs still present: ${route}`);
   const audit={checkedAt:new Date().toISOString(),source:'https://regrowthinc.vercel.app',note:'Read-only audit: before is live; after is the repaired in-memory result. This does not deploy.',before,after,updateLogUntouched:true};
   fs.mkdirSync(path.join(root,'artifacts'),{recursive:true});

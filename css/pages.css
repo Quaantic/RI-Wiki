@@ -2336,3 +2336,49 @@ mark {
 .reset-calc-power[hidden] { display: none !important; }
 .section-title { min-width: 0; overflow-wrap: anywhere; white-space: normal; }
 .section-head { min-width: 0; }
+
+/* Dense game data: small cards, full-size text, and no repeated label blocks. */
+.cat-hero--data { padding: 20px 24px; min-height: 0; }
+.cat-hero--data .cat-hero__name { font-size: clamp(24px,2.2vw,32px); }
+.cat-hero--data .cat-hero__tagline { margin-top: 10px; font-size: 13.5px; line-height: 1.6; }
+.milestone-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 8px; margin-top: 12px; }
+.milestone-card { min-width: 0; padding: 12px; border: 1px solid var(--c-border); border-radius: 10px; background: var(--c-card); font-size: 12.5px; line-height: 1.5; }
+.milestone-card header { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 6px; }
+.milestone-card header b { min-width: 0; font-size: 12px; font-weight: 600; }
+.milestone-card__num { display: inline-grid; place-items: center; width: 23px; height: 23px; flex: none; border-radius: 6px; background: var(--c-accent-soft-2); color: var(--c-accent-light); font-weight: 700; }
+.milestone-card p { margin: 2px 0; }
+.bonus-groups-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); align-items: start; gap: 12px; margin-top: 12px; }
+.bonus-groups-grid .rare-sap-group { margin: 0; padding: 12px; min-width: 0; border-radius: 10px; }
+.bonus-groups-grid .reset-tier-head { margin-bottom: 8px; gap: 8px; }
+.bonus-groups-grid .reset-tier-head h3 { font-size: 14px; }
+.bonus-groups-grid .reset-calc-power { max-width: none; padding: 6px 8px; margin: 8px 0; font-size: 12px; gap: 8px; }
+.bonus-groups-grid .reset-calc-power .input { min-height: 30px; padding: 5px 8px; }
+.bonus-groups-grid .reset-calc-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 6px; }
+.reset-calc-card--amount { position: relative; padding: 10px 12px; min-height: 56px; }
+.reset-calc-card--amount .reset-calc-card__head { padding-right: 70px; gap: 7px; margin: 0; }
+.reset-calc-card--amount .reset-calc-card__head b { font-size: 12.5px; }
+.reset-calc-card--amount .reset-calc-card__icon { width: 22px; height: 22px; }
+.reset-calc-card--amount .reset-calc-card__meta { margin: 3px 0 0 29px; padding: 0; border: 0; min-height: 0; }
+.reset-calc-card--amount .reset-calc-answer { position: absolute; right: 12px; top: 12px; margin: 0; padding: 0; border: 0; font-size: 13px; }
+.reset-calc-card--amount .reset-calc-answer span:not(.reset-calc-error) { display: none; }
+.reset-calc-card--amount .reset-calc-answer .reset-calc-error { display: block; max-width: none; font-size: 12px; }
+.reset-calc-card--amount .reset-calc-answer:has(.reset-calc-error) { position: static; margin: 5px 0 0 29px; }
+.generator-global { display: flex; flex-wrap: wrap; gap: 12px; margin: 12px 0; }
+.generator-global label { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+.generator-global .input { width: 80px; padding: 7px 9px; }
+.generator-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; }
+.generator-card { min-width: 0; padding: 14px; border: 1px solid var(--c-border); border-radius: 10px; background: var(--c-card); }
+.generator-card header { display: flex; justify-content: space-between; gap: 8px; align-items: center; margin-bottom: 4px; }
+.generator-card small,.generator-hint { color: var(--c-text-3); font-size: 12px; }
+.generator-owned { font-size: 12px; display: flex; gap: 6px; align-items: center; }
+.generator-controls { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; margin: 12px 0; }
+.generator-controls label { display: grid; gap: 4px; min-width: 0; font-size: 12px; color: var(--c-text-2); }
+.generator-controls .input { min-width: 0; padding: 7px 9px; font-size: 14px; }
+.generator-results>div { display: flex; justify-content: space-between; gap: 10px; padding: 5px 0; font-size: 12px; border-top: 1px solid var(--c-border); }
+.generator-results b { text-align: right; color: var(--c-accent-light); }
+.generator-total { display: flex; flex-wrap: wrap; gap: 24px; margin-top: 12px; font-size: 13px; }
+.generator-total b { margin-left: 8px; color: var(--c-accent-light); }
+.generator-hint { margin: 8px 0 0; }
+@media (min-width: 1500px) { .milestone-grid { grid-template-columns: repeat(8,minmax(0,1fr)); } }
+@media (max-width: 1000px) { .milestone-grid { grid-template-columns: repeat(3,minmax(0,1fr)); } .bonus-groups-grid { grid-template-columns: minmax(0,1fr); } .generator-grid { grid-template-columns: minmax(0,1fr); } }
+@media (max-width: 560px) { .milestone-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } .milestone-card { padding: 10px; } .bonus-groups-grid .reset-calc-grid { grid-template-columns: minmax(0,1fr); } .generator-controls .input { font-size: 16px; } }

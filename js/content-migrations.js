@@ -1,4 +1,5 @@
 import { IMPORTED_NOTES } from './data/imported-notes.js';
+import { refineImportedContent } from './content-presentation.js';
 
 const clone = (value) => structuredClone(value);
 const find = (nodes,id) => {
@@ -63,5 +64,5 @@ export function installImportedNotes(wiki,game) {
     game.contentMigrations = [...(game.contentMigrations || []),id];
     changed = true;
   }
-  return changed;
+  return refineImportedContent(wiki,game) || changed;
 }

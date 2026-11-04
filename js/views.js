@@ -16,6 +16,7 @@ import { colorizeResources } from './data/resource-colors.js';
 import { UI_COPY } from './data/ui-copy.js';
 import { LATEST_UPDATE_ID } from './data/update-log.js';
 import { resolveContentKey } from './page-content.js';
+import { calculateGenerator } from './data/generators.js';
 
 // ==== PAGINA DE FAMILIA DE RUNAS (cards por runa) ====
 
@@ -437,7 +438,42 @@ function resetCalcCard(bonus, requiredLabel, index, amountMode = false, accentCo
     </article>`;
 }
 
+function generatorSections(page,basePath) {
+  const field=(name,label,max,value=0)=>`<label>${label}<input class="input" type="number" min="0" max="${max}" step="1" value="${value}" data-generator-field="${name}" aria-label="${label}"></label>`;
+  return `<section class="section generator-page">${sectionHead(page.title)}
+    <button type="button" class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="${basePath}.machines" data-edit-add-template="generator">${icon('plus',13)} New generator</button>
+    <div class="generator-global"><label>More Frost level<input class="input" type="number" min="0" max="99" value="0" data-more-frost></label><label>Faster Machines level<input class="input" type="number" min="0" max="30" value="0" data-faster-machines></label></div>
+    <div class="generator-grid">${page.machines.map((machine,i)=>`<article class="generator-card" data-generator="${esc(machine.id)}">
+      <header><b ${ed(`${basePath}.machines.${i}`,'game:generator',machine.name)}>${esc(machine.name)}</b><label class="generator-owned"><input type="checkbox" data-generator-owned ${i===0?'checked':''}> Owned</label></header>
+      <small>${machine.unlockCost ? `${esc(fmtSuffix(machine.unlockCost))} Frost to unlock` : 'Free'}</small>
+      <div class="generator-controls">${field('level','Level',machine.maxLevel)}${field('speed','Speed',machine.maxSpeed)}${field('tier','Tier',machine.maxTier,1)}<label title="Enter the multiplier shown by your current tier">Tier multiplier<input class="input" type="number" min="0" step="any" value="1" data-generator-field="tierMultiplier" aria-label="Tier multiplier"></label></div>
+      <div class="generator-results" aria-live="polite" data-generator-results></div>
+    </article>`).join('')}</div><div class="generator-total" data-generator-total aria-live="polite"></div>
+    <p class="generator-hint">Tier multipliers use the value shown in game.</p>
+  </section>`;
+}
+
+function wireGenerators(root,page) {
+  const cards=qsa('[data-generator]',root);
+  const update=()=>{
+    let boardGain=1,totalRate=0,owned=0;
+    for(const card of cards){
+      const machine=page.machines.find(item=>item.id===card.dataset.generator);
+      const values=Object.fromEntries(qsa('[data-generator-field]',card).map(input=>[input.dataset.generatorField,input.value]));
+      values.moreFrost=qs('[data-more-frost]',root).value;
+      values.fasterMachines=qs('[data-faster-machines]',root).value;
+      const result=calculateGenerator(machine,values);
+      qs('[data-generator-results]',card).innerHTML=`<div><span>Frost / cycle</span><b>${esc(fmtSuffix(result.income))}</b></div><div><span>Cycle</span><b>${esc(Number(result.seconds.toPrecision(4)))}s</b></div><div><span>Frost / second</span><b>${esc(fmtSuffix(result.perSecond))}</b></div><div><span>Next Level / Speed / Tier</span><b>${[result.levelCost,result.speedCost,result.tierCost].map(value=>value===null?'Maxed':esc(fmtSuffix(value))).join(' / ')}</b></div>`;
+      if(qs('[data-generator-owned]',card).checked){boardGain*=result.baseIncome;totalRate+=result.perSecond;owned++;}
+    }
+    const total=qs('[data-generator-total]',root);
+    if(total) total.innerHTML=`<span>Base board gain <b>${esc(fmtSuffix(owned?boardGain:0))}</b></span><span>Total Frost / second <b>${esc(fmtSuffix(totalRate))}</b></span>`;
+  };
+  qsa('input',root).forEach(input=>input.addEventListener('input',update));update();
+}
+
 function resetLayerSections(page, basePath = '') {
+  if(page.kind==='generators') return generatorSections(page,basePath);
   const inputs = (page.inputs || []).map((input, i) => `<label class="reset-calc-power"><span ${basePath ? ed(`${basePath}.inputs.${i}.label`, 'text', 'Calculator input label') : ''}>${esc(input.label)}</span><input class="input reset-calc-input" value="${esc(String(input.default || 0))}" inputmode="decimal" data-calc-variable="${esc(input.id)}" aria-label="${esc(input.label)}"></label>`).join('');
   const settings = basePath ? `<button class="btn btn--ghost btn--sm ri-edit-add" ${ed(basePath, 'game:calculator-settings', 'Calculator settings')}>${icon('settings', 13)} Calculator settings</button>` : '';
   const bonusAdd = (listPath) => listPath
@@ -448,7 +484,7 @@ function resetLayerSections(page, basePath = '') {
       <section class="section reset-layer-page">
         ${sectionHead(page.title)}${settings}${inputs}
         ${basePath ? `<div class="ri-add-row"><button type="button" class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="${esc(basePath)}.groups" data-edit-add-template="bonus-group">${icon('plus', 13)} Add group</button><small class="ri-edit-help">Group related resources on this page. Edit a heading to change its name, owned amount label and notes.</small></div>` : ''}
-        ${page.groups.map((group, gi) => `
+        <div class="bonus-groups-grid">${page.groups.map((group, gi) => `
           <section class="reset-layer-tier rare-sap-group" style="--rare-sap-color:${esc(group.color || '#86d62b')}">
             <div class="reset-tier-head">
               <h3 data-resource-links ${basePath ? ed(`${basePath}.groups.${gi}`, 'game:bonus-group', esc(group.name)) : ''}>${colorizeResources(esc(group.name))} ${group.dropChance ? `<small>Drop chance: ${esc(group.dropChance)}</small>` : ''}</h3>
@@ -462,7 +498,7 @@ function resetLayerSections(page, basePath = '') {
             <div class="reset-calc-grid">
               ${group.bonuses.map((bonus, i) => resetCalcCard(bonus, group.amountLabel, i, true, group.color, itemListPath(basePath ? `${basePath}.groups.${gi}.bonuses` : '', i))).join('')}
             </div>
-          </section>`).join('')}
+          </section>`).join('')}</div>
       </section>`;
   }
 
@@ -525,6 +561,7 @@ function resetLayerSections(page, basePath = '') {
 
 function wireResetCalculators(root, page) {
   if (!page) return;
+  if(page.kind==='generators') { wireGenerators(root,page); return; }
   const cards = qsa('[data-reset-calculator]', root);
   const powerInput = qs('[data-dust-power-level]', root);
 
@@ -695,6 +732,13 @@ function stageCard(s, i, itemPath = '') {
 }
 
 function stagePageSections(stages, title = 'Stages', twoCol = false, listPath = '') {
+  if(/milestones/i.test(title)) return `<section class="section compact-progression">
+    <div ${listPath ? ed(listPath.replace(/\.(stages|ranks)$/,''),'game:progression-page','Milestone heading') : ''}>${sectionHead(title)}</div>
+    ${listPath ? `<button type="button" class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="${esc(listPath)}" data-edit-add-template="stage">${icon('plus',13)} New milestone</button>` : ''}
+    <div class="milestone-grid">${stages.map((stage,i)=>`<article class="milestone-card" aria-label="${esc(stage.title||`Milestone ${stage.num}`)}" ${listPath ? ed(itemListPath(listPath,i),'game:stage',stage.title||`Milestone ${stage.num}`) : ''}>
+      <header><span class="milestone-card__num">${esc(stage.num)}</span><b data-resource-links>${colorizeResources(esc((stage.requirements||[]).join(' · ')))}</b></header>
+      <div data-resource-links>${(stage.boosts||[]).map(boost=>`<p>${colorizeResources(esc(boost))}</p>`).join('')}${stage.unlocks?.area ? `<p>${esc(stage.unlocks.area)}</p>` : ''}${(stage.unlocks?.places||[]).map(place=>`<p>${esc(place)}</p>`).join('')}${(stage.unlocks?.features||[]).map(feature=>`<p>${esc(feature.name)} ${esc((feature.subs||[]).join(' · '))}</p>`).join('')}</div>
+    </article>`).join('')}</div></section>`;
   const cards = stages.map((s, i) => stageCard(s, i, itemListPath(listPath, i))).join('');
   const label = `New ${title.replace(/s$/, '').toLowerCase()}`;
   const add = listPath
@@ -989,13 +1033,12 @@ export const subcategoryView = {
       [layerPage,`mining.layers.${gameKey}.layers`,'layer','Add layer'],
       [gearPage,`dungeon.gear.${gameKey}.gears`,'gear','Add gear'],
     ]) if (container) familyBody += `<div class="ri-add-row"><button type="button" class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="game:${list}" data-edit-add-template="${template}">${icon('plus',13)} ${label}</button></div>`;
-    const showChildrenSection = visibleChildren.length > 0
-      || document.documentElement.classList.contains('ri-edit-on');
+    const showChildrenSection = visibleChildren.length > 0;
 
     window.__riPageNames = [cat.name, sub.name, ...(sub.parentChain || []).map((p) => p.name)];
 
     root.innerHTML = html`
-      <section class="cat-hero${sub.vitals?.length ? ' cat-hero--split' : ''}">
+      <section class="cat-hero${familyBody ? ' cat-hero--data' : ''}${sub.vitals?.length ? ' cat-hero--split' : ''}">
         <div class="cat-hero__main">
           <div class="cat-hero__crumbs crumbs">
             ${subCrumbParts(sub).slice(0, -1).map((c) => `
@@ -1028,6 +1071,7 @@ export const subcategoryView = {
         <details class="ri-content-menu"><summary class="btn btn--primary btn--sm">${icon('plus', 13)} Add content</summary>
           <div class="ri-content-menu__items">${[
             ['text', 'Text / FAQ', 'A heading and a normal description or answer'],
+            ['subpage', 'Subpage', 'A nested page in the navigation'],
             ['fact', 'Fact', 'A short label and value beside the description'],
             ['highlight', 'Highlight', 'A card with a heading, icon and description'],
             ['table', 'Table', 'Editable columns and rows for prices, machines or comparisons'],

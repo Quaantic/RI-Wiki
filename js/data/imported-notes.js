@@ -8,171 +8,10 @@ export const IMPORTED_NOTES = {
         "id": "frost-generators",
         "name": "Frost Generators",
         "icon": "gauge",
-        "desc": "Three Frost machines have separate purchase costs, income and cycle times. Upgrade their Tier, Level and Speed using the tables and formulas below; Frost Upgrades provide additional multipliers.",
+        "desc": "Adjust generator levels and speed to calculate Frost output and the next upgrade costs.",
         "highlights": [],
         "facts": [],
-        "sections": [
-          {
-            "id": "notes-generators-1",
-            "title": "As 3 maquinas",
-            "columns": [
-              "Maquina",
-              "Preco p/ comprar",
-              "Renda base",
-              "Ciclo base",
-              "Limites (Tier / Level / Speed)"
-            ],
-            "rows": [
-              {
-                "id": "row-1",
-                "cells": [
-                  "1",
-                  "gratis",
-                  "1 Frost",
-                  "5s",
-                  "3 / 50 / 10"
-                ]
-              },
-              {
-                "id": "row-2",
-                "cells": [
-                  "2",
-                  "10.000 Frost",
-                  "100 Frost",
-                  "10s",
-                  "3 / 60 / 20"
-                ]
-              },
-              {
-                "id": "row-3",
-                "cells": [
-                  "3",
-                  "10.000.000 Frost",
-                  "25.000 Frost",
-                  "15s",
-                  "3 / 75 / 30"
-                ]
-              }
-            ],
-            "text": ""
-          },
-          {
-            "id": "notes-generators-3",
-            "title": "Os 3 upgrades de cada maquina",
-            "columns": [
-              "Maquina",
-              "P (Tier / Level / Speed)"
-            ],
-            "rows": [
-              {
-                "id": "row-1",
-                "cells": [
-                  "1",
-                  "50 / 5 / 10"
-                ]
-              },
-              {
-                "id": "row-2",
-                "cells": [
-                  "2",
-                  "50.000 / 2.500 / 7.500"
-                ]
-              },
-              {
-                "id": "row-3",
-                "cells": [
-                  "3",
-                  "1e8 / 1.5e6 / 7.5e6"
-                ]
-              }
-            ],
-            "text": "T = Tier atual, L = Level atual, S = Speed atual, scale = 1 / 1.1 / 1.2 (maquina 1/2/3), P = preco base da tabela abaixo.\n\nUPGRADE 1 — TIER (aumenta o multiplicador interno da maquina):\nCusto    = P_tier * (10*scale + T/2)^(T-1)\nEfeito   = +1 tier   (o multiplicador exato por tier e [SERVER] — nao aparece no client)\nMax      = 3\n\nUPGRADE 2 — LEVEL (aumenta a renda por ciclo):\nCusto    = P_level * (1.35*scale + L/85)^L\nRenda    = StartIncome * (1 + L*0.4) * 1.1^L\nMax      = 50 / 60 / 75\n\nUPGRADE 3 — SPEED (ciclo mais rapido):\nCusto    = P_speed * (1.65*scale + S/35)^S\nCiclo    = StartTime / 1.1^S     (o board mostra em \"/s\")\nMax      = 10 / 20 / 30\n\nGANHO TOTAL mostrado no board de cada maquina = produto da renda das maquinas desbloqueadas:\nGain total = renda(M1) * renda(M2) * renda(M3)\n(cada maquina produz a renda dela por ciclo; multiplicadores externos — Frost Upgrade 1 \"More Frost\" e o Tier — entram [SERVER].)"
-          },
-          {
-            "id": "notes-generators-5",
-            "title": "Frost Upgrades",
-            "columns": [
-              "#",
-              "Nome",
-              "Max",
-              "Custo",
-              "Efeito"
-            ],
-            "rows": [
-              {
-                "id": "row-1",
-                "cells": [
-                  "1",
-                  "More Frost",
-                  "99",
-                  "250 * (1.55 + L/100)^L",
-                  "(1 + L/20) * 1.05^L (x Frost)"
-                ]
-              },
-              {
-                "id": "row-2",
-                "cells": [
-                  "2",
-                  "Faster Machines",
-                  "30",
-                  "500 * 1.45^L",
-                  "1 + L/10 (maquinas mais rapidas)"
-                ]
-              },
-              {
-                "id": "row-3",
-                "cells": [
-                  "3",
-                  "Tree Roots",
-                  "49",
-                  "500 * (1.6 + L/100)^L",
-                  "(1 + L/10) * 1.05^L (x Tree Roots)"
-                ]
-              },
-              {
-                "id": "row-4",
-                "cells": [
-                  "4",
-                  "Dark Liquid",
-                  "10",
-                  "1500 * (1.8 + L/85)^L",
-                  "(1 + L/20) * 1.05^L (x Dark Liquid)"
-                ]
-              },
-              {
-                "id": "row-5",
-                "cells": [
-                  "5",
-                  "Golden Research",
-                  "10",
-                  "2500 * (1.65 + L/85)^L",
-                  "1 + L/20 (x Golden Research)"
-                ]
-              },
-              {
-                "id": "row-6",
-                "cells": [
-                  "6",
-                  "Life Gem",
-                  "10",
-                  "12500 * (1.675 + L/80)^L",
-                  "(1 + L/20) * 1.05^L (x Life Gem)"
-                ]
-              },
-              {
-                "id": "row-7",
-                "cells": [
-                  "7",
-                  "Energy",
-                  "10",
-                  "50000 * (1.45 + L/75)^L",
-                  "(1 + L/10) * 1.05^L (x Energy)"
-                ]
-              }
-            ],
-            "text": "L = nivel. Compra maxima = clique direito / botao UPGRADE MAX."
-          }
-        ]
+        "sections": []
       }
     },
     {
@@ -181,174 +20,10 @@ export const IMPORTED_NOTES = {
         "id": "golden-points",
         "name": "Golden Points",
         "icon": "coin",
-        "desc": "Create Golden Research using Research Points, then invest Golden Points into six targets. Each target has a minimum investment; Life Gem, Mining Damage and Glacier also need Unlocker levels.",
+        "desc": "Invest Golden Points into six targets. Each bonus starts at its required investment.",
         "highlights": [],
         "facts": [],
-        "sections": [
-          {
-            "id": "notes-golden-1",
-            "title": "Desbloqueio",
-            "text": "Gold Bars Upgrade #39 \"Unlock Golden Research\" (custo fixo 1e20 Gold Bars)."
-          },
-          {
-            "id": "notes-golden-2",
-            "title": "Criar Golden Research (board GOLD RESEARCH)",
-            "text": "Cada clique no CREATE (ou no toggle do auto-clicker):\n\nCusto por clique  = 5e19 * GoldenResearchCostMulti  Research Points\nGanho por clique  = +0.1 * GoldenResearchMulti      Golden Research\nProgresso         = +1 clique na barra (barra cheia = Golden Points)\nBarra             = 10 cliques  →  vira 100 cliques com o Golden Milestone 5\n\n- O texto do botao mostra +0.1 x Multi e 5e19 x CostMulti PER INVEST.\n- Barra cheia = o server converte em Golden Points (a moeda que voce distribui).\n- GoldenResearch total (soma de tudo que ja ganhou) e o que dispara os Milestones .\n- Auto-clicker: botao de toggle no proprio board (stat GoldenAutoclicker)."
-          },
-          {
-            "id": "notes-golden-4",
-            "title": "Distribuir Golden Points (board GOLD POINTS / GOLD POINT INVESTING)",
-            "columns": [
-              "Alvo",
-              "Boost (o que multiplica)",
-              "Req investido",
-              "Formula do boost",
-              "CAP"
-            ],
-            "rows": [
-              {
-                "id": "row-1",
-                "cells": [
-                  "U1",
-                  "Energy",
-                  "1",
-                  "invest^0.425",
-                  "1.000"
-                ]
-              },
-              {
-                "id": "row-2",
-                "cells": [
-                  "U2",
-                  "Research Points",
-                  "10",
-                  "invest^0.3",
-                  "—"
-                ]
-              },
-              {
-                "id": "row-3",
-                "cells": [
-                  "U3",
-                  "Money",
-                  "25",
-                  "invest^0.285",
-                  "250"
-                ]
-              },
-              {
-                "id": "row-4",
-                "cells": [
-                  "U4",
-                  "Life Gem",
-                  "50",
-                  "invest^0.235",
-                  "—"
-                ]
-              },
-              {
-                "id": "row-5",
-                "cells": [
-                  "U5",
-                  "Mining Damage",
-                  "100",
-                  "invest^0.175",
-                  "50"
-                ]
-              },
-              {
-                "id": "row-6",
-                "cells": [
-                  "U6",
-                  "Glacier",
-                  "250",
-                  "invest^0.2",
-                  "50"
-                ]
-              }
-            ],
-            "text": "Voce escolhe o alvo (stat GoldenDistributer, botoes 1–6) e aperta INVEST — o ponto vai para aquele alvo. Cada alvo so liga o boost depois de ter o minimo investido (Req); abaixo disso o boost = 1 (nada).\n\nU4 / U5 / U6 so aparecem com o upgrade Unlocker nivel 2 / 3 / 4."
-          },
-          {
-            "id": "notes-golden-5",
-            "title": "Golden Upgrades (6 — moeda: Golden Research Points)",
-            "columns": [
-              "#",
-              "Nome",
-              "Max",
-              "Custo",
-              "Efeito"
-            ],
-            "rows": [
-              {
-                "id": "row-1",
-                "cells": [
-                  "1",
-                  "Click Power",
-                  "9",
-                  "1 * 3^L",
-                  "L (poder do clique manual)"
-                ]
-              },
-              {
-                "id": "row-2",
-                "cells": [
-                  "2",
-                  "Auto Power",
-                  "9",
-                  "10 * 5^L",
-                  "L por segundo (poder do auto)"
-                ]
-              },
-              {
-                "id": "row-3",
-                "cells": [
-                  "3",
-                  "Golden Research",
-                  "20",
-                  "2 * (1.35 + L/40)^L",
-                  "1 + L/10 (x Golden RP)"
-                ]
-              },
-              {
-                "id": "row-4",
-                "cells": [
-                  "4",
-                  "Golden Research #2",
-                  "49",
-                  "1000 * (1.75 + L/35)^L",
-                  "(1 + L/20) * 1.05^L (x Golden RP)"
-                ]
-              },
-              {
-                "id": "row-5",
-                "cells": [
-                  "5",
-                  "Unlocker",
-                  "4",
-                  "250 * 10^L",
-                  "2 + L (destrava os alvos U4/U5/U6)"
-                ]
-              },
-              {
-                "id": "row-6",
-                "cells": [
-                  "6",
-                  "Auto Speed",
-                  "10",
-                  "10000 * 3^L",
-                  "1 + L/5 (so visivel no Milestone 5+)"
-                ]
-              }
-            ],
-            "text": ""
-          },
-          {
-            "id": "notes-golden-6",
-            "title": "Fluxo resumido",
-            "text": "Research Points (5e19 x CostMulti) --clique--> barra 10/100 cliques --> +1 Golden Point\nGolden Point --INVEST--> U1..U6 (boost fixo por quantidade investida)\nGolden Research total --acumula--> Milestones G1..G7 (ve arquivo 03)"
-          }
-        ]
+        "sections": []
       }
     },
     {
@@ -357,79 +32,10 @@ export const IMPORTED_NOTES = {
         "id": "golden-research-milestones",
         "name": "Golden Research Milestones",
         "icon": "star",
-        "desc": "Golden Research Milestones are permanent bonuses tracked on the board. Early milestones boost Research limits; milestone 5 multiplies Golden Points investing power by 10x, the biggest jump in the minigame.",
+        "desc": "Seven rewards from total Golden Research, including research caps, automation and passive income.",
         "highlights": [],
         "facts": [],
-        "sections": [
-          {
-            "id": "notes-golden-milestones-2",
-            "title": "A) GOLDEN MILESTONES (7)",
-            "columns": [
-              "#",
-              "Req (total Golden Research)",
-              "Efeitos (board)"
-            ],
-            "rows": [
-              {
-                "id": "row-1",
-                "cells": [
-                  "G1",
-                  "10",
-                  "3x RP Cost mas 2x Golden RP · 2.5x Research Points"
-                ]
-              },
-              {
-                "id": "row-2",
-                "cells": [
-                  "G2",
-                  "50",
-                  "2x RP Cost mas 1.5x Golden RP · 2.5x Research Points"
-                ]
-              },
-              {
-                "id": "row-3",
-                "cells": [
-                  "G3",
-                  "250",
-                  "+5 Level Cap em TODOS os Research Upgrades (os de limite ≥ 25) · 4 novos Research Upgrades"
-                ]
-              },
-              {
-                "id": "row-4",
-                "cells": [
-                  "G4",
-                  "1.5K",
-                  "2x Auto Gold RP Power · 2x Life Gems & 2x Frost"
-                ]
-              },
-              {
-                "id": "row-5",
-                "cells": [
-                  "G5",
-                  "12.5K",
-                  "+1 NOVA Golden Upgrade (Auto Speed) · 10x PROGRESS REQ (barra 10→100 cliques), 12x GOLD RP"
-                ]
-              },
-              {
-                "id": "row-6",
-                "cells": [
-                  "G6",
-                  "175K",
-                  "5x RP Cost, 2x Golden RP · 2.5x Californium"
-                ]
-              },
-              {
-                "id": "row-7",
-                "cells": [
-                  "G7",
-                  "5M",
-                  "Auto Gain 0.1% Life Gems /s"
-                ]
-              }
-            ],
-            "text": "Requisito = Golden Research total acumulado (stat GoldenResearch). Efeitos copiados do board + os confirmados no codigo:\n\nConfirmado no codigo do client:\n- G3: limite = limite + PrestigeUpgrade18 (+5 se GoldenMilestone >= 3) para Research Upgrades com limite ≥ 25.\n- G5: barra do Golden Research = 10 * (GoldenMilestone >= 5 and 10 or 1) cliques; destrava a Golden Upgrade #6.\n- G1/G2/G6 alteram GoldenResearchCostMulti (custo em RP) e GoldenResearchMulti (ganho) — efeitos [SERVER], o board anuncia."
-          }
-        ]
+        "sections": []
       }
     },
     {
@@ -438,156 +44,10 @@ export const IMPORTED_NOTES = {
         "id": "californium-milestones",
         "name": "Californium Milestones",
         "icon": "star",
-        "desc": "Californium Milestones are permanent global bonuses earned by reaching Californium amounts. Milestone 4 starts boosting Californium caps, milestone 8 raises Adamantium upgrade limits by 15, milestone 9 raises Californium limits by 10, milestone 11 gives the first Quartz upgrade five extra levels, and milestone 13 unlocks the final two Opal upgrades. They reward holding Californium instead of only spending it.",
+        "desc": "Sixteen permanent rewards from total Californium. Reach 100T to unlock Astatine.",
         "highlights": [],
         "facts": [],
-        "sections": [
-          {
-            "id": "notes-californium-2",
-            "title": "B) CALIFORNIUM MILESTONES (16)",
-            "columns": [
-              "#",
-              "Req Californium",
-              "Efeitos (board)"
-            ],
-            "rows": [
-              {
-                "id": "row-1",
-                "cells": [
-                  "1",
-                  "10",
-                  "1.5x Adamantium & Platinum · 1.5x Crystal Perks"
-                ]
-              },
-              {
-                "id": "row-2",
-                "cells": [
-                  "2",
-                  "25",
-                  "2x Adamantium Chance · 1.5x Californium Chance"
-                ]
-              },
-              {
-                "id": "row-3",
-                "cells": [
-                  "3",
-                  "100",
-                  "2x Platinum · 5% passive Adamantium"
-                ]
-              },
-              {
-                "id": "row-4",
-                "cells": [
-                  "4",
-                  "250",
-                  "15% passive Adamantium · 2x Californium"
-                ]
-              },
-              {
-                "id": "row-5",
-                "cells": [
-                  "5",
-                  "600",
-                  "1.15^ Platinum Bonus Power · Californium's Adamantium Boost stronger"
-                ]
-              },
-              {
-                "id": "row-6",
-                "cells": [
-                  "6",
-                  "2.500",
-                  "50% passive Adamantium · 10% passive Californium"
-                ]
-              },
-              {
-                "id": "row-7",
-                "cells": [
-                  "7",
-                  "7.000",
-                  "1.15^ Adamantium Bonus Power · 2x Crystal Perks"
-                ]
-              },
-              {
-                "id": "row-8",
-                "cells": [
-                  "8",
-                  "250K",
-                  "100% passive Adamantium · +15 CAP nos Adamantium Upgrades"
-                ]
-              },
-              {
-                "id": "row-9",
-                "cells": [
-                  "9",
-                  "1.5M",
-                  "20% passive Californium · +10 CAP nos Californium Upgrades"
-                ]
-              },
-              {
-                "id": "row-10",
-                "cells": [
-                  "10",
-                  "15M",
-                  "+3 Crystal Shard tiers · 2.5x Bluesteel"
-                ]
-              },
-              {
-                "id": "row-11",
-                "cells": [
-                  "11",
-                  "225M",
-                  "NOVO boost de stat do Platinum · EXPAND First Merge Upgrade"
-                ]
-              },
-              {
-                "id": "row-12",
-                "cells": [
-                  "12",
-                  "2.5B",
-                  "NOVO boost de stat do Adamantium · 10x Crystal Compaction"
-                ]
-              },
-              {
-                "id": "row-13",
-                "cells": [
-                  "13",
-                  "15B",
-                  "2.5% passive Opal income · +2 Opal Upgrades (Opal 15/16 destravam no client com Milestone 13)"
-                ]
-              },
-              {
-                "id": "row-14",
-                "cells": [
-                  "14",
-                  "175B",
-                  "+0.1% passive Bluesteel · 35% passive Californium"
-                ]
-              },
-              {
-                "id": "row-15",
-                "cells": [
-                  "15",
-                  "2T",
-                  "2x Golden Research · 1.5x Rune Bulk"
-                ]
-              },
-              {
-                "id": "row-16",
-                "cells": [
-                  "16",
-                  "100T",
-                  "UNLOCK ASTATINE"
-                ]
-              }
-            ],
-            "text": "Requisito = Californium total (o board pinta verde quando CaliforniumMilestone >= i; reqs do codigo: t_17)."
-          },
-          {
-            "id": "notes-californium-3",
-            "title": "Power do Californium (e do Adamantium/Platinum) — formulas exatas",
-            "text": "Bônus principal do Californium (board Californium/Bonuses, \"Amount2\"):\nmin(20, (Californium/5 + 1)^0.2)        expoente vira 0.25 com o Milestone 5\n\nBônus do PLATINUM (board Adamantium — 6 linhas, cada uma de um stat):\nexpoente: 1.15 se Californium Milestone >= 5        linhas: AdamantiumUpgrade8 + 1 (+1 com Milestone 11)\nCAP: (1 + GDU12/10) * (1 + MagnetU12/10) * PowerAstatine B3 (Milestone 8 de Astatine)\n\nB1  min(cap*100,  (Platinum/50   + 1)^(exp*0.23))\nB2  min(cap*200,  (Platinum/75   + 1)^(exp*0.30))\nB3  min(cap*100,  (Platinum/100  + 1)^(exp*0.21))\nB4  min(cap*50,   (Platinum/150  + 1)^(exp*0.165))\nB5  min(cap*10,   (Platinum/300  + 1)^(exp*0.14))\nB6  min(cap*5,    (Platinum/1e14  + 1)^(exp*0.115))\n\nBônus do ADAMANTIUM (board Californium — 6 linhas):\nlinhas: CaliforniumUpgrade8 + 1 (+1 com Milestone 12)\nCAP: (1 + GDU13/10) * (1 + MagnetU8/10) * PowerAstatine B4 (Milestone 8 de Astatine)\n\nB1  min(cap*100, (Adamantium/15   + 1)^(exp*0.31))\nB2  min(cap*50,  (Adamantium/25   + 1)^(exp*0.25))\nB3  min(cap*25,  (Adamantium/50   + 1)^(exp*0.235))\nB4  min(cap*25,  (Adamantium/100  + 1)^(exp*0.315))\nB5  min(cap*5,   (Adamantium/250  + 1)^(exp*0.15))\nB6  min(cap*5,   (Adamantium/1e12  + 1)^(exp*0.09))"
-          }
-        ]
+        "sections": []
       }
     },
     {
@@ -596,227 +56,10 @@ export const IMPORTED_NOTES = {
         "id": "astatine-power",
         "name": "Astatine Power",
         "icon": "spark",
-        "desc": "Astatine Power is a set of passive bonuses that scale with total Astatine. The first two apply from the start and grow with amounts over 50 and 100; two more unlock at milestones 7 and 8 and scale with amounts over 500 and 1000, with soft caps. Holding more Astatine strengthens crystal income.",
+        "desc": "Calculate Astatine Power and Californium Buffs below. Power unlocks at milestone 7; its cap bonuses unlock at milestone 8.",
         "highlights": [],
         "facts": [],
-        "sections": [
-          {
-            "id": "notes-astatine-1",
-            "title": "C) ASTATINE (completo)",
-            "text": "Desbloqueio: Californium Milestone 16 (100T Californium).\nChance de spawn (4º cristal especial do board Platinum): 0.5% * (1 + AstatineUpgrade1/2), x2 com Astatine Milestone 7, teto 25%."
-          },
-          {
-            "id": "notes-astatine-2",
-            "title": "Astatine Milestones (8) — reqs = Astatine (codigo: t = {5,20,40,75,150,300,750,2500})",
-            "columns": [
-              "#",
-              "Req",
-              "Efeitos (board)"
-            ],
-            "rows": [
-              {
-                "id": "row-1",
-                "cells": [
-                  "1",
-                  "5",
-                  "1.5x Astatine · 4 Astatine Upgrades"
-                ]
-              },
-              {
-                "id": "row-2",
-                "cells": [
-                  "2",
-                  "20",
-                  "5x passive mais forte · +1 Astatine Upgrade"
-                ]
-              },
-              {
-                "id": "row-3",
-                "cells": [
-                  "3",
-                  "40",
-                  "3x Adamantium & Californium · +1 Astatine Upgrade"
-                ]
-              },
-              {
-                "id": "row-4",
-                "cells": [
-                  "4",
-                  "75",
-                  "2.5x Crystal Spawn Speed · CALIFORNIUM BUFFS"
-                ]
-              },
-              {
-                "id": "row-5",
-                "cells": [
-                  "5",
-                  "150",
-                  "1.25x Astatine · +2 Astatine Upgrades"
-                ]
-              },
-              {
-                "id": "row-6",
-                "cells": [
-                  "6",
-                  "300",
-                  "2x Mining Depth · +2 Astatine Upgrades"
-                ]
-              },
-              {
-                "id": "row-7",
-                "cells": [
-                  "7",
-                  "750",
-                  "2x Astatine Chance · UNLOCK ASTATINE POWER"
-                ]
-              },
-              {
-                "id": "row-8",
-                "cells": [
-                  "8",
-                  "2500",
-                  "3x Californium · EXPAND ASTATINE POWER (B3/B4 do Power + caps de Platinum/Adamantium)"
-                ]
-              }
-            ],
-            "text": ""
-          },
-          {
-            "id": "notes-astatine-4",
-            "title": "10 Astatine Upgrades",
-            "columns": [
-              "#",
-              "Nome",
-              "Max",
-              "Mst",
-              "Custo",
-              "Efeito"
-            ],
-            "rows": [
-              {
-                "id": "row-1",
-                "cells": [
-                  "1",
-                  "Astatine Chance",
-                  "18",
-                  "1",
-                  "(1+L) * 1.6^L",
-                  "0.5 + L/4 (% de spawn)"
-                ]
-              },
-              {
-                "id": "row-2",
-                "cells": [
-                  "2",
-                  "Faster Spawn",
-                  "29",
-                  "1",
-                  "(1+L) * 1.45^L",
-                  "1 + L/2 (x velocidade)"
-                ]
-              },
-              {
-                "id": "row-3",
-                "cells": [
-                  "3",
-                  "Crystal Limit",
-                  "49",
-                  "1",
-                  "(2 + L/3) * 1.225^L",
-                  "1 + L (x limite de cristais)"
-                ]
-              },
-              {
-                "id": "row-4",
-                "cells": [
-                  "4",
-                  "Crystal Compaction",
-                  "29",
-                  "1",
-                  "(3 + L/3) * 1.5^L",
-                  "1 + L/4 (x ganho por compactacao)"
-                ]
-              },
-              {
-                "id": "row-5",
-                "cells": [
-                  "5",
-                  "More Astatine",
-                  "40",
-                  "2",
-                  "(5 + L/3) * 1.445^L",
-                  "1 + 0.15L (x Platinum)"
-                ]
-              },
-              {
-                "id": "row-6",
-                "cells": [
-                  "6",
-                  "Dark Crystals [SOON]",
-                  "6",
-                  "3",
-                  "(7 + L/4) * 1.375^L",
-                  "(1 + 0.1L) * 1.05^L"
-                ]
-              },
-              {
-                "id": "row-7",
-                "cells": [
-                  "7",
-                  "Ore Mastery",
-                  "10",
-                  "5",
-                  "(10 + L/3) * 2.25^L",
-                  "1 + L/10 (x Ore Mastery)"
-                ]
-              },
-              {
-                "id": "row-8",
-                "cells": [
-                  "8",
-                  "Ruby Energy",
-                  "29",
-                  "5",
-                  "15 * 1.5^L",
-                  "(1 + 0.1L) * 1.05^L"
-                ]
-              },
-              {
-                "id": "row-9",
-                "cells": [
-                  "9",
-                  "Energy",
-                  "29",
-                  "6",
-                  "25 * 1.5^L",
-                  "(1 + 0.4L) * 1.1^L"
-                ]
-              },
-              {
-                "id": "row-10",
-                "cells": [
-                  "10",
-                  "Californium Bonuses",
-                  "3",
-                  "6",
-                  "125 * 4^L",
-                  "3 + L (linhas extras no Californium Buffs)"
-                ]
-              }
-            ],
-            "text": "Gated por milestone. L = nivel, custo passa por math.floor."
-          },
-          {
-            "id": "notes-astatine-5",
-            "title": "Californium Buffs (board Astatine/Bonuses — Milestone 4+)",
-            "text": "Bonus calculado com o Californium que voce segura (board mostra \"CALIFORNIUM\"):\nCAP  v22 = (1 + GoldenDiamondUpgrade13/10) * (1 + MagnetUpgrade8/10)\nQtd de linhas = 3 + AstatineUpgrade10 (max 6)\n\nB1  min(v22*100, (Cf/1e13 + 1)^0.325)      icone: Crystal Shards\nB2  min(v22*25,  (Cf/2e13 + 1)^0.225)      icone: Gears(?)\nB3  min(v22*25,  (Cf/4e13 + 1)^0.235)      icone: Golden Diamonds\nB4  min(v22*25,  (Cf/7e13 + 1)^0.15)       icone: Magnets\nB5  min(v22*5,   (Cf/2e14 + 1)^0.125)      icone: Dark Crystal\nB6  min(v22*5,   (Cf/5e14 + 1)^0.0775)     icone: Astatine"
-          },
-          {
-            "id": "notes-astatine-6",
-            "title": "POWER OF ASTATINE (board Astatine/Bonuses2 — Milestone 7+)",
-            "text": "Calculado com o Astatine que voce segura (B3/B4 so aparecem no Milestone 8):\n\nB1  (Astatine/50   + 1)^0.375\nB2  (Astatine/100  + 1)^0.275\nB3  min(7, (Astatine/500  + 1)^0.115)   → multiplica o CAP dos bonus de PLATINUM\nB4  min(5, (Astatine/1000 + 1)^0.085)   → multiplica o CAP dos bonus de ADAMANTIUM\n\n(GDU = Golden Diamond Upgrade, MagnetU8 = \"Adamantium Cap\", MagnetU12 = \"Platinum Cap\".)"
-          }
-        ]
+        "sections": []
       }
     },
     {
@@ -825,116 +68,11 @@ export const IMPORTED_NOTES = {
         "id": "frost-conversion",
         "name": "Frost Conversion",
         "icon": "refresh",
-        "desc": "Convert Frost into Packed, Dense, Compact and Neutron Frost on one page. Each tier boosts specific stats while held. Conversion costs, formulas and the Frost3-dependent Compact Frost bonus are listed below.",
+        "desc": "All four Frost conversions and their current bonuses. Enter your owned amounts below.",
         "highlights": [],
         "facts": [],
         "children": [],
-        "sections": [
-          {
-            "id": "notes-conversion-1",
-            "title": "Base",
-            "text": "O Frost (IceShard) vem das 3 Frost Generators . As conversoes transformam o frost de baixo no de cima, em cadeia:\n\nFrost (IceShard)  →  Frost2  →  Frost3  →  Frost4  →  Frost5\n\nCada linha da cadeia so destrava quando voce tem > 0 do frost anterior."
-          },
-          {
-            "id": "notes-conversion-3",
-            "title": "As 4 conversoes",
-            "columns": [
-              "Conversao",
-              "Taxa (custa 1)",
-              "Bonus que ela da",
-              "Formula do bonus"
-            ],
-            "rows": [
-              {
-                "id": "row-1",
-                "cells": [
-                  "Frost2",
-                  "10.000.000 Frost",
-                  "×Frost",
-                  "min(50, (Frost2/10 + 1)^0.2)"
-                ]
-              },
-              {
-                "id": "row-2",
-                "cells": [
-                  "Frost3",
-                  "10.000 Frost2",
-                  "×Frost",
-                  "min(500, (Frost3 + 1)^0.135)"
-                ]
-              },
-              {
-                "id": "row-3",
-                "cells": [
-                  "",
-                  "",
-                  "×Life Gem",
-                  "log10(Frost3/5 + 10)^0.675 * (Frost3 + 1)^0.03"
-                ]
-              },
-              {
-                "id": "row-4",
-                "cells": [
-                  "Frost4",
-                  "25.000 Frost3",
-                  "×Frost",
-                  "min(250, (Frost3 + 1)^0.115) *(usa o saldo de Frost3!)*"
-                ]
-              },
-              {
-                "id": "row-5",
-                "cells": [
-                  "",
-                  "",
-                  "×Energy",
-                  "log10(Frost4/100 + 10)^1.35 * (Frost4 + 1)^0.0425"
-                ]
-              },
-              {
-                "id": "row-6",
-                "cells": [
-                  "",
-                  "",
-                  "×Tree (icone de arvore)",
-                  "log10(Frost4/1000 + 10)^1 * (Frost4 + 1)^0.035"
-                ]
-              },
-              {
-                "id": "row-7",
-                "cells": [
-                  "Frost5",
-                  "1.000.000 Frost4",
-                  "×Frost",
-                  "min(100, (Frost5 + 1)^0.1)"
-                ]
-              },
-              {
-                "id": "row-8",
-                "cells": [
-                  "",
-                  "",
-                  "×Golden Research",
-                  "log10(Frost5/100 + 10)^0.9 * (Frost5 + 1)^0.025"
-                ]
-              },
-              {
-                "id": "row-9",
-                "cells": [
-                  "",
-                  "",
-                  "(3º slot no board)",
-                  "sem formula no client ainda — deve vir em update"
-                ]
-              }
-            ],
-            "text": "O botao converte de uma vez tudo que fechar numero inteiro: floor(saldo / taxa) (o Frost5 ainda leva um yield de x0.7 [SERVER])."
-          },
-          {
-            "id": "notes-conversion-4",
-            "title": "Resumo visual do board",
-            "text": "C1  FROST   (o que as maquinas produzem — nao tem conversao)\nC2  FROST2  10M Frost cada        1 bonus (Frost)\nC3  FROST3  10K Frost2 cada       2 bonus (Frost, Life Gem)\nC4  FROST4  25K Frost3 cada       3 bonus (Frost, Energy, Tree)\nC5  FROST5  1M  Frost4 cada       2 bonus (+ slot extra)  [yield x0.7]\n\nOs bonus sao permanentes enquanto voce segura a quantidade daquele frost (recalculados ao vivo no board a cada 2s)."
-          }
-        ]
+        "sections": []
       }
     },
     {
@@ -943,7 +81,7 @@ export const IMPORTED_NOTES = {
         "id": "energies",
         "name": "Energies",
         "icon": "spark",
-        "desc": "Silver, Golden, Diamond and Ruby Energy drop from the Upgrade Tree. Each has its own bonuses while held. Ruby Energy can raise Silver, Golden and Diamond bonus caps; compare all four energies below.",
+        "desc": "Enter your Silver, Golden, Diamond and Ruby Energy amounts to calculate bonuses and caps.",
         "highlights": [],
         "facts": [
           {
@@ -952,562 +90,59 @@ export const IMPORTED_NOTES = {
           }
         ],
         "children": [],
-        "sections": [
-          {
-            "id": "notes-energies-1",
-            "title": "Como pegar (chance por segundo)",
-            "text": "Cada energia tem uma chance/s de cair no Upgrade Tree (a de cima substitui a de baixo: Ruby > Diamond > Gold > Silver):\n\nSilver  %/s = (TU34 + TU35) * (1 + TU81/10)\nGold    %/s = (TU44 + TU45) * (1 + TU82/10) * (1 + EmerU15/20) * (Silver%/100)\nDiamond %/s = (TU54 + TU66 + GDU10) * (1 + TU83/10) * (Gold%/100)\nRuby    %/s = (TU77*3 + TU78) * (1 + MineCoreLevel * 0.2 * (1 + MiningU36/10)) * (Diamond%/100)\n\n- TU = Upgrade Tree (TU34 = \"Silver Energy\", TU35 = \"Silver Chance\", TU44/45 = Golden Energy/Chance, TU54/66 = Diamond Energy/Chance, TU77/78 = Ruby Energy/Chance, TU81/82/83 = Silver+/Gold+ III/Diamond+, TU80 = \"Ruby Bonuses\").\n- EmerU15 = Emerald Upgrade 15 (\"Gold Chance\"), GDU10 = Golden Diamond Upgrade 10, MiningU36 = Mining Upgrade 36.\n- Se a chance fica < 0.1%/s o board mostra \"1 IN (100/chance) /s\"."
-          },
-          {
-            "id": "notes-energies-2",
-            "title": "Quanto cada uma rende (multiplicador de ganho)",
-            "columns": [
-              "Energia",
-              "Upgrade",
-              "Efeito"
-            ],
-            "rows": [
-              {
-                "id": "row-1",
-                "cells": [
-                  "Silver",
-                  "Gold Upg 27 (Gold Bars)",
-                  "(1 + 0.08L) * 1.02^L"
-                ]
-              },
-              {
-                "id": "row-2",
-                "cells": [
-                  "Silver",
-                  "Emerald Upg 10",
-                  "1 + L/4"
-                ]
-              },
-              {
-                "id": "row-3",
-                "cells": [
-                  "Gold",
-                  "Gold Upg 33",
-                  "1 + L/10"
-                ]
-              },
-              {
-                "id": "row-4",
-                "cells": [
-                  "Gold",
-                  "Emerald Upg 8",
-                  "1 + L/4"
-                ]
-              },
-              {
-                "id": "row-5",
-                "cells": [
-                  "Diamond",
-                  "Gold Upg 37",
-                  "(1 + L/20) * 1.05^L"
-                ]
-              },
-              {
-                "id": "row-6",
-                "cells": [
-                  "Diamond",
-                  "Emerald Upg 13",
-                  "1 + L/4"
-                ]
-              },
-              {
-                "id": "row-7",
-                "cells": [
-                  "Ruby",
-                  "Golden Diamond Upg 15",
-                  "(1 + 0.075L) * 1.025^L"
-                ]
-              },
-              {
-                "id": "row-8",
-                "cells": [
-                  "Ruby",
-                  "Tree Upg 79 (\"Ruby Amounts\")",
-                  "1 + L/2"
-                ]
-              },
-              {
-                "id": "row-9",
-                "cells": [
-                  "Silver+Gold+Diamond",
-                  "Prestige Upg 25 (\"Super Special\")",
-                  "1 + 0.1L"
-                ]
-              }
-            ],
-            "text": "Cruzadas (enquanto segura a energia):\n- Prestige Upg 15 \"Better Silver\" → Silver multiplica o GANHO de Gold e Diamond: (Silver + 1)^(L/20)\n- TU49 \"Super Gold\" → Gold multiplica o GANHO de Silver: min(1000, (Gold + 1)^(L/10))\n- TU60 \"Super Diamond\" → Diamond multiplica o GANHO de Silver e Gold: min(100, (Diamond + 1)^(L/15))"
-          },
-          {
-            "id": "notes-energies-3",
-            "title": "SILVER",
-            "columns": [
-              "#",
-              "Boost (icone)",
-              "Formula",
-              "CAP"
-            ],
-            "rows": [
-              {
-                "id": "row-1",
-                "cells": [
-                  "B1",
-                  "Money",
-                  "(Silver/10 + 1)^0.26",
-                  "100 × capboost"
-                ]
-              },
-              {
-                "id": "row-2",
-                "cells": [
-                  "B2",
-                  "Energy",
-                  "(Silver/15 + 1)^0.265",
-                  "10.000 × capboost"
-                ]
-              },
-              {
-                "id": "row-3",
-                "cells": [
-                  "B3",
-                  "Crystals",
-                  "(Silver/25 + 1)^0.2",
-                  "100 × capboost"
-                ]
-              },
-              {
-                "id": "row-4",
-                "cells": [
-                  "B4",
-                  "Crystal Shards",
-                  "(Silver/50 + 1)^0.15",
-                  "25 × capboost"
-                ]
-              }
-            ],
-            "text": ""
-          },
-          {
-            "id": "notes-energies-4",
-            "title": "GOLDEN (Gold Energy)",
-            "columns": [
-              "#",
-              "Boost (icone)",
-              "Formula",
-              "CAP"
-            ],
-            "rows": [
-              {
-                "id": "row-1",
-                "cells": [
-                  "B1",
-                  "Money",
-                  "(Gold/5 + 1)^0.245",
-                  "1.000 × capboost"
-                ]
-              },
-              {
-                "id": "row-2",
-                "cells": [
-                  "B2",
-                  "Golden Bars",
-                  "(Gold/7 + 1)^0.3",
-                  "250 × capboost"
-                ]
-              },
-              {
-                "id": "row-3",
-                "cells": [
-                  "B3",
-                  "Prestige Points",
-                  "(Gold/12 + 1)^0.16",
-                  "100 × capboost"
-                ]
-              },
-              {
-                "id": "row-4",
-                "cells": [
-                  "B4",
-                  "Sap",
-                  "(Gold/25 + 1)^0.275",
-                  "50 × capboost"
-                ]
-              },
-              {
-                "id": "row-5",
-                "cells": [
-                  "B5",
-                  "Research Points",
-                  "(Gold/100 + 1)^0.125",
-                  "2.5 × capboost"
-                ]
-              }
-            ],
-            "text": ""
-          },
-          {
-            "id": "notes-energies-5",
-            "title": "DIAMOND",
-            "columns": [
-              "#",
-              "Boost (icone)",
-              "Formula",
-              "CAP"
-            ],
-            "rows": [
-              {
-                "id": "row-1",
-                "cells": [
-                  "B1",
-                  "Money",
-                  "(Diamond/1 + 1)^0.25",
-                  "1.000 × capboost"
-                ]
-              },
-              {
-                "id": "row-2",
-                "cells": [
-                  "B2",
-                  "Emerald Coins",
-                  "(Diamond/4 + 1)^0.345",
-                  "10.000 × capboost"
-                ]
-              },
-              {
-                "id": "row-3",
-                "cells": [
-                  "B3",
-                  "Iron",
-                  "(Diamond/10 + 1)^0.1",
-                  "4 × capboost"
-                ]
-              },
-              {
-                "id": "row-4",
-                "cells": [
-                  "B4",
-                  "Life Gem",
-                  "(Diamond/25 + 1)^0.15",
-                  "5 × capboost"
-                ]
-              },
-              {
-                "id": "row-5",
-                "cells": [
-                  "B5",
-                  "Rune Stone",
-                  "(Diamond/200 + 1)^0.09",
-                  "2.5 (fixo)"
-                ]
-              }
-            ],
-            "text": ""
-          },
-          {
-            "id": "notes-energies-6",
-            "title": "RUBY (linhas 1–3 = multiplicador, linhas 4–6 = CAP)",
-            "columns": [
-              "#",
-              "Boost (icone)",
-              "Formula",
-              "CAP"
-            ],
-            "rows": [
-              {
-                "id": "row-1",
-                "cells": [
-                  "B1",
-                  "Money",
-                  "(Ruby/0.5 + 1)^0.365",
-                  "250"
-                ]
-              },
-              {
-                "id": "row-2",
-                "cells": [
-                  "B2",
-                  "Golden Diamonds",
-                  "(Ruby/10 + 1)^0.315",
-                  "10.000"
-                ]
-              },
-              {
-                "id": "row-3",
-                "cells": [
-                  "B3",
-                  "Gears (icone de gear)",
-                  "(Ruby/30 + 1)^0.225",
-                  "10"
-                ]
-              },
-              {
-                "id": "row-4",
-                "cells": [
-                  "B4",
-                  "CAP Silver",
-                  "(Ruby/100 + 1)^0.05",
-                  "2.5"
-                ]
-              },
-              {
-                "id": "row-5",
-                "cells": [
-                  "B5",
-                  "CAP Gold",
-                  "(Ruby/1500 + 1)^0.0425",
-                  "2.5"
-                ]
-              },
-              {
-                "id": "row-6",
-                "cells": [
-                  "B6",
-                  "CAP Diamond",
-                  "(Ruby/20000 + 1)^0.035",
-                  "2.5"
-                ]
-              }
-            ],
-            "text": "Linhas visiveis:\n- Ruby: 2 + nivel do TU80 (max 6) — TU80 \"Ruby Bonuses\", efeito mostrado 3 + L.\n- Silver / Gold / Diamond: as linhas extras destravam com TU39 \"Better Silver\" (max 2), TU47 \"Better Gold Energy\" (max 3) e TU58 \"Better Diamond Energy\" (max 3)."
-          },
-          {
-            "id": "notes-energies-7",
-            "title": "CAPS (o ponto chave)",
-            "text": "O CAP de cada bonus = o teto do min(...). O Ruby Energy aumenta esses tetos (as linhas \"x CAP\" do board):\n\nCapBoost Silver  = min(2.5, (Ruby/100   + 1)^0.05)    (TU80 >= 1)\nCapBoost Gold    = min(2.5, (Ruby/1500  + 1)^0.0425)  (TU80 >= 2)\nCapBoost Diamond = min(2.5, (Ruby/20000 + 1)^0.035)   (TU80 >= 3)\n\nCap final de cada linha = CAP da tabela × CapBoost (menos Diamond B5, que e fixo em 2.5).\nEx.: com Ruby alto (CapBoost Gold = 2.5), o cap do bonus Gold B1 vai de 1.000 → 2.500."
-          },
-          {
-            "id": "notes-energies-8",
-            "title": "Upgrades da arvore ligados as energias (custo em Money, math.floor)",
-            "columns": [
-              "TU",
-              "Nome",
-              "Max",
-              "Custo",
-              "Efeito"
-            ],
-            "rows": [
-              {
-                "id": "row-1",
-                "cells": [
-                  "34",
-                  "Silver Energy",
-                  "1",
-                  "1e14 (fixo)",
-                  "desbloqueia"
-                ]
-              },
-              {
-                "id": "row-2",
-                "cells": [
-                  "35",
-                  "Silver Chance",
-                  "19",
-                  "2.5e14 * 2.25^L",
-                  "1 + L"
-                ]
-              },
-              {
-                "id": "row-3",
-                "cells": [
-                  "39",
-                  "Better Silver",
-                  "2",
-                  "1e16 * 1000^L",
-                  "L"
-                ]
-              },
-              {
-                "id": "row-4",
-                "cells": [
-                  "44",
-                  "Golden Energy",
-                  "1",
-                  "2.5e18 (fixo)",
-                  "desbloqueia"
-                ]
-              },
-              {
-                "id": "row-5",
-                "cells": [
-                  "45",
-                  "Golden Chance",
-                  "9",
-                  "5e18 * 2.35^L",
-                  "1 + L"
-                ]
-              },
-              {
-                "id": "row-6",
-                "cells": [
-                  "47",
-                  "Better Gold Energy",
-                  "3",
-                  "5e20 * 25^L",
-                  "L"
-                ]
-              },
-              {
-                "id": "row-7",
-                "cells": [
-                  "48",
-                  "Gold+",
-                  "9",
-                  "1e20 * 1.55^L",
-                  "1 + L"
-                ]
-              },
-              {
-                "id": "row-8",
-                "cells": [
-                  "49",
-                  "Super Gold",
-                  "3",
-                  "1e22 * 10000^L",
-                  "min(1000, (Gold+1)^(L/10))"
-                ]
-              },
-              {
-                "id": "row-9",
-                "cells": [
-                  "52",
-                  "Gold+ II",
-                  "20",
-                  "2e21 * (1 + L/2)",
-                  "1 + L/3"
-                ]
-              },
-              {
-                "id": "row-10",
-                "cells": [
-                  "54",
-                  "Diamond Energy",
-                  "1",
-                  "1e23 (fixo)",
-                  "desbloqueia"
-                ]
-              },
-              {
-                "id": "row-11",
-                "cells": [
-                  "58",
-                  "Better Diamond Energy",
-                  "3",
-                  "5e19 * 20^L",
-                  "1 + L"
-                ]
-              },
-              {
-                "id": "row-12",
-                "cells": [
-                  "60",
-                  "Super Diamond",
-                  "5",
-                  "1e26 * 1000^L",
-                  "min(100, (Diamond+1)^(L/15))"
-                ]
-              },
-              {
-                "id": "row-13",
-                "cells": [
-                  "63",
-                  "Diamond+",
-                  "9",
-                  "4e24 * 5^L",
-                  "1 + L"
-                ]
-              },
-              {
-                "id": "row-14",
-                "cells": [
-                  "66",
-                  "Diamond Chance",
-                  "9",
-                  "1.5e23 * 1.35^L",
-                  "1 + L"
-                ]
-              },
-              {
-                "id": "row-15",
-                "cells": [
-                  "77",
-                  "Ruby Energy",
-                  "1",
-                  "1e66 (fixo)",
-                  "desbloqueia (Rank 2 de Tree Ascension)"
-                ]
-              },
-              {
-                "id": "row-16",
-                "cells": [
-                  "78",
-                  "Ruby Chance",
-                  "22",
-                  "2.5e66 * 10^L",
-                  "3 + L"
-                ]
-              },
-              {
-                "id": "row-17",
-                "cells": [
-                  "79",
-                  "Ruby Amounts",
-                  "9",
-                  "1e68 * 100^L",
-                  "1 + L/2"
-                ]
-              },
-              {
-                "id": "row-18",
-                "cells": [
-                  "80",
-                  "Ruby Bonuses",
-                  "20",
-                  "1e72 * 1000000^L",
-                  "3 + L"
-                ]
-              },
-              {
-                "id": "row-19",
-                "cells": [
-                  "81",
-                  "Silver+",
-                  "10",
-                  "1e67 * 10^L",
-                  "1 + L/10"
-                ]
-              },
-              {
-                "id": "row-20",
-                "cells": [
-                  "82",
-                  "Gold+ III",
-                  "10",
-                  "1e72 * 100^L",
-                  "1 + L/10"
-                ]
-              },
-              {
-                "id": "row-21",
-                "cells": [
-                  "83",
-                  "Diamond+",
-                  "15",
-                  "1e78 * 1000^L",
-                  "1 + L/10"
-                ]
-              }
-            ],
-            "text": "Icones nao decodificados com certeza absoluta: o B3 do Ruby (e o B2 do Californium Buffs) usam o asset 137906519594680 — aparece tambem no bonus do Gear 3 e nos efeitos da Life VI = provavelmente Gears."
-          }
-        ]
+        "sections": []
       }
     }
   ],
   "calculators": {
+    "life/frost-generators": {
+      "kind": "generators",
+      "title": "Frost Generators",
+      "machines": [
+        {
+          "id": "frost1",
+          "name": "Generator 1",
+          "unlockCost": 0,
+          "startIncome": 1,
+          "startTime": 5,
+          "scale": 1,
+          "maxLevel": 50,
+          "maxSpeed": 10,
+          "maxTier": 3,
+          "tierPrice": 50,
+          "levelPrice": 5,
+          "speedPrice": 10
+        },
+        {
+          "id": "frost2",
+          "name": "Generator 2",
+          "unlockCost": 10000,
+          "startIncome": 100,
+          "startTime": 10,
+          "scale": 1.1,
+          "maxLevel": 60,
+          "maxSpeed": 20,
+          "maxTier": 3,
+          "tierPrice": 50000,
+          "levelPrice": 2500,
+          "speedPrice": 7500
+        },
+        {
+          "id": "frost3",
+          "name": "Generator 3",
+          "unlockCost": 10000000,
+          "startIncome": 25000,
+          "startTime": 15,
+          "scale": 1.2,
+          "maxLevel": 75,
+          "maxSpeed": 30,
+          "maxTier": 3,
+          "tierPrice": 100000000,
+          "levelPrice": 1500000,
+          "speedPrice": 7500000
+        }
+      ]
+    },
     "life/golden-points": {
       "kind": "amount-groups",
       "title": "Golden Point investments",
@@ -1638,13 +273,13 @@ export const IMPORTED_NOTES = {
           "bonuses": [
             {
               "id": "power1",
-              "name": "Power bonus 1 (stat not identified in source)",
+              "name": "Astatine bonus 1",
               "value": "formula: (amount/50+1)^0.375",
               "unit": "x"
             },
             {
               "id": "power2",
-              "name": "Power bonus 2 (stat not identified in source)",
+              "name": "Astatine bonus 2",
               "value": "formula: (amount/100+1)^0.275",
               "unit": "x"
             },
@@ -1668,7 +303,7 @@ export const IMPORTED_NOTES = {
           "id": "californium",
           "name": "Californium",
           "amountLabel": "Californium owned",
-          "description": "Californium Buffs unlock at Astatine Milestone 4. Visible lines: min(6, 3 + Astatine Upgrade 10).",
+          "description": "Unlocks at Astatine milestone 4. Californium Bonuses unlocks additional boosts.",
           "bonuses": [
             {
               "id": "shards",
@@ -1678,7 +313,7 @@ export const IMPORTED_NOTES = {
             },
             {
               "id": "gears",
-              "name": "Gears (icon unconfirmed)",
+              "name": "Gears",
               "value": "formula: min(25*(1+gdu13/10)*(1+magnet8/10),(amount/20000000000000+1)^0.225)",
               "unit": "x"
             },
@@ -1780,7 +415,7 @@ export const IMPORTED_NOTES = {
           "id": "frost5",
           "name": "Neutron Frost (Frost5)",
           "amountLabel": "Neutron Frost (Frost5) owned",
-          "description": "1,000,000 Frost4 per conversion; server yield ×0.7. A third board slot has no known client formula.",
+          "description": "1M Frost4 per conversion; 70% conversion yield.",
           "bonuses": [
             {
               "id": "frost",
@@ -1805,7 +440,7 @@ export const IMPORTED_NOTES = {
       "inputs": [
         {
           "id": "tu80",
-          "label": "Ruby Bonuses (TU80) level",
+          "label": "Ruby Bonuses level",
           "default": 0
         }
       ],
@@ -1923,7 +558,7 @@ export const IMPORTED_NOTES = {
           "id": "ruby",
           "name": "Ruby Energy",
           "amountLabel": "Ruby Energy owned",
-          "description": "Visible lines: min(6, 2 + TU80). The board also labels TU80 as 3 + L; the source contains this discrepancy.",
+          "description": "Additional bonuses unlock with Ruby Bonuses.",
           "bonuses": [
             {
               "id": "money",
@@ -1941,7 +576,7 @@ export const IMPORTED_NOTES = {
             },
             {
               "id": "gears",
-              "name": "Gears (icon unconfirmed)",
+              "name": "Gears",
               "value": "formula: min(10, (amount/30+1)^0.225)",
               "cap": 10,
               "unit": "x"
@@ -2088,7 +723,8 @@ export const IMPORTED_NOTES = {
             "features": []
           }
         }
-      ]
+      ],
+      "layout": "compact"
     },
     "main/californium-milestones": {
       "title": "Californium Milestones",
@@ -2349,7 +985,8 @@ export const IMPORTED_NOTES = {
             "features": []
           }
         }
-      ]
+      ],
+      "layout": "compact"
     },
     "main/astatine-power": {
       "title": "Astatine Milestones",
@@ -2483,7 +1120,8 @@ export const IMPORTED_NOTES = {
             "features": []
           }
         }
-      ]
+      ],
+      "layout": "compact"
     }
   },
   "upgrades": {

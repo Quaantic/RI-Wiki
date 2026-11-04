@@ -138,6 +138,11 @@ importUpgrades('life/frost-upgrades','frost',read('04-frost-generators.md').spli
 importUpgrades('main/astatine-upgrades','astatine',milestones.split('### 10 Astatine Upgrades')[1].split('### Californium Buffs')[0],true);
 
 async function finish() {
+  const {refineImportedContent}=await import('../js/content-presentation.js');
+  // A fresh import regenerates the presentation without displaying raw notes.
+  wiki.contentMigrations=(wiki.contentMigrations||[]).filter(id=>id!=='compact-game-content-v2');
+  game.contentMigrations=(game.contentMigrations||[]).filter(id=>id!=='compact-game-content-v2');
+  refineImportedContent(wiki,game);
   const { validateDocuments } = await import('../js/content-schema.js');
   const { setResetLayerPages } = await import('../js/data/reset-layers.js');
   const updates = JSON.parse(fs.readFileSync(path.join(root,'content/update-log.json')));

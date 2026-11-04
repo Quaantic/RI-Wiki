@@ -310,3 +310,23 @@ test('new list-item templates render in their existing game pages', async () => 
   }
 });
 
+test('milestones render once as compact cards and Frost machines use a calculator',async()=>{
+  const draft=await import('../js/edit/draft.js');
+  const views=await import('../js/views.js');
+  draft.__testInjectDocs({wiki:JSON.parse(fs.readFileSync('content/wiki-data.json')),game:JSON.parse(fs.readFileSync('content/game-data.json')),updates:JSON.parse(fs.readFileSync('content/update-log.json'))});
+  draft.applyDraftToSite();
+  const root=mkEl();
+  await views.subcategoryView.render(root,['main','californium-milestones'],new URLSearchParams());
+  assert.equal((root.innerHTML.match(/class="milestone-card"/g)||[]).length,16);
+  assert.ok(!root.innerHTML.includes('class="stage-card'));
+  assert.ok(!root.innerHTML.includes('Inside Californium Milestones'));
+  assert.ok(!root.innerHTML.includes('<table'));
+  await views.subcategoryView.render(root,['life','frost-generators'],new URLSearchParams());
+  assert.equal((root.innerHTML.match(/class="generator-card"/g)||[]).length,3);
+  assert.match(root.innerHTML,/data-generator-results/);
+  assert.ok(!root.innerHTML.includes('<table'));
+  await views.subcategoryView.render(root,['money-island','energies'],new URLSearchParams());
+  assert.match(root.innerHTML,/bonus-groups-grid/);
+  assert.ok(!root.innerHTML.includes('<table'));
+});
+

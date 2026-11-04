@@ -88,6 +88,10 @@ const SINGLE_TYPES = {
 };
 
 const SCHEMAS = {
+  'game:generator': [
+    {key:'name',label:'Name',type:'line'},
+    ...['unlockCost','startIncome','startTime','scale','maxLevel','maxSpeed','maxTier','tierPrice','levelPrice','speedPrice'].map(key=>({key,label:key.replace(/([A-Z])/g,' $1'),type:'line',numeric:true})),
+  ],
   pair: [
     { key: 'label', label: 'Label', type: 'line' },
     { key: 'value', label: 'Value', type: 'line' },
@@ -2019,6 +2023,7 @@ function uniqueIn(base, used) {
 function buildAddValue(docName, trail, template) {
   const doc = draft.doc(docName);
   if (!doc) return null;
+  if(template==='generator') return {id:`generator${crypto.randomUUID().replaceAll('-','')}`,name:'New generator',unlockCost:0,startIncome:1,startTime:5,scale:1,maxLevel:50,maxSpeed:10,maxTier:3,tierPrice:50,levelPrice:5,speedPrice:10};
   const simple = {
     ore: { name:'New ore',icon:'gem',color:'#86d62b',depth:'0',luck:'0' },
     layer: { name:'New layer',num:'1',depth:'0',ores:[] },
@@ -2147,13 +2152,13 @@ async function addItemFromTrigger(trigger) {
 export function addContentToPage(gameKey, wikiPath, type) {
   const page = draft.getValue('wiki', wikiPath);
   if (!page) throw new Error('This page no longer exists.');
-  if (type === 'fact' || type === 'highlight') {
-    const field = type === 'fact' ? 'facts' : 'highlights';
-    const kind = type === 'fact' ? 'pair' : 'card';
+  if (type === 'fact' || type === 'highlight' || type === 'subpage') {
+    const field = type === 'fact' ? 'facts' : type === 'subpage' ? 'children' : 'highlights';
+    const kind = type === 'fact' ? 'pair' : type === 'subpage' ? 'sub-card' : 'card';
     const path = `${wikiPath}.${field}`;
     if (!Array.isArray(draft.getValue('wiki',path))) draft.setValue('wiki',path,[]);
     const index = draft.pushValue('wiki',path,buildAddValue('wiki',path,kind));
-    return { docName:'wiki',valuePath:`${path}.${index}`,kind,label:type === 'fact' ? 'Page fact' : 'Highlight' };
+    return { docName:'wiki',valuePath:`${path}.${index}`,kind,label:type === 'fact' ? 'Page fact' : type === 'subpage' ? 'Subpage' : 'Highlight' };
   }
   if (type === 'text' || type === 'table') {
     const path = `${wikiPath}.sections`;

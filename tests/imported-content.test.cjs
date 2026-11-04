@@ -17,11 +17,11 @@ test('old deployed JSON receives all seven pages once, without changing later ed
     for(const [old,target] of Object.entries(IMPORTED_NOTES.redirects))if(target===`#/${route}`)(page.children||=[]).push({id:old.split('/')[1],name:'Legacy child',desc:'Legacy description'});
   }
   assert.equal(installImportedNotes(legacyWiki,legacyGame),true);
-  for(const {route} of IMPORTED_NOTES.pages){const [cat,id]=route.split('/');assert.ok(find(legacyWiki.categories.find(c=>c.id===cat).subcategories,id).sections.length,route);}
+  for(const {route} of IMPORTED_NOTES.pages) assert.ok(legacyGame.calculators.pages[route] || legacyGame.progression.stages[route],route);
   assert.equal(find(legacyWiki.categories.find(c=>c.id==='life').subcategories,'frost-conversion').children.length,0);
   assert.equal(find(legacyWiki.categories.find(c=>c.id==='money-island').subcategories,'energies').children.length,0);
   const page=find(legacyWiki.categories.find(c=>c.id==='life').subcategories,'frost-generators');
-  page.sections[0].title='My later edit';
+  page.sections.push({id:'my-section',title:'My later edit',text:'Keep this'});
   delete legacyGame.calculators.pages['life/golden-points'];
   assert.equal(installImportedNotes(legacyWiki,legacyGame),false);
   assert.equal(page.sections[0].title,'My later edit');
@@ -47,16 +47,45 @@ test('imported groups calculate Ruby caps and the Frost3 dependency correctly',a
   assert.equal(game.progression.stages['main/astatine-power'].stages.length,8);
 });
 
-test('all supplied content has editable tables and consolidated routes',()=>{
+test('reference dumps are removed and the dedicated components remain consolidated',()=>{
   const find=(nodes,id)=>{for(const n of nodes||[]){if(n.id===id)return n;const child=find(n.children,id);if(child)return child;}};
   for(const [cat,id] of [['life','frost-generators'],['life','golden-points'],['life','frost-conversion'],['money-island','energies'],['main','californium-milestones'],['main','astatine-power'],['life','golden-research-milestones']]){
     const page=find(wiki.categories.find((c)=>c.id===cat).subcategories,id);
-    assert.ok(page.sections.some((s)=>s.columns?.length && s.rows?.length),id);
+    assert.ok(!page.sections.some((s)=>s.id.startsWith('notes-')),id);
+    assert.ok(game.calculators.pages[`${cat}/${id}`] || game.progression.stages[`${cat}/${id}`],id);
     assert.equal(new Set(page.sections.map((s)=>s.id)).size,page.sections.length);
   }
   assert.equal(find(wiki.categories.find((c)=>c.id==='life').subcategories,'frost-conversion').children.length,0);
   assert.equal(find(wiki.categories.find((c)=>c.id==='money-island').subcategories,'energies').children.length,0);
   assert.equal(wiki.redirects['life/packed-frost'],'#/life/frost-conversion');
+});
+
+test('Frost generators calculate cycles, income, costs and upgrade limits',async()=>{
+  const {calculateGenerator}=await import('../js/data/generators.js');
+  const machines=game.calculators.pages['life/frost-generators'].machines;
+  assert.equal(machines.length,3);
+  assert.equal(calculateGenerator(machines[0]).perSecond,.2);
+  assert.equal(calculateGenerator(machines[1]).perSecond,10);
+  assert.equal(calculateGenerator(machines[2]).income,25000);
+  const result=calculateGenerator(machines[0],{level:10,speed:5,tier:2,tierMultiplier:3});
+  assert.equal(result.income,1*(1+10*.4)*1.1**10*3);
+  assert.equal(result.seconds,5/1.1**5);
+  assert.equal(result.tierCost,550);
+  const maxed=calculateGenerator(machines[0],{level:500,speed:500,tier:500});
+  assert.equal(maxed.levelCost,null);assert.equal(maxed.speedCost,null);assert.equal(maxed.tierCost,null);
+});
+
+test('upgrading a previously saved note-dump revision removes only imported sections',async()=>{
+  const {refineImportedContent}=await import('../js/content-presentation.js');
+  const oldWiki=structuredClone(wiki),oldGame=structuredClone(game);
+  oldWiki.contentMigrations=['game-notes-2026-11-v1'];oldGame.contentMigrations=['game-notes-2026-11-v1'];
+  const find=(nodes,id)=>{for(const node of nodes||[]){if(node.id===id)return node;const match=find(node.children,id);if(match)return match;}};
+  const page=find(oldWiki.categories.find(c=>c.id==='main').subcategories,'californium-milestones');
+  page.sections=[{id:'notes-californium-1',title:'Duplicated reference table',text:'Remove this'},{id:'custom-note',title:'Editor content',text:'Keep this'}];
+  refineImportedContent(oldWiki,oldGame);
+  assert.deepEqual(page.sections.map(section=>section.id),['custom-note']);
+  assert.equal(oldGame.progression.stages['main/californium-milestones'].stages.length,16);
+  assert.equal(refineImportedContent(oldWiki,oldGame),false);
 });
 
 test('duplicate release repair keeps every distinct update and does not mutate its input',async()=>{

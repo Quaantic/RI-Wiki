@@ -10,7 +10,7 @@ const routes=['life/frost-generators','life/golden-points','life/golden-research
 const pages=routes.map(route=>{
   const [cat,id]=route.split('/');
   const page=find(wiki.categories.find(c=>c.id===cat)?.subcategories,id);
-  if(!page?.sections?.length)throw new Error(`Missing imported content: ${route}`);
+  if(!page)throw new Error(`Missing imported page: ${route}`);
   return {route,page};
 });
 const calculators=Object.fromEntries(routes.filter(route=>game.calculators.pages[route]).map(route=>[route,game.calculators.pages[route]]));
