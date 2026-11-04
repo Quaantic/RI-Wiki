@@ -1,0 +1,40 @@
+{
+  "format": 1,
+  "entries": [
+    {
+      "at": 1793774990382,
+      "kind": "content",
+      "text": "Removed \"{\"label\":\"Families\",\"value\":\"6\"}\""
+    },
+    {
+      "at": 1793774988572,
+      "kind": "content",
+      "text": "Removed \"Boosts at cap\""
+    },
+    {
+      "at": 1793774986438,
+      "kind": "content",
+      "text": "Removed \"Luck-gated rolls\""
+    },
+    {
+      "at": 1793774984562,
+      "kind": "content",
+      "text": "Removed \"{\"label\":\"Documented\",\"value\":\"All 6\"}\""
+    },
+    {
+      "at": 1793774982296,
+      "kind": "content",
+      "text": "Removed \"Six families\""
+    },
+    {
+      "at": 1793774977538,
+      "kind": "content",
+      "text": "Updated desc of \"Runes\": Runes are socketable stones that rewrite yo… to empty"
+    },
+    {
+      "at": 1793774974362,
+      "kind": "content",
+      "text": "Updated desc of \"Runes\": Runes are socketable stones that rewrite yo… to Runes are socketable stones that rewrite yo…"
+    }
+  ]
+}
