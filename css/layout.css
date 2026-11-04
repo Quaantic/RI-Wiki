@@ -416,5 +416,8 @@
 
 @media (max-width: 560px) {
   .topbar__search { flex: 1; }
-  .topbar__hide-sm { display: none; }
+  /* Mantem o Settings alcancavel no celular: esconde apenas os icones
+     secundarios (Update Log / Feedback), nunca o menu inteiro. */
+  .topbar__hide-sm > a.icon-btn { display: none; }
+  .topbar { gap: 8px; }
 }

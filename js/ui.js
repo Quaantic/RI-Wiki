@@ -568,6 +568,38 @@ export function setupDrawer() {
   });
 
   window.addEventListener('hashchange', close);
+
+  // ==== Atalho mobile: deslize da borda esquerda para a direita abre o menu ====
+  // Sem arrastar o elemento (so detecta a intencao) para nunca brigar com a
+  // rolagem vertical. Um deslize para a esquerda com o menu aberto fecha.
+  const EDGE = 32;       // px a partir da borda esquerda que inicia o gesto
+  const OPEN_AT = 64;    // deslocamento horizontal minimo para abrir
+  const CLOSE_AT = -64;  // deslocamento para fechar (com o menu aberto)
+  let touch = null;
+
+  const horizontalIntent = (dx, dy) => Math.abs(dx) > Math.abs(dy) * 1.4;
+
+  document.addEventListener('touchstart', (e) => {
+    if (e.touches.length !== 1) return;
+    const t = e.touches[0];
+    const isOpen = sidebar.classList.contains('is-open');
+    if (!isOpen && t.clientX > EDGE) return;
+    touch = { x: t.clientX, y: t.clientY, isOpen };
+  }, { passive: true });
+
+  document.addEventListener('touchend', (e) => {
+    if (!touch) return;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - touch.x;
+    const dy = t.clientY - touch.y;
+    if (horizontalIntent(dx, dy)) {
+      if (!touch.isOpen && dx > OPEN_AT) open();
+      else if (touch.isOpen && dx < CLOSE_AT) close();
+    }
+    touch = null;
+  }, { passive: true });
+
+  document.addEventListener('touchcancel', () => { touch = null; }, { passive: true });
 }
 
 export function setupBackTop() {

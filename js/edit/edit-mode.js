@@ -352,7 +352,7 @@ function onToolbarAction(button) {
     signOut();
     return;
   }
-  if (!session.token) return;
+  if (!session.token || !session.allowed) return;
   void (async () => {
     try {
       if (act === 'save') {
@@ -406,6 +406,20 @@ async function startSession(token) {
   try {
     layer.bar.classList.remove('is-hidden');
     document.documentElement.classList.add('ri-edit-bar');
+    // Barra visivel mas com TODOS os botoes desligados ate a checagem de
+    // permissao terminar — sem janela em que Save/Publish dispare 403.
+    updateToolbar();
+    barStatus('Checking your write permission…', 'busy');
+    const permission = await githubCollaboratorPermission(token, session.user || (await githubUser(token).catch(() => ({ login: '' }))).login).catch(() => 'none');
+    session.allowed = hasWriteAccess(permission);
+    if (!session.allowed) {
+      // Sem permissao de escrita: esconde a barra de editar e explica por que.
+      notify('This account cannot edit the Wiki (write permission required).', true);
+      try { sessionStorage.removeItem(TOKEN_KEY); } catch { /* ignore */ }
+      document.documentElement.classList.remove('ri-edit-bar');
+      layer.bar.classList.add('is-hidden');
+      return;
+    }
     barStatus('Loading repository content…', 'busy');
     const info = await draft.initSession(token);
     if (info.sanitized) {
@@ -416,15 +430,6 @@ async function startSession(token) {
     const user = await githubUser(token).catch(() => ({ login: 'admin', name: 'admin', avatar: '' }));
     session.user = user.login;
     session.avatar = user.avatar || '';
-    const permission = await githubCollaboratorPermission(token, session.user).catch(() => 'none');
-    session.allowed = hasWriteAccess(permission);
-    if (!session.allowed) {
-      notify('This account cannot edit the Wiki (write permission required).', true);
-      try { sessionStorage.removeItem(TOKEN_KEY); } catch { /* ignore */ }
-      document.documentElement.classList.remove('ri-edit-bar');
-      layer.bar.classList.add('is-hidden');
-      return;
-    }
     session.ready = true;
     const signinRow = qs('[data-ri-edit-signin]');
     if (signinRow) signinRow.hidden = true;
@@ -438,6 +443,9 @@ async function startSession(token) {
   } catch (error) {
     notify(error.message || 'Failed to load the editing session.', true);
     barStatus('Failed to load editing session');
+    // Nunca deixar uma barra inutil na tela: sem sessao pronta ela some.
+    document.documentElement.classList.remove('ri-edit-bar');
+    layer.bar.classList.add('is-hidden');
   }
 }
 
@@ -1321,6 +1329,27 @@ function openManageAdd(anchor = null) {
   kindSel.innerHTML = '<option value="sub">Page inside a category</option><option value="cat">Top-level category</option>';
   kindWrap.appendChild(kindSel);
 
+  const typeWrap = field('Page type (what content lives here)');
+  const typeSel = document.createElement('select');
+  typeSel.className = 'input';
+  typeSel.setAttribute('data-ri-manage-type', '');
+  typeSel.innerHTML = [
+    ['generic', 'Generic page (text, facts, highlights)'],
+    ['stages', 'Stages page (like Main › Stages)'],
+    ['barns', 'Barns page'],
+    ['ranks', 'Ranks page'],
+    ['ascensions', 'Ascensions page'],
+    ['lifeRanks', 'Life ranks page'],
+    ['cores', 'Core ranks page'],
+    ['upgrades', 'Upgrades page (price/effect formulas)'],
+    ['calc-amount', 'Bonus calculator (single total)'],
+    ['calc-groups', 'Grouped bonus calculator (like Rare Saps)'],
+    ['calc-level', 'Level calculator (like Dungeon Level)'],
+    ['calc-gears', 'Gears calculator (tiers)'],
+    ['calc-dust', 'Bone Dust calculator'],
+  ].map(([v, l]) => `<option value="${v}">${l}</option>`).join('');
+  typeWrap.appendChild(typeSel);
+
   const parentWrap = field('Parent category');
   const parentSel = document.createElement('select');
   parentSel.className = 'input';
@@ -1372,6 +1401,7 @@ function openManageAdd(anchor = null) {
   kindSel.addEventListener('change', () => {
     const isCat = kindSel.value === 'cat';
     parentWrap.hidden = isCat;
+    typeWrap.hidden = isCat;
     tagWrap.hidden = !isCat;
     descWrap.hidden = isCat;
     picker.input.value = isCat ? 'sprout' : 'sparkles';
@@ -1427,6 +1457,19 @@ async function applyManageAdd() {
       if (areas[0]?.value?.trim()) value.desc = areas[0].value.trim();
     }
     draft.pushValue('wiki', trail, value);
+    // Conteudo do jogo: e o que da TIPO a pagina (Stages, Barns, Ranks,
+    // calculadora de bonus, upgrades...). Sem isso a pagina nova nasce
+    // generica mesmo escolhendo um tipo.
+    let typedNote = '';
+    if (kind !== 'cat') {
+      const pageType = body.querySelector('[data-ri-manage-type]')?.value || 'generic';
+      const result = createGamePageContainer(`${parentId}/${pageId}`, pageName, pageType);
+      if (result === 'created') {
+        typedNote = ` It renders as ${PAGE_TYPE_LABELS[pageType]} — edit the items in place.`;
+      } else if (result === 'exists') {
+        notify(`Game data for ${parentId}/${pageId} already existed — the page opened with the existing content.`, true);
+      }
+    }
     draft.applyDraftToSite();
     buildNav();
     applyDragMode();
@@ -1434,11 +1477,90 @@ async function applyManageAdd() {
     closePopover(true);
     updateToolbar();
     window.location.hash = kind === 'cat' ? `#/${pageId}` : `#/${parentId}/${pageId}`;
-    notify('Page added to the draft. Edit it in place and remember to save.');
+    notify(`Page added to the draft.${typedNote} Edit it in place and remember to save.`);
   } catch (error) {
     warn.textContent = error.message || 'Could not create the page.';
     warn.hidden = false;
   }
+}
+
+// Conteudo do jogo que da tipo a uma pagina nova. Chaves sao "catId/pageId"
+// (path do draft so divide em ".", entao "/" na chave e seguro).
+const STAGE_TEMPLATE = () => ({
+  num: '1',
+  requirements: ['1M Energy'],
+  boosts: ['2x Energy'],
+  unlocks: { area: '', places: [], features: [] },
+});
+const BONUS_TEMPLATE = (value = 'formula: amount') => ({ id: 'b1', name: 'New bonus', value });
+
+const PAGE_TYPE_LABELS = {
+  stages: 'a Stages list',
+  barns: 'a Barns list',
+  ranks: 'a Ranks list',
+  ascensions: 'an Ascensions list',
+  lifeRanks: 'a Life Ranks list',
+  cores: 'a Core Ranks list',
+  upgrades: 'an Upgrades (formulas) page',
+  'calc-amount': 'a bonus calculator',
+  'calc-groups': 'a grouped bonus calculator',
+  'calc-level': 'a level calculator',
+  'calc-gears': 'a gears calculator',
+  'calc-dust': 'a Bone Dust calculator',
+};
+
+function createGamePageContainer(gameKey, pageName, type) {
+  if (!type || type === 'generic' || !PAGE_TYPE_LABELS[type]) return 'skipped';
+  const existing = (path) => locate(draft.doc('game'), path);
+  const progressionBuckets = { stages: 'stages', barns: 'barns', ranks: 'ranks', ascensions: 'ascensions', lifeRanks: 'lifeRanks', cores: 'cores' };
+  const bucket = progressionBuckets[type];
+  if (bucket) {
+    const path = `progression.${bucket}.${gameKey}`;
+    if (existing(path)) return 'exists';
+    const listKey = bucket === 'stages' || bucket === 'barns' ? 'stages' : 'ranks';
+    draft.setValue('game', path, { [listKey]: [STAGE_TEMPLATE()] });
+    return 'created';
+  }
+  if (type === 'upgrades') {
+    const sectionKey = gameKey.replace(/\//g, '-');
+    if (existing(`upgrades.sections.${sectionKey}`)) return 'exists';
+    draft.setValue('game', `upgrades.sections.${sectionKey}`, {
+      name: pageName,
+      upgrades: [{ n: 1, name: 'New upgrade', cap: null, price: '3*L', multi: '1' }],
+    });
+    draft.setValue('game', `upgrades.routes.${gameKey}`, sectionKey);
+    return 'created';
+  }
+  const calcPath = `calculators.pages.${gameKey}`;
+  if (existing(calcPath)) return 'exists';
+  if (type === 'calc-amount') {
+    draft.setValue('game', calcPath, {
+      kind: 'amount', title: pageName, amountLabel: `Total ${pageName} owned`, bonuses: [BONUS_TEMPLATE()],
+    });
+  } else if (type === 'calc-groups') {
+    draft.setValue('game', calcPath, {
+      kind: 'amount-groups', title: pageName,
+      groups: [{ id: 'g1', name: 'Group 1', color: '#86d62b', dropChance: '1 in 100', amountLabel: 'Amount owned', bonuses: [BONUS_TEMPLATE()] }],
+    });
+  } else if (type === 'calc-level') {
+    draft.setValue('game', calcPath, {
+      kind: 'level', title: pageName, maxLevel: 1000,
+      xpToNextLevel: 'formula: Math.floor(10 * Math.pow(level, 1.5))',
+      bonuses: [BONUS_TEMPLATE('formula: level')],
+    });
+  } else if (type === 'calc-gears') {
+    draft.setValue('game', calcPath, {
+      kind: 'gears', title: pageName,
+      tiers: [{ id: 't1', name: 'New tier', bonuses: [BONUS_TEMPLATE('formula: G')] }],
+    });
+  } else if (type === 'calc-dust') {
+    draft.setValue('game', calcPath, {
+      kind: 'bone-dust', title: pageName, powerLevelMax: 6,
+      powerFromLevel: 'formula: 1 + level / 10',
+      bonuses: [BONUS_TEMPLATE('formula: Math.max(1, dust * p)')],
+    });
+  }
+  return 'created';
 }
 
 // ==== DRAG PARA REORDENAR / NESTAR PÁGINAS ====
@@ -1741,6 +1863,15 @@ function buildAddValue(docName, trail, template) {
     const used = new Set(list.map((b) => b.id).filter(Boolean));
     return { id: uniqueIn('b', used), name: 'New bonus', value: 'formula: amount' };
   }
+  if (template === 'stage') {
+    const list = locate(doc, trail) || [];
+    return {
+      num: String(list.length + 1),
+      requirements: ['1M Energy'],
+      boosts: ['2x Energy'],
+      unlocks: { area: '', places: [], features: [] },
+    };
+  }
   return null;
 }
 
@@ -1855,6 +1986,10 @@ function installInteraction() {
 }
 
 // ==== EXPORT ====
+
+// Ganchos usados pelos testes (tests/page-types.test.cjs): criacao do
+// conteudo de jogo por tipo de pagina e templates de itens novos.
+export { createGamePageContainer, buildAddValue };
 
 export function initEditMode() {
   if (session.started) return;

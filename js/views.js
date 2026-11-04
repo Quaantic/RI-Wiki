@@ -680,9 +680,14 @@ function stageCard(s, i, itemPath = '') {
 
 function stagePageSections(stages, title = 'Stages', twoCol = false, listPath = '') {
   const cards = stages.map((s, i) => stageCard(s, i, itemListPath(listPath, i))).join('');
+  const label = `New ${title.replace(/s$/, '').toLowerCase()}`;
+  const add = listPath
+    ? `<div class="ri-add-row"><button type="button" class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="${esc(listPath)}" data-edit-add-template="stage">${icon('plus', 13)} ${label}</button></div>`
+    : '';
   return `
     <section class="section">
       ${sectionHead(title)}
+      ${add}
       ${twoCol ? `<div class="stage-grid-2">${cards}</div>` : cards}
     </section>`;
 }
