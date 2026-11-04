@@ -29,6 +29,32 @@ const session = {
 const layer = { bar: null, chip: null, popover: null, toast: null };
 let popState = null;
 
+// Listas aninhadas em uma linha por item ("Target | mult | caps").
+const LIST_PARSERS = {
+  'area-list': {
+    print: (v) => (Array.isArray(v) ? v.join('\n') : ''),
+    parse: (text) => text.split('\n').map((line) => line.trim()).filter(Boolean),
+  },
+  'boost-list': {
+    print: (v) => (Array.isArray(v) ? v.map((b) => [b.target, b.mult, b.capsAt ?? ''].join(' | ')).join('\n') : ''),
+    parse: (text) => text.split('\n').map((line) => {
+      const [target, mult, capsAt] = line.split('|').map((part) => part.trim());
+      if (!target || mult == null || mult === '') return null;
+      const boost = { target, mult };
+      if (capsAt) boost.capsAt = capsAt;
+      return boost;
+    }).filter(Boolean),
+  },
+  'features-list': {
+    print: (v) => (Array.isArray(v) ? v.map((f) => [f.name, ...(f.subs || [])].join(' ;; ')).join('\n') : ''),
+    parse: (text) => text.split('\n').map((line) => {
+      const [name, ...subs] = line.split(';;').map((part) => part.trim()).filter(Boolean);
+      if (!name) return null;
+      return { name, subs };
+    }).filter(Boolean),
+  },
+};
+
 // ==== SCHEMAS DOS CAMPOS POR KIND ====
 
 const SINGLE_TYPES = {
@@ -48,11 +74,13 @@ const SCHEMAS = {
     { key: 'text', label: 'Text', type: 'area' },
   ],
   'category-card': [
+    { key: 'id', label: 'URL id (letters, numbers, -)', type: 'line', mono: true },
     { key: 'name', label: 'Name', type: 'line' },
     { key: 'tagline', label: 'Tagline', type: 'area' },
     { key: 'icon', label: 'Icon name (lucide)', type: 'line', mono: true },
   ],
   'sub-card': [
+    { key: 'id', label: 'URL id (letters, numbers, -)', type: 'line', mono: true },
     { key: 'name', label: 'Name', type: 'line' },
     { key: 'desc', label: 'Description', type: 'area' },
     { key: 'icon', label: 'Icon name (lucide)', type: 'line', mono: true },
@@ -88,9 +116,13 @@ const SCHEMAS = {
   ],
   'game:stage': [
     { key: 'title', label: 'Title', type: 'line' },
+    { key: 'num', label: 'Stage number', type: 'line' },
     { key: 'requirements', label: 'Requirements (one per line)', type: 'area-list' },
     { key: 'boosts', label: 'Boosts (one per line)', type: 'area-list' },
     { key: 'boostsNote', label: 'Boost note', type: 'line' },
+    { key: 'unlocks.area', label: 'Unlocks area (empty = none)', type: 'line' },
+    { key: 'unlocks.places', label: 'Unlocked places (one per line)', type: 'area-list' },
+    { key: 'unlocks.features', label: 'Unlock features (one per line: Name ;; sub ;; sub)', type: 'features-list' },
   ],
   'game:area': [
     { key: 'name', label: 'Name', type: 'line' },
@@ -102,6 +134,40 @@ const SCHEMAS = {
   'game:gear': [
     { key: 'name', label: 'Name', type: 'line' },
     { key: 'rarity', label: 'Rarity', type: 'line' },
+  ],
+  'game:upgrade': [
+    { key: 'name', label: 'Name', type: 'line' },
+    { key: 'n', label: 'Number (#)', type: 'line' },
+    { key: 'cap', label: 'Cap (empty = no cap)', type: 'line' },
+    { key: 'price', label: 'Price formula (L = level)', type: 'line', mono: true },
+    { key: 'multi', label: 'Effect formula (L = level)', type: 'line', mono: true },
+  ],
+  'game:rune': [
+    { key: 'name', label: 'Name', type: 'line' },
+    { key: 'icon', label: 'Icon name (lucide)', type: 'line', mono: true },
+    { key: 'luck', label: 'Recommended luck', type: 'line' },
+    { key: 'baseChance', label: 'Base chance', type: 'line' },
+    { key: 'recChance', label: 'Chance at rec. luck', type: 'line' },
+    { key: 'boosts', label: 'Boosts (Target | multiplier | caps at, one per line)', type: 'boost-list' },
+  ],
+  'game:bonus': [
+    { key: 'name', label: 'Name', type: 'line' },
+    { key: 'id', label: 'Internal id', type: 'line', mono: true },
+    { key: 'value', label: 'Value formula', type: 'area', mono: true },
+    { key: 'cap', label: 'Cap (empty = none)', type: 'line' },
+    { key: 'capUnit', label: 'Cap unit', type: 'line' },
+    { key: 'unit', label: 'Unit', type: 'line' },
+    { key: 'unlockAt', label: 'Unlocks at', type: 'line' },
+    { key: 'unlockLabel', label: 'Unlock label', type: 'line' },
+    { key: 'unlockLevel', label: 'Unlock level', type: 'line' },
+  ],
+  'game:bonus-group': [
+    { key: 'name', label: 'Name', type: 'line' },
+    { key: 'dropChance', label: 'Drop chance', type: 'line' },
+    { key: 'amountLabel', label: 'Amount label', type: 'line' },
+  ],
+  'game:tier': [
+    { key: 'name', label: 'Name', type: 'line' },
   ],
 };
 
@@ -215,6 +281,7 @@ function buildToolbar() {
     <div class="ri-edit-popover__body" data-edit-pop-body></div>
     <div class="ri-edit-popover__foot">
       <span class="ri-edit-popover__warn" data-edit-pop-warn hidden></span>
+      <button class="btn btn--ghost btn--sm ri-edit-popover__delete" data-edit-pop-delete hidden title="Remove this item from the list in the draft">${icon('trash-2', 13)} Delete</button>
       <span style="flex:1"></span>
       <button class="btn btn--ghost btn--sm" data-edit-pop-cancel>Cancel</button>
       <button class="btn btn--primary btn--sm" data-edit-pop-apply>${icon('check', 13)} Apply</button>
@@ -234,6 +301,10 @@ function buildToolbar() {
     }
     if (target.closest('[data-edit-pop-apply]')) {
       void applyPopover();
+      return;
+    }
+    if (target.closest('[data-edit-pop-delete]')) {
+      void deletePopoverItem();
       return;
     }
     const imageInput = target.closest('input[data-edit-pop-image]');
@@ -321,6 +392,7 @@ function installSigninButton() {
 async function startSession(token) {
   try {
     layer.bar.classList.remove('is-hidden');
+    document.documentElement.classList.add('ri-edit-bar');
     barStatus('Loading repository content…', 'busy');
     const info = await draft.initSession(token);
     session.token = token;
@@ -417,13 +489,41 @@ function openPopover(binding) {
   } else {
     fields.forEach((meta) => body.appendChild(createField(meta, `${binding.valuePath}.${meta.key}`, binding.docName)));
   }
+  const lastSegment = binding.valuePath.split('.').at(-1) || '';
+  qs('[data-edit-pop-delete]', layer.popover).hidden = !/^\d+$/.test(lastSegment);
   layer.popover.hidden = false;
   positionPopover(binding.el);
   body.querySelector('input, textarea, select')?.focus({ preventScroll: true });
 }
 
-function readValueForInput(docName, path, original) {
+async function deletePopoverItem() {
+  if (!popState) return;
+  const state = popState;
+  const path = state.valuePath;
+  const lastSegment = path.split('.').at(-1) || '';
+  if (!/^\d+$/.test(lastSegment)) {
+    notify('Only list items can be deleted.', true);
+    return;
+  }
+  const okDelete = window.confirm(`Remove "${state.label || 'this item'}" from the list? It stays in the draft until you publish.`);
+  if (!okDelete) return;
+  try {
+    draft.removeValue(state.docName, path);
+    draft.applyDraftToSite();
+    await rerender({ scroll: 'preserve' });
+    window.dispatchEvent(new CustomEvent('ri-edit-content'));
+    closePopover(true);
+    updateToolbar();
+    notify('Item removed. Remember to save/publish.');
+  } catch (error) {
+    notify(error.message || 'Could not remove this item.', true);
+  }
+}
+
+function readValueForInput(type, original) {
   if (original == null) return '';
+  const parser = LIST_PARSERS[type];
+  if (parser) return parser.print(original);
   if (Array.isArray(original)) return original.join('\n');
   return String(original);
 }
@@ -459,16 +559,16 @@ function createField(meta, path, docName) {
         </div>
       </div>`;
     return wrap;
-  } else if (meta.type === 'area' || meta.type === 'area-list') {
+  } else if (meta.type === 'area' || meta.type === 'area-list' || LIST_PARSERS[meta.type]) {
     input = document.createElement('textarea');
     input.className = 'input';
-    input.rows = meta.type === 'area-list' ? (readValueForInput(docName, path, original).split('\n').length + 2) : 4;
-    input.value = readValueForInput(docName, path, original);
+    input.rows = meta.type !== 'area' ? (readValueForInput(meta.type, original).split('\n').length + 2) : 4;
+    input.value = readValueForInput(meta.type, original);
   } else {
     input = document.createElement('input');
     input.type = 'text';
     input.className = 'input';
-    input.value = readValueForInput(docName, path, original);
+    input.value = readValueForInput(meta.type, original);
     if (meta.mono) input.style.fontFamily = 'var(--font-mono, monospace)';
   }
   input.dataset.editFieldPath = path.replace(/\./g, '·');
@@ -512,10 +612,10 @@ async function applyPopover() {
       const type = input.dataset.editFieldType;
       const numeric = input.dataset.editFieldNumeric === '1';
       let value = input.value;
-      if ((type === 'area-list')) {
+      if (LIST_PARSERS[type]) {
+        value = LIST_PARSERS[type].parse(value);
+      } else if (type === 'area-list') {
         value = value.split('\n').map((line) => line.trim()).filter(Boolean);
-      } else if (type === 'select') {
-        value = input.value;
       } else if (numeric) {
         const parsed = Number(value.replace(',', '.'));
         value = Number.isFinite(parsed) ? parsed : value;
@@ -585,19 +685,129 @@ async function onImagePicked(inputEl) {
   }
 }
 
-// ==== ROUTING DOS CLIQUES ====
+// ==== ROTEAMENTO DOS CLIQUES ====
+
+function locate(root, path) {
+  return path ? path.split('.').reduce((node, key) => (node == null ? node : node[key]), root) : root;
+}
+
+function collectPageIds(node, out = new Set()) {
+  if (!node) return out;
+  if (node.id && typeof node.id === 'string') out.add(node.id);
+  if (Array.isArray(node.children)) node.children.forEach((c) => collectPageIds(c, out));
+  return out;
+}
+
+function uniqueIn(base, used) {
+  if (!used.has(base)) return base;
+  let n = 2;
+  while (used.has(`${base}${n}`)) n += 1;
+  return `${base}${n}`;
+}
+
+function buildAddValue(docName, trail, template) {
+  const doc = draft.doc(docName);
+  if (!doc) return null;
+  if (template === 'category') {
+    const id = uniqueIn('new-category', new Set((doc.categories || []).map((c) => c.id)));
+    return {
+      id,
+      name: 'New category',
+      desc: 'Overview of this new category.',
+      tagline: 'What this category is about.',
+      icon: 'sprout',
+      vitals: [],
+      subcategories: [],
+      overview: { desc: '', facts: [], highlights: [] },
+    };
+  }
+  if (template === 'sub-card') {
+    const parentPath = trail.split('.').slice(0, -1).join('.');
+    const parent = locate(doc, parentPath);
+    const id = uniqueIn('new-page', collectPageIds(parent));
+    return {
+      id,
+      name: 'New page',
+      desc: 'Describe this page here.',
+      icon: 'sparkles',
+      highlights: [],
+      facts: [],
+      vitals: [],
+      children: [],
+    };
+  }
+  if (template === 'version') {
+    return { version: 'v0.0', date: new Date().toISOString().slice(0, 10), entries: [] };
+  }
+  if (template === 'entry') {
+    return { context: 'Feature', title: 'New update', href: '', description: 'What changed in the game.' };
+  }
+  if (template === 'upgrade') {
+    const list = locate(doc, trail) || [];
+    const used = new Set(list.map((u) => Number(u.n)).filter((n) => Number.isFinite(n)));
+    let n = 1;
+    while (used.has(n)) n += 1;
+    return { n, name: 'New upgrade', cap: null, price: '3*L', multi: '1' };
+  }
+  if (template === 'bonus') {
+    const list = locate(doc, trail) || [];
+    const used = new Set(list.map((b) => b.id).filter(Boolean));
+    return { id: uniqueIn('b', used), name: 'New bonus', value: 'formula: amount' };
+  }
+  return null;
+}
+
+async function addItemFromTrigger(trigger) {
+  const bindingPath = trigger.getAttribute('data-edit-add') || '';
+  const template = trigger.getAttribute('data-edit-add-template') || '';
+  const sep = bindingPath.indexOf(':');
+  if (sep <= 0) return;
+  const docName = bindingPath.slice(0, sep);
+  const trail = bindingPath.slice(sep + 1);
+  if (popState) closePopover(true);
+  try {
+    const value = buildAddValue(docName, trail, template);
+    if (!value) {
+      notify('This add button is not wired to a template yet.', true);
+      return;
+    }
+    const index = draft.pushValue(docName, trail, value);
+    draft.applyDraftToSite();
+    window.dispatchEvent(new CustomEvent('ri-edit-content'));
+    await rerender({ scroll: 'preserve' });
+    const el = document.querySelector(`[data-edit="${bindingPath}.${index}"]`);
+    if (el && session.editing) {
+      const info = parseBinding(el);
+      if (info) openPopover({ ...info, el });
+    }
+    updateToolbar();
+    notify('Item added to the draft. Fill it in and remember to save.');
+  } catch (error) {
+    notify(error.message || 'Could not add the item.', true);
+  }
+}
 
 function installInteraction() {
   document.addEventListener('click', (event) => {
     if (!session.ready || !session.allowed) return;
     if (event.target.closest('#ri-edit-bar, .ri-edit-popover, .ri-edit-chip')) return;
+
+    const addTrigger = event.target.closest('[data-edit-add]');
+    if (addTrigger && session.editing) {
+      event.preventDefault();
+      event.stopPropagation();
+      void addItemFromTrigger(addTrigger);
+      return;
+    }
+
+    // Clicar fora fecha o popover aberto (descarta mudanças não aplicadas).
+    if (popState) closePopover(true);
+
     const binding = event.target.closest('[data-edit]');
     if (!binding) return;
     const info = parseBinding(binding);
     if (!info) return;
-    if (!session.editing) {
-      return;
-    }
+    if (!session.editing) return;
     event.preventDefault();
     event.stopPropagation();
     openPopover({ ...info, el: binding });

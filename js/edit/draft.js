@@ -43,18 +43,51 @@ export function setValue(name, path, value) {
   if (!segments.length) throw new Error(`Invalid path: ${path}`);
   const root = draftState.docs?.[name];
   if (!root) throw new Error(`Unknown document: ${name}`);
-  const parentPath = segments.slice(0, -1).join('.');
-  const holder = parentPath ? walkTo(root, parentPath) : root;
+  let holder = root;
+  for (let i = 0; i < segments.length - 1; i += 1) {
+    const key = segments[i];
+    const nextIsIndex = /^\d+$/.test(segments[i + 1]);
+    if (holder == null || typeof holder !== 'object') {
+      throw new Error(`Cannot write to "${path}" (broken path).`);
+    }
+    if (holder[key] == null || typeof holder[key] !== 'object') {
+      holder[key] = nextIsIndex ? [] : {};
+    }
+    holder = holder[key];
+  }
   if (holder == null || typeof holder !== 'object') {
     throw new Error(`Cannot write to "${path}" (broken path).`);
   }
   holder[segments.at(-1)] = value;
 }
 
+export function removeValue(name, path) {
+  const segments = path.split('.');
+  if (segments.length < 2) throw new Error(`"${path}" is not inside a list.`);
+  const root = draftState.docs?.[name];
+  if (!root) throw new Error(`Unknown document: ${name}`);
+  const parent = walkTo(root, segments.slice(0, -1).join('.'));
+  if (!Array.isArray(parent)) throw new Error(`"${path}" is not inside a list.`);
+  const index = Number(segments.at(-1));
+  if (!Number.isInteger(index) || index < 0 || index >= parent.length) {
+    throw new Error(`Nothing to delete at "${path}".`);
+  }
+  parent.splice(index, 1);
+}
+
 export function getValue(name, path) {
   const root = draftState.docs?.[name];
   if (!root) return undefined;
   return walkTo(root, path);
+}
+
+export function pushValue(name, path, value) {
+  const root = draftState.docs?.[name];
+  if (!root) throw new Error(`Unknown document: ${name}`);
+  const list = walkTo(root, path);
+  if (!Array.isArray(list)) throw new Error(`"${path}" is not a list.`);
+  list.push(value);
+  return list.indexOf(value);
 }
 
 export function doc(name) {

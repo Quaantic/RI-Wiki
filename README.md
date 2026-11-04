@@ -44,8 +44,12 @@ Quem pode editar também pode fazê-lo nas próprias páginas públicas, sem abr
 o painel: entre no menu **Settings → Sign in to edit** (ou pressione **Alt+E**).
 Aparece uma barra fixa no topo com **Edit/Preview**, **Save draft**, **Discard**,
 **Publish** e um indicador de pendências; clique em qualquer título, texto,
-card, fato, ore, stage, área, equipamento, entrada do update log ou crédito
-para editar in-place com botões **Apply/Cancel**.
+card, fato, ore, layer, runa (com boosts), stage (com requirements e
+desbloqueios), área de treino, equipamento, upgrade/fórmula, calculadora de
+reset, custo de desbloqueio, entrada do update log, crédito ou texto da home
+para editar in-place com botões **Apply/Cancel**. Itens de lista têm **Delete**
+no popover, e botões **＋ New…** criam categorias, subpáginas, releases,
+entradas de update, upgrades e bônus.
 
 - **Apply** aplica a alteração na página em tempo real (preview ao vivo).
 - **Save draft** grava um rascunho em `content/drafts/inline-draft.json`

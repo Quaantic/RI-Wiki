@@ -19,19 +19,28 @@ Não é necessário editar arquivos de código em nenhum dos dois.
    **Edit/Preview** (liga e desliga o modo de edição), **Save draft**,
    **Discard**, **Publish**, um indicador de pendências e botão **Sign out**.
 3. Clique em qualquer elemento editável (títulos, descrições, cards, fatos,
-   destaques, ores, layers, stages, áreas de treino, equipamentos, entradas do
-   update log e créditos). Um popover abre com os campos daquele item.
-4. **Apply** aplica e mostra a mudança na hora (a página inteira re-renderiza
+   destaques, ores, layers, runas com seus boosts, stages com áreas/placas
+   desbloqueadas, áreas de treino, equipamentos, fórmulas e preços de upgrades,
+   calculadoras de reset, custos de desbloqueio Tier 2, entradas do update log,
+   créditos e textos da home). Um popover abre com os campos daquele item.
+4. Itens dentro de listas (ores, runas, upgrades, fatos, entradas…) têm o botão
+   **Delete** no rodapé do popover: remove aquele item do rascunho (só sai de
+   vez no Publish, que antes cria um backup).
+5. Botões **＋ New…** criam itens onde aparecem: **New category** (home),
+   **New page** (topo de categoria e listagens de subpáginas), **New release /
+   New update** (update log), **New upgrade** (fórmulas) e **New bonus**
+   (calculadoras).
+6. **Apply** aplica e mostra a mudança na hora (a página inteira re-renderiza
    preservando a posição da rolagem). **Cancel/Esc** Fecha sem aplicar.
-5. **Save draft**: precisa parar no meio? Salve um rascunho. Ele fica salvo no GitHub como
+7. **Save draft**: precisa parar no meio? Salve um rascunho. Ele fica salvo no GitHub como
    `content/drafts/inline-draft.json` e reaparece ao voltar (restaurado e
    aplicado na página automaticamente). O site público nunca lê esse arquivo.
-6. **Publish**: grava o conteúdo definitivo. Um backup completo é criado antes,
+8. **Publish**: grava o conteúdo definitivo. Um backup completo é criado antes,
    o rascunho é apagado e a Vercel publica. **Discard** joga fora o rascunho e
    volta ao conteúdo publicado.
-7. Imagens de avatar (página Credits): no campo **Avatar image** escolha o
+9. Imagens de avatar (página Credits): no campo **Avatar image** escolha o
    arquivo (max ~2 MB); ele sobe direto para `images/credits/` no GitHub.
-8. Saia com **Sign out** ao terminar (Alt+E também entra/sai do modo).
+10. Saia com **Sign out** ao terminar (Alt+E também entra/sai do modo).
 
 No modo **Edit** a navegação pelos elementos editáveis vira edição; para
 navegar normalmente use **Preview** (primeiro botão da barra) ou pressione

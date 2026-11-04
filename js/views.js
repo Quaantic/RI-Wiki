@@ -9,17 +9,18 @@ import { getRuneFamily, FAMILY_COLORS } from './data/runes.js';
 import { ORE_DATA, MASTERY_DATA, getOrePage, getMasteryPage, getLayerPage } from './data/ores.js';
 import { getStagePage, getBarnPage, getRankPage, getAscensionPage, getLifeRankPage, getCorePage} from './data/progress.js';
 import { getTrainingAreas, getGearPage, DUST_UNLOCK } from './data/dungeon.js';
-import { getFormulaPage, getInlineUpgradePages } from './data/formulas.js';
+import { getFormulaPage, getInlineUpgradePages, FORMULA_PAGE_MAP } from './data/formulas.js';
 import { RESET_LAYER_PAGES, minimumForTarget } from './data/reset-layers.js';
 import { MINING_PRICES } from './data/mining-prices.js';
 import { colorizeResources } from './data/resource-colors.js';
+import { UI_COPY } from './data/ui-copy.js';
 import { LATEST_UPDATE_ID } from './data/update-log.js';
 
 // ==== PAGINA DE FAMILIA DE RUNAS (cards por runa) ====
 
-function runeCard(r, i, color) {
+function runeCard(r, i, color, itemPath = '') {
   return `
-    <article class="rune-card${r.special ? ' rune-card--special' : ''} reveal" style="--reveal-delay:${Math.min(i * 50, 400)}ms">
+    <article class="rune-card${r.special ? ' rune-card--special' : ''} reveal" ${itemPath ? ed(itemPath, 'game:rune', esc(r.name)) : ''} style="--reveal-delay:${Math.min(i * 50, 400)}ms">
       <header class="rune-card__head">
         <span class="rune-card__icon" style="color:${esc(color)}">${icon(r.icon, 20)}</span>
         <span class="rune-card__name" style="color:${esc(color)}"><b>${esc(r.name)}</b></span>
@@ -41,15 +42,15 @@ function runeCard(r, i, color) {
     </article>`;
 }
 
-function runeTableHTML(runes) {
+function runeTableHTML(runes, listPath = '') {
   return `
     <div class="table-wrap"><table class="data-table">
       <thead><tr>
         <th>Rune</th><th>Req. luck</th><th>Base chance</th><th>Chance at rec. luck</th><th>Boosts at cap</th>
       </tr></thead>
       <tbody>
-        ${runes.map((r) => `
-          <tr>
+        ${runes.map((r, i) => `
+          <tr ${itemListPath(listPath, i) ? ed(itemListPath(listPath, i), 'game:rune', esc(r.name)) : ''}>
             <td class="cell-strong">${icon(r.icon, 14)} ${esc(r.name)}</td>
             <td class="num">${esc(fmtValue(r.luck))}</td>
             <td class="num">${esc(r.baseChance)}</td>
@@ -62,17 +63,18 @@ function runeTableHTML(runes) {
 
 function runeFamilySections(runes, slug) {
   const color = FAMILY_COLORS[slug] || 'var(--c-accent)';
+  const listPath = `game:runes.families.${slug}.runes`;
   return `
     <section class="section">
       ${sectionHead('The runes')}
       <div class="rune-grid">
-        ${runes.map((r, i) => runeCard(r, i, color)).join('')}
+        ${runes.map((r, i) => runeCard(r, i, color, itemListPath(listPath, i))).join('')}
       </div>
     </section>
 
     <section class="section">
       ${sectionHead('Quick reference')}
-      ${runeTableHTML(runes)}
+      ${runeTableHTML(runes, listPath)}
     </section>`;
 }
 
@@ -250,7 +252,7 @@ function dustSections() {
       </div>
       <div class="dust-grid">
         ${DUST_UNLOCK.map((d, i) => `
-          <div class="dust-chip reveal" style="--reveal-delay:${Math.min(i * 50, 400)}ms">
+          <div class="dust-chip reveal" style="--reveal-delay:${Math.min(i * 50, 400)}ms" ${ed(`game:dungeon.dustUnlock.${i}`, 'num', `Tier 2 unlock #${i + 1}`)}>
             <span class="dust-chip__num">${i + 1}</span>${esc(fmtValue(d))}
           </div>`).join('')}
       </div>
@@ -294,7 +296,7 @@ const TEMPLATE_UPGRADES = [
   { name: 'Third Upgrade', cap: 25, price: '—', multi: '—' },
 ];
 
-function upgradeCard(u, i, priceTable, node = false) {
+function upgradeCard(u, i, priceTable, itemPath = '') {
   const perkTier = String(u.multi || '').match(/MaxTier\s*=\s*min\([^,]+,\s*AbsoluteMax\s+(\d+)\)/i);
   const capMax = u.cap ?? 499;
   const n = u.n ?? i + 1;
@@ -302,7 +304,7 @@ function upgradeCard(u, i, priceTable, node = false) {
   const priceAttr = priceTable ? '' : ` data-price="${esc(u.price || '')}"`;
   const tableAttr = priceTable ? ` data-price-table="${esc(priceTable)}" data-n="${n}"` : '';
   return `
-        <article class="upgrade-card reveal${node ? ' upgrade-card--node' : ''}" data-upgrade data-cap="${capMax}" data-multi="${esc(u.multi || '')}"${priceAttr}${tableAttr} style="--reveal-delay:${Math.min(i * 45, 400)}ms">
+        <article class="upgrade-card reveal" data-upgrade data-cap="${capMax}" data-multi="${esc(u.multi || '')}"${priceAttr}${tableAttr}${itemPath ? ed(itemPath, 'game:upgrade', esc(u.name)) : ''} style="--reveal-delay:${Math.min(i * 45, 400)}ms">
       <header class="upgrade-card__head">
         <b><span class="upgrade-card__n">${n}.</span> ${colorizeResources(esc(u.name))}</b>
         <span class="upgrade-card__val"><b data-lvl>0</b> / ${u.cap == null ? '—' : esc(fmtValue(u.cap))}</span>
@@ -384,25 +386,27 @@ function wireUpgrades(root) {
   });
 }
 
-function formulaSections(section) {
+function formulaSections(section, listPath = '') {
   const isLevelPerks = section.upgrades.some((upgrade) => /MaxTier\s*=\s*min\(/i.test(upgrade.multi || ''));
   return `
     <section class="section">
       ${sectionHead('The upgrades')}
+      ${listPath ? `
+      <button type="button" class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="${esc(listPath)}" data-edit-add-template="upgrade">${icon('plus', 13)} New upgrade</button>` : ''}
       ${isLevelPerks ? `
       <div class="perk-tree-controls">
         <label>Tree Upgrade 15<input class="input" type="number" min="0" step="1" value="0" data-tree-upgrade15></label>
         <label>Tree Upgrade 51<input class="input" type="number" min="0" max="3" step="1" value="0" data-tree-upgrade51></label>
       </div>` : ''}
       <div class="rune-grid">
-        ${section.upgrades.map((u2, i) => upgradeCard(u2, i, section.priceTable)).join('')}
+        ${section.upgrades.map((u2, i) => upgradeCard(u2, i, section.priceTable, itemListPath(listPath, i))).join('')}
       </div>
     </section>`;
 }
 
-function resetCalcCard(bonus, requiredLabel, index, amountMode = false, accentColor = '') {
+function resetCalcCard(bonus, requiredLabel, index, amountMode = false, accentColor = '', itemPath = '') {
   return `
-    <article class="reset-calc-card${amountMode ? ' reset-calc-card--amount' : ''} reveal" ${amountMode ? 'data-resource-links' : ''} data-reset-calculator data-bonus-id="${esc(bonus.id)}" data-required-label="${esc(requiredLabel)}" style="--reveal-delay:${Math.min(index * 45, 360)}ms;${accentColor ? `--reset-bonus-color:${esc(accentColor)};` : ''}">
+    <article class="reset-calc-card${amountMode ? ' reset-calc-card--amount' : ''} reveal" ${amountMode ? 'data-resource-links' : ''} data-reset-calculator data-bonus-id="${esc(bonus.id)}" data-required-label="${esc(requiredLabel)}" style="--reveal-delay:${Math.min(index * 45, 360)}ms;${accentColor ? `--reset-bonus-color:${esc(accentColor)};` : ''}" ${itemPath ? ed(itemPath, 'game:bonus', esc(bonus.name)) : ''}>
       <header class="reset-calc-card__head">
         <span class="reset-calc-card__icon">${icon('target', 17)}</span>
         <b>${colorizeResources(esc(bonus.name))}</b>
@@ -426,20 +430,24 @@ function resetCalcCard(bonus, requiredLabel, index, amountMode = false, accentCo
     </article>`;
 }
 
-function resetLayerSections(page) {
+function resetLayerSections(page, basePath = '') {
+  const bonusAdd = (listPath) => listPath
+    ? `<button type="button" class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="${esc(listPath)}" data-edit-add-template="bonus">${icon('plus', 13)} New bonus</button>`
+    : '';
   if (page.kind === 'amount-groups') {
     return `
       <section class="section reset-layer-page">
         ${sectionHead(page.title)}
-        ${page.groups.map((group) => `
-          <section class="reset-layer-tier rare-sap-group" style="--rare-sap-color:${esc(group.color)}">
+        ${page.groups.map((group, gi) => `
+          <section class="reset-layer-tier rare-sap-group" style="--rare-sap-color:${esc(group.color)}" ${basePath ? ed(`${basePath}.groups.${gi}`, 'game:bonus-group', esc(group.name)) : ''}>
             <h3 data-resource-links>${colorizeResources(esc(group.name))} <small>Drop chance: ${esc(group.dropChance)}</small></h3>
             <label class="reset-calc-power">
               <span>${esc(group.amountLabel)}</span>
               <input class="input reset-calc-input" type="text" inputmode="decimal" value="0" data-reset-amount data-group-id="${esc(group.id)}" aria-label="${esc(group.amountLabel)}">
             </label>
+            ${bonusAdd(basePath ? `${basePath}.groups.${gi}.bonuses` : '')}
             <div class="reset-calc-grid">
-              ${group.bonuses.map((bonus, i) => resetCalcCard(bonus, group.amountLabel, i, true, group.color)).join('')}
+              ${group.bonuses.map((bonus, i) => resetCalcCard(bonus, group.amountLabel, i, true, group.color, itemListPath(basePath ? `${basePath}.groups.${gi}.bonuses` : '', i))).join('')}
             </div>
           </section>`).join('')}
       </section>`;
@@ -454,7 +462,8 @@ function resetLayerSections(page) {
           <input class="input reset-calc-input" type="text" inputmode="decimal" value="0" data-reset-amount aria-label="${esc(page.amountLabel)}">
         </label>
         <div class="reset-calc-grid reset-calc-grid--amount">
-          ${page.bonuses.map((bonus, i) => resetCalcCard(bonus, page.amountLabel, i, true)).join('')}
+          ${bonusAdd(basePath ? `${basePath}.bonuses` : '')}
+          ${page.bonuses.map((bonus, i) => resetCalcCard(bonus, page.amountLabel, i, true, '', itemListPath(basePath ? `${basePath}.bonuses` : '', i))).join('')}
         </div>
       </section>`;
   }
@@ -463,11 +472,12 @@ function resetLayerSections(page) {
     return `
       <section class="section reset-layer-page">
         ${sectionHead(page.title)}
-        ${page.tiers.map((tier) => `
-          <section class="reset-layer-tier">
+        ${page.tiers.map((tier, ti) => `
+          <section class="reset-layer-tier" ${basePath ? ed(`${basePath}.tiers.${ti}`, 'game:tier', esc(tier.name)) : ''}>
             <h3>${esc(tier.name)}</h3>
+            ${bonusAdd(basePath ? `${basePath}.tiers.${ti}.bonuses` : '')}
             <div class="reset-calc-grid">
-              ${tier.bonuses.map((bonus, i) => resetCalcCard(bonus, tier.name, i)).join('')}
+              ${tier.bonuses.map((bonus, i) => resetCalcCard(bonus, tier.name, i, false, '', itemListPath(basePath ? `${basePath}.tiers.${ti}.bonuses` : '', i))).join('')}
             </div>
           </section>`).join('')}
       </section>`;
@@ -481,8 +491,9 @@ function resetLayerSections(page) {
           <span>Souls Upgrade 11 level</span>
           <input class="input reset-calc-input" type="number" min="0" max="${page.powerLevelMax}" step="1" value="0" data-dust-power-level>
         </label>
+        ${bonusAdd(basePath ? `${basePath}.bonuses` : '')}
         <div class="reset-calc-grid">
-          ${page.bonuses.map((bonus, i) => resetCalcCard(bonus, 'Bone Dust', i)).join('')}
+          ${page.bonuses.map((bonus, i) => resetCalcCard(bonus, 'Bone Dust', i, false, '', itemListPath(basePath ? `${basePath}.bonuses` : '', i))).join('')}
         </div>
       </section>`;
   }
@@ -490,8 +501,9 @@ function resetLayerSections(page) {
   return `
     <section class="section reset-layer-page">
       ${sectionHead(page.title)}
+      ${bonusAdd(basePath ? `${basePath}.bonuses` : '')}
       <div class="reset-calc-grid">
-        ${page.bonuses.map((bonus, i) => resetCalcCard(bonus, 'Dungeon Level', i)).join('')}
+        ${page.bonuses.map((bonus, i) => resetCalcCard(bonus, 'Dungeon Level', i, false, '', itemListPath(basePath ? `${basePath}.bonuses` : '', i))).join('')}
       </div>
     </section>`;
 }
@@ -689,11 +701,10 @@ export const homeView = {
         <div class="hero__hex hex-texture"></div>
         <div class="hero__inner">
           <div>
-            <span class="hero__badge"><span class="hex-dot"></span> Regrowth Incremental · Community Wiki</span>
-            <h1 class="hero__title">Grow your knowledge<br />alongside your valley.</h1>
-            <p class="hero__sub">
-              Every ore, rune, boss and perk — documented, cross-linked and searchable.
-              Built by the community, verified against v${latest.version}.
+            <span class="hero__badge"><span class="hex-dot"></span> ${ed('game:uiCopy.heroBadge', 'text', 'Hero badge')}${esc(UI_COPY.heroBadge || `Regrowth Incremental · Community Wiki`)}</span>
+            <h1 class="hero__title" ${ed('game:uiCopy.heroTitle', 'long', 'Hero title')}>${esc(UI_COPY.heroTitle || 'Grow your knowledge\nalongside your valley.').replace('\n', '<br />')}</h1>
+            <p class="hero__sub" ${ed('game:uiCopy.heroSub', 'long', 'Hero description')}>
+              ${esc(UI_COPY.heroSub || `Every ore, rune, boss and perk — documented, cross-linked and searchable. Built by the community, verified against v${latest.version}.`).replace('\n', '<br />')}
             </p>
             <form class="hero__search" id="hero-search">
               <div class="input-wrap">
@@ -724,6 +735,9 @@ export const homeView = {
         ${sectionHead('Explore the wiki')}
         <div class="grid grid--cards">
           ${cats.map((c, i) => categoryCard(c, i)).join('')}
+          <button type="button" class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="wiki:categories" data-edit-add-template="category" style="align-self:center;justify-content:center;">
+            ${icon('plus', 14)} New category
+          </button>
         </div>
       </section>
 
@@ -830,6 +844,9 @@ export const categoryView = {
               </span>
               ${icon('arrow-right', 15, 'sub-link__go')}
             </a>`).join('')}
+          <button type="button" class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="${catPath}.subcategories" data-edit-add-template="sub-card" style="align-self:center;justify-content:center;">
+            ${icon('plus', 14)} New page
+          </button>
         </div>
       </section>
 
@@ -884,15 +901,22 @@ export const subcategoryView = {
     const inlineUpgradeIds = new Set(inlineUpgradePages.map(({ child }) => child.id));
     const visibleChildren = (sub.children || []).filter((child) => !inlineUpgradeIds.has(child.id));
     const formulaPage = getFormulaPage(cat.id, sub.id);
-    const inlineUpgradeSections = inlineUpgradePages.map(({ page }) => formulaSections(page)).join('');
+    const upgradesListPath = (pageId) => {
+      const sectionKey = FORMULA_PAGE_MAP[`${cat.id}/${pageId}`];
+      return sectionKey ? `game:upgrades.sections.${sectionKey}.upgrades` : '';
+    };
+    const inlineUpgradeSections = inlineUpgradePages
+      .map(({ child, page }) => formulaSections(page, upgradesListPath(child.id)))
+      .join('');
     const resetLayerPage = RESET_LAYER_PAGES[`${cat.id}/${sub.id}`];
+    const resetLayerPath = resetLayerPage ? `game:calculators.pages.${cat.id}/${sub.id}` : '';
     const rankPage = getRankPage(cat.id, sub.id);
     const ascensionPage = getAscensionPage(cat.id, sub.id);
     const lifeRankPage = getLifeRankPage(cat.id, sub.id);
     const corePage = getCorePage(cat.id, sub.id);
     const isDustPage = sub.id === 'bone-dust';
     const familyBody = resetLayerPage
-      ? `${resetLayerSections(resetLayerPage)}${resetLayerPage.kind === 'bone-dust' ? dustSections() : ''}`
+      ? `${resetLayerSections(resetLayerPage, resetLayerPath)}${resetLayerPage.kind === 'bone-dust' ? dustSections() : ''}`
       : family?.runes?.length
       ? runeFamilySections(family.runes, sub.id)
       : orePage?.ores?.length
@@ -918,12 +942,14 @@ export const subcategoryView = {
                     : gearPage?.gears?.length
                       ? gearSections(gearPage.gears, `game:dungeon.gear.${gameKey}.gears`)
                       : formulaPage
-                        ? formulaSections(formulaPage)
+                              ? formulaSections(formulaPage, upgradesListPath(sub.id))
                         : sub.name === 'Upgrades' && !sub.children?.length
                           ? upgradeTemplateSections()
                           : isDustPage
                             ? dustSections()
                             : (cat.id === 'runes' ? runePlaceholderSection(sub) : '');
+    const showChildrenSection = visibleChildren.length > 0
+      || document.documentElement.classList.contains('ri-edit-bar');
 
     window.__riPageNames = [cat.name, sub.name, ...(sub.parentChain || []).map((p) => p.name)];
 
@@ -962,9 +988,10 @@ export const subcategoryView = {
         </nav>
       </div>
 
-      ${visibleChildren.length ? `
-      <section class="section">
+      ${showChildrenSection ? `
+      <section class="section sub-children-section">
         ${sectionHead(familyBody ? `Inside ${sub.name}` : sub.name)}
+        <button type="button" class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="${esc(`${wikiPath}.children`)}" data-edit-add-template="sub-card">${icon('plus', 13)} New page</button>
         <div class="link-grid">
           ${visibleChildren.map((ch, i) => `
             <a ${`class="sub-link reveal" style="--reveal-delay:${i * 35}ms"`}${ed(`wiki:${getSubcategoryDocPath(cat.id, ch.id)}`, 'sub-card', ch.name)} href="#/${cat.id}/${ch.id}">
@@ -1217,6 +1244,7 @@ export const updatesView = {
       </header>
 
       <nav class="upd-filters" aria-label="Filter update categories">
+        <button type="button" class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="updates:versions" data-edit-add-template="version">${icon('plus', 13)} New release</button>
         <button class="upd-filter is-active" type="button" data-update-filter="all">All <b>${totalEntries}</b></button>
         ${CONTEXTS.map((ctx) => {
           const count = displayVersions.reduce((total, { v }) => total + v.entries.filter((entry) => entry.context === ctx.id).length, 0);
@@ -1254,6 +1282,7 @@ export const updatesView = {
                       <p class="upd-entry__description">${colorizeResources(esc(e.description))}</p>
                     </div>
                   </article>`).join('')}
+                <button type="button" class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="updates:versions.${docIndex}.entries" data-edit-add-template="entry">${icon('plus', 12)} New update</button>
               </section>`;
           }).join('')}
         </section>`).join('')}

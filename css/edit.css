@@ -259,3 +259,12 @@ html.reduce-motion #ri-edit-chip { animation: none; transition: none; }
   .ri-edit-bar .btn { padding: 6px 10px; }
   .ri-edit-bar__user { display: none; }
 }
+
+/* Página sem subpáginas: a seção só aparece quando o editor está ativo */
+.sub-children-section:has(.link-grid:empty) {
+  display: none;
+}
+html.ri-edit-on .sub-children-section,
+html.ri-edit-on .sub-children-section:has(.link-grid:empty) {
+  display: block;
+}

@@ -10,6 +10,7 @@ import { TRAINING_AREAS, DUST_UNLOCK, GEARS } from './data/dungeon.js';
 import { RESET_LAYER_PAGES, setResetLayerPages } from './data/reset-layers.js';
 import { MINING_PRICES } from './data/mining-prices.js';
 import { setResourceColors } from './data/resource-colors.js';
+import { setUiCopy } from './data/ui-copy.js';
 import { searchPages } from './utils.js';
 
 export const DATA_SOURCES = { MOCK: 'mock', EXCEL: 'excel' };
@@ -80,6 +81,7 @@ export function applyGameData(data) {
   replaceObject(GEARS, data.dungeon?.gear, 'Dungeon gear');
   setResetLayerPages(data.calculators?.pages);
   setResourceColors(data.resources?.colors, data.resources?.pageLinks);
+  setUiCopy(data.uiCopy);
 }
 
 function applyCredits(content) {
