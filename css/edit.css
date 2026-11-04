@@ -13,6 +13,14 @@ html.ri-edit-bar .sidebar { top: var(--ri-edit-bar-h); }
 
 /* ---------- Barra fixa ---------- */
 
+/* display explícito nas classes vence o [hidden] padrão do browser:
+   garantir que hidden SEMPRE feche estes elementos. */
+.ri-edit-popover[hidden],
+.ri-edit-popover__warn[hidden],
+#ri-edit-chip[hidden],
+#ri-edit-bar[hidden],
+.ri-edit-toast[hidden] { display: none !important; }
+
 .ri-edit-bar {
   position: fixed;
   inset: 0 0 auto 0;
@@ -184,7 +192,6 @@ html.ri-edit-bar .sidebar { top: var(--ri-edit-bar-h); }
   font-size: 12px;
   color: #ffb08a;
   min-width: 0;
-  display: block;
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -231,6 +238,14 @@ html.ri-edit-on [data-edit]:hover {
   outline: 1.5px dashed color-mix(in srgb, var(--c-accent, #86d62b) 80%, transparent);
 }
 html.ri-edit-on a[data-edit] { text-decoration-color: transparent; }
+
+/* Botões de criar itens: só aparecem no modo edição. */
+.ri-edit-add { display: none; }
+html.ri-edit-on .ri-edit-add {
+  display: inline-flex;
+  color: var(--c-text-2);
+  border-style: dashed;
+}
 
 html.reduce-motion .ri-edit-toast,
 html.reduce-motion .ri-edit-popover,
