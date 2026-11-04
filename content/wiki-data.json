@@ -1306,34 +1306,9 @@
       "icon": "rune",
       "tagline": "Socketable stones grouped into six families — Energetic, Sky, Riches, Earth, Advanced and Bones. Every roll is gated by Rune Luck.",
       "overview": {
-        "desc": "Runes are socketable stones that rewrite your stats while they are slotted. Every rune belongs to one of six families — Energetic, Sky, Riches, Earth, Advanced and Bones — and every roll is gated by Rune Luck: the more luck you stack, the deeper into a family's pool you can reach. Each family page breaks its runes into cards showing the required luck, the base roll chance, the chance with recommended luck, and what each rune boosts at cap. All six families are documented — pick one below to see its full rune board.",
-        "highlights": [
-          {
-            "icon": "rune",
-            "title": "Six families",
-            "text": "Energetic, Sky, Riches, Earth, Advanced and Bones — each with its own pool of runes."
-          },
-          {
-            "icon": "star",
-            "title": "Luck-gated rolls",
-            "text": "Every rune has a luck requirement; the rarest rolls only appear as your luck grows."
-          },
-          {
-            "icon": "chart",
-            "title": "Boosts at cap",
-            "text": "Each rune multiplies a target stat while socketed, with a cap value still being measured."
-          }
-        ],
-        "facts": [
-          {
-            "label": "Families",
-            "value": "6"
-          },
-          {
-            "label": "Documented",
-            "value": "All 6"
-          }
-        ]
+        "desc": "\n",
+        "highlights": [],
+        "facts": []
       },
       "vitals": [
         {
