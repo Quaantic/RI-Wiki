@@ -549,6 +549,19 @@
                 "facts": []
               },
               {
+                "id": "rare-saps",
+                "name": "Rare Saps",
+                "icon": "drop",
+                "desc": "Silver, Golden, Diamond and Amethyst Sap drop while cutting trees at flat chances of 1 / 100, 1 / 500, 1 / 1,500 and 1 / 5,000. Enter the owned amount for each sap to see its three bonuses. Whether a drop is per chop or per tree-fall is decided server-side and is not exposed.",
+                "highlights": [],
+                "facts": [
+                  {
+                    "label": "Types",
+                    "value": "4"
+                  }
+                ]
+              },
+              {
                 "id": "sap",
                 "name": "Sap",
                 "icon": "drop",
@@ -563,19 +576,6 @@
                     "desc": "Move the level slider and the site computes the next-level price and the multi.",
                     "highlights": [],
                     "facts": []
-                  },
-                  {
-                    "id": "rare-saps",
-                    "name": "Rare Saps",
-                    "icon": "drop",
-                    "desc": "Silver, Golden, Diamond and Amethyst Sap drop while cutting trees at flat chances of 1 / 100, 1 / 500, 1 / 1,500 and 1 / 5,000. Enter the owned amount for each sap to see its three bonuses. Whether a drop is per chop or per tree-fall is decided server-side and is not exposed.",
-                    "highlights": [],
-                    "facts": [
-                      {
-                        "label": "Types",
-                        "value": "4"
-                      }
-                    ]
                   }
                 ]
               },
@@ -686,6 +686,14 @@
             "facts": [],
             "children": [
               {
+                "id": "monster-evolution",
+                "name": "Monster Evolution",
+                "icon": "refresh",
+                "desc": "Monster Evolution upgrades evolve your monster permanently. There are six evolutions with escalating prices; each multiplies monster gains, with the first five doubling it and the last ones growing by 25 percent. Every Monster Upgrade also requires a minimum evolution level, so evolving is mandatory for further upgrades.",
+                "highlights": [],
+                "facts": []
+              },
+              {
                 "id": "red-liquid",
                 "name": "Red Liquid",
                 "icon": "drop",
@@ -693,14 +701,6 @@
                 "highlights": [],
                 "facts": [],
                 "children": [
-                  {
-                    "id": "monster-evolution",
-                    "name": "Monster Evolution",
-                    "icon": "refresh",
-                    "desc": "Monster Evolution upgrades evolve your monster permanently. There are six evolutions with escalating prices; each multiplies monster gains, with the first five doubling it and the last ones growing by 25 percent. Every Monster Upgrade also requires a minimum evolution level, so evolving is mandatory for further upgrades.",
-                    "highlights": [],
-                    "facts": []
-                  },
                   {
                     "id": "monster-upgrades",
                     "name": "Monster Upgrades",
