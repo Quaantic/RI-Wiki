@@ -6904,6 +6904,189 @@
               }
             }
           ]
+        },
+        "life/monster-evolution": {
+          "title": "Evolutions",
+          "stages": [
+            {
+              "num": "1",
+              "requirements": [
+                "100 Red Liquid"
+              ],
+              "boosts": [
+                "2x Red Liquid gains",
+                "1.2x  Energy",
+                "1.2x Life Gem gain"
+              ],
+              "unlocks": {
+                "area": "",
+                "places": [],
+                "features": [
+                  {
+                    "name": "2 New Monster Upgrades",
+                    "subs": []
+                  },
+                  {
+                    "name": "100% Faster Monster Click",
+                    "subs": []
+                  }
+                ]
+              },
+              "title": "Evolution 1",
+              "boostsNote": ""
+            },
+            {
+              "title": "Evolution 2",
+              "num": "2",
+              "requirements": [
+                "5K Red Liquid"
+              ],
+              "boosts": [
+                "4x Red Liquid gains",
+                "1.44x  Energy",
+                "1.44x Life Gem gain"
+              ],
+              "unlocks": {
+                "area": "",
+                "places": [],
+                "features": [
+                  {
+                    "name": "2 New Monster Upgrades",
+                    "subs": []
+                  },
+                  {
+                    "name": "200% Faster Monster Click",
+                    "subs": []
+                  },
+                  {
+                    "name": "2x Red Liquid",
+                    "subs": []
+                  }
+                ]
+              }
+            },
+            {
+              "title": "Evolution 3",
+              "num": "3",
+              "requirements": [
+                "10M Red Liquid"
+              ],
+              "boosts": [
+                "8x Red Liquid gains",
+                "1.73x Energy",
+                "1.73x Life Gem gain"
+              ],
+              "unlocks": {
+                "area": "",
+                "places": [],
+                "features": [
+                  {
+                    "name": "1 New Monster Upgrade",
+                    "subs": []
+                  },
+                  {
+                    "name": "Instant Monster Click",
+                    "subs": []
+                  },
+                  {
+                    "name": "1 New Monster Level Stat Bonus",
+                    "subs": []
+                  }
+                ]
+              }
+            },
+            {
+              "title": "Evolution 4",
+              "num": "4",
+              "requirements": [
+                "10B Red Liquid"
+              ],
+              "boosts": [
+                "16x Red Liquid gains",
+                "2.07x Energy",
+                "2.07x Life Gem gain"
+              ],
+              "unlocks": {
+                "area": "",
+                "places": [],
+                "features": [
+                  {
+                    "name": "1 New Monster Upgrade",
+                    "subs": []
+                  },
+                  {
+                    "name": "Auto Monster Click [1/s]",
+                    "subs": []
+                  },
+                  {
+                    "name": "1 New Monster Level Stat Bonus",
+                    "subs": []
+                  }
+                ]
+              }
+            },
+            {
+              "title": "Evolution 5",
+              "num": "5",
+              "requirements": [
+                "10T Red Liquid"
+              ],
+              "boosts": [
+                "32x Red Liquid gains",
+                "2.49x Energy",
+                "2.49x Life Gem gain"
+              ],
+              "unlocks": {
+                "area": "",
+                "places": [
+                  "Unlock Monster Levels"
+                ],
+                "features": [
+                  {
+                    "name": "2 New Monster Upgrades",
+                    "subs": []
+                  },
+                  {
+                    "name": "Auto Monster Click [3/s]",
+                    "subs": []
+                  },
+                  {
+                    "name": "Expand Monster Tycoon",
+                    "subs": []
+                  }
+                ]
+              }
+            },
+            {
+              "title": "Evolution 6",
+              "num": "6",
+              "requirements": [
+                "250Qa Red Liquid"
+              ],
+              "boosts": [
+                "64x Red Liquid gains",
+                "2.99x Energy",
+                "2.99 Life Gem gain",
+                "1.25x Monster Perks"
+              ],
+              "unlocks": {
+                "area": "",
+                "places": [
+                  "Unlock Monster Sacrifice"
+                ],
+                "features": [
+                  {
+                    "name": "Auto Monster Click [10/s]",
+                    "subs": []
+                  },
+                  {
+                    "name": "Expand Monster Tycoon",
+                    "subs": []
+                  }
+                ]
+              }
+            }
+          ]
         }
       },
       "barns": {
