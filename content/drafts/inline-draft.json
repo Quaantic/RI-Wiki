@@ -1463,6 +1463,31 @@
             "facts": []
           }
         ]
+      },
+      {
+        "id": "FAQ",
+        "name": "FAQ",
+        "desc": "look here the answer of most asked question!",
+        "tagline": "Frequently Asked Questions (FAQ) that are made in community server and in our feedback page!",
+        "icon": "sprout",
+        "vitals": [],
+        "subcategories": [
+          {
+            "id": "new-page",
+            "name": "New page",
+            "desc": "Describe this page here.",
+            "icon": "sparkles",
+            "highlights": [],
+            "facts": [],
+            "vitals": [],
+            "children": []
+          }
+        ],
+        "overview": {
+          "desc": "",
+          "facts": [],
+          "highlights": []
+        }
       }
     ],
     "credits": {
