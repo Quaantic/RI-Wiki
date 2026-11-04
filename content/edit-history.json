@@ -2,6 +2,341 @@
   "format": 1,
   "entries": [
     {
+      "at": 1793806753424,
+      "kind": "content",
+      "text": "Renamed \"Eternal Shards \" to \"Eternal Shards \""
+    },
+    {
+      "at": 1793806753424,
+      "kind": "content",
+      "text": "Updated desc of \"Eternal Shards \": See here eternal shards information and tre… to See here eternal shards information and ete…"
+    },
+    {
+      "at": 1793806753424,
+      "kind": "content",
+      "text": "Updated icon of \"Eternal Shards \": infinity to infinity"
+    },
+    {
+      "at": 1793806753419,
+      "kind": "content",
+      "text": "Updated id of \"Eternal Shards \": Eternal-shards to Eternal-shards"
+    },
+    {
+      "at": 1793806732151,
+      "kind": "content",
+      "text": "Updated id of \"New page\": new-page to Eternal-shards"
+    },
+    {
+      "at": 1793806732151,
+      "kind": "content",
+      "text": "Renamed \"New page\" to \"Eternal Shards \""
+    },
+    {
+      "at": 1793806732151,
+      "kind": "content",
+      "text": "Updated desc of \"Eternal Shards \": Describe this page here. to See here eternal shards information and tre…"
+    },
+    {
+      "at": 1793806732151,
+      "kind": "content",
+      "text": "Updated icon of \"Eternal Shards \": sparkles to infinity"
+    },
+    {
+      "at": 1793806661560,
+      "kind": "content",
+      "text": "Added \"New page\""
+    },
+    {
+      "at": 1793806660030,
+      "kind": "content",
+      "text": "Updated id of \"New page\": new-page to Gamepasses"
+    },
+    {
+      "at": 1793806660030,
+      "kind": "content",
+      "text": "Renamed \"New page\" to \"Gamepasses\""
+    },
+    {
+      "at": 1793806660030,
+      "kind": "content",
+      "text": "Updated desc of \"Gamepasses\": Describe this page here. to See here the gamepass boosts, a tier of whi…"
+    },
+    {
+      "at": 1793806660030,
+      "kind": "content",
+      "text": "Updated icon of \"Gamepasses\": sparkles to hand-coins"
+    },
+    {
+      "at": 1793806540782,
+      "kind": "content",
+      "text": "Added \"New page\""
+    },
+    {
+      "at": 1793806534797,
+      "kind": "content",
+      "text": "Renamed \"New category\" to \"Miscellaneous \""
+    },
+    {
+      "at": 1793806534797,
+      "kind": "content",
+      "text": "Updated tagline of \"Miscellaneous \": What this category is about. to Gamepasses and Eternal Shards are side stat…"
+    },
+    {
+      "at": 1793806534797,
+      "kind": "content",
+      "text": "Updated icon of \"Miscellaneous \": sprout to blend"
+    },
+    {
+      "at": 1793806534796,
+      "kind": "content",
+      "text": "Updated id of \"New category\": new-category to Miscellaneous"
+    },
+    {
+      "at": 1793806430106,
+      "kind": "content",
+      "text": "Added \"New category\""
+    },
+    {
+      "at": 1793806402348,
+      "kind": "content",
+      "text": "Updated id of \"Main Island\": Main-Island-FAQ to Main-Island-FAQ"
+    },
+    {
+      "at": 1793806402348,
+      "kind": "content",
+      "text": "Renamed \"Main Island\" to \"Main Island\""
+    },
+    {
+      "at": 1793806402348,
+      "kind": "content",
+      "text": "Updated desc of \"Main Island\": Main Island most asked questions! to Main Island most asked questions!"
+    },
+    {
+      "at": 1793806402348,
+      "kind": "content",
+      "text": "Updated icon of \"Main Island\": sparkles to compass"
+    },
+    {
+      "at": 1793806396001,
+      "kind": "content",
+      "text": "Updated id of \"General\": General-FAQ to General-FAQ"
+    },
+    {
+      "at": 1793806396001,
+      "kind": "content",
+      "text": "Renamed \"General\" to \"General\""
+    },
+    {
+      "at": 1793806396001,
+      "kind": "content",
+      "text": "Updated desc of \"General\": General most asked questions (extra content… to General most asked questions (extra content…"
+    },
+    {
+      "at": 1793806396001,
+      "kind": "content",
+      "text": "Updated icon of \"General\": album to album"
+    },
+    {
+      "at": 1793806388364,
+      "kind": "content",
+      "text": "Updated id of \"Main\": main to main"
+    },
+    {
+      "at": 1793806388364,
+      "kind": "content",
+      "text": "Renamed \"Main\" to \"Main\""
+    },
+    {
+      "at": 1793806388364,
+      "kind": "content",
+      "text": "Updated tagline of \"Main\": The core islands: Stages, Energy, Gears, Cr… to The core islands: Stages, Energy, Gears, Cr…"
+    },
+    {
+      "at": 1793806388364,
+      "kind": "content",
+      "text": "Updated icon of \"Main\": compass to compass"
+    },
+    {
+      "at": 1793806375891,
+      "kind": "content",
+      "text": "Updated id of \"General\": General-FAQ to General-FAQ"
+    },
+    {
+      "at": 1793806375891,
+      "kind": "content",
+      "text": "Renamed \"General\" to \"General\""
+    },
+    {
+      "at": 1793806375891,
+      "kind": "content",
+      "text": "Updated desc of \"General\": General most asked questions (extra content… to General most asked questions (extra content…"
+    },
+    {
+      "at": 1793806375891,
+      "kind": "content",
+      "text": "Updated icon of \"General\": sparkles to album"
+    },
+    {
+      "at": 1793806349282,
+      "kind": "content",
+      "text": "Updated id of \"Training Island \": TrainingIsland-FAQ to TrainingIsland-FAQ"
+    },
+    {
+      "at": 1793806349282,
+      "kind": "content",
+      "text": "Renamed \"Training Island \" to \"Training Island \""
+    },
+    {
+      "at": 1793806349282,
+      "kind": "content",
+      "text": "Updated desc of \"Training Island \": Training Island most asked questions (dunge… to Training Island most asked questions (dunge…"
+    },
+    {
+      "at": 1793806349282,
+      "kind": "content",
+      "text": "Updated icon of \"Training Island \": punch to biceps-flexed"
+    },
+    {
+      "at": 1793806297154,
+      "kind": "content",
+      "text": "Renamed \"Training Island \" to \"Training Island \""
+    },
+    {
+      "at": 1793806297154,
+      "kind": "content",
+      "text": "Updated desc of \"Training Island \": Training Island most asked questions (dunge… to Training Island most asked questions (dunge…"
+    },
+    {
+      "at": 1793806297154,
+      "kind": "content",
+      "text": "Updated icon of \"Training Island \": sparkles to punch"
+    },
+    {
+      "at": 1793806297153,
+      "kind": "content",
+      "text": "Updated id of \"Training Island \": TrainingIsland-FAQ to TrainingIsland-FAQ"
+    },
+    {
+      "at": 1793806278187,
+      "kind": "content",
+      "text": "Updated id of \"Mining Island\": Mining-Island-FAQ to Mining-Island-FAQ"
+    },
+    {
+      "at": 1793806278187,
+      "kind": "content",
+      "text": "Renamed \"Mining Island\" to \"Mining Island\""
+    },
+    {
+      "at": 1793806278187,
+      "kind": "content",
+      "text": "Updated desc of \"Mining Island\": Mining island most asked questions! to Mining island most asked questions!"
+    },
+    {
+      "at": 1793806278187,
+      "kind": "content",
+      "text": "Updated icon of \"Mining Island\": sparkles to pickaxe"
+    },
+    {
+      "at": 1793806270878,
+      "kind": "content",
+      "text": "Updated id of \"Money Island \": Money-Island-FAQ to Money-Island-FAQ"
+    },
+    {
+      "at": 1793806270878,
+      "kind": "content",
+      "text": "Renamed \"Money Island \" to \"Money Island \""
+    },
+    {
+      "at": 1793806270878,
+      "kind": "content",
+      "text": "Updated desc of \"Money Island \": Money Island most asked questions! to Money Island most asked questions!"
+    },
+    {
+      "at": 1793806270878,
+      "kind": "content",
+      "text": "Updated icon of \"Money Island \": empty to coin"
+    },
+    {
+      "at": 1793806217786,
+      "kind": "content",
+      "text": "Updated tagline of \"Money Island\": The money island: the 83-node Upgrade Tree,… to The money island: the 83-node Upgrade Tree,…"
+    },
+    {
+      "at": 1793806217786,
+      "kind": "content",
+      "text": "Updated icon of \"Money Island\": coin to coin"
+    },
+    {
+      "at": 1793806217785,
+      "kind": "content",
+      "text": "Updated id of \"Money Island\": money-island to money-island"
+    },
+    {
+      "at": 1793806217785,
+      "kind": "content",
+      "text": "Renamed \"Money Island\" to \"Money Island\""
+    },
+    {
+      "at": 1793806207554,
+      "kind": "content",
+      "text": "Updated id of \"Money Island \": Money-Island-FAQ to Money-Island-FAQ"
+    },
+    {
+      "at": 1793806207554,
+      "kind": "content",
+      "text": "Renamed \"Money Island \" to \"Money Island \""
+    },
+    {
+      "at": 1793806207554,
+      "kind": "content",
+      "text": "Updated desc of \"Money Island \": Money Island most asked questions! to Money Island most asked questions!"
+    },
+    {
+      "at": 1793806207554,
+      "kind": "content",
+      "text": "Updated icon of \"Money Island \": empty to empty"
+    },
+    {
+      "at": 1793806137922,
+      "kind": "content",
+      "text": "Updated id of \"FAQ\": FAQ to FAQ"
+    },
+    {
+      "at": 1793806137922,
+      "kind": "content",
+      "text": "Renamed \"FAQ\" to \"FAQ\""
+    },
+    {
+      "at": 1793806137922,
+      "kind": "content",
+      "text": "Updated tagline of \"FAQ\": Frequently Asked Questions (FAQ) that are m… to Frequently Asked Questions (FAQ) that are m…"
+    },
+    {
+      "at": 1793806137922,
+      "kind": "content",
+      "text": "Updated icon of \"FAQ\": sprout to badge-help"
+    },
+    {
+      "at": 1793806109187,
+      "kind": "content",
+      "text": "Updated id of \"Main Island\": Main-Island-FAQ to Main-Island-FAQ"
+    },
+    {
+      "at": 1793806109187,
+      "kind": "content",
+      "text": "Renamed \"Main Island\" to \"Main Island\""
+    },
+    {
+      "at": 1793806109187,
+      "kind": "content",
+      "text": "Updated desc of \"Main Island\": Main Island most asked questions! to Main Island most asked questions!"
+    },
+    {
+      "at": 1793806109187,
+      "kind": "content",
+      "text": "Updated icon of \"Main Island\": sparkles to sparkles"
+    },
+    {
       "at": 1793805414626,
       "kind": "colors",
       "text": "Linked \"FAQ\" to #/FAQ"
