@@ -1473,9 +1473,9 @@
         "vitals": [],
         "subcategories": [
           {
-            "id": "new-page1",
-            "name": "New page1",
-            "desc": "Describe this page here.",
+            "id": "Main-Island-FAQ",
+            "name": "Main Island",
+            "desc": "Main Island most asked questions!",
             "icon": "sparkles",
             "highlights": [],
             "facts": [],
@@ -1483,9 +1483,29 @@
             "children": []
           },
           {
-            "id": "new-page2",
-            "name": "New page2",
-            "desc": "Describe this page here.",
+            "id": "Life-island-FAQ",
+            "name": "Life Island",
+            "desc": "Life Island most asked questions!",
+            "icon": "leaf",
+            "highlights": [],
+            "facts": [],
+            "vitals": [],
+            "children": []
+          },
+          {
+            "id": "Money-Island-FAQ",
+            "name": "Money Island ",
+            "desc": "Money Island most asked questions!",
+            "icon": "",
+            "highlights": [],
+            "facts": [],
+            "vitals": [],
+            "children": []
+          },
+          {
+            "id": "Mining-Island-FAQ",
+            "name": "Mining Island",
+            "desc": "Mining island most asked questions!",
             "icon": "sparkles",
             "highlights": [],
             "facts": [],
@@ -1493,9 +1513,9 @@
             "children": []
           },
           {
-            "id": "new-page3",
-            "name": "New page3",
-            "desc": "Describe this page here.",
+            "id": "TrainingIsland-FAQ",
+            "name": "Training Island ",
+            "desc": "Training Island most asked questions (dungeon included)!",
             "icon": "sparkles",
             "highlights": [],
             "facts": [],
@@ -1503,9 +1523,9 @@
             "children": []
           },
           {
-            "id": "new-page4",
-            "name": "New page4",
-            "desc": "Describe this page here.",
+            "id": "General-FAQ",
+            "name": "General",
+            "desc": "General most asked questions (extra content + overall most asked questions)!",
             "icon": "sparkles",
             "highlights": [],
             "facts": [],
