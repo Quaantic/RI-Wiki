@@ -7,6 +7,16 @@
       "text": "Linked \"Health\" to #/dungeon/training"
     },
     {
+      "at": 1793776367972,
+      "kind": "colors",
+      "text": "Linked \"Health\" to #/dungeon/training"
+    },
+    {
+      "at": 1793776363884,
+      "kind": "colors",
+      "text": "Linked \"Item\" to #/dungeon/items"
+    },
+    {
       "at": 1793776363884,
       "kind": "colors",
       "text": "Linked \"Item\" to #/dungeon/items"
@@ -17,9 +27,24 @@
       "text": "Linked \"Iron\" to #/mining/ores"
     },
     {
+      "at": 1793776361882,
+      "kind": "colors",
+      "text": "Linked \"Iron\" to #/mining/ores"
+    },
+    {
       "at": 1793776357297,
       "kind": "colors",
       "text": "Linked \"Level Perks\" to #/perks/perk"
+    },
+    {
+      "at": 1793776357297,
+      "kind": "colors",
+      "text": "Linked \"Level Perks\" to #/perks/perk"
+    },
+    {
+      "at": 1793776351660,
+      "kind": "colors",
+      "text": "Linked \"Life Generation\" to #/life/life-generation"
     },
     {
       "at": 1793776351660,
@@ -37,6 +62,21 @@
       "text": "Linked \"Log Perks\" to #/perks/log"
     },
     {
+      "at": 1793776345699,
+      "kind": "colors",
+      "text": "Removed the link of \"log perks\""
+    },
+    {
+      "at": 1793776345699,
+      "kind": "colors",
+      "text": "Linked \"Log Perks\" to #/perks/log"
+    },
+    {
+      "at": 1793776338136,
+      "kind": "colors",
+      "text": "Linked \"Log\" to #/life/logs"
+    },
+    {
       "at": 1793776338136,
       "kind": "colors",
       "text": "Linked \"Log\" to #/life/logs"
@@ -45,6 +85,16 @@
       "at": 1793776325299,
       "kind": "colors",
       "text": "Linked \"Fossil\" to #/life/fossil"
+    },
+    {
+      "at": 1793776325299,
+      "kind": "colors",
+      "text": "Linked \"Fossil\" to #/life/fossil"
+    },
+    {
+      "at": 1793776322482,
+      "kind": "colors",
+      "text": "Linked \"Garnet\" to #/mining/ores"
     },
     {
       "at": 1793776322482,
@@ -62,9 +112,29 @@
       "text": "Removed the link of \"Energy Shards\""
     },
     {
+      "at": 1793776318023,
+      "kind": "colors",
+      "text": "Removed the color of \"Energy Shards\""
+    },
+    {
+      "at": 1793776318023,
+      "kind": "colors",
+      "text": "Removed the link of \"Energy Shards\""
+    },
+    {
       "at": 1793776311233,
       "kind": "colors",
       "text": "Linked \"Energetic\" to #/runes/energetic"
+    },
+    {
+      "at": 1793776311233,
+      "kind": "colors",
+      "text": "Linked \"Energetic\" to #/runes/energetic"
+    },
+    {
+      "at": 1793776306289,
+      "kind": "colors",
+      "text": "Linked \"Enemie\" to #/dungeon/enemies"
     },
     {
       "at": 1793776306289,
@@ -77,9 +147,24 @@
       "text": "Linked \"Emerald\" to #/money-island/emeralds"
     },
     {
+      "at": 1793776301447,
+      "kind": "colors",
+      "text": "Linked \"Emerald\" to #/money-island/emeralds"
+    },
+    {
       "at": 1793776292815,
       "kind": "colors",
       "text": "Linked \"Dungeons\" to #/dungeon"
+    },
+    {
+      "at": 1793776292815,
+      "kind": "colors",
+      "text": "Linked \"Dungeons\" to #/dungeon"
+    },
+    {
+      "at": 1793776286094,
+      "kind": "colors",
+      "text": "Linked \"Dust\" to #/dungeon/bone-dust"
     },
     {
       "at": 1793776286094,
@@ -92,9 +177,24 @@
       "text": "Linked \"Drop Luck\" to #/dungeon/items"
     },
     {
+      "at": 1793776280043,
+      "kind": "colors",
+      "text": "Linked \"Drop Luck\" to #/dungeon/items"
+    },
+    {
       "at": 1793776276280,
       "kind": "colors",
       "text": "Linked \"Diamond Energy\" to #/money-island/diamond-energy"
+    },
+    {
+      "at": 1793776276280,
+      "kind": "colors",
+      "text": "Linked \"Diamond Energy\" to #/money-island/diamond-energy"
+    },
+    {
+      "at": 1793776270364,
+      "kind": "colors",
+      "text": "Linked \"Diamond Apples\" to #/life/apples-diamond"
     },
     {
       "at": 1793776270364,
@@ -107,9 +207,24 @@
       "text": "Linked \"Diamond\" to #/mining/ores"
     },
     {
+      "at": 1793776265695,
+      "kind": "colors",
+      "text": "Linked \"Diamond\" to #/mining/ores"
+    },
+    {
       "at": 1793776261433,
       "kind": "colors",
       "text": "Linked \"Dark Crystals\" to #/main/crystals"
+    },
+    {
+      "at": 1793776261433,
+      "kind": "colors",
+      "text": "Linked \"Dark Crystals\" to #/main/crystals"
+    },
+    {
+      "at": 1793776250259,
+      "kind": "colors",
+      "text": "Linked \"Core\" to #/mining/cores"
     },
     {
       "at": 1793776250259,
@@ -122,6 +237,16 @@
       "text": "Linked \"Copper\" to #/mining/ores"
     },
     {
+      "at": 1793776245227,
+      "kind": "colors",
+      "text": "Linked \"Copper\" to #/mining/ores"
+    },
+    {
+      "at": 1793776241050,
+      "kind": "colors",
+      "text": "Linked \"Coal\" to #/mining/ores"
+    },
+    {
       "at": 1793776241050,
       "kind": "colors",
       "text": "Linked \"Coal\" to #/mining/ores"
@@ -132,9 +257,24 @@
       "text": "Linked \"Cells\" to #/life/life-generation"
     },
     {
+      "at": 1793776238476,
+      "kind": "colors",
+      "text": "Linked \"Cells\" to #/life/life-generation"
+    },
+    {
       "at": 1793776225749,
       "kind": "colors",
       "text": "Linked \"Azurite\" to #/mining/ores"
+    },
+    {
+      "at": 1793776225749,
+      "kind": "colors",
+      "text": "Linked \"Azurite\" to #/mining/ores"
+    },
+    {
+      "at": 1793776220336,
+      "kind": "colors",
+      "text": "Linked \"Automation\" to #/main/automations"
     },
     {
       "at": 1793776220336,
@@ -155,6 +295,26 @@
       "at": 1793776215715,
       "kind": "colors",
       "text": "Removed the link of \"Ascensions\""
+    },
+    {
+      "at": 1793776215715,
+      "kind": "colors",
+      "text": "Removed the color of \"Ascensions\""
+    },
+    {
+      "at": 1793776215715,
+      "kind": "colors",
+      "text": "Removed the link of \"ascensions\""
+    },
+    {
+      "at": 1793776215715,
+      "kind": "colors",
+      "text": "Removed the link of \"Ascensions\""
+    },
+    {
+      "at": 1793776213312,
+      "kind": "colors",
+      "text": "Linked \"Ascension\" to #/money-island/ascensions"
     },
     {
       "at": 1793776213312,
