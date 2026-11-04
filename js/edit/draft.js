@@ -23,6 +23,7 @@ const draftState = {
   shas: {},
   draftSha: null,
   savedDraftRaw: '',
+  actor: '',
 };
 
 // Diario automatico de edicoes ("Update History"). Em memoria durante a
@@ -124,7 +125,7 @@ function fieldWord(key) {
 }
 
 function logChange(kind, text) {
-  changeLog.push({ at: Date.now(), kind, text });
+  changeLog.push({ id: crypto.randomUUID(), at: Date.now(), kind, text, actor: draftState.actor });
   if (changeLog.length > CHANGE_LOG_MAX) changeLog.shift();
 }
 
@@ -152,11 +153,13 @@ function describeSet(name, path, prev, value) {
 
 export function setValue(name, path, value) {
   const prev = readAt(name, path);
+  if (JSON.stringify(prev) === JSON.stringify(value)) return false;
   writeAt(name, path, value);
   remember({ type: 'set', name, path, value: prev === undefined ? undefined : clone(prev) });
   try {
     logChange(/^(wiki|game|updates)$/.test(name) ? (path.startsWith('resources.') ? 'colors' : 'content') : 'content', describeSet(name, path, prev, value));
   } catch { /* o diario nunca bloqueia a edicao */ }
+  return true;
 }
 
 function undoSet(entry) {
@@ -242,21 +245,36 @@ export function moveValue(name, fromPath, fromIndex, toPath, toIndex, skipHistor
   if (fromPath === toPath && toIndex === fromIndex) return false;
   let destIndex = toIndex;
   if (fromPath === toPath && destIndex > fromIndex) destIndex -= 1;
-  const [item] = source.splice(fromIndex, 1);
+  // Resolve the destination before removing anything: removing a category or
+  // sibling can shift the numeric indexes in toPath.
+  const dest = fromPath === toPath ? source : walkTo(root, toPath);
+  if (!Array.isArray(dest)) throw new Error(`Destination "${toPath}" is not a list.`);
+  if (dest === source && destIndex === fromIndex) return false;
+  const item = source[fromIndex];
+  const contains = (node) => node === dest || (node && typeof node === 'object' && Object.values(node).some(contains));
+  if (contains(item)) throw new Error('A page cannot be moved inside its own children.');
+  source.splice(fromIndex, 1);
   if (item == null || typeof item !== 'object') {
     throw new Error('Only items can be moved (the origin list is odd).');
   }
   const movedLabel = itemLabel(item) || 'item';
   try {
-    const dest = fromPath === toPath ? source : walkTo(root, toPath);
-    if (!Array.isArray(dest)) throw new Error(`Destination "${toPath}" is not a list.`);
     dest.splice(destIndex, 0, item);
   } catch (error) {
     source.splice(fromIndex, 0, item);
     throw error;
   }
   if (!skipHistory) {
-    remember({ type: 'move', name, fromPath, fromIndex, toPath, toIndex: destIndex });
+    const pathOf = (node, target, path = '') => {
+      if (node === target) return path;
+      if (!node || typeof node !== 'object') return null;
+      for (const key of Object.keys(node)) {
+        const found = pathOf(node[key], target, path ? `${path}.${key}` : key);
+        if (found !== null) return found;
+      }
+      return null;
+    };
+    remember({ type: 'move', name, fromPath: pathOf(root, source), fromIndex, toPath: pathOf(root, dest), toIndex: destIndex });
     try {
       logChange('content', `Moved "${movedLabel}"`);
     } catch { /* o diario nunca bloqueia a edicao */ }
@@ -270,7 +288,7 @@ function undoMove(entry) {
     entry.toPath,
     entry.toIndex,
     entry.fromPath,
-    entry.fromIndex,
+    entry.fromIndex + (entry.fromPath === entry.toPath && entry.fromIndex > entry.toIndex ? 1 : 0),
     true,
   );
   return 'restored position';
@@ -319,7 +337,7 @@ export function draftOnline() {
 
 export function draftDirty() {
   if (!draftState.docs) return false;
-  return currentDraftRaw() !== draftState.savedDraftRaw;
+  return draftState.savedDraftRaw ? currentDraftRaw() !== draftState.savedDraftRaw : changedFiles().length > 0;
 }
 
 export function changedCount() {
@@ -371,8 +389,10 @@ function sanitizeResources() {
   return dropped;
 }
 
-export async function initSession(token) {
+export async function initSession(token, actor = '') {
   draftState.token = token;
+  draftState.actor = actor;
+  history.length = 0;
   draftState.baseDocs = {};
   draftState.shas = {};
   draftState.draftSha = null;
@@ -418,26 +438,29 @@ export async function initSession(token) {
 }
 
 export async function saveDraft(token) {
+  await assertRemoteUnchanged(token);
   validateDocuments(draftState.docs);
+  const raw = currentDraftRaw();
   await githubRequest(githubContentsUrl(DRAFT_FILE), token, {
     method: 'PUT',
     body: JSON.stringify({
       message: 'Save inline draft',
-      content: encodeBase64Content(currentDraftRaw()),
+      content: encodeBase64Content(raw),
       sha: draftState.draftSha || undefined,
       branch: BRANCH,
     }),
   }).then((result) => {
     draftState.draftSha = result.content.sha;
-    draftState.savedDraftRaw = currentDraftRaw();
+    draftState.savedDraftRaw = raw;
   });
   // Diario: pendencias vao para o arquivo (marcadas "pending").
   if (changeLog.length) {
-    await writeHistory(token, changeLog.map((entry) => ({ at: entry.at, kind: entry.kind, text: entry.text })), true).catch(() => {});
+    await writeHistory(token, changeLog.map((entry) => ({ ...entry, pending: true })), true);
   }
 }
 
 export async function discardDraft(token) {
+  await assertRemoteUnchanged(token);
   if (draftState.draftSha) {
     await githubRequest(githubContentsUrl(DRAFT_FILE), token, {
       method: 'DELETE',
@@ -455,11 +478,13 @@ export async function discardDraft(token) {
   draftState.docs = clone(draftState.baseDocs);
   applyDraftToSite();
   changeLog.length = 0;
+  history.length = 0;
   // Descartou o rascunho: as pendencias do diario caducam junto.
-  await writeHistory(token, [], false).catch(() => {});
+  await writeHistory(token, [], false, true).catch(() => {});
 }
 
 export async function publishChanges(token) {
+  await assertRemoteUnchanged(token);
   validateDocuments(draftState.docs);
   const changed = changedFiles();
   if (changed.length) {
@@ -512,16 +537,33 @@ export async function publishChanges(token) {
   if (changeLog.length) {
     // Diario definitivo: pendencias antigas do arquivo sao substituidas
     // pelas mesmas entradas agora marcadas como publicadas.
-    const published = changeLog.map((entry) => ({ at: entry.at, kind: entry.kind, text: entry.text }));
+    const published = changeLog.map((entry) => ({ ...entry, pending: false }));
     changeLog.length = 0;
     await writeHistory(token, published, false).catch(() => {});
+  } else {
+    await writeHistory(token, [], false);
   }
+  history.length = 0;
+}
+
+export async function remoteChanged(token) {
+  const remote = await githubRequest(githubContentsUrl(DRAFT_FILE), token, { allowNotFound: true, cache: 'no-store' });
+  if ((remote?.sha || null) !== draftState.draftSha) return true;
+  const files = await Promise.all(Object.entries(FILES).map(async ([name, path]) => {
+    const result = await githubRequest(githubContentsUrl(path), token, { cache: 'no-store' });
+    return result.sha !== draftState.shas[name];
+  }));
+  return files.some(Boolean);
+}
+
+async function assertRemoteUnchanged(token) {
+  if (await remoteChanged(token)) throw new Error('Another editor saved a newer version. Reload before saving or publishing.');
 }
 
 // Grava o diario no repositorio. pending=true marca como "nao publicado"
 // (vem do "Save draft"); pending=false grava como definitivo (Publish) e
 // limpa pendencias antigas. `newEntries` = entradas novas desta sessao.
-async function writeHistory(token, newEntries, pending) {
+async function writeHistory(token, newEntries, pending, discard = false) {
   if (!newEntries.length && pending) return;
   let older = [];
   let sha;
@@ -534,9 +576,11 @@ async function writeHistory(token, newEntries, pending) {
     } catch {
       older = [];
     }
-    if (!pending) older = older.filter((entry) => !entry.pending);
+    if (discard) older = older.filter((entry) => !entry.pending);
+    else if (!pending) older = older.map((entry) => ({ ...entry, pending: false }));
   }
-  const entries = [...older, ...newEntries]
+  const byId = new Map([...older, ...newEntries].map((entry) => [entry.id || `${entry.at}:${entry.text}`, entry]));
+  const entries = [...byId.values()]
     .sort((a, b) => (b.at || 0) - (a.at || 0))
     .slice(0, LOG_STORAGE_MAX);
   await githubRequest(githubContentsUrl(HISTORY_FILE), token, {
@@ -563,8 +607,9 @@ export async function listEditHistory(token) {
       fileEntries = [];
     }
   }
-  const pending = changeLog.map((entry) => ({ at: entry.at, kind: entry.kind, text: entry.text, pending: true }));
-  return [...pending, ...fileEntries].sort((a, b) => (b.at || 0) - (a.at || 0)).slice(0, LOG_STORAGE_MAX);
+  const pending = changeLog.map((entry) => ({ ...entry, pending: true }));
+  const entries = new Map([...fileEntries, ...pending].map((entry) => [entry.id || `${entry.at}:${entry.text}`, entry]));
+  return [...entries.values()].sort((a, b) => (b.at || 0) - (a.at || 0)).slice(0, LOG_STORAGE_MAX);
 }
 
 // ==== VERSOES (backups no GitHub; substitui o painel /admin/) ====

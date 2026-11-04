@@ -620,3 +620,11 @@ html.ri-edit-bar .sub-pills-wrap {
 
 .ri-edit-popover__delete { flex: none; }
 .ri-edit-popover__delete[hidden] { display: none !important; }
+/* Shared editing controls and inline guidance. */
+.ri-history-row__actor { color: var(--text-muted, #a5ada3); font-size: .75rem; overflow-wrap: anywhere; }
+.ri-edit-help { display: none; color: var(--text-muted, #a5ada3); line-height: 1.5; }
+.ri-edit-on .ri-edit-help { display: block; }
+.ri-edit-on .ri-add-row { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; }
+.ri-nav-tool.is-on { outline: 1px solid currentColor; }
+.ri-edit-on [draggable="true"] { cursor: grab; }
+.ri-edit-on [draggable="true"]:active { cursor: grabbing; }

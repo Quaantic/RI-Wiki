@@ -11,6 +11,7 @@ const mkEl = () => ({
   addEventListener: () => {}, setAttribute: () => {}, getAttribute: () => null,
   appendChild: () => {}, insertAdjacentHTML: () => {}, remove: () => {},
   querySelector: () => mkEl(), querySelectorAll: () => [], contains: () => false,
+  closest: () => mkEl(),
   focus: () => {}, blur: () => {},
 });
 globalThis.window = {
@@ -153,5 +154,30 @@ test('page type: upgrades route + section validate and render', async () => {
   const root = mkEl();
   await views.subcategoryView.render(root, ['mining', 'test-upgrades'], new URLSearchParams());
   assert.equal(String(root.innerHTML).includes('New upgrade'), true);
+});
+
+test('Rare Saps can add groups and bonuses with unique IDs and visible controls', async () => {
+  const draft = await import('../js/edit/draft.js');
+  const { createGamePageContainer, buildAddValue } = await import('../js/edit/edit-mode.js');
+  const { validateDocuments } = await import('../js/content-schema.js');
+  draft.__testInjectDocs(baseDocs());
+  draft.pushValue('wiki', 'categories.0.subcategories', { id: 'rare-saps', name: 'Rare Saps', desc: 'd', icon: 'sprout', children: [], facts: [], highlights: [], vitals: [] });
+  createGamePageContainer('mining/rare-saps', 'Rare Saps', 'calc-groups');
+  const groupsPath = 'calculators.pages.mining/rare-saps.groups';
+  const sap = buildAddValue('game', groupsPath, 'bonus-group');
+  draft.pushValue('game', groupsPath, sap);
+  const next = buildAddValue('game', groupsPath, 'bonus-group');
+  assert.notEqual(sap.id, next.id);
+  const bonusesPath = `${groupsPath}.1.bonuses`;
+  draft.pushValue('game', bonusesPath, buildAddValue('game', bonusesPath, 'bonus'));
+  assert.equal(sap.bonuses.length, 2);
+  assert.notEqual(sap.bonuses[0].id, sap.bonuses[1].id);
+  validateDocuments(draft.snapshotDocs());
+  draft.applyDraftToSite();
+  const views = await import('../js/views.js');
+  const root = mkEl();
+  await views.subcategoryView.render(root, ['mining', 'rare-saps'], new URLSearchParams());
+  assert.match(root.innerHTML, /Add sap group/);
+  assert.match(root.innerHTML, /New bonus/);
 });
 

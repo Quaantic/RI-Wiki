@@ -18,7 +18,7 @@ export function githubHeaders(token, json = false) {
 
 export async function githubRequest(url, token, options = {}) {
   const { allowNotFound = false, ...requestOptions } = options;
-  const response = await fetch(url, { ...requestOptions, headers: { ...githubHeaders(token, Boolean(requestOptions.body)), ...requestOptions.headers } });
+  const response = await fetch(url, { cache: 'no-store', ...requestOptions, headers: { ...githubHeaders(token, Boolean(requestOptions.body)), ...requestOptions.headers } });
   const payload = await response.json().catch(() => ({}));
   if (response.status === 404 && allowNotFound) {
     // Recurso realmente inexistente (ex.: o esboco inline ainda nao foi

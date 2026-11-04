@@ -442,6 +442,7 @@ function resetLayerSections(page, basePath = '') {
     return `
       <section class="section reset-layer-page">
         ${sectionHead(page.title)}
+        ${basePath ? `<div class="ri-add-row"><button type="button" class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="${esc(basePath)}.groups" data-edit-add-template="bonus-group">${icon('plus', 13)} Add sap group</button><small class="ri-edit-help">Add a sap, then add its bonuses. Click a group heading to edit its name, color and drop chance.</small></div>` : ''}
         ${page.groups.map((group, gi) => `
           <section class="reset-layer-tier rare-sap-group" style="--rare-sap-color:${esc(group.color)}" ${basePath ? ed(`${basePath}.groups.${gi}`, 'game:bonus-group', esc(group.name)) : ''}>
             <div class="reset-tier-head">
@@ -526,7 +527,7 @@ function wireResetCalculators(root, page) {
       const inputValue = amountInput.value.trim();
       const amount = inputValue ? parseGameNumber(inputValue) : 0;
       const groupCards = group
-        ? cards.filter((card) => card.dataset.requiredLabel === group.amountLabel)
+        ? qsa('[data-reset-calculator]', amountInput.closest('.rare-sap-group'))
         : cards;
       if (amount == null || !Number.isFinite(amount) || amount < 0) {
         groupCards.forEach((card) => {

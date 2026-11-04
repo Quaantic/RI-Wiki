@@ -29,6 +29,7 @@ const session = {
   ready: false,
   editing: false,
   started: false,
+  busy: false,
 };
 
 const layer = { bar: null, chip: null, popover: null, toast: null };
@@ -167,7 +168,9 @@ const SCHEMAS = {
     { key: 'unlockLevel', label: 'Unlock level', type: 'line' },
   ],
   'game:bonus-group': [
+    { key: 'id', label: 'Unique group ID', type: 'line' },
     { key: 'name', label: 'Name', type: 'line' },
+    { key: 'color', label: 'Color (#hex)', type: 'line' },
     { key: 'dropChance', label: 'Drop chance', type: 'line' },
     { key: 'amountLabel', label: 'Amount label', type: 'line' },
   ],
@@ -258,7 +261,7 @@ function buildToolbar() {
       <span data-edit-mode-label>Edit</span>
     </button>
     <button class="btn btn--ghost btn--sm" data-edit-undo title="Undo the last change in the draft (Ctrl+Z)">${icon('undo-2', 13)} Undo</button>
-    <button class="btn btn--ghost btn--sm" data-edit-save title="Save a draft on GitHub so no change is lost">${icon('save', 13)} Save draft</button>
+    <button class="btn btn--ghost btn--sm" data-edit-save title="Save for all editors and refresh their admin Wiki">${icon('save', 13)} Save for everyone</button>
     <button class="btn btn--ghost btn--sm" data-edit-discard title="Discard the draft and return to the published content">${icon('rotate-ccw', 13)} Discard</button>
     <button class="btn btn--primary btn--sm" data-edit-publish title="Publish the changes to the live Wiki (creates a backup first)">${icon('upload', 13)} Publish</button>
     <span class="ri-edit-bar__user" data-edit-user hidden></span>
@@ -329,6 +332,7 @@ function buildToolbar() {
 }
 
 function onToolbarAction(button) {
+  if (session.busy) return;
   const act = button.getAttribute('data-edit-toggle') != null
     ? 'toggle'
     : button.getAttribute('data-edit-undo') != null
@@ -354,11 +358,16 @@ function onToolbarAction(button) {
   }
   if (!session.token || !session.allowed) return;
   void (async () => {
+    session.busy = true;
     try {
+      if ((act === 'save' || act === 'publish') && popState) {
+        await applyPopover();
+        if (popState) return;
+      }
       if (act === 'save') {
         barStatus('Saving draft…', 'busy');
         await draft.saveDraft(session.token);
-        notify('Draft saved on GitHub. Changes are not published yet.');
+        window.location.reload();
       } else if (act === 'publish') {
         if (!window.confirm('Publish the changes to the live Wiki? A backup is created first.')) return;
         if (popState) closePopover(true);
@@ -375,6 +384,8 @@ function onToolbarAction(button) {
       }
     } catch (error) {
       notify(error.message || 'Operation failed.', true);
+    } finally {
+      session.busy = false;
     }
     updateToolbar();
   })();
@@ -421,7 +432,8 @@ async function startSession(token) {
       return;
     }
     barStatus('Loading repository content…', 'busy');
-    const info = await draft.initSession(token);
+    const signedInUser = await githubUser(token);
+    const info = await draft.initSession(token, signedInUser.login);
     if (info.sanitized) {
       notify(`${info.sanitized} invalid resource entr${info.sanitized === 1 ? 'y was' : 'ies were'} removed from your draft to keep editing working.`, true);
     }
@@ -431,6 +443,8 @@ async function startSession(token) {
     session.user = user.login;
     session.avatar = user.avatar || '';
     session.ready = true;
+    setEditing(true);
+    startSharedRefresh();
     const signinRow = qs('[data-ri-edit-signin]');
     if (signinRow) signinRow.hidden = true;
     installSidebarTools();
@@ -473,6 +487,26 @@ function setEditing(on) {
     if (popState) closePopover(true);
   }
   updateToolbar();
+  applyDragMode();
+}
+
+let sharedRefreshTimer;
+let sharedRefreshChecking = false;
+function startSharedRefresh() {
+  clearInterval(sharedRefreshTimer);
+  const check = async () => {
+    if (!session.ready || session.busy || sharedRefreshChecking || document.hidden) return;
+    sharedRefreshChecking = true;
+    try {
+      if (await draft.remoteChanged(session.token)) window.location.reload();
+    } catch (error) {
+      console.warn('[editor-sync]', error.message);
+    } finally {
+      sharedRefreshChecking = false;
+    }
+  };
+  sharedRefreshTimer = setInterval(check, 15000);
+  window.addEventListener('focus', check);
 }
 
 // ==== DESFAZER (Ctrl+Z / botão Undo) ====
@@ -764,6 +798,7 @@ async function applyPopover() {
       const path = input.dataset.editFieldPath.replaceAll('·', '.');
       const docName = input.dataset.editFieldDoc;
       const type = input.dataset.editFieldType;
+      if (input.value === readValueForInput(type, draft.getValue(docName, path))) continue;
       const numeric = input.dataset.editFieldNumeric === '1';
       let value = input.value;
       if (LIST_PARSERS[type]) {
@@ -861,7 +896,10 @@ function applyDragMode() {
   const hint = nav.querySelector('.ri-nav-tools__hint');
   const dragBtn = nav.querySelector('[data-ri-nav-tool="drag"]');
   if (hint) hint.hidden = !dragArmed;
-  if (dragBtn) dragBtn.classList.toggle('is-on', dragArmed);
+  if (dragBtn) {
+    dragBtn.classList.toggle('is-on', dragArmed);
+    dragBtn.setAttribute('aria-pressed', String(dragArmed));
+  }
 }
 
 function installSidebarTools() {
@@ -883,6 +921,7 @@ function installSidebarTools() {
     box.querySelector('[data-ri-nav-tool="versions"]').addEventListener('click', () => openAdminPage('versions'));
     box.querySelector('[data-ri-nav-tool="drag"]').addEventListener('click', () => {
       dragArmed = !dragArmed;
+      if (dragArmed && !session.editing) setEditing(true);
       if (!dragArmed) {
         clearDndMarks();
         dragSource = null;
@@ -961,6 +1000,7 @@ function renderHistoryList(container, entries, filterKind) {
       <span class="ri-history-row__date">${esc(formatHistoryDate(entry.at))}</span>
       <span class="ri-history-row__kind ri-history-row__kind--${entry.kind === 'colors' ? 'colors' : 'content'}">${entry.kind === 'colors' ? 'Colors' : 'Content'}</span>
       <span class="ri-history-row__text">${esc(entry.text)}</span>
+      <span class="ri-history-row__actor">${entry.actor ? `@${esc(entry.actor)}` : 'Legacy edit'}</span>
       ${entry.pending ? '<span class="ri-history-row__pending">pending</span>' : ''}
     </div>`).join('');
 }
@@ -1862,6 +1902,10 @@ function buildAddValue(docName, trail, template) {
     const list = locate(doc, trail) || [];
     const used = new Set(list.map((b) => b.id).filter(Boolean));
     return { id: uniqueIn('b', used), name: 'New bonus', value: 'formula: amount' };
+  }
+  if (template === 'bonus-group') {
+    const used = new Set((locate(doc, trail) || []).map((group) => group.id));
+    return { id: uniqueIn('sap', used), name: 'New sap', color: '#86d62b', dropChance: '1 in 100', amountLabel: 'Amount owned', bonuses: [BONUS_TEMPLATE()] };
   }
   if (template === 'stage') {
     const list = locate(doc, trail) || [];

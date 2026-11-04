@@ -55,16 +55,28 @@ têm seletor visual (grade pesquisável com preview). Itens de lista têm
 releases, entradas de update, upgrades e bônus; na **barra lateral** há
 **Add pages** (criar categoria/página), **Reorder / nest** (arrastar páginas:
 solte **entre dois itens** para reposicionar ou **no meio de uma categoria ou
-página** para torná-la filha dela), **Colors** (cores dos recursos, busca e a
-página para a qual cada nome aponta) e **Versions** (lista/restaura as
-últimas 25 versões do conteúdo).
+página** para torná-la filha dela), **Colors** (rota `#/colors` com as cores
+dos recursos — Add no topo, busca e campo de link pesquisável) e **Versions**
+(rota `#/versions` com as últimas 25 versões do conteúdo e o **Update
+History** automático de cada mudança).
 
 - **Apply** aplica a alteração na página em tempo real (preview ao vivo).
-- **Save draft** grava um rascunho em `content/drafts/inline-draft.json`
-  (carregado apenas pelo editor; o site público nunca lê esse arquivo).
+- **Save for everyone** grava o rascunho compartilhado em `content/drafts/inline-draft.json`
+  e recarrega o admin de quem salvou. Os demais editores conectados verificam
+  atualizações a cada 15 segundos e ao voltar à janela; ao detectar uma mudança,
+  recarregam automaticamente. Abas em segundo plano verificam ao voltar.
+  Esse recarregamento substitui alterações locais ainda não salvas; combinem os
+  saves entre colaboradores. Save e Publish recusam versões remotas desatualizadas.
+  O site público continua usando somente o conteúdo publicado.
 - **Publish** valida o conteúdo, cria um backup do estado anterior e publica
   no repositório (a versão anterior fica listada em **Versions**).
 - **Discard** volta ao conteúdo publicado.
+
+O **Update History** registra somente alterações reais, com o login GitHub
+do editor, sem duplicar entradas a cada Save. Entradas anteriores sem autoria
+aparecem como `Legacy edit`. **Reorder / nest** ativa Edit automaticamente;
+arraste pelas bordas para reordenar ou pelo centro para aninhar. Em **Rare Saps**,
+use **Add sap group** para criar um sap e **New bonus** para adicionar seus bônus.
 
 Ver `docs/COMO-EDITAR.md` para o passo a passo.
 
