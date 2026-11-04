@@ -320,7 +320,7 @@ function installSigninButton() {
 
 async function startSession(token) {
   try {
-    bar.classList.remove('is-hidden');
+    layer.bar.classList.remove('is-hidden');
     barStatus('Loading repository content…', 'busy');
     const info = await draft.initSession(token);
     session.token = token;
@@ -338,6 +338,8 @@ async function startSession(token) {
       return;
     }
     session.ready = true;
+    const signinRow = qs('[data-ri-edit-signin]');
+    if (signinRow) signinRow.hidden = true;
     if (info.draftLoaded) {
       draft.applyDraftToSite();
       await rerender({ scroll: 'preserve' });
