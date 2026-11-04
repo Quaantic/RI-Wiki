@@ -140,6 +140,7 @@ export async function loadEditableContent() {
     fetchContent('../content/game-data.json'),
   ]);
 
+  installImportedNotes(wikiContent,gameData);
   applyWikiContent(wikiContent);
   applyUpdateContent(updateContent.versions);
   applyGameData(gameData);
@@ -223,3 +224,4 @@ export { getCategory, getSubcategory, CATEGORIES };
 import { setContentKeys } from './page-content.js';
 import { normalizeReleases } from './releases.js';
 import { PAGE_REDIRECTS } from './data/wiki-data.js';
+import { installImportedNotes } from './content-migrations.js';

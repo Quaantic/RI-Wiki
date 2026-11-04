@@ -4,6 +4,30 @@ const fs=require('node:fs');
 const game=JSON.parse(fs.readFileSync('content/game-data.json'));
 const wiki=JSON.parse(fs.readFileSync('content/wiki-data.json'));
 
+test('old deployed JSON receives all seven pages once, without changing later editor changes',async()=>{
+  const {installImportedNotes}=await import('../js/content-migrations.js');
+  const {IMPORTED_NOTES}=await import('../js/data/imported-notes.js');
+  const legacyWiki=structuredClone(wiki),legacyGame=structuredClone(game);
+  const find=(nodes,id)=>{for(const n of nodes||[]){if(n.id===id)return n;const c=find(n.children,id);if(c)return c;}};
+  delete legacyWiki.contentMigrations;delete legacyGame.contentMigrations;
+  for(const {route} of IMPORTED_NOTES.pages){
+    const [cat,id]=route.split('/');const page=find(legacyWiki.categories.find(c=>c.id===cat).subcategories,id);
+    delete page.sections;
+    delete legacyGame.calculators.pages[route];delete legacyGame.progression.stages[route];
+    for(const [old,target] of Object.entries(IMPORTED_NOTES.redirects))if(target===`#/${route}`)(page.children||=[]).push({id:old.split('/')[1],name:'Legacy child',desc:'Legacy description'});
+  }
+  assert.equal(installImportedNotes(legacyWiki,legacyGame),true);
+  for(const {route} of IMPORTED_NOTES.pages){const [cat,id]=route.split('/');assert.ok(find(legacyWiki.categories.find(c=>c.id===cat).subcategories,id).sections.length,route);}
+  assert.equal(find(legacyWiki.categories.find(c=>c.id==='life').subcategories,'frost-conversion').children.length,0);
+  assert.equal(find(legacyWiki.categories.find(c=>c.id==='money-island').subcategories,'energies').children.length,0);
+  const page=find(legacyWiki.categories.find(c=>c.id==='life').subcategories,'frost-generators');
+  page.sections[0].title='My later edit';
+  delete legacyGame.calculators.pages['life/golden-points'];
+  assert.equal(installImportedNotes(legacyWiki,legacyGame),false);
+  assert.equal(page.sections[0].title,'My later edit');
+  assert.equal(legacyGame.calculators.pages['life/golden-points'],undefined);
+});
+
 test('imported groups calculate Ruby caps and the Frost3 dependency correctly',async()=>{
   const {setResetLayerPages,RESET_LAYER_PAGES}=await import('../js/data/reset-layers.js');
   setResetLayerPages(game.calculators.pages);

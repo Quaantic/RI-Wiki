@@ -18,6 +18,7 @@ import { applyWikiContent, applyUpdateContent, applyGameData } from '../services
 import { mergeDocuments } from './merge.js';
 import { pinContentKeys } from '../page-content.js';
 import { readSharedDraft } from './shared-draft.js';
+import { installImportedNotes } from '../content-migrations.js';
 
 const draftState = {
   token: '',
@@ -354,6 +355,7 @@ export function changedCount() {
 // instantly reflects the working copy (rerender is invoked by the edit layer).
 export function applyDraftToSite() {
   if (!draftState.docs) return;
+  installImportedNotes(draftState.docs.wiki,draftState.docs.game);
   applyWikiContent(draftState.docs.wiki);
   applyUpdateContent(draftState.docs.updates.versions);
   applyGameData(draftState.docs.game);
@@ -460,7 +462,8 @@ export async function initSession(token, actor = '') {
       changeLog.push(...(recovery.entries || []));
     }
   } catch { /* storage unavailable or an invalid recovery copy */ }
-  return { draftLoaded, sanitized: dropped, recovered, recoveryConflict };
+  const contentImported = installImportedNotes(draftState.docs.wiki,draftState.docs.game);
+  return { draftLoaded, sanitized: dropped, recovered, recoveryConflict, contentImported };
 }
 
 function recoveryKey() { return `ri-editor-recovery:${REPOSITORY}:${draftState.actor}`; }

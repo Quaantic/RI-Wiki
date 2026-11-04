@@ -1,5 +1,21 @@
 # RI Gaming Wiki
 
+### Correção da entrega do conteúdo importado
+
+As informações dos cinco arquivos também estão em `js/data/imported-notes.js`.
+`js/content-migrations.js` aplica essa importação uma vez tanto no carregamento
+público quanto no editor, inclusive sobre JSON/rascunhos antigos. As páginas
+registram `contentMigrations` após Save/Publish, preservando edições posteriores.
+Energies e Frost Conversion removem as antigas subpáginas e mantêm redirecionamentos.
+O Update Log não faz parte dessa importação.
+
+Ao enviar a atualização, inclua os arquivos novos da pasta `js/`, especialmente
+`data/imported-notes.js` e `content-migrations.js`, além de `services.js` e
+`edit/draft.js`. Atualizar só arquivos que já existiam não instala os módulos novos.
+`node scripts/build-content-patch.cjs` regenera o pacote de dados a partir dos
+JSONs locais importados. `node scripts/verify-live-content-repair.cjs` faz uma
+auditoria de leitura do site e salva o antes/depois simulado em `artifacts/`.
+
 Wiki frontend para Regrowth Idle — HTML + CSS + JS puro, sem build e sem dependências.
 Rode com qualquer servidor estático (VS Code Live Server, `npx serve`, GitHub Pages).
 

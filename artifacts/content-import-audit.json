@@ -1,0 +1,118 @@
+{
+  "checkedAt": "2026-11-04T18:37:05.807Z",
+  "source": "https://regrowthinc.vercel.app",
+  "note": "Read-only audit: before is live; after is the repaired in-memory result. This does not deploy.",
+  "before": [
+    {
+      "route": "life/frost-generators",
+      "sections": 0,
+      "children": [],
+      "bonusGroups": 0,
+      "milestones": 0
+    },
+    {
+      "route": "life/golden-points",
+      "sections": 0,
+      "children": [],
+      "bonusGroups": 0,
+      "milestones": 0
+    },
+    {
+      "route": "life/golden-research-milestones",
+      "sections": 0,
+      "children": [],
+      "bonusGroups": 0,
+      "milestones": 0
+    },
+    {
+      "route": "main/californium-milestones",
+      "sections": 0,
+      "children": [],
+      "bonusGroups": 0,
+      "milestones": 0
+    },
+    {
+      "route": "main/astatine-power",
+      "sections": 0,
+      "children": [],
+      "bonusGroups": 0,
+      "milestones": 0
+    },
+    {
+      "route": "life/frost-conversion",
+      "sections": 0,
+      "children": [
+        "packed-frost",
+        "dense-frost",
+        "compact-frost",
+        "neutron-frost"
+      ],
+      "bonusGroups": 0,
+      "milestones": 0
+    },
+    {
+      "route": "money-island/energies",
+      "sections": 0,
+      "children": [
+        "silver-energy",
+        "gold-energy",
+        "diamond-energy",
+        "ruby-energy"
+      ],
+      "bonusGroups": 0,
+      "milestones": 0
+    }
+  ],
+  "after": [
+    {
+      "route": "life/frost-generators",
+      "sections": 3,
+      "children": [],
+      "bonusGroups": 0,
+      "milestones": 0
+    },
+    {
+      "route": "life/golden-points",
+      "sections": 5,
+      "children": [],
+      "bonusGroups": 6,
+      "milestones": 0
+    },
+    {
+      "route": "life/golden-research-milestones",
+      "sections": 1,
+      "children": [],
+      "bonusGroups": 0,
+      "milestones": 7
+    },
+    {
+      "route": "main/californium-milestones",
+      "sections": 2,
+      "children": [],
+      "bonusGroups": 0,
+      "milestones": 16
+    },
+    {
+      "route": "main/astatine-power",
+      "sections": 5,
+      "children": [],
+      "bonusGroups": 2,
+      "milestones": 8
+    },
+    {
+      "route": "life/frost-conversion",
+      "sections": 3,
+      "children": [],
+      "bonusGroups": 4,
+      "milestones": 0
+    },
+    {
+      "route": "money-island/energies",
+      "sections": 8,
+      "children": [],
+      "bonusGroups": 4,
+      "milestones": 0
+    }
+  ],
+  "updateLogUntouched": true
+}
