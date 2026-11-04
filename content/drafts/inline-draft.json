@@ -1469,14 +1469,14 @@
         "name": "FAQ",
         "desc": "look here the answer of most asked question!",
         "tagline": "Frequently Asked Questions (FAQ) that are made in community server and in our feedback page!",
-        "icon": "sprout",
+        "icon": "badge-help",
         "vitals": [],
         "subcategories": [
           {
             "id": "Main-Island-FAQ",
             "name": "Main Island",
             "desc": "Main Island most asked questions!",
-            "icon": "sparkles",
+            "icon": "compass",
             "highlights": [],
             "facts": [],
             "vitals": [],
@@ -1496,7 +1496,7 @@
             "id": "Money-Island-FAQ",
             "name": "Money Island ",
             "desc": "Money Island most asked questions!",
-            "icon": "",
+            "icon": "coin",
             "highlights": [],
             "facts": [],
             "vitals": [],
@@ -1506,7 +1506,7 @@
             "id": "Mining-Island-FAQ",
             "name": "Mining Island",
             "desc": "Mining island most asked questions!",
-            "icon": "sparkles",
+            "icon": "pickaxe",
             "highlights": [],
             "facts": [],
             "vitals": [],
@@ -1516,7 +1516,7 @@
             "id": "TrainingIsland-FAQ",
             "name": "Training Island ",
             "desc": "Training Island most asked questions (dungeon included)!",
-            "icon": "sparkles",
+            "icon": "biceps-flexed",
             "highlights": [],
             "facts": [],
             "vitals": [],
@@ -1526,7 +1526,42 @@
             "id": "General-FAQ",
             "name": "General",
             "desc": "General most asked questions (extra content + overall most asked questions)!",
-            "icon": "sparkles",
+            "icon": "album",
+            "highlights": [],
+            "facts": [],
+            "vitals": [],
+            "children": []
+          }
+        ],
+        "overview": {
+          "desc": "",
+          "facts": [],
+          "highlights": []
+        }
+      },
+      {
+        "id": "Miscellaneous",
+        "name": "Miscellaneous ",
+        "desc": "Overview of this new category.",
+        "tagline": "Gamepasses and Eternal Shards are side stats or paid-resources you can use to get even more stats!",
+        "icon": "blend",
+        "vitals": [],
+        "subcategories": [
+          {
+            "id": "Gamepasses",
+            "name": "Gamepasses",
+            "desc": "See here the gamepass boosts, a tier of which ones are best to buy, and tips on which ones to buy based on your focus!",
+            "icon": "hand-coins",
+            "highlights": [],
+            "facts": [],
+            "vitals": [],
+            "children": []
+          },
+          {
+            "id": "Eternal-shards",
+            "name": "Eternal Shards ",
+            "desc": "See here eternal shards information and eternal shards tree!",
+            "icon": "infinity",
             "highlights": [],
             "facts": [],
             "vitals": [],
