@@ -2,6 +2,91 @@
   "format": 1,
   "entries": [
     {
+      "at": 1793805180443,
+      "kind": "content",
+      "text": "Renamed \"FAQ\" to \"FAQ\""
+    },
+    {
+      "at": 1793805173184,
+      "kind": "content",
+      "text": "Updated id of \"New page\": new-page to new-page"
+    },
+    {
+      "at": 1793805173184,
+      "kind": "content",
+      "text": "Renamed \"New page\" to \"New page\""
+    },
+    {
+      "at": 1793805173184,
+      "kind": "content",
+      "text": "Updated desc of \"New page\": Describe this page here. to Describe this page here."
+    },
+    {
+      "at": 1793805173184,
+      "kind": "content",
+      "text": "Updated icon of \"New page\": sparkles to sparkles"
+    },
+    {
+      "at": 1793805171650,
+      "kind": "content",
+      "text": "Added \"New page\""
+    },
+    {
+      "at": 1793805169790,
+      "kind": "content",
+      "text": "Updated tagline of \"FAQ\": Frequently Asked Questions (FAQ) that are m… to Frequently Asked Questions (FAQ) that are m…"
+    },
+    {
+      "at": 1793805160200,
+      "kind": "content",
+      "text": "Updated desc of \"FAQ\": Overview of this new category. to look here the answer of most asked question!"
+    },
+    {
+      "at": 1793805137020,
+      "kind": "content",
+      "text": "Updated tagline of \"FAQ\": Frequently Asked Questions (FAQ) that are m… to Frequently Asked Questions (FAQ) that are m…"
+    },
+    {
+      "at": 1793805132721,
+      "kind": "content",
+      "text": "Renamed \"FAQ\" to \"FAQ\""
+    },
+    {
+      "at": 1793805117201,
+      "kind": "content",
+      "text": "Updated id of \"New category\": new-category to FAQ"
+    },
+    {
+      "at": 1793805117201,
+      "kind": "content",
+      "text": "Renamed \"New category\" to \"FAQ\""
+    },
+    {
+      "at": 1793805117201,
+      "kind": "content",
+      "text": "Updated tagline of \"FAQ\": What this category is about. to Frequently Asked Questions (FAQ) that are m…"
+    },
+    {
+      "at": 1793805117201,
+      "kind": "content",
+      "text": "Updated icon of \"FAQ\": sprout to sprout"
+    },
+    {
+      "at": 1793805068102,
+      "kind": "content",
+      "text": "Added \"New category\""
+    },
+    {
+      "at": 1793805059913,
+      "kind": "content",
+      "text": "Removed \"FAQ\""
+    },
+    {
+      "at": 1793805031814,
+      "kind": "content",
+      "text": "Added \"FAQ\""
+    },
+    {
       "at": 1793776367972,
       "kind": "colors",
       "text": "Linked \"Health\" to #/dungeon/training"
