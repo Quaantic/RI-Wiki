@@ -1473,8 +1473,38 @@
         "vitals": [],
         "subcategories": [
           {
-            "id": "new-page",
-            "name": "New page",
+            "id": "new-page1",
+            "name": "New page1",
+            "desc": "Describe this page here.",
+            "icon": "sparkles",
+            "highlights": [],
+            "facts": [],
+            "vitals": [],
+            "children": []
+          },
+          {
+            "id": "new-page2",
+            "name": "New page2",
+            "desc": "Describe this page here.",
+            "icon": "sparkles",
+            "highlights": [],
+            "facts": [],
+            "vitals": [],
+            "children": []
+          },
+          {
+            "id": "new-page3",
+            "name": "New page3",
+            "desc": "Describe this page here.",
+            "icon": "sparkles",
+            "highlights": [],
+            "facts": [],
+            "vitals": [],
+            "children": []
+          },
+          {
+            "id": "new-page4",
+            "name": "New page4",
             "desc": "Describe this page here.",
             "icon": "sparkles",
             "highlights": [],
@@ -11895,7 +11925,8 @@
         "Gold Upgrades": "#f5b83d",
         "Sacrifice": "#d24d4d",
         "Ranks": "#cf8c5a",
-        "Terraforming": "#6fce55"
+        "Terraforming": "#6fce55",
+        "FAQ": "#8c3434"
       },
       "pageLinks": {
         "main": "#/main",
@@ -12007,7 +12038,8 @@
         "Level Perks": "#/perks/perk",
         "Iron": "#/mining/ores",
         "Item": "#/dungeon/items",
-        "Health": "#/dungeon/training"
+        "Health": "#/dungeon/training",
+        "FAQ": "#/FAQ"
       }
     }
   },
