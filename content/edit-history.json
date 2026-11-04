@@ -2,6 +2,86 @@
   "format": 1,
   "entries": [
     {
+      "id": "3e171a6c-8198-42de-bf2e-bcb5b2e8eb79",
+      "at": 1793811937732,
+      "kind": "content",
+      "text": "Removed \"New bonus\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "4b9dd4f4-b81b-4d98-aa50-b57008cdb1e1",
+      "at": 1793811891685,
+      "kind": "content",
+      "text": "Added \"New bonus\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "524b2c2e-a205-4201-bbab-d5f31f07ae22",
+      "at": 1793811771000,
+      "kind": "content",
+      "text": "Moved \"Rare Saps\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "f8f8d412-8f67-4b22-8b99-1af1de5ae9ee",
+      "at": 1793811218240,
+      "kind": "content",
+      "text": "Moved \"Monster Evolution\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "389ca58a-4db8-485b-a1c8-7a24b3b026f0",
+      "at": 1793810908586,
+      "kind": "content",
+      "text": "Removed \"New page\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "62333858-13f3-4e8d-8b96-4026c2d4ff3e",
+      "at": 1793810897648,
+      "kind": "content",
+      "text": "Added \"New page\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "4703766a-ddfe-476d-91ea-fb1d5251c876",
+      "at": 1793810803853,
+      "kind": "content",
+      "text": "Removed \"New sap\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "0e8e53e2-8013-47b9-ace9-d99e37fe07b0",
+      "at": 1793810780611,
+      "kind": "content",
+      "text": "Added \"New sap\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "b3aa4cba-f384-4121-9483-5508b557e4e9",
+      "at": 1793810775397,
+      "kind": "content",
+      "text": "Moved \"Rare Saps\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "30292c68-2aa3-470d-ac7e-0500b25fe649",
+      "at": 1793810774077,
+      "kind": "content",
+      "text": "Moved \"Rare Saps\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
       "at": 1793807605551,
       "kind": "content",
       "text": "Renamed \"Eternal Shards\" to \"Eternal Shards\""
@@ -522,31 +602,6 @@
       "text": "Renamed \"FAQ\" to \"FAQ\""
     },
     {
-      "at": 1793805180443,
-      "kind": "content",
-      "text": "Renamed \"FAQ\" to \"FAQ\""
-    },
-    {
-      "at": 1793805173184,
-      "kind": "content",
-      "text": "Updated id of \"New page\": new-page to new-page"
-    },
-    {
-      "at": 1793805173184,
-      "kind": "content",
-      "text": "Renamed \"New page\" to \"New page\""
-    },
-    {
-      "at": 1793805173184,
-      "kind": "content",
-      "text": "Updated desc of \"New page\": Describe this page here. to Describe this page here."
-    },
-    {
-      "at": 1793805173184,
-      "kind": "content",
-      "text": "Updated icon of \"New page\": sparkles to sparkles"
-    },
-    {
       "at": 1793805173184,
       "kind": "content",
       "text": "Updated id of \"New page\": new-page to new-page"
@@ -572,16 +627,6 @@
       "text": "Added \"New page\""
     },
     {
-      "at": 1793805171650,
-      "kind": "content",
-      "text": "Added \"New page\""
-    },
-    {
-      "at": 1793805169790,
-      "kind": "content",
-      "text": "Updated tagline of \"FAQ\": Frequently Asked Questions (FAQ) that are m… to Frequently Asked Questions (FAQ) that are m…"
-    },
-    {
       "at": 1793805169790,
       "kind": "content",
       "text": "Updated tagline of \"FAQ\": Frequently Asked Questions (FAQ) that are m… to Frequently Asked Questions (FAQ) that are m…"
@@ -592,24 +637,9 @@
       "text": "Updated desc of \"FAQ\": Overview of this new category. to look here the answer of most asked question!"
     },
     {
-      "at": 1793805160200,
-      "kind": "content",
-      "text": "Updated desc of \"FAQ\": Overview of this new category. to look here the answer of most asked question!"
-    },
-    {
       "at": 1793805137020,
       "kind": "content",
       "text": "Updated tagline of \"FAQ\": Frequently Asked Questions (FAQ) that are m… to Frequently Asked Questions (FAQ) that are m…"
-    },
-    {
-      "at": 1793805137020,
-      "kind": "content",
-      "text": "Updated tagline of \"FAQ\": Frequently Asked Questions (FAQ) that are m… to Frequently Asked Questions (FAQ) that are m…"
-    },
-    {
-      "at": 1793805132721,
-      "kind": "content",
-      "text": "Renamed \"FAQ\" to \"FAQ\""
     },
     {
       "at": 1793805132721,
@@ -637,39 +667,9 @@
       "text": "Updated icon of \"FAQ\": sprout to sprout"
     },
     {
-      "at": 1793805117201,
-      "kind": "content",
-      "text": "Updated id of \"New category\": new-category to FAQ"
-    },
-    {
-      "at": 1793805117201,
-      "kind": "content",
-      "text": "Renamed \"New category\" to \"FAQ\""
-    },
-    {
-      "at": 1793805117201,
-      "kind": "content",
-      "text": "Updated tagline of \"FAQ\": What this category is about. to Frequently Asked Questions (FAQ) that are m…"
-    },
-    {
-      "at": 1793805117201,
-      "kind": "content",
-      "text": "Updated icon of \"FAQ\": sprout to sprout"
-    },
-    {
       "at": 1793805068102,
       "kind": "content",
       "text": "Added \"New category\""
-    },
-    {
-      "at": 1793805068102,
-      "kind": "content",
-      "text": "Added \"New category\""
-    },
-    {
-      "at": 1793805059913,
-      "kind": "content",
-      "text": "Removed \"FAQ\""
     },
     {
       "at": 1793805059913,
@@ -682,24 +682,9 @@
       "text": "Added \"FAQ\""
     },
     {
-      "at": 1793805031814,
-      "kind": "content",
-      "text": "Added \"FAQ\""
-    },
-    {
       "at": 1793776367972,
       "kind": "colors",
       "text": "Linked \"Health\" to #/dungeon/training"
-    },
-    {
-      "at": 1793776367972,
-      "kind": "colors",
-      "text": "Linked \"Health\" to #/dungeon/training"
-    },
-    {
-      "at": 1793776363884,
-      "kind": "colors",
-      "text": "Linked \"Item\" to #/dungeon/items"
     },
     {
       "at": 1793776363884,
@@ -712,24 +697,9 @@
       "text": "Linked \"Iron\" to #/mining/ores"
     },
     {
-      "at": 1793776361882,
-      "kind": "colors",
-      "text": "Linked \"Iron\" to #/mining/ores"
-    },
-    {
       "at": 1793776357297,
       "kind": "colors",
       "text": "Linked \"Level Perks\" to #/perks/perk"
-    },
-    {
-      "at": 1793776357297,
-      "kind": "colors",
-      "text": "Linked \"Level Perks\" to #/perks/perk"
-    },
-    {
-      "at": 1793776351660,
-      "kind": "colors",
-      "text": "Linked \"Life Generation\" to #/life/life-generation"
     },
     {
       "at": 1793776351660,
@@ -747,21 +717,6 @@
       "text": "Linked \"Log Perks\" to #/perks/log"
     },
     {
-      "at": 1793776345699,
-      "kind": "colors",
-      "text": "Removed the link of \"log perks\""
-    },
-    {
-      "at": 1793776345699,
-      "kind": "colors",
-      "text": "Linked \"Log Perks\" to #/perks/log"
-    },
-    {
-      "at": 1793776338136,
-      "kind": "colors",
-      "text": "Linked \"Log\" to #/life/logs"
-    },
-    {
       "at": 1793776338136,
       "kind": "colors",
       "text": "Linked \"Log\" to #/life/logs"
@@ -770,16 +725,6 @@
       "at": 1793776325299,
       "kind": "colors",
       "text": "Linked \"Fossil\" to #/life/fossil"
-    },
-    {
-      "at": 1793776325299,
-      "kind": "colors",
-      "text": "Linked \"Fossil\" to #/life/fossil"
-    },
-    {
-      "at": 1793776322482,
-      "kind": "colors",
-      "text": "Linked \"Garnet\" to #/mining/ores"
     },
     {
       "at": 1793776322482,
@@ -797,29 +742,9 @@
       "text": "Removed the link of \"Energy Shards\""
     },
     {
-      "at": 1793776318023,
-      "kind": "colors",
-      "text": "Removed the color of \"Energy Shards\""
-    },
-    {
-      "at": 1793776318023,
-      "kind": "colors",
-      "text": "Removed the link of \"Energy Shards\""
-    },
-    {
       "at": 1793776311233,
       "kind": "colors",
       "text": "Linked \"Energetic\" to #/runes/energetic"
-    },
-    {
-      "at": 1793776311233,
-      "kind": "colors",
-      "text": "Linked \"Energetic\" to #/runes/energetic"
-    },
-    {
-      "at": 1793776306289,
-      "kind": "colors",
-      "text": "Linked \"Enemie\" to #/dungeon/enemies"
     },
     {
       "at": 1793776306289,
@@ -832,24 +757,9 @@
       "text": "Linked \"Emerald\" to #/money-island/emeralds"
     },
     {
-      "at": 1793776301447,
-      "kind": "colors",
-      "text": "Linked \"Emerald\" to #/money-island/emeralds"
-    },
-    {
       "at": 1793776292815,
       "kind": "colors",
       "text": "Linked \"Dungeons\" to #/dungeon"
-    },
-    {
-      "at": 1793776292815,
-      "kind": "colors",
-      "text": "Linked \"Dungeons\" to #/dungeon"
-    },
-    {
-      "at": 1793776286094,
-      "kind": "colors",
-      "text": "Linked \"Dust\" to #/dungeon/bone-dust"
     },
     {
       "at": 1793776286094,
@@ -862,24 +772,9 @@
       "text": "Linked \"Drop Luck\" to #/dungeon/items"
     },
     {
-      "at": 1793776280043,
-      "kind": "colors",
-      "text": "Linked \"Drop Luck\" to #/dungeon/items"
-    },
-    {
       "at": 1793776276280,
       "kind": "colors",
       "text": "Linked \"Diamond Energy\" to #/money-island/diamond-energy"
-    },
-    {
-      "at": 1793776276280,
-      "kind": "colors",
-      "text": "Linked \"Diamond Energy\" to #/money-island/diamond-energy"
-    },
-    {
-      "at": 1793776270364,
-      "kind": "colors",
-      "text": "Linked \"Diamond Apples\" to #/life/apples-diamond"
     },
     {
       "at": 1793776270364,
@@ -892,24 +787,9 @@
       "text": "Linked \"Diamond\" to #/mining/ores"
     },
     {
-      "at": 1793776265695,
-      "kind": "colors",
-      "text": "Linked \"Diamond\" to #/mining/ores"
-    },
-    {
       "at": 1793776261433,
       "kind": "colors",
       "text": "Linked \"Dark Crystals\" to #/main/crystals"
-    },
-    {
-      "at": 1793776261433,
-      "kind": "colors",
-      "text": "Linked \"Dark Crystals\" to #/main/crystals"
-    },
-    {
-      "at": 1793776250259,
-      "kind": "colors",
-      "text": "Linked \"Core\" to #/mining/cores"
     },
     {
       "at": 1793776250259,
@@ -922,16 +802,6 @@
       "text": "Linked \"Copper\" to #/mining/ores"
     },
     {
-      "at": 1793776245227,
-      "kind": "colors",
-      "text": "Linked \"Copper\" to #/mining/ores"
-    },
-    {
-      "at": 1793776241050,
-      "kind": "colors",
-      "text": "Linked \"Coal\" to #/mining/ores"
-    },
-    {
       "at": 1793776241050,
       "kind": "colors",
       "text": "Linked \"Coal\" to #/mining/ores"
@@ -942,24 +812,9 @@
       "text": "Linked \"Cells\" to #/life/life-generation"
     },
     {
-      "at": 1793776238476,
-      "kind": "colors",
-      "text": "Linked \"Cells\" to #/life/life-generation"
-    },
-    {
       "at": 1793776225749,
       "kind": "colors",
       "text": "Linked \"Azurite\" to #/mining/ores"
-    },
-    {
-      "at": 1793776225749,
-      "kind": "colors",
-      "text": "Linked \"Azurite\" to #/mining/ores"
-    },
-    {
-      "at": 1793776220336,
-      "kind": "colors",
-      "text": "Linked \"Automation\" to #/main/automations"
     },
     {
       "at": 1793776220336,
@@ -982,34 +837,9 @@
       "text": "Removed the link of \"Ascensions\""
     },
     {
-      "at": 1793776215715,
-      "kind": "colors",
-      "text": "Removed the color of \"Ascensions\""
-    },
-    {
-      "at": 1793776215715,
-      "kind": "colors",
-      "text": "Removed the link of \"ascensions\""
-    },
-    {
-      "at": 1793776215715,
-      "kind": "colors",
-      "text": "Removed the link of \"Ascensions\""
-    },
-    {
       "at": 1793776213312,
       "kind": "colors",
       "text": "Linked \"Ascension\" to #/money-island/ascensions"
-    },
-    {
-      "at": 1793776213312,
-      "kind": "colors",
-      "text": "Linked \"Ascension\" to #/money-island/ascensions"
-    },
-    {
-      "at": 1793774990382,
-      "kind": "content",
-      "text": "Removed \"{\"label\":\"Families\",\"value\":\"6\"}\""
     },
     {
       "at": 1793774990382,
@@ -1022,24 +852,9 @@
       "text": "Removed \"Boosts at cap\""
     },
     {
-      "at": 1793774988572,
-      "kind": "content",
-      "text": "Removed \"Boosts at cap\""
-    },
-    {
       "at": 1793774986438,
       "kind": "content",
       "text": "Removed \"Luck-gated rolls\""
-    },
-    {
-      "at": 1793774986438,
-      "kind": "content",
-      "text": "Removed \"Luck-gated rolls\""
-    },
-    {
-      "at": 1793774984562,
-      "kind": "content",
-      "text": "Removed \"{\"label\":\"Documented\",\"value\":\"All 6\"}\""
     },
     {
       "at": 1793774984562,
@@ -1052,24 +867,9 @@
       "text": "Removed \"Six families\""
     },
     {
-      "at": 1793774982296,
-      "kind": "content",
-      "text": "Removed \"Six families\""
-    },
-    {
       "at": 1793774977538,
       "kind": "content",
       "text": "Updated desc of \"Runes\": Runes are socketable stones that rewrite yo… to empty"
-    },
-    {
-      "at": 1793774977538,
-      "kind": "content",
-      "text": "Updated desc of \"Runes\": Runes are socketable stones that rewrite yo… to empty"
-    },
-    {
-      "at": 1793774974362,
-      "kind": "content",
-      "text": "Updated desc of \"Runes\": Runes are socketable stones that rewrite yo… to Runes are socketable stones that rewrite yo…"
     },
     {
       "at": 1793774974362,
