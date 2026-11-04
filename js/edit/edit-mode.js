@@ -751,6 +751,12 @@ async function applyPopover() {
     notify('Colors applied. Remember to save/publish.');
     return;
   }
+  if (popState.versions) {
+    // A lista de versoes nao tem campos; o Apply apenas fecha.
+    closePopover(true);
+    updateToolbar();
+    return;
+  }
   const state = popState;
   const applyButton = layer.popover.querySelector('[data-edit-pop-apply]');
   applyButton.disabled = true;
@@ -871,10 +877,12 @@ function installSidebarTools() {
       <button type="button" class="ri-nav-tool" data-ri-nav-tool="add">${icon('plus', 14)} Add pages</button>
       <button type="button" class="ri-nav-tool" data-ri-nav-tool="drag" aria-pressed="false">${icon('folder-tree', 14)} Reorder / nest</button>
       <button type="button" class="ri-nav-tool" data-ri-nav-tool="colors">${icon('palette', 14)} Colors</button>
+      <button type="button" class="ri-nav-tool" data-ri-nav-tool="versions">${icon('history', 14)} Versions</button>
       <small class="ri-nav-tools__hint" hidden>Drag a page between two items to reposition it — or drop it in the middle of a category/page header to nest it inside. Only in Edit mode.</small>`;
     nav.appendChild(box);
     box.querySelector('[data-ri-nav-tool="add"]').addEventListener('click', (event) => openManageAdd(event.currentTarget));
     box.querySelector('[data-ri-nav-tool="colors"]').addEventListener('click', (event) => openColorsManager(event.currentTarget));
+    box.querySelector('[data-ri-nav-tool="versions"]').addEventListener('click', (event) => openVersionsManager(event.currentTarget));
     box.querySelector('[data-ri-nav-tool="drag"]').addEventListener('click', () => {
       dragArmed = !dragArmed;
       if (!dragArmed) {
@@ -886,6 +894,85 @@ function installSidebarTools() {
     bindSidebarDnd(nav);
   }
   applyDragMode();
+}
+
+// ==== VERSOES (backups no GitHub — substitui o painel /admin/) ====
+// Lista content/backups ("backup-*.json"), limite de 25 versoes (a mais
+// antiga sai quando chega a 26) e restore com versao de seguranca.
+
+function openVersionsManager(anchor = null) {
+  if (!session.ready || !session.allowed) return;
+  if (popState) closePopover(true);
+  if (!session.editing) setEditing(true);
+  popState = { versions: true, label: 'Versions' };
+  const body = qs('[data-edit-pop-body]', layer.popover);
+  const title = qs('[data-edit-pop-title]', layer.popover);
+  const warn = qs('[data-edit-pop-warn]', layer.popover);
+  const deleteBtn = qs('[data-edit-pop-delete]', layer.popover);
+  title.textContent = 'Versions';
+  warn.hidden = true;
+  if (deleteBtn) deleteBtn.hidden = true;
+
+  body.innerHTML = `
+    <p class="ri-color-note">Every publish saves the previous content as a version automatically. The list keeps the latest <b>25</b> — when a new one arrives, the oldest is removed. Restoring replaces the live Wiki and the draft you are editing (a safety version of the current content is saved first).</p>
+    <div class="ri-versions-actions">
+      <button type="button" class="btn btn--ghost btn--sm" data-ri-versions-save>${icon('save', 13)} Save version now</button>
+    </div>
+    <div data-ri-versions-list><p class="ri-color-row__empty">Loading versions…</p></div>`;
+
+  const refresh = async () => {
+    const list = qs('[data-ri-versions-list]', body);
+    if (!list) return;
+    try {
+      const versions = await draft.listVersions(session.token);
+      if (!list.isConnected) return;
+      if (!versions.length) {
+        list.innerHTML = '<p class="ri-color-row__empty">No versions yet. Publish an edit or click "Save version now".</p>';
+        return;
+      }
+      list.innerHTML = versions.map((v) => `
+        <div class="ri-version-row">
+          <span class="ri-version-row__name" title="${esc(v.name)}">${esc(draft.versionLabel(v.name))}</span>
+          <button type="button" class="btn btn--ghost btn--sm" data-ri-version-restore="${esc(v.name)}">${icon('rotate-ccw', 12)} Restore</button>
+        </div>`).join('');
+      list.querySelectorAll('[data-ri-version-restore]').forEach((btn) => {
+        btn.addEventListener('click', () => restoreFlow(btn.getAttribute('data-ri-version-restore')));
+      });
+    } catch (error) {
+      if (list.isConnected) list.innerHTML = `<p class="ri-color-row__empty">${esc(error.message || 'Failed to list versions.')}</p>`;
+    }
+  };
+
+  const restoreFlow = async (name) => {
+    if (!window.confirm(`Restore "${draft.versionLabel(name)}"? This replaces the live Wiki and your current draft edits. A safety version of the current content is saved first.`)) return;
+    warn.hidden = true;
+    try {
+      await draft.restoreVersion(session.token, name);
+      closePopover(true);
+      updateToolbar();
+      await rerender({ scroll: 'preserve' });
+      notify(`Version restored: ${draft.versionLabel(name)}`);
+    } catch (error) {
+      warn.textContent = error.message || 'Restore failed.';
+      warn.hidden = false;
+    }
+  };
+
+  qs('[data-ri-versions-save]', body).addEventListener('click', async () => {
+    warn.hidden = true;
+    try {
+      await draft.createVersion(session.token, draft.snapshotDocs() || undefined, 'Manual version');
+      notify('Version saved.');
+      await refresh();
+    } catch (error) {
+      warn.textContent = error.message || 'Could not save the version.';
+      warn.hidden = false;
+    }
+  });
+
+  layer.popover.hidden = false;
+  positionPopover(anchor?.isConnected ? anchor : navEl()?.querySelector('[data-ri-nav-tools]'));
+  void refresh();
 }
 
 // ==== GERENCIADOR DE CORES DOS RECURSOS ====
@@ -902,19 +989,39 @@ function hexTo6(hex) {
   return `#${h.toLowerCase()}`;
 }
 
+// O link salvo pode ter caixa diferente do nome da cor (ex.: "silver sap"
+// vs "Silver Sap") — o site resolve lowercase, entao aqui tambem.
+function pageLinksEntry(name) {
+  const links = locate(draft.doc('game'), 'resources.pageLinks') || {};
+  const wanted = String(name).toLowerCase();
+  const exact = Object.prototype.hasOwnProperty.call(links, name) ? name : null;
+  if (exact) return { key: exact, value: links[exact] };
+  const found = Object.keys(links).find((k) => k.toLowerCase() === wanted);
+  return found ? { key: found, value: links[found] } : null;
+}
+
 function resourceLinkOptions(selected) {
   const options = ['<option value="">No page link</option>'];
+  let matched = !selected;
+  const mark = (value) => {
+    if (selected && value === selected) matched = true;
+    return selected === value ? ' selected' : '';
+  };
   for (const cat of CATEGORIES) {
     const base = `#/${cat.id}`;
-    options.push(`<option value="${base}"${selected === base ? ' selected' : ''}>${esc(cat.name)} (category)</option>`);
+    options.push(`<option value="${base}"${mark(base)}>${esc(cat.name)} (category)</option>`);
     for (const s of cat.subcategories || []) {
       const route = `${base}/${s.id}`;
-      options.push(`<option value="${route}"${selected === route ? ' selected' : ''}>${esc(cat.name)} › ${esc(s.name)}</option>`);
+      options.push(`<option value="${route}"${mark(route)}>${esc(cat.name)} › ${esc(s.name)}</option>`);
       for (const ch of s.children || []) {
         const childRoute = `${base}/${ch.id}`;
-        options.push(`<option value="${childRoute}"${selected === childRoute ? ' selected' : ''}>${esc(cat.name)} › ${esc(ch.name)}</option>`);
+        options.push(`<option value="${childRoute}"${mark(childRoute)}>${esc(cat.name)} › ${esc(ch.name)}</option>`);
       }
     }
+  }
+  // Link salvo apontando para pagina inexistente: mostra em vez de "No page link".
+  if (selected && !matched) {
+    options.splice(1, 0, `<option value="${esc(selected)}" selected>Missing page: ${esc(selected)}</option>`);
   }
   return options.join('');
 }
@@ -925,17 +1032,21 @@ function renderColorsRows() {
   const list = qs('[data-ri-color-list]', body);
   if (!list) return;
   list.innerHTML = '';
+  const query = (popState.colorsQuery || '').trim().toLowerCase();
   const names = Object.keys(locate(draft.doc('game'), 'resources.colors') || {})
+    .filter((n) => !query || n.toLowerCase().includes(query))
     .sort((a, b) => a.localeCompare(b));
   if (!names.length) {
     const empty = document.createElement('p');
     empty.className = 'ri-color-row__empty';
-    empty.textContent = 'No colored resources yet. Add one below.';
+    empty.textContent = query
+      ? `No resources match "${query}".`
+      : 'No colored resources yet. Add one below.';
     list.appendChild(empty);
   }
   for (const name of names) {
     const color = hexTo6(locate(draft.doc('game'), `resources.colors.${name}`) || '#ffffff');
-    const link = locate(draft.doc('game'), `resources.pageLinks.${name}`) || '';
+    const link = pageLinksEntry(name)?.value || '';
     const row = document.createElement('div');
     row.className = 'ri-color-row';
     row.innerHTML = `
@@ -976,12 +1087,18 @@ function openColorsManager(anchor = null) {
 
   body.innerHTML = `
     <p class="ri-color-note">Each entry colors the resource name everywhere in texts and can link it to a wiki page.</p>
+    <input type="search" class="input ri-color-search" data-ri-color-search placeholder="Search resources (${Object.keys(locate(draft.doc('game'), 'resources.colors') || {}).length})..." aria-label="Search colored resources">
     <div data-ri-color-list></div>
     <div class="ri-color-add">
       <input type="text" class="input" data-ri-color-name placeholder="Resource name (ex.: Bone Dust)">
       <input type="color" class="ri-color-row__swatch" data-ri-color-new-color value="#86d62b" aria-label="New resource color">
       <button type="button" class="btn btn--ghost btn--sm" data-ri-color-add>${icon('plus', 13)} Add</button>
     </div>`;
+
+  qs('[data-ri-color-search]', body).addEventListener('input', (event) => {
+    popState.colorsQuery = event.target.value;
+    renderColorsRows();
+  });
 
   const addResource = () => {
     const nameIn = qs('[data-ri-color-name]', body);
@@ -1016,12 +1133,20 @@ function openColorsManager(anchor = null) {
 
 // Aplica a mudanca de um recurso (cor e/ou link) e reflete na hora.
 // undefined remove a chave do rascunho (o undo guarda o valor anterior).
+// Se o link vivia sob chave com outra caixa ("silver sap"), ele migra para
+// a chave do nome da cor e a antiga e removida (tudo undoable, LIFO).
 function applyResourceChange(name, { color, link } = {}) {
   if (color !== undefined) draft.setValue('game', `resources.colors.${name}`, color);
-  if (link !== undefined) draft.setValue('game', `resources.pageLinks.${name}`, link || undefined);
+  if (link !== undefined) {
+    const legacy = pageLinksEntry(name);
+    if (legacy && legacy.key !== name) draft.setValue('game', `resources.pageLinks.${legacy.key}`, undefined);
+    draft.setValue('game', `resources.pageLinks.${name}`, link || undefined);
+  }
   if (color === undefined && link === undefined) {
+    const legacy = pageLinksEntry(name);
     draft.setValue('game', `resources.colors.${name}`, undefined);
-    draft.setValue('game', `resources.pageLinks.${name}`, undefined);
+    if (legacy) draft.setValue('game', `resources.pageLinks.${legacy.key}`, undefined);
+    if (!legacy || legacy.key !== name) draft.setValue('game', `resources.pageLinks.${name}`, undefined);
   }
   draft.applyDraftToSite();
   void rerender({ scroll: 'preserve' });
@@ -1324,7 +1449,7 @@ async function runHierarchyDrop(src, target) {
   let plan = null;
   let dstCatId = src.catId;
   if (target.type === 'top') {
-    if (src.kind !== 'cat') { notify('Only categories can sit at the top level (use /admin/ for deeper moves).', true); return; }
+    if (src.kind !== 'cat') { notify('Only categories can sit at the top level.', true); return; }
     plan = { move: { fromPath: 'categories', fromIndex: srcSlot.index, toPath: 'categories', toIndex: 0 }, dstCatId: src.catId };
   } else if (target.type === 'cat') {
     const ti = CATEGORIES.findIndex((c) => c.id === target.catId);

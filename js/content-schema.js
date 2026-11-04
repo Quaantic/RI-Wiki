@@ -1,5 +1,5 @@
 // ==== CONTENT SCHEMA: repositorio, validacao e codificacao compartilhados ====
-// Usado pelo Content Studio (admin/app.js) e pelo Editor inline (js/edit/*).
+// Usado pelo Editor inline (js/edit/*) e pelos testes.
 
 import { evaluateExpression } from './utils.js';
 

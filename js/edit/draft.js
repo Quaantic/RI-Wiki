@@ -126,7 +126,13 @@ function undoRemove(entry) {
 export function getValue(name, path) {
   const root = draftState.docs?.[name];
   if (!root) return undefined;
-  return walkTo(root, path);
+  try {
+    return walkTo(root, path);
+  } catch {
+    // Caminho inexistente (ex.: item removido por outro campo): o campo
+    // mostra "(missing)" em vez de derrubar o popover inteiro.
+    return undefined;
+  }
 }
 
 export function pushValue(name, path, value) {
@@ -336,7 +342,10 @@ export async function publishChanges(token) {
   validateDocuments(draftState.docs);
   const changed = changedFiles();
   if (changed.length) {
-    const backupName = `inline-editor-${Date.now()}.json`;
+    // Mesmo formato de nome/timestamp dos backups ("backup-*.json") listados
+    // pela ferramenta Versions do editor inline.
+    const stamp = new Date().toISOString().replace(/[-:]/g, '').replace(/\.(\d{3})Z$/, '$1Z');
+    const backupName = `backup-inline-${stamp}.json`;
     const documents = { format: 1, createdAt: new Date().toISOString(), documents: draftState.baseDocs };
     await githubRequest(githubContentsUrl(`${BACKUP_DIRECTORY}/${backupName}`), token, {
       method: 'PUT',
@@ -346,6 +355,9 @@ export async function publishChanges(token) {
         branch: BRANCH,
       }),
     });
+    // Mantem a lista de versoes dentro do limite (25). Best-effort: nao
+    // bloqueia a publicacao se a limpeza falhar.
+    await pruneVersions(token).catch(() => {});
     for (const name of changed) {
       const path = FILES[name];
       const content = `${JSON.stringify(draftState.docs[name], null, 2)}\n`;
@@ -376,6 +388,103 @@ export async function publishChanges(token) {
   }
   draftState.draftSha = null;
   draftState.savedDraftRaw = '';
+}
+
+// ==== VERSOES (backups no GitHub; substitui o painel /admin/) ====
+// A lista vive em content/backups/ ("backup-*.json"). Limite de 25: ao criar
+// a 26, a mais antiga e removida. Versoes nao podem ser apagadas a mao.
+
+const VERSIONS_MAX = 25;
+
+function backupStamp() {
+  return new Date().toISOString().replace(/[-:]/g, '').replace(/\.(\d{3})Z$/, '$1Z');
+}
+
+export function versionLabel(name) {
+  const match = /^backup-(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})/.exec(name || '');
+  if (!match) return name;
+  const [, y, mo, d, h, mi] = match;
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  return `${months[Number(mo) - 1]} ${Number(d)}, ${y} at ${h}:${mi} UTC`;
+}
+
+export async function listVersions(token) {
+  const result = await githubRequest(githubContentsUrl(BACKUP_DIRECTORY), token, { allowNotFound: true });
+  return Array.isArray(result)
+    ? result
+        .filter((item) => item.type === 'file' && /^backup-.*\.json$/.test(item.name))
+        .map((item) => ({ name: item.name, sha: item.sha }))
+        .sort((a, b) => b.name.localeCompare(a.name))
+    : [];
+}
+
+export async function pruneVersions(token, keep = VERSIONS_MAX) {
+  const versions = await listVersions(token);
+  const excess = versions.slice(keep); // ordenada desc: tudo alem do limite e o mais antigo
+  for (const item of excess) {
+    await githubRequest(githubContentsUrl(`${BACKUP_DIRECTORY}/${item.name}`), token, {
+      method: 'DELETE',
+      body: JSON.stringify({
+        message: `Prune old version ${item.name} (limit ${keep})`,
+        sha: item.sha,
+        branch: BRANCH,
+      }),
+    });
+  }
+  return excess.map((item) => item.name);
+}
+
+export async function createVersion(token, documents = draftState.baseDocs, message = 'Manual version') {
+  const stamp = backupStamp();
+  const name = `backup-${stamp}.json`;
+  const payload = { format: 1, createdAt: new Date().toISOString(), documents: clone(documents) };
+  await githubRequest(githubContentsUrl(`${BACKUP_DIRECTORY}/${name}`), token, {
+    method: 'PUT',
+    body: JSON.stringify({
+      message: `${message} (${stamp})`,
+      content: encodeBase64Content(`${JSON.stringify(payload, null, 2)}\n`),
+      branch: BRANCH,
+    }),
+  });
+  await pruneVersions(token);
+  return name;
+}
+
+export async function restoreVersion(token, name) {
+  const result = await githubRequest(githubContentsUrl(`${BACKUP_DIRECTORY}/${encodeURIComponent(name)}`), token, {});
+  const backup = JSON.parse(decodeBase64Content(result.content));
+  if (backup.format !== 1 || !backup.documents?.wiki || !backup.documents?.updates || !backup.documents?.game) {
+    throw new Error('This version is incomplete or has an unsupported format.');
+  }
+  const restored = { wiki: backup.documents.wiki, updates: backup.documents.updates, game: backup.documents.game };
+  validateDocuments(restored);
+  // Seguranca: guarda o estado publicado atual como versao antes de restaurar.
+  await createVersion(token, draftState.baseDocs, 'Safety version before restore');
+  for (const docName of Object.keys(FILES)) {
+    const path = FILES[docName];
+    const content = `${JSON.stringify(restored[docName], null, 2)}\n`;
+    const put = await githubRequest(githubContentsUrl(path), token, {
+      method: 'PUT',
+      body: JSON.stringify({
+        message: `Restore ${path.split('/').at(-1).replace('.json', '')} from ${name}`,
+        content: encodeBase64Content(content),
+        sha: draftState.shas[docName],
+        branch: BRANCH,
+      }),
+    });
+    draftState.shas[docName] = put.content.sha;
+  }
+  draftState.baseDocs = clone(restored);
+  draftState.docs = clone(restored);
+  history.length = 0;
+  applyDraftToSite();
+  return name;
+}
+
+// Copia do estado atual do rascunho (inclui mudancas nao publicadas) para
+// criar uma versao manual.
+export function snapshotDocs() {
+  return draftState.docs ? clone(draftState.docs) : null;
 }
 
 export function uploadStatus() {

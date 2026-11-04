@@ -9,9 +9,9 @@ Rode com qualquer servidor estático (VS Code Live Server, `npx serve`, GitHub P
 index.html            página única (SPA por hash: categorias, páginas e busca)
 css/                  tokens, base, components, layout, pages, edit (editor inline)
 images/               favicon, hex-pattern, hex-badge
-content/              conteúdo editável em JSON (rascunhos inline em content/drafts/)
-admin/                painel editorial em /admin/
-api/                  autenticação OAuth (compartilhada pelo painel e pelo editor inline)
+content/              conteúdo editável em JSON (rascunhos inline em content/drafts/,
+                      versões/restauração em content/backups/)
+api/                  autenticação OAuth (usada pelo editor inline)
 js/
   main.js             boot (não editar)
   router.js           rotas + rerender() para o editor inline (não editar)
@@ -20,7 +20,7 @@ js/
   views.js            páginas (não editar)
   services.js         camada de dados (dataProvider) + placeholder do Excel
   content-schema.js   repositório, validação e codificação compartilhados
-  github.js           OAuth popup + API do GitHub (compartilhados com o admin)
+  github.js           OAuth popup + API do GitHub (usados pelo editor inline)
   edit/
     ed-attr.js        helper data-edit das ligações editáveis
     draft.js          estado do rascunho (draft em content/drafts/inline-draft.json)
@@ -32,30 +32,38 @@ js/
 
 ## Como editar o conteúdo
 
-- Abra `/admin/` no site e conecte uma conta GitHub com permissão de escrita no repositório.
-- Use **Wiki pages** para páginas, **Game data** para upgrades e dados de jogo,
-  **Update log** para notas de versão e **Versions** para backups/restauração.
-- **Save changes** cria um backup completo e grava os JSON no branch principal;
-  a Vercel publica a atualização.
+- Entre no site e use o menu **Settings → Sign in to edit** (ou **Alt+E**) com
+  uma conta GitHub com permissão de escrita no repositório.
+- Toda a edição acontece nas próprias páginas (editor inline); a ferramenta
+  **Versions** na barra lateral lista as versões salvas em `content/backups/`,
+  permite restaurar e mantém o limite de 25 (a mais antiga sai quando a 26 é criada).
+- **Publish** valida o conteúdo, cria uma versão do estado anterior e publica
+  no branch principal; a Vercel publica a atualização.
 
 ## Editando direto no site (editor inline)
 
 Quem pode editar também pode fazê-lo nas próprias páginas públicas, sem abrir
 o painel: entre no menu **Settings → Sign in to edit** (ou pressione **Alt+E**).
-Aparece uma barra fixa no topo com **Edit/Preview**, **Save draft**, **Discard**,
-**Publish** e um indicador de pendências; clique em qualquer título, texto,
-card, fato, ore, layer, runa (com boosts), stage (com requirements e
-desbloqueios), área de treino, equipamento, upgrade/fórmula, calculadora de
-reset, custo de desbloqueio, entrada do update log, crédito ou texto da home
-para editar in-place com botões **Apply/Cancel**. Itens de lista têm **Delete**
-no popover, e botões **＋ New…** criam categorias, subpáginas, releases,
-entradas de update, upgrades e bônus.
+Aparece uma barra fixa no topo com **Edit/Preview**, **Undo (Ctrl+Z)**,
+**Save draft**, **Discard**, **Publish** e um indicador de pendências; clique em
+qualquer título, texto, card, fato, ore, layer, runa (com boosts), stage (com
+requirements e desbloqueios), área de treino, equipamento, upgrade/fórmula,
+calculadora de reset, custo de desbloqueio, entrada do update log, crédito ou
+texto da home para editar in-place com botões **Apply/Cancel**. Campos de ícone
+têm seletor visual (grade pesquisável com preview). Itens de lista têm
+**Delete** no popover, botões **＋ New…** criam categorias, subpáginas,
+releases, entradas de update, upgrades e bônus; na **barra lateral** há
+**Add pages** (criar categoria/página), **Reorder / nest** (arrastar páginas:
+solte **entre dois itens** para reposicionar ou **no meio de uma categoria ou
+página** para torná-la filha dela), **Colors** (cores dos recursos, busca e a
+página para a qual cada nome aponta) e **Versions** (lista/restaura as
+últimas 25 versões do conteúdo).
 
 - **Apply** aplica a alteração na página em tempo real (preview ao vivo).
 - **Save draft** grava um rascunho em `content/drafts/inline-draft.json`
   (carregado apenas pelo editor; o site público nunca lê esse arquivo).
-- **Publish** valida o conteúdo, cria um backup e publica no repositório
-  (mesmo fluxo do painel).
+- **Publish** valida o conteúdo, cria um backup do estado anterior e publica
+  no repositório (a versão anterior fica listada em **Versions**).
 - **Discard** volta ao conteúdo publicado.
 
 Ver `docs/COMO-EDITAR.md` para o passo a passo.

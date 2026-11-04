@@ -61,9 +61,11 @@ function runeTableHTML(runes, listPath = '') {
     </table></div>`;
 }
 
-function runeFamilySections(runes, slug) {
+function runeFamilySections(runes, slug, familyKey = '') {
+  // familyKey e a chave REAL em game-data.json (ex.: "runes/sky") — o slug
+  // so resolve a cor da familia em FAMILY_COLORS.
   const color = FAMILY_COLORS[slug] || 'var(--c-accent)';
-  const listPath = `game:runes.families.${slug}.runes`;
+  const listPath = familyKey ? `game:runes.families.${familyKey}.runes` : '';
   return `
     <section class="section">
       ${sectionHead('The runes')}
@@ -924,7 +926,7 @@ export const subcategoryView = {
     const familyBody = resetLayerPage
       ? `${resetLayerSections(resetLayerPage, resetLayerPath)}${resetLayerPage.kind === 'bone-dust' ? dustSections() : ''}`
       : family?.runes?.length
-      ? runeFamilySections(family.runes, sub.id)
+      ? runeFamilySections(family.runes, sub.id, `${cat.id}/${sub.id}`)
       : orePage?.ores?.length
         ? orePageSections(orePage.ores, `game:mining.ores.${gameKey}.ores`)
         : masteryPage?.ores?.length

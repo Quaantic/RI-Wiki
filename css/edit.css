@@ -438,6 +438,34 @@ html.ri-edit-bar .sub-pills-wrap {
   margin: 0 0 10px;
   line-height: 1.45;
 }
+.ri-color-search {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 7px 10px;
+  font-size: 13px;
+}
+.ri-versions-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 8px;
+}
+.ri-version-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 7px 2px;
+  border-bottom: 1px solid var(--c-border);
+}
+.ri-version-row:last-child { border-bottom: 0; }
+.ri-version-row__name {
+  font-size: 12.5px;
+  color: var(--c-text-2);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .ri-color-row {
   display: flex;
   align-items: center;
