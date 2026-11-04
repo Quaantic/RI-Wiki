@@ -929,9 +929,7 @@ export const subcategoryView = {
     const lifeRankPage = getLifeRankPage(cat.id, sub.id);
     const corePage = getCorePage(cat.id, sub.id);
     const isDustPage = sub.id === 'bone-dust';
-    const familyBody = resetLayerPage
-      ? `${resetLayerSections(resetLayerPage, resetLayerPath)}${resetLayerPage.kind === 'bone-dust' ? dustSections() : ''}`
-      : family?.runes?.length
+    let familyBody = family?.runes?.length
       ? runeFamilySections(family.runes, sub.id, `${cat.id}/${sub.id}`)
       : orePage?.ores?.length
         ? orePageSections(orePage.ores, `game:mining.ores.${gameKey}.ores`)
@@ -940,7 +938,7 @@ export const subcategoryView = {
           : layerPage?.layers?.length
             ? layerPageSections(layerPage.layers, `game:mining.layers.${gameKey}.layers`)
             : stagePage?.stages?.length
-              ? stagePageSections(stagePage.stages, 'Stages', false, `game:progression.stages.${gameKey}.stages`)
+              ? stagePageSections(stagePage.stages, stagePage.title || 'Stages', false, `game:progression.stages.${gameKey}.stages`)
               : barnPage?.stages?.length
                 ? stagePageSections(barnPage.stages, 'Barns', true, `game:progression.barns.${gameKey}.stages`)
                 : rankPage?.ranks?.length
@@ -962,6 +960,10 @@ export const subcategoryView = {
                           : isDustPage
                             ? dustSections()
                             : (cat.id === 'runes' ? runePlaceholderSection(sub) : '');
+    if (formulaPage && (stagePage || barnPage || rankPage || ascensionPage || lifeRankPage || corePage || family || orePage || masteryPage || layerPage || trainingPage || gearPage)) {
+      familyBody += formulaSections(formulaPage, upgradesListPath(sub.id));
+    }
+    if (resetLayerPage) familyBody = `${resetLayerSections(resetLayerPage, resetLayerPath)}${resetLayerPage.kind === 'bone-dust' ? dustSections() : ''}${familyBody}`;
     const showChildrenSection = visibleChildren.length > 0
       || document.documentElement.classList.contains('ri-edit-on');
 
@@ -981,7 +983,7 @@ export const subcategoryView = {
           </div>
           <p class="cat-hero__tagline" data-resource-links ${ed(`${wikiPath}.desc`, 'long', `${sub.name} · description`)}>${colorizeResources(esc(sub.desc))}</p>
           <div class="cat-hero__facts">
-            ${sub.facts.map((f, fi) => `<span class="chip" ${ed(`${wikiPath}.facts.${fi}`, 'pair', `Fact · ${esc(f.label)}`)}>${esc(f.label)}: <b style="color:var(--c-text)">&nbsp;${esc(f.value)}</b></span>`).join('')}
+            ${(sub.facts || []).map((f, fi) => `<span class="chip" ${ed(`${wikiPath}.facts.${fi}`, 'pair', `Fact · ${esc(f.label)}`)}>${esc(f.label)}: <b style="color:var(--c-text)">&nbsp;${esc(f.value)}</b></span>`).join('')}
           </div>
         </div>
         ${sub.vitals?.length ? `
@@ -994,6 +996,20 @@ export const subcategoryView = {
             </div>`).join('')}
         </aside>` : ''}
       </section>
+
+      <div class="ri-page-content-tools">
+        <div><b>Page content</b><small>Add information to this page. Each section can be edited or removed.</small></div>
+        <button class="btn btn--ghost btn--sm" ${ed(`${wikiPath}.desc`, 'long', 'Page description')}>${icon('pencil', 13)} Edit description</button>
+        <details class="ri-content-menu"><summary class="btn btn--primary btn--sm">${icon('plus', 13)} Add content</summary>
+          <div class="ri-content-menu__items">${[
+            ['text', 'Text / FAQ', 'A heading and a normal description or answer'],
+            ['evolutions', 'Evolution', 'Requirements, boosts and unlocks'],
+            ['stages', 'Stage', 'Another stage with requirements and boosts'],
+            ['upgrades', 'Upgrade', 'Price and effect formulas'],
+            ['calc-amount', 'Bonus', 'A bonus based on an owned amount'],
+          ].map(([type, label, help]) => `<button type="button" data-page-content="${type}" data-page-key="${esc(gameKey)}" data-wiki-path="${esc(wikiPath.slice(5))}"><b>${label}</b><small>${help}</small></button>`).join('')}</div>
+        </details>
+      </div>
 
       <div class="sub-pills-wrap">
         <nav class="pill-nav" aria-label="Subsections of ${esc(cat.name)}">
@@ -1022,6 +1038,11 @@ export const subcategoryView = {
       </section>` : ''}
 
       ${familyBody || ''}
+      ${(sub.sections || []).map((section, i) => `
+        <section class="section ri-text-section" ${ed(`${wikiPath}.sections.${i}`, 'text-section', section.title || 'Text / FAQ')}>
+          ${sectionHead(section.title || '')}
+          <div class="ri-text-section__body" data-resource-links>${colorizeResources(esc(section.text || ''))}</div>
+        </section>`).join('')}
       ${sub.highlights?.length ? `
       <section class="section">
         ${sectionHead('Highlights')}
@@ -1046,7 +1067,7 @@ export const subcategoryView = {
             </div>
           </section>
       ` : ''}
-      ${!familyBody && sub.id !== 'overview' && !sub.children?.length ? `
+      ${!familyBody && sub.id !== 'overview' && !sub.children?.length && !sub.sections?.length && !sub.highlights?.length && !document.documentElement.classList.contains('ri-edit-on') ? `
           <section class="section">
             <div class="empty-state">
               ${icon('info', 26)}

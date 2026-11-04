@@ -181,3 +181,31 @@ test('Rare Saps can add groups and bonuses with unique IDs and visible controls'
   assert.match(root.innerHTML, /New bonus/);
 });
 
+test('existing pages accept evolutions, upgrades, bonuses and FAQ text together', async () => {
+  const draft = await import('../js/edit/draft.js');
+  const { addContentToPage, bonusFields } = await import('../js/edit/edit-mode.js');
+  const { validateDocuments } = await import('../js/content-schema.js');
+  draft.__testInjectDocs(baseDocs());
+  const wikiPath = 'categories.0.subcategories.0';
+  const key = 'mining/ores-main';
+  for (const type of ['evolutions', 'upgrades', 'calc-amount', 'text']) addContentToPage(key, wikiPath, type);
+  addContentToPage(key, wikiPath, 'evolutions');
+  assert.equal(draft.getValue('game', `progression.stages.${key}.stages`).length, 2);
+  const binding = { valuePath: `calculators.pages.${key}.bonuses.0` };
+  assert.deepEqual(bonusFields(binding).map((field) => field.key), ['name', 'value', 'unit', 'cap', 'unlockAt']);
+  draft.setValue('wiki', `${wikiPath}.sections.0.title`, 'How does evolution work?');
+  draft.setValue('wiki', `${wikiPath}.sections.0.text`, 'First line\nSecond line');
+  validateDocuments(draft.snapshotDocs());
+  draft.applyDraftToSite();
+  const views = await import('../js/views.js');
+  const root = mkEl();
+  await views.subcategoryView.render(root, ['mining', 'ores-main'], new URLSearchParams());
+  for (const text of ['Evolution 1', 'Evolution 2', 'New upgrade', 'New bonus', 'How does evolution work?', 'First line\nSecond line', 'Add content']) assert.ok(root.innerHTML.includes(text), text);
+  assert.ok(!root.innerHTML.includes('More details coming soon'));
+  draft.setValue('game', `upgrades.routes.${key}`, 'base');
+  addContentToPage(key, wikiPath, 'upgrades');
+  assert.equal(draft.getValue('game', `upgrades.routes.${key}`), 'base');
+  assert.equal(draft.getValue('game', 'upgrades.sections.base.upgrades.0.name'), 'U');
+  assert.equal(draft.getValue('game', 'upgrades.sections.base.upgrades').length, 2);
+});
+

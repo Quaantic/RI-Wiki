@@ -30,6 +30,7 @@ const session = {
   editing: false,
   started: false,
   busy: false,
+  syncError: '',
 };
 
 const layer = { bar: null, chip: null, popover: null, toast: null };
@@ -158,14 +159,16 @@ const SCHEMAS = {
   ],
   'game:bonus': [
     { key: 'name', label: 'Name', type: 'line' },
-    { key: 'id', label: 'Internal id', type: 'line', mono: true },
-    { key: 'value', label: 'Value formula', type: 'area', mono: true },
-    { key: 'cap', label: 'Cap (empty = none)', type: 'line' },
-    { key: 'capUnit', label: 'Cap unit', type: 'line' },
-    { key: 'unit', label: 'Unit', type: 'line' },
-    { key: 'unlockAt', label: 'Unlocks at', type: 'line' },
-    { key: 'unlockLabel', label: 'Unlock label', type: 'line' },
-    { key: 'unlockLevel', label: 'Unlock level', type: 'line' },
+    { key: 'value', label: 'Bonus formula', type: 'formula', mono: true },
+    { key: 'unit', label: 'Display as', type: 'select', options: () => [
+      { id: '', label: 'Number' }, { id: 'x', label: 'Multiplier (×)' },
+      { id: '%', label: 'Percentage (%)' }, { id: 'cap', label: 'Added capacity (+ CAP)' },
+    ] },
+    { key: 'cap', label: 'Maximum bonus (optional)', type: 'line', numeric: true },
+  ],
+  'text-section': [
+    { key: 'title', label: 'Heading or question', type: 'line' },
+    { key: 'text', label: 'Description or answer', type: 'area' },
   ],
   'game:bonus-group': [
     { key: 'id', label: 'Unique group ID', type: 'line' },
@@ -183,6 +186,16 @@ function fieldsFor(kind) {
   if (SCHEMAS[kind]) return SCHEMAS[kind];
   if (SINGLE_TYPES[kind]) return null;
   return null;
+}
+
+export function bonusFields(binding) {
+  const pagePath = binding.valuePath.split('.').slice(0, 3).join('.');
+  const kind = draft.getValue('game', pagePath)?.kind;
+  return [...SCHEMAS['game:bonus'], {
+    key: kind === 'level' ? 'unlockLevel' : 'unlockAt',
+    label: kind === 'level' ? 'Required level (optional)' : 'Required amount (optional)',
+    type: 'line', numeric: true,
+  }];
 }
 
 function parseBinding(el) {
@@ -220,6 +233,7 @@ function barStatus(text, kind = '') {
 
 function updateToolbar() {
   if (!layer.bar) return;
+  if (session.ready) draft.persistLocalRecovery();
   const { ready, editing, user, avatar } = session;
   const draftOnline = draft.draftOnline();
   const draftDirty = draft.draftDirty();
@@ -234,12 +248,20 @@ function updateToolbar() {
   layer.bar.querySelector('[data-edit-save]').disabled = !ready;
   layer.bar.querySelector('[data-edit-publish]').disabled = !ready;
   layer.bar.querySelector('[data-edit-discard]').disabled = !ready;
+  if (session.busy || sharedRefreshChecking) {
+    qsa('button', layer.bar).forEach((button) => { button.disabled = true; });
+  } else {
+    layer.bar.querySelector('[data-edit-signout]').disabled = false;
+    layer.bar.querySelector('[data-edit-download]').disabled = !ready;
+  }
 
   layer.bar.querySelector('[data-edit-mode-label]').textContent = editing ? 'Preview' : 'Edit';
   layer.bar.querySelector('[data-edit-toggle]').classList.toggle('is-on', editing);
 
   if (!ready) {
     barStatus('Checking sign-in…');
+  } else if (session.syncError) {
+    barStatus(session.syncError, 'dirty');
   } else if (draftDirty) {
     barStatus('Unsaved changes', 'dirty');
   } else if (draftOnline) {
@@ -261,7 +283,8 @@ function buildToolbar() {
       <span data-edit-mode-label>Edit</span>
     </button>
     <button class="btn btn--ghost btn--sm" data-edit-undo title="Undo the last change in the draft (Ctrl+Z)">${icon('undo-2', 13)} Undo</button>
-    <button class="btn btn--ghost btn--sm" data-edit-save title="Save for all editors and refresh their admin Wiki">${icon('save', 13)} Save for everyone</button>
+    <button class="btn btn--ghost btn--sm" data-edit-save title="Merge the latest shared changes and save for all editors">${icon('save', 13)} Save for everyone</button>
+    <button class="btn btn--ghost btn--sm" data-edit-download title="Download a recovery copy of your current draft">${icon('download', 13)} Download draft</button>
     <button class="btn btn--ghost btn--sm" data-edit-discard title="Discard the draft and return to the published content">${icon('rotate-ccw', 13)} Discard</button>
     <button class="btn btn--primary btn--sm" data-edit-publish title="Publish the changes to the live Wiki (creates a backup first)">${icon('upload', 13)} Publish</button>
     <span class="ri-edit-bar__user" data-edit-user hidden></span>
@@ -269,7 +292,7 @@ function buildToolbar() {
   document.body.appendChild(layer.bar);
 
   layer.bar.addEventListener('click', (event) => {
-    const action = event.target.closest('[data-edit-toggle],[data-edit-undo],[data-edit-save],[data-edit-publish],[data-edit-discard],[data-edit-signout]');
+    const action = event.target.closest('[data-edit-toggle],[data-edit-undo],[data-edit-save],[data-edit-publish],[data-edit-discard],[data-edit-signout],[data-edit-download]');
     if (!action) return;
     onToolbarAction(action);
   });
@@ -333,6 +356,15 @@ function buildToolbar() {
 
 function onToolbarAction(button) {
   if (session.busy) return;
+  if (button.hasAttribute('data-edit-download')) {
+    const url = URL.createObjectURL(new Blob([JSON.stringify(draft.snapshotDocs(), null, 2)], { type: 'application/json' }));
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `wiki-draft-${new Date().toISOString().replace(/[:.]/g, '-')}.json`;
+    link.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    return;
+  }
   const act = button.getAttribute('data-edit-toggle') != null
     ? 'toggle'
     : button.getAttribute('data-edit-undo') != null
@@ -367,7 +399,12 @@ function onToolbarAction(button) {
       if (act === 'save') {
         barStatus('Saving draft…', 'busy');
         await draft.saveDraft(session.token);
-        window.location.reload();
+        session.syncError = '';
+        draft.applyDraftToSite();
+        buildNav();
+        await rerender({ scroll: 'preserve' });
+        window.dispatchEvent(new CustomEvent('ri-edit-content'));
+        notify('Saved for everyone. Shared changes merged; your work is preserved.');
       } else if (act === 'publish') {
         if (!window.confirm('Publish the changes to the live Wiki? A backup is created first.')) return;
         if (popState) closePopover(true);
@@ -383,9 +420,11 @@ function onToolbarAction(button) {
         notify('Draft discarded. The published content is showing.');
       }
     } catch (error) {
+      if (error.name === 'SyncConflict') session.syncError = 'Sync conflict — download your draft';
       notify(error.message || 'Operation failed.', true);
     } finally {
       session.busy = false;
+      updateToolbar();
     }
     updateToolbar();
   })();
@@ -434,6 +473,7 @@ async function startSession(token) {
     barStatus('Loading repository content…', 'busy');
     const signedInUser = await githubUser(token);
     const info = await draft.initSession(token, signedInUser.login);
+    if (info.recoveryConflict) session.syncError = 'Sync conflict — download your draft';
     if (info.sanitized) {
       notify(`${info.sanitized} invalid resource entr${info.sanitized === 1 ? 'y was' : 'ies were'} removed from your draft to keep editing working.`, true);
     }
@@ -448,10 +488,10 @@ async function startSession(token) {
     const signinRow = qs('[data-ri-edit-signin]');
     if (signinRow) signinRow.hidden = true;
     installSidebarTools();
-    if (info.draftLoaded) {
+    if (info.draftLoaded || info.recovered) {
       draft.applyDraftToSite();
       await rerender({ scroll: 'preserve' });
-      notify('A draft saved on GitHub was restored.');
+      notify(info.recovered ? 'Your unsaved work was recovered from this browser.' : 'The shared draft is ready.');
     }
     updateToolbar();
   } catch (error) {
@@ -495,14 +535,23 @@ let sharedRefreshChecking = false;
 function startSharedRefresh() {
   clearInterval(sharedRefreshTimer);
   const check = async () => {
-    if (!session.ready || session.busy || sharedRefreshChecking || document.hidden) return;
+    if (!session.ready || session.busy || sharedRefreshChecking || popState || dragSource || document.hidden) return;
     sharedRefreshChecking = true;
     try {
-      if (await draft.remoteChanged(session.token)) window.location.reload();
+      if (await draft.syncRemote(session.token)) {
+        session.syncError = '';
+        draft.applyDraftToSite();
+        buildNav();
+        await rerender({ scroll: 'preserve' });
+        window.dispatchEvent(new CustomEvent('ri-edit-content'));
+        notify('Synced your collaborators’ changes. Your unsaved edits are still here.');
+      }
     } catch (error) {
       console.warn('[editor-sync]', error.message);
+      session.syncError = error.name === 'SyncConflict' ? 'Sync conflict — download your draft' : 'Sync unavailable — local edits kept';
     } finally {
       sharedRefreshChecking = false;
+      updateToolbar();
     }
   };
   sharedRefreshTimer = setInterval(check, 15000);
@@ -555,7 +604,7 @@ function hideChip() {
 
 function openPopover(binding) {
   if (popState) closePopover(true);
-  const fields = fieldsFor(binding.kind);
+  const fields = binding.kind === 'game:bonus' ? bonusFields(binding) : fieldsFor(binding.kind);
   popState = { ...binding, fields };
   const body = qs('[data-edit-pop-body]', layer.popover);
   const title = qs('[data-edit-pop-title]', layer.popover);
@@ -573,6 +622,12 @@ function openPopover(binding) {
     ));
   } else {
     fields.forEach((meta) => body.appendChild(createField(meta, `${binding.valuePath}.${meta.key}`, binding.docName)));
+    if (binding.kind === 'game:bonus') {
+      const help = document.createElement('p');
+      help.className = 'ri-form-help';
+      help.textContent = 'Use amount for owned resources, level for levels, G for gears, or dust and p for Bone Dust. Leave the maximum and unlock empty if unused.';
+      body.appendChild(help);
+    }
   }
   const lastSegment = binding.valuePath.split('.').at(-1) || '';
   qs('[data-edit-pop-delete]', layer.popover).hidden = !/^\d+$/.test(lastSegment);
@@ -609,6 +664,7 @@ async function deletePopoverItem() {
 
 function readValueForInput(type, original) {
   if (original == null) return '';
+  if (type === 'formula') return String(original).replace(/^formula:\s*/, '');
   const parser = LIST_PARSERS[type];
   if (parser) return parser.print(original);
   if (Array.isArray(original)) return original.join('\n');
@@ -624,10 +680,9 @@ function createField(meta, path, docName) {
     const label = document.createElement('span');
     label.className = 'ri-edit-field__label';
     label.textContent = meta.label;
-    if (original === undefined) label.appendChild(Object.assign(document.createElement('small'), { textContent: ' (missing)' }));
     wrap.appendChild(label);
   }
-  const numeric = typeof original === 'number';
+  const numeric = meta.numeric || typeof original === 'number';
 
   let input;
   if (meta.type === 'select') {
@@ -639,6 +694,9 @@ function createField(meta, path, docName) {
       option.textContent = typeof opt === 'string' ? opt : (opt.label || opt.id);
       input.appendChild(option);
     });
+    if (original && ![...input.options].some((option) => option.value === String(original))) {
+      input.appendChild(Object.assign(document.createElement('option'), { value: String(original), textContent: String(original) }));
+    }
     input.value = String(original ?? '');
     if (!input.value && input.options.length) input.selectedIndex = 0;
   } else if (meta.type === 'image') {
@@ -652,7 +710,7 @@ function createField(meta, path, docName) {
         </div>
       </div>`;
     return wrap;
-  } else if (meta.type === 'area' || meta.type === 'area-list' || LIST_PARSERS[meta.type]) {
+  } else if (meta.type === 'area' || meta.type === 'formula' || meta.type === 'area-list' || LIST_PARSERS[meta.type]) {
     input = document.createElement('textarea');
     input.className = 'input';
     input.rows = meta.type !== 'area' ? (readValueForInput(meta.type, original).split('\n').length + 2) : 4;
@@ -801,14 +859,19 @@ async function applyPopover() {
       if (input.value === readValueForInput(type, draft.getValue(docName, path))) continue;
       const numeric = input.dataset.editFieldNumeric === '1';
       let value = input.value;
-      if (LIST_PARSERS[type]) {
+      if (type === 'formula') {
+        value = `formula: ${value.replace(/^formula:\s*/, '').trim()}`;
+      } else if (LIST_PARSERS[type]) {
         value = LIST_PARSERS[type].parse(value);
       } else if (type === 'area-list') {
         value = value.split('\n').map((line) => line.trim()).filter(Boolean);
       } else if (numeric) {
         const parsed = Number(value.replace(',', '.'));
-        value = Number.isFinite(parsed) ? parsed : value;
+        if (value.trim() && !Number.isFinite(parsed)) throw new Error('Enter a valid number, or leave the optional field empty.');
+        value = value.trim() === '' ? undefined : parsed;
       }
+      if (state.kind === 'game:bonus' && /\.(unlockAt|unlockLevel)$/.test(path)) draft.setValue(docName, `${state.valuePath}.unlockLabel`, undefined);
+      if (state.kind === 'game:bonus' && path.endsWith('.unit')) draft.setValue(docName, `${state.valuePath}.capUnit`, value === 'cap' ? 'CAP' : value || 'x');
       draft.setValue(docName, path, value);
     }
     try {
@@ -1024,7 +1087,9 @@ function renderVersionsPage(root) {
     </section>`;
 
   const restoreFlow = async (name) => {
+    if (session.busy) return;
     if (!window.confirm(`Restore "${draft.versionLabel(name)}"? This replaces the live Wiki and your current draft edits. A safety version of the current content is saved first.`)) return;
+    session.busy = true;
     try {
       await draft.restoreVersion(session.token, name);
       updateToolbar();
@@ -1032,6 +1097,9 @@ function renderVersionsPage(root) {
       notify(`Version restored: ${draft.versionLabel(name)}`);
     } catch (error) {
       notify(error.message || 'Restore failed.', true);
+    } finally {
+      session.busy = false;
+      updateToolbar();
     }
   };
 
@@ -1060,10 +1128,25 @@ function renderVersionsPage(root) {
         list.innerHTML = versions.map((v) => `
           <div class="ri-version-row">
             <span class="ri-version-row__name" title="${esc(v.name)}">${esc(draft.versionLabel(v.name))}</span>
+            <button type="button" class="btn btn--ghost btn--sm" data-ri-version-recover="${esc(v.name)}" title="Add missing pages to your draft while keeping current content">${icon('plus', 12)} Recover missing pages</button>
             <button type="button" class="btn btn--ghost btn--sm" data-ri-version-restore="${esc(v.name)}">${icon('rotate-ccw', 12)} Restore</button>
           </div>`).join('');
         list.querySelectorAll('[data-ri-version-restore]').forEach((btn) => {
           btn.addEventListener('click', () => restoreFlow(btn.getAttribute('data-ri-version-restore')));
+        });
+        list.querySelectorAll('[data-ri-version-recover]').forEach((btn) => {
+          btn.addEventListener('click', async () => {
+            if (session.busy) return;
+            session.busy = true;
+            try {
+              const count = await draft.recoverMissingPages(session.token, btn.dataset.riVersionRecover);
+              draft.applyDraftToSite();
+              buildNav();
+              window.dispatchEvent(new CustomEvent('ri-edit-content'));
+              notify(`${count} missing page(s) recovered into your draft. Save for everyone when ready.`);
+            } catch (error) { notify(error.message, true); }
+            finally { session.busy = false; updateToolbar(); }
+          });
         });
       }
       renderHistoryList(historyBox, history);
@@ -1376,6 +1459,7 @@ function openManageAdd(anchor = null) {
   typeSel.innerHTML = [
     ['generic', 'Generic page (text, facts, highlights)'],
     ['stages', 'Stages page (like Main › Stages)'],
+    ['evolutions', 'Evolutions (requirements and boosts)'],
     ['barns', 'Barns page'],
     ['ranks', 'Ranks page'],
     ['ascensions', 'Ascensions page'],
@@ -1535,6 +1619,7 @@ const STAGE_TEMPLATE = () => ({
 const BONUS_TEMPLATE = (value = 'formula: amount') => ({ id: 'b1', name: 'New bonus', value });
 
 const PAGE_TYPE_LABELS = {
+  evolutions: 'an Evolutions list',
   stages: 'a Stages list',
   barns: 'a Barns list',
   ranks: 'a Ranks list',
@@ -1552,18 +1637,23 @@ const PAGE_TYPE_LABELS = {
 function createGamePageContainer(gameKey, pageName, type) {
   if (!type || type === 'generic' || !PAGE_TYPE_LABELS[type]) return 'skipped';
   const existing = (path) => locate(draft.doc('game'), path);
-  const progressionBuckets = { stages: 'stages', barns: 'barns', ranks: 'ranks', ascensions: 'ascensions', lifeRanks: 'lifeRanks', cores: 'cores' };
+  const progressionBuckets = { evolutions: 'stages', stages: 'stages', barns: 'barns', ranks: 'ranks', ascensions: 'ascensions', lifeRanks: 'lifeRanks', cores: 'cores' };
   const bucket = progressionBuckets[type];
   if (bucket) {
     const path = `progression.${bucket}.${gameKey}`;
     if (existing(path)) return 'exists';
     const listKey = bucket === 'stages' || bucket === 'barns' ? 'stages' : 'ranks';
-    draft.setValue('game', path, { [listKey]: [STAGE_TEMPLATE()] });
+    draft.setValue('game', path, { ...(type === 'evolutions' ? { title: 'Evolutions' } : {}), [listKey]: [{ ...STAGE_TEMPLATE(), ...(type === 'evolutions' ? { title: 'Evolution 1' } : {}) }] });
     return 'created';
   }
   if (type === 'upgrades') {
+    const linkedSection = existing(`upgrades.routes.${gameKey}`);
+    if (linkedSection && existing(`upgrades.sections.${linkedSection}`)) return 'exists';
     const sectionKey = gameKey.replace(/\//g, '-');
-    if (existing(`upgrades.sections.${sectionKey}`)) return 'exists';
+    if (existing(`upgrades.sections.${sectionKey}`)) {
+      draft.setValue('game', `upgrades.routes.${gameKey}`, sectionKey);
+      return 'exists';
+    }
     draft.setValue('game', `upgrades.sections.${sectionKey}`, {
       name: pageName,
       upgrades: [{ n: 1, name: 'New upgrade', cap: null, price: '3*L', multi: '1' }],
@@ -1903,13 +1993,18 @@ function buildAddValue(docName, trail, template) {
     const used = new Set(list.map((b) => b.id).filter(Boolean));
     return { id: uniqueIn('b', used), name: 'New bonus', value: 'formula: amount' };
   }
+  if (template === 'text-section') {
+    return { id: `text-${crypto.randomUUID()}`, title: 'New section', text: 'Write a description or FAQ answer here.' };
+  }
   if (template === 'bonus-group') {
     const used = new Set((locate(doc, trail) || []).map((group) => group.id));
     return { id: uniqueIn('sap', used), name: 'New sap', color: '#86d62b', dropChance: '1 in 100', amountLabel: 'Amount owned', bonuses: [BONUS_TEMPLATE()] };
   }
   if (template === 'stage') {
     const list = locate(doc, trail) || [];
+    const isEvolution = locate(doc, trail.replace(/\.stages$/, ''))?.title === 'Evolutions';
     return {
+      ...(isEvolution ? { title: `Evolution ${list.length + 1}` } : {}),
       num: String(list.length + 1),
       requirements: ['1M Energy'],
       boosts: ['2x Energy'],
@@ -1933,6 +2028,7 @@ async function addItemFromTrigger(trigger) {
       notify('This add button is not wired to a template yet.', true);
       return;
     }
+    if (!Array.isArray(draft.getValue(docName, trail))) draft.setValue(docName, trail, []);
     const index = draft.pushValue(docName, trail, value);
     draft.applyDraftToSite();
     window.dispatchEvent(new CustomEvent('ri-edit-content'));
@@ -1952,10 +2048,67 @@ async function addItemFromTrigger(trigger) {
   }
 }
 
+// Content can be added to any existing page; each type keeps its own data.
+export function addContentToPage(gameKey, wikiPath, type) {
+  const page = draft.getValue('wiki', wikiPath);
+  if (!page) throw new Error('This page no longer exists.');
+  if (type === 'text') {
+    const path = `${wikiPath}.sections`;
+    if (!Array.isArray(draft.getValue('wiki', path))) draft.setValue('wiki', path, []);
+    const index = draft.pushValue('wiki', path, buildAddValue('wiki', path, 'text-section'));
+    return { docName: 'wiki', valuePath: `${path}.${index}`, kind: 'text-section', label: 'Text / FAQ section' };
+  }
+  const created = createGamePageContainer(gameKey, page.name, type);
+  let listPath, kind, label;
+  if (type === 'stages' || type === 'evolutions') {
+    listPath = `progression.stages.${gameKey}.stages`;
+    kind = 'game:stage'; label = type === 'evolutions' ? 'Evolution' : 'Stage';
+  } else if (type === 'upgrades') {
+    const section = draft.getValue('game', `upgrades.routes.${gameKey}`);
+    listPath = `upgrades.sections.${section}.upgrades`;
+    kind = 'game:upgrade'; label = 'Upgrade';
+  } else if (type === 'calc-amount') {
+    const calc = draft.getValue('game', `calculators.pages.${gameKey}`);
+    if (calc.kind !== 'amount') throw new Error('This page already has a calculator. Use its New bonus button to add bonuses.');
+    listPath = `calculators.pages.${gameKey}.bonuses`;
+    kind = 'game:bonus'; label = 'Bonus';
+  } else throw new Error('Choose a supported content type.');
+  let index = 0;
+  if (created === 'exists') {
+    const template = type === 'upgrades' ? 'upgrade' : type === 'calc-amount' ? 'bonus' : 'stage';
+    const value = buildAddValue('game', listPath, template);
+    if (type === 'evolutions') value.title = `Evolution ${value.num}`;
+    index = draft.pushValue('game', listPath, value);
+  }
+  return { docName: 'game', valuePath: `${listPath}.${index}`, kind, label };
+}
+
+async function onPageContent(trigger) {
+  if (popState) closePopover(true);
+  try {
+    const binding = addContentToPage(trigger.dataset.pageKey, trigger.dataset.wikiPath, trigger.dataset.pageContent);
+    draft.applyDraftToSite();
+    await rerender({ scroll: 'preserve' });
+    window.dispatchEvent(new CustomEvent('ri-edit-content'));
+    updateToolbar();
+    const el = document.querySelector(`[data-edit="${binding.docName}:${binding.valuePath}"]`);
+    if (el) openPopover({ ...binding, el });
+    notify(`${binding.label} added. Fill in the content, then save for everyone.`);
+  } catch (error) { notify(error.message, true); }
+}
+
 function installInteraction() {
   document.addEventListener('click', (event) => {
     if (!session.ready || !session.allowed) return;
+    if (session.busy || sharedRefreshChecking) return;
     if (event.target.closest('#ri-edit-bar, .ri-edit-popover, .ri-edit-chip')) return;
+    const contentTrigger = event.target.closest('[data-page-content]');
+    if (contentTrigger && session.editing) {
+      event.preventDefault();
+      event.stopPropagation();
+      void onPageContent(contentTrigger);
+      return;
+    }
 
     const addTrigger = event.target.closest('[data-edit-add]');
     if (addTrigger && session.editing) {

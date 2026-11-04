@@ -15,6 +15,7 @@ import {
   githubContentsUrl,
 } from '../github.js';
 import { applyWikiContent, applyUpdateContent, applyGameData } from '../services.js';
+import { mergeDocuments } from './merge.js';
 
 const draftState = {
   token: '',
@@ -24,6 +25,8 @@ const draftState = {
   draftSha: null,
   savedDraftRaw: '',
   actor: '',
+  sharedBase: null,
+  needsMerge: false,
 };
 
 // Diario automatico de edicoes ("Update History"). Em memoria durante a
@@ -397,6 +400,7 @@ export async function initSession(token, actor = '') {
   draftState.shas = {};
   draftState.draftSha = null;
   draftState.savedDraftRaw = '';
+  draftState.needsMerge = false;
   changeLog.length = 0;
   await Promise.all(Object.entries(FILES).map(async ([name, path]) => {
     const result = await githubRequest(githubContentsUrl(path), token);
@@ -434,11 +438,39 @@ export async function initSession(token, actor = '') {
     draftLoaded = false;
   }
   const dropped = sanitizeResources();
-  return { draftLoaded, sanitized: dropped };
+  draftState.sharedBase = clone(draftState.docs);
+  let recovered = false, recoveryConflict = false;
+  try {
+    const recovery = JSON.parse(sessionStorage.getItem(recoveryKey()) || 'null');
+    if (recovery?.docs && recovery?.sharedBase) {
+      validateDocuments(recovery.docs);
+      recovered = true;
+      try {
+        draftState.docs = mergeDocuments(recovery.sharedBase, recovery.docs, draftState.docs);
+      } catch {
+        draftState.docs = recovery.docs;
+        draftState.sharedBase = recovery.sharedBase;
+        draftState.needsMerge = true;
+        recoveryConflict = true;
+      }
+      changeLog.push(...(recovery.entries || []));
+    }
+  } catch { /* storage unavailable or an invalid recovery copy */ }
+  return { draftLoaded, sanitized: dropped, recovered, recoveryConflict };
+}
+
+function recoveryKey() { return `ri-editor-recovery:${REPOSITORY}:${draftState.actor}`; }
+
+export function persistLocalRecovery() {
+  if (!draftState.docs || !draftState.actor) return;
+  try {
+    if (!draftDirty()) sessionStorage.removeItem(recoveryKey());
+    else sessionStorage.setItem(recoveryKey(), JSON.stringify({ docs: draftState.docs, sharedBase: draftState.sharedBase, entries: changeLog }));
+  } catch { /* browser storage can be disabled; Download draft remains available */ }
 }
 
 export async function saveDraft(token) {
-  await assertRemoteUnchanged(token);
+  await syncRemote(token);
   validateDocuments(draftState.docs);
   const raw = currentDraftRaw();
   await githubRequest(githubContentsUrl(DRAFT_FILE), token, {
@@ -452,11 +484,15 @@ export async function saveDraft(token) {
   }).then((result) => {
     draftState.draftSha = result.content.sha;
     draftState.savedDraftRaw = raw;
+    draftState.sharedBase = JSON.parse(raw);
   });
   // Diario: pendencias vao para o arquivo (marcadas "pending").
   if (changeLog.length) {
-    await writeHistory(token, changeLog.map((entry) => ({ ...entry, pending: true })), true);
+    const entries = changeLog.map((entry) => ({ ...entry, pending: true }));
+    await writeHistory(token, entries, true);
+    changeLog.splice(0, entries.length);
   }
+  persistLocalRecovery();
 }
 
 export async function discardDraft(token) {
@@ -476,6 +512,8 @@ export async function discardDraft(token) {
   draftState.draftSha = null;
   draftState.savedDraftRaw = '';
   draftState.docs = clone(draftState.baseDocs);
+  draftState.sharedBase = clone(draftState.docs);
+  persistLocalRecovery();
   applyDraftToSite();
   changeLog.length = 0;
   history.length = 0;
@@ -484,7 +522,7 @@ export async function discardDraft(token) {
 }
 
 export async function publishChanges(token) {
-  await assertRemoteUnchanged(token);
+  await syncRemote(token);
   validateDocuments(draftState.docs);
   const changed = changedFiles();
   if (changed.length) {
@@ -534,6 +572,7 @@ export async function publishChanges(token) {
   }
   draftState.draftSha = null;
   draftState.savedDraftRaw = '';
+  draftState.sharedBase = clone(draftState.docs);
   if (changeLog.length) {
     // Diario definitivo: pendencias antigas do arquivo sao substituidas
     // pelas mesmas entradas agora marcadas como publicadas.
@@ -544,6 +583,7 @@ export async function publishChanges(token) {
     await writeHistory(token, [], false);
   }
   history.length = 0;
+  persistLocalRecovery();
 }
 
 export async function remoteChanged(token) {
@@ -558,6 +598,39 @@ export async function remoteChanged(token) {
 
 async function assertRemoteUnchanged(token) {
   if (await remoteChanged(token)) throw new Error('Another editor saved a newer version. Reload before saving or publishing.');
+}
+
+// Read first, merge atomically in memory, and only then advance our baseline.
+// Conflicts leave every local document and SHA untouched. PUT still uses the
+// fetched SHA, so a save racing this read is rejected by GitHub.
+let syncPromise;
+export async function syncRemote(token) {
+  if (syncPromise) return syncPromise;
+  syncPromise = readAndMergeRemote(token);
+  try { return await syncPromise; } finally { syncPromise = null; }
+}
+
+async function readAndMergeRemote(token) {
+  const files = await Promise.all(Object.entries(FILES).map(async ([name, path]) => [name, await githubRequest(githubContentsUrl(path), token)]));
+  const remoteDraft = await githubRequest(githubContentsUrl(DRAFT_FILE), token, { allowNotFound: true });
+  const changed = draftState.needsMerge || (remoteDraft?.sha || null) !== draftState.draftSha || files.some(([name, file]) => file.sha !== draftState.shas[name]);
+  if (!changed) return false;
+  const published = Object.fromEntries(files.map(([name, file]) => [name, JSON.parse(decodeBase64Content(file.content))]));
+  const remote = remoteDraft ? JSON.parse(decodeBase64Content(remoteDraft.content)) : published;
+  validateDocuments(remote);
+  const merged = mergeDocuments(draftState.sharedBase, draftState.docs, remote);
+  validateDocuments(merged);
+  draftState.docs = merged;
+  draftState.sharedBase = clone(remote);
+  draftState.baseDocs = published;
+  draftState.shas = Object.fromEntries(files.map(([name, file]) => [name, file.sha]));
+  draftState.draftSha = remoteDraft?.sha || null;
+  draftState.savedDraftRaw = remoteDraft ? `${JSON.stringify(remote, null, 2)}\n` : '';
+  draftState.needsMerge = false;
+  // Numeric undo targets must never apply to a collaborator's reordered list.
+  history.length = 0;
+  persistLocalRecovery();
+  return true;
 }
 
 // Grava o diario no repositorio. pending=true marca como "nao publicado"
@@ -705,6 +778,54 @@ export async function restoreVersion(token, name) {
   return name;
 }
 
+export async function recoverMissingPages(token, name) {
+  const result = await githubRequest(githubContentsUrl(`${BACKUP_DIRECTORY}/${encodeURIComponent(name)}`), token);
+  const backup = JSON.parse(decodeBase64Content(result.content));
+  validateDocuments(backup.documents);
+  const recovered = clone(draftState.docs);
+  let count = 0;
+  const collect = (nodes, ids = new Set()) => {
+    for (const node of nodes || []) { ids.add(node.id); collect(node.children, ids); }
+    return ids;
+  };
+  const appendMissing = (target, older, known) => {
+    for (const node of older || []) {
+      const current = target.find((item) => item.id === node.id);
+      if (current) {
+        if (node.children?.length) { current.children ||= []; appendMissing(current.children, node.children, known); }
+      } else if (!known.has(node.id)) {
+        target.push(clone(node));
+        collect([node], known);
+        count += 1;
+      }
+    }
+  };
+  for (const category of backup.documents.wiki.categories) {
+    const current = recovered.wiki.categories.find((item) => item.id === category.id);
+    if (!current) { recovered.wiki.categories.push(clone(category)); count += 1; }
+    else appendMissing(current.subcategories, category.subcategories, collect(current.subcategories));
+  }
+  // Recover missing game containers too; never replace an existing value.
+  const fillMissing = (target, older) => {
+    for (const [key, value] of Object.entries(older || {})) {
+      if (!(key in target)) target[key] = clone(value);
+      else if (value && target[key] && typeof value === 'object' && !Array.isArray(value) && !Array.isArray(target[key])) fillMissing(target[key], value);
+    }
+  };
+  fillMissing(recovered.game, backup.documents.game);
+  validateDocuments(recovered);
+  for (const category of recovered.wiki.categories) {
+    if (!draftState.docs.wiki.categories.some((item) => item.id === category.id)) pushValue('wiki', 'categories', category);
+    else {
+      const index = draftState.docs.wiki.categories.findIndex((item) => item.id === category.id);
+      setValue('wiki', `categories.${index}.subcategories`, category.subcategories);
+    }
+  }
+  for (const key of Object.keys(recovered.game)) setValue('game', key, recovered.game[key]);
+  persistLocalRecovery();
+  return count;
+}
+
 // Copia do estado atual do rascunho (inclui mudancas nao publicadas) para
 // criar uma versao manual.
 export function snapshotDocs() {
@@ -724,6 +845,9 @@ export function uploadStatus() {
 export function __testInjectDocs(docs) {
   draftState.docs = docs;
   draftState.baseDocs = JSON.parse(JSON.stringify(docs));
+  draftState.sharedBase = clone(docs);
+  draftState.savedDraftRaw = '';
+  draftState.needsMerge = false;
   history.length = 0;
   changeLog.length = 0;
 }

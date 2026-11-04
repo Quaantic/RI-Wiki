@@ -61,12 +61,15 @@ dos recursos — Add no topo, busca e campo de link pesquisável) e **Versions**
 History** automático de cada mudança).
 
 - **Apply** aplica a alteração na página em tempo real (preview ao vivo).
-- **Save for everyone** grava o rascunho compartilhado em `content/drafts/inline-draft.json`
-  e recarrega o admin de quem salvou. Os demais editores conectados verificam
-  atualizações a cada 15 segundos e ao voltar à janela; ao detectar uma mudança,
-  recarregam automaticamente. Abas em segundo plano verificam ao voltar.
-  Esse recarregamento substitui alterações locais ainda não salvas; combinem os
-  saves entre colaboradores. Save e Publish recusam versões remotas desatualizadas.
+- **Save for everyone** grava o rascunho compartilhado em `content/drafts/inline-draft.json`.
+  Os editores verificam atualizações a cada 15 segundos e ao voltar à janela.
+  A sincronização combina mudanças independentes por ID de página, mantendo
+  edições locais ainda não salvas, sem forçar F5. Não há sincronização enquanto
+  um formulário ou arraste está aberto. Save e Publish também sincronizam antes
+  de gravar; o SHA do GitHub impede sobrescrever um save simultâneo.
+  Se duas pessoas alterarem o mesmo campo, o save é bloqueado e as alterações
+  locais permanecem disponíveis. Use **Download draft** para guardar uma cópia.
+  A sessão também mantém recuperação de alterações aplicadas no mesmo navegador/aba.
   O site público continua usando somente o conteúdo publicado.
 - **Publish** valida o conteúdo, cria um backup do estado anterior e publica
   no repositório (a versão anterior fica listada em **Versions**).
@@ -77,6 +80,31 @@ do editor, sem duplicar entradas a cada Save. Entradas anteriores sem autoria
 aparecem como `Legacy edit`. **Reorder / nest** ativa Edit automaticamente;
 arraste pelas bordas para reordenar ou pelo centro para aninhar. Em **Rare Saps**,
 use **Add sap group** para criar um sap e **New bonus** para adicionar seus bônus.
+
+## Conteúdo de páginas existentes
+
+No modo Edit, cada página tem **Page content → Add content**: adicione
+**Evolution**, **Stage**, **Upgrade**, **Bonus** ou **Text / FAQ** sem recriar a
+página. Tipos diferentes podem coexistir. Text / FAQ contém um título e texto
+com quebras de linha; o conteúdo é salvo em `wiki.categories[…].sections`.
+Evolutions usa o mesmo formato de requirements/boosts de Stages, com o título
+Evolutions. A criação de páginas também oferece esse tipo.
+
+O formulário de bônus mostra nome, fórmula, formato de exibição, um máximo
+opcional e um desbloqueio opcional (nível ou quantidade, conforme a calculadora).
+IDs internos são automáticos. Metadados antigos não editados são preservados.
+
+Em **Versions**, **Recover missing pages** recupera categorias/páginas ausentes
+de um backup para o rascunho e mantém o conteúdo atual. Depois revise e salve.
+Essa recuperação depende de a página existir em uma versão salva; não reconstrói
+texto perdido que nunca chegou ao repositório.
+
+Depois de enviar esta atualização ao site, todos os colaboradores devem
+recarregar uma vez para usar o novo sincronizador.
+
+Para testar a interface sem login nem gravações no GitHub, rode
+`node tests/admin-preview.cjs` e abra `http://127.0.0.1:4173/`.
+Esse servidor usa somente dados em memória e deve ser encerrado após o teste.
 
 Ver `docs/COMO-EDITAR.md` para o passo a passo.
 

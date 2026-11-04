@@ -2325,3 +2325,4 @@ mark {
     radial-gradient(220px 120px at -10% 112%, var(--c-accent-soft), transparent 72%),
     var(--c-card);
 }
+.ri-text-section__body { white-space: pre-wrap; overflow-wrap: anywhere; color: var(--c-text-2); line-height: 1.8; }
