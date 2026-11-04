@@ -89,7 +89,14 @@ function writeAt(name, path, value) {
   if (holder == null || typeof holder !== 'object') {
     throw new Error(`Cannot write to "${path}" (broken path).`);
   }
-  holder[segments.at(-1)] = value;
+  const lastKey = segments.at(-1);
+  if (value === undefined) {
+    // Salvar undefined = remover a chave (nunca deixar undefined no objeto:
+    // quebraria a validacao de conteudo em applyDraftToSite).
+    delete holder[lastKey];
+  } else {
+    holder[lastKey] = value;
+  }
 }
 
 function itemLabel(item) {

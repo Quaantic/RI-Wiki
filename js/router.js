@@ -14,9 +14,29 @@ const ROUTES = [
   { pattern: /^feedback$/, view: feedbackView },
   { pattern: /^credits$/, view: creditsView },
   { pattern: /^search$/, view: searchView },
+];
+
+// Paginas genericas por id (categorias e subpaginas) casam por ULTIMO, para
+// abrir espaco para rotas registradas depois (ex.: Colors/Versions do editor).
+const PAGE_FALLBACKS = [
   { pattern: /^([\w-]+)$/, view: categoryView },
   { pattern: /^([\w-]+)\/([\w-]+)$/, view: subcategoryView },
 ];
+
+// Paginas do editor inline (Colors / Versions) sao registradas pelo proprio
+// modulo delas via registerRoute() e casam antes das categorias genericas.
+export function registerRoute(pattern, view) {
+  ROUTES.push({ pattern, view });
+}
+
+function routesInOrder() {
+  return [...ROUTES, ...PAGE_FALLBACKS];
+}
+
+// Gancho para testes: ordem efetiva de casamento das rotas.
+export function __testRoutes() {
+  return routesInOrder();
+}
 
 function parseHash() {
   const raw = window.location.hash.replace(/^#/, '');
@@ -78,7 +98,7 @@ async function renderView(view, params, query) {
 }
 
 async function navigate(path, query) {
-  for (const route of ROUTES) {
+  for (const route of routesInOrder()) {
     const match = path.match(route.pattern);
     if (match) {
       await renderView(route.view, match.slice(1), query);
@@ -98,7 +118,7 @@ export async function rerender(opts = {}) {
   pendingScrollAfterRender = opts.scroll === 'preserve'
     ? 'preserve'
     : { top: opts.scrollTop ?? null };
-  for (const route of ROUTES) {
+  for (const route of routesInOrder()) {
     const match = path.match(route.pattern);
     if (match) {
       await renderView(route.view, match.slice(1), query);

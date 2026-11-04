@@ -14,16 +14,21 @@ html {
 }
 
 /* A raiz precisa ficar no fluxo normal do documento: se qualquer coisa
-   (estilo injetado, extensao de navegador) colocar position/height/overflow
-   no html, a pagina inteira para de rolar. Estes valores sao os iniciais
-   do proprio site — a regra so existe para neutralizar interferencia. */
+   (estilo injetado, extensao de navegador) colocar position/display/height/
+   overflow no html ou no body, a pagina para de rolar e/ou encolhe para o
+   tamanho do conteudo (flex na raiz encolhe o body). Estes valores sao os
+   iniciais do proprio site — a regra so existe para neutralizar
+   interferencia. */
 html {
   position: static !important;
+  display: block !important;
   height: auto !important;
   overflow-y: auto !important;
 }
 
 body {
+  position: static !important;
+  display: block !important;
   height: auto !important;
   overflow-y: visible !important;
 }

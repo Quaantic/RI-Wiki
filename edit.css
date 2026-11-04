@@ -444,6 +444,28 @@ html.ri-edit-bar .sub-pills-wrap {
   padding: 7px 10px;
   font-size: 13px;
 }
+.ri-versions-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 8px;
+}
+.ri-version-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 7px 2px;
+  border-bottom: 1px solid var(--c-border);
+}
+.ri-version-row:last-child { border-bottom: 0; }
+.ri-version-row__name {
+  font-size: 12.5px;
+  color: var(--c-text-2);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .ri-color-row {
   display: flex;
   align-items: center;
@@ -492,6 +514,109 @@ html.ri-edit-bar .sub-pills-wrap {
   margin-top: 12px;
 }
 .ri-color-add .input { flex: 1; min-width: 0; font-size: 12.5px; }
+.ri-color-add--top {
+  margin: 0 0 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--c-border);
+}
+
+/* ---------- Paginas do editor (Colors / Versions) ---------- */
+/* Sao paginas de rota propria (#/colors, #/versions): mesmas secoes do site,
+   sem overlay. */
+
+.ri-admin-section { max-width: 860px; }
+.ri-admin-section__title {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 12px;
+  font-size: 16px;
+  color: var(--c-text);
+}
+.ri-admin-toolbar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.ri-admin-toolbar .ri-color-search { flex: 1; margin-bottom: 0; }
+.ri-history-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--c-border);
+  font-size: 12.5px;
+}
+.ri-history-row:last-child { border-bottom: 0; }
+.ri-history-row__date {
+  flex: none;
+  min-width: 132px;
+  color: var(--c-text-3);
+  font-variant-numeric: tabular-nums;
+}
+.ri-history-row__kind {
+  flex: none;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 1px 7px;
+  border-radius: 999px;
+  border: 1px solid var(--c-border);
+  color: var(--c-text-2);
+}
+.ri-history-row__kind--colors { color: #86d62b; border-color: rgba(134, 214, 43, 0.45); }
+.ri-history-row__text {
+  flex: 1;
+  min-width: 0;
+  color: var(--c-text-2);
+  overflow-wrap: anywhere;
+}
+.ri-history-row__pending {
+  flex: none;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #f2c94c;
+}
+
+/* Campo de link pesquisavel */
+.ri-linkpick { position: relative; flex: 1; min-width: 0; }
+.ri-linkpick__input { width: 100%; font-size: 12.5px; cursor: pointer; }
+.ri-linkpick__list {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 5;
+  max-height: 260px;
+  overflow-y: auto;
+  background: var(--c-bg-2, #101408);
+  border: 1px solid var(--c-border);
+  border-radius: 10px;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
+  padding: 4px;
+}
+.ri-linkpick__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  padding: 7px 10px;
+  border: 0;
+  background: none;
+  border-radius: 7px;
+  color: var(--c-text-2);
+  font-size: 12.5px;
+  text-align: left;
+  cursor: pointer;
+}
+.ri-linkpick__row b { color: var(--c-text); font-size: 12.5px; }
+.ri-linkpick__row small { color: var(--c-text-3); font-size: 11px; }
+.ri-linkpick__row:hover { background: rgba(134, 214, 43, 0.08); }
+.ri-linkpick__row.is-current { outline: 1px solid rgba(134, 214, 43, 0.35); }
 
 .ri-edit-popover__delete { flex: none; }
 .ri-edit-popover__delete[hidden] { display: none !important; }

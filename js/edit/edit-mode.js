@@ -15,7 +15,7 @@ import { LUCIDE_ICONS } from '../lib/lucide-data.js';
 import { CATEGORIES, getSubcategory, getSubcategoryDocPath, collectSubtreeIds } from '../data/wiki-data.js';
 import { buildNav } from '../ui.js';
 import * as draft from './draft.js';
-import { rerender } from '../router.js';
+import { rerender, registerRoute } from '../router.js';
 
 const LUCIDE_ICON_NAMES = Object.keys(LUCIDE_ICONS);
 
@@ -886,21 +886,53 @@ function installSidebarTools() {
   applyDragMode();
 }
 
-// ==== PAGINAS DO EDITOR: Colors e Versions (interface completa, nao popup) ====
-// Um overlay de tela cheia com cabecalho proprio e rolagem independente.
-// Esc ou o botao Close fecham; o conteudo continua sendo o rascunho comum.
+// ==== PAGINAS DO EDITOR: Colors e Versions ====
+// Paginas de verdade (mesma casca do site, sem texto de descricao), com rotas
+// proprias (#/colors e #/versions) registradas ANTES das categorias genericas.
 
-let adminOverlay = null;
-let adminOverlayKind = '';
 let adminColorsQuery = '';
+const COLORS_ROW_CAP = 80;
 
-function closeAdminPage() {
-  if (adminOverlay) {
-    adminOverlay.remove();
-    adminOverlay = null;
-    adminOverlayKind = '';
+// As paginas so existem para editores logados: qualquer outro visitante que
+// digite a rota na mao ve apenas um aviso.
+function editorPageShell(root, icon_, heading, bodyHtml) {
+  if (!session.ready || !session.allowed) {
+    root.innerHTML = `
+      <section class="section ri-admin-section">
+        <h2 class="ri-admin-section__title">${icon(icon_, 15)} ${esc(heading)}</h2>
+        <p class="ri-color-row__empty">This page is part of the inline Edit mode. Log in as an editor and enable Edit mode to use it.</p>
+      </section>`;
+    return false;
   }
+  return true;
 }
+
+const colorsView = {
+  title: () => 'Colors — RI Gaming Wiki',
+  crumbs: () => [{ label: 'Main', href: '#/', icon: 'compass' }, { label: 'Colors', icon: 'palette' }],
+  nav: () => null,
+  render(root) {
+    if (!editorPageShell(root, 'palette', 'Resource colors & links')) return;
+    if (popState) closePopover(true);
+    if (!session.editing) setEditing(true);
+    renderColorsPage(root);
+  },
+};
+
+const versionsView = {
+  title: () => 'Versions — RI Gaming Wiki',
+  crumbs: () => [{ label: 'Main', href: '#/', icon: 'compass' }, { label: 'Versions', icon: 'history' }],
+  nav: () => null,
+  render(root) {
+    if (!editorPageShell(root, 'history', 'Versions & Update History')) return;
+    if (popState) closePopover(true);
+    if (!session.editing) setEditing(true);
+    renderVersionsPage(root);
+  },
+};
+
+registerRoute(/^colors$/, colorsView);
+registerRoute(/^versions$/, versionsView);
 
 function formatHistoryDate(at) {
   const date = new Date(at || 0);
@@ -927,47 +959,19 @@ function renderHistoryList(container, entries, filterKind) {
 
 function openAdminPage(kind) {
   if (!session.ready || !session.allowed) return;
-  if (popState) closePopover(true);
-  if (!session.editing) setEditing(true);
-  closeAdminPage();
-  adminOverlayKind = kind;
-  adminColorsQuery = '';
-  const overlay = document.createElement('div');
-  overlay.className = 'ri-admin-overlay';
-  overlay.innerHTML = `
-    <div class="ri-admin-page">
-      <header class="ri-admin-page__head">
-        <h2>${kind === 'colors' ? `${icon('palette', 17)} Resource colors & links` : `${icon('history', 17)} Versions & Update History`}</h2>
-        <button type="button" class="btn btn--ghost btn--sm" data-ri-admin-close>${icon('x', 14)} Close</button>
-      </header>
-      <div class="ri-admin-page__body" data-ri-admin-body></div>
-    </div>`;
-  document.body.appendChild(overlay);
-  adminOverlay = overlay;
-  qs('[data-ri-admin-close]', overlay).addEventListener('click', closeAdminPage);
-  const onKey = (event) => {
-    if (event.key === 'Escape' && adminOverlay) {
-      event.stopPropagation();
-      closeAdminPage();
-      document.removeEventListener('keydown', onKey, true);
-    }
-  };
-  document.addEventListener('keydown', onKey, true);
-  if (kind === 'colors') renderColorsPage(overlay);
-  else renderVersionsPage(overlay);
+  window.location.hash = kind === 'colors' ? '#/colors' : '#/versions';
 }
 
-function renderVersionsPage(overlay) {
-  const body = qs('[data-ri-admin-body]', overlay);
-  body.innerHTML = `
-    <p class="ri-color-note">Every publish saves the previous content as a version automatically. The list keeps the latest <b>25</b> — when a new one arrives, the oldest is removed. Restoring replaces the live Wiki and the draft you are editing (a safety version of the current content is saved first).</p>
-    <div class="ri-versions-actions">
-      <button type="button" class="btn btn--ghost btn--sm" data-ri-versions-save>${icon('save', 13)} Save version now</button>
-    </div>
-    <div data-ri-versions-list><p class="ri-color-row__empty">Loading versions…</p></div>
-    <section class="ri-admin-history">
-      <h3>${icon('history', 14)} Update History</h3>
-      <p class="ri-color-note">Automatic log of every change — created, renamed, removed or moved content, colors and links. Pending entries become permanent when you publish.</p>
+function renderVersionsPage(root) {
+  root.innerHTML = `
+    <section class="section ri-admin-section">
+      <div class="ri-versions-actions">
+        <button type="button" class="btn btn--ghost btn--sm" data-ri-versions-save>${icon('save', 13)} Save version now</button>
+      </div>
+      <div data-ri-versions-list><p class="ri-color-row__empty">Loading versions…</p></div>
+    </section>
+    <section class="section ri-admin-section">
+      <h2 class="ri-admin-section__title">${icon('history', 15)} Update History</h2>
       <div data-ri-history><p class="ri-color-row__empty">Loading…</p></div>
     </section>`;
 
@@ -978,31 +982,30 @@ function renderVersionsPage(overlay) {
       updateToolbar();
       await rerender({ scroll: 'preserve' });
       notify(`Version restored: ${draft.versionLabel(name)}`);
-      renderVersionsPage(overlay);
     } catch (error) {
       notify(error.message || 'Restore failed.', true);
     }
   };
 
-  qs('[data-ri-versions-save]', body).addEventListener('click', async () => {
+  qs('[data-ri-versions-save]', root).addEventListener('click', async () => {
     try {
       await draft.createVersion(session.token, draft.snapshotDocs() || undefined, 'Manual version');
       notify('Version saved.');
-      renderVersionsPage(overlay);
+      renderVersionsPage(root);
     } catch (error) {
       notify(error.message || 'Could not save the version.', true);
     }
   });
 
   void (async () => {
-    const list = qs('[data-ri-versions-list]', body);
-    const historyBox = qs('[data-ri-history]', body);
+    const list = qs('[data-ri-versions-list]', root);
+    const historyBox = qs('[data-ri-history]', root);
     try {
       const [versions, history] = await Promise.all([
         draft.listVersions(session.token),
         draft.listEditHistory(session.token).catch(() => []),
       ]);
-      if (!adminOverlay || adminOverlayKind !== 'versions') return;
+      if (!root.isConnected) return;
       if (!versions.length) {
         list.innerHTML = '<p class="ri-color-row__empty">No versions yet. Publish an edit or click "Save version now".</p>';
       } else {
@@ -1073,15 +1076,15 @@ function routeLabel(route, routes = collectPageRoutes()) {
 
 // Campo de link pesquisavel: digite para filtrar paginas, clique para
 // escolher. Mostra o NOME da pagina (nao a rota crua) quando escolhido.
-function makeLinkPicker({ value, onPick }) {
-  const routes = collectPageRoutes();
+function makeLinkPicker({ value, routes, onPick }) {
+  const routeList = routes || collectPageRoutes();
   const wrap = document.createElement('div');
   wrap.className = 'ri-linkpick';
   const input = document.createElement('input');
   input.type = 'text';
   input.className = 'input ri-linkpick__input';
   input.autocomplete = 'off';
-  input.value = value ? (routeLabel(value, routes) || value) : '';
+  input.value = value ? (routeLabel(value, routeList) || value) : '';
   input.placeholder = 'No page link — click to search pages…';
   input.setAttribute('aria-label', 'Page link');
   const list = document.createElement('div');
@@ -1093,7 +1096,7 @@ function makeLinkPicker({ value, onPick }) {
   let rows = [];
   const open = (query) => {
     const wanted = query.trim().toLowerCase();
-    const matches = routes.filter((item) => !wanted || item.search.includes(wanted) || item.route.toLowerCase().includes(wanted));
+    const matches = routeList.filter((item) => !wanted || item.search.includes(wanted) || item.route.toLowerCase().includes(wanted));
     rows = [
       { route: '', label: 'No page link', search: '' },
       ...matches.slice(0, 60),
@@ -1106,7 +1109,7 @@ function makeLinkPicker({ value, onPick }) {
   };
   const pick = (route) => {
     value = route;
-    input.value = route ? (routeLabel(route, routes) || route) : '';
+    input.value = route ? (routeLabel(route, routeList) || route) : '';
     list.hidden = true;
     onPick(route);
   };
@@ -1130,20 +1133,35 @@ function makeLinkPicker({ value, onPick }) {
   return wrap;
 }
 
+// Cache das rotas por abertura da pagina (evita reconstruir a lista de
+// paginas a cada linha/campo de link).
+let pageRoutesCache = null;
+
+function cachedPageRoutes() {
+  if (!pageRoutesCache) pageRoutesCache = collectPageRoutes();
+  return pageRoutesCache;
+}
+
 function renderColorsRows(list) {
   if (!list) return;
   list.innerHTML = '';
   const query = adminColorsQuery.trim().toLowerCase();
-  const names = Object.keys(locate(draft.doc('game'), 'resources.colors') || {})
+  const allNames = Object.keys(locate(draft.doc('game'), 'resources.colors') || {})
     .filter((n) => !query || n.toLowerCase().includes(query))
     .sort((a, b) => a.localeCompare(b));
-  if (!names.length) {
+  const names = allNames.slice(0, COLORS_ROW_CAP);
+  if (!allNames.length) {
     const empty = document.createElement('p');
     empty.className = 'ri-color-row__empty';
     empty.textContent = query
       ? `No resources match "${query}".`
-      : 'No colored resources yet. Add one below.';
+      : 'No colored resources yet. Add one above.';
     list.appendChild(empty);
+  } else if (allNames.length > names.length) {
+    const more = document.createElement('p');
+    more.className = 'ri-color-row__empty';
+    more.textContent = `Showing ${names.length} of ${allNames.length} — refine the search to see the rest.`;
+    list.appendChild(more);
   }
   for (const name of names) {
     const color = hexTo6(locate(draft.doc('game'), `resources.colors.${name}`) || '#ffffff');
@@ -1156,7 +1174,8 @@ function renderColorsRows(list) {
       <b style="color:${esc(color)}">${esc(name)}</b>`;
     main.appendChild(makeLinkPicker({
       value: link,
-      onPick: (route) => applyResourceChange(name, { link: route }),
+      routes: cachedPageRoutes(),
+      onPick: (route) => applyResourceChange(name, { link: route }, { rerender: false }),
     }));
     row.innerHTML = `
       <input type="color" class="ri-color-row__swatch" value="${esc(color)}" data-ri-color-swatch aria-label="${esc(name)} color">`;
@@ -1164,46 +1183,53 @@ function renderColorsRows(list) {
     row.insertAdjacentHTML('beforeend', `
       <button type="button" class="ri-color-row__remove" data-ri-color-remove title="Remove this resource">${icon('trash-2', 13)}</button>`);
     row.querySelector('[data-ri-color-swatch]').addEventListener('change', (event) => {
-      applyResourceChange(name, { color: event.target.value });
+      applyResourceChange(name, { color: event.target.value }, { rerender: false });
       row.querySelector('b').style.color = event.target.value;
     });
     row.querySelector('[data-ri-color-remove]').addEventListener('click', () => {
       if (!window.confirm(`Remove "${name}" from the colored resources?`)) return;
-      applyResourceChange(name, { color: undefined, link: undefined });
+      applyResourceChange(name, { color: undefined, link: undefined }, { rerender: false });
       renderColorsRows(list);
     });
     list.appendChild(row);
   }
 }
 
-function renderColorsPage(overlay) {
-  const body = qs('[data-ri-admin-body]', overlay);
+function renderColorsPage(root) {
   const count = Object.keys(locate(draft.doc('game'), 'resources.colors') || {}).length;
-  body.innerHTML = `
-    <p class="ri-color-note">Each entry colors the resource name everywhere in texts and can link it to a wiki page. Click a link field and type to search pages — including nested ones (Tree › Sap › Rare Saps).</p>
-    <div class="ri-admin-toolbar">
-      <input type="search" class="input ri-color-search" data-ri-color-search placeholder="Search resources (${count})..." aria-label="Search colored resources">
-    </div>
-    <div data-ri-color-list></div>
-    <div class="ri-color-add">
-      <input type="text" class="input" data-ri-color-name placeholder="Resource name (ex.: Bone Dust)">
-      <input type="color" class="ri-color-row__swatch" data-ri-color-new-color value="#86d62b" aria-label="New resource color">
-      <button type="button" class="btn btn--ghost btn--sm" data-ri-color-add>${icon('plus', 13)} Add</button>
-    </div>
-    <section class="ri-admin-history">
-      <h3>${icon('palette', 14)} Recent color changes</h3>
+  pageRoutesCache = null;
+  adminColorsQuery = '';
+  root.innerHTML = `
+    <section class="section ri-admin-section">
+      <div class="ri-color-add ri-color-add--top">
+        <input type="text" class="input" data-ri-color-name placeholder="Add a resource (ex.: Bone Dust)" aria-label="New resource name">
+        <input type="color" class="ri-color-row__swatch" data-ri-color-new-color value="#86d62b" aria-label="New resource color">
+        <button type="button" class="btn btn--ghost btn--sm" data-ri-color-add>${icon('plus', 13)} Add</button>
+      </div>
+      <div class="ri-admin-toolbar">
+        <input type="search" class="input ri-color-search" data-ri-color-search placeholder="Search resources (${count})..." aria-label="Search colored resources">
+      </div>
+      <div data-ri-color-list></div>
+    </section>
+    <section class="section ri-admin-section">
+      <h2 class="ri-admin-section__title">${icon('palette', 15)} Recent color changes</h2>
       <div data-ri-color-history><p class="ri-color-row__empty">Loading…</p></div>
     </section>`;
 
-  body.querySelector('[data-ri-color-search]').addEventListener('input', (event) => {
-    adminColorsQuery = event.target.value;
-    renderColorsRows(body.querySelector('[data-ri-color-list]'));
+  const searchInput = root.querySelector('[data-ri-color-search]');
+  let searchTimer = 0;
+  searchInput.addEventListener('input', () => {
+    window.clearTimeout(searchTimer);
+    searchTimer = window.setTimeout(() => {
+      adminColorsQuery = searchInput.value;
+      renderColorsRows(root.querySelector('[data-ri-color-list]'));
+    }, 120);
   });
 
   const fail = (msg) => notify(msg, true);
   const addResource = () => {
-    const nameIn = body.querySelector('[data-ri-color-name]');
-    const colorIn = body.querySelector('[data-ri-color-new-color]');
+    const nameIn = root.querySelector('[data-ri-color-name]');
+    const colorIn = root.querySelector('[data-ri-color-new-color]');
     const name = (nameIn?.value || '').trim();
     if (name.length < 2) return fail('Give the resource a name (2+ letters).');
     if (name.includes('.')) return fail('The resource name cannot contain dots.');
@@ -1214,22 +1240,22 @@ function renderColorsPage(overlay) {
     }
     draft.setValue('game', `resources.colors.${name}`, colorIn?.value || '#86d62b');
     draft.applyDraftToSite();
-    void rerender({ scroll: 'preserve' });
     updateToolbar();
     nameIn.value = '';
-    renderColorsRows(body.querySelector('[data-ri-color-list]'));
+    pageRoutesCache = null;
+    renderColorsRows(root.querySelector('[data-ri-color-list]'));
   };
 
-  body.querySelector('[data-ri-color-add]').addEventListener('click', addResource);
-  body.querySelector('[data-ri-color-name]').addEventListener('keydown', (event) => {
+  root.querySelector('[data-ri-color-add]').addEventListener('click', addResource);
+  root.querySelector('[data-ri-color-name]').addEventListener('keydown', (event) => {
     if (event.key === 'Enter') { event.preventDefault(); addResource(); }
   });
 
-  renderColorsRows(body.querySelector('[data-ri-color-list]'));
+  renderColorsRows(root.querySelector('[data-ri-color-list]'));
   void draft.listEditHistory(session.token)
-    .then((entries) => renderHistoryList(body.querySelector('[data-ri-color-history]'), entries, 'colors'))
+    .then((entries) => renderHistoryList(root.querySelector('[data-ri-color-history]'), entries, 'colors'))
     .catch(() => {
-      const box = body.querySelector('[data-ri-color-history]');
+      const box = root.querySelector('[data-ri-color-history]');
       if (box) box.innerHTML = '<p class="ri-color-row__empty">History could not be loaded (it still saves on GitHub with your next publish).</p>';
     });
 }
@@ -1242,7 +1268,7 @@ function renderColorsPage(overlay) {
 // derrubar o applyDraftToSite inteiro.
 const LINK_ROUTE_RE = /^#\/[\w-]+(?:\/[\w-]+)*$/;
 
-function applyResourceChange(name, { color, link } = {}) {
+function applyResourceChange(name, { color, link } = {}, { rerenderPage = true } = {}) {
   if (color !== undefined) draft.setValue('game', `resources.colors.${name}`, color);
   if (link !== undefined) {
     if (link && !LINK_ROUTE_RE.test(link)) {
@@ -1260,7 +1286,7 @@ function applyResourceChange(name, { color, link } = {}) {
     if (!legacy || legacy.key !== name) draft.setValue('game', `resources.pageLinks.${name}`, undefined);
   }
   draft.applyDraftToSite();
-  void rerender({ scroll: 'preserve' });
+  if (rerenderPage) void rerender({ scroll: 'preserve' });
   updateToolbar();
 }
 

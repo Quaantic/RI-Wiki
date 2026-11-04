@@ -23,6 +23,11 @@ export function setResetLayerPages(pages) {
     for (const bonus of page.bonuses || []) {
       if (bonus.value) bonus.value = formula(bonus.value, page.kind === 'level' ? ['level'] : page.kind === 'bone-dust' ? ['dust', 'p'] : ['amount']);
     }
+    for (const group of page.groups || []) {
+      for (const bonus of group.bonuses || []) {
+        if (bonus.value) bonus.value = formula(bonus.value, ['amount']);
+      }
+    }
     for (const tier of page.tiers || []) {
       for (const bonus of tier.bonuses || []) {
         if (bonus.value) bonus.value = formula(bonus.value, ['G']);
