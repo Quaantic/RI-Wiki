@@ -408,6 +408,9 @@ async function startSession(token) {
     document.documentElement.classList.add('ri-edit-bar');
     barStatus('Loading repository content…', 'busy');
     const info = await draft.initSession(token);
+    if (info.sanitized) {
+      notify(`${info.sanitized} invalid resource entr${info.sanitized === 1 ? 'y was' : 'ies were'} removed from your draft to keep editing working.`, true);
+    }
     session.token = token;
     try { sessionStorage.setItem(TOKEN_KEY, token); } catch { /* ignore */ }
     const user = await githubUser(token).catch(() => ({ login: 'admin', name: 'admin', avatar: '' }));
@@ -744,19 +747,6 @@ async function applyPopover() {
     await applyManageAdd();
     return;
   }
-  if (popState.colors) {
-    // As cores sao aplicadas ao vivo a cada mudanca; o Apply apenas fecha.
-    closePopover(true);
-    updateToolbar();
-    notify('Colors applied. Remember to save/publish.');
-    return;
-  }
-  if (popState.versions) {
-    // A lista de versoes nao tem campos; o Apply apenas fecha.
-    closePopover(true);
-    updateToolbar();
-    return;
-  }
   const state = popState;
   const applyButton = layer.popover.querySelector('[data-edit-pop-apply]');
   applyButton.disabled = true;
@@ -881,8 +871,8 @@ function installSidebarTools() {
       <small class="ri-nav-tools__hint" hidden>Drag a page between two items to reposition it — or drop it in the middle of a category/page header to nest it inside. Only in Edit mode.</small>`;
     nav.appendChild(box);
     box.querySelector('[data-ri-nav-tool="add"]').addEventListener('click', (event) => openManageAdd(event.currentTarget));
-    box.querySelector('[data-ri-nav-tool="colors"]').addEventListener('click', (event) => openColorsManager(event.currentTarget));
-    box.querySelector('[data-ri-nav-tool="versions"]').addEventListener('click', (event) => openVersionsManager(event.currentTarget));
+    box.querySelector('[data-ri-nav-tool="colors"]').addEventListener('click', () => openAdminPage('colors'));
+    box.querySelector('[data-ri-nav-tool="versions"]').addEventListener('click', () => openAdminPage('versions'));
     box.querySelector('[data-ri-nav-tool="drag"]').addEventListener('click', () => {
       dragArmed = !dragArmed;
       if (!dragArmed) {
@@ -896,83 +886,140 @@ function installSidebarTools() {
   applyDragMode();
 }
 
-// ==== VERSOES (backups no GitHub — substitui o painel /admin/) ====
-// Lista content/backups ("backup-*.json"), limite de 25 versoes (a mais
-// antiga sai quando chega a 26) e restore com versao de seguranca.
+// ==== PAGINAS DO EDITOR: Colors e Versions (interface completa, nao popup) ====
+// Um overlay de tela cheia com cabecalho proprio e rolagem independente.
+// Esc ou o botao Close fecham; o conteudo continua sendo o rascunho comum.
 
-function openVersionsManager(anchor = null) {
+let adminOverlay = null;
+let adminOverlayKind = '';
+let adminColorsQuery = '';
+
+function closeAdminPage() {
+  if (adminOverlay) {
+    adminOverlay.remove();
+    adminOverlay = null;
+    adminOverlayKind = '';
+  }
+}
+
+function formatHistoryDate(at) {
+  const date = new Date(at || 0);
+  if (Number.isNaN(date.getTime())) return '';
+  return date.toLocaleString(undefined, { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+}
+
+function renderHistoryList(container, entries, filterKind) {
+  const shown = entries
+    .filter((entry) => entry.text && (!filterKind || entry.kind === filterKind))
+    .slice(0, 60);
+  if (!shown.length) {
+    container.innerHTML = '<p class="ri-color-row__empty">Nothing logged yet. Every edit (created/renamed/removed/moved, colors and links) is logged automatically.</p>';
+    return;
+  }
+  container.innerHTML = shown.map((entry) => `
+    <div class="ri-history-row">
+      <span class="ri-history-row__date">${esc(formatHistoryDate(entry.at))}</span>
+      <span class="ri-history-row__kind ri-history-row__kind--${entry.kind === 'colors' ? 'colors' : 'content'}">${entry.kind === 'colors' ? 'Colors' : 'Content'}</span>
+      <span class="ri-history-row__text">${esc(entry.text)}</span>
+      ${entry.pending ? '<span class="ri-history-row__pending">pending</span>' : ''}
+    </div>`).join('');
+}
+
+function openAdminPage(kind) {
   if (!session.ready || !session.allowed) return;
   if (popState) closePopover(true);
   if (!session.editing) setEditing(true);
-  popState = { versions: true, label: 'Versions' };
-  const body = qs('[data-edit-pop-body]', layer.popover);
-  const title = qs('[data-edit-pop-title]', layer.popover);
-  const warn = qs('[data-edit-pop-warn]', layer.popover);
-  const deleteBtn = qs('[data-edit-pop-delete]', layer.popover);
-  title.textContent = 'Versions';
-  warn.hidden = true;
-  if (deleteBtn) deleteBtn.hidden = true;
+  closeAdminPage();
+  adminOverlayKind = kind;
+  adminColorsQuery = '';
+  const overlay = document.createElement('div');
+  overlay.className = 'ri-admin-overlay';
+  overlay.innerHTML = `
+    <div class="ri-admin-page">
+      <header class="ri-admin-page__head">
+        <h2>${kind === 'colors' ? `${icon('palette', 17)} Resource colors & links` : `${icon('history', 17)} Versions & Update History`}</h2>
+        <button type="button" class="btn btn--ghost btn--sm" data-ri-admin-close>${icon('x', 14)} Close</button>
+      </header>
+      <div class="ri-admin-page__body" data-ri-admin-body></div>
+    </div>`;
+  document.body.appendChild(overlay);
+  adminOverlay = overlay;
+  qs('[data-ri-admin-close]', overlay).addEventListener('click', closeAdminPage);
+  const onKey = (event) => {
+    if (event.key === 'Escape' && adminOverlay) {
+      event.stopPropagation();
+      closeAdminPage();
+      document.removeEventListener('keydown', onKey, true);
+    }
+  };
+  document.addEventListener('keydown', onKey, true);
+  if (kind === 'colors') renderColorsPage(overlay);
+  else renderVersionsPage(overlay);
+}
 
+function renderVersionsPage(overlay) {
+  const body = qs('[data-ri-admin-body]', overlay);
   body.innerHTML = `
     <p class="ri-color-note">Every publish saves the previous content as a version automatically. The list keeps the latest <b>25</b> — when a new one arrives, the oldest is removed. Restoring replaces the live Wiki and the draft you are editing (a safety version of the current content is saved first).</p>
     <div class="ri-versions-actions">
       <button type="button" class="btn btn--ghost btn--sm" data-ri-versions-save>${icon('save', 13)} Save version now</button>
     </div>
-    <div data-ri-versions-list><p class="ri-color-row__empty">Loading versions…</p></div>`;
-
-  const refresh = async () => {
-    const list = qs('[data-ri-versions-list]', body);
-    if (!list) return;
-    try {
-      const versions = await draft.listVersions(session.token);
-      if (!list.isConnected) return;
-      if (!versions.length) {
-        list.innerHTML = '<p class="ri-color-row__empty">No versions yet. Publish an edit or click "Save version now".</p>';
-        return;
-      }
-      list.innerHTML = versions.map((v) => `
-        <div class="ri-version-row">
-          <span class="ri-version-row__name" title="${esc(v.name)}">${esc(draft.versionLabel(v.name))}</span>
-          <button type="button" class="btn btn--ghost btn--sm" data-ri-version-restore="${esc(v.name)}">${icon('rotate-ccw', 12)} Restore</button>
-        </div>`).join('');
-      list.querySelectorAll('[data-ri-version-restore]').forEach((btn) => {
-        btn.addEventListener('click', () => restoreFlow(btn.getAttribute('data-ri-version-restore')));
-      });
-    } catch (error) {
-      if (list.isConnected) list.innerHTML = `<p class="ri-color-row__empty">${esc(error.message || 'Failed to list versions.')}</p>`;
-    }
-  };
+    <div data-ri-versions-list><p class="ri-color-row__empty">Loading versions…</p></div>
+    <section class="ri-admin-history">
+      <h3>${icon('history', 14)} Update History</h3>
+      <p class="ri-color-note">Automatic log of every change — created, renamed, removed or moved content, colors and links. Pending entries become permanent when you publish.</p>
+      <div data-ri-history><p class="ri-color-row__empty">Loading…</p></div>
+    </section>`;
 
   const restoreFlow = async (name) => {
     if (!window.confirm(`Restore "${draft.versionLabel(name)}"? This replaces the live Wiki and your current draft edits. A safety version of the current content is saved first.`)) return;
-    warn.hidden = true;
     try {
       await draft.restoreVersion(session.token, name);
-      closePopover(true);
       updateToolbar();
       await rerender({ scroll: 'preserve' });
       notify(`Version restored: ${draft.versionLabel(name)}`);
+      renderVersionsPage(overlay);
     } catch (error) {
-      warn.textContent = error.message || 'Restore failed.';
-      warn.hidden = false;
+      notify(error.message || 'Restore failed.', true);
     }
   };
 
   qs('[data-ri-versions-save]', body).addEventListener('click', async () => {
-    warn.hidden = true;
     try {
       await draft.createVersion(session.token, draft.snapshotDocs() || undefined, 'Manual version');
       notify('Version saved.');
-      await refresh();
+      renderVersionsPage(overlay);
     } catch (error) {
-      warn.textContent = error.message || 'Could not save the version.';
-      warn.hidden = false;
+      notify(error.message || 'Could not save the version.', true);
     }
   });
 
-  layer.popover.hidden = false;
-  positionPopover(anchor?.isConnected ? anchor : navEl()?.querySelector('[data-ri-nav-tools]'));
-  void refresh();
+  void (async () => {
+    const list = qs('[data-ri-versions-list]', body);
+    const historyBox = qs('[data-ri-history]', body);
+    try {
+      const [versions, history] = await Promise.all([
+        draft.listVersions(session.token),
+        draft.listEditHistory(session.token).catch(() => []),
+      ]);
+      if (!adminOverlay || adminOverlayKind !== 'versions') return;
+      if (!versions.length) {
+        list.innerHTML = '<p class="ri-color-row__empty">No versions yet. Publish an edit or click "Save version now".</p>';
+      } else {
+        list.innerHTML = versions.map((v) => `
+          <div class="ri-version-row">
+            <span class="ri-version-row__name" title="${esc(v.name)}">${esc(draft.versionLabel(v.name))}</span>
+            <button type="button" class="btn btn--ghost btn--sm" data-ri-version-restore="${esc(v.name)}">${icon('rotate-ccw', 12)} Restore</button>
+          </div>`).join('');
+        list.querySelectorAll('[data-ri-version-restore]').forEach((btn) => {
+          btn.addEventListener('click', () => restoreFlow(btn.getAttribute('data-ri-version-restore')));
+        });
+      }
+      renderHistoryList(historyBox, history);
+    } catch (error) {
+      list.innerHTML = `<p class="ri-color-row__empty">${esc(error.message || 'Failed to list versions.')}</p>`;
+    }
+  })();
 }
 
 // ==== GERENCIADOR DE CORES DOS RECURSOS ====
@@ -1000,39 +1047,93 @@ function pageLinksEntry(name) {
   return found ? { key: found, value: links[found] } : null;
 }
 
-function resourceLinkOptions(selected) {
-  const options = ['<option value="">No page link</option>'];
-  let matched = !selected;
-  const mark = (value) => {
-    if (selected && value === selected) matched = true;
-    return selected === value ? ' selected' : '';
-  };
+// Lista completa de destinos: categorias, paginas e paginas filhas em
+// QUALQUER nivel (ex.: #/life/rare-saps fica dentro de Tree > Sap).
+function collectPageRoutes() {
+  const routes = [];
   for (const cat of CATEGORIES) {
     const base = `#/${cat.id}`;
-    options.push(`<option value="${base}"${mark(base)}>${esc(cat.name)} (category)</option>`);
-    for (const s of cat.subcategories || []) {
-      const route = `${base}/${s.id}`;
-      options.push(`<option value="${route}"${mark(route)}>${esc(cat.name)} › ${esc(s.name)}</option>`);
-      for (const ch of s.children || []) {
-        const childRoute = `${base}/${ch.id}`;
-        options.push(`<option value="${childRoute}"${mark(childRoute)}>${esc(cat.name)} › ${esc(ch.name)}</option>`);
+    routes.push({ route: base, label: `${cat.name} (category)`, search: `${cat.name}`.toLowerCase() });
+    const walk = (items, prefix) => {
+      for (const item of items || []) {
+        const label = `${prefix}${item.name}`;
+        routes.push({ route: `${base}/${item.id}`, label, search: `${cat.name} ${prefix} ${item.name} ${item.id}`.toLowerCase() });
+        walk(item.children, `${label} › `);
       }
-    }
+    };
+    walk(cat.subcategories, '');
   }
-  // Link salvo apontando para pagina inexistente: mostra em vez de "No page link".
-  if (selected && !matched) {
-    options.splice(1, 0, `<option value="${esc(selected)}" selected>Missing page: ${esc(selected)}</option>`);
-  }
-  return options.join('');
+  return routes;
 }
 
-function renderColorsRows() {
-  const body = qs('[data-edit-pop-body]', layer.popover);
-  if (!body || !popState?.colors) return;
-  const list = qs('[data-ri-color-list]', body);
+function routeLabel(route, routes = collectPageRoutes()) {
+  if (!route) return '';
+  return routes.find((item) => item.route === route)?.label || '';
+}
+
+// Campo de link pesquisavel: digite para filtrar paginas, clique para
+// escolher. Mostra o NOME da pagina (nao a rota crua) quando escolhido.
+function makeLinkPicker({ value, onPick }) {
+  const routes = collectPageRoutes();
+  const wrap = document.createElement('div');
+  wrap.className = 'ri-linkpick';
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.className = 'input ri-linkpick__input';
+  input.autocomplete = 'off';
+  input.value = value ? (routeLabel(value, routes) || value) : '';
+  input.placeholder = 'No page link — click to search pages…';
+  input.setAttribute('aria-label', 'Page link');
+  const list = document.createElement('div');
+  list.className = 'ri-linkpick__list';
+  list.hidden = true;
+  wrap.appendChild(input);
+  wrap.appendChild(list);
+
+  let rows = [];
+  const open = (query) => {
+    const wanted = query.trim().toLowerCase();
+    const matches = routes.filter((item) => !wanted || item.search.includes(wanted) || item.route.toLowerCase().includes(wanted));
+    rows = [
+      { route: '', label: 'No page link', search: '' },
+      ...matches.slice(0, 60),
+    ];
+    list.innerHTML = rows.map((item) => `
+      <button type="button" class="ri-linkpick__row${item.route === value ? ' is-current' : ''}" data-route="${esc(item.route)}">
+        <b>${esc(item.label)}</b>${item.route ? `<small>${esc(item.route)}</small>` : ''}
+      </button>`).join('');
+    list.hidden = false;
+  };
+  const pick = (route) => {
+    value = route;
+    input.value = route ? (routeLabel(route, routes) || route) : '';
+    list.hidden = true;
+    onPick(route);
+  };
+  input.addEventListener('focus', () => open(''));
+  input.addEventListener('input', () => open(input.value));
+  input.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      const first = list.querySelector('[data-route]');
+      if (first) pick(first.getAttribute('data-route'));
+    }
+    if (event.key === 'Escape') { list.hidden = true; input.blur(); }
+  });
+  list.addEventListener('click', (event) => {
+    const row = event.target.closest('[data-route]');
+    if (row) pick(row.getAttribute('data-route'));
+  });
+  wrap.addEventListener('focusout', (event) => {
+    if (!wrap.contains(event.relatedTarget)) list.hidden = true;
+  });
+  return wrap;
+}
+
+function renderColorsRows(list) {
   if (!list) return;
   list.innerHTML = '';
-  const query = (popState.colorsQuery || '').trim().toLowerCase();
+  const query = adminColorsQuery.trim().toLowerCase();
   const names = Object.keys(locate(draft.doc('game'), 'resources.colors') || {})
     .filter((n) => !query || n.toLowerCase().includes(query))
     .sort((a, b) => a.localeCompare(b));
@@ -1049,62 +1150,61 @@ function renderColorsRows() {
     const link = pageLinksEntry(name)?.value || '';
     const row = document.createElement('div');
     row.className = 'ri-color-row';
+    const main = document.createElement('div');
+    main.className = 'ri-color-row__main';
+    main.innerHTML = `
+      <b style="color:${esc(color)}">${esc(name)}</b>`;
+    main.appendChild(makeLinkPicker({
+      value: link,
+      onPick: (route) => applyResourceChange(name, { link: route }),
+    }));
     row.innerHTML = `
-      <input type="color" class="ri-color-row__swatch" value="${esc(color)}" data-ri-color-swatch aria-label="${esc(name)} color">
-      <div class="ri-color-row__main">
-        <b style="color:${esc(color)}">${esc(name)}</b>
-        <select class="input" data-ri-color-link aria-label="${esc(name)} page link">${resourceLinkOptions(link)}</select>
-      </div>
-      <button type="button" class="ri-color-row__remove" data-ri-color-remove title="Remove this resource">${icon('trash-2', 13)}</button>`;
+      <input type="color" class="ri-color-row__swatch" value="${esc(color)}" data-ri-color-swatch aria-label="${esc(name)} color">`;
+    row.appendChild(main);
+    row.insertAdjacentHTML('beforeend', `
+      <button type="button" class="ri-color-row__remove" data-ri-color-remove title="Remove this resource">${icon('trash-2', 13)}</button>`);
     row.querySelector('[data-ri-color-swatch]').addEventListener('change', (event) => {
       applyResourceChange(name, { color: event.target.value });
       row.querySelector('b').style.color = event.target.value;
     });
-    row.querySelector('[data-ri-color-link]').addEventListener('change', (event) => {
-      applyResourceChange(name, { link: event.target.value });
-    });
     row.querySelector('[data-ri-color-remove]').addEventListener('click', () => {
       if (!window.confirm(`Remove "${name}" from the colored resources?`)) return;
       applyResourceChange(name, { color: undefined, link: undefined });
-      renderColorsRows();
+      renderColorsRows(list);
     });
     list.appendChild(row);
   }
 }
 
-function openColorsManager(anchor = null) {
-  if (!session.ready || !session.allowed) return;
-  if (popState) closePopover(true);
-  if (!session.editing) setEditing(true);
-  popState = { colors: true, label: 'Colors' };
-  const body = qs('[data-edit-pop-body]', layer.popover);
-  const title = qs('[data-edit-pop-title]', layer.popover);
-  const warn = qs('[data-edit-pop-warn]', layer.popover);
-  title.textContent = 'Resource colors & links';
-  warn.hidden = true;
-  const deleteBtn = qs('[data-edit-pop-delete]', layer.popover);
-  if (deleteBtn) deleteBtn.hidden = true;
-
+function renderColorsPage(overlay) {
+  const body = qs('[data-ri-admin-body]', overlay);
+  const count = Object.keys(locate(draft.doc('game'), 'resources.colors') || {}).length;
   body.innerHTML = `
-    <p class="ri-color-note">Each entry colors the resource name everywhere in texts and can link it to a wiki page.</p>
-    <input type="search" class="input ri-color-search" data-ri-color-search placeholder="Search resources (${Object.keys(locate(draft.doc('game'), 'resources.colors') || {}).length})..." aria-label="Search colored resources">
+    <p class="ri-color-note">Each entry colors the resource name everywhere in texts and can link it to a wiki page. Click a link field and type to search pages — including nested ones (Tree › Sap › Rare Saps).</p>
+    <div class="ri-admin-toolbar">
+      <input type="search" class="input ri-color-search" data-ri-color-search placeholder="Search resources (${count})..." aria-label="Search colored resources">
+    </div>
     <div data-ri-color-list></div>
     <div class="ri-color-add">
       <input type="text" class="input" data-ri-color-name placeholder="Resource name (ex.: Bone Dust)">
       <input type="color" class="ri-color-row__swatch" data-ri-color-new-color value="#86d62b" aria-label="New resource color">
       <button type="button" class="btn btn--ghost btn--sm" data-ri-color-add>${icon('plus', 13)} Add</button>
-    </div>`;
+    </div>
+    <section class="ri-admin-history">
+      <h3>${icon('palette', 14)} Recent color changes</h3>
+      <div data-ri-color-history><p class="ri-color-row__empty">Loading…</p></div>
+    </section>`;
 
-  qs('[data-ri-color-search]', body).addEventListener('input', (event) => {
-    popState.colorsQuery = event.target.value;
-    renderColorsRows();
+  body.querySelector('[data-ri-color-search]').addEventListener('input', (event) => {
+    adminColorsQuery = event.target.value;
+    renderColorsRows(body.querySelector('[data-ri-color-list]'));
   });
 
+  const fail = (msg) => notify(msg, true);
   const addResource = () => {
-    const nameIn = qs('[data-ri-color-name]', body);
-    const colorIn = qs('[data-ri-color-new-color]', body);
+    const nameIn = body.querySelector('[data-ri-color-name]');
+    const colorIn = body.querySelector('[data-ri-color-new-color]');
     const name = (nameIn?.value || '').trim();
-    const fail = (msg) => { warn.textContent = msg; warn.hidden = false; };
     if (name.length < 2) return fail('Give the resource a name (2+ letters).');
     if (name.includes('.')) return fail('The resource name cannot contain dots.');
     if (RESERVED_KEYS.includes(name)) return fail('That name is not allowed.');
@@ -1116,28 +1216,39 @@ function openColorsManager(anchor = null) {
     draft.applyDraftToSite();
     void rerender({ scroll: 'preserve' });
     updateToolbar();
-    warn.hidden = true;
     nameIn.value = '';
-    renderColorsRows();
+    renderColorsRows(body.querySelector('[data-ri-color-list]'));
   };
 
-  qs('[data-ri-color-add]', body).addEventListener('click', addResource);
-  qs('[data-ri-color-name]', body).addEventListener('keydown', (event) => {
+  body.querySelector('[data-ri-color-add]').addEventListener('click', addResource);
+  body.querySelector('[data-ri-color-name]').addEventListener('keydown', (event) => {
     if (event.key === 'Enter') { event.preventDefault(); addResource(); }
   });
 
-  renderColorsRows();
-  layer.popover.hidden = false;
-  positionPopover(anchor?.isConnected ? anchor : navEl()?.querySelector('[data-ri-nav-tools]'));
+  renderColorsRows(body.querySelector('[data-ri-color-list]'));
+  void draft.listEditHistory(session.token)
+    .then((entries) => renderHistoryList(body.querySelector('[data-ri-color-history]'), entries, 'colors'))
+    .catch(() => {
+      const box = body.querySelector('[data-ri-color-history]');
+      if (box) box.innerHTML = '<p class="ri-color-row__empty">History could not be loaded (it still saves on GitHub with your next publish).</p>';
+    });
 }
 
 // Aplica a mudanca de um recurso (cor e/ou link) e reflete na hora.
 // undefined remove a chave do rascunho (o undo guarda o valor anterior).
 // Se o link vivia sob chave com outra caixa ("silver sap"), ele migra para
 // a chave do nome da cor e a antiga e removida (tudo undoable, LIFO).
+// Rotas invalidas sao recusadas ANTES de gravar: uma entrada ruim nao pode
+// derrubar o applyDraftToSite inteiro.
+const LINK_ROUTE_RE = /^#\/[\w-]+(?:\/[\w-]+)*$/;
+
 function applyResourceChange(name, { color, link } = {}) {
   if (color !== undefined) draft.setValue('game', `resources.colors.${name}`, color);
   if (link !== undefined) {
+    if (link && !LINK_ROUTE_RE.test(link)) {
+      notify(`"${link}" is not a valid page route — the link was not saved.`, true);
+      return;
+    }
     const legacy = pageLinksEntry(name);
     if (legacy && legacy.key !== name) draft.setValue('game', `resources.pageLinks.${legacy.key}`, undefined);
     draft.setValue('game', `resources.pageLinks.${name}`, link || undefined);

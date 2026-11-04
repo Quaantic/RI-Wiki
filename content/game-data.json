@@ -10348,7 +10348,21 @@
       "Sword": "#968d99",
       "Shield": "#9db0a0",
       "Item": "#2f8099",
-      "Dungeon Level": "#490382"
+      "Dungeon Level": "#490382",
+      "Asteroid": "#9c8f7f",
+      "Meteorite": "#a06b45",
+      "Cobalt": "#3f7fe0",
+      "Amber": "#e6a817",
+      "Amethyst": "#a05ce6",
+      "Astatine": "#63c94a",
+      "Ascensions": "#f2c94c",
+      "Machines": "#9aa3b2",
+      "Factory": "#e0743a",
+      "Money Island": "#58c04d",
+      "Gold Upgrades": "#f5b83d",
+      "Sacrifice": "#d24d4d",
+      "Ranks": "#cf8c5a",
+      "Terraforming": "#6fce55"
     },
     "pageLinks": {
       "main": "#/main",
@@ -10429,7 +10443,14 @@
       "gold upgrades": "#/money-island/gold-upgrades",
       "terraforming": "#/life/terraforming",
       "life": "#/life",
-      "money": "#/money-island"
+      "money": "#/money-island",
+      "Asteroid": "#/mining/ores",
+      "Meteorite": "#/mining/ores",
+      "Cobalt": "#/mining/ores",
+      "Amber": "#/mining/ores",
+      "Amethyst": "#/mining/ores",
+      "Earth": "#/runes/earth",
+      "Advanced": "#/runes/advanced"
     }
   }
 }

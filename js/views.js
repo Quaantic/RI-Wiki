@@ -709,7 +709,7 @@ export const homeView = {
         <div class="hero__hex hex-texture"></div>
         <div class="hero__inner">
           <div>
-            <span class="hero__badge"><span class="hex-dot"></span> ${ed('game:uiCopy.heroBadge', 'text', 'Hero badge')}${esc(UI_COPY.heroBadge || `Regrowth Incremental · Community Wiki`)}</span>
+            <span class="hero__badge" ${ed('game:uiCopy.heroBadge', 'text', 'Hero badge')}><span class="hex-dot"></span> ${esc(UI_COPY.heroBadge || `Regrowth Incremental · Community Wiki`)}</span>
             <h1 class="hero__title" ${ed('game:uiCopy.heroTitle', 'long', 'Hero title')}>${esc(UI_COPY.heroTitle || 'Grow your knowledge\nalongside your valley.').replace('\n', '<br />')}</h1>
             <p class="hero__sub" ${ed('game:uiCopy.heroSub', 'long', 'Hero description')}>
               ${esc(UI_COPY.heroSub || `Every ore, rune, boss and perk — documented, cross-linked and searchable. Built by the community, verified against v${latest.version}.`).replace('\n', '<br />')}

@@ -1306,7 +1306,7 @@
       "icon": "rune",
       "tagline": "Socketable stones grouped into six families — Energetic, Sky, Riches, Earth, Advanced and Bones. Every roll is gated by Rune Luck.",
       "overview": {
-        "desc": "Runes are socketable stones that rewrite your stats while they are slotted. Every rune belongs to one of six families — Energetic, Sky, Riches, Earth, Advanced and Bones — and every roll is gated by Rune Luck: the more luck you stack, the deeper into a family's pool you can reach. Each family page breaks its runes into cards showing the required luck, the base roll chance, the chance with recommended luck, and what each rune boosts at cap. The Riches family is documented first and sets the template for the rest.",
+        "desc": "Runes are socketable stones that rewrite your stats while they are slotted. Every rune belongs to one of six families — Energetic, Sky, Riches, Earth, Advanced and Bones — and every roll is gated by Rune Luck: the more luck you stack, the deeper into a family's pool you can reach. Each family page breaks its runes into cards showing the required luck, the base roll chance, the chance with recommended luck, and what each rune boosts at cap. All six families are documented — pick one below to see its full rune board.",
         "highlights": [
           {
             "icon": "rune",
@@ -1331,7 +1331,7 @@
           },
           {
             "label": "Documented",
-            "value": "Riches"
+            "value": "All 6"
           }
         ]
       },
@@ -1491,13 +1491,43 @@
   ],
   "credits": {
     "staff": [
-      { "name": "Zeno", "handle": "im_zenoir", "role": "Web Designer · Wiki Manager", "avatar": "images/credits/zeno.png", "banner": "#86D62B" },
-      { "name": "Zinss", "handle": "zinss", "role": "Wiki Manager", "avatar": "images/credits/zinss.png", "banner": "#E05252" }
+      {
+        "name": "Zeno",
+        "handle": "im_zenoir",
+        "role": "Web Designer · Wiki Manager",
+        "avatar": "images/credits/zeno.png",
+        "banner": "#86D62B"
+      },
+      {
+        "name": "Zinss",
+        "handle": "zinss",
+        "role": "Wiki Manager",
+        "avatar": "images/credits/zinss.png",
+        "banner": "#E05252"
+      }
     ],
     "contributors": [
-      { "name": "Qbeekr", "handle": "", "role": "Contributor", "avatar": "images/credits/qbeekr.png", "banner": "#F5D442" },
-      { "name": "Azure", "handle": "", "role": "Contributor", "avatar": "images/credits/azure.png", "banner": "#4A9DE8" },
-      { "name": "Otter", "handle": "", "role": "Contributor", "avatar": "images/credits/otter.png", "banner": "#1A1D1F" }
+      {
+        "name": "Qbeekr",
+        "handle": "",
+        "role": "Contributor",
+        "avatar": "images/credits/qbeekr.png",
+        "banner": "#F5D442"
+      },
+      {
+        "name": "Azure",
+        "handle": "",
+        "role": "Contributor",
+        "avatar": "images/credits/azure.png",
+        "banner": "#4A9DE8"
+      },
+      {
+        "name": "Otter",
+        "handle": "",
+        "role": "Contributor",
+        "avatar": "images/credits/otter.png",
+        "banner": "#1A1D1F"
+      }
     ],
     "thanks": "To everyone in the RI Gaming community logging drops and sharing finds — this wiki runs on that."
   }

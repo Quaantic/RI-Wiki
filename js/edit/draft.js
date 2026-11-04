@@ -25,6 +25,14 @@ const draftState = {
   savedDraftRaw: '',
 };
 
+// Diario automatico de edicoes ("Update History"). Em memoria durante a
+// sessao; "Save draft" grava pendente em content/edit-history.json,
+// "Publish" grava como definitivo, "Discard" limpa pendentes.
+const changeLog = [];
+const CHANGE_LOG_MAX = 400;
+const HISTORY_FILE = 'content/edit-history.json';
+const LOG_STORAGE_MAX = 300;
+
 const clone = (value) => JSON.parse(JSON.stringify(value));
 
 function walkTo(docs, path) {
@@ -84,10 +92,64 @@ function writeAt(name, path, value) {
   holder[segments.at(-1)] = value;
 }
 
+function itemLabel(item) {
+  return item && typeof item === 'object' ? (item.name ?? item.title ?? item.version ?? item.id ?? '') : '';
+}
+
+function shortValue(value) {
+  if (value == null) return '';
+  const text = typeof value === 'string' ? value : JSON.stringify(value) || '';
+  const clean = text.replace(/\s+/g, ' ').trim();
+  return clean.length > 44 ? `${clean.slice(0, 43)}…` : clean;
+}
+
+function labelAt(name, path) {
+  const segments = path.split('.');
+  for (let i = segments.length; i >= 1; i -= 1) {
+    const label = itemLabel(readAt(name, segments.slice(0, i).join('.')));
+    if (label) return label;
+  }
+  return '';
+}
+
+function fieldWord(key) {
+  return String(key || '').replace(/([a-z0-9])([A-Z])/g, '$1 $2');
+}
+
+function logChange(kind, text) {
+  changeLog.push({ at: Date.now(), kind, text });
+  if (changeLog.length > CHANGE_LOG_MAX) changeLog.shift();
+}
+
+function describeSet(name, path, prev, value) {
+  const colorMatch = /^resources\.colors\.(.+)$/.exec(path);
+  if (colorMatch) {
+    return value == null ? `Removed the color of "${colorMatch[1]}"` : `Colored "${colorMatch[1]}" (${value})`;
+  }
+  const linkMatch = /^resources\.pageLinks\.(.+)$/.exec(path);
+  if (linkMatch) {
+    return value ? `Linked "${linkMatch[1]}" to ${value}` : `Removed the link of "${linkMatch[1]}"`;
+  }
+  const segments = path.split('.');
+  const last = segments.at(-1);
+  const parentLabel = itemLabel(readAt(name, segments.slice(0, -1).join('.'))) || labelAt(name, segments.slice(0, -1).join('.'));
+  if (last === 'name' && typeof value === 'string') {
+    return prev == null ? `Created "${value}"` : `Renamed "${prev}" to "${value}"`;
+  }
+  const target = parentLabel ? `"${parentLabel}"` : `"${segments.slice(0, -2).at(-1) ?? last}"`;
+  const field = last === 'name' || last === 'title' ? 'text' : fieldWord(last);
+  return prev === undefined
+    ? `Set ${field} of ${target} (${shortValue(value)})`
+    : `Updated ${field} of ${target}: ${shortValue(prev) || 'empty'} to ${shortValue(value) || 'empty'}`;
+}
+
 export function setValue(name, path, value) {
   const prev = readAt(name, path);
   writeAt(name, path, value);
   remember({ type: 'set', name, path, value: prev === undefined ? undefined : clone(prev) });
+  try {
+    logChange(/^(wiki|game|updates)$/.test(name) ? (path.startsWith('resources.') ? 'colors' : 'content') : 'content', describeSet(name, path, prev, value));
+  } catch { /* o diario nunca bloqueia a edicao */ }
 }
 
 function undoSet(entry) {
@@ -112,8 +174,12 @@ export function removeValue(name, path) {
   if (!Number.isInteger(index) || index < 0 || index >= parent.length) {
     throw new Error(`Nothing to delete at "${path}".`);
   }
+  const removedLabel = itemLabel(parent[index]) || shortValue(parent[index]) || 'item';
   const [value] = parent.splice(index, 1);
   remember({ type: 'remove', name, parentPath: segments.slice(0, -1).join('.'), index, value: clone(value) });
+  try {
+    logChange('content', `Removed "${removedLabel}"`);
+  } catch { /* o diario nunca bloqueia a edicao */ }
 }
 
 function undoRemove(entry) {
@@ -143,6 +209,9 @@ export function pushValue(name, path, value) {
   const index = list.length;
   list.push(value);
   remember({ type: 'push', name, path, index });
+  try {
+    logChange('content', `Added "${itemLabel(value) || shortValue(value) || 'item'}"`);
+  } catch { /* o diario nunca bloqueia a edicao */ }
   return index;
 }
 
@@ -170,6 +239,7 @@ export function moveValue(name, fromPath, fromIndex, toPath, toIndex, skipHistor
   if (item == null || typeof item !== 'object') {
     throw new Error('Only items can be moved (the origin list is odd).');
   }
+  const movedLabel = itemLabel(item) || 'item';
   try {
     const dest = fromPath === toPath ? source : walkTo(root, toPath);
     if (!Array.isArray(dest)) throw new Error(`Destination "${toPath}" is not a list.`);
@@ -180,6 +250,9 @@ export function moveValue(name, fromPath, fromIndex, toPath, toIndex, skipHistor
   }
   if (!skipHistory) {
     remember({ type: 'move', name, fromPath, fromIndex, toPath, toIndex: destIndex });
+    try {
+      logChange('content', `Moved "${movedLabel}"`);
+    } catch { /* o diario nunca bloqueia a edicao */ }
   }
   return true;
 }
@@ -259,12 +332,45 @@ export function appPublishedDocs(name) {
   return clone(draftState.baseDocs?.[name] ?? {});
 }
 
+// Autocura: uma entrada invalida de colors/pageLinks (ex.: rota digitada
+// errada) NAO pode derrubar applyDraftToSite e travar TODA a edicao. Entras
+// ruins sao removidas do rascunho antes do uso, com aviso.
+function sanitizeResources() {
+  const resources = draftState.docs?.game?.resources;
+  if (!resources || typeof resources !== 'object') return 0;
+  const reserved = ['__proto__', 'constructor', 'prototype'];
+  const validName = (key) => key && key.trim() && !reserved.includes(key);
+  let dropped = 0;
+  const colors = resources.colors;
+  if (colors && typeof colors === 'object' && !Array.isArray(colors)) {
+    for (const key of Object.keys(colors)) {
+      const value = colors[key];
+      if (!validName(key) || typeof value !== 'string' || !/^#(?:[\da-f]{3}|[\da-f]{4}|[\da-f]{6}|[\da-f]{8})$/i.test(value)) {
+        delete colors[key];
+        dropped += 1;
+      }
+    }
+  }
+  const links = resources.pageLinks;
+  if (links && typeof links === 'object' && !Array.isArray(links)) {
+    for (const key of Object.keys(links)) {
+      const value = links[key];
+      if (!validName(key) || typeof value !== 'string' || !/^#\/[\w-]+(?:\/[\w-]+)*$/.test(value)) {
+        delete links[key];
+        dropped += 1;
+      }
+    }
+  }
+  return dropped;
+}
+
 export async function initSession(token) {
   draftState.token = token;
   draftState.baseDocs = {};
   draftState.shas = {};
   draftState.draftSha = null;
   draftState.savedDraftRaw = '';
+  changeLog.length = 0;
   await Promise.all(Object.entries(FILES).map(async ([name, path]) => {
     const result = await githubRequest(githubContentsUrl(path), token);
     if (result.type !== 'file' || typeof result.content !== 'string') {
@@ -300,7 +406,8 @@ export async function initSession(token) {
     }
     draftLoaded = false;
   }
-  return { draftLoaded };
+  const dropped = sanitizeResources();
+  return { draftLoaded, sanitized: dropped };
 }
 
 export async function saveDraft(token) {
@@ -317,6 +424,10 @@ export async function saveDraft(token) {
     draftState.draftSha = result.content.sha;
     draftState.savedDraftRaw = currentDraftRaw();
   });
+  // Diario: pendencias vao para o arquivo (marcadas "pending").
+  if (changeLog.length) {
+    await writeHistory(token, changeLog.map((entry) => ({ at: entry.at, kind: entry.kind, text: entry.text })), true).catch(() => {});
+  }
 }
 
 export async function discardDraft(token) {
@@ -336,6 +447,9 @@ export async function discardDraft(token) {
   draftState.savedDraftRaw = '';
   draftState.docs = clone(draftState.baseDocs);
   applyDraftToSite();
+  changeLog.length = 0;
+  // Descartou o rascunho: as pendencias do diario caducam junto.
+  await writeHistory(token, [], false).catch(() => {});
 }
 
 export async function publishChanges(token) {
@@ -388,6 +502,62 @@ export async function publishChanges(token) {
   }
   draftState.draftSha = null;
   draftState.savedDraftRaw = '';
+  if (changeLog.length) {
+    // Diario definitivo: pendencias antigas do arquivo sao substituidas
+    // pelas mesmas entradas agora marcadas como publicadas.
+    const published = changeLog.map((entry) => ({ at: entry.at, kind: entry.kind, text: entry.text }));
+    changeLog.length = 0;
+    await writeHistory(token, published, false).catch(() => {});
+  }
+}
+
+// Grava o diario no repositorio. pending=true marca como "nao publicado"
+// (vem do "Save draft"); pending=false grava como definitivo (Publish) e
+// limpa pendencias antigas. `newEntries` = entradas novas desta sessao.
+async function writeHistory(token, newEntries, pending) {
+  if (!newEntries.length && pending) return;
+  let older = [];
+  let sha;
+  const current = await githubRequest(githubContentsUrl(HISTORY_FILE), token, { allowNotFound: true });
+  if (current?.type === 'file') {
+    sha = current.sha;
+    try {
+      const parsed = JSON.parse(decodeBase64Content(current.content));
+      older = Array.isArray(parsed?.entries) ? parsed.entries : [];
+    } catch {
+      older = [];
+    }
+    if (!pending) older = older.filter((entry) => !entry.pending);
+  }
+  const entries = [...older, ...newEntries]
+    .sort((a, b) => (b.at || 0) - (a.at || 0))
+    .slice(0, LOG_STORAGE_MAX);
+  await githubRequest(githubContentsUrl(HISTORY_FILE), token, {
+    method: 'PUT',
+    body: JSON.stringify({
+      message: pending ? 'Log inline editor activity (pending)' : 'Log inline editor activity (published)',
+      content: encodeBase64Content(`${JSON.stringify({ format: 1, entries }, null, 2)}\n`),
+      sha,
+      branch: BRANCH,
+    }),
+  });
+}
+
+// Lista do "Update History": pendencias da sessao + arquivo no GitHub
+// (mais recentes primeiro).
+export async function listEditHistory(token) {
+  let fileEntries = [];
+  const current = await githubRequest(githubContentsUrl(HISTORY_FILE), token, { allowNotFound: true });
+  if (current?.type === 'file') {
+    try {
+      const parsed = JSON.parse(decodeBase64Content(current.content));
+      fileEntries = Array.isArray(parsed?.entries) ? parsed.entries : [];
+    } catch {
+      fileEntries = [];
+    }
+  }
+  const pending = changeLog.map((entry) => ({ at: entry.at, kind: entry.kind, text: entry.text, pending: true }));
+  return [...pending, ...fileEntries].sort((a, b) => (b.at || 0) - (a.at || 0)).slice(0, LOG_STORAGE_MAX);
 }
 
 // ==== VERSOES (backups no GitHub; substitui o painel /admin/) ====
@@ -477,6 +647,8 @@ export async function restoreVersion(token, name) {
   draftState.baseDocs = clone(restored);
   draftState.docs = clone(restored);
   history.length = 0;
+  changeLog.length = 0;
+  logChange('content', `Restored the version "${versionLabel(name)}" (pending edits were replaced)`);
   applyDraftToSite();
   return name;
 }
@@ -501,4 +673,10 @@ export function __testInjectDocs(docs) {
   draftState.docs = docs;
   draftState.baseDocs = JSON.parse(JSON.stringify(docs));
   history.length = 0;
+  changeLog.length = 0;
+}
+
+// SOMENTE TESTES: descarta o diario pendente (para encadear cenarios).
+export function __testChangeLog() {
+  return changeLog.map((entry) => ({ at: entry.at, kind: entry.kind, text: entry.text }));
 }
