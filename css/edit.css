@@ -247,6 +247,31 @@ html.ri-edit-on .ri-edit-add {
   border-style: dashed;
 }
 
+/* Cabeçalhos alinhados com o botão "+ New" (só mudam nada no modo edição). */
+.section-head--with-add {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.section-head--with-add .section-head { flex: 1; margin-bottom: 0; }
+.reset-tier-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.reset-tier-head h3 { margin: 0; }
+
+/* Linha do botão "+ New" solto: não ocupa espaço fora do modo edição. */
+.ri-add-row { display: none; }
+html.ri-edit-on .ri-add-row {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 12px;
+}
+
 html.reduce-motion .ri-edit-toast,
 html.reduce-motion .ri-edit-popover,
 html.reduce-motion #ri-edit-chip { animation: none; transition: none; }

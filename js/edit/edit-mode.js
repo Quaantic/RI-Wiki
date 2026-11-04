@@ -12,7 +12,7 @@ import {
 } from '../github.js';
 import { CONTEXTS } from '../content-schema.js';
 import { LUCIDE_ICONS } from '../lib/lucide-data.js';
-import { CATEGORIES, getSubcategory, getSubcategoryDocPath } from '../data/wiki-data.js';
+import { CATEGORIES, getSubcategory, getSubcategoryDocPath, collectSubtreeIds } from '../data/wiki-data.js';
 import { buildNav } from '../ui.js';
 import * as draft from './draft.js';
 import { rerender } from '../router.js';
@@ -532,7 +532,9 @@ function openPopover(binding) {
   const lastSegment = binding.valuePath.split('.').at(-1) || '';
   qs('[data-edit-pop-delete]', layer.popover).hidden = !/^\d+$/.test(lastSegment);
   layer.popover.hidden = false;
-  positionPopover(binding.el);
+  // O popover edita o item (binding.el), mas pode ser ancorado em outro
+  // elemento (ex.: o botao "+ New" que o abriu) para aparecer perto dele.
+  positionPopover(binding.anchorEl?.isConnected ? binding.anchorEl : binding.el);
   body.querySelector('input, textarea, select')?.focus({ preventScroll: true });
 }
 
@@ -869,10 +871,10 @@ function installSidebarTools() {
       <button type="button" class="ri-nav-tool" data-ri-nav-tool="add">${icon('plus', 14)} Add pages</button>
       <button type="button" class="ri-nav-tool" data-ri-nav-tool="drag" aria-pressed="false">${icon('folder-tree', 14)} Reorder / nest</button>
       <button type="button" class="ri-nav-tool" data-ri-nav-tool="colors">${icon('palette', 14)} Colors</button>
-      <small class="ri-nav-tools__hint" hidden>Drag a page between two items to reposition it. Drop it on the middle of a category header to make it a child of that category. Only in Edit mode.</small>`;
+      <small class="ri-nav-tools__hint" hidden>Drag a page between two items to reposition it — or drop it in the middle of a category/page header to nest it inside. Only in Edit mode.</small>`;
     nav.appendChild(box);
-    box.querySelector('[data-ri-nav-tool="add"]').addEventListener('click', () => openManageAdd());
-    box.querySelector('[data-ri-nav-tool="colors"]').addEventListener('click', () => openColorsManager());
+    box.querySelector('[data-ri-nav-tool="add"]').addEventListener('click', (event) => openManageAdd(event.currentTarget));
+    box.querySelector('[data-ri-nav-tool="colors"]').addEventListener('click', (event) => openColorsManager(event.currentTarget));
     box.querySelector('[data-ri-nav-tool="drag"]').addEventListener('click', () => {
       dragArmed = !dragArmed;
       if (!dragArmed) {
@@ -959,7 +961,7 @@ function renderColorsRows() {
   }
 }
 
-function openColorsManager() {
+function openColorsManager(anchor = null) {
   if (!session.ready || !session.allowed) return;
   if (popState) closePopover(true);
   if (!session.editing) setEditing(true);
@@ -1009,6 +1011,7 @@ function openColorsManager() {
 
   renderColorsRows();
   layer.popover.hidden = false;
+  positionPopover(anchor?.isConnected ? anchor : navEl()?.querySelector('[data-ri-nav-tools]'));
 }
 
 // Aplica a mudanca de um recurso (cor e/ou link) e reflete na hora.
@@ -1026,7 +1029,7 @@ function applyResourceChange(name, { color, link } = {}) {
 }
 
 // Popover de criação: nova categoria ou nova página dentro de uma categoria.
-function openManageAdd() {
+function openManageAdd(anchor = null) {
   if (!session.ready || !session.allowed) return;
   if (popState) closePopover(true);
   if (!session.editing) setEditing(true);
@@ -1118,6 +1121,7 @@ function openManageAdd() {
   if (deleteBtn) deleteBtn.hidden = true;
 
   layer.popover.hidden = false;
+  positionPopover(anchor?.isConnected ? anchor : navEl()?.querySelector('[data-ri-nav-tools]'));
   body.scrollTop = 0;
   nameIn.focus({ preventScroll: true });
 }
@@ -1249,12 +1253,12 @@ function bindSidebarDnd(nav) {
     let info = null;
     let el = null;
     if (subItem) {
-      // Paginas so reordenam (antes/depois). Atravessar categorias continua funcando.
+      // Ponta = reordenar (antes/depois); meio = virar filho daquela pagina.
       info = {
         type: 'sub',
         catId: subItem.closest('.nav-group')?.dataset.cat,
         subId: subItem.dataset.sub,
-        pos: dropBand(subItem, event.clientY) === 'before' ? 'before' : 'after',
+        pos: dropBand(subItem, event.clientY),
       };
       el = subItem;
     } else if (catItem) {
@@ -1282,12 +1286,12 @@ function bindSidebarDnd(nav) {
   });
 }
 
-// Converte uma categoria em pagina (children) para poder nasar dentro de outra.
-// Feita como um setValue proprio no historico: o undo restaura o formato original.
-function planCategoryToPage(srcIndex, targetCatIndex, toIndex) {
+// Converte uma categoria em pagina (children) para poder nasar dentro de
+// outra categoria ou pagina. Feita como um setValue proprio no historico:
+// o undo restaura o formato original.
+function planCategoryToPage(srcIndex, toPath, toIndex, dstCatId) {
   const cat = locate(draft.doc('wiki'), `categories.${srcIndex}`);
   if (!cat) throw new Error('The category vanished from the list. Try again.');
-  if (cat.id === CATEGORIES[targetCatIndex]?.id) throw new Error('Pick a different category.');
   const converted = {
     id: cat.id,
     name: cat.name,
@@ -1301,14 +1305,16 @@ function planCategoryToPage(srcIndex, targetCatIndex, toIndex) {
   };
   return {
     converts: [{ path: `categories.${srcIndex}`, value: converted }],
-    move: {
-      fromPath: 'categories',
-      fromIndex: srcIndex,
-      toPath: `categories.${targetCatIndex}.subcategories`,
-      toIndex,
-    },
-    dstCatId: CATEGORIES[targetCatIndex]?.id,
+    move: { fromPath: 'categories', fromIndex: srcIndex, toPath, toIndex },
+    dstCatId,
   };
+}
+
+// Garante que a lista de destino existe (paginas novas ainda nao tem children).
+function ensureChildrenList(childrenPath) {
+  if (!Array.isArray(locate(draft.doc('wiki'), childrenPath))) {
+    draft.setValue('wiki', childrenPath, []);
+  }
 }
 
 async function runHierarchyDrop(src, target) {
@@ -1326,28 +1332,60 @@ async function runHierarchyDrop(src, target) {
     if (target.pos === 'inside') {
       if (src.kind === 'cat') {
         if (src.catId === target.catId) return;
+        ensureChildrenList(`categories.${ti}.subcategories`);
         const inside = locate(draft.doc('wiki'), `categories.${ti}.subcategories`) || [];
-        plan = planCategoryToPage(srcSlot.index, ti, inside.length);
+        plan = planCategoryToPage(srcSlot.index, `categories.${ti}.subcategories`, inside.length, target.catId);
       } else {
         const insidePath = `categories.${ti}.subcategories`;
-        if (srcSlot.parentPath === insidePath) return;
-        const inside = locate(draft.doc('wiki'), insidePath) || [];
-        plan = { move: { fromPath: srcSlot.parentPath, fromIndex: srcSlot.index, toPath: insidePath, toIndex: inside.length }, dstCatId: target.catId };
+        ensureChildrenList(insidePath);
+        if (srcSlot.parentPath === insidePath && srcSlot.index === (locate(draft.doc('wiki'), insidePath) || []).length - 1) return;
+        plan = { move: { fromPath: srcSlot.parentPath, fromIndex: srcSlot.index, toPath: insidePath, toIndex: (locate(draft.doc('wiki'), insidePath) || []).length }, dstCatId: target.catId };
       }
-      dstCatId = plan.dstCatId;
+      dstCatId = target.catId;
     } else {
       if (src.kind !== 'cat') { notify('Drop onto the middle of the category header to nest this page inside it.', true); return; }
       if (src.catId === target.catId) return;
       plan = { move: { fromPath: 'categories', fromIndex: srcSlot.index, toPath: 'categories', toIndex: target.pos === 'before' ? ti : ti + 1 }, dstCatId: src.catId };
     }
   } else {
-    if (src.kind === 'cat') { notify('Drop the category on a category header (middle = nest inside) instead.', true); return; }
     const dstSlot = slotFor('sub', target.catId, target.subId);
     if (!dstSlot) { notify('The target page vanished. Try again.', true); return; }
-    if (dstSlot.parentPath === srcSlot.parentPath && dstSlot.index === srcSlot.index) return;
-    const toIndex = target.pos === 'before' ? dstSlot.index : dstSlot.index + 1;
-    if (dstSlot.parentPath === srcSlot.parentPath && toIndex === srcSlot.index) return;
-    plan = { move: { fromPath: srcSlot.parentPath, fromIndex: srcSlot.index, toPath: dstSlot.parentPath, toIndex }, dstCatId: target.catId };
+    if (target.pos === 'inside') {
+      // Virar filho da pagina alvo. Impedir ciclos: ninguem entra dentro de
+      // si mesmo nem dentro da propria subarvore.
+      const subtree = collectSubtreeIds(src.catId, src.kind === 'sub' ? src.subId : null);
+      if (subtree.has(target.subId)) {
+        notify('You cannot nest a page inside itself (or inside its own children).', true);
+        return;
+      }
+      const targetPath = getSubcategoryDocPath(target.catId, target.subId);
+      if (!targetPath) { notify('The target page vanished. Try again.', true); return; }
+      const childListPath = `${targetPath}.children`;
+      ensureChildrenList(childListPath);
+      const inside = locate(draft.doc('wiki'), childListPath) || [];
+      if (src.kind === 'cat') {
+        // Categoria solta no meio de uma pagina: vira pagina filha dela.
+        plan = planCategoryToPage(srcSlot.index, childListPath, inside.length, target.catId);
+      } else {
+        if (srcSlot.parentPath === childListPath && srcSlot.index === inside.length - 1) return;
+        plan = { move: { fromPath: srcSlot.parentPath, fromIndex: srcSlot.index, toPath: childListPath, toIndex: (locate(draft.doc('wiki'), childListPath) || []).length }, dstCatId: target.catId };
+      }
+      dstCatId = target.catId;
+    } else {
+      if (dstSlot.parentPath === srcSlot.parentPath && dstSlot.index === srcSlot.index) return;
+      const toIndex = target.pos === 'before' ? dstSlot.index : dstSlot.index + 1;
+      if (src.kind === 'cat') {
+        // Categoria entre duas paginas: vira pagina naquela posicao.
+        const subtree = collectSubtreeIds(src.catId, null);
+        if (subtree.has(target.subId)) { notify('You cannot place a category inside its own children.', true); return; }
+        ensureChildrenList(dstSlot.parentPath);
+        plan = planCategoryToPage(srcSlot.index, dstSlot.parentPath, toIndex, target.catId);
+      } else {
+        if (dstSlot.parentPath === srcSlot.parentPath && toIndex === srcSlot.index) return;
+        plan = { move: { fromPath: srcSlot.parentPath, fromIndex: srcSlot.index, toPath: dstSlot.parentPath, toIndex }, dstCatId: target.catId };
+      }
+      dstCatId = target.catId;
+    }
   }
 
   try {
@@ -1462,10 +1500,13 @@ async function addItemFromTrigger(trigger) {
     draft.applyDraftToSite();
     window.dispatchEvent(new CustomEvent('ri-edit-content'));
     await rerender({ scroll: 'preserve' });
+    // O popover abre junto ao botao "+ New" clicado — nao no item novo, que
+    // pode ser o ultimo de uma lista longa e ficar longe da tela.
     const el = document.querySelector(`[data-edit="${bindingPath}.${index}"]`);
+    const anchor = document.querySelector(`[data-edit-add="${bindingPath}"]`);
     if (el && session.editing) {
       const info = parseBinding(el);
-      if (info) openPopover({ ...info, el });
+      if (info) openPopover({ ...info, el, anchorEl: anchor || el });
     }
     updateToolbar();
     notify('Item added to the draft. Fill it in and remember to save.');
@@ -1543,7 +1584,10 @@ function installInteraction() {
   });
 
   window.addEventListener('scroll', () => {
-    if (popState) positionPopover(popState.el?.isConnected ? popState.el : null);
+    const anchor = popState?.anchorEl?.isConnected
+      ? popState.anchorEl
+      : (popState?.el?.isConnected ? popState.el : null);
+    positionPopover(anchor);
     hideChip();
   }, { passive: true, capture: true });
 }

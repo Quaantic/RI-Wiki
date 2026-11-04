@@ -5,6 +5,7 @@ import {
   BACKUP_DIRECTORY,
   DRAFT_FILE,
   BRANCH,
+  REPOSITORY,
   validateDocuments,
   encodeBase64Content,
   decodeBase64Content,
@@ -270,7 +271,11 @@ export async function initSession(token) {
   let draftLoaded = false;
   try {
     const result = await githubRequest(githubContentsUrl(DRAFT_FILE), token, { allowNotFound: true });
-    if (result?.type === 'file' && typeof result.content === 'string') {
+    if (result === null) {
+      // Esboco ausente no GitHub: primeiro uso do editor (normal).
+      console.info('[inline-editor] No inline draft on GitHub yet — that is normal before the first "Save draft".');
+      draftLoaded = false;
+    } else if (result?.type === 'file' && typeof result.content === 'string') {
       const remote = JSON.parse(decodeBase64Content(result.content));
       validateDocuments(remote);
       draftState.draftSha = result.sha;
@@ -279,8 +284,13 @@ export async function initSession(token) {
       draftLoaded = true;
     }
   } catch (error) {
-    if (!/(404|not found)/i.test(error.message || '')) {
-      throw new Error(`The inline draft file could not be read: ${error.message || error}`);
+    const msg = error.message || '';
+    if (/(401|403|credential|forbidden|permission)/i.test(msg)) {
+      // Nao mascarar problemas de acesso como "esboco ausente".
+      throw new Error(`Your GitHub session cannot read the inline draft (${msg}). Sign in again or ask for write access to ${REPOSITORY}.`);
+    }
+    if (!/(404|not found)/i.test(msg)) {
+      throw new Error(`The inline draft file could not be read: ${msg}`);
     }
     draftLoaded = false;
   }

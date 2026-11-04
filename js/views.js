@@ -390,9 +390,11 @@ function formulaSections(section, listPath = '') {
   const isLevelPerks = section.upgrades.some((upgrade) => /MaxTier\s*=\s*min\(/i.test(upgrade.multi || ''));
   return `
     <section class="section">
-      ${sectionHead('The upgrades')}
-      ${listPath ? `
-      <button type="button" class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="${esc(listPath)}" data-edit-add-template="upgrade">${icon('plus', 13)} New upgrade</button>` : ''}
+      <div class="section-head--with-add">
+        ${sectionHead('The upgrades')}
+        ${listPath ? `
+        <button type="button" class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="${esc(listPath)}" data-edit-add-template="upgrade">${icon('plus', 13)} New upgrade</button>` : ''}
+      </div>
       ${isLevelPerks ? `
       <div class="perk-tree-controls">
         <label>Tree Upgrade 15<input class="input" type="number" min="0" step="1" value="0" data-tree-upgrade15></label>
@@ -440,12 +442,14 @@ function resetLayerSections(page, basePath = '') {
         ${sectionHead(page.title)}
         ${page.groups.map((group, gi) => `
           <section class="reset-layer-tier rare-sap-group" style="--rare-sap-color:${esc(group.color)}" ${basePath ? ed(`${basePath}.groups.${gi}`, 'game:bonus-group', esc(group.name)) : ''}>
-            <h3 data-resource-links>${colorizeResources(esc(group.name))} <small>Drop chance: ${esc(group.dropChance)}</small></h3>
+            <div class="reset-tier-head">
+              <h3 data-resource-links>${colorizeResources(esc(group.name))} <small>Drop chance: ${esc(group.dropChance)}</small></h3>
+              ${bonusAdd(basePath ? `${basePath}.groups.${gi}.bonuses` : '')}
+            </div>
             <label class="reset-calc-power">
               <span>${esc(group.amountLabel)}</span>
               <input class="input reset-calc-input" type="text" inputmode="decimal" value="0" data-reset-amount data-group-id="${esc(group.id)}" aria-label="${esc(group.amountLabel)}">
             </label>
-            ${bonusAdd(basePath ? `${basePath}.groups.${gi}.bonuses` : '')}
             <div class="reset-calc-grid">
               ${group.bonuses.map((bonus, i) => resetCalcCard(bonus, group.amountLabel, i, true, group.color, itemListPath(basePath ? `${basePath}.groups.${gi}.bonuses` : '', i))).join('')}
             </div>
@@ -457,12 +461,12 @@ function resetLayerSections(page, basePath = '') {
     return `
       <section class="section reset-layer-page">
         ${sectionHead(page.title)}
+        <div class="ri-add-row">${bonusAdd(basePath ? `${basePath}.bonuses` : '')}</div>
         <label class="reset-calc-power">
           <span>${esc(page.amountLabel)}</span>
           <input class="input reset-calc-input" type="text" inputmode="decimal" value="0" data-reset-amount aria-label="${esc(page.amountLabel)}">
         </label>
         <div class="reset-calc-grid reset-calc-grid--amount">
-          ${bonusAdd(basePath ? `${basePath}.bonuses` : '')}
           ${page.bonuses.map((bonus, i) => resetCalcCard(bonus, page.amountLabel, i, true, '', itemListPath(basePath ? `${basePath}.bonuses` : '', i))).join('')}
         </div>
       </section>`;
@@ -474,8 +478,10 @@ function resetLayerSections(page, basePath = '') {
         ${sectionHead(page.title)}
         ${page.tiers.map((tier, ti) => `
           <section class="reset-layer-tier" ${basePath ? ed(`${basePath}.tiers.${ti}`, 'game:tier', esc(tier.name)) : ''}>
-            <h3>${esc(tier.name)}</h3>
-            ${bonusAdd(basePath ? `${basePath}.tiers.${ti}.bonuses` : '')}
+            <div class="reset-tier-head">
+              <h3>${esc(tier.name)}</h3>
+              ${bonusAdd(basePath ? `${basePath}.tiers.${ti}.bonuses` : '')}
+            </div>
             <div class="reset-calc-grid">
               ${tier.bonuses.map((bonus, i) => resetCalcCard(bonus, tier.name, i, false, '', itemListPath(basePath ? `${basePath}.tiers.${ti}.bonuses` : '', i))).join('')}
             </div>
@@ -491,7 +497,7 @@ function resetLayerSections(page, basePath = '') {
           <span>Souls Upgrade 11 level</span>
           <input class="input reset-calc-input" type="number" min="0" max="${page.powerLevelMax}" step="1" value="0" data-dust-power-level>
         </label>
-        ${bonusAdd(basePath ? `${basePath}.bonuses` : '')}
+        <div class="ri-add-row">${bonusAdd(basePath ? `${basePath}.bonuses` : '')}</div>
         <div class="reset-calc-grid">
           ${page.bonuses.map((bonus, i) => resetCalcCard(bonus, 'Bone Dust', i, false, '', itemListPath(basePath ? `${basePath}.bonuses` : '', i))).join('')}
         </div>
@@ -501,7 +507,7 @@ function resetLayerSections(page, basePath = '') {
   return `
     <section class="section reset-layer-page">
       ${sectionHead(page.title)}
-      ${bonusAdd(basePath ? `${basePath}.bonuses` : '')}
+      <div class="ri-add-row">${bonusAdd(basePath ? `${basePath}.bonuses` : '')}</div>
       <div class="reset-calc-grid">
         ${page.bonuses.map((bonus, i) => resetCalcCard(bonus, 'Dungeon Level', i, false, '', itemListPath(basePath ? `${basePath}.bonuses` : '', i))).join('')}
       </div>
@@ -990,8 +996,10 @@ export const subcategoryView = {
 
       ${showChildrenSection ? `
       <section class="section sub-children-section">
-        ${sectionHead(familyBody ? `Inside ${sub.name}` : sub.name)}
-        <button type="button" class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="${esc(`${wikiPath}.children`)}" data-edit-add-template="sub-card">${icon('plus', 13)} New page</button>
+        <div class="section-head--with-add">
+          ${sectionHead(familyBody ? `Inside ${sub.name}` : sub.name)}
+          <button type="button" class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="${esc(`${wikiPath}.children`)}" data-edit-add-template="sub-card">${icon('plus', 13)} New page</button>
+        </div>
         <div class="link-grid">
           ${visibleChildren.map((ch, i) => `
             <a ${`class="sub-link reveal" style="--reveal-delay:${i * 35}ms"`}${ed(`wiki:${getSubcategoryDocPath(cat.id, ch.id)}`, 'sub-card', ch.name)} href="#/${cat.id}/${ch.id}">

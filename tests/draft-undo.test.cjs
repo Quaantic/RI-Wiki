@@ -72,3 +72,90 @@ test('LIFO across interleaved operations', async () => {
   assert.equal(draft.doc('wiki').categories[0].subcategories.length, 1);
   assert.equal(draft.canUndo(), false);
 });
+
+// Reproduz o fluxo do drag "drop no meio do cabeçalho de categoria":
+// converter a categoria em página (setValue) + mover para dentro (moveValue).
+// O undo LIFO precisa restaurar a categoria com o formato original.
+test('category nested as page: conversion + move undo restores original shape', async () => {
+  const draft = await import('../js/edit/draft.js');
+  const docs = doc();
+  docs.wiki.categories[1].tagline = 'Beta tag';
+  docs.wiki.categories[1].overview = { highlights: ['h1'], facts: [{ label: 'l', value: 'v' }] };
+  docs.wiki.categories[1].vitals = [{ label: 'k', value: 'v' }];
+  draft.__testInjectDocs(docs);
+
+  const si = 1;
+  const ti = 0;
+  const cat = draft.doc('wiki').categories[si];
+  const converted = {
+    id: cat.id,
+    name: cat.name,
+    icon: cat.icon || 'sparkles',
+    desc: cat.desc || cat.tagline || '',
+    tagline: cat.tagline || '',
+    children: Array.isArray(cat.subcategories) ? cat.subcategories : [],
+    highlights: Array.isArray(cat.overview?.highlights) ? cat.overview.highlights : [],
+    facts: Array.isArray(cat.overview?.facts) ? cat.overview.facts : [],
+    vitals: Array.isArray(cat.vitals) ? cat.vitals : [],
+  };
+  draft.setValue('wiki', `categories.${si}`, converted);
+  draft.moveValue('wiki', 'categories', si, `categories.${ti}.subcategories`, 1);
+
+  const nested = draft.doc('wiki').categories[0].subcategories[1];
+  assert.equal(draft.doc('wiki').categories.length, 1);
+  assert.equal(nested.id, 'b');
+  assert.equal(nested.children[0].id, 'b1');
+  assert.equal(nested.highlights[0], 'h1');
+  assert.equal(nested.vitals[0].label, 'k');
+  assert.equal(nested.subcategories, undefined);
+
+  draft.undoLast(); // desfaz o move: a página volta para o topo
+  assert.equal(draft.doc('wiki').categories[1].id, 'b');
+  draft.undoLast(); // desfaz a conversão: formato original de categoria volta
+  const restored = draft.doc('wiki').categories[1];
+  assert.equal(restored.subcategories[0].id, 'b1');
+  assert.equal(restored.tagline, 'Beta tag');
+  assert.equal(restored.overview.facts[0].label, 'l');
+  assert.equal(restored.children, undefined);
+});
+
+// O drag "soltar no meio de outra pagina" aninha em children (criada na hora
+// pelo ensure) e o undo LIFO desfaz move + criacao da lista vazia.
+test('page nested into another page: children list auto-created, undo clean', async () => {
+  const draft = await import('../js/edit/draft.js');
+  const docs = doc();
+  delete docs.wiki.categories[1].subcategories[0].children; // b1 SEM children
+  draft.__testInjectDocs(docs);
+
+  // ensure: children nao existe -> setValue cria
+  if (!Array.isArray(draft.doc('wiki').categories[1].subcategories[0].children)) {
+    draft.setValue('wiki', 'categories.1.subcategories.0.children', []);
+  }
+  draft.moveValue('wiki', 'categories.0.subcategories', 0, 'categories.1.subcategories.0.children', 0);
+
+  assert.equal(draft.doc('wiki').categories[0].subcategories.length, 0);
+  const nested = draft.doc('wiki').categories[1].subcategories[0].children[0];
+  assert.equal(nested.id, 'a1');
+
+  draft.undoLast(); // desfaz o move: a1 volta para o topo
+  assert.equal(draft.doc('wiki').categories[0].subcategories[0].id, 'a1');
+  draft.undoLast(); // desfaz a criacao de children: chave some
+  assert.equal(draft.doc('wiki').categories[1].subcategories[0].children, undefined);
+});
+
+// O gerenciador de cores remove entradas com setValue(undefined): a chave sai
+// do JSON publicado e o undo devolve o valor anterior.
+test('resource color entry: key deletion via setValue(undefined) is undoable', async () => {
+  const draft = await import('../js/edit/draft.js');
+  const docs = { game: { resources: { colors: { 'Bone Dust': '#aabbcc' }, pageLinks: { 'Bone Dust': '#/dungeon/bone-dust' } } } };
+  draft.__testInjectDocs(docs);
+
+  draft.setValue('game', 'resources.colors.Bone Dust', undefined);
+  draft.setValue('game', 'resources.pageLinks.Bone Dust', undefined);
+  assert.equal(JSON.stringify(draft.doc('game')).includes('Bone Dust'), false);
+
+  draft.undoLast(); // link volta
+  assert.equal(draft.doc('game').resources.pageLinks['Bone Dust'], '#/dungeon/bone-dust');
+  draft.undoLast(); // cor volta
+  assert.equal(draft.doc('game').resources.colors['Bone Dust'], '#aabbcc');
+});

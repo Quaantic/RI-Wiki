@@ -13,6 +13,21 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
+/* A raiz precisa ficar no fluxo normal do documento: se qualquer coisa
+   (estilo injetado, extensao de navegador) colocar position/height/overflow
+   no html, a pagina inteira para de rolar. Estes valores sao os iniciais
+   do proprio site — a regra so existe para neutralizar interferencia. */
+html {
+  position: static !important;
+  height: auto !important;
+  overflow-y: auto !important;
+}
+
+body {
+  height: auto !important;
+  overflow-y: visible !important;
+}
+
 body {
   font-family: var(--font-body);
   font-size: 15px;

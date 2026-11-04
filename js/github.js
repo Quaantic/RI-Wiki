@@ -19,8 +19,16 @@ export function githubHeaders(token, json = false) {
 export async function githubRequest(url, token, options = {}) {
   const { allowNotFound = false, ...requestOptions } = options;
   const response = await fetch(url, { ...requestOptions, headers: { ...githubHeaders(token, Boolean(requestOptions.body)), ...requestOptions.headers } });
-  if (response.status === 404 && allowNotFound) return null;
   const payload = await response.json().catch(() => ({}));
+  if (response.status === 404 && allowNotFound) {
+    // Recurso realmente inexistente (ex.: o esboco inline ainda nao foi
+    // salvo). Erros de autenticacao/permissao chegam aqui como 401/403 e
+    // caem no bloco abaixo; um 404 de acesso a repositorio privado e
+    // indistinguivel de arquivo ausente, mas quem usa allowNotFound so
+    // faz essa chamada DEPOIS de carregar com sucesso os arquivos base
+    // do mesmo repositorio com o mesmo token — o acesso ja esta provado.
+    return null;
+  }
   if (!response.ok) {
     const message = payload.message || `GitHub returned HTTP ${response.status}.`;
     if ([401, 403, 404].includes(response.status)) {
