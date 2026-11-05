@@ -2,6 +2,14 @@ import { FILES, DRAFT_FILE, BRANCH, REPOSITORY, decodeBase64Content, validateDoc
 import { githubRequest, githubContentsUrl } from '../github.js';
 import { mergeDocuments } from './merge.js';
 
+// Even a merge with no visible edits must be saved when its published base
+// changed. Otherwise the next session replays the same stale draft delta.
+export function sharedDraftNeedsRebase(file, shas) {
+  if (!file) return false;
+  const payload = JSON.parse(decodeBase64Content(file.content));
+  return Object.keys(FILES).some((name) => payload._baseShas?.[name] !== shas[name]);
+}
+
 // The shared draft records the published blob SHAs it was based on. This
 // preserves new site content when a collaborator keeps editing an older draft.
 export async function readSharedDraft(file, published, shas, token, keepSharedOrder) {

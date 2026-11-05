@@ -18,7 +18,7 @@ import {
 import { applyWikiContent, applyUpdateContent, applyGameData } from '../services.js';
 import { mergeDocuments } from './merge.js';
 import { pinContentKeys } from '../page-content.js';
-import { readSharedDraft } from './shared-draft.js';
+import { readSharedDraft, sharedDraftNeedsRebase } from './shared-draft.js';
 import { installImportedNotes } from '../content-migrations.js';
 import {readRecovery,writeRecovery,clearRecovery} from './recovery.js';
 
@@ -424,7 +424,7 @@ export async function initSession(token, actor = '') {
   }));
   validateDocuments(draftState.baseDocs);
   draftState.docs = clone(draftState.baseDocs);
-  let draftLoaded = false, orderConflict = false;
+  let draftLoaded = false, orderConflict = false, contentConflict = false;
   try {
     const { result, error } = await sharedFile;
     if (error) throw error;
@@ -435,12 +435,17 @@ export async function initSession(token, actor = '') {
     } else if (result?.type === 'file' && typeof result.content === 'string') {
       // Show the shared order on startup so local recovery remains available.
       // Save and Publish must ask before committing this provisional order.
-      const remote = await readSharedDraft(result, draftState.baseDocs, draftState.shas, token, () => {
+      const provisional = () => {
         orderConflict = true;
         return true;
-      });
+      };
+      // Opening the editor must not require resolving stale shared content.
+      // Display published values at conflicts; Save/Publish will ask explicitly.
+      provisional.resolveConflict = () => { contentConflict = true; return 'remote'; };
+      const remote = await readSharedDraft(result, draftState.baseDocs, draftState.shas, token, provisional);
       validateDocuments(remote);
       draftState.draftSha = result.sha;
+      draftState.sharedOrderNeedsSave = sharedDraftNeedsRebase(result, draftState.shas);
       draftState.savedDraftRaw = `${JSON.stringify(remote, null, 2)}\n`;
       draftState.docs = remote;
       draftLoaded = true;
@@ -456,7 +461,7 @@ export async function initSession(token, actor = '') {
     }
     draftLoaded = false;
   }
-  draftState.needsMerge = orderConflict;
+  draftState.needsMerge = orderConflict || contentConflict;
   const dropped = sanitizeResources();
   draftState.sharedBase = clone(draftState.docs);
   let recovered = false, recoveryConflict = false;
@@ -477,7 +482,7 @@ export async function initSession(token, actor = '') {
     }
   } catch { /* storage unavailable or an invalid recovery copy */ }
   const contentImported = installImportedNotes(draftState.docs.wiki,draftState.docs.game);
-  return { draftLoaded, sanitized: dropped, recovered, recoveryConflict, orderConflict, contentImported };
+  return { draftLoaded, sanitized: dropped, recovered, recoveryConflict, orderConflict, contentConflict, contentImported };
 }
 
 function recoveryKey() { return `ri-editor-recovery:${REPOSITORY}:${draftState.actor}`; }
@@ -556,10 +561,10 @@ export async function discardDraft(token) {
   draftState.sharedBase = clone(draftState.docs);
   draftState.needsMerge = false;
   draftState.sharedOrderNeedsSave = false;
-  persistLocalRecovery();
-  applyDraftToSite();
   changeLog.length = 0;
   history.length = 0;
+  persistLocalRecovery();
+  applyDraftToSite();
   // Descartou o rascunho: as pendencias do diario caducam junto.
   await writeHistory(token, [], false, true).catch(() => {});
 }
@@ -598,6 +603,8 @@ export async function publishChanges(token, keepLocalOrder) {
         }),
       });
       draftState.shas[name] = result.content.sha;
+      draftState.baseDocs[name] = clone(draftState.docs[name]);
+      persistLocalRecovery();
     }
   }
   draftState.baseDocs = clone(draftState.docs);
@@ -655,7 +662,7 @@ export async function syncRemote(token, keepLocalOrder) {
     } catch (error) {
       // A background check can be in flight when the editor clicks Save.
       // Retry an order conflict with the foreground confirmation callback.
-      if (!keepLocalOrder || !error.release) throw error;
+      if (!keepLocalOrder || error.name !== 'SyncConflict') throw error;
       return syncRemote(token, keepLocalOrder);
     }
   }
@@ -670,12 +677,18 @@ async function readAndMergeRemote(token, keepLocalOrder) {
   if (!changed) return false;
   const published = Object.fromEntries(files.map(([name, file]) => [name, JSON.parse(decodeBase64Content(file.content))]));
   const shas = Object.fromEntries(files.map(([name, file]) => [name, file.sha]));
-  let sharedOrderNeedsSave = false;
-  const remote = remoteDraft ? await readSharedDraft(remoteDraft, published, shas, token, (version) => {
+  let sharedOrderNeedsSave = sharedDraftNeedsRebase(remoteDraft, shas);
+  const sharedResolver = (version) => {
     if (!keepLocalOrder?.(version, 'shared')) return false;
     sharedOrderNeedsSave = true;
     return true;
-  }) : published;
+  };
+  sharedResolver.resolveConflict = (conflict) => {
+    const choice = keepLocalOrder?.resolveConflict?.({ ...conflict, source: 'shared' });
+    if (choice === 'local' || choice === 'remote') sharedOrderNeedsSave = true;
+    return choice;
+  };
+  const remote = remoteDraft ? await readSharedDraft(remoteDraft, published, shas, token, sharedResolver) : published;
   validateDocuments(remote);
   const merged = mergeDocuments(draftState.sharedBase, draftState.docs, remote, 'content', keepLocalOrder);
   validateDocuments(merged);

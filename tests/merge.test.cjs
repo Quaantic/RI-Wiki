@@ -1,6 +1,27 @@
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
 
+test('delete/edit conflicts accept either explicit choice without mutating the originals', async () => {
+  const { mergeDocuments } = await import('../js/edit/merge.js');
+  const base = [{ id: 'dark-liquid', name: 'Dark Liquid' }];
+  const local = [];
+  const remote = [{ id: 'dark-liquid', name: 'Recovered Dark Liquid' }];
+  const resolver = () => true;
+  resolver.resolveConflict = ({ path, local, remote }) => {
+    assert.equal(path, 'content[dark-liquid]');
+    assert.equal(local, undefined);
+    assert.equal(remote.name, 'Recovered Dark Liquid');
+    return 'remote';
+  };
+  assert.deepEqual(mergeDocuments(base, local, remote, 'content', resolver), remote);
+  resolver.resolveConflict = () => 'local';
+  assert.deepEqual(mergeDocuments(base, local, remote, 'content', resolver), []);
+  resolver.resolveConflict = () => undefined;
+  assert.throws(() => mergeDocuments(base, local, remote, 'content', resolver), /Both editors changed/);
+  assert.equal(remote[0].name, 'Recovered Dark Liquid');
+  assert.equal(base[0].name, 'Dark Liquid');
+});
+
 test('concurrent FAQ and Miscellaneous additions both survive', async () => {
   const { mergeDocuments } = await import('../js/edit/merge.js');
   const base = { categories: [{ id: 'main', name: 'Main', subcategories: [] }] };

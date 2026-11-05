@@ -449,6 +449,19 @@ function confirmReleaseOrder(version, source) {
   return window.confirm(`Update Log ${version}\n\n${explanation}\n\nCompatible edits and entries from both versions are kept. Cancel to keep working without writing to GitHub.`);
 }
 
+// No write occurs until all conflicts have a choice. Cancel preserves the draft.
+confirmReleaseOrder.resolveConflict = ({ path, local, remote, source }) => {
+  const describe = (value) => {
+    if (value === undefined) return '(deleted)';
+    const text = JSON.stringify(value, null, 2);
+    return text.length > 1800 ? `${text.slice(0, 1800)}\n… (preview truncated; this choice applies to the whole item)` : text;
+  };
+  const left = source === 'shared' ? 'Shared draft' : 'Your draft';
+  const right = source === 'shared' ? 'Published wiki' : 'Latest shared version';
+  const choice = window.prompt(`Conflicting edit: ${path}\n\n1 — ${left}\n${describe(local)}\n\n2 — ${right}\n${describe(remote)}\n\nType 1 or 2 to choose. Cancel keeps your work without saving or publishing.`);
+  return choice?.trim() === '1' ? 'local' : choice?.trim() === '2' ? 'remote' : undefined;
+};
+
 async function restoreDownloadedDraft(file) {
   if (!session.ready || !session.allowed || session.busy) return;
   session.busy = true;
@@ -578,7 +591,7 @@ function onToolbarAction(button) {
         notify('Draft discarded. The published content is showing.');
       }
     } catch (error) {
-      if (error.name === 'SyncConflict') session.syncError = error.release ? 'Update Log order conflict' : 'Sync conflict — download your draft';
+      if (error.name === 'SyncConflict') session.syncError = error.release ? 'Update Log order conflict' : 'Sync conflict — Save to choose versions';
       notify(error.message || 'Operation failed.', true);
     } finally {
       session.busy = false;
@@ -631,8 +644,9 @@ async function startSession(token, {deferRender=false}={}) {
     }
     barStatus('Loading repository content…', 'busy');
     const info = await draft.initSession(token, user.login);
-    if (info.orderConflict) session.syncError = 'Update Log order conflict';
-    else if (info.recoveryConflict) session.syncError = 'Sync conflict — download your draft';
+    if (info.contentConflict) session.syncError = 'Draft conflict — open Save to choose versions';
+    else if (info.orderConflict) session.syncError = 'Update Log order conflict';
+    else if (info.recoveryConflict) session.syncError = 'Sync conflict — Save to choose versions';
     if (info.sanitized) {
       notify(`${info.sanitized} invalid resource entr${info.sanitized === 1 ? 'y was' : 'ies were'} removed from your draft to keep editing working.`, true);
     }
@@ -710,7 +724,7 @@ function startSharedRefresh() {
     } catch (error) {
       console.warn('[editor-sync]', error.message);
       session.syncError = error.release ? 'Update Log order conflict'
-        : error.name === 'SyncConflict' ? 'Sync conflict — download your draft' : 'Sync unavailable — local edits kept';
+        : error.name === 'SyncConflict' ? 'Sync conflict — Save to choose versions' : 'Sync unavailable — local edits kept';
     } finally {
       sharedRefreshChecking = null;
       updateToolbar();

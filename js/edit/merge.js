@@ -8,11 +8,18 @@ export class SyncConflict extends Error {
   constructor(path, release) {
     super(release
       ? `Update Log ${release} has competing entry orders. Your edits are still here. Use Save for everyone or Publish to resolve the order.`
-      : `Both editors changed ${path}. Your work is still here. Download your draft before resolving this conflict.`);
+      : `Both editors changed ${path}. Your work is still here. Use Save for everyone or Publish to choose which version to keep; cancel to continue editing.`);
     this.name = 'SyncConflict';
     this.path = path;
     this.release = release;
   }
+}
+
+function resolveConflict(path, local, remote, resolver) {
+  const choice = resolver?.resolveConflict?.({ path, local: copy(local), remote: copy(remote) });
+  if (choice === 'local') return copy(local);
+  if (choice === 'remote') return copy(remote);
+  throw new SyncConflict(path);
 }
 
 export function mergeDocuments(base, local, remote, path = 'content', keepLocalOrder) {
@@ -39,7 +46,12 @@ export function mergeDocuments(base, local, remote, path = 'content', keepLocalO
       ]));
       if (localReorder && remoteReorder && !equal(localOrder, remoteOrder)) {
         const release = /^content\.updates\.versions\[([^\]]+)\]\.entries$/.exec(path);
-        if (!release || !keepLocalOrder?.(release[1])) throw new SyncConflict(`${path} order`, release?.[1]);
+        if (release) {
+          if (!keepLocalOrder?.(release[1])) throw new SyncConflict(`${path} order`, release[1]);
+        } else {
+          const chosen = resolveConflict(`${path} order`, localIds, remoteIds, keepLocalOrder);
+          return [...new Set([...chosen, ...remoteIds, ...localIds])].map((id) => merged.get(id)).filter((item) => item !== undefined);
+        }
       }
       const order = localReorder ? [...localIds, ...remoteIds] : [...remoteIds, ...localIds];
       return [...new Set(order)].map((id) => merged.get(id)).filter((item) => item !== undefined);
@@ -53,5 +65,5 @@ export function mergeDocuments(base, local, remote, path = 'content', keepLocalO
     }
     return merged;
   }
-  throw new SyncConflict(path);
+  return resolveConflict(path, local, remote, keepLocalOrder);
 }
