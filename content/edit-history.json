@@ -2,6 +2,78 @@
   "format": 1,
   "entries": [
     {
+      "id": "41063507-3633-47a3-a0cf-c6a073a557e8",
+      "at": 1793850513885,
+      "kind": "content",
+      "text": "Updated requirements of \"Tier 10\": [\"??? XP\"] to [\"50B XP\"]",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "c8cec4c6-b7d5-4e56-9440-16ab48a6719f",
+      "at": 1793850499955,
+      "kind": "content",
+      "text": "Updated requirements of \"Tier 9\": [\"??? XP\"] to [\"2.5B XP\"]",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "45d91110-6111-4f70-afb0-2e9ca6cdbe9d",
+      "at": 1793850487269,
+      "kind": "content",
+      "text": "Updated requirements of \"Tier 8\": [\"??? XP\"] to [\"500M XP\"]",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "2d6d93b3-8fe5-4957-9c08-179db72161d0",
+      "at": 1793850470802,
+      "kind": "content",
+      "text": "Updated requirements of \"Tier 7\": [\"??? XP\"] to [\"125M XP\"]",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "3442c15f-1258-4bf4-8057-71da06928d5e",
+      "at": 1793850460708,
+      "kind": "content",
+      "text": "Updated requirements of \"Tier 6\": [\"??? XP\"] to [\"25M XP\"]",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "9c88101c-8837-422c-bcfc-45402597e224",
+      "at": 1793850445687,
+      "kind": "content",
+      "text": "Updated requirements of \"Tier 5\": [\"??? XP\"] to [\"5M XP\"]",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "9bb22af6-08be-4eb4-9db4-4a0f8670c212",
+      "at": 1793850433781,
+      "kind": "content",
+      "text": "Updated requirements of \"Tier 4\": [\"??? XP\"] to [\"1.25M XP\"]",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "a73bbf54-4692-4736-a515-420b265c8f4a",
+      "at": 1793850421114,
+      "kind": "content",
+      "text": "Updated requirements of \"Tier 3\": [\"??? XP\"] to [\"400K XP\"]",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "2e697932-f302-4c82-8692-848b84f01219",
+      "at": 1793850410646,
+      "kind": "content",
+      "text": "Updated requirements of \"Tier 2\": [\"??? XP\"] to [\"75K XP\"]",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
       "id": "82569ced-9972-46dc-8a54-2c6f768bc59e",
       "at": 1793850023575,
       "kind": "content",
@@ -2328,63 +2400,6 @@
       "text": "Added \"New page\"",
       "actor": "Quaantic",
       "pending": true
-    },
-    {
-      "id": "4703766a-ddfe-476d-91ea-fb1d5251c876",
-      "at": 1793810803853,
-      "kind": "content",
-      "text": "Removed \"New sap\"",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "0e8e53e2-8013-47b9-ace9-d99e37fe07b0",
-      "at": 1793810780611,
-      "kind": "content",
-      "text": "Added \"New sap\"",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "b3aa4cba-f384-4121-9483-5508b557e4e9",
-      "at": 1793810775397,
-      "kind": "content",
-      "text": "Moved \"Rare Saps\"",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "30292c68-2aa3-470d-ac7e-0500b25fe649",
-      "at": 1793810774077,
-      "kind": "content",
-      "text": "Moved \"Rare Saps\"",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "at": 1793807605551,
-      "kind": "content",
-      "text": "Renamed \"Eternal Shards\" to \"Eternal Shards\""
-    },
-    {
-      "at": 1793807605551,
-      "kind": "content",
-      "text": "Updated desc of \"Eternal Shards\": Eternal Shards are the premium slow currenc… to Eternal Shards are the premium slow currenc…"
-    },
-    {
-      "at": 1793807605551,
-      "kind": "content",
-      "text": "Updated icon of \"Eternal Shards\": fuck to fuck"
-    },
-    {
-      "at": 1793807605550,
-      "kind": "content",
-      "text": "Updated id of \"Eternal Shards\": eternal-shards to eternal-shards"
-    },
-    {
-      "at": 1793807592023,
-      "kind": "content",
-      "text": "Removed \"Eternal Shards \""
     }
   ]
 }
