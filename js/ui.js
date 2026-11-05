@@ -408,6 +408,8 @@ function renderSubTree(catId, items, depth) {
 }
 
 let navWired = false;
+const branchStates=new Map();
+const branchKey=el=>`${el.closest('.nav-group')?.dataset.cat}/${el.dataset.parentSub}`;
 
 export function buildNav() {
   const nav = qs('#sidebar-nav');
@@ -454,25 +456,18 @@ export function buildNav() {
       return;
     }
 
-    if (link.hash === window.location.hash) {
+    const subId=link.dataset.sub;
+    const wrapper=qsa('[data-parent-sub]',link.closest('.nav-group')).find(el=>el.dataset.parentSub===subId);
+    if(wrapper){
       e.preventDefault();
-      const [catId, subId] = link.hash.replace(/^#\/?/, '').split('/');
-      const sub = getSubcategory(catId, subId);
-      if (sub?.parentId) {
-        window.location.hash = `#/${catId}/${sub.parentId}`;
-        return;
-      }
-
-      const wrapper = nav.querySelector(`[data-parent-sub="${subId}"]`);
-      if (wrapper) wrapper.classList.toggle('open');
+      const open=!wrapper.classList.contains('open');
+      wrapper.classList.toggle('open',open);
+      branchStates.set(branchKey(wrapper),open);
+      link.setAttribute('aria-expanded',String(open));
+      if(link.hash!==window.location.hash)window.location.hash=link.hash;
       return;
     }
-
-    const subItem = e.target.closest('[data-sub]');
-    if (subItem) {
-      const wrapper = nav.querySelector(`[data-parent-sub="${subItem.dataset.sub}"]`);
-      if (wrapper) wrapper.classList.toggle('open');
-    }
+    if(link.hash===window.location.hash)e.preventDefault();
   });
 }
 
@@ -522,11 +517,19 @@ export function setActiveNav(catId, subId = null) {
     el.classList.toggle('active', el.dataset.cat === catId);
   });
   qsa('[data-sub]').forEach((el) => {
-    el.classList.toggle('active', !!catId && el.dataset.sub === subId);
+    el.classList.toggle('active', !!catId && el.closest('.nav-group')?.dataset.cat===catId && el.dataset.sub === subId);
   });
   if (catId) openGroup(catId);
   qsa('[data-parent-sub]').forEach((el) => {
-    if(el.dataset.parentSub === subId || el.querySelector('[data-sub].active'))el.classList.add('open');
+    const key=branchKey(el);
+    if(el.querySelector('[data-sub].active')){
+      el.classList.add('open');branchStates.set(key,true);
+    }else if(branchStates.has(key))el.classList.toggle('open',branchStates.get(key));
+    else if(el.closest('.nav-group')?.dataset.cat===catId&&el.dataset.parentSub===subId)el.classList.add('open');
+    if(el.dataset.parentSub){
+      const link=qsa('[data-sub]',el.closest('.nav-group')).find(link=>link.dataset.sub===el.dataset.parentSub);
+      link?.setAttribute('aria-expanded',String(el.classList.contains('open')));
+    }
   });
   moveIndicator();
   clearTimeout(navScrollTimer);

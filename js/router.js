@@ -7,6 +7,7 @@ import {
   searchView, updatesView, creditsView, notFoundView,
 } from './views.js';
 import { feedbackView } from './feedback.js';
+import {getCategory,getSubcategory} from './data/wiki-data.js';
 
 const ROUTES = [
   { pattern: /^$/, view: homeView },
@@ -51,6 +52,10 @@ let renderSeq = 0;
 let pendingScrollAfterRender = null;
 
 async function renderView(view, params, query) {
+  // A removed/old bookmark is a normal missing route, not a failed renderer.
+  if((view===subcategoryView&&!getSubcategory(params[0],params[1]))||(view===categoryView&&!getCategory(params[0]))){
+    params=[params.join('/')];view=notFoundView;
+  }
   const seq = ++renderSeq;
   const viewEl = qs('#view');
   const nav = view.nav ? view.nav(params, query) : null;

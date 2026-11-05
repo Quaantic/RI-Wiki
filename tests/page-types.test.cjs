@@ -358,3 +358,20 @@ test('short progression items share an adaptive grid while detailed stages can e
   assert.equal((root.innerHTML.match(/data-edit-kind="game:stage"/g)||[]).length,5);
 });
 
+test('legacy Tree Milestones bookmarks resolve a renamed Tree Tier without replacing real pages',async()=>{
+  const {applyWikiContent}=await import('../js/services.js');
+  const {getSubcategory,getCategory}=await import('../js/data/wiki-data.js');
+  const fixture=JSON.parse(fs.readFileSync('content/wiki-data.json'));
+  const tree=fixture.categories.find(category=>category.id==='life').subcategories.find(page=>page.id==='tree');
+  const old=tree.children.find(page=>page.id==='tree-milestones');
+  tree.children.push({id:'tree-tier',name:'Tree Tier',desc:'Editor data',children:[]});
+  applyWikiContent(fixture);
+  assert.equal(getSubcategory('life','tree-milestones').id,old.id);
+  tree.children=tree.children.filter(page=>page.id!=='tree-milestones');
+  fixture.categories.push({id:'draft-test',name:'Draft test',desc:'Only in the shared draft',tagline:'Test',subcategories:[]});
+  applyWikiContent(fixture);
+  assert.equal(getSubcategory('life','tree-milestones').id,'tree-tier');
+  assert.equal(getSubcategory('life','missing-page'),null);
+  assert.equal(getCategory('draft-test').name,'Draft test');
+});
+

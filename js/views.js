@@ -697,7 +697,7 @@ function stageCard(s, i, itemPath = '') {
   const length=details.join(' ').length;
   const size=length>500||details.length>14?'full':length>230||details.length>8?'wide':'compact';
   return `
-    <article class="stage-card stage-card--${size} reveal" ${itemPath ? ed(itemPath, 'game:stage', esc(s.title || `Stage ${s.num}`)) : ''} style="--reveal-delay:${Math.min(i * 50, 400)}ms">
+    <article class="stage-card stage-card--${size}" ${itemPath ? ed(itemPath, 'game:stage', esc(s.title || `Stage ${s.num}`)) : ''}>
       <header class="stage-card__head">
         <span class="stage-card__num">${esc(s.num)}</span>
         <b class="stage-card__title">${esc(s.title || `Stage ${s.num}`)}</b>
@@ -710,10 +710,10 @@ function stageCard(s, i, itemPath = '') {
           </div>
         </div>
         <div class="stage-card__col">
-          <span class="stage-card__label">Boosts${s.boostsNote ? `<small class="stage-card__note">${esc(s.boostsNote)}</small>` : ''}</span>
-          <div class="stage-chips">
+          <span class="stage-card__label">Boosts</span>
+          <div class="stage-rewards"><div class="stage-chips">
             ${s.boosts.map((b) => `<span class="stage-chip">${colorizeResources(esc(b))}</span>`).join('')}
-          </div>
+          </div>${s.boostsNote ? `<small class="stage-card__note">${esc(s.boostsNote)}</small>` : ''}</div>
         </div>
         ${hasUnlocks ? `
         <div class="stage-card__col stage-card__col--wide">

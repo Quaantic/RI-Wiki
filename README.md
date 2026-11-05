@@ -237,6 +237,30 @@ For a two-editor browser check, run `node tests/admin-preview.cjs` and open
 `http://127.0.0.1:4173/?editor=editor-b#/life/tree` in separate tabs. The repository
 and saves are mocked in memory; no GitHub credentials or remote writes are used.
 
+## Initial draft loading and navigation
+
+For a signed-in editor, startup awaits the shared draft before resolving the
+first route. The sidebar, home page and content view all use that same draft,
+including categories created in older editor versions. Preview/Edit preference
+survives refresh within the session; changing modes does not switch datasets.
+The public site continues to use published content until Publish.
+
+Apples and other nested branches can be explicitly collapsed without the
+active-page logic immediately reopening them. Selecting a child still reveals
+its ancestors. Old Tree Milestones links resolve Tree Tier when that page was
+renamed; an absent page displays the normal missing-page view.
+
+Progression cards align their outline and reward rows across a grid row, using
+CSS subgrid when supported. Labels are 12px. Detailed stages use flowing rows
+for Requirements, Boosts and Unlocks, avoiding three mostly empty columns.
+
+Regression preview: `node tests/admin-preview.cjs --shared-regression` creates
+an in-memory draft containing FAQ, Miscellaneous and Tree Tier, while the public
+JSON stays unchanged. Open `http://127.0.0.1:4173/?editor=boot-test#/life/tree-milestones`,
+switch to Preview and refresh. The draft-only categories must already be in the
+sidebar without making any edits. This fixture never writes project content or
+publishes to GitHub.
+
 ## Excel (fase futura)
 
 A interface nunca lê os dados diretamente — tudo passa por `js/services.js`.

@@ -43,14 +43,18 @@ async function boot() {
   });
 
   const t0 = performance.now();
-  await initRouter();
-
+  let restoreEditorForm;
   try {
-    const { initEditMode } = await import('./edit/edit-mode.js');
-    initEditMode();
+    const editor = await import('./edit/edit-mode.js');
+    // Load the authenticated draft before resolving its routes or painting
+    // the first page. Published content may not contain new draft categories.
+    await editor.initEditMode({ deferRender: true });
+    restoreEditorForm = editor.restoreEditorForm;
   } catch (error) {
     console.error('[main] Inline edit mode failed to start:', error);
   }
+  await initRouter();
+  restoreEditorForm?.();
 
   const wait = Math.max(0, 520 - (performance.now() - t0));
   setTimeout(() => {

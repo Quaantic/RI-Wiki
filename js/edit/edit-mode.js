@@ -532,7 +532,7 @@ function installSigninButton() {
 
 // ==== SESSAO ====
 
-async function startSession(token) {
+async function startSession(token, {deferRender=false}={}) {
   try {
     layer.bar.classList.remove('is-hidden');
     document.documentElement.classList.add('ri-edit-bar');
@@ -562,19 +562,23 @@ async function startSession(token) {
     const user = await githubUser(token).catch(() => ({ login: 'admin', name: 'admin', avatar: '' }));
     session.user = user.login;
     session.avatar = user.avatar || '';
+    draft.applyDraftToSite();
+    // Initial sign-in must update navigation too, not only the current view.
+    window.dispatchEvent(new CustomEvent('ri-edit-content'));
     session.ready = true;
-    setEditing(true);
+    let editing=true;
+    try{editing=sessionStorage.getItem(`ri-edit-mode:${session.user}`)!=='preview';}catch{}
+    setEditing(editing);
     startSharedRefresh();
     const signinRow = qs('[data-ri-edit-signin]');
     if (signinRow) signinRow.hidden = true;
     installSidebarTools();
     {
-      draft.applyDraftToSite();
-      await rerender({ scroll: 'preserve' });
+      if(!deferRender)await rerender({ scroll: 'preserve' });
       notify(info.recovered ? 'Your unsaved work was recovered from this browser.' : 'The shared draft is ready.');
     }
     updateToolbar();
-    restoreForm();
+    if(!deferRender&&session.editing)restoreForm();
   } catch (error) {
     notify(error.message || 'Failed to load the editing session.', true);
     barStatus('Failed to load editing session');
@@ -602,6 +606,7 @@ function toggleSession() {
 
 function setEditing(on) {
   session.editing = on;
+  if(session.user)try{sessionStorage.setItem(`ri-edit-mode:${session.user}`,on?'edit':'preview');}catch{}
   document.documentElement.classList.toggle('ri-edit-on', on);
   if (!on) {
     layer.chip.hidden = true;
@@ -2418,7 +2423,9 @@ function installInteraction() {
 // conteudo de jogo por tipo de pagina e templates de itens novos.
 export { createGamePageContainer, buildAddValue };
 
-export function initEditMode() {
+export function restoreEditorForm(){if(session.ready&&session.editing)restoreForm();}
+
+export async function initEditMode({deferRender=false}={}) {
   if (session.started) return;
   session.started = true;
   buildToolbar();
@@ -2431,6 +2438,6 @@ export function initEditMode() {
   layer.bar.classList.add('is-hidden');
   try {
     const stored = sessionStorage.getItem(TOKEN_KEY);
-    if (stored) void startSession(stored);
+    if (stored) await startSession(stored,{deferRender});
   } catch { /* sem token salvo */ }
 }

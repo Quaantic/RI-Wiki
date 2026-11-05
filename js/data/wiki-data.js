@@ -2,6 +2,7 @@
 
 export const CATEGORIES = [];
 export const PAGE_REDIRECTS = {};
+const LEGACY_PAGE_ALIASES={'life/tree-milestones':'life/tree-tier'};
 
 // Creditos da comunidade (content/wiki-data.json -> "credits").
 // Mutado no lugar por services.applyWikiContent para a views renderizarem
@@ -44,7 +45,9 @@ export function getSubcategory(categoryId, subId) {
       };
       walk(category.subcategories);
     }
-    return candidates.length === 1 && (candidates[0].cat !== categoryId || candidates[0].id !== subId) ? getSubcategory(candidates[0].cat, candidates[0].id) : null;
+    if(candidates.length === 1 && (candidates[0].cat !== categoryId || candidates[0].id !== subId))return getSubcategory(candidates[0].cat, candidates[0].id);
+    const alias=LEGACY_PAGE_ALIASES[`${categoryId}/${subId}`];
+    return alias?getSubcategory(...alias.split('/')):null;
   };
   if (!cat) return moved();
   const flat = [];
