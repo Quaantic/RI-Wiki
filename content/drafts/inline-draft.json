@@ -7916,7 +7916,7 @@
               "title": "Tier 2",
               "num": "2",
               "requirements": [
-                "??? XP"
+                "75K XP"
               ],
               "boosts": [
                 "More Damage Multi (+/tier)",
@@ -7937,7 +7937,7 @@
               "title": "Tier 3",
               "num": "3",
               "requirements": [
-                "??? XP"
+                "400K XP"
               ],
               "boosts": [
                 "More Damage Multi (+/tier)",
@@ -7959,7 +7959,7 @@
               "title": "Tier 4",
               "num": "4",
               "requirements": [
-                "??? XP"
+                "1.25M XP"
               ],
               "boosts": [
                 "More Damage Multi (+/tier)",
@@ -7985,7 +7985,7 @@
               "title": "Tier 5",
               "num": "5",
               "requirements": [
-                "??? XP"
+                "5M XP"
               ],
               "boosts": [
                 "More Damage Multi (+/tier)",
@@ -8007,7 +8007,7 @@
               "title": "Tier 6",
               "num": "6",
               "requirements": [
-                "??? XP"
+                "25M XP"
               ],
               "boosts": [
                 "More Damage Multi (+/tier)",
@@ -8030,7 +8030,7 @@
               "title": "Tier 7",
               "num": "7",
               "requirements": [
-                "??? XP"
+                "125M XP"
               ],
               "boosts": [
                 "More Damage Multi (+/tier)",
@@ -8053,7 +8053,7 @@
               "title": "Tier 8",
               "num": "8",
               "requirements": [
-                "??? XP"
+                "500M XP"
               ],
               "boosts": [
                 "More Damage Multi (+/tier)",
@@ -8076,7 +8076,7 @@
               "title": "Tier 9",
               "num": "9",
               "requirements": [
-                "??? XP"
+                "2.5B XP"
               ],
               "boosts": [
                 "More Damage Multi (+/tier)",
@@ -8103,7 +8103,7 @@
               "title": "Tier 10",
               "num": "10",
               "requirements": [
-                "??? XP"
+                "50B XP"
               ],
               "boosts": [
                 "More Damage Multi (+/tier)",
