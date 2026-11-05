@@ -2,6 +2,38 @@
   "format": 1,
   "entries": [
     {
+      "id": "eece4eb3-9cb3-4ad0-a18e-9b4b5470215c",
+      "at": 1793845450678,
+      "kind": "content",
+      "text": "Updated columns of \"Gamepasses\": [\"Name\",\"Price\",\"Boosts\",\"Can be obtained b… to [\"Name\",\"Price\",\"Boosts\"]",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "05b26eb0-2a74-400f-adde-12fe20cf3f52",
+      "at": 1793845450677,
+      "kind": "content",
+      "text": "Updated text of \"Gamepasses\": Gamepasses to Gamepasses",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "fb9bc72e-958a-4b31-b78c-fa7f75028658",
+      "at": 1793845420467,
+      "kind": "content",
+      "text": "Set 3 of \"row-2fced816-1d99-4a3d-8ef4-973b259a5fe0\" (Yes)",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "7ba28817-4d61-4208-b554-93ed2aba9b96",
+      "at": 1793845415647,
+      "kind": "content",
+      "text": "Updated columns of \"Gamepasses \": [\"Name\",\"Price\",\"Boosts\"] to [\"Name\",\"Price\",\"Boosts\",\"Can be obtained b…",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
       "id": "13e50a1b-39c6-4ac6-a2c2-7edb8bf08185",
       "at": 1793845374147,
       "kind": "content",
