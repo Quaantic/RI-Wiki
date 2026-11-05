@@ -1995,6 +1995,13 @@
             "title": "Background",
             "href": "",
             "description": "Added lightweight backgrounds and more consistent styling across the wiki."
+          },
+          {
+            "id": "entry-5f705e92-adb7-489a-92e2-bcdc95fc9b36",
+            "context": "Feature",
+            "title": "New update",
+            "href": "",
+            "description": "What changed in the game."
           }
         ]
       },
@@ -2056,7 +2063,10 @@
     ]
   },
   "game": {
-    "uiCopy": {},
+    "uiCopy": {
+      "heroSub": "Everything in Regrowht Incremental documented, and searchable. \nBuilt by the community\n",
+      "heroTitle": "Grow your knowledge."
+    },
     "upgrades": {
       "sections": {
         "crystal": {
