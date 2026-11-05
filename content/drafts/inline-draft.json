@@ -29,7 +29,8 @@
                 "label": "Gate resource",
                 "value": "Energy"
               }
-            ]
+            ],
+            "sections": []
           },
           {
             "id": "energy",
@@ -45,7 +46,8 @@
                 "icon": "gauge",
                 "desc": "Machines are the Energy producers of the tycoon, bought and leveled with Energy. There are 24 machine types across four eras, from Basic Extractor to Super Neutronizer, and you can own up to five of each. Every level raises income; every 10 levels adds a tier worth a 1.7x boost. Extra copies cost exponentially more, and prices jump about 100x between eras.",
                 "highlights": [],
-                "facts": []
+                "facts": [],
+                "sections": []
               },
               {
                 "id": "factory",
@@ -53,9 +55,11 @@
                 "icon": "factory",
                 "desc": "The Factory is a tycoon building with six Energy-paid upgrades: Furnace, Pipes, Filtering, Overclock, Storage and Automator. Each multiplies the Energy production chain; Furnace and Overclock are the strongest, and Automator can reach level 150. It is also one of the first systems Automation can buy for you.",
                 "highlights": [],
-                "facts": []
+                "facts": [],
+                "sections": []
               }
-            ]
+            ],
+            "sections": []
           },
           {
             "id": "gears",
@@ -71,7 +75,8 @@
                 "icon": "gauge",
                 "desc": "Gears Generators are five production machines unlocked by the Unlock Gears Production button for 1e16 Energy: Wrench, Generator, Engine, Jet Engine and Accelerator. Each is leveled individually, produces Gears per second and gains a tier bonus every 10 levels. Each machine requires the previous one; Accelerator is the endgame generator.",
                 "highlights": [],
-                "facts": []
+                "facts": [],
+                "sections": []
               },
               {
                 "id": "special-gears",
@@ -79,7 +84,8 @@
                 "icon": "star",
                 "desc": "Special Gears are the prestige layer of the Gears system, unlocked by the Special Gears Frames button for 1.25 million Gears. The reset board converts Gears into special tiers: 2 million normal Gears become Shiny Gears, 10 thousand Shiny become Life Gears, and 10 thousand Life Gears become the final tier. The board previews the exact gain before resetting.",
                 "highlights": [],
-                "facts": []
+                "facts": [],
+                "sections": []
               },
               {
                 "id": "automations",
@@ -87,9 +93,11 @@
                 "icon": "refresh",
                 "desc": "Automations are 24 auto-buyers paid in Gears, unlocked by Autobuy Frames for 250 Gears. They automatically buy upgrades for Machines, Factory, Crystals, Jewels, Platinum, Life Shards, Fossils, Research, Logs, Sap, Terraform, Roots, Monster, Money, Gold, Prestige, Emeralds, Crystal Shards, Crystal Perks, Opal, Adamantium, Merge and Californium. Each level unlocks more automatic purchases per tick.",
                 "highlights": [],
-                "facts": []
+                "facts": [],
+                "sections": []
               }
-            ]
+            ],
+            "sections": []
           },
           {
             "id": "crystals",
@@ -113,9 +121,11 @@
                     "icon": "hammer",
                     "desc": "Move the level slider and the site computes the next-level price and the multi.",
                     "highlights": [],
-                    "facts": []
+                    "facts": [],
+                    "sections": []
                   }
-                ]
+                ],
+                "sections": []
               },
               {
                 "id": "jewels",
@@ -131,9 +141,11 @@
                     "icon": "hammer",
                     "desc": "Move the level slider and the site computes the next-level price and the multi.",
                     "highlights": [],
-                    "facts": []
+                    "facts": [],
+                    "sections": []
                   }
-                ]
+                ],
+                "sections": []
               },
               {
                 "id": "platinum",
@@ -149,9 +161,11 @@
                     "icon": "hammer",
                     "desc": "Move the level slider and the site computes the next-level price and the multi.",
                     "highlights": [],
-                    "facts": []
+                    "facts": [],
+                    "sections": []
                   }
-                ]
+                ],
+                "sections": []
               },
               {
                 "id": "adamantium",
@@ -167,9 +181,11 @@
                     "icon": "hammer",
                     "desc": "Move the level slider and the site computes the next-level price and the multi.",
                     "highlights": [],
-                    "facts": []
+                    "facts": [],
+                    "sections": []
                   }
-                ]
+                ],
+                "sections": []
               },
               {
                 "id": "californium",
@@ -185,17 +201,21 @@
                     "icon": "hammer",
                     "desc": "Move the level slider and the site computes the next-level price and the multi.",
                     "highlights": [],
-                    "facts": []
+                    "facts": [],
+                    "sections": []
                   },
                   {
                     "id": "californium-milestones",
                     "name": "Californium Milestones",
                     "icon": "star",
-                    "desc": "Californium Milestones are permanent global bonuses earned by reaching Californium amounts. Milestone 4 starts boosting Californium caps, milestone 8 raises Adamantium upgrade limits by 15, milestone 9 raises Californium limits by 10, milestone 11 gives the first Quartz upgrade five extra levels, and milestone 13 unlocks the final two Opal upgrades. They reward holding Californium instead of only spending it.",
+                    "desc": "Sixteen permanent rewards from total Californium. Reach 100T to unlock Astatine.",
                     "highlights": [],
-                    "facts": []
+                    "facts": [],
+                    "sections": [],
+                    "children": []
                   }
-                ]
+                ],
+                "sections": []
               },
               {
                 "id": "astatine",
@@ -211,19 +231,24 @@
                     "icon": "hammer",
                     "desc": "Full breakdown coming soon.",
                     "highlights": [],
-                    "facts": []
+                    "facts": [],
+                    "sections": []
                   },
                   {
                     "id": "astatine-power",
                     "name": "Astatine Power",
                     "icon": "spark",
-                    "desc": "Astatine Power is a set of passive bonuses that scale with total Astatine. The first two apply from the start and grow with amounts over 50 and 100; two more unlock at milestones 7 and 8 and scale with amounts over 500 and 1000, with soft caps. Holding more Astatine strengthens crystal income.",
+                    "desc": "Calculate Astatine Power and Californium Buffs below. Power unlocks at milestone 7; its cap bonuses unlock at milestone 8.",
                     "highlights": [],
-                    "facts": []
+                    "facts": [],
+                    "sections": [],
+                    "children": []
                   }
-                ]
+                ],
+                "sections": []
               }
-            ]
+            ],
+            "sections": []
           },
           {
             "id": "barn",
@@ -247,9 +272,11 @@
                     "icon": "hammer",
                     "desc": "Move the level slider and the site computes the next-level price and the multi.",
                     "highlights": [],
-                    "facts": []
+                    "facts": [],
+                    "sections": []
                   }
-                ]
+                ],
+                "sections": []
               },
               {
                 "id": "crystal-perks",
@@ -265,9 +292,11 @@
                     "icon": "hammer",
                     "desc": "Move the level slider and the site computes the next-level price and the multi.",
                     "highlights": [],
-                    "facts": []
+                    "facts": [],
+                    "sections": []
                   }
-                ]
+                ],
+                "sections": []
               },
               {
                 "id": "opal",
@@ -283,11 +312,14 @@
                     "icon": "hammer",
                     "desc": "Move the level slider and the site computes the next-level price and the multi.",
                     "highlights": [],
-                    "facts": []
+                    "facts": [],
+                    "sections": []
                   }
-                ]
+                ],
+                "sections": []
               }
-            ]
+            ],
+            "sections": []
           },
           {
             "id": "merge",
@@ -311,9 +343,11 @@
                     "icon": "hammer",
                     "desc": "Move the level slider and the site computes the next-level price and the multi.",
                     "highlights": [],
-                    "facts": []
+                    "facts": [],
+                    "sections": []
                   }
-                ]
+                ],
+                "sections": []
               },
               {
                 "id": "bluesteel",
@@ -329,9 +363,11 @@
                     "icon": "hammer",
                     "desc": "Full breakdown coming soon.",
                     "highlights": [],
-                    "facts": []
+                    "facts": [],
+                    "sections": []
                   }
-                ]
+                ],
+                "sections": []
               },
               {
                 "id": "merge-perks",
@@ -347,9 +383,11 @@
                     "icon": "hammer",
                     "desc": "Move the level slider and the site computes the next-level price and the multi.",
                     "highlights": [],
-                    "facts": []
+                    "facts": [],
+                    "sections": []
                   }
-                ]
+                ],
+                "sections": []
               },
               {
                 "id": "magnets",
@@ -365,13 +403,17 @@
                     "icon": "hammer",
                     "desc": "Full breakdown coming soon.",
                     "highlights": [],
-                    "facts": []
+                    "facts": [],
+                    "sections": []
                   }
-                ]
+                ],
+                "sections": []
               }
-            ]
+            ],
+            "sections": []
           }
-        ]
+        ],
+        "sections": []
       },
       {
         "id": "life",
@@ -412,11 +454,14 @@
                     "icon": "hammer",
                     "desc": "Move the level slider and the site computes the next-level price and the multi.",
                     "highlights": [],
-                    "facts": []
+                    "facts": [],
+                    "sections": []
                   }
-                ]
+                ],
+                "sections": []
               }
-            ]
+            ],
+            "sections": []
           },
           {
             "id": "fossil",
@@ -432,7 +477,8 @@
                 "icon": "hammer",
                 "desc": "Move the level slider and the site computes the next-level price and the multi.",
                 "highlights": [],
-                "facts": []
+                "facts": [],
+                "sections": []
               },
               {
                 "id": "power-of-fossils",
@@ -440,9 +486,11 @@
                 "icon": "chart",
                 "desc": "Power of Fossils unlocks seven permanent bonuses at total Fossil milestones. Enter your total Fossils to see each unlocked bonus, including Sap chance and CAP effects.",
                 "highlights": [],
-                "facts": []
+                "facts": [],
+                "sections": []
               }
-            ]
+            ],
+            "sections": []
           },
           {
             "id": "research",
@@ -458,7 +506,8 @@
                 "icon": "hammer",
                 "desc": "Move the level slider and the site computes the next-level price and the multi.",
                 "highlights": [],
-                "facts": []
+                "facts": [],
+                "sections": []
               },
               {
                 "id": "golden-research",
@@ -472,9 +521,11 @@
                     "id": "golden-research-milestones",
                     "name": "Golden Research Milestones",
                     "icon": "star",
-                    "desc": "Golden Research Milestones are permanent bonuses tracked on the board. Early milestones boost Research limits; milestone 5 multiplies Golden Points investing power by 10x, the biggest jump in the minigame.",
+                    "desc": "Seven rewards from total Golden Research, including research caps, automation and passive income.",
                     "highlights": [],
-                    "facts": []
+                    "facts": [],
+                    "sections": [],
+                    "children": []
                   },
                   {
                     "id": "golden-research-upgrades",
@@ -482,19 +533,24 @@
                     "icon": "hammer",
                     "desc": "Move the level slider and the site computes the next-level price and the multi.",
                     "highlights": [],
-                    "facts": []
+                    "facts": [],
+                    "sections": []
                   },
                   {
                     "id": "golden-points",
                     "name": "Golden Points",
                     "icon": "coin",
-                    "desc": "Golden Points are invested on the Golden Point Investing board. Each point grows a permanent multiplier with soft caps. Early slots boost Energy, Research Points, Money, Life Gems and Mining Damage; the Unlocker opens more slots. Reinvest Golden Points as soon as you earn them.",
+                    "desc": "Invest Golden Points into six targets. Each bonus starts at its required investment.",
                     "highlights": [],
-                    "facts": []
+                    "facts": [],
+                    "sections": [],
+                    "children": []
                   }
-                ]
+                ],
+                "sections": []
               }
-            ]
+            ],
+            "sections": []
           },
           {
             "id": "tree",
@@ -518,9 +574,11 @@
                     "icon": "hammer",
                     "desc": "Move the level slider and the site computes the next-level price and the multi.",
                     "highlights": [],
-                    "facts": []
+                    "facts": [],
+                    "sections": []
                   }
-                ]
+                ],
+                "sections": []
               },
               {
                 "id": "tree-milestones",
@@ -528,7 +586,8 @@
                 "icon": "star",
                 "desc": "Tree Milestones are Tree Tiers reached with Tree Tier XP. Thirteen tiers range from 25 thousand XP to 1e99 XP; each tier multiplies the trees you can cut and unlocks deeper Roots upgrades, including Golden, Diamond and Void Apple chances. Unlock Tree Tier and Tree Tier XP upgrades speed progression.",
                 "highlights": [],
-                "facts": []
+                "facts": [],
+                "sections": []
               },
               {
                 "id": "rare-saps",
@@ -541,7 +600,8 @@
                     "label": "Types",
                     "value": "4"
                   }
-                ]
+                ],
+                "sections": []
               },
               {
                 "id": "sap",
@@ -557,9 +617,11 @@
                     "icon": "hammer",
                     "desc": "Move the level slider and the site computes the next-level price and the multi.",
                     "highlights": [],
-                    "facts": []
+                    "facts": [],
+                    "sections": []
                   }
-                ]
+                ],
+                "sections": []
               },
               {
                 "id": "roots",
@@ -575,9 +637,11 @@
                     "icon": "hammer",
                     "desc": "Move the level slider and the site computes the next-level price and the multi.",
                     "highlights": [],
-                    "facts": []
+                    "facts": [],
+                    "sections": []
                   }
-                ]
+                ],
+                "sections": []
               },
               {
                 "id": "apples",
@@ -593,7 +657,8 @@
                     "icon": "leaf",
                     "desc": "Default Apples are the base tier and drop from the start of tree cutting. Holding them unlocks the first Apple Buffs milestones, which boost tree gains and scale with the amount held up to a 1000 requirement.",
                     "highlights": [],
-                    "facts": []
+                    "facts": [],
+                    "sections": []
                   },
                   {
                     "id": "apples-golden",
@@ -601,7 +666,8 @@
                     "icon": "star",
                     "desc": "Golden Apples are the second tier, unlocked with the Golden Apple Roots upgrade and increased by More Golden Apples. Their Apple Buffs milestones are among the strongest and scale up to 1000 held. The More Apples Eternal upgrade multiplies Red, Golden and Diamond apples together.",
                     "highlights": [],
-                    "facts": []
+                    "facts": [],
+                    "sections": []
                   },
                   {
                     "id": "apples-diamond",
@@ -609,7 +675,8 @@
                     "icon": "diamond",
                     "desc": "Diamond Apples are the third tier, unlocked with the Diamond Apple Roots upgrade. They are much rarer than Golden Apples, their bonuses scale up to a 100 thousand requirement, and they unlock Void Apples through the Void Chance upgrade.",
                     "highlights": [],
-                    "facts": []
+                    "facts": [],
+                    "sections": []
                   },
                   {
                     "id": "apples-void",
@@ -617,11 +684,14 @@
                     "icon": "moon",
                     "desc": "Void Apples are the final tier, unlocked with the Void Chance Roots upgrade, which starts at a 15 percent chance and grows with levels. Their five Apple Buffs milestones scale to 1000 Void Apples and give the strongest multipliers in the tree system.",
                     "highlights": [],
-                    "facts": []
+                    "facts": [],
+                    "sections": []
                   }
-                ]
+                ],
+                "sections": []
               }
-            ]
+            ],
+            "sections": []
           },
           {
             "id": "terraforming",
@@ -637,7 +707,8 @@
                 "icon": "leaf",
                 "desc": "Life is the creation-tier stat shown on your nametag milestone. It rises every three lives created in Life Generation and gates Terraform upgrades, Life upgrade limits and the Fossil board. It can also be ranked up without losing progress by paying Eternal Shards.",
                 "highlights": [],
-                "facts": []
+                "facts": [],
+                "sections": []
               },
               {
                 "id": "life-gems",
@@ -653,11 +724,14 @@
                     "icon": "hammer",
                     "desc": "Move the level slider and the site computes the next-level price and the multi.",
                     "highlights": [],
-                    "facts": []
+                    "facts": [],
+                    "sections": []
                   }
-                ]
+                ],
+                "sections": []
               }
-            ]
+            ],
+            "sections": []
           },
           {
             "id": "monster",
@@ -673,7 +747,8 @@
                 "icon": "refresh",
                 "desc": "Monster Evolution upgrades evolve your monster permanently. There are six evolutions with escalating prices; each multiplies monster gains, with the first five doubling it and the last ones growing by 25 percent. Every Monster Upgrade also requires a minimum evolution level, so evolving is mandatory for further upgrades.",
                 "highlights": [],
-                "facts": []
+                "facts": [],
+                "sections": []
               },
               {
                 "id": "red-liquid",
@@ -689,9 +764,11 @@
                     "icon": "hammer",
                     "desc": "Move the level slider and the site computes the next-level price and the multi.",
                     "highlights": [],
-                    "facts": []
+                    "facts": [],
+                    "sections": []
                   }
-                ]
+                ],
+                "sections": []
               },
               {
                 "id": "sacrifice",
@@ -707,7 +784,8 @@
                     "icon": "drop",
                     "desc": "Dark Liquid is the currency earned by sacrificing monsters. It pays for the separate Dark Monster Upgrades board, which further boosts the monster area, and is tracked in your Life Island inventory.",
                     "highlights": [],
-                    "facts": []
+                    "facts": [],
+                    "sections": []
                   },
                   {
                     "id": "sacrifice-upgrades",
@@ -715,11 +793,14 @@
                     "icon": "hammer",
                     "desc": "Move the level slider and the site computes the next-level price and the multi.",
                     "highlights": [],
-                    "facts": []
+                    "facts": [],
+                    "sections": []
                   }
-                ]
+                ],
+                "sections": []
               }
-            ]
+            ],
+            "sections": []
           },
           {
             "id": "frost",
@@ -733,9 +814,11 @@
                 "id": "frost-generators",
                 "name": "Frost Generators",
                 "icon": "gauge",
-                "desc": "Frost Generators are three machines: the first is free, the second costs 10 thousand IceShard and the third 10 million. Each has Tier, Level and Speed upgrade tracks. Tier caps at 3; Level caps at 50, 60 or 75; Speed caps at 10, 20 or 30. Every track increases IceShard production.",
+                "desc": "Adjust generator levels and speed to calculate Frost output and the next upgrade costs.",
                 "highlights": [],
-                "facts": []
+                "facts": [],
+                "sections": [],
+                "children": []
               },
               {
                 "id": "frost-upgrades",
@@ -743,53 +826,24 @@
                 "icon": "hammer",
                 "desc": "Move the level slider and the site computes the next-level price and the multi.",
                 "highlights": [],
-                "facts": []
+                "facts": [],
+                "sections": []
               },
               {
                 "id": "frost-conversion",
                 "name": "Frost Conversion",
                 "icon": "refresh",
-                "desc": "Frost Conversion is the board that trades frost currency up the chain. Each conversion is one-way into the next tier, and every higher tier permanently multiplies several stats while also serving as the input for the next conversion.",
+                "desc": "All four Frost conversions and their current bonuses. Enter your owned amounts below.",
                 "highlights": [],
                 "facts": [],
-                "children": [
-                  {
-                    "id": "packed-frost",
-                    "name": "Packed Frost",
-                    "icon": "spark",
-                    "desc": "Packed Frost is the second frost tier, converted from IceShard. Each one held adds a soft-capped multiplier of up to 50x to your stats, and Packed Frost is the input for Dense Frost.",
-                    "highlights": [],
-                    "facts": []
-                  },
-                  {
-                    "id": "dense-frost",
-                    "name": "Dense Frost",
-                    "icon": "spark",
-                    "desc": "Dense Frost is the third frost tier, converted from Packed Frost, with two bonus lines scaling up to 500x. It feeds Compact Frost.",
-                    "highlights": [],
-                    "facts": []
-                  },
-                  {
-                    "id": "compact-frost",
-                    "name": "Compact Frost",
-                    "icon": "spark",
-                    "desc": "Compact Frost is the fourth frost tier, converted from Dense Frost. It carries three bonus lines scaling with logarithmic and power formulas and is the input for the final tier.",
-                    "highlights": [],
-                    "facts": []
-                  },
-                  {
-                    "id": "neutron-frost",
-                    "name": "Neutron Frost",
-                    "icon": "spark",
-                    "desc": "Neutron Frost is the fifth and final frost tier, converted from Compact Frost. Its two strong bonus lines cap at 100x. Holding the highest tiers you can afford is the endgame of the Frost area.",
-                    "highlights": [],
-                    "facts": []
-                  }
-                ]
+                "children": [],
+                "sections": []
               }
-            ]
+            ],
+            "sections": []
           }
-        ]
+        ],
+        "sections": []
       },
       {
         "id": "money-island",
@@ -823,7 +877,8 @@
                 "label": "Currency",
                 "value": "Money"
               }
-            ]
+            ],
+            "sections": []
           },
           {
             "id": "gold-bars",
@@ -839,9 +894,11 @@
                 "icon": "hammer",
                 "desc": "Move the level slider and the site computes the next-level price and the multi from the game formulas.",
                 "highlights": [],
-                "facts": []
+                "facts": [],
+                "sections": []
               }
-            ]
+            ],
+            "sections": []
           },
           {
             "id": "emeralds",
@@ -857,9 +914,11 @@
                 "icon": "hammer",
                 "desc": "Move the level slider and the site computes the next-level price and the multi from the game formulas.",
                 "highlights": [],
-                "facts": []
+                "facts": [],
+                "sections": []
               }
-            ]
+            ],
+            "sections": []
           },
           {
             "id": "golden-diamond",
@@ -875,9 +934,11 @@
                 "icon": "hammer",
                 "desc": "Move the level slider and the site computes the next-level price and the multi from the game formulas.",
                 "highlights": [],
-                "facts": []
+                "facts": [],
+                "sections": []
               }
-            ]
+            ],
+            "sections": []
           },
           {
             "id": "ascensions",
@@ -885,13 +946,14 @@
             "icon": "refresh",
             "desc": "Tree Ascension is Money Island’s rank system, paid in Money. Rank 1 costs 1e51 Money and unlocks Golden Diamonds plus five tree upgrades; Rank 2 costs 1e72 and unlocks Ruby Energy plus seven more upgrades. Further ranks are coming soon. Ranks appear on your nametag and can be bought without resetting by paying Eternal Shards.",
             "highlights": [],
-            "facts": []
+            "facts": [],
+            "sections": []
           },
           {
             "id": "energies",
             "name": "Energies",
             "icon": "spark",
-            "desc": "The Energies are four special stats on Money Island that stack exponential multipliers onto Energy gain. Each unlocks through the Upgrade Tree or Ascension, is gained from its own nodes and chances, and is soft-capped to keep it balanced. They are among the strongest Energy boosts in the game.",
+            "desc": "Enter your Silver, Golden, Diamond and Ruby Energy amounts to calculate bonuses and caps.",
             "highlights": [],
             "facts": [
               {
@@ -899,42 +961,11 @@
                 "value": "4"
               }
             ],
-            "children": [
-              {
-                "id": "silver-energy",
-                "name": "Silver Energy",
-                "icon": "spark",
-                "desc": "Silver Energy unlocks with a 100 trillion Money node in the Upgrade Tree and is gained through Silver Chance and Better Silver upgrades. It multiplies Energy with a soft-capped power formula that grows with the amount held.",
-                "highlights": [],
-                "facts": []
-              },
-              {
-                "id": "gold-energy",
-                "name": "Gold Energy",
-                "icon": "spark",
-                "desc": "Gold Energy is the second Energy stat, unlocked deeper in the Upgrade Tree. Its multiplier scales up to a hard cap of 1000x and combines multiplicatively with the other Energies.",
-                "highlights": [],
-                "facts": []
-              },
-              {
-                "id": "diamond-energy",
-                "name": "Diamond Energy",
-                "icon": "spark",
-                "desc": "Diamond Energy is the third Energy stat, unlocked with a 1e23 Money node. Its bonus caps at 100x, is cheaper to push than Gold Energy, and Better Diamond Energy raises its gain per level.",
-                "highlights": [],
-                "facts": []
-              },
-              {
-                "id": "ruby-energy",
-                "name": "Ruby Energy",
-                "icon": "spark",
-                "desc": "Ruby Energy is the final Energy stat, unlocked by Tree Ascension Rank 2 and boosted by Golden Diamond upgrades and the Ruby Necklace item. It multiplies all other Energies at once with a 2.5x cap, so it is saved for endgame.",
-                "highlights": [],
-                "facts": []
-              }
-            ]
+            "children": [],
+            "sections": []
           }
-        ]
+        ],
+        "sections": []
       },
       {
         "id": "mining",
@@ -982,7 +1013,8 @@
                 "label": "Layers",
                 "value": "20"
               }
-            ]
+            ],
+            "sections": []
           },
           {
             "id": "mastery",
@@ -999,7 +1031,8 @@
                 "label": "Lines each",
                 "value": "3"
               }
-            ]
+            ],
+            "sections": []
           },
           {
             "id": "cores",
@@ -1012,7 +1045,8 @@
                 "label": "Cores",
                 "value": "12"
               }
-            ]
+            ],
+            "sections": []
           },
           {
             "id": "layers",
@@ -1033,7 +1067,8 @@
                 "label": "To",
                 "value": "Deep Space II"
               }
-            ]
+            ],
+            "sections": []
           },
           {
             "id": "upgrades",
@@ -1049,7 +1084,8 @@
                 "icon": "hammer",
                 "desc": "The Mining Upgrade store holds 38 upgrades paid with mined ores such as Tin, Iron, Silver, Gold and Uranium, with multi-currency prices per level. It covers Mining Damage, Pickaxe power, Gemstones, Forge Luck and Quality, XP and critical hits. Upgrade 28 discounts every price by 5 percent per level; upgrade 34 unlocks five colored diamond picks.",
                 "highlights": [],
-                "facts": []
+                "facts": [],
+                "sections": []
               },
               {
                 "id": "auto-mining",
@@ -1065,13 +1101,17 @@
                     "icon": "drill",
                     "desc": "Auto Mining Drills are five drills, for Coal, Iron, Fossils, Gold and Stone, each paid with its own mined currency. Every drill levels automatically once unlocked. They produce ores without requiring you to swing the pickaxe.",
                     "highlights": [],
-                    "facts": []
+                    "facts": [],
+                    "sections": []
                   }
-                ]
+                ],
+                "sections": []
               }
-            ]
+            ],
+            "sections": []
           }
-        ]
+        ],
+        "sections": []
       },
       {
         "id": "dungeon",
@@ -1126,7 +1166,8 @@
                     "label": "Groups",
                     "value": "Strength / Life"
                   }
-                ]
+                ],
+                "sections": []
               },
               {
                 "id": "ranks",
@@ -1134,7 +1175,8 @@
                 "icon": "chart",
                 "desc": "Dungeon Ranks are the combat prestige: Stickman, Noob, Weak, Trainer, Hunter and Master. Ranking up requires Strength and Health at the threshold, from 5 thousand to 250 trillion. Normal rank-ups reset training progress, which can be skipped with Eternal Shards. Rank 3 unlocks the Dungeon; higher ranks unlock more Training Upgrades and content.",
                 "highlights": [],
-                "facts": []
+                "facts": [],
+                "sections": []
               },
               {
                 "id": "training-upgrades",
@@ -1142,9 +1184,11 @@
                 "icon": "hammer",
                 "desc": "Every training upgrade follows the same model: a current value and a cap — the bar shows how far you are.",
                 "highlights": [],
-                "facts": []
+                "facts": [],
+                "sections": []
               }
-            ]
+            ],
+            "sections": []
           },
           {
             "id": "enemies",
@@ -1168,9 +1212,11 @@
                     "icon": "hammer",
                     "desc": "Every bones upgrade: move the level slider and the site computes the next-level price and the multi from the game formulas.",
                     "highlights": [],
-                    "facts": []
+                    "facts": [],
+                    "sections": []
                   }
-                ]
+                ],
+                "sections": []
               },
               {
                 "id": "coins",
@@ -1186,9 +1232,11 @@
                     "icon": "hammer",
                     "desc": "Every coins upgrade: move the level slider and the site computes the next-level price and the multi from the game formulas.",
                     "highlights": [],
-                    "facts": []
+                    "facts": [],
+                    "sections": []
                   }
-                ]
+                ],
+                "sections": []
               },
               {
                 "id": "bone-dust",
@@ -1201,9 +1249,11 @@
                     "label": "Unlocks",
                     "value": "T2 areas"
                   }
-                ]
+                ],
+                "sections": []
               }
-            ]
+            ],
+            "sections": []
           },
           {
             "id": "items",
@@ -1233,7 +1283,8 @@
                     "label": "Top tier",
                     "value": "Cobalt"
                   }
-                ]
+                ],
+                "sections": []
               },
               {
                 "id": "shield",
@@ -1250,9 +1301,11 @@
                     "label": "Top tier",
                     "value": "Titanium"
                   }
-                ]
+                ],
+                "sections": []
               }
-            ]
+            ],
+            "sections": []
           },
           {
             "id": "souls",
@@ -1268,7 +1321,8 @@
                 "icon": "hammer",
                 "desc": "Every souls upgrade follows the same model: a current value and a cap — the bar shows how far you are.",
                 "highlights": [],
-                "facts": []
+                "facts": [],
+                "sections": []
               },
               {
                 "id": "dungeon-level",
@@ -1276,11 +1330,14 @@
                 "icon": "chart",
                 "desc": "Dungeon Levels are enemy levels. Defeat ten enemies at your current highest level to unlock the next. Each level raises enemy health but also increases Bones, Coins and drop rewards, scaling the combat economy.",
                 "highlights": [],
-                "facts": []
+                "facts": [],
+                "sections": []
               }
-            ]
+            ],
+            "sections": []
           }
-        ]
+        ],
+        "sections": []
       },
       {
         "id": "runes",
@@ -1310,7 +1367,8 @@
             "icon": "spark",
             "desc": "The Energetic rune is paid with Energy at 1 million per roll. Its rarities boost Energy, Crystals, Perk Points, Jewels, Platinum, Crystal Shards and Quartz, from Basic through Charged, Voltic, Special, Hexa, Dark, Omega and Prismatic.",
             "highlights": [],
-            "facts": []
+            "facts": [],
+            "sections": []
           },
           {
             "id": "sky",
@@ -1318,7 +1376,8 @@
             "icon": "cloud",
             "desc": "The Sky rune is paid with Research Points at 25 per roll, making it one of the cheapest. It boosts Research-related stats and Life Island currencies, scaling from Basic to its highest rarities.",
             "highlights": [],
-            "facts": []
+            "facts": [],
+            "sections": []
           },
           {
             "id": "money",
@@ -1353,7 +1412,8 @@
                 "label": "Gated by",
                 "value": "Rune Luck"
               }
-            ]
+            ],
+            "sections": []
           },
           {
             "id": "earth",
@@ -1361,7 +1421,8 @@
             "icon": "leaf",
             "desc": "The Earth rune is paid with Stone at 250 thousand per roll. It boosts Stone, Mining and mined ore currencies, making it a natural sink for early Mining income.",
             "highlights": [],
-            "facts": []
+            "facts": [],
+            "sections": []
           },
           {
             "id": "advanced",
@@ -1369,7 +1430,8 @@
             "icon": "hex",
             "desc": "The Advanced rune is paid with Life Gems at 1e26 per roll, the most expensive rune. It boosts the strongest Life Island and crystal stats, including Terraform Gems, and is intended for late-game players.",
             "highlights": [],
-            "facts": []
+            "facts": [],
+            "sections": []
           },
           {
             "id": "bones",
@@ -1377,9 +1439,11 @@
             "icon": "skull",
             "desc": "The Bones rune is paid with Bones at 2500 per roll, and it is the combat rune. Its seven rarities: from Basic, which boosts Strength and Health, through Shiny with Bones, Bluesteel and Californium, Metalic with Drop Luck, Gears and Bone Dust, Golden with Iron, Dungeon Coins and Runestone luck, Platinum with Souls, Strength and Health, up to Diamond and Shadow carrying the best combat multipliers in the game.",
             "highlights": [],
-            "facts": []
+            "facts": [],
+            "sections": []
           }
-        ]
+        ],
+        "sections": []
       },
       {
         "id": "perks",
@@ -1394,7 +1458,8 @@
             "icon": "spark",
             "desc": "Perk Points are earned from your main player Level. They buy the Level Perk Tree’s 20 perk lines, each with seven tiers and a level cap. Every tier multiplies its currency more strongly and requires previous perks to unlock. Prestige and Research upgrades raise perk limits and Perk Point gain.",
             "highlights": [],
-            "facts": []
+            "facts": [],
+            "sections": []
           },
           {
             "id": "crystal",
@@ -1402,7 +1467,8 @@
             "icon": "gem",
             "desc": "Crystal Perks are earned from your Crystal Level as you collect crystals. They buy permanent multipliers for the crystal economy, and the first four Crystal Perk upgrades are bought with Crystal Shards; Upgrade 9 holds the unlock for the rest.",
             "highlights": [],
-            "facts": []
+            "facts": [],
+            "sections": []
           },
           {
             "id": "log",
@@ -1410,7 +1476,8 @@
             "icon": "book",
             "desc": "Log Perks are earned each time Log Level rises from cutting trees. They buy permanent Log Perk multipliers for the forest; the More Log Perks upgrade in the Logs board raises their limits.",
             "highlights": [],
-            "facts": []
+            "facts": [],
+            "sections": []
           },
           {
             "id": "sap",
@@ -1418,7 +1485,8 @@
             "icon": "drop",
             "desc": "Sap Perks are earned each time your Sap Level rises. They buy Sap Perk multipliers; the Sap Perks upgrade in Roots and the Sap and Log Perks upgrade in Sap push their limits further.",
             "highlights": [],
-            "facts": []
+            "facts": [],
+            "sections": []
           },
           {
             "id": "monster",
@@ -1426,7 +1494,8 @@
             "icon": "skull",
             "desc": "Monster Perks are the Red Perks, earned each time Monster Level rises. They buy permanent multipliers for the monster and Red Liquid economy; the Monster Perks upgrade in the Monster board raises their gain.",
             "highlights": [],
-            "facts": []
+            "facts": [],
+            "sections": []
           },
           {
             "id": "mining",
@@ -1434,7 +1503,8 @@
             "icon": "pickaxe",
             "desc": "Mine Perks are earned each time Mining Level rises from breaking ores. They buy the Mining Perk board for damage, ores, Gemstones, Forge and XP boosts. MoreLevels extends caps, and newer perks cover Pickaxe XP, Training Stats, Ruby Energy, Rare Diamonds and Astatine.",
             "highlights": [],
-            "facts": []
+            "facts": [],
+            "sections": []
           },
           {
             "id": "merge",
@@ -1442,9 +1512,11 @@
             "icon": "grid",
             "desc": "Merge Perks are earned each time your Merge Level rises on the grid. They buy the Merge Perk multipliers for the merge economy, and the Merge Perks upgrade inside the Quartz board holds the unlock for the rest of the line.",
             "highlights": [],
-            "facts": []
+            "facts": [],
+            "sections": []
           }
-        ]
+        ],
+        "sections": []
       },
       {
         "id": "FAQ",
@@ -1462,7 +1534,8 @@
             "highlights": [],
             "facts": [],
             "vitals": [],
-            "children": []
+            "children": [],
+            "sections": []
           },
           {
             "id": "Life-island-FAQ",
@@ -1472,7 +1545,8 @@
             "highlights": [],
             "facts": [],
             "vitals": [],
-            "children": []
+            "children": [],
+            "sections": []
           },
           {
             "id": "Money-Island-FAQ",
@@ -1482,7 +1556,8 @@
             "highlights": [],
             "facts": [],
             "vitals": [],
-            "children": []
+            "children": [],
+            "sections": []
           },
           {
             "id": "Mining-Island-FAQ",
@@ -1492,7 +1567,8 @@
             "highlights": [],
             "facts": [],
             "vitals": [],
-            "children": []
+            "children": [],
+            "sections": []
           },
           {
             "id": "TrainingIsland-FAQ",
@@ -1502,7 +1578,8 @@
             "highlights": [],
             "facts": [],
             "vitals": [],
-            "children": []
+            "children": [],
+            "sections": []
           },
           {
             "id": "General-FAQ",
@@ -1512,14 +1589,16 @@
             "highlights": [],
             "facts": [],
             "vitals": [],
-            "children": []
+            "children": [],
+            "sections": []
           }
         ],
         "overview": {
           "desc": "",
           "facts": [],
           "highlights": []
-        }
+        },
+        "sections": []
       },
       {
         "id": "Miscellaneous",
@@ -1543,9 +1622,11 @@
                 "icon": "branch",
                 "desc": "The Eternal Tree is a chain of 21 upgrades paid in Eternal Shards, with each node requiring the previous one. Its upgrades multiply Base Energy, Energy, Crystals, Life Shards, Logs, Pickaxe Damage, Ores, special crystal and Energy stats, Apples, XP, Perks, Eternal Shards, Life Gems, Money, Research, Golden Research, Prestige Points, Gold Bars and Emerald Coins. It is a long-term reward for saving shards.",
                 "highlights": [],
-                "facts": []
+                "facts": [],
+                "sections": []
               }
-            ]
+            ],
+            "sections": []
           },
           {
             "id": "Gamepasses",
@@ -1558,9 +1639,104 @@
             "children": [],
             "sections": [
               {
-                "id": "text-06f85a05-93a3-4451-acef-4f3ca75f14cf",
-                "title": "Name",
-                "text": "Price: xxx Robux\n\nBoosts: x stat, x stat, x stat, x stat"
+                "id": "table-b93a258d-7e75-4bbf-812b-bc8bd0791cad",
+                "title": "Gamepasses ",
+                "columns": [
+                  "Name",
+                  "Price",
+                  "Boosts"
+                ],
+                "rows": [
+                  {
+                    "id": "row-2fced816-1d99-4a3d-8ef4-973b259a5fe0",
+                    "cells": [
+                      "Factory Master",
+                      "149",
+                      "3x Energy, 2.5x Perks, 2x Perks, 1.5x Gears"
+                    ]
+                  },
+                  {
+                    "id": "row-f4b617bf-4561-4ed6-9df2-661a0071b475",
+                    "cells": [
+                      "Crystal Pack",
+                      "225",
+                      "3x Crystal, 2x Jewels, 2.5x Platinum, 1.6x Adamantium, 2x Opal, 1.3x Californium "
+                    ]
+                  },
+                  {
+                    "id": "row-c8051d53-83c2-476c-83ff-1f4edadc48b5",
+                    "cells": [
+                      "Barn Master ",
+                      "",
+                      "3x Crystal Shards, 2x Crystal Perks, 2x Quartz, 2x Bluesteel, 2.25x Energy"
+                    ]
+                  },
+                  {
+                    "id": "row-9f79a12e-fb5d-4806-88c2-484c3429d853",
+                    "cells": [
+                      "Life Master",
+                      "225",
+                      "3x Life Shards, 2x Fossils, 2x Research, 2x Life Gem"
+                    ]
+                  },
+                  {
+                    "id": "row-373a43dc-8b42-457e-8dac-d66fd34a8997",
+                    "cells": [
+                      "Super Trees",
+                      "259",
+                      "2x Log, 2x SAP, 2x Roots, 1.5x Apples"
+                    ]
+                  },
+                  {
+                    "id": "row-e664e941-b5e1-40c6-940f-e7c2115e0ab4",
+                    "cells": [
+                      "Money Boost",
+                      "399",
+                      "3x Money, 2x Gold, 2x Emerald, 2.5x Energy Shards, 1.5x Energies"
+                    ]
+                  },
+                  {
+                    "id": "row-f0450d5a-5d18-4f60-b86d-306d22d8673c",
+                    "cells": [
+                      "Super Miner",
+                      "379",
+                      "3x Damage, 3x Forge Luck, 2x Ores"
+                    ]
+                  },
+                  {
+                    "id": "row-26e135cf-459e-4306-b4f9-69a61102a31d",
+                    "cells": [
+                      "Rune Hunter ",
+                      "549",
+                      "2x Rune Bulk, 3x Rune Luck, 1.5x Mastery"
+                    ]
+                  },
+                  {
+                    "id": "row-59244c3d-a78b-490e-88dd-ccbf76db1315",
+                    "cells": [
+                      "2x Perks",
+                      "379",
+                      "2x Perks, 2x Crystal Perks, 2x Log Perks, 2x SAP Perks, 2x Merge Perks, 2x Mining Perks"
+                    ]
+                  },
+                  {
+                    "id": "row-efc7c3dd-2443-40df-b583-f0e6e9d7292b",
+                    "cells": [
+                      "Eternal Boost",
+                      "449",
+                      "1.5x Eternal Shards"
+                    ]
+                  },
+                  {
+                    "id": "row-c9b90c43-e7c2-4df0-86bb-aaa5139dd047",
+                    "cells": [
+                      "Dungeon Hunter",
+                      "",
+                      "2x Strength, 2x Health, 2x Coins, 2x Bones, 2x Souls"
+                    ]
+                  }
+                ],
+                "text": ""
               }
             ]
           }
@@ -1569,7 +1745,8 @@
           "desc": "",
           "facts": [],
           "highlights": []
-        }
+        },
+        "sections": []
       }
     ],
     "credits": {
@@ -1613,7 +1790,80 @@
         }
       ],
       "thanks": "To everyone in the RI Gaming community logging drops and sharing finds — this wiki runs on that."
-    }
+    },
+    "redirects": {
+      "money-island/silver-energy": "#/money-island/energies",
+      "money-island/gold-energy": "#/money-island/energies",
+      "money-island/diamond-energy": "#/money-island/energies",
+      "money-island/ruby-energy": "#/money-island/energies",
+      "life/packed-frost": "#/life/frost-conversion",
+      "life/dense-frost": "#/life/frost-conversion",
+      "life/compact-frost": "#/life/frost-conversion",
+      "life/neutron-frost": "#/life/frost-conversion"
+    },
+    "contentMigrations": [
+      "game-notes-2026-11-v1",
+      "compact-game-content-v2"
+    ]
+  },
+  "updates": {
+    "versions": [
+      {
+        "version": "1.01",
+        "date": "2026-11-03",
+        "entries": [
+          {
+            "context": "Feature",
+            "title": "Rare Saps",
+            "href": "#/life/rare-saps",
+            "description": "Added Silver, Golden, Diamond and Amethyst Sap with separate owned-amount calculators, three bonuses each and their tree-cutting drop chances.",
+            "id": "entry-a67b5755-0"
+          },
+          {
+            "context": "Feature",
+            "title": "Power of Fossils",
+            "href": "#/life/power-of-fossils",
+            "description": "Added seven permanent Fossil milestone bonuses, including More Life Gems and More Void Apples.",
+            "id": "entry-5263f34f-0"
+          },
+          {
+            "context": "Changes",
+            "title": "Named Sap and Fossil effects",
+            "description": "Bonus cards now show their real effects, including More Logs, Axe Damage, Better Sap Chance, More Research Cap and Mastery.",
+            "id": "entry-a1e3a61c-0"
+          },
+          {
+            "context": "Bugs",
+            "title": "Fossil calculator input",
+            "description": "Fixed empty Fossil amounts being rejected; an empty field now correctly behaves as zero, and game-number input is accepted.",
+            "id": "entry-aeda91a8-0"
+          },
+          {
+            "context": "Bugs",
+            "title": "Bonus card overflow and resource links",
+            "description": "Fixed cramped text and overflowing bonus cards. Colored resource names in the calculators now navigate to their matching wiki pages.",
+            "id": "entry-bba41a2-0"
+          },
+          {
+            "context": "UI",
+            "title": "Rare Sap colors and layout",
+            "description": "Grouped the four Rare Saps on one page, color-coded by type, and adjusted the bonus grids for desktop and mobile screens.",
+            "id": "entry-d2efda4e-0"
+          },
+          {
+            "context": "UI",
+            "title": "A refreshed Update Log",
+            "description": "Added a version overview, entry counts, category filters and colorful, clickable resource references throughout the release notes.",
+            "id": "entry-6d8a12de-0"
+          }
+        ]
+      },
+      {
+        "version": "1",
+        "date": "2026-10-30",
+        "entries": []
+      }
+    ]
   },
   "game": {
     "uiCopy": {},
@@ -7094,6 +7344,521 @@
               }
             }
           ]
+        },
+        "life/golden-research-milestones": {
+          "title": "Golden Research Milestones",
+          "itemLabel": "Milestone",
+          "stages": [
+            {
+              "num": "1",
+              "title": "Milestone 1",
+              "requirements": [
+                "10 total Golden Research"
+              ],
+              "boosts": [
+                "3× RP cost; 2× Golden RP",
+                "2.5× Research Points"
+              ],
+              "unlocks": {
+                "area": "",
+                "places": [],
+                "features": []
+              }
+            },
+            {
+              "num": "2",
+              "title": "Milestone 2",
+              "requirements": [
+                "50 total Golden Research"
+              ],
+              "boosts": [
+                "2× RP cost; 1.5× Golden RP",
+                "2.5× Research Points"
+              ],
+              "unlocks": {
+                "area": "",
+                "places": [],
+                "features": []
+              }
+            },
+            {
+              "num": "3",
+              "title": "Milestone 3",
+              "requirements": [
+                "250 total Golden Research"
+              ],
+              "boosts": [
+                "+5 level cap for Research Upgrades with cap ≥25",
+                "4 new Research Upgrades"
+              ],
+              "unlocks": {
+                "area": "",
+                "places": [],
+                "features": []
+              }
+            },
+            {
+              "num": "4",
+              "title": "Milestone 4",
+              "requirements": [
+                "1.5K total Golden Research"
+              ],
+              "boosts": [
+                "2× auto Golden RP power",
+                "2× Life Gems and Frost"
+              ],
+              "unlocks": {
+                "area": "",
+                "places": [],
+                "features": []
+              }
+            },
+            {
+              "num": "5",
+              "title": "Milestone 5",
+              "requirements": [
+                "12.5K total Golden Research"
+              ],
+              "boosts": [
+                "Unlock Auto Speed",
+                "Progress bar: 10 → 100 clicks; 12× Golden RP"
+              ],
+              "unlocks": {
+                "area": "",
+                "places": [],
+                "features": []
+              }
+            },
+            {
+              "num": "6",
+              "title": "Milestone 6",
+              "requirements": [
+                "175K total Golden Research"
+              ],
+              "boosts": [
+                "5× RP cost; 2× Golden RP",
+                "2.5× Californium"
+              ],
+              "unlocks": {
+                "area": "",
+                "places": [],
+                "features": []
+              }
+            },
+            {
+              "num": "7",
+              "title": "Milestone 7",
+              "requirements": [
+                "5M total Golden Research"
+              ],
+              "boosts": [
+                "Gain 0.1% Life Gems per second"
+              ],
+              "unlocks": {
+                "area": "",
+                "places": [],
+                "features": []
+              }
+            }
+          ],
+          "layout": "compact"
+        },
+        "main/californium-milestones": {
+          "title": "Californium Milestones",
+          "itemLabel": "Milestone",
+          "stages": [
+            {
+              "num": "1",
+              "title": "Milestone 1",
+              "requirements": [
+                "10 Californium"
+              ],
+              "boosts": [
+                "1.5× Adamantium and Platinum",
+                "1.5× Crystal Perks"
+              ],
+              "unlocks": {
+                "area": "",
+                "places": [],
+                "features": []
+              }
+            },
+            {
+              "num": "2",
+              "title": "Milestone 2",
+              "requirements": [
+                "25 Californium"
+              ],
+              "boosts": [
+                "2× Adamantium Chance",
+                "1.5× Californium Chance"
+              ],
+              "unlocks": {
+                "area": "",
+                "places": [],
+                "features": []
+              }
+            },
+            {
+              "num": "3",
+              "title": "Milestone 3",
+              "requirements": [
+                "100 Californium"
+              ],
+              "boosts": [
+                "2× Platinum",
+                "5% passive Adamantium"
+              ],
+              "unlocks": {
+                "area": "",
+                "places": [],
+                "features": []
+              }
+            },
+            {
+              "num": "4",
+              "title": "Milestone 4",
+              "requirements": [
+                "250 Californium"
+              ],
+              "boosts": [
+                "15% passive Adamantium",
+                "2× Californium"
+              ],
+              "unlocks": {
+                "area": "",
+                "places": [],
+                "features": []
+              }
+            },
+            {
+              "num": "5",
+              "title": "Milestone 5",
+              "requirements": [
+                "600 Californium"
+              ],
+              "boosts": [
+                "Platinum bonus exponent ×1.15",
+                "Californium’s Adamantium boost exponent: 0.2 → 0.25"
+              ],
+              "unlocks": {
+                "area": "",
+                "places": [],
+                "features": []
+              }
+            },
+            {
+              "num": "6",
+              "title": "Milestone 6",
+              "requirements": [
+                "2,500 Californium"
+              ],
+              "boosts": [
+                "50% passive Adamantium",
+                "10% passive Californium"
+              ],
+              "unlocks": {
+                "area": "",
+                "places": [],
+                "features": []
+              }
+            },
+            {
+              "num": "7",
+              "title": "Milestone 7",
+              "requirements": [
+                "7,000 Californium"
+              ],
+              "boosts": [
+                "Adamantium bonus exponent ×1.15",
+                "2× Crystal Perks"
+              ],
+              "unlocks": {
+                "area": "",
+                "places": [],
+                "features": []
+              }
+            },
+            {
+              "num": "8",
+              "title": "Milestone 8",
+              "requirements": [
+                "250K Californium"
+              ],
+              "boosts": [
+                "100% passive Adamantium",
+                "+15 Adamantium Upgrade caps"
+              ],
+              "unlocks": {
+                "area": "",
+                "places": [],
+                "features": []
+              }
+            },
+            {
+              "num": "9",
+              "title": "Milestone 9",
+              "requirements": [
+                "1.5M Californium"
+              ],
+              "boosts": [
+                "20% passive Californium",
+                "+10 Californium Upgrade caps"
+              ],
+              "unlocks": {
+                "area": "",
+                "places": [],
+                "features": []
+              }
+            },
+            {
+              "num": "10",
+              "title": "Milestone 10",
+              "requirements": [
+                "15M Californium"
+              ],
+              "boosts": [
+                "+3 Crystal Shard tiers",
+                "2.5× Bluesteel"
+              ],
+              "unlocks": {
+                "area": "",
+                "places": [],
+                "features": []
+              }
+            },
+            {
+              "num": "11",
+              "title": "Milestone 11",
+              "requirements": [
+                "225M Californium"
+              ],
+              "boosts": [
+                "New Platinum stat boost",
+                "Expand First Merge Upgrade"
+              ],
+              "unlocks": {
+                "area": "",
+                "places": [],
+                "features": []
+              }
+            },
+            {
+              "num": "12",
+              "title": "Milestone 12",
+              "requirements": [
+                "2.5B Californium"
+              ],
+              "boosts": [
+                "New Adamantium stat boost",
+                "10× Crystal Compaction"
+              ],
+              "unlocks": {
+                "area": "",
+                "places": [],
+                "features": []
+              }
+            },
+            {
+              "num": "13",
+              "title": "Milestone 13",
+              "requirements": [
+                "15B Californium"
+              ],
+              "boosts": [
+                "2.5% passive Opal",
+                "Unlock Opal Upgrades 15 and 16"
+              ],
+              "unlocks": {
+                "area": "",
+                "places": [],
+                "features": []
+              }
+            },
+            {
+              "num": "14",
+              "title": "Milestone 14",
+              "requirements": [
+                "175B Californium"
+              ],
+              "boosts": [
+                "+0.1% passive Bluesteel",
+                "35% passive Californium"
+              ],
+              "unlocks": {
+                "area": "",
+                "places": [],
+                "features": []
+              }
+            },
+            {
+              "num": "15",
+              "title": "Milestone 15",
+              "requirements": [
+                "2T Californium"
+              ],
+              "boosts": [
+                "2× Golden Research",
+                "1.5× Rune Bulk"
+              ],
+              "unlocks": {
+                "area": "",
+                "places": [],
+                "features": []
+              }
+            },
+            {
+              "num": "16",
+              "title": "Milestone 16",
+              "requirements": [
+                "100T Californium"
+              ],
+              "boosts": [
+                "Unlock Astatine"
+              ],
+              "unlocks": {
+                "area": "",
+                "places": [],
+                "features": []
+              }
+            }
+          ],
+          "layout": "compact"
+        },
+        "main/astatine-power": {
+          "title": "Astatine Milestones",
+          "itemLabel": "Milestone",
+          "stages": [
+            {
+              "num": "1",
+              "title": "Milestone 1",
+              "requirements": [
+                "5 Astatine"
+              ],
+              "boosts": [
+                "1.5× Astatine",
+                "Unlock 4 Astatine Upgrades"
+              ],
+              "unlocks": {
+                "area": "",
+                "places": [],
+                "features": []
+              }
+            },
+            {
+              "num": "2",
+              "title": "Milestone 2",
+              "requirements": [
+                "20 Astatine"
+              ],
+              "boosts": [
+                "5× stronger passive",
+                "+1 Astatine Upgrade"
+              ],
+              "unlocks": {
+                "area": "",
+                "places": [],
+                "features": []
+              }
+            },
+            {
+              "num": "3",
+              "title": "Milestone 3",
+              "requirements": [
+                "40 Astatine"
+              ],
+              "boosts": [
+                "3× Adamantium and Californium",
+                "+1 Astatine Upgrade"
+              ],
+              "unlocks": {
+                "area": "",
+                "places": [],
+                "features": []
+              }
+            },
+            {
+              "num": "4",
+              "title": "Milestone 4",
+              "requirements": [
+                "75 Astatine"
+              ],
+              "boosts": [
+                "2.5× Crystal Spawn Speed",
+                "Unlock Californium Buffs"
+              ],
+              "unlocks": {
+                "area": "",
+                "places": [],
+                "features": []
+              }
+            },
+            {
+              "num": "5",
+              "title": "Milestone 5",
+              "requirements": [
+                "150 Astatine"
+              ],
+              "boosts": [
+                "1.25× Astatine",
+                "+2 Astatine Upgrades"
+              ],
+              "unlocks": {
+                "area": "",
+                "places": [],
+                "features": []
+              }
+            },
+            {
+              "num": "6",
+              "title": "Milestone 6",
+              "requirements": [
+                "300 Astatine"
+              ],
+              "boosts": [
+                "2× Mining Depth",
+                "+2 Astatine Upgrades"
+              ],
+              "unlocks": {
+                "area": "",
+                "places": [],
+                "features": []
+              }
+            },
+            {
+              "num": "7",
+              "title": "Milestone 7",
+              "requirements": [
+                "750 Astatine"
+              ],
+              "boosts": [
+                "2× Astatine Chance",
+                "Unlock Astatine Power"
+              ],
+              "unlocks": {
+                "area": "",
+                "places": [],
+                "features": []
+              }
+            },
+            {
+              "num": "8",
+              "title": "Milestone 8",
+              "requirements": [
+                "2,500 Astatine"
+              ],
+              "boosts": [
+                "3× Californium",
+                "Expand Astatine Power: Platinum and Adamantium caps"
+              ],
+              "unlocks": {
+                "area": "",
+                "places": [],
+                "features": []
+              }
+            }
+          ],
+          "layout": "compact"
         }
       },
       "barns": {
@@ -12010,6 +12775,517 @@
               "value": "formula: (amount / 1e46 + 1) ** 0.11"
             }
           ]
+        },
+        "life/frost-generators": {
+          "kind": "generators",
+          "title": "Frost Generators",
+          "machines": [
+            {
+              "id": "frost1",
+              "name": "Generator 1",
+              "unlockCost": 0,
+              "startIncome": 1,
+              "startTime": 5,
+              "scale": 1,
+              "maxLevel": 50,
+              "maxSpeed": 10,
+              "maxTier": 3,
+              "tierPrice": 50,
+              "levelPrice": 5,
+              "speedPrice": 10
+            },
+            {
+              "id": "frost2",
+              "name": "Generator 2",
+              "unlockCost": 10000,
+              "startIncome": 100,
+              "startTime": 10,
+              "scale": 1.1,
+              "maxLevel": 60,
+              "maxSpeed": 20,
+              "maxTier": 3,
+              "tierPrice": 50000,
+              "levelPrice": 2500,
+              "speedPrice": 7500
+            },
+            {
+              "id": "frost3",
+              "name": "Generator 3",
+              "unlockCost": 10000000,
+              "startIncome": 25000,
+              "startTime": 15,
+              "scale": 1.2,
+              "maxLevel": 75,
+              "maxSpeed": 30,
+              "maxTier": 3,
+              "tierPrice": 100000000,
+              "levelPrice": 1500000,
+              "speedPrice": 7500000
+            }
+          ]
+        },
+        "life/golden-points": {
+          "kind": "amount-groups",
+          "title": "Golden Point investments",
+          "groups": [
+            {
+              "id": "u1",
+              "name": "Energy",
+              "amountLabel": "Energy owned",
+              "description": "Invest at least 1 Golden Points.",
+              "bonuses": [
+                {
+                  "id": "u1",
+                  "name": "Energy",
+                  "value": "formula: min(1000, amount^0.425)",
+                  "cap": 1000,
+                  "unit": "x",
+                  "unlockAt": 1,
+                  "unlockResource": "invested Golden Points"
+                }
+              ]
+            },
+            {
+              "id": "u2",
+              "name": "Research Points",
+              "amountLabel": "Research Points owned",
+              "description": "Invest at least 10 Golden Points.",
+              "bonuses": [
+                {
+                  "id": "u2",
+                  "name": "Research Points",
+                  "value": "formula: amount^0.3",
+                  "unit": "x",
+                  "unlockAt": 10,
+                  "unlockResource": "invested Golden Points"
+                }
+              ]
+            },
+            {
+              "id": "u3",
+              "name": "Money",
+              "amountLabel": "Money owned",
+              "description": "Invest at least 25 Golden Points.",
+              "bonuses": [
+                {
+                  "id": "u3",
+                  "name": "Money",
+                  "value": "formula: min(250, amount^0.285)",
+                  "cap": 250,
+                  "unit": "x",
+                  "unlockAt": 25,
+                  "unlockResource": "invested Golden Points"
+                }
+              ]
+            },
+            {
+              "id": "u4",
+              "name": "Life Gem",
+              "amountLabel": "Life Gem owned",
+              "description": "Invest at least 50 Golden Points. Requires Unlocker level 2.",
+              "bonuses": [
+                {
+                  "id": "u4",
+                  "name": "Life Gem",
+                  "value": "formula: amount^0.235",
+                  "unit": "x",
+                  "unlockAt": 50,
+                  "unlockResource": "invested Golden Points"
+                }
+              ]
+            },
+            {
+              "id": "u5",
+              "name": "Mining Damage",
+              "amountLabel": "Mining Damage owned",
+              "description": "Invest at least 100 Golden Points. Requires Unlocker level 3.",
+              "bonuses": [
+                {
+                  "id": "u5",
+                  "name": "Mining Damage",
+                  "value": "formula: min(50, amount^0.175)",
+                  "cap": 50,
+                  "unit": "x",
+                  "unlockAt": 100,
+                  "unlockResource": "invested Golden Points"
+                }
+              ]
+            },
+            {
+              "id": "u6",
+              "name": "Glacier",
+              "amountLabel": "Glacier owned",
+              "description": "Invest at least 250 Golden Points. Requires Unlocker level 4.",
+              "bonuses": [
+                {
+                  "id": "u6",
+                  "name": "Glacier",
+                  "value": "formula: min(50, amount^0.2)",
+                  "cap": 50,
+                  "unit": "x",
+                  "unlockAt": 250,
+                  "unlockResource": "invested Golden Points"
+                }
+              ]
+            }
+          ]
+        },
+        "main/astatine-power": {
+          "kind": "amount-groups",
+          "title": "Astatine Power and Californium Buffs",
+          "inputs": [
+            {
+              "id": "gdu13",
+              "label": "Golden Diamond Upgrade 13 level",
+              "default": 0
+            },
+            {
+              "id": "magnet8",
+              "label": "Magnet Upgrade 8 level",
+              "default": 0
+            }
+          ],
+          "groups": [
+            {
+              "id": "astatine",
+              "name": "Astatine",
+              "amountLabel": "Astatine owned",
+              "description": "Power unlocks at Astatine Milestone 7. Cap multipliers unlock at Milestone 8.",
+              "bonuses": [
+                {
+                  "id": "power1",
+                  "name": "Astatine bonus 1",
+                  "value": "formula: (amount/50+1)^0.375",
+                  "unit": "x"
+                },
+                {
+                  "id": "power2",
+                  "name": "Astatine bonus 2",
+                  "value": "formula: (amount/100+1)^0.275",
+                  "unit": "x"
+                },
+                {
+                  "id": "platinumcap",
+                  "name": "Platinum bonus caps",
+                  "value": "formula: min(7, (amount/500+1)^0.115)",
+                  "cap": 7,
+                  "unit": "x CAP"
+                },
+                {
+                  "id": "adamantiumcap",
+                  "name": "Adamantium bonus caps",
+                  "value": "formula: min(5, (amount/1000+1)^0.085)",
+                  "cap": 5,
+                  "unit": "x CAP"
+                }
+              ]
+            },
+            {
+              "id": "californium",
+              "name": "Californium",
+              "amountLabel": "Californium owned",
+              "description": "Unlocks at Astatine milestone 4. Californium Bonuses unlocks additional boosts.",
+              "bonuses": [
+                {
+                  "id": "shards",
+                  "name": "Crystal Shards",
+                  "value": "formula: min(100*(1+gdu13/10)*(1+magnet8/10),(amount/10000000000000+1)^0.325)",
+                  "unit": "x"
+                },
+                {
+                  "id": "gears",
+                  "name": "Gears",
+                  "value": "formula: min(25*(1+gdu13/10)*(1+magnet8/10),(amount/20000000000000+1)^0.225)",
+                  "unit": "x"
+                },
+                {
+                  "id": "diamonds",
+                  "name": "Golden Diamonds",
+                  "value": "formula: min(25*(1+gdu13/10)*(1+magnet8/10),(amount/40000000000000+1)^0.235)",
+                  "unit": "x"
+                },
+                {
+                  "id": "magnets",
+                  "name": "Magnets",
+                  "value": "formula: min(25*(1+gdu13/10)*(1+magnet8/10),(amount/70000000000000+1)^0.15)",
+                  "unit": "x"
+                },
+                {
+                  "id": "dark",
+                  "name": "Dark Crystal",
+                  "value": "formula: min(5*(1+gdu13/10)*(1+magnet8/10),(amount/200000000000000+1)^0.125)",
+                  "unit": "x"
+                },
+                {
+                  "id": "astatine",
+                  "name": "Astatine",
+                  "value": "formula: min(5*(1+gdu13/10)*(1+magnet8/10),(amount/500000000000000+1)^0.0775)",
+                  "unit": "x"
+                }
+              ]
+            }
+          ]
+        },
+        "life/frost-conversion": {
+          "kind": "amount-groups",
+          "title": "All Frost conversions",
+          "groups": [
+            {
+              "id": "frost2",
+              "name": "Packed Frost (Frost2)",
+              "amountLabel": "Packed Frost (Frost2) owned",
+              "description": "10,000,000 Frost → 1 Frost2.",
+              "bonuses": [
+                {
+                  "id": "frost",
+                  "name": "Frost",
+                  "value": "formula: min(50, (amount/10+1)^0.2)",
+                  "cap": 50,
+                  "unit": "x"
+                }
+              ]
+            },
+            {
+              "id": "frost3",
+              "name": "Dense Frost (Frost3)",
+              "amountLabel": "Dense Frost (Frost3) owned",
+              "description": "10,000 Frost2 → 1 Frost3.",
+              "bonuses": [
+                {
+                  "id": "frost",
+                  "name": "Frost",
+                  "value": "formula: min(500, (amount+1)^0.135)",
+                  "cap": 500,
+                  "unit": "x"
+                },
+                {
+                  "id": "gems",
+                  "name": "Life Gem",
+                  "value": "formula: log10(amount/5+10)^0.675*(amount+1)^0.03",
+                  "unit": "x"
+                }
+              ]
+            },
+            {
+              "id": "frost4",
+              "name": "Compact Frost (Frost4)",
+              "amountLabel": "Compact Frost (Frost4) owned",
+              "description": "25,000 Frost3 → 1 Frost4. Its Frost boost uses your Frost3 balance, not Frost4.",
+              "bonuses": [
+                {
+                  "id": "frost",
+                  "name": "Frost (uses Frost3 owned)",
+                  "value": "formula: min(250,(frost3+1)^0.115)",
+                  "unit": "x"
+                },
+                {
+                  "id": "energy",
+                  "name": "Energy",
+                  "value": "formula: log10(amount/100+10)^1.35*(amount+1)^0.0425",
+                  "unit": "x"
+                },
+                {
+                  "id": "tree",
+                  "name": "Tree",
+                  "value": "formula: log10(amount/1000+10)*(amount+1)^0.035",
+                  "unit": "x"
+                }
+              ]
+            },
+            {
+              "id": "frost5",
+              "name": "Neutron Frost (Frost5)",
+              "amountLabel": "Neutron Frost (Frost5) owned",
+              "description": "1M Frost4 per conversion; 70% conversion yield.",
+              "bonuses": [
+                {
+                  "id": "frost",
+                  "name": "Frost",
+                  "value": "formula: min(100, (amount+1)^0.1)",
+                  "cap": 100,
+                  "unit": "x"
+                },
+                {
+                  "id": "research",
+                  "name": "Golden Research",
+                  "value": "formula: log10(amount/100+10)^0.9*(amount+1)^0.025",
+                  "unit": "x"
+                }
+              ]
+            }
+          ]
+        },
+        "money-island/energies": {
+          "kind": "amount-groups",
+          "title": "Energy bonuses and caps",
+          "inputs": [
+            {
+              "id": "tu80",
+              "label": "Ruby Bonuses level",
+              "default": 0
+            }
+          ],
+          "groups": [
+            {
+              "id": "silver",
+              "name": "Silver Energy",
+              "amountLabel": "Silver Energy owned",
+              "description": "Extra bonus lines unlock with TU39. Ruby raises these caps when TU80 ≥ 1.",
+              "bonuses": [
+                {
+                  "id": "money",
+                  "name": "Money",
+                  "value": "formula: min(100*(1 + min(1,max(0,tu80-0)) * (min(2.5,(ruby/100+1)^0.05)-1)),(amount/10+1)^0.26)",
+                  "unit": "x"
+                },
+                {
+                  "id": "energy",
+                  "name": "Energy",
+                  "value": "formula: min(10000*(1 + min(1,max(0,tu80-0)) * (min(2.5,(ruby/100+1)^0.05)-1)),(amount/15+1)^0.265)",
+                  "unit": "x"
+                },
+                {
+                  "id": "crystals",
+                  "name": "Crystals",
+                  "value": "formula: min(100*(1 + min(1,max(0,tu80-0)) * (min(2.5,(ruby/100+1)^0.05)-1)),(amount/25+1)^0.2)",
+                  "unit": "x"
+                },
+                {
+                  "id": "shards",
+                  "name": "Crystal Shards",
+                  "value": "formula: min(25*(1 + min(1,max(0,tu80-0)) * (min(2.5,(ruby/100+1)^0.05)-1)),(amount/50+1)^0.15)",
+                  "unit": "x"
+                }
+              ]
+            },
+            {
+              "id": "golden",
+              "name": "Golden Energy",
+              "amountLabel": "Golden Energy owned",
+              "description": "Extra bonus lines unlock with TU47. Ruby raises these caps when TU80 ≥ 2.",
+              "bonuses": [
+                {
+                  "id": "money",
+                  "name": "Money",
+                  "value": "formula: min(1000*(1 + min(1,max(0,tu80-1)) * (min(2.5,(ruby/1500+1)^0.0425)-1)),(amount/5+1)^0.245)",
+                  "unit": "x"
+                },
+                {
+                  "id": "bars",
+                  "name": "Golden Bars",
+                  "value": "formula: min(250*(1 + min(1,max(0,tu80-1)) * (min(2.5,(ruby/1500+1)^0.0425)-1)),(amount/7+1)^0.3)",
+                  "unit": "x"
+                },
+                {
+                  "id": "prestige",
+                  "name": "Prestige Points",
+                  "value": "formula: min(100*(1 + min(1,max(0,tu80-1)) * (min(2.5,(ruby/1500+1)^0.0425)-1)),(amount/12+1)^0.16)",
+                  "unit": "x"
+                },
+                {
+                  "id": "sap",
+                  "name": "Sap",
+                  "value": "formula: min(50*(1 + min(1,max(0,tu80-1)) * (min(2.5,(ruby/1500+1)^0.0425)-1)),(amount/25+1)^0.275)",
+                  "unit": "x"
+                },
+                {
+                  "id": "research",
+                  "name": "Research Points",
+                  "value": "formula: min(2.5*(1 + min(1,max(0,tu80-1)) * (min(2.5,(ruby/1500+1)^0.0425)-1)),(amount/100+1)^0.125)",
+                  "unit": "x"
+                }
+              ]
+            },
+            {
+              "id": "diamond",
+              "name": "Diamond Energy",
+              "amountLabel": "Diamond Energy owned",
+              "description": "Extra bonus lines unlock with TU58. Rune Stone stays capped at 2.5×.",
+              "bonuses": [
+                {
+                  "id": "money",
+                  "name": "Money",
+                  "value": "formula: min(1000*(1 + min(1,max(0,tu80-2)) * (min(2.5,(ruby/20000+1)^0.035)-1)),(amount/1+1)^0.25)",
+                  "unit": "x"
+                },
+                {
+                  "id": "emerald",
+                  "name": "Emerald Coins",
+                  "value": "formula: min(10000*(1 + min(1,max(0,tu80-2)) * (min(2.5,(ruby/20000+1)^0.035)-1)),(amount/4+1)^0.345)",
+                  "unit": "x"
+                },
+                {
+                  "id": "iron",
+                  "name": "Iron",
+                  "value": "formula: min(4*(1 + min(1,max(0,tu80-2)) * (min(2.5,(ruby/20000+1)^0.035)-1)),(amount/10+1)^0.1)",
+                  "unit": "x"
+                },
+                {
+                  "id": "gems",
+                  "name": "Life Gem",
+                  "value": "formula: min(5*(1 + min(1,max(0,tu80-2)) * (min(2.5,(ruby/20000+1)^0.035)-1)),(amount/25+1)^0.15)",
+                  "unit": "x"
+                },
+                {
+                  "id": "runes",
+                  "name": "Rune Stone",
+                  "value": "formula: min(2.5, (amount/200+1)^0.09)",
+                  "cap": 2.5,
+                  "unit": "x"
+                }
+              ]
+            },
+            {
+              "id": "ruby",
+              "name": "Ruby Energy",
+              "amountLabel": "Ruby Energy owned",
+              "description": "Additional bonuses unlock with Ruby Bonuses.",
+              "bonuses": [
+                {
+                  "id": "money",
+                  "name": "Money",
+                  "value": "formula: min(250, (amount/0.5+1)^0.365)",
+                  "cap": 250,
+                  "unit": "x"
+                },
+                {
+                  "id": "diamonds",
+                  "name": "Golden Diamonds",
+                  "value": "formula: min(10000, (amount/10+1)^0.315)",
+                  "cap": 10000,
+                  "unit": "x"
+                },
+                {
+                  "id": "gears",
+                  "name": "Gears",
+                  "value": "formula: min(10, (amount/30+1)^0.225)",
+                  "cap": 10,
+                  "unit": "x"
+                },
+                {
+                  "id": "silvercap",
+                  "name": "Silver bonus caps",
+                  "value": "formula: min(2.5, (amount/100+1)^0.05)",
+                  "cap": 2.5,
+                  "unit": "x CAP"
+                },
+                {
+                  "id": "goldcap",
+                  "name": "Golden bonus caps",
+                  "value": "formula: min(2.5, (amount/1500+1)^0.0425)",
+                  "cap": 2.5,
+                  "unit": "x CAP"
+                },
+                {
+                  "id": "diamondcap",
+                  "name": "Diamond bonus caps",
+                  "value": "formula: min(2.5, (amount/20000+1)^0.035)",
+                  "cap": 2.5,
+                  "unit": "x CAP"
+                }
+              ]
+            }
+          ]
         }
       }
     },
@@ -12276,58 +13552,15 @@
         "Health": "#/dungeon/training",
         "FAQ": "#/FAQ"
       }
-    }
-  },
-  "updates": {
-    "versions": [
-      {
-        "version": "1.01",
-        "date": "2026-11-03",
-        "entries": [
-          {
-            "context": "Feature",
-            "title": "Rare Saps",
-            "href": "#/life/rare-saps",
-            "description": "Added Silver, Golden, Diamond and Amethyst Sap with separate owned-amount calculators, three bonuses each and their tree-cutting drop chances."
-          },
-          {
-            "context": "Feature",
-            "title": "Power of Fossils",
-            "href": "#/life/power-of-fossils",
-            "description": "Added seven permanent Fossil milestone bonuses, including More Life Gems and More Void Apples."
-          },
-          {
-            "context": "Changes",
-            "title": "Named Sap and Fossil effects",
-            "description": "Bonus cards now show their real effects, including More Logs, Axe Damage, Better Sap Chance, More Research Cap and Mastery."
-          },
-          {
-            "context": "Bugs",
-            "title": "Fossil calculator input",
-            "description": "Fixed empty Fossil amounts being rejected; an empty field now correctly behaves as zero, and game-number input is accepted."
-          },
-          {
-            "context": "Bugs",
-            "title": "Bonus card overflow and resource links",
-            "description": "Fixed cramped text and overflowing bonus cards. Colored resource names in the calculators now navigate to their matching wiki pages."
-          },
-          {
-            "context": "UI",
-            "title": "Rare Sap colors and layout",
-            "description": "Grouped the four Rare Saps on one page, color-coded by type, and adjusted the bonus grids for desktop and mobile screens."
-          },
-          {
-            "context": "UI",
-            "title": "A refreshed Update Log",
-            "description": "Added a version overview, entry counts, category filters and colorful, clickable resource references throughout the release notes."
-          }
-        ]
-      },
-      {
-        "version": "1",
-        "date": "2026-10-30",
-        "entries": []
-      }
+    },
+    "contentMigrations": [
+      "game-notes-2026-11-v1",
+      "compact-game-content-v2"
     ]
+  },
+  "_baseShas": {
+    "updates": "ecdf385fa2ac89c1665ed8efc0a942c1170d1dac",
+    "wiki": "ba53f71a8dbc3b8446613314973e34966e0da244",
+    "game": "99f497ec15466acfd662a7ab1723a80460dd48f7"
   }
 }
