@@ -13,12 +13,14 @@ import {
 import {
   githubRequest,
   githubContentsUrl,
+  isRevisionConflict,
 } from '../github.js';
 import { applyWikiContent, applyUpdateContent, applyGameData } from '../services.js';
 import { mergeDocuments } from './merge.js';
 import { pinContentKeys } from '../page-content.js';
 import { readSharedDraft } from './shared-draft.js';
 import { installImportedNotes } from '../content-migrations.js';
+import {readRecovery,writeRecovery,clearRecovery} from './recovery.js';
 
 const draftState = {
   token: '',
@@ -133,6 +135,7 @@ function fieldWord(key) {
 function logChange(kind, text) {
   changeLog.push({ id: crypto.randomUUID(), at: Date.now(), kind, text, actor: draftState.actor });
   if (changeLog.length > CHANGE_LOG_MAX) changeLog.shift();
+  persistLocalRecovery();
 }
 
 function describeSet(name, path, prev, value) {
@@ -447,7 +450,7 @@ export async function initSession(token, actor = '') {
   draftState.sharedBase = clone(draftState.docs);
   let recovered = false, recoveryConflict = false;
   try {
-    const recovery = JSON.parse(sessionStorage.getItem(recoveryKey()) || 'null');
+    const recovery = readRecovery(recoveryKey());
     if (recovery?.docs && recovery?.sharedBase) {
       validateDocuments(recovery.docs);
       recovered = true;
@@ -471,28 +474,47 @@ function recoveryKey() { return `ri-editor-recovery:${REPOSITORY}:${draftState.a
 export function persistLocalRecovery() {
   if (!draftState.docs || !draftState.actor) return;
   try {
-    if (!draftDirty()) sessionStorage.removeItem(recoveryKey());
-    else sessionStorage.setItem(recoveryKey(), JSON.stringify({ docs: draftState.docs, sharedBase: draftState.sharedBase, entries: changeLog }));
-  } catch { /* browser storage can be disabled; Download draft remains available */ }
+    if (!draftDirty()&&!changeLog.length) clearRecovery(recoveryKey());
+    else return writeRecovery(recoveryKey(),{ docs: draftState.docs, sharedBase: draftState.sharedBase, entries: changeLog });
+    return true;
+  } catch { return false; }
 }
 
+let savePromise;
 export async function saveDraft(token) {
-  await syncRemote(token);
-  validateDocuments(draftState.docs);
-  const raw = currentDraftRaw();
-  await githubRequest(githubContentsUrl(DRAFT_FILE), token, {
-    method: 'PUT',
-    body: JSON.stringify({
-      message: 'Save inline draft',
-      content: encodeBase64Content(`${JSON.stringify({ ...JSON.parse(raw), _baseShas: draftState.shas }, null, 2)}\n`),
-      sha: draftState.draftSha || undefined,
-      branch: BRANCH,
-    }),
-  }).then((result) => {
-    draftState.draftSha = result.content.sha;
-    draftState.savedDraftRaw = raw;
-    draftState.sharedBase = JSON.parse(raw);
-  });
+  if(savePromise)return savePromise;
+  savePromise=saveChangedDraft(token);
+  try{return await savePromise;}finally{savePromise=null;}
+}
+
+async function saveChangedDraft(token){
+  for(let attempt=0;attempt<4;attempt++){
+    await syncRemote(token);
+    validateDocuments(draftState.docs);
+    // Save is relative to the last shared revision, never a stale published
+    // snapshot. An unchanged editor must not create a new shared revision.
+    if(JSON.stringify(draftState.docs)===JSON.stringify(draftState.sharedBase))break;
+    const raw=currentDraftRaw();
+    try{
+      const result=await githubRequest(githubContentsUrl(DRAFT_FILE), token, {
+        method: 'PUT',
+        body: JSON.stringify({
+          message: 'Save inline draft',
+          content: encodeBase64Content(`${JSON.stringify({ ...JSON.parse(raw), _baseShas: draftState.shas }, null, 2)}\n`),
+          sha: draftState.draftSha || undefined,
+          branch: BRANCH,
+        }),
+      });
+      draftState.draftSha=result.content.sha;
+      draftState.savedDraftRaw=raw;
+      draftState.sharedBase=JSON.parse(raw);
+      break;
+    }catch(error){
+      persistLocalRecovery();
+      if(!isRevisionConflict(error)||attempt===3)throw error;
+      // Re-read and rebase only our delta, using the new SHA for the retry.
+    }
+  }
   // Diario: pendencias vao para o arquivo (marcadas "pending").
   if (changeLog.length) {
     const entries = changeLog.map((entry) => ({ ...entry, pending: true }));
@@ -646,6 +668,13 @@ async function readAndMergeRemote(token) {
 // limpa pendencias antigas. `newEntries` = entradas novas desta sessao.
 async function writeHistory(token, newEntries, pending, discard = false) {
   if (!newEntries.length && pending) return;
+  for(let attempt=0;attempt<4;attempt++){
+    try{await writeHistoryRevision(token,newEntries,pending,discard);return;}
+    catch(error){if(!isRevisionConflict(error)||attempt===3)throw error;}
+  }
+}
+
+async function writeHistoryRevision(token,newEntries,pending,discard){
   let older = [];
   let sha;
   const current = await githubRequest(githubContentsUrl(HISTORY_FILE), token, { allowNotFound: true });

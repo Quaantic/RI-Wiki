@@ -385,8 +385,8 @@ export function fillStaticIcons() {
 }
 
 function renderSubTree(catId, items, depth) {
-  const boxCls = depth === 1 ? 'nav-sub' : `nav-sub${depth}`;
-  const itemCls = depth === 1 ? 'nav-sub__item' : `nav-sub${depth}__item`;
+  const boxCls = depth === 1 ? 'nav-sub' : `nav-sub${Math.min(depth,3)}`;
+  const itemCls = depth === 1 ? 'nav-sub__item' : `nav-sub${Math.min(depth,3)}__item`;
   return `
     <div class="${boxCls}" data-parent-sub="${items[0]?.__parentId || ''}"><div>
       <div class="${boxCls}__list">
@@ -412,6 +412,8 @@ let navWired = false;
 export function buildNav() {
   const nav = qs('#sidebar-nav');
   if (!nav) return;
+  const openGroups=new Set(qsa('.nav-group.open',nav).map(el=>el.dataset.cat));
+  const openBranches=new Set(qsa('[data-parent-sub].open',nav).map(el=>`${el.closest('.nav-group')?.dataset.cat}/${el.dataset.parentSub}`));
   nav.innerHTML =
     '<span class="sidebar__label">Categories</span>' +
     CATEGORIES.map((c) => {
@@ -428,6 +430,12 @@ export function buildNav() {
       </div>`;
     }).join('');
 
+  qsa('.nav-group',nav).forEach(el=>el.classList.toggle('open',openGroups.has(el.dataset.cat)));
+  qsa('[data-parent-sub]',nav).forEach(el=>el.classList.toggle('open',openBranches.has(`${el.closest('.nav-group')?.dataset.cat}/${el.dataset.parentSub}`)));
+  // Saves and live sync rebuild this tree after the router has highlighted
+  // the page. Reapply its full ancestor chain so nested pages stay visible.
+  const [catId,subId]=(window.location.hash||'').replace(/^#\/?/,'').split('?')[0].split('/');
+  setActiveNav(CATEGORIES.some(cat=>cat.id===catId)?catId:null,subId||null);
   if (navWired) return;
   navWired = true;
   nav.addEventListener('click', (e) => {
@@ -475,11 +483,12 @@ export function openGroup(catId) {
 // ==== Indicador deslizante da categoria (a "linha verde") ====
 let navIndicator = null;
 let indicatorToken = 0;
+let navScrollTimer;
 
 function moveIndicator() {
   const nav = qs('#sidebar-nav');
   if (!nav) return;
-  if (!navIndicator) {
+  if (!navIndicator?.isConnected) {
     navIndicator = document.createElement('span');
     navIndicator.className = 'nav-indicator';
     navIndicator.setAttribute('aria-hidden', 'true');
@@ -517,9 +526,19 @@ export function setActiveNav(catId, subId = null) {
   });
   if (catId) openGroup(catId);
   qsa('[data-parent-sub]').forEach((el) => {
-    el.classList.toggle('open', el.dataset.parentSub === subId || !!el.querySelector('[data-sub].active'));
+    if(el.dataset.parentSub === subId || el.querySelector('[data-sub].active'))el.classList.add('open');
   });
   moveIndicator();
+  clearTimeout(navScrollTimer);
+  // Search can open a new nested page below the sidebar's visible area.
+  // Wait for the accordion to expand, then reveal only within its scroller.
+  navScrollTimer=setTimeout(()=>{
+    const nav=qs('#sidebar-nav'),active=nav?.querySelector('[data-sub].active');
+    if(!active)return;
+    const bounds=nav.getBoundingClientRect(),item=active.getBoundingClientRect();
+    if(item.bottom>bounds.bottom-12)nav.scrollTop+=item.bottom-bounds.bottom+12;
+    else if(item.top<bounds.top+12)nav.scrollTop-=bounds.top-item.top+12;
+  },300);
 }
 
 export function setCrumbs(items = []) {

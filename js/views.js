@@ -17,6 +17,7 @@ import { UI_COPY } from './data/ui-copy.js';
 import { LATEST_UPDATE_ID } from './data/update-log.js';
 import { resolveContentKey } from './page-content.js';
 import { calculateGenerator } from './data/generators.js';
+import {releaseKind,formatReleaseVersion} from './releases.js';
 
 // ==== PAGINA DE FAMILIA DE RUNAS (cards por runa) ====
 
@@ -445,6 +446,7 @@ function generatorSections(page,basePath) {
     <div class="generator-global"><label>More Frost level<input class="input" type="number" min="0" max="99" value="0" data-more-frost></label><label>Faster Machines level<input class="input" type="number" min="0" max="30" value="0" data-faster-machines></label></div>
     <div class="generator-grid">${page.machines.map((machine,i)=>`<article class="generator-card" data-generator="${esc(machine.id)}">
       <header><b ${ed(`${basePath}.machines.${i}`,'game:generator',machine.name)}>${esc(machine.name)}</b><label class="generator-owned"><input type="checkbox" data-generator-owned ${i===0?'checked':''}> Owned</label></header>
+      <button type="button" class="btn btn--ghost btn--sm ri-edit-add" ${ed(`${basePath}.machines.${i}`,'game:generator',machine.name)}>Edit generator & formulas</button>
       <small>${machine.unlockCost ? `${esc(fmtSuffix(machine.unlockCost))} Frost to unlock` : 'Free'}</small>
       <div class="generator-controls">${field('level','Level',machine.maxLevel)}${field('speed','Speed',machine.maxSpeed)}${field('tier','Tier',machine.maxTier,1)}<label title="Enter the multiplier shown by your current tier">Tier multiplier<input class="input" type="number" min="0" step="any" value="1" data-generator-field="tierMultiplier" aria-label="Tier multiplier"></label></div>
       <div class="generator-results" aria-live="polite" data-generator-results></div>
@@ -691,8 +693,11 @@ function upgradeTemplateSections() {
 function stageCard(s, i, itemPath = '') {
   const unlocks = s.unlocks || {};
   const hasUnlocks = Boolean(unlocks.area || unlocks.places?.length || unlocks.features?.length);
+  const details=[...(s.requirements||[]),...(s.boosts||[]),unlocks.area||'',...(unlocks.places||[]),...(unlocks.features||[]).flatMap(feature=>[feature.name,...(feature.subs||[])])].filter(Boolean);
+  const length=details.join(' ').length;
+  const size=length>500||details.length>14?'full':length>230||details.length>8?'wide':'compact';
   return `
-    <article class="stage-card reveal" ${itemPath ? ed(itemPath, 'game:stage', esc(s.title || `Stage ${s.num}`)) : ''} style="--reveal-delay:${Math.min(i * 50, 400)}ms">
+    <article class="stage-card stage-card--${size} reveal" ${itemPath ? ed(itemPath, 'game:stage', esc(s.title || `Stage ${s.num}`)) : ''} style="--reveal-delay:${Math.min(i * 50, 400)}ms">
       <header class="stage-card__head">
         <span class="stage-card__num">${esc(s.num)}</span>
         <b class="stage-card__title">${esc(s.title || `Stage ${s.num}`)}</b>
@@ -748,7 +753,7 @@ function stagePageSections(stages, title = 'Stages', twoCol = false, listPath = 
     <section class="section">
       <div ${listPath ? ed(listPath.replace(/\.(stages|ranks)$/, ''), 'game:progression-page', 'Section heading and item name') : ''}>${sectionHead(title)}</div>
       ${add}
-      ${twoCol ? `<div class="stage-grid-2">${cards}</div>` : cards}
+      <div class="stage-grid${twoCol?' stage-grid-2':''}">${cards}</div>
     </section>`;
 }
 
@@ -777,7 +782,7 @@ export const homeView = {
             <span class="hero__badge" ${ed('game:uiCopy.heroBadge', 'text', 'Hero badge')}><span class="hex-dot"></span> ${esc(UI_COPY.heroBadge || `Regrowth Incremental · Community Wiki`)}</span>
             <h1 class="hero__title" ${ed('game:uiCopy.heroTitle', 'long', 'Hero title')}>${esc(UI_COPY.heroTitle || 'Grow your knowledge\nalongside your valley.').replace('\n', '<br />')}</h1>
             <p class="hero__sub" ${ed('game:uiCopy.heroSub', 'long', 'Hero description')}>
-              ${esc(UI_COPY.heroSub || `Every ore, rune, boss and perk — documented, cross-linked and searchable. Built by the community, verified against v${latest.version}.`).replace('\n', '<br />')}
+              ${esc(UI_COPY.heroSub || `Every ore, rune, boss and perk — documented, cross-linked and searchable. Built by the community, verified against ${formatReleaseVersion(latest.version)}.`).replace('\n', '<br />')}
             </p>
             <form class="hero__search" id="hero-search">
               <div class="input-wrap">
@@ -798,7 +803,7 @@ export const homeView = {
         <div class="hero__stats">
           <div class="hero__stat"><b data-count="${stats.pages}">0</b><span>Wiki pages</span></div>
           <div class="hero__stat"><b data-count="${stats.categories}">0</b><span>Categories</span></div>
-          <div class="hero__stat"><b>v${stats.updateVersion}</b><span>Latest update</span></div>
+          <div class="hero__stat"><b>${esc(formatReleaseVersion(stats.updateVersion))}</b><span>Latest update</span></div>
           <div class="hero__stat"><b data-count="${stats.updateCount}">0</b><span>Logged changes</span></div>
         </div>
       </section>
@@ -1038,7 +1043,7 @@ export const subcategoryView = {
     window.__riPageNames = [cat.name, sub.name, ...(sub.parentChain || []).map((p) => p.name)];
 
     root.innerHTML = html`
-      <section class="cat-hero${familyBody ? ' cat-hero--data' : ''}${sub.vitals?.length ? ' cat-hero--split' : ''}">
+      <section class="cat-hero${familyBody ? ' cat-hero--data' : ''}${sub.vitals?.length ? ' cat-hero--split' : ''}" data-backdrop="${ci%3}">
         <div class="cat-hero__main">
           <div class="cat-hero__crumbs crumbs">
             ${subCrumbParts(sub).slice(0, -1).map((c) => `
@@ -1110,12 +1115,12 @@ export const subcategoryView = {
       </section>` : ''}
 
       ${familyBody || ''}
-      ${(sub.sections || []).map((section, i) => `
-        <section class="section ri-text-section">
+      ${sub.sections?.length?'<div class="content-sections-grid">':''}${(sub.sections || []).map((section, i) => `
+        <section class="section ri-text-section${section.columns || (section.text||'').length>900?' ri-text-section--full':(section.text||'').length>350?' ri-text-section--wide':''}">
           <div ${ed(`${wikiPath}.sections.${i}`, section.columns ? 'table-section' : 'text-section', section.title || 'Text / FAQ')}>${sectionHead(section.title || '')}</div>
           ${section.columns ? `<div class="table-wrap"><table class="data-table"><thead><tr>${section.columns.map((label) => `<th>${esc(label)}</th>`).join('')}</tr></thead><tbody>${(section.rows || []).map((row, ri) => `<tr ${ed(`${wikiPath}.sections.${i}.rows.${ri}`, 'table-row', `${section.title} · row ${ri + 1}`)}>${section.columns.map((_, ci) => `<td>${esc(row.cells[ci] || '')}</td>`).join('')}</tr>`).join('')}</tbody></table></div><button type="button" class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="${wikiPath}.sections.${i}.rows" data-edit-add-template="table-row">${icon('plus', 13)} Add row</button>` : ''}
           <div class="ri-text-section__body" data-resource-links ${ed(`${wikiPath}.sections.${i}.text`, 'long', 'Section description')}>${colorizeResources(esc(section.text || ''))}</div>
-        </section>`).join('')}
+        </section>`).join('')}${sub.sections?.length?'</div>':''}
       ${sub.highlights?.length ? `
       <section class="section">
         ${sectionHead('Highlights')}
@@ -1326,6 +1331,8 @@ const CONTEXTS = [
   { id: 'UI', icon: 'grid', cls: 'ui', label: 'UI' },
   { id: 'Bugs', icon: 'alert', cls: 'bug', label: 'Bugs' },
 ];
+let updateReleaseFilter='all';
+window.addEventListener('ri-edit-new-release',()=>{updateReleaseFilter='all';});
 
 export const updatesView = {
   title: () => 'Update Log — RI Gaming Wiki',
@@ -1337,43 +1344,34 @@ export const updatesView = {
     const displayVersions = versions
       .map((v, docIndex) => ({ v, docIndex }))
       .filter(({ v }) => v.entries.length || document.documentElement.classList.contains('ri-edit-on'));
-    const totalEntries = displayVersions.reduce((total, { v }) => total + v.entries.length, 0);
 
     root.innerHTML = html`
       <header class="upd-hero">
         <div class="upd-hero__intro">
-          <span class="upd-hero__eyebrow">${icon('spark', 14)} The valley keeps growing</span>
-          <h1>Update Log</h1>
-          <p>New features, improvements and fixes — all in one place. Select a category or follow a colored resource to explore the wiki.</p>
-        </div>
-        <div class="upd-hero__stats">
-          <div><b>${displayVersions.length}</b><span>Versions</span></div>
-          <div><b>${totalEntries}</b><span>Updates</span></div>
-          <div><b>v${esc(displayVersions[0]?.v.version || '—')}</b><span>Latest</span></div>
+          <span class="upd-hero__eyebrow">Regrowth Incremental</span>
+          <h1>Update <em>Log</em></h1>
+          <p>All game updates, changes, and improvements for RI.</p>
         </div>
       </header>
 
-      <nav class="upd-filters" aria-label="Filter update categories">
+      <nav class="upd-filters" aria-label="Filter releases">
         <button type="button" class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="updates:versions" data-edit-add-template="version">${icon('plus', 13)} New release</button>
-        <button class="upd-filter is-active" type="button" data-update-filter="all">All <b>${totalEntries}</b></button>
-        ${CONTEXTS.map((ctx) => {
-          const count = displayVersions.reduce((total, { v }) => total + v.entries.filter((entry) => entry.context === ctx.id).length, 0);
-          return `<button class="upd-filter upd-filter--${ctx.cls}" type="button" data-update-filter="${ctx.id}">${icon(ctx.icon, 14)} ${ctx.label} <b>${count}</b></button>`;
-        }).join('')}
+        ${[['all','All Updates','grid'],['major','Major Releases','layers'],['minor','Minor Updates','circle'],['hotfix','Hotfixes','wrench']].map(([kind,label,glyph])=>`<button class="upd-filter${updateReleaseFilter===kind?' is-active':''}" type="button" data-update-filter="${kind}" aria-pressed="${updateReleaseFilter===kind}">${icon(glyph,14)} ${label}</button>`).join('')}
       </nav>
 
       ${displayVersions.map(({ v, docIndex }, vi) => `
-        <section class="upd-version reveal" ${ed(`updates:versions.${docIndex}`, 'version', `Release ${v.version}`)} data-update-version style="--reveal-delay:${Math.min(vi * 55, 400)}ms">
-          <div class="upd-version__head">
+        <details class="upd-version${vi===0?' upd-version--latest':''}" data-update-version ${v.entries.length?'':'data-release-empty'} data-release-kind="${releaseKind(v)}" ${updateReleaseFilter!=='all'&&updateReleaseFilter!==releaseKind(v)?'hidden':''} ${vi===0||document.documentElement.classList.contains('ri-edit-on')?'open':''}>
+          <summary class="upd-version__head">
             <div class="upd-version__identity">
               <span class="upd-version__eyebrow">Release</span>
-              <span class="upd-version__num">${esc(v.version)}</span>
+              <span class="upd-version__num" ${ed(`updates:versions.${docIndex}`, 'version', `Release ${v.version}`)}>${esc(formatReleaseVersion(v.version))}</span>
             </div>
             <span class="upd-version__date">${icon('calendar', 13)} ${fmtDate(v.date)}</span>
             <span class="upd-version__count">${v.entries.length} ${v.entries.length === 1 ? 'update' : 'updates'}</span>
             ${vi === 0 ? '<span class="chip chip--accent upd-version__latest">Latest</span>' : ''}
             <button type="button" class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="updates:versions.${docIndex}.entries" data-edit-add-template="entry">${icon('plus', 12)} Add update</button>
-          </div>
+            ${icon('chevron-down',16,'upd-collapse-icon')}
+          </summary><div class="upd-version__body">
 
           ${CONTEXTS.map((ctx) => {
             const entries = v.entries
@@ -1381,11 +1379,10 @@ export const updatesView = {
               .filter(({ e }) => e.context === ctx.id);
             if (!entries.length) return '';
             return `
-              <section class="upd-group upd-group--${ctx.cls}" data-update-group="${ctx.id}">
-                <div class="upd-group__label">${icon(ctx.icon, 14)} ${ctx.label}</div>
+              <details class="upd-group upd-group--${ctx.cls}" data-update-group="${ctx.id}" open>
+                <summary class="upd-group__label">${icon(ctx.icon, 14)} ${ctx.label} <b>(${entries.length})</b>${icon('chevron-down',14,'upd-collapse-icon')}</summary><div class="upd-group__entries">
                 ${entries.map(({ e, entryIndex }) => `
                   <article class="upd-entry" ${ed(`updates:versions.${docIndex}.entries.${entryIndex}`, 'entry', esc(e.title))} data-resource-links>
-                    ${icon(ctx.icon, 16)}
                     <div>
                       ${e.href
                         ? `<a class="upd-entry__title" href="${esc(e.href)}"><span class="upd-entry__title-text">${colorizeResources(esc(e.title))}</span>${icon('arrow-right', 13)}</a>`
@@ -1393,18 +1390,22 @@ export const updatesView = {
                       <p class="upd-entry__description">${colorizeResources(esc(e.description))}</p>
                     </div>
                   </article>`).join('')}
-              </section>`;
+              </div></details>`;
           }).join('')}
-        </section>`).join('')}
+        </div></details>`).join('')}
+      <p class="upd-empty" data-updates-empty ${displayVersions.some(({v})=>updateReleaseFilter==='all'||releaseKind(v)===updateReleaseFilter)?'hidden':''}>No releases in this category yet.</p>
     `;
 
     qsa('[data-update-filter]', root).forEach((button) => {
       button.addEventListener('click', () => {
         const filter = button.dataset.updateFilter;
-        qsa('[data-update-filter]', root).forEach((item) => item.classList.toggle('is-active', item === button));
-        qsa('[data-update-group]', root).forEach((group) => {
-          group.hidden = filter !== 'all' && group.dataset.updateGroup !== filter;
+        updateReleaseFilter=filter;
+        qsa('[data-update-filter]', root).forEach((item) => {item.classList.toggle('is-active', item === button);item.setAttribute('aria-pressed',String(item===button));});
+        const releases=qsa('[data-update-version]',root);
+        releases.forEach((release) => {
+          release.hidden = filter !== 'all' && release.dataset.releaseKind !== filter;
         });
+        const empty=qs('[data-updates-empty]',root);if(empty)empty.hidden=releases.some(release=>!release.hidden);
       });
     });
 

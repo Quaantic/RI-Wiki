@@ -20,8 +20,12 @@ const mergeList = (existing = [], incoming = [], key = 'id') => {
 export function installImportedNotes(wiki,game) {
   if (!wiki?.categories || !game?.calculators?.pages || !game?.progression?.stages) return false;
   const id = IMPORTED_NOTES.id;
+  // The bundled compact revision already includes this import. Re-importing
+  // reference sections here would dirty untouched documents and revive pages
+  // that an editor intentionally removed after upgrading.
+  const installed=doc=>(doc.contentMigrations||[]).some(revision=>revision===id||revision==='compact-game-content-v2');
   let changed = false;
-  if (!(wiki.contentMigrations || []).includes(id)) {
+  if (!installed(wiki)) {
     for (const {route,page:source} of IMPORTED_NOTES.pages) {
       const [catId,pageId] = route.split('/');
       const cat = wiki.categories.find((item) => item.id === catId);
@@ -43,7 +47,7 @@ export function installImportedNotes(wiki,game) {
     wiki.contentMigrations = [...(wiki.contentMigrations || []),id];
     changed = true;
   }
-  if (!(game.contentMigrations || []).includes(id)) {
+  if (!installed(game)) {
     for (const [route,value] of Object.entries(IMPORTED_NOTES.calculators)) {
       const current = game.calculators.pages[route];
       if (!current) game.calculators.pages[route] = clone(value);

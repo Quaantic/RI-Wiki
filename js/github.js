@@ -31,16 +31,19 @@ export async function githubRequest(url, token, options = {}) {
   }
   if (!response.ok) {
     const message = payload.message || `GitHub returned HTTP ${response.status}.`;
+    const fail=(text)=>{const error=new Error(text);error.status=response.status;throw error;};
     if ([401, 403, 404].includes(response.status)) {
-      throw new Error(`${message} Check that this GitHub account can access ${REPOSITORY} and has write permission.`);
+      fail(`${message} Check that this GitHub account can access ${REPOSITORY} and has write permission.`);
     }
     if (response.status === 409 || response.status === 422) {
-      throw new Error(`${message} The file may have changed on GitHub. Reload the editor before saving again.`);
+      fail(`${message} The file may have changed on GitHub. Your local changes are preserved; try saving again.`);
     }
-    throw new Error(message);
+    fail(message);
   }
   return payload;
 }
+
+export const isRevisionConflict=error=>error?.status===409||(error?.status===422&&/sha|already exists|reference update|revision/i.test(error.message));
 
 export async function githubUser(token) {
   const user = await githubRequest('https://api.github.com/user', token);

@@ -4,6 +4,17 @@ const fs=require('node:fs');
 const game=JSON.parse(fs.readFileSync('content/game-data.json'));
 const wiki=JSON.parse(fs.readFileSync('content/wiki-data.json'));
 
+test('completed compact imports do not dirty unrelated documents or revive intentionally removed pages',async()=>{
+  const {installImportedNotes}=await import('../js/content-migrations.js');
+  const currentWiki=structuredClone(wiki),currentGame=structuredClone(game);
+  const life=currentWiki.categories.find(category=>category.id==='life');
+  const prune=pages=>pages.filter(page=>page.id!=='frost-conversion').map(page=>({...page,children:prune(page.children||[])}));
+  life.subcategories=prune(life.subcategories);
+  const before=JSON.stringify([currentWiki,currentGame]);
+  assert.equal(installImportedNotes(currentWiki,currentGame),false);
+  assert.equal(JSON.stringify([currentWiki,currentGame]),before);
+});
+
 test('old deployed JSON receives all seven pages once, without changing later editor changes',async()=>{
   const {installImportedNotes}=await import('../js/content-migrations.js');
   const {IMPORTED_NOTES}=await import('../js/data/imported-notes.js');

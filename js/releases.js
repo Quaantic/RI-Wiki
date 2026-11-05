@@ -50,3 +50,14 @@ export function nextReleaseVersion(versions) {
   while (used.has(`v0.0.${patch}`)) patch += 1;
   return `v0.0.${patch}`;
 }
+export function formatReleaseVersion(version){return `v${String(version||'—').replace(/^v/i,'')}`;}
+
+export function releaseKind(release){
+  const entries=release.entries||[];
+  const features=entries.filter(entry=>entry.context==='Feature').length;
+  const changes=entries.filter(entry=>entry.context==='Changes').length;
+  if(features>=3)return 'major';
+  if(features+changes>=3)return 'minor';
+  if(entries.length&&entries.every(entry=>['UI','Bugs'].includes(entry.context)))return 'hotfix';
+  return 'other';
+}

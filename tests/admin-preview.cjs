@@ -18,7 +18,7 @@ http.createServer(async (req, res) => {
   }
   if (url.pathname.startsWith('/__github/')) {
     const api = url.pathname.slice('/__github'.length);
-    if (api === '/user') return json({ login: 'preview-editor', avatar_url: '' });
+    if (api === '/user') return json({ login: req.headers['x-preview-editor'] || 'preview-editor', avatar_url: '' });
     if (api.endsWith('/commits')) return json([{ sha: 'preview-baseline' }]);
     if (api.endsWith('/permission')) return json({ permission: 'write' });
     const file = decodeURIComponent(api.split('/contents/')[1] || '');
@@ -39,17 +39,20 @@ http.createServer(async (req, res) => {
     let data = fs.readFileSync(filename);
     if (filename.endsWith('index.html')) {
       const mock = `<script>
-        sessionStorage.setItem('ri-edit-token', 'local-preview-only');
+        const previewEditor=(new URLSearchParams(location.search).get('editor') || 'preview-editor').replace(/[^a-z0-9-]/gi,'').slice(0,39);
+        sessionStorage.setItem('ri-edit-token', 'local-preview-only:'+previewEditor);
         const originalFetch = window.fetch.bind(window);
         window.fetch = (input, options) => {
           const url = new URL(input, location.href);
-          return originalFetch(url.hostname === 'api.github.com' ? '/__github' + url.pathname + url.search : input, options);
+          return url.hostname === 'api.github.com'
+            ? originalFetch('/__github'+url.pathname+url.search,{...options,headers:{...options?.headers,'X-Preview-Editor':previewEditor}})
+            : originalFetch(input,options);
         };
         if (!location.hash) location.hash = '#/life/monster-evolution';
       </script>`;
       data = data.toString().replace('<script type="module"', mock + '<script type="module"');
     }
-    const type = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png' }[path.extname(filename)] || 'application/octet-stream';
+    const type = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg':'image/jpeg' }[path.extname(filename)] || 'application/octet-stream';
     res.writeHead(200, { 'Content-Type': type, 'Cache-Control': 'no-store' }); res.end(data);
   } catch { json({}, 404); }
 }).listen(4173, '127.0.0.1', () => console.log('Local admin preview: http://127.0.0.1:4173/ (memory only)'));

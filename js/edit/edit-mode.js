@@ -10,7 +10,7 @@ import {
   githubCollaboratorPermission,
   hasWriteAccess,
 } from '../github.js';
-import { CONTEXTS } from '../content-schema.js';
+import { CONTEXTS,validateDocuments } from '../content-schema.js';
 import { LUCIDE_ICONS } from '../lib/lucide-data.js';
 import { CATEGORIES, getSubcategory, getSubcategoryDocPath, collectSubtreeIds } from '../data/wiki-data.js';
 import { buildNav } from '../ui.js';
@@ -18,6 +18,8 @@ import * as draft from './draft.js';
 import { rerender, registerRoute } from '../router.js';
 import { pinContentKeys, resolveContentKey } from '../page-content.js';
 import { nextReleaseVersion } from '../releases.js';
+import {readRecovery,storeFormRecovery,removeFormRecovery,isRecoveryStored} from './recovery.js';
+import {GENERATOR_FORMULAS} from '../data/generators.js';
 
 const LUCIDE_ICON_NAMES = Object.keys(LUCIDE_ICONS);
 
@@ -91,6 +93,7 @@ const SCHEMAS = {
   'game:generator': [
     {key:'name',label:'Name',type:'line'},
     ...['unlockCost','startIncome','startTime','scale','maxLevel','maxSpeed','maxTier','tierPrice','levelPrice','speedPrice'].map(key=>({key,label:key.replace(/([A-Z])/g,' $1'),type:'line',numeric:true})),
+    ...Object.entries(GENERATOR_FORMULAS).map(([key,fallback])=>({key,label:key.replace(/([A-Z])/g,' $1'),type:'formula',advanced:true,fallback})),
   ],
   pair: [
     { key: 'label', label: 'Label', type: 'line' },
@@ -278,7 +281,9 @@ function barStatus(text, kind = '') {
 
 function updateToolbar() {
   if (!layer.bar) return;
-  if (session.ready) draft.persistLocalRecovery();
+  const localSaved=session.ready ? draft.persistLocalRecovery()!==false : true;
+  const resume=layer.bar.querySelector('[data-edit-resume]');
+  if(resume)resume.hidden=Boolean(popState)||!readRecovery(formRecoveryKey());
   const { ready, editing, user, avatar } = session;
   const draftOnline = draft.draftOnline();
   const draftDirty = draft.draftDirty();
@@ -307,8 +312,12 @@ function updateToolbar() {
     barStatus('Checking sign-in…');
   } else if (session.syncError) {
     barStatus(session.syncError, 'dirty');
+  } else if(!localSaved||!isRecoveryStored(formRecoveryKey())) {
+    barStatus('Local backup unavailable — download your draft','dirty');
+  } else if(readRecovery(formRecoveryKey())) {
+    barStatus('Unfinished edits saved on this device','dirty');
   } else if (draftDirty) {
-    barStatus('Unsaved changes', 'dirty');
+    barStatus(localSaved?'Saved on this device · not shared':'Local backup unavailable — download your draft', 'dirty');
   } else if (draftOnline) {
     barStatus('Draft saved on GitHub (unpublished)');
   } else {
@@ -330,6 +339,7 @@ function buildToolbar() {
     <button class="btn btn--ghost btn--sm" data-edit-undo title="Undo the last change in the draft (Ctrl+Z)">${icon('undo-2', 13)} Undo</button>
     <button class="btn btn--ghost btn--sm" data-edit-save title="Merge the latest shared changes and save for all editors">${icon('save', 13)} <span class="ri-save-full">Save for everyone</span><span class="ri-save-short">Save</span></button>
     <button class="btn btn--ghost btn--sm" data-edit-download title="Download a recovery copy of your current draft">${icon('download', 13)} Download draft</button>
+    <button class="btn btn--ghost btn--sm" data-edit-resume hidden>Resume edit</button>
     <button class="btn btn--ghost btn--sm" data-edit-discard title="Discard the draft and return to the published content">${icon('rotate-ccw', 13)} Discard</button>
     <button class="btn btn--primary btn--sm" data-edit-publish title="Publish the changes to the live Wiki (creates a backup first)">${icon('upload', 13)} Publish</button>
     <button class="btn btn--ghost btn--sm ri-edit-more" data-edit-more aria-expanded="false">${icon('menu', 13)} More</button>
@@ -341,7 +351,7 @@ function buildToolbar() {
   window.addEventListener('resize', resizeToolbar);
 
   layer.bar.addEventListener('click', (event) => {
-    const action = event.target.closest('[data-edit-toggle],[data-edit-undo],[data-edit-save],[data-edit-publish],[data-edit-discard],[data-edit-signout],[data-edit-download],[data-edit-more]');
+    const action = event.target.closest('[data-edit-toggle],[data-edit-undo],[data-edit-save],[data-edit-publish],[data-edit-discard],[data-edit-signout],[data-edit-download],[data-edit-more],[data-edit-resume]');
     if (!action) return;
     onToolbarAction(action);
   });
@@ -378,7 +388,7 @@ function buildToolbar() {
   layer.popover.addEventListener('click', (event) => {
     const target = event.target;
     if (target.closest('[data-edit-pop-close],[data-edit-pop-cancel]')) {
-      closePopover(true);
+      closePopover(true,Boolean(target.closest('[data-edit-pop-cancel]')));
       return;
     }
     if (target.closest('[data-edit-pop-apply]')) {
@@ -399,19 +409,35 @@ function buildToolbar() {
       void applyPopover();
     }
   });
+  layer.popover.addEventListener('input',persistForm);
+  layer.popover.addEventListener('change',persistForm);
+  layer.popover.setAttribute('role','dialog');
+  layer.popover.setAttribute('aria-label','Edit content');
+  const preserve=(event)=>{
+    const formSaved=persistForm(),draftSaved=draft.persistLocalRecovery();
+    if(event?.type==='beforeunload'&&(formSaved===false||draftSaved===false)){event.preventDefault();event.returnValue='';}
+  };
+  window.addEventListener('pagehide',preserve);
+  window.addEventListener('beforeunload',preserve);
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)preserve();});
 
   installSigninButton();
 }
 
 function onToolbarAction(button) {
   if (session.busy) return;
+  if(button.hasAttribute('data-edit-resume')){
+    const saved=readRecovery(formRecoveryKey());
+    if(saved)void(async()=>{setEditing(true);if(saved.hash!==location.hash)location.hash=saved.hash;await rerender({scroll:'preserve'});restoreForm();})();
+    return;
+  }
   if (button.hasAttribute('data-edit-more')) {
     const expanded = layer.bar.classList.toggle('is-expanded');
     button.setAttribute('aria-expanded', String(expanded));
     return;
   }
   if (button.hasAttribute('data-edit-download')) {
-    const url = URL.createObjectURL(new Blob([JSON.stringify(draft.snapshotDocs(), null, 2)], { type: 'application/json' }));
+    const url = URL.createObjectURL(new Blob([JSON.stringify({...draft.snapshotDocs(),_unfinishedForm:readRecovery(formRecoveryKey())}, null, 2)], { type: 'application/json' }));
     const link = document.createElement('a');
     link.href = url;
     link.download = `wiki-draft-${new Date().toISOString().replace(/[:.]/g, '-')}.json`;
@@ -548,6 +574,7 @@ async function startSession(token) {
       notify(info.recovered ? 'Your unsaved work was recovered from this browser.' : 'The shared draft is ready.');
     }
     updateToolbar();
+    restoreForm();
   } catch (error) {
     notify(error.message || 'Failed to load the editing session.', true);
     barStatus('Failed to load editing session');
@@ -661,7 +688,7 @@ function openPopover(binding) {
   const fields = binding.kind === 'game:bonus' ? bonusFields(binding)
     : binding.kind === 'table-row' ? (draft.getValue(binding.docName, binding.valuePath.replace(/\.rows\.\d+$/, '.columns')) || []).map((label, i) => ({ key: `cells.${i}`, label, type: 'area' }))
     : fieldsFor(binding.kind);
-  popState = { ...binding, fields };
+  popState = { ...binding, fields, hash:window.location.hash,recoveryTargetId:draft.getValue(binding.docName,binding.valuePath)?.id };
   const body = qs('[data-edit-pop-body]', layer.popover);
   const title = qs('[data-edit-pop-title]', layer.popover);
   title.textContent = binding.label || 'Edit content';
@@ -677,7 +704,15 @@ function openPopover(binding) {
       binding.docName,
     ));
   } else {
-    fields.forEach((meta) => body.appendChild(createField(meta, `${binding.valuePath}.${meta.key}`, binding.docName)));
+    fields.filter(meta=>!meta.advanced).forEach((meta) => body.appendChild(createField(meta, `${binding.valuePath}.${meta.key}`, binding.docName)));
+    if(fields.some(meta=>meta.advanced)){
+      const advanced=document.createElement('details');advanced.innerHTML='<summary>Advanced formulas</summary>';
+      fields.filter(meta=>meta.advanced).forEach(meta=>advanced.appendChild(createField(meta,`${binding.valuePath}.${meta.key}`,binding.docName)));
+      const help=document.createElement('p');help.className='ri-form-help';
+      help.textContent='L = level, S = speed, T = tier. baseIncome, baseTime, scale, tierPrice, levelPrice and speedPrice use the settings above. Tier multipliers and global upgrades are applied separately.';
+      advanced.appendChild(help);
+      body.appendChild(advanced);
+    }
     if (binding.kind === 'game:bonus') {
       const help = document.createElement('p');
       help.className = 'ri-form-help';
@@ -688,10 +723,66 @@ function openPopover(binding) {
   const lastSegment = binding.valuePath.split('.').at(-1) || '';
   qs('[data-edit-pop-delete]', layer.popover).hidden = !/^\d+$/.test(lastSegment) && binding.kind !== 'game:calculator-settings';
   layer.popover.hidden = false;
+  document.documentElement.classList.add('ri-edit-form-open');
+  layer.bar.querySelector('[data-edit-resume]').hidden=true;
   // O popover edita o item (binding.el), mas pode ser ancorado em outro
   // elemento (ex.: o botao "+ New" que o abriu) para aparecer perto dele.
   positionPopover(binding.anchorEl?.isConnected ? binding.anchorEl : binding.el);
   body.querySelector('input, textarea, select')?.focus({ preventScroll: true });
+  body.querySelectorAll('input,textarea,select').forEach((input)=>{input.dataset.recoveryOriginal=input.value;});
+  restoreMatchingFields();
+  persistForm();
+}
+
+function formRecoveryKey(){return `ri-editor-form:${session.user}`;}
+function restoreMatchingFields(){
+  const saved=readRecovery(formRecoveryKey());
+  if(!saved||!popState)return;
+  const targetId=popState.recoveryTargetId??draft.getValue(popState.docName,popState.valuePath)?.id;
+  const match=[...(saved.pending||[]),saved].reverse().find(form=>form.hash===popState.hash&&Boolean(form.binding?.manage)===Boolean(popState.manage)&&form.binding?.docName===popState.docName&&(targetId?form.targetId===targetId:form.binding?.valuePath===popState.valuePath));
+  if(match)restoreFields(match.fields);
+}
+function restoreFields(fields=[]){
+  const inputs=[...layer.popover.querySelectorAll('input,textarea,select')].filter(input=>input.type!=='file');
+  for(const field of fields){
+    if(field.value===field.original)continue;
+    const input=field.path?inputs.find(item=>item.dataset.editFieldPath===field.path)||inputs[field.index]:inputs[field.index];
+    if(input){input.value=field.value;input.dispatchEvent(new Event('change',{bubbles:true}));}
+  }
+}
+function persistForm(){
+  if(!popState||!session.user)return isRecoveryStored(formRecoveryKey());
+  const fields=[...layer.popover.querySelectorAll('input,textarea,select')].filter(input=>input.type!=='file').map((input,index)=>({index,path:input.dataset.editFieldPath,value:input.value,original:input.dataset.recoveryOriginal??input.defaultValue??''}));
+  const {docName,valuePath,kind,label,manage}=popState;
+  const value=docName&&valuePath?draft.getValue(docName,valuePath):null;
+  const targetId=popState.recoveryTargetId??value?.id;
+  if(!fields.some(field=>field.value!==field.original)){
+    removeFormRecovery(formRecoveryKey(),{hash:popState.hash,binding:popState,targetId});
+    return isRecoveryStored(formRecoveryKey());
+  }
+  const saved=storeFormRecovery(formRecoveryKey(),{hash:popState.hash,binding:{docName,valuePath,kind,label,manage},targetId,fields});
+  if(!session.busy)barStatus(saved?'Editing · saved on this device':'Local backup unavailable — download draft','dirty');
+  return saved;
+}
+function restoreForm(){
+  const saved=readRecovery(formRecoveryKey());
+  if(!saved||saved.hash!==window.location.hash||popState)return;
+  const binding=saved.binding;
+  if(!binding)return;
+  if(binding.manage){openManageAdd(layer.bar);}else{
+    if(!binding.docName||!binding.valuePath)return;
+    if(saved.targetId && draft.getValue(binding.docName,binding.valuePath)?.id!==saved.targetId){
+      const paths=[];
+      const walk=(node,path='')=>{if(!node||typeof node!=='object')return;if(node.id===saved.targetId)paths.push(path);for(const [key,child]of Object.entries(node))walk(child,path?`${path}.${key}`:key);};
+      walk(draft.doc(binding.docName));
+      if(paths.length!==1){notify('Your saved form is preserved. Its item moved; reopen the item to continue.',true);return;}
+      binding.valuePath=paths[0];
+    }
+    const el=document.querySelector(`[data-edit="${binding.docName}:${binding.valuePath}"]`)||layer.bar;
+    openPopover({...binding,el});
+  }
+  restoreFields(saved.fields);
+  persistForm();notify('Your unfinished edit was restored.');
 }
 
 async function deletePopoverItem() {
@@ -711,7 +802,7 @@ async function deletePopoverItem() {
     draft.applyDraftToSite();
     await rerender({ scroll: 'preserve' });
     window.dispatchEvent(new CustomEvent('ri-edit-content'));
-    closePopover(true);
+    closePopover(true,true);
     updateToolbar();
     notify('Item removed. Remember to save/publish.');
   } catch (error) {
@@ -730,7 +821,7 @@ function readValueForInput(type, original) {
 
 function createField(meta, path, docName) {
   if (meta.picker === 'icon') return createIconField(meta, path, docName);
-  const original = draft.getValue(docName, path);
+  const original = draft.getValue(docName, path) ?? meta.fallback;
   const wrap = document.createElement('label');
   wrap.className = 'ri-edit-field';
   if (meta.label) {
@@ -890,12 +981,14 @@ function positionPopover(el) {
   layer.popover.style.top = `${Math.max(56, top)}px`;
 }
 
-function closePopover(silent = false) {
+function closePopover(silent = false,discard = false) {
   if (!popState) return;
+  if(discard)removeFormRecovery(formRecoveryKey(),{hash:popState.hash,binding:popState,targetId:popState.recoveryTargetId??draft.getValue(popState.docName,popState.valuePath)?.id});else persistForm();
   popState = null;
   layer.popover.hidden = true;
+  document.documentElement.classList.remove('ri-edit-form-open');
   layer.popover.querySelector('[data-edit-pop-body]').innerHTML = '';
-  if (!silent) updateToolbar();
+  updateToolbar();
 }
 
 async function applyPopover() {
@@ -909,17 +1002,23 @@ async function applyPopover() {
   applyButton.disabled = true;
   try {
     const inputs = [...layer.popover.querySelectorAll('[data-edit-field-path]')];
+    const writes=[];
     for (const input of inputs) {
       const path = input.dataset.editFieldPath.replaceAll('·', '.');
       const docName = input.dataset.editFieldDoc;
       const type = input.dataset.editFieldType;
-      if (input.value === readValueForInput(type, draft.getValue(docName, path))) continue;
+      if (input.value === (input.dataset.recoveryOriginal ?? readValueForInput(type, draft.getValue(docName, path)))) continue;
       const numeric = input.dataset.editFieldNumeric === '1';
       let value = input.value;
       if (state.kind === 'game:calculator-settings' && path.endsWith('.showAmount')) value = value !== 'false';
       if (docName === 'updates' && /versions\.\d+\.version$/.test(path)) {
         value = value.trim();
         if (draft.doc('updates').versions.some((release, i) => i !== Number(path.split('.')[1]) && release.version.trim() === value)) throw new Error('That version already exists. Choose a different release version.');
+      }
+      if(docName==='updates'&&/versions\.\d+\.date$/.test(path)){
+        value=value.trim();
+        const date=new Date(`${value}T12:00:00Z`);
+        if(!/^\d{4}-\d{2}-\d{2}$/.test(value)||!Number.isFinite(date.getTime())||date.toISOString().slice(0,10)!==value)throw new Error('Enter a valid release date in YYYY-MM-DD format.');
       }
       if (type === 'formula') {
         value = `formula: ${value.replace(/^formula:\s*/, '').trim()}`;
@@ -932,16 +1031,23 @@ async function applyPopover() {
         if (value.trim() && !Number.isFinite(parsed)) throw new Error('Enter a valid number, or leave the optional field empty.');
         value = value.trim() === '' ? undefined : parsed;
       }
-      if (state.kind === 'game:bonus' && /\.(unlockAt|unlockLevel)$/.test(path)) draft.setValue(docName, `${state.valuePath}.unlockLabel`, undefined);
-      if (state.kind === 'game:bonus' && path.endsWith('.unit')) draft.setValue(docName, `${state.valuePath}.capUnit`, value === 'cap' ? 'CAP' : value || 'x');
-      if (docName === 'wiki' && path.endsWith('.id')) pinContentKeys(draft.doc('wiki'));
-      draft.setValue(docName, path, value);
+      if (state.kind === 'game:bonus' && /\.(unlockAt|unlockLevel)$/.test(path)) writes.push([docName, `${state.valuePath}.unlockLabel`, undefined]);
+      if (state.kind === 'game:bonus' && path.endsWith('.unit')) writes.push([docName, `${state.valuePath}.capUnit`, value === 'cap' ? 'CAP' : value || 'x']);
+      writes.push([docName,path,value]);
     }
+    const candidate=draft.snapshotDocs();
+    for(const[name,path,value]of writes){
+      const keys=path.split('.');let node=candidate[name];
+      for(let i=0;i<keys.length-1;i++)node=node[keys[i]]??=(/^\d+$/.test(keys[i+1])?[]:{});
+      if(value===undefined)delete node[keys.at(-1)];else node[keys.at(-1)]=value;
+    }
+    validateDocuments(candidate);
+    for(const[name,path,value]of writes){if(name==='wiki'&&path.endsWith('.id'))pinContentKeys(draft.doc('wiki'));draft.setValue(name,path,value);}
     try {
       draft.applyDraftToSite();
       await rerender({ scroll: 'preserve' });
       window.dispatchEvent(new CustomEvent('ri-edit-content'));
-      closePopover(true);
+      closePopover(true,true);
       updateToolbar();
       notify('Content applied. Remember to save/publish.');
     } catch (error) {
@@ -1493,7 +1599,7 @@ function openManageAdd(anchor = null) {
   if (!session.ready || !session.allowed) return;
   if (popState) closePopover(true);
   if (!session.editing) setEditing(true);
-  popState = { manage: true, label: 'Add pages' };
+  popState = { manage: true, label: 'Add pages',hash:window.location.hash };
   const body = qs('[data-edit-pop-body]', layer.popover);
   const title = qs('[data-edit-pop-title]', layer.popover);
   const warn = qs('[data-edit-pop-warn]', layer.popover);
@@ -1603,9 +1709,14 @@ function openManageAdd(anchor = null) {
   if (deleteBtn) deleteBtn.hidden = true;
 
   layer.popover.hidden = false;
+  document.documentElement.classList.add('ri-edit-form-open');
+  layer.bar.querySelector('[data-edit-resume]').hidden=true;
   positionPopover(anchor?.isConnected ? anchor : navEl()?.querySelector('[data-ri-nav-tools]'));
   body.scrollTop = 0;
   nameIn.focus({ preventScroll: true });
+  body.querySelectorAll('input,textarea,select').forEach(input=>{input.dataset.recoveryOriginal=input.value;});
+  restoreMatchingFields();
+  persistForm();
 }
 
 async function applyManageAdd() {
@@ -1664,7 +1775,7 @@ async function applyManageAdd() {
     buildNav();
     applyDragMode();
     window.dispatchEvent(new CustomEvent('ri-edit-content'));
-    closePopover(true);
+    closePopover(true,true);
     updateToolbar();
     window.location.hash = kind === 'cat' ? `#/${pageId}` : `#/${parentId}/${pageId}`;
     notify(`Page added to the draft.${typedNote} Edit it in place and remember to save.`);
@@ -2124,6 +2235,7 @@ async function addItemFromTrigger(trigger) {
       notify('This add button is not wired to a template yet.', true);
       return;
     }
+    if(template==='version')window.dispatchEvent(new CustomEvent('ri-edit-new-release'));
     if (!Array.isArray(draft.getValue(docName, trail))) draft.setValue(docName, trail, []);
     let index = draft.pushValue(docName, trail, value);
     if (template === 'version' && index > 0) {
@@ -2217,6 +2329,11 @@ function installInteraction() {
     if (!session.ready || !session.allowed) return;
     if (session.busy || sharedRefreshChecking) return;
     if (event.target.closest('#ri-edit-bar, .ri-edit-popover, .ri-edit-chip')) return;
+    if(popState){
+      // A mouse-up outside a textarea can produce a click on the page. It
+      // must never cancel the form or open a different editor underneath it.
+      event.preventDefault();event.stopPropagation();persistForm();return;
+    }
     const contentTrigger = event.target.closest('[data-page-content]');
     if (contentTrigger && session.editing) {
       event.preventDefault();
@@ -2233,8 +2350,6 @@ function installInteraction() {
       return;
     }
 
-    // Clicar fora fecha o popover aberto (descarta mudanças não aplicadas).
-    if (popState) closePopover(true);
 
     const binding = event.target.closest('[data-edit]');
     if (!binding) return;

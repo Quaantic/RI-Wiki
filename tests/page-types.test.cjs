@@ -330,3 +330,31 @@ test('milestones render once as compact cards and Frost machines use a calculato
   assert.ok(!root.innerHTML.includes('<table'));
 });
 
+test('update log uses collapsible release/category groups and no leading entry icons',async()=>{
+  const draft=await import('../js/edit/draft.js');
+  const {updatesView}=await import('../js/views.js');
+  draft.__testInjectDocs({wiki:JSON.parse(fs.readFileSync('content/wiki-data.json')),game:JSON.parse(fs.readFileSync('content/game-data.json')),updates:JSON.parse(fs.readFileSync('content/update-log.json'))});
+  draft.applyDraftToSite();
+  const root=mkEl();await updatesView.render(root);
+  assert.match(root.innerHTML,/<details[^>]+data-update-version[^>]+data-release-kind="minor"/);
+  assert.equal((root.innerHTML.match(/<details[^>]+data-update-group=/g)||[]).length,4);
+  assert.match(root.innerHTML,/<summary class="upd-group__label">[^]*?Features <b>\(2\)<\/b>/);
+  assert.equal((root.innerHTML.match(/<article class="upd-entry"/g)||[]).length,7);
+  assert.doesNotMatch(root.innerHTML,/<article[^>]*>\s*<svg/);
+  assert.match(root.innerHTML,/data-update-filter="hotfix"/);
+});
+
+test('short progression items share an adaptive grid while detailed stages can expand',async()=>{
+  const draft=await import('../js/edit/draft.js');
+  const views=await import('../js/views.js');
+  draft.__testInjectDocs({wiki:JSON.parse(fs.readFileSync('content/wiki-data.json')),game:JSON.parse(fs.readFileSync('content/game-data.json')),updates:JSON.parse(fs.readFileSync('content/update-log.json'))});
+  draft.applyDraftToSite();
+  const root=mkEl();
+  await views.subcategoryView.render(root,['mining','cores'],new URLSearchParams());
+  assert.match(root.innerHTML,/<div class="stage-grid/);
+  assert.equal((root.innerHTML.match(/stage-card--compact/g)||[]).length,12);
+  await views.subcategoryView.render(root,['main','stages'],new URLSearchParams());
+  assert.match(root.innerHTML,/stage-card--full/);
+  assert.equal((root.innerHTML.match(/data-edit-kind="game:stage"/g)||[]).length,5);
+});
+

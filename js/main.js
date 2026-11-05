@@ -4,6 +4,7 @@ import { esc, qs } from './utils.js';
 import { initShell, initUpdateBadge, buildNav } from './ui.js';
 import { initRouter } from './router.js';
 import { LATEST_UPDATE, LATEST_UPDATE_ID } from './data/update-log.js';
+import {formatReleaseVersion} from './releases.js';
 import { loadEditableContent } from './services.js';
 
 async function boot() {
@@ -21,13 +22,13 @@ async function boot() {
   }
 
   initShell();
-  qs('#wiki-version').textContent = `v${LATEST_UPDATE?.version || '—'}`;
+  qs('#wiki-version').textContent = formatReleaseVersion(LATEST_UPDATE?.version);
   initUpdateBadge(LATEST_UPDATE_ID);
 
   // Editor inline: reconstrói a sidebar/versão quando aplicado um rascunho.
   window.addEventListener('ri-edit-content', () => {
     buildNav();
-    qs('#wiki-version').textContent = `v${LATEST_UPDATE?.version || '—'}`;
+    qs('#wiki-version').textContent = formatReleaseVersion(LATEST_UPDATE?.version);
     initUpdateBadge(LATEST_UPDATE_ID);
   });
 

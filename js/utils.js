@@ -53,6 +53,7 @@ const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
 export function fmtDate(iso) {
   if (!iso) return '';
   const [y, m, d] = iso.split('-').map(Number);
+  if(!Number.isFinite(y)||!Number.isFinite(d)||m<1||m>12||d<1||d>31)return '';
   return `${MONTHS[(m || 1) - 1]} ${d}, ${y}`;
 }
 

@@ -1,5 +1,18 @@
 # RI Gaming Wiki
 
+### Compact game presentation
+
+Imported Markdown is reference material, not page copy. The compact presentation
+migration removes only generated `notes-*` sections, preserving custom editor
+sections and the extracted calculators. Milestones use responsive grid cards;
+owned-amount bonuses use compact rows. Frost Generators has three interactive
+machines with Level, Speed, Tier, tier multiplier, output and upgrade costs.
+Tier multipliers are entered from the game because the source did not specify
+their exact formula. The update log is not changed by this migration.
+
+Deploy both `js/` and `css/`, including new modules. The v2 presentation migration
+also repairs previously saved v1 drafts, so the old note tables do not reappear.
+
 ### Correção da entrega do conteúdo importado
 
 As informações dos cinco arquivos também estão em `js/data/imported-notes.js`.
@@ -163,6 +176,66 @@ O dono do site configura o OAuth do GitHub e as variáveis do Vercel uma vez.
 Cada editor precisa de acesso de escrita ao repositório. O conteúdo editável
 fica em `content/*.json`; os módulos em `js/data/` são renderizadores e lógica
 do site.
+
+## Editor safety and release log
+
+Applied edits and unfinished form text are automatically backed up on this
+device, using local storage with a session-storage fallback. Refreshing restores
+the draft after editor sign-in. **Close** and **Escape** keep unfinished forms;
+**Resume edit** reopens them. Opening another form keeps earlier unfinished
+forms too. **Cancel** explicitly discards only that form's typing. Form
+validation completes before any field is changed. If storage is unavailable,
+the editor reports the problem and warns before leaving; **Download draft**
+includes unfinished forms as well as applied content.
+
+**Save for everyone** applies the open form and shares the draft through GitHub.
+**Publish** publishes it to the public wiki. Local recovery is specific to the
+browser and GitHub account; use Save before switching devices or clearing site
+storage.
+
+Frost Generators have **Edit generator & formulas**, including an **Advanced
+formulas** section. Variables: `L` level, `S` speed, `T` tier, `scale`,
+`baseIncome`, `baseTime`, `tierPrice`, `levelPrice`, and `speedPrice`. Tier and
+global upgrade multipliers are applied after the base formulas.
+
+The Update Log has collapsible releases and category groups. Icons appear on
+category headers, with plain update rows. **Major Releases** have at least three
+Features; **Minor Updates** have at least three Features + Changes combined
+without meeting Major; **Hotfixes** contain only UI/Bugs. Smaller mixed releases
+remain under **All Updates**. Creating a release returns to All so it stays
+visible while editing.
+
+Static backgrounds live in `images/backgrounds/`: one compressed landscape and
+two small SVG textures, reused across banners and release cards. They add no
+animation loop, canvas, particles or third-party image requests.
+
+## Concurrent saves and adaptive layout
+
+Save merges each editor's changes into the latest shared revision. Unchanged
+fields keep the other editor's values; saving without changes does not write a
+new draft revision. If another save wins between the read and write, the editor
+automatically re-reads, merges and retries (up to four attempts). The activity
+history uses the same revision protection. Conflicting edits to the same field
+stop the save and keep the local recovery copy.
+
+Rendering no longer inserts generator defaults into untouched documents, and
+the completed compact content import is not re-run. Generator forms show the
+built-in formulas as defaults and apply only fields you changed.
+
+The sidebar preserves expanded branches and reopens the current page's full
+ancestor chain after save/sync. Navigation supports deeper nesting as well.
+
+`css/adaptive.css` carries the forest palette across the page, sidebar, cards
+and footer. Grids choose their column count from available space. Short
+progression cards share a row; longer cards request more columns. This also
+applies to bonus groups, generators, milestones, upgrades and custom text/FAQ
+sections. Long descriptions and tables retain the space they need. There are
+no new animated backgrounds or additional image assets.
+
+For a two-editor browser check, run `node tests/admin-preview.cjs` and open
+`http://127.0.0.1:4173/?editor=editor-a#/updates` and
+`http://127.0.0.1:4173/?editor=editor-b#/life/tree` in separate tabs. The repository
+and saves are mocked in memory; no GitHub credentials or remote writes are used.
 
 ## Excel (fase futura)
 

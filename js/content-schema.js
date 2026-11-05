@@ -135,7 +135,7 @@ function validateGameData(game) {
       throw new Error(`Resource page link "${name}" needs a valid Wiki route.`);
     }
   }
-  const variables = { L: 1, tier: 1, N: 1, level: 1, G: 1, dust: 1, p: 1, amount: 1 };
+  const variables = { L: 1, S:1,T:1,scale:1,baseIncome:1,baseTime:1,tierPrice:1,levelPrice:1,speedPrice:1,tier: 1, N: 1, level: 1, G: 1, dust: 1, p: 1, amount: 1 };
   const validateFormulas = (value, path = 'game') => {
     if (typeof value === 'string' && value.startsWith('formula: ')) {
       try {
