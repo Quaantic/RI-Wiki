@@ -2,6 +2,54 @@
   "format": 1,
   "entries": [
     {
+      "id": "f6d0c42e-a443-4cf2-967b-d9da370db773",
+      "at": 1793854174738,
+      "kind": "content",
+      "text": "Added \"New update\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "b07263f8-4374-41ab-a37b-952a0f7d4a71",
+      "at": 1793854083783,
+      "kind": "content",
+      "text": "Set hero Title of \"heroTitle\" (Grow your knowledge.)",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "7a42d868-1be4-4e99-bbae-bbfcc509cde6",
+      "at": 1793854064668,
+      "kind": "content",
+      "text": "Updated hero Sub of \"heroSub\": Everything in Regrowht Incremental document… to Everything in Regrowht Incremental document…",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "2069c39c-84db-4173-9a94-d260aa89aebb",
+      "at": 1793854060570,
+      "kind": "content",
+      "text": "Updated hero Sub of \"heroSub\": Everything in Regrowht Incremental document… to Everything in Regrowht Incremental document…",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "a811dbe7-021c-457d-aeaa-a24dd442fdf4",
+      "at": 1793854054304,
+      "kind": "content",
+      "text": "Updated hero Sub of \"heroSub\": Every ore, rune, boss and perk — documented… to Everything in Regrowht Incremental document…",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "606670d2-d90f-434a-8b1c-202e05c44a96",
+      "at": 1793854028475,
+      "kind": "content",
+      "text": "Set hero Sub of \"heroSub\" (Every ore, rune, boss and perk — documented…)",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
       "id": "1626d956-36bd-43e4-a019-c384ded7e73d",
       "at": 1793853902074,
       "kind": "colors",
@@ -2350,54 +2398,6 @@
       "at": 1793845149771,
       "kind": "content",
       "text": "Updated 2 of \"row-c8051d53-83c2-476c-83ff-1f4edadc48b5\": empty to 3x Crystal Shards, 2x Crystal Perks, 2x Qua…",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "16765953-ed8a-4758-ae1b-b69986f56c3b",
-      "at": 1793845110218,
-      "kind": "content",
-      "text": "Added \"row-c8051d53-83c2-476c-83ff-1f4edadc48b5\"",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "7dd375f8-f72d-4d93-9d02-3293da68eea5",
-      "at": 1793845109159,
-      "kind": "content",
-      "text": "Updated 1 of \"row-f4b617bf-4561-4ed6-9df2-661a0071b475\": empty to 225",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "586bd7ba-c630-4aca-97d1-e3bbe01d186b",
-      "at": 1793845109159,
-      "kind": "content",
-      "text": "Updated 2 of \"row-f4b617bf-4561-4ed6-9df2-661a0071b475\": empty to 3x Crystal, 2x Jewels, 2.5x Platinum, 1.6x …",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "982bd829-8c62-4e2f-b492-7e65d092271f",
-      "at": 1793845109158,
-      "kind": "content",
-      "text": "Updated 0 of \"row-f4b617bf-4561-4ed6-9df2-661a0071b475\": empty to Crystal Pack",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "6f8e88ed-aa6a-4108-9a17-12ff5ed94360",
-      "at": 1793845062462,
-      "kind": "content",
-      "text": "Added \"row-f4b617bf-4561-4ed6-9df2-661a0071b475\"",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "9b1237cc-d6d3-46a5-a142-94f3c2e6edc7",
-      "at": 1793845061412,
-      "kind": "content",
-      "text": "Updated 1 of \"row-2fced816-1d99-4a3d-8ef4-973b259a5fe0\": empty to 149",
       "actor": "zzinss",
       "pending": true
     }
