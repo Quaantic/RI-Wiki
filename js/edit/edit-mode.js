@@ -1362,7 +1362,11 @@ function pageLinksEntry(name) {
 // Lista completa de destinos: categorias, paginas e paginas filhas em
 // QUALQUER nivel (ex.: #/life/rare-saps fica dentro de Tree > Sap).
 function collectPageRoutes() {
-  const routes = [];
+  const routes = [
+    { route: '#/updates', label: 'Update Log', search: 'update log updates releases' },
+    { route: '#/credits', label: 'Credits', search: 'credits' },
+    { route: '#/feedback', label: 'Feedback', search: 'feedback feedbacks' },
+  ];
   for (const cat of CATEGORIES) {
     const base = `#/${cat.id}`;
     routes.push({ route: base, label: `${cat.name} (category)`, search: `${cat.name}`.toLowerCase() });

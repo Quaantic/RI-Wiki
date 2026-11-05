@@ -1384,6 +1384,7 @@ export const updatesView = {
                 ${entries.map(({ e, entryIndex }) => `
                   <article class="upd-entry" ${ed(`updates:versions.${docIndex}.entries.${entryIndex}`, 'entry', esc(e.title))} data-resource-links>
                     <div>
+                      <span class="upd-entry__order ri-edit-add" aria-label="Update order">${[-1, 1].map(direction => `<button type="button" class="btn btn--ghost btn--sm" data-update-move="${docIndex}:${entryIndex}:${direction}" aria-label="Move update ${direction < 0 ? 'up' : 'down'}" ${entries[direction < 0 ? 0 : entries.length - 1].entryIndex === entryIndex ? 'disabled' : ''}>${direction < 0 ? '↑ Move up' : '↓ Move down'}</button>`).join('')}</span>
                       ${e.href
                         ? `<a class="upd-entry__title" href="${esc(e.href)}"><span class="upd-entry__title-text">${colorizeResources(esc(e.title))}</span>${icon('arrow-right', 13)}</a>`
                         : `<b class="upd-entry__title upd-entry__title-text">${colorizeResources(esc(e.title))}</b>`}
