@@ -161,17 +161,13 @@ function backend() {
   return activeSource === DATA_SOURCES.EXCEL ? excelProvider : mockBackend;
 }
 
-const MOCK_LATENCY = 120;
-const delay = (value) =>
-  new Promise((resolve) => setTimeout(() => resolve(value), MOCK_LATENCY));
-
 const mockBackend = {
   async getCategories() {
-    return delay(CATEGORIES);
+    return CATEGORIES;
   },
 
   async getWikiStats() {
-    return delay({
+    return {
       categories: CATEGORIES.length,
       pages: CATEGORIES.reduce((total, category) => {
         const countPages = (pages) => pages.reduce((count, page) => count + 1 + countPages(page.children || []), 0);
@@ -179,15 +175,15 @@ const mockBackend = {
       }, 0),
       updateVersion: LATEST_UPDATE.version,
       updateCount: UPDATE_LOG.reduce((n, v) => n + v.entries.length, 0),
-    });
+    };
   },
 
   async search(query, opts) {
-    return delay(searchPages(query, opts));
+    return searchPages(query, opts);
   },
 
   async getUpdateLog() {
-    return delay(UPDATE_LOG);
+    return UPDATE_LOG;
   },
 };
 

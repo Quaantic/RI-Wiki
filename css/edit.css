@@ -661,8 +661,8 @@ html.ri-edit-bar .sub-pills-wrap {
   .ri-edit-more { display: inline-flex; order: 4; }
   .ri-save-short { display: inline; }
   [data-edit-toggle] { order: 1; } [data-edit-save] { order: 2; } [data-edit-publish] { order: 3; }
-  .ri-edit-bar [data-edit-undo], .ri-edit-bar [data-edit-download], .ri-edit-bar [data-edit-discard], .ri-edit-bar [data-edit-signout] { display: none; order: 5; grid-column: span 2; }
-  .ri-edit-bar.is-expanded [data-edit-undo], .ri-edit-bar.is-expanded [data-edit-download], .ri-edit-bar.is-expanded [data-edit-discard], .ri-edit-bar.is-expanded [data-edit-signout] { display: inline-flex; }
+  .ri-edit-bar [data-edit-undo], .ri-edit-bar [data-edit-download], .ri-edit-bar [data-edit-restore], .ri-edit-bar [data-edit-discard], .ri-edit-bar [data-edit-signout] { display: none; order: 5; grid-column: span 2; }
+  .ri-edit-bar.is-expanded [data-edit-undo], .ri-edit-bar.is-expanded [data-edit-download], .ri-edit-bar.is-expanded [data-edit-restore], .ri-edit-bar.is-expanded [data-edit-discard], .ri-edit-bar.is-expanded [data-edit-signout] { display: inline-flex; }
   .ri-edit-bar [data-edit-resume] { order: 5; grid-column: 1/-1; }
 }
 @media (max-width: 720px) {

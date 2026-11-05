@@ -136,7 +136,7 @@ function fieldWord(key) {
 function logChange(kind, text) {
   changeLog.push({ id: crypto.randomUUID(), at: Date.now(), kind, text, actor: draftState.actor });
   if (changeLog.length > CHANGE_LOG_MAX) changeLog.shift();
-  persistLocalRecovery();
+  return persistLocalRecovery();
 }
 
 function describeSet(name, path, prev, value) {
@@ -412,6 +412,8 @@ export async function initSession(token, actor = '') {
   draftState.needsMerge = false;
   draftState.sharedOrderNeedsSave = false;
   changeLog.length = 0;
+  const sharedFile = githubRequest(githubContentsUrl(DRAFT_FILE), token, { allowNotFound: true })
+    .then((result) => ({ result }), (error) => ({ error }));
   await Promise.all(Object.entries(FILES).map(async ([name, path]) => {
     const result = await githubRequest(githubContentsUrl(path), token);
     if (result.type !== 'file' || typeof result.content !== 'string') {
@@ -424,7 +426,8 @@ export async function initSession(token, actor = '') {
   draftState.docs = clone(draftState.baseDocs);
   let draftLoaded = false, orderConflict = false;
   try {
-    const result = await githubRequest(githubContentsUrl(DRAFT_FILE), token, { allowNotFound: true });
+    const { result, error } = await sharedFile;
+    if (error) throw error;
     if (result === null) {
       // Esboco ausente no GitHub: primeiro uso do editor (normal).
       console.info('[inline-editor] No inline draft on GitHub yet — that is normal before the first "Save draft".');
@@ -894,6 +897,21 @@ export async function recoverMissingPages(token, name) {
 // criar uma versao manual.
 export function snapshotDocs() {
   return draftState.docs ? clone(draftState.docs) : null;
+}
+
+export function restoreDraftSnapshot(snapshot) {
+  const docs = clone({ wiki: snapshot?.wiki, game: snapshot?.game, updates: snapshot?.updates });
+  validateDocuments(docs);
+  installImportedNotes(docs.wiki, docs.game);
+  validateDocuments(docs);
+  draftState.docs = docs;
+  history.length = 0;
+  changeLog.length = 0;
+  return logChange('draft-restore', 'Restored a downloaded draft in this browser');
+}
+
+export function hasRestoredDraft() {
+  return changeLog.some((entry) => entry.kind === 'draft-restore');
 }
 
 export function uploadStatus() {

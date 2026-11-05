@@ -42,7 +42,6 @@ async function boot() {
     location.hash = link.dataset.href;
   });
 
-  const t0 = performance.now();
   let restoreEditorForm;
   try {
     const editor = await import('./edit/edit-mode.js');
@@ -56,10 +55,7 @@ async function boot() {
   await initRouter();
   restoreEditorForm?.();
 
-  const wait = Math.max(0, 520 - (performance.now() - t0));
-  setTimeout(() => {
-    qs('#boot')?.classList.add('is-done');
-  }, wait);
+  qs('#boot')?.classList.add('is-done');
 }
 
 boot();

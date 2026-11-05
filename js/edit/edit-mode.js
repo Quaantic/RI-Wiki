@@ -305,6 +305,9 @@ function updateToolbar() {
   layer.bar.querySelector('[data-edit-save]').disabled = !ready;
   layer.bar.querySelector('[data-edit-publish]').disabled = !ready;
   layer.bar.querySelector('[data-edit-discard]').disabled = !ready;
+  layer.bar.querySelector('[data-edit-restore]').disabled = !ready;
+  layer.bar.querySelector('[data-edit-more]').disabled = !ready;
+  resume.disabled = !ready;
   if (session.busy || sharedRefreshChecking) {
     qsa('button', layer.bar).forEach((button) => { button.disabled = true; });
   } else {
@@ -346,6 +349,8 @@ function buildToolbar() {
     <button class="btn btn--ghost btn--sm" data-edit-undo title="Undo the last change in the draft (Ctrl+Z)">${icon('undo-2', 13)} Undo</button>
     <button class="btn btn--ghost btn--sm" data-edit-save title="Merge the latest shared changes and save for all editors">${icon('save', 13)} <span class="ri-save-full">Save for everyone</span><span class="ri-save-short">Save</span></button>
     <button class="btn btn--ghost btn--sm" data-edit-download title="Download a recovery copy of your current draft">${icon('download', 13)} Download draft</button>
+    <button class="btn btn--ghost btn--sm" data-edit-restore title="Open a downloaded wiki draft in this browser">${icon('upload', 13)} Restore draft</button>
+    <input type="file" accept=".json,application/json" data-edit-restore-file hidden>
     <button class="btn btn--ghost btn--sm" data-edit-resume hidden>Resume edit</button>
     <button class="btn btn--ghost btn--sm" data-edit-discard title="Discard the draft and return to the published content">${icon('rotate-ccw', 13)} Discard</button>
     <button class="btn btn--primary btn--sm" data-edit-publish title="Publish the changes to the live Wiki (creates a backup first)">${icon('upload', 13)} Publish</button>
@@ -358,9 +363,15 @@ function buildToolbar() {
   window.addEventListener('resize', resizeToolbar);
 
   layer.bar.addEventListener('click', (event) => {
-    const action = event.target.closest('[data-edit-toggle],[data-edit-undo],[data-edit-save],[data-edit-publish],[data-edit-discard],[data-edit-signout],[data-edit-download],[data-edit-more],[data-edit-resume]');
+    const action = event.target.closest('[data-edit-toggle],[data-edit-undo],[data-edit-save],[data-edit-publish],[data-edit-discard],[data-edit-signout],[data-edit-download],[data-edit-restore],[data-edit-more],[data-edit-resume]');
     if (!action) return;
     onToolbarAction(action);
+  });
+  const restoreInput = layer.bar.querySelector('[data-edit-restore-file]');
+  restoreInput.addEventListener('change', () => {
+    const file = restoreInput.files[0];
+    restoreInput.value = '';
+    if (file) void restoreDownloadedDraft(file);
   });
 
   layer.chip = document.createElement('div');
@@ -438,6 +449,44 @@ function confirmReleaseOrder(version, source) {
   return window.confirm(`Update Log ${version}\n\n${explanation}\n\nCompatible edits and entries from both versions are kept. Cancel to keep working without writing to GitHub.`);
 }
 
+async function restoreDownloadedDraft(file) {
+  if (!session.ready || !session.allowed || session.busy || sharedRefreshChecking) return;
+  session.busy = true;
+  updateToolbar();
+  try {
+    const snapshot = JSON.parse(await file.text());
+    const unfinished = snapshot?._unfinishedForm;
+    const forms = unfinished ? [...(unfinished.pending || []), unfinished] : [];
+    for (const form of forms) {
+      const binding = form?.binding;
+      const validPath = typeof binding?.valuePath === 'string' && /^[\w./ -]+$/.test(binding.valuePath)
+        && !binding.valuePath.split('.').some((part) => ['__proto__', 'constructor', 'prototype'].includes(part));
+      if (typeof form?.hash !== 'string' || !form.hash.startsWith('#/')
+        || !(binding?.manage === true || (['wiki', 'game', 'updates'].includes(binding?.docName) && validPath))
+        || !Array.isArray(form.fields) || form.fields.some((field) => !Number.isSafeInteger(field?.index)
+          || typeof field.value !== 'string' || typeof field.original !== 'string')) {
+        throw new Error('The downloaded draft contains an invalid unfinished form.');
+      }
+    }
+    if ((draft.draftDirty() || popState || readRecovery(formRecoveryKey()))
+      && !window.confirm('Replace the working draft in this browser with the downloaded snapshot? Download your current draft first if you need a copy.')) return;
+    const stored = draft.restoreDraftSnapshot(snapshot);
+    if (popState) closePopover(true);
+    for (const form of forms) {
+      storeFormRecovery(formRecoveryKey(), { hash: form.hash, binding: form.binding, targetId: form.targetId, fields: form.fields });
+    }
+    draft.applyDraftToSite();
+    window.dispatchEvent(new CustomEvent('ri-edit-content'));
+    await rerender({ scroll: 'preserve' });
+    notify(stored ? 'Draft restored in this browser. Review it before saving for everyone.' : 'Draft opened. Keep your downloaded copy because browser storage is unavailable.', !stored);
+  } catch (error) {
+    notify(error.message || 'Could not restore the downloaded draft.', true);
+  } finally {
+    session.busy = false;
+    updateToolbar();
+  }
+}
+
 function onToolbarAction(button) {
   if (session.busy) return;
   if(button.hasAttribute('data-edit-resume')){
@@ -457,6 +506,10 @@ function onToolbarAction(button) {
     link.download = `wiki-draft-${new Date().toISOString().replace(/[:.]/g, '-')}.json`;
     link.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
+    return;
+  }
+  if (button.hasAttribute('data-edit-restore')) {
+    layer.bar.querySelector('[data-edit-restore-file]').click();
     return;
   }
   const act = button.getAttribute('data-edit-toggle') != null
@@ -491,6 +544,7 @@ function onToolbarAction(button) {
         if (popState) return;
       }
       if (act === 'save') {
+        if (draft.hasRestoredDraft() && !window.confirm('Share this restored snapshot? It may replace changes made after the download.')) return;
         barStatus('Saving draft…', 'busy');
         await draft.saveDraft(session.token, confirmReleaseOrder);
         session.syncError = '';
@@ -500,7 +554,10 @@ function onToolbarAction(button) {
         window.dispatchEvent(new CustomEvent('ri-edit-content'));
         notify('Saved for everyone. Shared changes merged; your work is preserved.');
       } else if (act === 'publish') {
-        if (!window.confirm('Publish the changes to the live Wiki? A backup is created first.')) return;
+        const message = draft.hasRestoredDraft()
+          ? 'Publish this restored snapshot to the live Wiki? It may replace changes made after the download. A backup is created first.'
+          : 'Publish the changes to the live Wiki? A backup is created first.';
+        if (!window.confirm(message)) return;
         if (popState) closePopover(true);
         barStatus('Publishing…', 'busy');
         await draft.publishChanges(session.token, confirmReleaseOrder);
@@ -559,7 +616,8 @@ async function startSession(token, {deferRender=false}={}) {
     // permissao terminar — sem janela em que Save/Publish dispare 403.
     updateToolbar();
     barStatus('Checking your write permission…', 'busy');
-    const permission = await githubCollaboratorPermission(token, session.user || (await githubUser(token).catch(() => ({ login: '' }))).login).catch(() => 'none');
+    const user = await githubUser(token);
+    const permission = await githubCollaboratorPermission(token, user.login).catch(() => 'none');
     session.allowed = hasWriteAccess(permission);
     if (!session.allowed) {
       // Sem permissao de escrita: esconde a barra de editar e explica por que.
@@ -570,8 +628,7 @@ async function startSession(token, {deferRender=false}={}) {
       return;
     }
     barStatus('Loading repository content…', 'busy');
-    const signedInUser = await githubUser(token);
-    const info = await draft.initSession(token, signedInUser.login);
+    const info = await draft.initSession(token, user.login);
     if (info.orderConflict) session.syncError = 'Update Log order conflict';
     else if (info.recoveryConflict) session.syncError = 'Sync conflict — download your draft';
     if (info.sanitized) {
@@ -579,7 +636,6 @@ async function startSession(token, {deferRender=false}={}) {
     }
     session.token = token;
     try { sessionStorage.setItem(TOKEN_KEY, token); } catch { /* ignore */ }
-    const user = await githubUser(token).catch(() => ({ login: 'admin', name: 'admin', avatar: '' }));
     session.user = user.login;
     session.avatar = user.avatar || '';
     draft.applyDraftToSite();
