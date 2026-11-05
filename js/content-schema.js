@@ -110,6 +110,14 @@ function validateGameData(game) {
   const sections = game.upgrades?.sections;
   for (const [sectionId, section] of Object.entries(sections || {})) {
     if (!section.name?.trim() || !Array.isArray(section.upgrades)) throw new Error(`Upgrade section "${sectionId}" needs a name and upgrades list.`);
+    const { treeUpgrade15 = {}, treeUpgrade51 = {} } = section.perkControls || {};
+    const start15 = treeUpgrade15.defaultLevel ?? 0;
+    const start51 = treeUpgrade51.defaultLevel ?? 0;
+    const max51 = treeUpgrade51.maxLevel ?? 3;
+    if ([start15, start51, max51].some((level) => !Number.isSafeInteger(level) || level < 0)) {
+      throw new Error('Tree Upgrade levels must be whole numbers of 0 or more.');
+    }
+    if (start51 > max51) throw new Error('Tree Upgrade 51 starting level must be within its maximum.');
     const upgradeNumbers = new Set();
     for (const upgrade of section.upgrades) {
       if (!Number.isInteger(Number(upgrade.n)) || !upgrade.name?.trim() || !String(upgrade.price ?? '').trim() || !String(upgrade.multi ?? '').trim()) {

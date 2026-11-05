@@ -330,6 +330,10 @@ function upgradeCard(u, i, priceTable, itemPath = '') {
 function wireUpgrades(root) {
   const treeUpgrade15 = qs('[data-tree-upgrade15]', root);
   const treeUpgrade51 = qs('[data-tree-upgrade51]', root);
+  const readTreeLevel = (input) => Math.min(
+    input?.max ? Number(input.max) : Infinity,
+    Math.max(0, Math.floor(Number(input?.value) || 0)),
+  );
   const cardUpdates = [];
   qsa('[data-upgrade-slider]', root).forEach((slider) => {
     const card = slider.closest('[data-upgrade]');
@@ -373,13 +377,13 @@ function wireUpgrades(root) {
           const p = evalFormula(rawPrice, {
             L,
             tier: isPerkTiered ? L + 1 : 0,
-            TreeUpgrade15: Number(treeUpgrade15?.value) || 0,
+            TreeUpgrade15: readTreeLevel(treeUpgrade15),
           });
           priceOut.innerHTML = p != null ? esc(fmtSuffix(p)) : `<small class="upgrade-card__raw">${esc(rawPrice || '—')}</small>`;
           priceOut.classList.remove('has-res');
         }
       }
-      const maxTier = Math.min(70 + 10 * Math.max(0, Math.floor(Number(treeUpgrade51?.value) || 0)), Number(card.dataset.perkAbsCap));
+      const maxTier = Math.min(70 + 10 * readTreeLevel(treeUpgrade51), Number(card.dataset.perkAbsCap));
       const m = isPerkTiered ? maxTier : evalFormula(card.dataset.multi, { L });
       multiOut.innerHTML = m != null ? esc(fmtSuffix(m)) : `<small class="upgrade-card__raw">${esc(card.dataset.multi || '—')}</small>`;
     };
@@ -390,13 +394,16 @@ function wireUpgrades(root) {
   });
   [treeUpgrade15, treeUpgrade51].filter(Boolean).forEach((input) => {
     input.addEventListener('input', () => cardUpdates.forEach((update) => update()));
+    input.addEventListener('change', () => { input.value = readTreeLevel(input); });
   });
 }
 
 function formulaSections(section, listPath = '') {
   const isLevelPerks = section.upgrades.some((upgrade) => /MaxTier\s*=\s*min\(/i.test(upgrade.multi || ''));
+  const controlsPath = listPath.replace(/\.upgrades$/, '.perkControls');
+  const { treeUpgrade15 = {}, treeUpgrade51 = {} } = section.perkControls || {};
   return `
-    <section class="section">
+    <section class="section" data-upgrade-section>
       <div class="section-head--with-add">
         ${sectionHead('The upgrades')}
         ${listPath ? `
@@ -404,8 +411,9 @@ function formulaSections(section, listPath = '') {
       </div>
       ${isLevelPerks ? `
       <div class="perk-tree-controls">
-        <label>Tree Upgrade 15<input class="input" type="number" min="0" step="1" value="0" data-tree-upgrade15></label>
-        <label>Tree Upgrade 51<input class="input" type="number" min="0" max="3" step="1" value="0" data-tree-upgrade51></label>
+        <label>${esc(treeUpgrade15.label || 'Tree Upgrade 15')}<input class="input" type="number" min="0" step="1" value="${esc(treeUpgrade15.defaultLevel ?? 0)}" data-tree-upgrade15></label>
+        <label>${esc(treeUpgrade51.label || 'Tree Upgrade 51')}<input class="input" type="number" min="0" max="${esc(treeUpgrade51.maxLevel ?? 3)}" step="1" value="${esc(treeUpgrade51.defaultLevel ?? 0)}" data-tree-upgrade51></label>
+        ${listPath ? `<button type="button" class="btn btn--ghost btn--sm ri-edit-add" ${ed(controlsPath, 'game:perk-controls', 'Tree Upgrade controls')}>${icon('settings', 13)} Edit controls</button>` : ''}
       </div>` : ''}
       <div class="rune-grid">
         ${section.upgrades.map((u2, i) => upgradeCard(u2, i, section.priceTable, itemListPath(listPath, i))).join('')}
@@ -417,13 +425,11 @@ function resetCalcCard(bonus, requiredLabel, index, amountMode = false, accentCo
   return `
     <article class="reset-calc-card${amountMode ? ' reset-calc-card--amount' : ''} reveal" ${amountMode ? 'data-resource-links' : ''} data-reset-calculator data-bonus-id="${esc(bonus.id)}" data-required-label="${esc(requiredLabel)}" style="--reveal-delay:${Math.min(index * 45, 360)}ms;${accentColor ? `--reset-bonus-color:${esc(accentColor)};` : ''}" ${itemPath ? ed(itemPath, 'game:bonus', esc(bonus.name)) : ''}>
       <header class="reset-calc-card__head">
-        <span class="reset-calc-card__icon">${icon('target', 17)}</span>
         <b>${colorizeResources(esc(bonus.name))}</b>
-        ${!amountMode && bonus.cap ? `<small>cap ${esc(fmtSuffix(bonus.cap))} ${esc(bonus.capUnit || 'x')}</small>` : ''}
+        ${bonus.cap != null ? `<small>Cap: ${esc(fmtSuffix(bonus.cap))} ${esc(bonus.capUnit || 'x')}</small>` : ''}
         ${!amountMode && bonus.unlockAt ? `<small>unlocks at ${esc(fmtSuffix(bonus.unlockAt))} ${esc(bonus.unlockResource || requiredLabel)}</small>` : ''}
       </header>
       ${amountMode ? `
-      ${bonus.cap ? `<div class="reset-calc-card__meta"><small>Cap: ${esc(fmtSuffix(bonus.cap))} ${esc(bonus.capUnit || 'x')}</small></div>` : ''}
       <div class="reset-calc-answer" data-reset-answer aria-live="polite"></div>` : `
       <label class="reset-calc-field">
         <span>Desired bonus</span>
@@ -681,7 +687,7 @@ function wireResetCalculators(root, page) {
 
 function upgradeTemplateSections() {
   return `
-    <section class="section">
+    <section class="section" data-upgrade-section>
       ${sectionHead('Upgrades')}
       <div class="rune-grid">
         ${TEMPLATE_UPGRADES.map((u2, i) => upgradeCard(u2, i)).join('')}
@@ -691,12 +697,12 @@ function upgradeTemplateSections() {
 
 // ==== PAGINA DE STAGES (Main) ====
 
-function stageCard(s, i, itemPath = '') {
+function stageCard(s, i, itemPath = '', uniform = false) {
   const unlocks = s.unlocks || {};
   const hasUnlocks = Boolean(unlocks.area || unlocks.places?.length || unlocks.features?.length);
   const details=[...(s.requirements||[]),...(s.boosts||[]),unlocks.area||'',...(unlocks.places||[]),...(unlocks.features||[]).flatMap(feature=>[feature.name,...(feature.subs||[])])].filter(Boolean);
   const length=details.join(' ').length;
-  const size=length>500||details.length>14?'full':length>230||details.length>8?'wide':'compact';
+  const size=uniform?'compact':length>500||details.length>14?'full':length>230||details.length>8?'wide':'compact';
   return `
     <article class="stage-card stage-card--${size}" ${itemPath ? ed(itemPath, 'game:stage', esc(s.title || `Stage ${s.num}`)) : ''}>
       <header class="stage-card__head">
@@ -737,7 +743,7 @@ function stageCard(s, i, itemPath = '') {
     </article>`;
 }
 
-function stagePageSections(stages, title = 'Stages', twoCol = false, listPath = '') {
+function stagePageSections(stages, title = 'Stages', twoCol = false, listPath = '', uniform = false) {
   if(/milestones/i.test(title)) return `<section class="section compact-progression">
     <div ${listPath ? ed(listPath.replace(/\.(stages|ranks)$/,''),'game:progression-page','Milestone heading') : ''}>${sectionHead(title)}</div>
     ${listPath ? `<button type="button" class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="${esc(listPath)}" data-edit-add-template="stage">${icon('plus',13)} New milestone</button>` : ''}
@@ -745,7 +751,7 @@ function stagePageSections(stages, title = 'Stages', twoCol = false, listPath = 
       <header><span class="milestone-card__num">${esc(stage.num)}</span><b data-resource-links>${colorizeResources(esc((stage.requirements||[]).join(' · ')))}</b></header>
       <div data-resource-links>${(stage.boosts||[]).map(boost=>`<p>${colorizeResources(esc(boost))}</p>`).join('')}${stage.unlocks?.area ? `<p>${esc(stage.unlocks.area)}</p>` : ''}${(stage.unlocks?.places||[]).map(place=>`<p>${esc(place)}</p>`).join('')}${(stage.unlocks?.features||[]).map(feature=>`<p>${esc(feature.name)} ${esc((feature.subs||[]).join(' · '))}</p>`).join('')}</div>
     </article>`).join('')}</div></section>`;
-  const cards = stages.map((s, i) => stageCard(s, i, itemListPath(listPath, i))).join('');
+  const cards = stages.map((s, i) => stageCard(s, i, itemListPath(listPath, i), uniform)).join('');
   const label = `New ${title.replace(/s$/, '').toLowerCase()}`;
   const add = listPath
     ? `<div class="ri-add-row"><button type="button" class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="${esc(listPath)}" data-edit-add-template="stage">${icon('plus', 13)} ${label}</button></div>`
@@ -754,7 +760,7 @@ function stagePageSections(stages, title = 'Stages', twoCol = false, listPath = 
     <section class="section">
       <div ${listPath ? ed(listPath.replace(/\.(stages|ranks)$/, ''), 'game:progression-page', 'Section heading and item name') : ''}>${sectionHead(title)}</div>
       ${add}
-      <div class="stage-grid${twoCol?' stage-grid-2':''}">${cards}</div>
+      <div class="stage-grid${twoCol?' stage-grid-2':''}${uniform?' stage-grid--uniform':''}">${cards}</div>
     </section>`;
 }
 
@@ -1014,7 +1020,7 @@ export const subcategoryView = {
                 : ascensionPage?.ranks
                   ? stagePageSections(ascensionPage.ranks, ascensionPage.title || 'Ascensions', true, `game:progression.ascensions.${gameKey}.ranks`)
                   : lifeRankPage?.ranks
-                    ? stagePageSections(lifeRankPage.ranks, lifeRankPage.title || 'Life Ranks', true, `game:progression.lifeRanks.${gameKey}.ranks`)
+                    ? stagePageSections(lifeRankPage.ranks, lifeRankPage.title || 'Life Ranks', true, `game:progression.lifeRanks.${gameKey}.ranks`, true)
                     : corePage?.ranks
                       ? stagePageSections(corePage.ranks, corePage.title || 'Core Ranks', true, `game:progression.cores.${gameKey}.ranks`)
                       : trainingPage?.groups?.length
@@ -1170,7 +1176,7 @@ export const subcategoryView = {
       </nav>` : ''}
     `;
 
-    wireUpgrades(root);
+    qsa('[data-upgrade-section]', root).forEach(wireUpgrades);
     wireResetCalculators(root, resetLayerPage);
     initReveal(root);
   },

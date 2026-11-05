@@ -1782,50 +1782,30 @@ mark {
 .reset-calc-card {
   min-width: 0;
   padding: 12px;
-  border: 1px solid var(--c-border);
+  border: 1px solid color-mix(in srgb, var(--reset-bonus-color, var(--c-accent)) 26%, var(--c-border));
   border-radius: 8px;
-  background: var(--c-bg-2);
+  background: color-mix(in srgb, var(--reset-bonus-color, var(--c-accent)) 3%, var(--c-bg-2));
 }
 .reset-calc-card__head {
   display: flex;
-  align-items: center;
-  gap: 7px;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 3px 8px;
   min-width: 0;
   margin-bottom: 10px;
 }
-.reset-calc-card__head b {
+.reset-calc-card__head b,
+.bonus-groups-grid .reset-tier-head h3 {
+  color: var(--c-text);
   min-width: 0;
-  color: var(--reset-bonus-color, var(--c-text));
-}
-.reset-calc-card--amount .reset-calc-card__head b {
   overflow-wrap: anywhere;
 }
-.reset-calc-card__meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px 10px;
-  min-width: 0;
-  margin: -4px 0 6px 31px;
-  color: var(--c-text-3);
-  font-size: 11px;
-}
-.reset-calc-card__meta small {
-  overflow-wrap: anywhere;
+.reset-calc-card__head .res,
+.bonus-groups-grid .reset-tier-head .res {
+  color: inherit !important;
 }
 .reset-calc-card__head small {
-  margin-left: auto;
   color: var(--c-text-3);
-  white-space: nowrap;
-}
-.reset-calc-card__icon {
-  display: grid;
-  place-items: center;
-  width: 24px;
-  height: 24px;
-  flex: none;
-  border-radius: 7px;
-  color: var(--reset-bonus-color, var(--c-accent));
-  background: color-mix(in srgb, var(--reset-bonus-color, var(--c-accent)) 14%, transparent);
 }
 .reset-calc-field {
   display: grid;
@@ -1865,7 +1845,7 @@ mark {
 }
 .reset-calc-answer > div span { color: var(--c-text-3); }
 .reset-calc-answer > div b {
-  color: var(--reset-bonus-color, var(--c-accent));
+  color: var(--c-text);
   font-variant-numeric: tabular-nums;
   text-align: right;
 }
@@ -1911,6 +1891,7 @@ mark {
 .perk-tree-controls {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 8px;
   margin-bottom: 12px;
 }
@@ -2354,15 +2335,18 @@ mark {
 .bonus-groups-grid .reset-calc-power { max-width: none; padding: 6px 8px; margin: 8px 0; font-size: 12px; gap: 8px; }
 .bonus-groups-grid .reset-calc-power .input { min-height: 30px; padding: 5px 8px; }
 .bonus-groups-grid .reset-calc-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 6px; }
-.reset-calc-card--amount { position: relative; padding: 10px 12px; min-height: 56px; }
-.reset-calc-card--amount .reset-calc-card__head { padding-right: 70px; gap: 7px; margin: 0; }
+.reset-calc-card--amount { padding: 8px 10px; }
+.reset-calc-card--amount .reset-calc-card__head { margin: 0; }
 .reset-calc-card--amount .reset-calc-card__head b { font-size: 12.5px; }
-.reset-calc-card--amount .reset-calc-card__icon { width: 22px; height: 22px; }
-.reset-calc-card--amount .reset-calc-card__meta { margin: 3px 0 0 29px; padding: 0; border: 0; min-height: 0; }
-.reset-calc-card--amount .reset-calc-answer { position: absolute; right: 12px; top: 12px; margin: 0; padding: 0; border: 0; font-size: 13px; }
-.reset-calc-card--amount .reset-calc-answer span:not(.reset-calc-error) { display: none; }
-.reset-calc-card--amount .reset-calc-answer .reset-calc-error { display: block; max-width: none; font-size: 12px; }
-.reset-calc-card--amount .reset-calc-answer:has(.reset-calc-error) { position: static; margin: 5px 0 0 29px; }
+.reset-calc-card--amount .reset-calc-answer {
+  min-height: 0;
+  margin: 3px 0 0;
+  padding: 0;
+  border: 0;
+  overflow-wrap: anywhere;
+}
+.reset-calc-card--amount .reset-calc-answer > div { display: block; }
+.reset-calc-card--amount .reset-calc-answer > div span { display: none; }
 .generator-global { display: flex; flex-wrap: wrap; gap: 12px; margin: 12px 0; }
 .generator-global label { display: flex; align-items: center; gap: 8px; font-size: 12px; }
 .generator-global .input { width: 80px; padding: 7px 9px; }

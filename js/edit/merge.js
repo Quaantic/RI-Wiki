@@ -12,7 +12,7 @@ export class SyncConflict extends Error {
   }
 }
 
-export function mergeDocuments(base, local, remote, path = 'content') {
+export function mergeDocuments(base, local, remote, path = 'content', keepLocalOrder) {
   if (equal(local, remote) || equal(base, remote)) return copy(local);
   if (equal(base, local)) return copy(remote);
   if (Array.isArray(local) && Array.isArray(remote) && (base === undefined || Array.isArray(base))) {
@@ -26,19 +26,26 @@ export function mergeDocuments(base, local, remote, path = 'content') {
       const baseIds = original.map((item) => String(item[key]));
       const localIds = local.map((item) => String(item[key]));
       const remoteIds = remote.map((item) => String(item[key]));
-      const common = baseIds.filter((id) => l.has(id) && r.has(id));
-      const orderOf = (ids) => ids.filter((id) => common.includes(id));
-      const localReorder = !equal(orderOf(localIds), common);
-      const remoteReorder = !equal(orderOf(remoteIds), common);
-      if (localReorder && remoteReorder && !equal(orderOf(localIds), orderOf(remoteIds))) throw new SyncConflict(`${path} order`);
+      const common = new Set(baseIds.filter((id) => l.has(id) && r.has(id)));
+      const localOrder = localIds.filter((id) => common.has(id));
+      const remoteOrder = remoteIds.filter((id) => common.has(id));
+      const localReorder = !equal(localOrder, [...common]);
+      const remoteReorder = !equal(remoteOrder, [...common]);
+      const merged = new Map([...new Set([...remoteIds, ...localIds])].map((id) => [
+        id, mergeDocuments(b.get(id), l.get(id), r.get(id), `${path}[${id}]`, keepLocalOrder),
+      ]));
+      if (localReorder && remoteReorder && !equal(localOrder, remoteOrder)) {
+        const release = /^content\.updates\.versions\[([^\]]+)\]\.entries$/.exec(path);
+        if (!release || !keepLocalOrder?.(release[1])) throw new SyncConflict(`${path} order`);
+      }
       const order = localReorder ? [...localIds, ...remoteIds] : [...remoteIds, ...localIds];
-      return [...new Set(order)].map((id) => mergeDocuments(b.get(id), l.get(id), r.get(id), `${path}[${id}]`)).filter((item) => item !== undefined);
+      return [...new Set(order)].map((id) => merged.get(id)).filter((item) => item !== undefined);
     }
   }
   if (object(local) && object(remote) && (base === undefined || object(base))) {
     const merged = {};
     for (const key of new Set([...Object.keys(base || {}), ...Object.keys(local), ...Object.keys(remote)])) {
-      const value = mergeDocuments(base?.[key], local[key], remote[key], `${path}.${key}`);
+      const value = mergeDocuments(base?.[key], local[key], remote[key], `${path}.${key}`, keepLocalOrder);
       if (value !== undefined) Object.defineProperty(merged, key, { value, enumerable: true, writable: true, configurable: true });
     }
     return merged;

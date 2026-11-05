@@ -481,15 +481,15 @@ export function persistLocalRecovery() {
 }
 
 let savePromise;
-export async function saveDraft(token) {
+export async function saveDraft(token, keepLocalOrder) {
   if(savePromise)return savePromise;
-  savePromise=saveChangedDraft(token);
+  savePromise=saveChangedDraft(token, keepLocalOrder);
   try{return await savePromise;}finally{savePromise=null;}
 }
 
-async function saveChangedDraft(token){
+async function saveChangedDraft(token, keepLocalOrder){
   for(let attempt=0;attempt<4;attempt++){
-    await syncRemote(token);
+    await syncRemote(token, keepLocalOrder);
     validateDocuments(draftState.docs);
     // Save is relative to the last shared revision, never a stale published
     // snapshot. An unchanged editor must not create a new shared revision.
@@ -633,13 +633,13 @@ async function assertRemoteUnchanged(token) {
 // Conflicts leave every local document and SHA untouched. PUT still uses the
 // fetched SHA, so a save racing this read is rejected by GitHub.
 let syncPromise;
-export async function syncRemote(token) {
+export async function syncRemote(token, keepLocalOrder) {
   if (syncPromise) return syncPromise;
-  syncPromise = readAndMergeRemote(token);
+  syncPromise = readAndMergeRemote(token, keepLocalOrder);
   try { return await syncPromise; } finally { syncPromise = null; }
 }
 
-async function readAndMergeRemote(token) {
+async function readAndMergeRemote(token, keepLocalOrder) {
   const files = await Promise.all(Object.entries(FILES).map(async ([name, path]) => [name, await githubRequest(githubContentsUrl(path), token)]));
   const remoteDraft = await githubRequest(githubContentsUrl(DRAFT_FILE), token, { allowNotFound: true });
   const changed = draftState.needsMerge || (remoteDraft?.sha || null) !== draftState.draftSha || files.some(([name, file]) => file.sha !== draftState.shas[name]);
@@ -648,7 +648,7 @@ async function readAndMergeRemote(token) {
   const shas = Object.fromEntries(files.map(([name, file]) => [name, file.sha]));
   const remote = remoteDraft ? await readSharedDraft(remoteDraft, published, shas, token) : published;
   validateDocuments(remote);
-  const merged = mergeDocuments(draftState.sharedBase, draftState.docs, remote);
+  const merged = mergeDocuments(draftState.sharedBase, draftState.docs, remote, 'content', keepLocalOrder);
   validateDocuments(merged);
   draftState.docs = merged;
   draftState.sharedBase = clone(remote);

@@ -182,6 +182,13 @@ const SCHEMAS = {
     { key: 'multi', label: 'Effect formula (L = level)', type: 'line', mono: true },
     { key: 'requirement', label: 'Unlock requirement (optional)', type: 'line' },
   ],
+  'game:perk-controls': [
+    { key: 'treeUpgrade15.label', label: 'Tree Upgrade 15 label', type: 'line', fallback: 'Tree Upgrade 15' },
+    { key: 'treeUpgrade15.defaultLevel', label: 'Tree Upgrade 15 starting level', type: 'line', numeric: true, fallback: 0 },
+    { key: 'treeUpgrade51.label', label: 'Tree Upgrade 51 label', type: 'line', fallback: 'Tree Upgrade 51' },
+    { key: 'treeUpgrade51.defaultLevel', label: 'Tree Upgrade 51 starting level', type: 'line', numeric: true, fallback: 0 },
+    { key: 'treeUpgrade51.maxLevel', label: 'Tree Upgrade 51 maximum level', type: 'line', numeric: true, fallback: 3 },
+  ],
   'game:rune': [
     { key: 'name', label: 'Name', type: 'line' },
     { key: 'icon', label: 'Icon (lucide)', type: 'line', mono: true, picker: 'icon' },
@@ -478,7 +485,9 @@ function onToolbarAction(button) {
       }
       if (act === 'save') {
         barStatus('Saving draft…', 'busy');
-        await draft.saveDraft(session.token);
+        await draft.saveDraft(session.token, (version) => window.confirm(
+          `The entries in Update Log ${version} were reordered in both drafts.\n\nKeep your current order and save? Shared entries and compatible text edits will be kept. Cancel to keep working on this device.`,
+        ));
         session.syncError = '';
         draft.applyDraftToSite();
         buildNav();

@@ -44,3 +44,19 @@ test('collaborators can add separate updates to the same release',async()=>{
   remote[0].entries.push({id:'remote-update',context:'Bugs',title:'Remote',description:'R',href:''});
   assert.equal(mergeDocuments(base,local,remote)[0].entries.length,3);
 });
+
+test('choosing the local release order preserves shared entries and compatible text edits', async () => {
+  const { mergeDocuments, SyncConflict } = await import('../js/edit/merge.js');
+  const a = { id: 'a', title: 'A' }, b = { id: 'b', title: 'B' }, c = { id: 'c', title: 'C' };
+  const shared = { id: 'shared', title: 'Shared addition' };
+  const wrap = (entries) => ({ updates: { versions: [{ version: '1.02', entries }] } });
+  const base = wrap([a, b, c]);
+  const local = wrap([b, { ...a, title: 'Local title' }, c]);
+  const remote = wrap([a, c, { ...b, title: 'Shared title' }, shared]);
+
+  assert.throws(() => mergeDocuments(base, local, remote), SyncConflict);
+  assert.throws(() => mergeDocuments(base, local, remote, 'content', () => false), SyncConflict);
+  const result = mergeDocuments(base, local, remote, 'content', (version) => version === '1.02');
+  assert.deepEqual(result, wrap([{ ...b, title: 'Shared title' }, { ...a, title: 'Local title' }, c, shared]));
+  assert.throws(() => mergeDocuments(base, local, wrap([{ ...a, title: 'Other title' }, c, b]), 'content', () => true), /entries\[a\]\.title/);
+});
