@@ -1640,7 +1640,7 @@
             "sections": [
               {
                 "id": "table-b93a258d-7e75-4bbf-812b-bc8bd0791cad",
-                "title": "Gamepasses ",
+                "title": "Gamepasses",
                 "columns": [
                   "Name",
                   "Price",
@@ -1652,7 +1652,8 @@
                     "cells": [
                       "Factory Master",
                       "149",
-                      "3x Energy, 2.5x Perks, 2x Perks, 1.5x Gears"
+                      "3x Energy, 2.5x Perks, 2x Perks, 1.5x Gears",
+                      "Yes"
                     ]
                   },
                   {
