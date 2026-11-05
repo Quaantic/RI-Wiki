@@ -140,3 +140,78 @@ test('shared save preserves GitHub attribution, deduplicates history and merges 
     global.fetch = originalFetch;
   }
 });
+
+test('Save and Publish resolve a shared draft order conflict with the published wiki', async () => {
+  const draft = await import('../js/edit/draft.js');
+  const schema = await import('../js/content-schema.js');
+  const original = Object.fromEntries(Object.entries(schema.FILES).map(([name, file]) => [
+    name, JSON.parse(fs.readFileSync(path.join(__dirname, '..', file))),
+  ]));
+  const entry = (id) => ({ id, context: 'Feature', title: id, description: id, href: '' });
+  const release = (entries) => ({ versions: [{ version: '1.02', date: '2026-11-05', entries }] });
+  const [a, b, c, d] = ['a', 'b', 'c', 'd'].map(entry);
+  const published = release([a, c, { ...b, description: 'Published edit' }, d]);
+  const shared = release([b, { ...a, title: 'Shared edit' }, c]);
+  const file = (doc, sha) => ({ type: 'file', sha, content: schema.encodeBase64Content(JSON.stringify(doc)) });
+  const sharedFile = file({
+    ...original, updates: shared, _baseShas: { wiki: 'wiki', game: 'game', updates: 'old-updates' },
+  }, 'shared');
+  const repo = new Map(Object.entries(schema.FILES).map(([name, filename]) => [filename,
+    file(name === 'updates' ? published : original[name], name),
+  ]));
+  const originalFetch = global.fetch;
+  let writes = 0;
+  global.fetch = async (url, options = {}) => {
+    const pathname = new URL(url).pathname;
+    if (pathname.endsWith('/git/blobs/old-updates')) {
+      return Response.json(file(release([a, b, c]), 'old-updates'));
+    }
+    const filename = pathname.split('/contents/')[1];
+    if (options.method === 'PUT' || options.method === 'DELETE') {
+      const body = JSON.parse(options.body);
+      assert.equal(body.sha, repo.get(filename)?.sha);
+      writes += 1;
+      if (options.method === 'DELETE') {
+        repo.delete(filename);
+        return Response.json({});
+      }
+      const result = { type: 'file', sha: `write-${writes}`, content: body.content };
+      repo.set(filename, result);
+      return Response.json({ content: result });
+    }
+    return Response.json(repo.get(filename) || {}, { status: repo.has(filename) ? 200 : 404 });
+  };
+  const confirm = (version, source) => {
+    assert.equal(version, '1.02');
+    assert.equal(source, 'shared');
+    return true;
+  };
+  const expected = release([{ ...b, description: 'Published edit' }, { ...a, title: 'Shared edit' }, c, d]);
+  const read = (filename) => JSON.parse(schema.decodeBase64Content(repo.get(filename).content));
+  try {
+    repo.set(schema.DRAFT_FILE, sharedFile);
+    const info = await draft.initSession('token', 'order-conflict');
+    assert.equal(info.orderConflict, true);
+    assert.deepEqual(draft.doc('updates'), expected);
+    await assert.rejects(draft.saveDraft('token', () => false), { release: '1.02' });
+    await assert.rejects(draft.publishChanges('token', () => false), { release: '1.02' });
+    assert.equal(writes, 0);
+    const backgroundCheck = assert.rejects(draft.syncRemote('token'), { release: '1.02' });
+    await draft.saveDraft('token', confirm);
+    await backgroundCheck;
+    assert.deepEqual(read(schema.DRAFT_FILE).updates, expected);
+    assert.equal(read(schema.DRAFT_FILE)._baseShas.updates, 'updates');
+    assert.deepEqual(read(schema.FILES.updates), published);
+
+    repo.set(schema.DRAFT_FILE, sharedFile);
+    await draft.initSession('token', 'order-conflict');
+    draft.setValue('updates', 'versions.0.entries.2.description', 'Unsaved browser edit');
+    await draft.publishChanges('token', confirm);
+    assert.deepEqual(read(schema.FILES.updates), release([
+      ...expected.versions[0].entries.slice(0, 2), { ...c, description: 'Unsaved browser edit' }, d,
+    ]));
+    assert.equal(repo.has(schema.DRAFT_FILE), false);
+  } finally {
+    global.fetch = originalFetch;
+  }
+});

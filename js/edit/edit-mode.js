@@ -431,6 +431,13 @@ function buildToolbar() {
   installSigninButton();
 }
 
+function confirmReleaseOrder(version, source) {
+  const explanation = source === 'shared'
+    ? 'The shared draft and the published wiki have different orders. Keep the shared draft order when merging?'
+    : 'Your draft and the latest shared revision have different orders. Keep your draft order when merging?';
+  return window.confirm(`Update Log ${version}\n\n${explanation}\n\nCompatible edits and entries from both versions are kept. Cancel to keep working without writing to GitHub.`);
+}
+
 function onToolbarAction(button) {
   if (session.busy) return;
   if(button.hasAttribute('data-edit-resume')){
@@ -485,9 +492,7 @@ function onToolbarAction(button) {
       }
       if (act === 'save') {
         barStatus('Saving draft…', 'busy');
-        await draft.saveDraft(session.token, (version) => window.confirm(
-          `The entries in Update Log ${version} were reordered in both drafts.\n\nKeep your current order and save? Shared entries and compatible text edits will be kept. Cancel to keep working on this device.`,
-        ));
+        await draft.saveDraft(session.token, confirmReleaseOrder);
         session.syncError = '';
         draft.applyDraftToSite();
         buildNav();
@@ -498,7 +503,12 @@ function onToolbarAction(button) {
         if (!window.confirm('Publish the changes to the live Wiki? A backup is created first.')) return;
         if (popState) closePopover(true);
         barStatus('Publishing…', 'busy');
-        await draft.publishChanges(session.token);
+        await draft.publishChanges(session.token, confirmReleaseOrder);
+        session.syncError = '';
+        draft.applyDraftToSite();
+        buildNav();
+        await rerender({ scroll: 'preserve' });
+        window.dispatchEvent(new CustomEvent('ri-edit-content'));
         notify('Changes published! GitHub is deploying the update.');
       } else {
         if (!window.confirm('Discard the draft and return to the published content?')) return;
@@ -509,7 +519,7 @@ function onToolbarAction(button) {
         notify('Draft discarded. The published content is showing.');
       }
     } catch (error) {
-      if (error.name === 'SyncConflict') session.syncError = 'Sync conflict — download your draft';
+      if (error.name === 'SyncConflict') session.syncError = error.release ? 'Update Log order conflict' : 'Sync conflict — download your draft';
       notify(error.message || 'Operation failed.', true);
     } finally {
       session.busy = false;
@@ -562,7 +572,8 @@ async function startSession(token, {deferRender=false}={}) {
     barStatus('Loading repository content…', 'busy');
     const signedInUser = await githubUser(token);
     const info = await draft.initSession(token, signedInUser.login);
-    if (info.recoveryConflict) session.syncError = 'Sync conflict — download your draft';
+    if (info.orderConflict) session.syncError = 'Update Log order conflict';
+    else if (info.recoveryConflict) session.syncError = 'Sync conflict — download your draft';
     if (info.sanitized) {
       notify(`${info.sanitized} invalid resource entr${info.sanitized === 1 ? 'y was' : 'ies were'} removed from your draft to keep editing working.`, true);
     }
@@ -642,7 +653,8 @@ function startSharedRefresh() {
       }
     } catch (error) {
       console.warn('[editor-sync]', error.message);
-      session.syncError = error.name === 'SyncConflict' ? 'Sync conflict — download your draft' : 'Sync unavailable — local edits kept';
+      session.syncError = error.release ? 'Update Log order conflict'
+        : error.name === 'SyncConflict' ? 'Sync conflict — download your draft' : 'Sync unavailable — local edits kept';
     } finally {
       sharedRefreshChecking = false;
       updateToolbar();

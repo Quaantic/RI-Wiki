@@ -222,34 +222,26 @@
 .nav-sub__label, .nav-item__label { min-width: 0; }
 .pill__label { min-width: 0; }
 
-/* ---------- Update badge (! vermelho) ---------- */
-
-.icon-btn { position: relative; }
+/* ---------- Unread release ---------- */
 
 .nav-badge {
-  position: absolute;
-  top: 6px;
-  right: 9px;
-  min-width: 15px;
-  height: 15px;
-  padding: 0 4px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--c-bug);
-  color: #2b0f0b;
-  font-family: var(--font-display);
-  font-size: 10px;
-  font-weight: 700;
-  line-height: 1;
+  padding: 3px 7px;
+  background: var(--c-accent-soft);
+  color: var(--c-text);
+  border: 1px solid var(--c-border-2);
   border-radius: 99px;
-  border: 2px solid var(--c-bg-2);
-  box-shadow: 0 0 8px rgba(255, 122, 110, 0.55);
-  animation: pulse-soft 1.8s ease-in-out infinite;
-  pointer-events: none;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.25;
+  white-space: nowrap;
 }
-.nav-badge--top { top: 2px; right: 2px; }
-.nav-badge[hidden] { display: none; }
+.foot-link--updates .nav-badge { margin-left: auto; }
+.topbar__updates:has(.nav-badge:not([hidden])) {
+  width: auto;
+  gap: 6px;
+  padding-inline: 7px;
+}
 
 .sidebar__foot {
   padding: 14px 16px 16px;
@@ -419,5 +411,8 @@
   /* Mantem o Settings alcancavel no celular: esconde apenas os icones
      secundarios (Update Log / Feedback), nunca o menu inteiro. */
   .topbar__hide-sm > a.icon-btn { display: none; }
+  .topbar__hide-sm > .topbar__updates:has(.nav-badge:not([hidden])) { display: inline-flex; }
+  .topbar__updates > [data-icon] { display: none; }
+  .topbar__search { min-width: 0; }
   .topbar { gap: 8px; }
 }

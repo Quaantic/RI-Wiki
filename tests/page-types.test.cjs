@@ -342,6 +342,21 @@ test('update log uses collapsible release/category groups and no leading entry i
   assert.equal((root.innerHTML.match(/<article class="upd-entry"/g)||[]).length,7);
   assert.doesNotMatch(root.innerHTML,/<article[^>]*>\s*<svg/);
   assert.match(root.innerHTML,/data-update-filter="hotfix"/);
+
+  const updates = draft.doc('updates');
+  const older = { ...updates.versions[0], version: '1.00' };
+  draft.pushValue('updates', 'versions', older);
+  draft.applyDraftToSite();
+  const originalContains = document.documentElement.classList.contains;
+  document.documentElement.classList.contains = (name) => name === 'ri-edit-on';
+  try {
+    await updatesView.render(root);
+    const [latest, previous] = root.innerHTML.match(/<details[^>]+data-update-version[^>]*>/g);
+    assert.match(latest, /\sopen>/);
+    assert.doesNotMatch(previous, /\sopen>/);
+  } finally {
+    document.documentElement.classList.contains = originalContains;
+  }
 });
 
 test('short progression items share an adaptive grid while detailed stages can expand',async()=>{

@@ -32,6 +32,7 @@ const draftState = {
   actor: '',
   sharedBase: null,
   needsMerge: false,
+  sharedOrderNeedsSave: false,
 };
 
 // Diario automatico de edicoes ("Update History"). Em memoria durante a
@@ -409,6 +410,7 @@ export async function initSession(token, actor = '') {
   draftState.draftSha = null;
   draftState.savedDraftRaw = '';
   draftState.needsMerge = false;
+  draftState.sharedOrderNeedsSave = false;
   changeLog.length = 0;
   await Promise.all(Object.entries(FILES).map(async ([name, path]) => {
     const result = await githubRequest(githubContentsUrl(path), token);
@@ -420,7 +422,7 @@ export async function initSession(token, actor = '') {
   }));
   validateDocuments(draftState.baseDocs);
   draftState.docs = clone(draftState.baseDocs);
-  let draftLoaded = false;
+  let draftLoaded = false, orderConflict = false;
   try {
     const result = await githubRequest(githubContentsUrl(DRAFT_FILE), token, { allowNotFound: true });
     if (result === null) {
@@ -428,7 +430,12 @@ export async function initSession(token, actor = '') {
       console.info('[inline-editor] No inline draft on GitHub yet — that is normal before the first "Save draft".');
       draftLoaded = false;
     } else if (result?.type === 'file' && typeof result.content === 'string') {
-      const remote = await readSharedDraft(result, draftState.baseDocs, draftState.shas, token);
+      // Show the shared order on startup so local recovery remains available.
+      // Save and Publish must ask before committing this provisional order.
+      const remote = await readSharedDraft(result, draftState.baseDocs, draftState.shas, token, () => {
+        orderConflict = true;
+        return true;
+      });
       validateDocuments(remote);
       draftState.draftSha = result.sha;
       draftState.savedDraftRaw = `${JSON.stringify(remote, null, 2)}\n`;
@@ -446,6 +453,7 @@ export async function initSession(token, actor = '') {
     }
     draftLoaded = false;
   }
+  draftState.needsMerge = orderConflict;
   const dropped = sanitizeResources();
   draftState.sharedBase = clone(draftState.docs);
   let recovered = false, recoveryConflict = false;
@@ -466,7 +474,7 @@ export async function initSession(token, actor = '') {
     }
   } catch { /* storage unavailable or an invalid recovery copy */ }
   const contentImported = installImportedNotes(draftState.docs.wiki,draftState.docs.game);
-  return { draftLoaded, sanitized: dropped, recovered, recoveryConflict, contentImported };
+  return { draftLoaded, sanitized: dropped, recovered, recoveryConflict, orderConflict, contentImported };
 }
 
 function recoveryKey() { return `ri-editor-recovery:${REPOSITORY}:${draftState.actor}`; }
@@ -493,7 +501,7 @@ async function saveChangedDraft(token, keepLocalOrder){
     validateDocuments(draftState.docs);
     // Save is relative to the last shared revision, never a stale published
     // snapshot. An unchanged editor must not create a new shared revision.
-    if(JSON.stringify(draftState.docs)===JSON.stringify(draftState.sharedBase))break;
+    if(!draftState.sharedOrderNeedsSave && JSON.stringify(draftState.docs)===JSON.stringify(draftState.sharedBase))break;
     const raw=currentDraftRaw();
     try{
       const result=await githubRequest(githubContentsUrl(DRAFT_FILE), token, {
@@ -508,6 +516,7 @@ async function saveChangedDraft(token, keepLocalOrder){
       draftState.draftSha=result.content.sha;
       draftState.savedDraftRaw=raw;
       draftState.sharedBase=JSON.parse(raw);
+      draftState.sharedOrderNeedsSave=false;
       break;
     }catch(error){
       persistLocalRecovery();
@@ -542,6 +551,8 @@ export async function discardDraft(token) {
   draftState.savedDraftRaw = '';
   draftState.docs = clone(draftState.baseDocs);
   draftState.sharedBase = clone(draftState.docs);
+  draftState.needsMerge = false;
+  draftState.sharedOrderNeedsSave = false;
   persistLocalRecovery();
   applyDraftToSite();
   changeLog.length = 0;
@@ -550,8 +561,8 @@ export async function discardDraft(token) {
   await writeHistory(token, [], false, true).catch(() => {});
 }
 
-export async function publishChanges(token) {
-  await syncRemote(token);
+export async function publishChanges(token, keepLocalOrder) {
+  await syncRemote(token, keepLocalOrder);
   validateDocuments(draftState.docs);
   const changed = changedFiles();
   if (changed.length) {
@@ -602,6 +613,7 @@ export async function publishChanges(token) {
   draftState.draftSha = null;
   draftState.savedDraftRaw = '';
   draftState.sharedBase = clone(draftState.docs);
+  draftState.sharedOrderNeedsSave = false;
   if (changeLog.length) {
     // Diario definitivo: pendencias antigas do arquivo sao substituidas
     // pelas mesmas entradas agora marcadas como publicadas.
@@ -634,7 +646,16 @@ async function assertRemoteUnchanged(token) {
 // fetched SHA, so a save racing this read is rejected by GitHub.
 let syncPromise;
 export async function syncRemote(token, keepLocalOrder) {
-  if (syncPromise) return syncPromise;
+  if (syncPromise) {
+    try {
+      return await syncPromise;
+    } catch (error) {
+      // A background check can be in flight when the editor clicks Save.
+      // Retry an order conflict with the foreground confirmation callback.
+      if (!keepLocalOrder || !error.release) throw error;
+      return syncRemote(token, keepLocalOrder);
+    }
+  }
   syncPromise = readAndMergeRemote(token, keepLocalOrder);
   try { return await syncPromise; } finally { syncPromise = null; }
 }
@@ -646,7 +667,12 @@ async function readAndMergeRemote(token, keepLocalOrder) {
   if (!changed) return false;
   const published = Object.fromEntries(files.map(([name, file]) => [name, JSON.parse(decodeBase64Content(file.content))]));
   const shas = Object.fromEntries(files.map(([name, file]) => [name, file.sha]));
-  const remote = remoteDraft ? await readSharedDraft(remoteDraft, published, shas, token) : published;
+  let sharedOrderNeedsSave = false;
+  const remote = remoteDraft ? await readSharedDraft(remoteDraft, published, shas, token, (version) => {
+    if (!keepLocalOrder?.(version, 'shared')) return false;
+    sharedOrderNeedsSave = true;
+    return true;
+  }) : published;
   validateDocuments(remote);
   const merged = mergeDocuments(draftState.sharedBase, draftState.docs, remote, 'content', keepLocalOrder);
   validateDocuments(merged);
@@ -657,6 +683,7 @@ async function readAndMergeRemote(token, keepLocalOrder) {
   draftState.draftSha = remoteDraft?.sha || null;
   draftState.savedDraftRaw = remoteDraft ? `${JSON.stringify(remote, null, 2)}\n` : '';
   draftState.needsMerge = false;
+  draftState.sharedOrderNeedsSave = sharedOrderNeedsSave;
   // Numeric undo targets must never apply to a collaborator's reordered list.
   history.length = 0;
   persistLocalRecovery();
@@ -885,6 +912,7 @@ export function __testInjectDocs(docs) {
   draftState.sharedBase = clone(docs);
   draftState.savedDraftRaw = '';
   draftState.needsMerge = false;
+  draftState.sharedOrderNeedsSave = false;
   history.length = 0;
   changeLog.length = 0;
 }

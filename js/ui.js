@@ -6,6 +6,7 @@ import { getInlineUpgradePages } from './data/formulas.js';
 import { colorizeResources, resourceColor } from './data/resource-colors.js';
 import { dataProvider } from './services.js';
 import { ed } from './edit/ed-attr.js';
+import { formatReleaseVersion } from './releases.js';
 
 import { LUCIDE_ICONS } from './lib/lucide-data.js';
 
@@ -640,19 +641,28 @@ export function setupBackTop() {
   btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 }
 
-// ==== Badge de update nova (! vermelho no Update Log) ====
+// ==== Unread release badge ====
 
 const UPDATE_SEEN_KEY = 'ri-seen-update-id';
+let lastSeenUpdate = '';
 
 export function initUpdateBadge(latestId) {
-  let unseen = true;
-  try { unseen = localStorage.getItem(UPDATE_SEEN_KEY) !== latestId; } catch { /* file:// etc */ }
-  qsa('[data-update-badge]').forEach((b) => { b.hidden = !unseen; });
+  let seen = lastSeenUpdate === latestId;
+  try { seen ||= localStorage.getItem(UPDATE_SEEN_KEY) === latestId; } catch { /* file:// etc */ }
+  const unread = Boolean(latestId && !seen);
+  const version = formatReleaseVersion(latestId);
+  qsa('[data-update-badge]').forEach((badge) => {
+    badge.textContent = unread ? `New ${version}` : '';
+    badge.hidden = !unread;
+    badge.closest('.topbar__updates')?.setAttribute('aria-label', unread ? `Update Log, unread release ${version}` : 'Update Log');
+  });
 }
 
 export function markUpdateSeen(latestId) {
+  if (!latestId) return;
+  lastSeenUpdate = latestId;
   try { localStorage.setItem(UPDATE_SEEN_KEY, latestId); } catch { /* ignore */ }
-  qsa('[data-update-badge]').forEach((b) => { b.hidden = true; });
+  initUpdateBadge(latestId);
 }
 
 // ==== Settings ====

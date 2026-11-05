@@ -5,10 +5,13 @@ const copy = (value) => value === undefined ? undefined : structuredClone(value)
 const object = (value) => value !== null && typeof value === 'object' && !Array.isArray(value);
 
 export class SyncConflict extends Error {
-  constructor(path) {
-    super(`Both editors changed ${path}. Your work is still here. Download your draft before resolving this conflict.`);
+  constructor(path, release) {
+    super(release
+      ? `Update Log ${release} has competing entry orders. Your edits are still here. Use Save for everyone or Publish to resolve the order.`
+      : `Both editors changed ${path}. Your work is still here. Download your draft before resolving this conflict.`);
     this.name = 'SyncConflict';
     this.path = path;
+    this.release = release;
   }
 }
 
@@ -36,7 +39,7 @@ export function mergeDocuments(base, local, remote, path = 'content', keepLocalO
       ]));
       if (localReorder && remoteReorder && !equal(localOrder, remoteOrder)) {
         const release = /^content\.updates\.versions\[([^\]]+)\]\.entries$/.exec(path);
-        if (!release || !keepLocalOrder?.(release[1])) throw new SyncConflict(`${path} order`);
+        if (!release || !keepLocalOrder?.(release[1])) throw new SyncConflict(`${path} order`, release?.[1]);
       }
       const order = localReorder ? [...localIds, ...remoteIds] : [...remoteIds, ...localIds];
       return [...new Set(order)].map((id) => merged.get(id)).filter((item) => item !== undefined);

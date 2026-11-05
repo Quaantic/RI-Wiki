@@ -101,7 +101,7 @@
         <a class="nav-item foot-link foot-link--updates" href="#/updates">
           <span class="nav-item__icon" data-icon="scroll"></span>
           <span>Update Log</span>
-          <span class="nav-badge" data-update-badge hidden>!</span>
+          <span class="nav-badge" data-update-badge hidden></span>
         </a>
         <a class="nav-item foot-link foot-link--feedback" href="#/feedback">
           <span class="nav-item__icon" data-icon="heart"></span>
@@ -131,8 +131,9 @@
         <div class="topbar__search" id="search-root"></div>
 
         <div class="topbar__actions topbar__hide-sm">
-          <a class="icon-btn" href="#/updates" data-icon-link="scroll" aria-label="Update log" title="Update Log">
-            <span class="nav-badge nav-badge--top" data-update-badge hidden>!</span>
+          <a class="icon-btn topbar__updates" href="#/updates" aria-label="Update Log" title="Update Log">
+            <span data-icon="scroll" aria-hidden="true"></span>
+            <span class="nav-badge" data-update-badge hidden></span>
           </a>
           <a class="icon-btn" href="#/feedback" data-icon-link="heart" aria-label="Feedback" title="Feedback"></a>
           <div class="settings-wrap">

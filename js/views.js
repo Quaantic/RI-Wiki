@@ -1348,6 +1348,8 @@ export const updatesView = {
 
   async render(root) {
     const versions = await dataProvider.getUpdateLog();
+    const previousOpen = new Map(qsa('#view [data-update-version]').map((release) => [release.dataset.releaseId, release.open]));
+    if (!previousOpen.size) updateReleaseFilter = 'all';
     const displayVersions = versions
       .map((v, docIndex) => ({ v, docIndex }))
       .filter(({ v }) => v.entries.length || document.documentElement.classList.contains('ri-edit-on'));
@@ -1367,7 +1369,7 @@ export const updatesView = {
       </nav>
 
       ${displayVersions.map(({ v, docIndex }, vi) => `
-        <details class="upd-version${vi===0?' upd-version--latest':''}" data-update-version ${v.entries.length?'':'data-release-empty'} data-release-kind="${releaseKind(v)}" ${updateReleaseFilter!=='all'&&updateReleaseFilter!==releaseKind(v)?'hidden':''} ${vi===0||document.documentElement.classList.contains('ri-edit-on')?'open':''}>
+        <details class="upd-version${vi===0?' upd-version--latest':''}" data-update-version data-release-id="${esc(v.version)}" ${v.entries.length?'':'data-release-empty'} data-release-kind="${releaseKind(v)}" ${updateReleaseFilter!=='all'&&updateReleaseFilter!==releaseKind(v)?'hidden':''} ${(previousOpen.get(v.version) ?? (vi===0))?'open':''}>
           <summary class="upd-version__head">
             <div class="upd-version__identity">
               <span class="upd-version__eyebrow">Release</span>
@@ -1404,6 +1406,11 @@ export const updatesView = {
       <p class="upd-empty" data-updates-empty ${displayVersions.some(({v})=>updateReleaseFilter==='all'||releaseKind(v)===updateReleaseFilter)?'hidden':''}>No releases in this category yet.</p>
     `;
 
+    const latestRelease = qs('.upd-version--latest', root);
+    const markVisibleReleaseSeen = () => {
+      if (latestRelease?.open && !latestRelease.hidden) markUpdateSeen(LATEST_UPDATE_ID);
+    };
+    latestRelease?.addEventListener('toggle', markVisibleReleaseSeen);
     qsa('[data-update-filter]', root).forEach((button) => {
       button.addEventListener('click', () => {
         const filter = button.dataset.updateFilter;
@@ -1414,10 +1421,11 @@ export const updatesView = {
           release.hidden = filter !== 'all' && release.dataset.releaseKind !== filter;
         });
         const empty=qs('[data-updates-empty]',root);if(empty)empty.hidden=releases.some(release=>!release.hidden);
+        markVisibleReleaseSeen();
       });
     });
 
-    markUpdateSeen(LATEST_UPDATE_ID);
+    markVisibleReleaseSeen();
     initReveal(root);
   },
 };

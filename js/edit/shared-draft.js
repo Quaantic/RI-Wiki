@@ -4,7 +4,7 @@ import { mergeDocuments } from './merge.js';
 
 // The shared draft records the published blob SHAs it was based on. This
 // preserves new site content when a collaborator keeps editing an older draft.
-export async function readSharedDraft(file, published, shas, token) {
+export async function readSharedDraft(file, published, shas, token, keepSharedOrder) {
   const payload = JSON.parse(decodeBase64Content(file.content));
   const docs = { wiki: payload.wiki, game: payload.game, updates: payload.updates };
   validateDocuments(docs);
@@ -31,7 +31,7 @@ export async function readSharedDraft(file, published, shas, token) {
     original = Object.fromEntries(entries);
   }
   validateDocuments(original);
-  const merged = mergeDocuments(original, docs, published);
+  const merged = mergeDocuments(original, docs, published, 'content', keepSharedOrder);
   validateDocuments(merged);
   return merged;
 }
