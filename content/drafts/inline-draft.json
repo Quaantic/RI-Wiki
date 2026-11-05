@@ -1833,6 +1833,20 @@
           "highlights": []
         },
         "sections": []
+      },
+      {
+        "id": "test",
+        "name": "test",
+        "desc": "Overview of this new category.",
+        "tagline": "What this category is about.",
+        "icon": "sprout",
+        "vitals": [],
+        "subcategories": [],
+        "overview": {
+          "desc": "",
+          "facts": [],
+          "highlights": []
+        }
       }
     ],
     "credits": {
@@ -1890,6 +1904,113 @@
     "contentMigrations": [
       "game-notes-2026-11-v1",
       "compact-game-content-v2"
+    ]
+  },
+  "updates": {
+    "versions": [
+      {
+        "version": "1.02",
+        "date": "2026-11-05",
+        "entries": [
+          {
+            "id": "entry-3f67d361-7416-482b-89d9-a20633dd5a84",
+            "context": "Feature",
+            "title": "Gamepasses",
+            "href": "",
+            "description": "Added Gamepasses Prices and Boosts in the wiki."
+          },
+          {
+            "id": "entry-dada62bf-3028-4064-bac1-ddc4bbc50e30",
+            "context": "Feature",
+            "title": "Miscellaneous",
+            "href": "",
+            "description": "A New Miscellaneous tab was created: it contains informations of game side-stats or paid-resources!"
+          },
+          {
+            "id": "entry-8eacbe44-9775-41cf-b747-99d9e261e621",
+            "context": "Changes",
+            "title": "Eternal Shard Moved ",
+            "href": "",
+            "description": "Eternal Shards category was moved from Main to Miscellaneous tab."
+          },
+          {
+            "id": "entry-3f61b2bc-2f6b-4734-bed8-42b7c5c03960",
+            "context": "Feature",
+            "title": "Tree Tiers",
+            "href": "",
+            "description": "Added Tree Tiers to the Tree page (some tiers required xp are still undone)!"
+          },
+          {
+            "id": "entry-2d3a8d0c-e2b0-47fb-804f-65d182ea8c5a",
+            "context": "Bugs",
+            "title": "Typos",
+            "href": "",
+            "description": "Fixed typos and wrong informations."
+          },
+          {
+            "id": "entry-c8d9f72b-c7a9-45ab-8a6b-fd97b6cafe37",
+            "context": "Feature",
+            "title": "FAQ Tab (WIP)",
+            "href": "",
+            "description": "Your most frequently made questions are now answered in FAQ (wip for all questions, leave us questions in server or feedback!)!"
+          }
+        ]
+      },
+      {
+        "version": "1.01",
+        "date": "2026-11-03",
+        "entries": [
+          {
+            "context": "Feature",
+            "title": "Rare Saps",
+            "href": "#/life/rare-saps",
+            "description": "Added Silver, Golden, Diamond and Amethyst Sap with separate owned-amount calculators, three bonuses each and their tree-cutting drop chances.",
+            "id": "entry-a67b5755-0"
+          },
+          {
+            "context": "Feature",
+            "title": "Power of Fossils",
+            "href": "#/life/power-of-fossils",
+            "description": "Added seven permanent Fossil milestone bonuses, including More Life Gems and More Void Apples.",
+            "id": "entry-5263f34f-0"
+          },
+          {
+            "context": "Changes",
+            "title": "Named Sap and Fossil effects",
+            "description": "Bonus cards now show their real effects, including More Logs, Axe Damage, Better Sap Chance, More Research Cap and Mastery.",
+            "id": "entry-a1e3a61c-0"
+          },
+          {
+            "context": "Bugs",
+            "title": "Fossil calculator input",
+            "description": "Fixed empty Fossil amounts being rejected; an empty field now correctly behaves as zero, and game-number input is accepted.",
+            "id": "entry-aeda91a8-0"
+          },
+          {
+            "context": "Bugs",
+            "title": "Bonus card overflow and resource links",
+            "description": "Fixed cramped text and overflowing bonus cards. Colored resource names in the calculators now navigate to their matching wiki pages.",
+            "id": "entry-bba41a2-0"
+          },
+          {
+            "context": "UI",
+            "title": "Rare Sap colors and layout",
+            "description": "Grouped the four Rare Saps on one page, color-coded by type, and adjusted the bonus grids for desktop and mobile screens.",
+            "id": "entry-d2efda4e-0"
+          },
+          {
+            "context": "UI",
+            "title": "A refreshed Update Log",
+            "description": "Added a version overview, entry counts, category filters and colorful, clickable resource references throughout the release notes.",
+            "id": "entry-6d8a12de-0"
+          }
+        ]
+      },
+      {
+        "version": "1",
+        "date": "2026-10-30",
+        "entries": []
+      }
     ]
   },
   "game": {
@@ -13878,116 +13999,9 @@
       "compact-game-content-v2"
     ]
   },
-  "updates": {
-    "versions": [
-      {
-        "version": "1.02",
-        "date": "2026-11-05",
-        "entries": [
-          {
-            "id": "entry-3f67d361-7416-482b-89d9-a20633dd5a84",
-            "context": "Feature",
-            "title": "Gamepasses",
-            "href": "",
-            "description": "Added Gamepasses Prices and Boosts in the wiki."
-          },
-          {
-            "id": "entry-dada62bf-3028-4064-bac1-ddc4bbc50e30",
-            "context": "Feature",
-            "title": "Miscellaneous",
-            "href": "",
-            "description": "A New Miscellaneous tab was created: it contains informations of game side-stats or paid-resources!"
-          },
-          {
-            "id": "entry-8eacbe44-9775-41cf-b747-99d9e261e621",
-            "context": "Changes",
-            "title": "Eternal Shard Moved ",
-            "href": "",
-            "description": "Eternal Shards category was moved from Main to Miscellaneous tab."
-          },
-          {
-            "id": "entry-3f61b2bc-2f6b-4734-bed8-42b7c5c03960",
-            "context": "Feature",
-            "title": "Tree Tiers",
-            "href": "",
-            "description": "Added Tree Tiers to the Tree page (some tiers required xp are still undone)!"
-          },
-          {
-            "id": "entry-2d3a8d0c-e2b0-47fb-804f-65d182ea8c5a",
-            "context": "Bugs",
-            "title": "Typos",
-            "href": "",
-            "description": "Fixed typos and wrong informations."
-          },
-          {
-            "id": "entry-c8d9f72b-c7a9-45ab-8a6b-fd97b6cafe37",
-            "context": "Feature",
-            "title": "FAQ Tab (WIP)",
-            "href": "",
-            "description": "Your most frequently made questions are now answered in FAQ (wip for all questions, leave us questions in server or feedback!)!"
-          }
-        ]
-      },
-      {
-        "version": "1.01",
-        "date": "2026-11-03",
-        "entries": [
-          {
-            "context": "Feature",
-            "title": "Rare Saps",
-            "href": "#/life/rare-saps",
-            "description": "Added Silver, Golden, Diamond and Amethyst Sap with separate owned-amount calculators, three bonuses each and their tree-cutting drop chances.",
-            "id": "entry-a67b5755-0"
-          },
-          {
-            "context": "Feature",
-            "title": "Power of Fossils",
-            "href": "#/life/power-of-fossils",
-            "description": "Added seven permanent Fossil milestone bonuses, including More Life Gems and More Void Apples.",
-            "id": "entry-5263f34f-0"
-          },
-          {
-            "context": "Changes",
-            "title": "Named Sap and Fossil effects",
-            "description": "Bonus cards now show their real effects, including More Logs, Axe Damage, Better Sap Chance, More Research Cap and Mastery.",
-            "id": "entry-a1e3a61c-0"
-          },
-          {
-            "context": "Bugs",
-            "title": "Fossil calculator input",
-            "description": "Fixed empty Fossil amounts being rejected; an empty field now correctly behaves as zero, and game-number input is accepted.",
-            "id": "entry-aeda91a8-0"
-          },
-          {
-            "context": "Bugs",
-            "title": "Bonus card overflow and resource links",
-            "description": "Fixed cramped text and overflowing bonus cards. Colored resource names in the calculators now navigate to their matching wiki pages.",
-            "id": "entry-bba41a2-0"
-          },
-          {
-            "context": "UI",
-            "title": "Rare Sap colors and layout",
-            "description": "Grouped the four Rare Saps on one page, color-coded by type, and adjusted the bonus grids for desktop and mobile screens.",
-            "id": "entry-d2efda4e-0"
-          },
-          {
-            "context": "UI",
-            "title": "A refreshed Update Log",
-            "description": "Added a version overview, entry counts, category filters and colorful, clickable resource references throughout the release notes.",
-            "id": "entry-6d8a12de-0"
-          }
-        ]
-      },
-      {
-        "version": "1",
-        "date": "2026-10-30",
-        "entries": []
-      }
-    ]
-  },
   "_baseShas": {
-    "wiki": "ba53f71a8dbc3b8446613314973e34966e0da244",
     "updates": "ecdf385fa2ac89c1665ed8efc0a942c1170d1dac",
+    "wiki": "ba53f71a8dbc3b8446613314973e34966e0da244",
     "game": "99f497ec15466acfd662a7ab1723a80460dd48f7"
   }
 }
