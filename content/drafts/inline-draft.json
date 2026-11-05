@@ -8070,8 +8070,8 @@
                 "25K XP"
               ],
               "boosts": [
-                "More Damage Multi (+/tier)",
-                "More Log Multi (+/tier)"
+                "2.25x Logs",
+                "1.56x Tree Damage"
               ],
               "unlocks": {
                 "area": "",
@@ -8092,8 +8092,8 @@
                 "75K XP"
               ],
               "boosts": [
-                "More Damage Multi (+/tier)",
-                "More Log Multi (+/tier)"
+                "4.5x Logs",
+                "2.34x Tree Damage"
               ],
               "unlocks": {
                 "area": "",
@@ -8113,9 +8113,9 @@
                 "400K XP"
               ],
               "boosts": [
-                "More Damage Multi (+/tier)",
-                "More Log Multi (+/tier)",
-                "More Roots Multi (+/tier)"
+                "8.44x Logs",
+                "3.42x Tree Damage",
+                "1.32x Roots"
               ],
               "unlocks": {
                 "area": "",
@@ -8135,9 +8135,9 @@
                 "1.25M XP"
               ],
               "boosts": [
-                "More Damage Multi (+/tier)",
-                "More Log Multi (+/tier)",
-                "More Roots Multi (+/tier)"
+                "15.19x Logs",
+                "4.88x Tree Damage",
+                "1.72x Roots"
               ],
               "unlocks": {
                 "area": "",
@@ -8161,9 +8161,9 @@
                 "5M XP"
               ],
               "boosts": [
-                "More Damage Multi (+/tier)",
-                "More Log Multi (+/tier)",
-                "More Roots Multi (+/tier)"
+                "26.58x Logs",
+                "6.87x Tree Damage",
+                "2.21x Roots"
               ],
               "unlocks": {
                 "area": "",
@@ -8183,10 +8183,10 @@
                 "25M XP"
               ],
               "boosts": [
-                "More Damage Multi (+/tier)",
-                "More Log Multi (+/tier)",
-                "More Roots Multi (+/tier)",
-                "More \"First 3 Apples\" Multi (+/tier)"
+                "45.56x Logs",
+                "9.54x Tree Damage",
+                "2.8x Roots",
+                "1.54x Apples (Except Void)"
               ],
               "unlocks": {
                 "area": "",
@@ -8206,10 +8206,10 @@
                 "125M XP"
               ],
               "boosts": [
-                "More Damage Multi (+/tier)",
-                "More Log Multi (+/tier)",
-                "More Roots Multi (+/tier)",
-                "More \"First 3 Apples\" Multi (+/tier)"
+                "76.89x Logs",
+                "13.11x Tree Damage",
+                "3.52x Roots",
+                "2.18x Apples (Except Void)"
               ],
               "unlocks": {
                 "area": "",
@@ -8229,10 +8229,10 @@
                 "500M XP"
               ],
               "boosts": [
-                "More Damage Multi (+/tier)",
-                "More Log Multi (+/tier)",
-                "More Roots Multi (+/tier)",
-                "More \"First 3 Apples\" Multi (+/tier)"
+                "128.14x Logs",
+                "17.88x Tree Damage",
+                "4.39x Roots",
+                "2.93x Apples (Except Void)"
               ],
               "unlocks": {
                 "area": "",
@@ -8252,10 +8252,10 @@
                 "2.5B XP"
               ],
               "boosts": [
-                "More Damage Multi (+/tier)",
-                "More Log Multi (+/tier)",
-                "More Roots Multi (+/tier)",
-                "More \"First 3 Apples\" Multi (+/tier)"
+                "211.44x Logs",
+                "24.21x Tree Damage",
+                "5.45x Roots",
+                "3.81x Apples (Except Void)"
               ],
               "unlocks": {
                 "area": "",
@@ -8279,10 +8279,10 @@
                 "50B XP"
               ],
               "boosts": [
-                "More Damage Multi (+/tier)",
-                "More Log Multi (+/tier)",
-                "More Roots Multi (+/tier)",
-                "More \"First 3 Apples\" Multi (+/tier)"
+                "345.99x Logs",
+                "32.6x Tree Damage",
+                "6.73x Roots",
+                "4.83x Apples (Except Void)"
               ],
               "unlocks": {
                 "area": "",
@@ -8306,10 +8306,10 @@
                 "1T XP"
               ],
               "boosts": [
-                "More Damage Multi (+/tier)",
-                "More Log Multi (+/tier)",
-                "More Roots Multi (+/tier)",
-                "More \"First 3 Apples\" Multi (+/tier)"
+                "562.23x Logs",
+                "43.66x Tree Damage",
+                "8.27x Roots",
+                "6.02x Apples (Except Void)"
               ],
               "unlocks": {
                 "area": "",
@@ -8333,10 +8333,10 @@
                 "10T XP"
               ],
               "boosts": [
-                "More Damage Multi (+/tier)",
-                "More Log Multi (+/tier)",
-                "More Roots Multi (+/tier)",
-                "More \"First 3 Apples\" Multi (+/tier)"
+                "908.22x Logs",
+                "58.21x Tree Damage",
+                "10.11x Roots",
+                "7.41x Apples (Except Void)"
               ],
               "unlocks": {
                 "area": "",
@@ -13777,6 +13777,54 @@
               ]
             }
           ]
+        },
+        "money-island/upgrade-tree": {
+          "kind": "amount",
+          "title": "Upgrade Tree",
+          "amountLabel": "Upgrade Tree owned",
+          "showAmount": true,
+          "defaultAmount": 0,
+          "bonuses": []
+        },
+        "life/tree-tier": {
+          "kind": "amount",
+          "title": "Tree Tier",
+          "amountLabel": "Tree Tier owned",
+          "showAmount": true,
+          "defaultAmount": 0,
+          "bonuses": []
+        },
+        "life/roots": {
+          "kind": "amount",
+          "title": "Roots",
+          "amountLabel": "Roots owned",
+          "showAmount": true,
+          "defaultAmount": 0,
+          "bonuses": []
+        },
+        "life/apples-golden": {
+          "kind": "amount-groups",
+          "title": "Golden",
+          "groups": [
+            {
+              "id": "g1",
+              "name": "Red Apples",
+              "color": "#86d62b",
+              "dropChance": "",
+              "amountLabel": "Amount owned",
+              "bonuses": [
+                {
+                  "id": "b1",
+                  "name": "Logs",
+                  "value": "formula: (amount/5+1)^0.365",
+                  "capUnit": "x",
+                  "unit": "x",
+                  "unlockAt": 1
+                }
+              ],
+              "description": ""
+            }
+          ]
         }
       }
     },
@@ -14053,8 +14101,8 @@
     ]
   },
   "_baseShas": {
+    "wiki": "ba53f71a8dbc3b8446613314973e34966e0da244",
     "updates": "ecdf385fa2ac89c1665ed8efc0a942c1170d1dac",
-    "game": "99f497ec15466acfd662a7ab1723a80460dd48f7",
-    "wiki": "ba53f71a8dbc3b8446613314973e34966e0da244"
+    "game": "99f497ec15466acfd662a7ab1723a80460dd48f7"
   }
 }
