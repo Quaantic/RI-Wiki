@@ -2,6 +2,206 @@
   "format": 1,
   "entries": [
     {
+      "id": "d0dd779d-31c0-4da9-9edb-6a3b51fb33c0",
+      "at": 1793857310173,
+      "kind": "content",
+      "text": "Updated desc of \"Sacrifice\": The Sacrifice board lets you sacrifice your… to The Sacrifice board lets you sacrifice your…",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "e4911263-ae11-4442-975b-1545e2ec8f0a",
+      "at": 1793857304265,
+      "kind": "content",
+      "text": "Removed \"Dark Liquid\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "4c9aff7f-fde7-4fa5-86b2-1f134e0e7c86",
+      "at": 1793857236789,
+      "kind": "content",
+      "text": "Renamed \"Bonus 5\" to \"Dark Liquid\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "aec2dd94-7fb9-4e43-ad5e-7c6b676b5b7d",
+      "at": 1793857233024,
+      "kind": "content",
+      "text": "Renamed \"Bonus 4\" to \"Californium\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "e808c874-999e-4e50-97d2-6c04c73c06ad",
+      "at": 1793857228073,
+      "kind": "content",
+      "text": "Renamed \"Bonus 3\" to \"Frost\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "3d1d4894-5a70-4909-a56f-ef15e233d561",
+      "at": 1793857219623,
+      "kind": "content",
+      "text": "Renamed \"Bonus 2\" to \"Tree Tier XP\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "b767a523-ac5a-4229-92ba-21348720a533",
+      "at": 1793857210124,
+      "kind": "content",
+      "text": "Renamed \"Bonus 1\" to \"Red, Golden & Diamond Apples\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "65bb00b8-f595-4cb5-a5a4-7f99d0fcf757",
+      "at": 1793857192174,
+      "kind": "content",
+      "text": "Renamed \"Bonus 4\" to \"Void Apples\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "1d704e92-6965-4eca-948d-3c26c4c06c02",
+      "at": 1793857184808,
+      "kind": "content",
+      "text": "Renamed \"Bonus 3\" to \"Golden Research\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "dbf2e123-f6fc-40c0-8085-055e7a5ca5fb",
+      "at": 1793857181742,
+      "kind": "content",
+      "text": "Renamed \"Bonus 2\" to \"Research\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "ebc29772-6a9f-434d-9b91-49d0b58fbf3f",
+      "at": 1793857171355,
+      "kind": "content",
+      "text": "Renamed \"Bonus 1\" to \"Red & Golden Apples\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "529debe6-14ea-4b4a-ba8d-be5d6ee31e46",
+      "at": 1793857151942,
+      "kind": "content",
+      "text": "Renamed \"Bonus 5\" to \"Life Gems\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "fc457826-a8e8-4d92-8e4a-627e9c2deb09",
+      "at": 1793857145048,
+      "kind": "content",
+      "text": "Renamed \"Bonus 4\" to \"Golden Apples\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "4763b625-da70-4b4c-a6f2-7c597f271f18",
+      "at": 1793857139450,
+      "kind": "content",
+      "text": "Renamed \"Bonus 3\" to \"Roots\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "2e002255-203d-454c-8dad-506771af3e17",
+      "at": 1793857134351,
+      "kind": "content",
+      "text": "Renamed \"Bonus 2\" to \"Axe Damage\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "ca938ac8-3a20-4a47-bf6b-a56a83b0ba52",
+      "at": 1793857103874,
+      "kind": "content",
+      "text": "Updated color of \"Red Apples\": #ff6569 to #ffFFFF",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "040e8b28-82ff-4e61-982e-4501c032dc81",
+      "at": 1793857090790,
+      "kind": "content",
+      "text": "Renamed \"Bonus 1\" to \"Red Apples\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "655cc31c-654f-4947-9653-c5a27b371394",
+      "at": 1793857083882,
+      "kind": "content",
+      "text": "Renamed \"Bonus 5\" to \"Sap Perks\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "7624678f-9a1c-461e-91a1-c3300a9d82c3",
+      "at": 1793857076814,
+      "kind": "content",
+      "text": "Renamed \"Tree Perks\" to \"Log Perks\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "35fc6fba-bf96-4e49-bf90-03452410f811",
+      "at": 1793857072488,
+      "kind": "content",
+      "text": "Renamed \"Bonus 4\" to \"Tree Perks\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "9c493283-9b92-4f75-9443-a1e89fa6a1f1",
+      "at": 1793857049269,
+      "kind": "content",
+      "text": "Renamed \"Bonus 3\" to \"Red Apples\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "112affe6-91ee-414e-98f3-31f9dea13ac7",
+      "at": 1793857042408,
+      "kind": "content",
+      "text": "Renamed \"Bonus 2\" to \"Sap\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "c715cfcf-a2f8-4747-bcb5-64f2312e224b",
+      "at": 1793857038581,
+      "kind": "content",
+      "text": "Renamed \"Bonus 1\" to \"Logs\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "0c52a27c-89f9-4b1a-81f5-87fe7e36a6e1",
+      "at": 1793856936783,
+      "kind": "content",
+      "text": "Moved \"FAQ Tab (WIP)\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "bb97dba2-0fd1-4ea5-bb8a-21ce674e1e95",
+      "at": 1793856935603,
+      "kind": "content",
+      "text": "Moved \"FAQ Tab (WIP)\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
       "id": "3e8ede6a-5dfc-4bf7-bd3b-18b451a9bae1",
       "at": 1793856790812,
       "kind": "content",
@@ -2198,206 +2398,6 @@
       "at": 1793845815162,
       "kind": "content",
       "text": "Added \"Stage 8\"",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "d16dbd8f-b1ea-4200-9ca7-51e05c69a0cd",
-      "at": 1793845813343,
-      "kind": "content",
-      "text": "Updated text of \"Tier 7\": Stage 7 to Tier 7",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "f193413e-b902-44ff-9a3f-746aca7e4c35",
-      "at": 1793845806452,
-      "kind": "content",
-      "text": "Added \"Stage 7\"",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "1c60e1fd-f6f7-497c-999f-746b77072a38",
-      "at": 1793845804747,
-      "kind": "content",
-      "text": "Updated text of \"Tier 6\": Stage 6 to Tier 6",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "8d30fc92-28bc-4ce1-8050-5b38b76fc4e5",
-      "at": 1793845798958,
-      "kind": "content",
-      "text": "Added \"Stage 6\"",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "10c36b62-2ede-4e74-a943-f089bfd614a3",
-      "at": 1793845797821,
-      "kind": "content",
-      "text": "Updated text of \"Tier 5\": Stage 5 to Tier 5",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "3ace2ae3-8282-41e1-992a-c37120ae2fb9",
-      "at": 1793845791465,
-      "kind": "content",
-      "text": "Added \"Stage 5\"",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "4956f20e-45b0-4482-b3fb-67b76d344602",
-      "at": 1793845788890,
-      "kind": "content",
-      "text": "Updated text of \"Tier 4\": Stage 4 to Tier 4",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "4fbd4dbc-99ca-401e-960f-21b73e573bf1",
-      "at": 1793845779210,
-      "kind": "content",
-      "text": "Added \"Stage 4\"",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "c5f250f7-6834-4c59-945a-799cac7a37f7",
-      "at": 1793845776725,
-      "kind": "content",
-      "text": "Updated text of \"Tier 3\": Stage 3 to Tier 3",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "17fe0322-2750-47a1-bad9-587c8d176324",
-      "at": 1793845768042,
-      "kind": "content",
-      "text": "Added \"Stage 3\"",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "55f86970-76e2-4b20-8757-1be492eb9498",
-      "at": 1793845765583,
-      "kind": "content",
-      "text": "Updated text of \"Tier 2\": Stage 1 to Tier 2",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "668df482-6f28-4866-950e-2202c888d77d",
-      "at": 1793845765583,
-      "kind": "content",
-      "text": "Updated num of \"Tier 2\": 1 to 2",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "9278b5d2-e31a-453b-aa20-adf7c9fc8f4c",
-      "at": 1793845755207,
-      "kind": "content",
-      "text": "Set life/tree-tier of \"progression\" ({\"title\":\"Stages\",\"itemLabel\":\"Stage\",\"stag…)",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "3ae402d6-776e-4d5a-a754-63d4930a318d",
-      "at": 1793845737741,
-      "kind": "content",
-      "text": "Updated desc of \"Logs\": Logs are the main tree currency, dropped by… to Logs are the principal tree currency, dropp…",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "94a31030-cd89-4185-a850-bda519c1919f",
-      "at": 1793845697588,
-      "kind": "colors",
-      "text": "Colored \"Tree Tier\" (#694931)",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "89365fde-fb59-4b84-9cce-d3c00bfff483",
-      "at": 1793845644712,
-      "kind": "colors",
-      "text": "Colored \"Tree Tier\" (#402a23)",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "39c0d207-0a81-48ec-945c-c245cefed776",
-      "at": 1793845608790,
-      "kind": "content",
-      "text": "Updated desc of \"Tree Tier\": Describe this page here. to Tree Tiers are a feature unlocked through R…",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "9d8dd4bc-b02e-4136-bc67-5b2e385f938e",
-      "at": 1793845608790,
-      "kind": "content",
-      "text": "Updated icon of \"Tree Tier\": sparkles to arrow-big-up",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "e5177c2b-b5d6-47ec-ab01-56df2b05d8d5",
-      "at": 1793845608789,
-      "kind": "content",
-      "text": "Updated id of \"New page\": new-page to tree-tier",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "239686d1-d192-47c4-987f-cb14da0a3abb",
-      "at": 1793845608789,
-      "kind": "content",
-      "text": "Renamed \"New page\" to \"Tree Tier\"",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "e532381e-1002-4ae0-8918-f91ef87ebe6d",
-      "at": 1793845481397,
-      "kind": "content",
-      "text": "Added \"New page\"",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "eece4eb3-9cb3-4ad0-a18e-9b4b5470215c",
-      "at": 1793845450678,
-      "kind": "content",
-      "text": "Updated columns of \"Gamepasses\": [\"Name\",\"Price\",\"Boosts\",\"Can be obtained b… to [\"Name\",\"Price\",\"Boosts\"]",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "05b26eb0-2a74-400f-adde-12fe20cf3f52",
-      "at": 1793845450677,
-      "kind": "content",
-      "text": "Updated text of \"Gamepasses\": Gamepasses to Gamepasses",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "fb9bc72e-958a-4b31-b78c-fa7f75028658",
-      "at": 1793845420467,
-      "kind": "content",
-      "text": "Set 3 of \"row-2fced816-1d99-4a3d-8ef4-973b259a5fe0\" (Yes)",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "7ba28817-4d61-4208-b554-93ed2aba9b96",
-      "at": 1793845415647,
-      "kind": "content",
-      "text": "Updated columns of \"Gamepasses \": [\"Name\",\"Price\",\"Boosts\"] to [\"Name\",\"Price\",\"Boosts\",\"Can be obtained b…",
       "actor": "zzinss",
       "pending": true
     }
