@@ -2,6 +2,22 @@
   "format": 1,
   "entries": [
     {
+      "id": "6eda4b25-ba72-4296-bec2-8e940bc2d012",
+      "at": 1793849150214,
+      "kind": "content",
+      "text": "Updated desc of \"Miscellaneous \": This tab will show you some of the miscella… to This tab will show you some of the miscella…",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "872823ec-d6a2-487e-a6a1-45b29416b9d0",
+      "at": 1793849140191,
+      "kind": "content",
+      "text": "Updated desc of \"Miscellaneous \": Overview of this new category. to This tab will show you some of the miscella…",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
       "id": "e25b33cb-4508-47bf-961a-03f5aca9baa2",
       "at": 1793849078854,
       "kind": "colors",
@@ -2276,16 +2292,6 @@
       "at": 1793806388364,
       "kind": "content",
       "text": "Renamed \"Main\" to \"Main\""
-    },
-    {
-      "at": 1793806388364,
-      "kind": "content",
-      "text": "Updated tagline of \"Main\": The core islands: Stages, Energy, Gears, Cr… to The core islands: Stages, Energy, Gears, Cr…"
-    },
-    {
-      "at": 1793806388364,
-      "kind": "content",
-      "text": "Updated icon of \"Main\": compass to compass"
     }
   ]
 }
