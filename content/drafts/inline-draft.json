@@ -709,7 +709,7 @@
                     "id": "apples-void",
                     "name": "Void",
                     "icon": "moon",
-                    "desc": "Void Apples are the final tier, unlocked with the Void Chance Roots upgrade, which starts at a 15 percent chance and grows with levels. Their five Apple Buffs milestones scale to 1000 Void Apples and give the strongest multipliers in the tree system.",
+                    "desc": "Void Apples are the final tier, unlocked with the Void Chance Roots upgrade, which starts at a 0.15 percent chance and grows with levels. Their five Apple Buffs milestones scale to 1000 Void Apples and give the strongest multipliers in the tree system.",
                     "highlights": [],
                     "facts": [],
                     "sections": []
@@ -13880,6 +13880,54 @@
   },
   "updates": {
     "versions": [
+      {
+        "version": "1.02",
+        "date": "2026-11-05",
+        "entries": [
+          {
+            "id": "entry-3f67d361-7416-482b-89d9-a20633dd5a84",
+            "context": "Feature",
+            "title": "Gamepasses",
+            "href": "",
+            "description": "Added Gamepasses Prices and Boosts in the wiki."
+          },
+          {
+            "id": "entry-dada62bf-3028-4064-bac1-ddc4bbc50e30",
+            "context": "Feature",
+            "title": "Miscellaneous",
+            "href": "",
+            "description": "A New Miscellaneous tab was created: it contains informations of game side-stats or paid-resources!"
+          },
+          {
+            "id": "entry-8eacbe44-9775-41cf-b747-99d9e261e621",
+            "context": "Changes",
+            "title": "Eternal Shard Moved ",
+            "href": "",
+            "description": "Eternal Shards category was moved from Main to Miscellaneous tab."
+          },
+          {
+            "id": "entry-3f61b2bc-2f6b-4734-bed8-42b7c5c03960",
+            "context": "Feature",
+            "title": "Tree Tiers",
+            "href": "",
+            "description": "Added Tree Tiers to the Tree page (some tiers required xp are still undone)!"
+          },
+          {
+            "id": "entry-2d3a8d0c-e2b0-47fb-804f-65d182ea8c5a",
+            "context": "Bugs",
+            "title": "Typos",
+            "href": "",
+            "description": "Fixed typos and wrong informations."
+          },
+          {
+            "id": "entry-c8d9f72b-c7a9-45ab-8a6b-fd97b6cafe37",
+            "context": "Feature",
+            "title": "FAQ Tab (WIP)",
+            "href": "",
+            "description": "Your most frequently made questions are now answered in FAQ (wip for all questions, leave us questions in server or feedback!)!"
+          }
+        ]
+      },
       {
         "version": "1.01",
         "date": "2026-11-03",
