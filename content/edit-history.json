@@ -2,6 +2,382 @@
   "format": 1,
   "entries": [
     {
+      "id": "13e50a1b-39c6-4ac6-a2c2-7edb8bf08185",
+      "at": 1793845374147,
+      "kind": "content",
+      "text": "Updated 2 of \"row-59244c3d-a78b-490e-88dd-ccbf76db1315\": 2x Perks, Crystal Perks, Log Perks, SAP Per… to 2x Perks, 2x Crystal Perks, 2x Log Perks, 2…",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "ad21be3d-18c7-4ace-996d-597061c1024b",
+      "at": 1793845353854,
+      "kind": "content",
+      "text": "Updated 0 of \"row-c9b90c43-e7c2-4df0-86bb-aaa5139dd047\": empty to Dungeon Hunter",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "1e2c1fa9-6572-4995-b942-85de10bfb4c3",
+      "at": 1793845353854,
+      "kind": "content",
+      "text": "Updated 2 of \"row-c9b90c43-e7c2-4df0-86bb-aaa5139dd047\": empty to 2x Strength, 2x Health, 2x Coins, 2x Bones,…",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "1b4795f8-453c-43fd-9d81-5725db042e5f",
+      "at": 1793845331118,
+      "kind": "content",
+      "text": "Added \"row-c9b90c43-e7c2-4df0-86bb-aaa5139dd047\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "2a378c85-00d2-4569-b522-802059af79ea",
+      "at": 1793845330031,
+      "kind": "content",
+      "text": "Updated 0 of \"row-efc7c3dd-2443-40df-b583-f0e6e9d7292b\": empty to Eternal Boost",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "60e2b081-83e0-4516-a83a-e3c5e08ada1c",
+      "at": 1793845330031,
+      "kind": "content",
+      "text": "Updated 1 of \"row-efc7c3dd-2443-40df-b583-f0e6e9d7292b\": empty to 449",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "ae495f7e-73b2-423c-8f04-596372954642",
+      "at": 1793845330031,
+      "kind": "content",
+      "text": "Updated 2 of \"row-efc7c3dd-2443-40df-b583-f0e6e9d7292b\": empty to 1.5x Eternal Shards",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "38b989b0-5a94-4747-8c88-5933235d7e6e",
+      "at": 1793845316177,
+      "kind": "content",
+      "text": "Added \"row-efc7c3dd-2443-40df-b583-f0e6e9d7292b\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "9018e5ba-3aa6-4227-831e-977466830986",
+      "at": 1793845314849,
+      "kind": "content",
+      "text": "Updated 0 of \"row-59244c3d-a78b-490e-88dd-ccbf76db1315\": empty to 2x Perks",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "b063c017-717a-413f-8805-c69fc4839242",
+      "at": 1793845314849,
+      "kind": "content",
+      "text": "Updated 1 of \"row-59244c3d-a78b-490e-88dd-ccbf76db1315\": empty to 379",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "a220e94a-7b04-4230-8681-8be1aeb1517e",
+      "at": 1793845314849,
+      "kind": "content",
+      "text": "Updated 2 of \"row-59244c3d-a78b-490e-88dd-ccbf76db1315\": empty to 2x Perks, Crystal Perks, Log Perks, SAP Per…",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "609aa758-f356-4988-b6ac-63017ba97669",
+      "at": 1793845284187,
+      "kind": "content",
+      "text": "Added \"row-59244c3d-a78b-490e-88dd-ccbf76db1315\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "decfc2aa-c2a9-474e-a481-1f01bfb358f6",
+      "at": 1793845283129,
+      "kind": "content",
+      "text": "Updated 0 of \"row-26e135cf-459e-4306-b4f9-69a61102a31d\": empty to Rune Hunter",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "088bc3ab-b7d8-46d4-bd78-178d57efa5e9",
+      "at": 1793845283129,
+      "kind": "content",
+      "text": "Updated 1 of \"row-26e135cf-459e-4306-b4f9-69a61102a31d\": empty to 549",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "7c7c5df7-5313-4a51-a582-bd1340c04925",
+      "at": 1793845283129,
+      "kind": "content",
+      "text": "Updated 2 of \"row-26e135cf-459e-4306-b4f9-69a61102a31d\": empty to 2x Rune Bulk, 3x Rune Luck, 1.5x Mastery",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "b5161dc3-da18-4663-a321-d39faafb1708",
+      "at": 1793845265335,
+      "kind": "content",
+      "text": "Added \"row-26e135cf-459e-4306-b4f9-69a61102a31d\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "7fa5ae4e-e93b-415a-add4-b8ac85caf485",
+      "at": 1793845261627,
+      "kind": "content",
+      "text": "Updated 1 of \"row-f0450d5a-5d18-4f60-b86d-306d22d8673c\": empty to 379",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "a8f83bda-0eb6-4739-8320-1d64c9ac905e",
+      "at": 1793845261627,
+      "kind": "content",
+      "text": "Updated 2 of \"row-f0450d5a-5d18-4f60-b86d-306d22d8673c\": empty to 3x Damage, 3x Forge Luck, 2x Ores",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "51d15387-e54d-47fa-8ee2-3f13fd249d17",
+      "at": 1793845261626,
+      "kind": "content",
+      "text": "Updated 0 of \"row-f0450d5a-5d18-4f60-b86d-306d22d8673c\": empty to Super Miner",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "e68ad645-d931-42ec-b1c2-e3e42d722588",
+      "at": 1793845246371,
+      "kind": "content",
+      "text": "Added \"row-f0450d5a-5d18-4f60-b86d-306d22d8673c\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "042767b8-b343-4aa8-b49e-bf705067ddb4",
+      "at": 1793845245259,
+      "kind": "content",
+      "text": "Updated 2 of \"row-e664e941-b5e1-40c6-940f-e7c2115e0ab4\": empty to 3x Money, 2x Gold, 2x Emerald, 2.5x Energy …",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "f16ec6e2-b4a7-4178-9154-7ab33aec6c16",
+      "at": 1793845245258,
+      "kind": "content",
+      "text": "Updated 0 of \"row-e664e941-b5e1-40c6-940f-e7c2115e0ab4\": empty to Money Boost",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "45d2586c-5557-436e-85bc-bb751daa61c7",
+      "at": 1793845245258,
+      "kind": "content",
+      "text": "Updated 1 of \"row-e664e941-b5e1-40c6-940f-e7c2115e0ab4\": empty to 399",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "e93bc683-0c58-4ea5-8406-b521935a820d",
+      "at": 1793845198154,
+      "kind": "content",
+      "text": "Added \"row-e664e941-b5e1-40c6-940f-e7c2115e0ab4\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "bac91c54-2153-457f-a902-4f863c0ce6ff",
+      "at": 1793845196980,
+      "kind": "content",
+      "text": "Updated 0 of \"row-373a43dc-8b42-457e-8dac-d66fd34a8997\": empty to Super Trees",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "73649dba-80ea-461d-81d0-f3a122126e75",
+      "at": 1793845196980,
+      "kind": "content",
+      "text": "Updated 1 of \"row-373a43dc-8b42-457e-8dac-d66fd34a8997\": empty to 259",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "caead66f-883c-4076-a9a1-c6131ef0e05d",
+      "at": 1793845196980,
+      "kind": "content",
+      "text": "Updated 2 of \"row-373a43dc-8b42-457e-8dac-d66fd34a8997\": empty to 2x Log, 2x SAP, 2x Roots, 1.5x Apples",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "eeb05c58-b5f1-42da-8f5f-83086a98a467",
+      "at": 1793845179455,
+      "kind": "content",
+      "text": "Added \"row-373a43dc-8b42-457e-8dac-d66fd34a8997\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "690aca18-252f-450c-a395-9ad8b8069862",
+      "at": 1793845178158,
+      "kind": "content",
+      "text": "Updated 0 of \"row-9f79a12e-fb5d-4806-88c2-484c3429d853\": empty to Life Master",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "5390aa9f-75d9-4020-9ae2-247bd356ffac",
+      "at": 1793845178158,
+      "kind": "content",
+      "text": "Updated 1 of \"row-9f79a12e-fb5d-4806-88c2-484c3429d853\": empty to 225",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "749e2623-9b76-4698-be69-01453a8b1d0e",
+      "at": 1793845178158,
+      "kind": "content",
+      "text": "Updated 2 of \"row-9f79a12e-fb5d-4806-88c2-484c3429d853\": empty to 3x Life Shards, 2x Fossils, 2x Research, 2x…",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "1d26e36b-43ee-432f-af88-41aa4c495335",
+      "at": 1793845150829,
+      "kind": "content",
+      "text": "Added \"row-9f79a12e-fb5d-4806-88c2-484c3429d853\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "b447bfb0-67ce-44e6-97c7-594129805527",
+      "at": 1793845149771,
+      "kind": "content",
+      "text": "Updated 0 of \"row-c8051d53-83c2-476c-83ff-1f4edadc48b5\": empty to Barn Master",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "7caa9b68-7202-4625-9cf2-676b5d17b814",
+      "at": 1793845149771,
+      "kind": "content",
+      "text": "Updated 2 of \"row-c8051d53-83c2-476c-83ff-1f4edadc48b5\": empty to 3x Crystal Shards, 2x Crystal Perks, 2x Qua…",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "16765953-ed8a-4758-ae1b-b69986f56c3b",
+      "at": 1793845110218,
+      "kind": "content",
+      "text": "Added \"row-c8051d53-83c2-476c-83ff-1f4edadc48b5\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "7dd375f8-f72d-4d93-9d02-3293da68eea5",
+      "at": 1793845109159,
+      "kind": "content",
+      "text": "Updated 1 of \"row-f4b617bf-4561-4ed6-9df2-661a0071b475\": empty to 225",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "586bd7ba-c630-4aca-97d1-e3bbe01d186b",
+      "at": 1793845109159,
+      "kind": "content",
+      "text": "Updated 2 of \"row-f4b617bf-4561-4ed6-9df2-661a0071b475\": empty to 3x Crystal, 2x Jewels, 2.5x Platinum, 1.6x …",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "982bd829-8c62-4e2f-b492-7e65d092271f",
+      "at": 1793845109158,
+      "kind": "content",
+      "text": "Updated 0 of \"row-f4b617bf-4561-4ed6-9df2-661a0071b475\": empty to Crystal Pack",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "6f8e88ed-aa6a-4108-9a17-12ff5ed94360",
+      "at": 1793845062462,
+      "kind": "content",
+      "text": "Added \"row-f4b617bf-4561-4ed6-9df2-661a0071b475\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "9b1237cc-d6d3-46a5-a142-94f3c2e6edc7",
+      "at": 1793845061412,
+      "kind": "content",
+      "text": "Updated 1 of \"row-2fced816-1d99-4a3d-8ef4-973b259a5fe0\": empty to 149",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "bd004a6c-c93e-46bb-b355-6a18f721aeb8",
+      "at": 1793845061412,
+      "kind": "content",
+      "text": "Updated 2 of \"row-2fced816-1d99-4a3d-8ef4-973b259a5fe0\": empty to 3x Energy, 2.5x Perks, 2x Perks, 1.5x Gears",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "60fd256c-5e32-4a82-86b3-5d3f596b58df",
+      "at": 1793845061411,
+      "kind": "content",
+      "text": "Updated 0 of \"row-2fced816-1d99-4a3d-8ef4-973b259a5fe0\": empty to Factory Master",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "2d4d3480-23e0-47da-b1be-24bb9d5fb2f0",
+      "at": 1793845035905,
+      "kind": "content",
+      "text": "Added \"row-2fced816-1d99-4a3d-8ef4-973b259a5fe0\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "05dd68e0-7f83-4ac0-9335-6ff851740383",
+      "at": 1793845034692,
+      "kind": "content",
+      "text": "Updated columns of \"Gamepasses \": [\"Name\",\"Requirement\",\"Effect\"] to [\"Name\",\"Price\",\"Boosts\"]",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "3408a805-9bff-4c9e-a61c-da7188197b95",
+      "at": 1793845034691,
+      "kind": "content",
+      "text": "Updated text of \"Gamepasses \": New table to Gamepasses",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "21aedaf0-7c06-43fd-a1b2-f677c094062d",
+      "at": 1793845017614,
+      "kind": "content",
+      "text": "Added \"New table\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "812b0be2-12a7-4a83-8765-c8c338028bb3",
+      "at": 1793845012058,
+      "kind": "content",
+      "text": "Removed \"Name\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
       "id": "7233802f-6a63-4555-ba62-c47492f19017",
       "at": 1793814557810,
       "kind": "content",
