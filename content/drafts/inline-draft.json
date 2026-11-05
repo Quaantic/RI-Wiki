@@ -613,15 +613,6 @@
                 "sections": []
               },
               {
-                "id": "tree-milestones",
-                "name": "Tree Milestones",
-                "icon": "star",
-                "desc": "Tree Milestones are Tree Tiers reached with Tree Tier XP. Thirteen tiers range from 25 thousand XP to 1e99 XP; each tier multiplies the trees you can cut and unlocks deeper Roots upgrades, including Golden, Diamond and Void Apple chances. Unlock Tree Tier and Tree Tier XP upgrades speed progression.",
-                "highlights": [],
-                "facts": [],
-                "sections": []
-              },
-              {
                 "id": "rare-saps",
                 "name": "Rare Saps",
                 "icon": "drop",
@@ -729,7 +720,7 @@
               {
                 "id": "tree-tier",
                 "name": "Tree Tier",
-                "desc": "Tree Tiers are a feature unlocked through Roots, and it works based on XP, which you gain a certain amount each time you break the tree. It goes all the way up to 11, and give multiple feature, as: Rare Saps and Axe Crafting!",
+                "desc": "Tree Tiers are a feature unlocked through Roots, and it works based on XP, which you gain a certain amount each time you break the tree. It goes all the way up to 11 tiers, and give multiple feature as: Rare Saps, Apples and Axe Crafting!",
                 "icon": "arrow-big-up",
                 "highlights": [],
                 "facts": [],
@@ -7897,13 +7888,13 @@
           "layout": "compact"
         },
         "life/tree-tier": {
-          "title": "Stages",
-          "itemLabel": "Stage",
+          "title": "Tiers",
+          "itemLabel": "Tiers",
           "stages": [
             {
               "num": "1",
               "requirements": [
-                "??? XP"
+                "25K XP"
               ],
               "boosts": [
                 "More Damage Multi (+/tier)",
