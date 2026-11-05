@@ -2,6 +2,198 @@
   "format": 1,
   "entries": [
     {
+      "id": "e8329fc8-6010-42da-9954-cfd45a952f41",
+      "at": 1793848082696,
+      "kind": "content",
+      "text": "Updated boosts of \"Tier 12\": [\"Passive Roots Multi (+/tier)\",\"Passive Fi… to [\"More Damage Multi (+/tier)\",\"More Log Mul…",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "16ab715a-2bf6-4fe3-ba24-31c9662c8100",
+      "at": 1793848076660,
+      "kind": "content",
+      "text": "Updated boosts of \"Tier 11\": [\"Passive Roots Multi (+/tier)\",\"Passive Fi… to [\"More Damage Multi (+/tier)\",\"More Log Mul…",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "47634cf0-1434-4d6e-bc13-1b5df63ea86c",
+      "at": 1793848064036,
+      "kind": "content",
+      "text": "Updated requirements of \"Tier 10\": [\"?? XP\"] to [\"??? XP\"]",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "f2295057-8a30-4fee-9756-31862cb681b5",
+      "at": 1793848056824,
+      "kind": "content",
+      "text": "Updated requirements of \"Tier 10\": [\"xxx XP\"] to [\"?? XP\"]",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "4c8d9da9-9e0d-4b2b-b00d-0ff8e5848502",
+      "at": 1793848056824,
+      "kind": "content",
+      "text": "Updated boosts of \"Tier 10\": [\"Passive Roots Multi (+/tier)\",\"Passive Fi… to [\"More Damage Multi (+/tier)\",\"More Log Mul…",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "721d64da-4d53-4f7d-b410-466ebabdd296",
+      "at": 1793848044716,
+      "kind": "content",
+      "text": "Updated boosts of \"Tier 9\": [\"Passive Roots Multi (+/tier)\",\"Passive Fi… to [\"More Damage Multi (+/tier)\",\"More Log Mul…",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "87d0e129-2cfc-47b1-bc63-6b4d338255a6",
+      "at": 1793848044715,
+      "kind": "content",
+      "text": "Updated requirements of \"Tier 9\": [\"xxx XP\"] to [\"??? XP\"]",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "b14c303a-0e83-4675-a671-d35198cb0bf7",
+      "at": 1793848030272,
+      "kind": "content",
+      "text": "Updated requirements of \"Tier 8\": [\"xxx XP\"] to [\"??? XP\"]",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "877887c6-d2af-48f8-a808-44970eb152db",
+      "at": 1793848030272,
+      "kind": "content",
+      "text": "Updated boosts of \"Tier 8\": [\"Passive Roots Multi (+/tier)\",\"Passive Fi… to [\"More Damage Multi (+/tier)\",\"More Log Mul…",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "7899faf8-16ff-4289-ae58-26b84f588e3a",
+      "at": 1793848018658,
+      "kind": "content",
+      "text": "Updated requirements of \"Tier 7\": [] to [\"??? XP\"]",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "c542f67c-034d-48e7-984d-d21065c0533d",
+      "at": 1793848018658,
+      "kind": "content",
+      "text": "Updated boosts of \"Tier 7\": [\"Passive Roots Multi (+/tier)\",\"Passive Fi… to [\"More Damage Multi (+/tier)\",\"More Log Mul…",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "e04e1e53-f77e-404b-b6cb-e4c81da18355",
+      "at": 1793848008418,
+      "kind": "content",
+      "text": "Updated requirements of \"Tier 6\": [\"xxx XP\"] to [\"??? XP\"]",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "d5e08025-4396-46a7-8e0c-ace276477375",
+      "at": 1793848008418,
+      "kind": "content",
+      "text": "Updated boosts of \"Tier 6\": [\"Passive Roots Multi (+/tier)\",\"Passive Fi… to [\"More Damage Multi (+/tier)\",\"More Log Mul…",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "079d0323-5859-4a5f-860d-bab96f519ecf",
+      "at": 1793847973680,
+      "kind": "content",
+      "text": "Updated requirements of \"Tier 5\": [\"xxx XP\"] to [\"??? XP\"]",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "71246510-1632-4a38-8424-3b5b2002669f",
+      "at": 1793847973680,
+      "kind": "content",
+      "text": "Updated boosts of \"Tier 5\": [\"Passive Roots Multi (+/tier)\"] to [\"More Damage Multi (+/tier)\",\"More Log Mul…",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "de5c17aa-5728-4843-ab0e-c99b03677305",
+      "at": 1793847958657,
+      "kind": "content",
+      "text": "Updated requirements of \"Tier 4\": [\"xxx XP\"] to [\"??? XP\"]",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "4026c891-58f9-478b-9b2d-e5caae694506",
+      "at": 1793847937273,
+      "kind": "content",
+      "text": "Updated boosts of \"Tier 4\": [\"Passive Roots Multi (+/tier)\"] to [\"More Damage Multi (+/tier)\",\"More Log Mul…",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "beda3764-2d87-4bea-b1fc-16cf19e05d62",
+      "at": 1793847925443,
+      "kind": "content",
+      "text": "Updated boosts of \"Tier 3\": [\"More Damage Multi (+/tier)\",\"More Log Mul… to [\"More Damage Multi (+/tier)\",\"More Log Mul…",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "54a61d9a-744c-4b0f-b1a3-8a4e1e481f63",
+      "at": 1793847914145,
+      "kind": "content",
+      "text": "Updated requirements of \"Tier 3\": [\"xxx XP\"] to [\"??? XP\"]",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "f239e912-2fc8-4591-814f-8080e19e14e0",
+      "at": 1793847914145,
+      "kind": "content",
+      "text": "Updated boosts of \"Tier 3\": [\"Passive Roots Multi (+/tier)\"] to [\"More Damage Multi (+/tier)\",\"More Log Mul…",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "3287251e-3faa-48cb-b98b-1d4215674f24",
+      "at": 1793847899152,
+      "kind": "content",
+      "text": "Updated requirements of \"Tier 2\": [\"xxx XP\"] to [\"??? XP\"]",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "ecdc33e0-2fc5-4a61-ba9e-b815d53507e4",
+      "at": 1793847899152,
+      "kind": "content",
+      "text": "Updated boosts of \"Tier 2\": [\"-\"] to [\"More Damage Multi (+/tier)\",\"More Log Mul…",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "1934c712-df31-4d81-8545-4af56845daa8",
+      "at": 1793847889630,
+      "kind": "content",
+      "text": "Updated requirements of \"Tier 1\": [\"xxx XP\"] to [\"??? XP\"]",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "71cafef6-059b-49ef-9aff-00e8292f1f06",
+      "at": 1793847889630,
+      "kind": "content",
+      "text": "Updated boosts of \"Tier 1\": [\"-\"] to [\"More Damage Multi (+/tier)\",\"More Log Mul…",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
       "id": "2a721a98-f8e4-4c46-bf36-81e0be19fbc8",
       "at": 1793847520517,
       "kind": "content",
@@ -2043,126 +2235,6 @@
       "at": 1793806270878,
       "kind": "content",
       "text": "Updated id of \"Money Island \": Money-Island-FAQ to Money-Island-FAQ"
-    },
-    {
-      "at": 1793806270878,
-      "kind": "content",
-      "text": "Renamed \"Money Island \" to \"Money Island \""
-    },
-    {
-      "at": 1793806270878,
-      "kind": "content",
-      "text": "Updated desc of \"Money Island \": Money Island most asked questions! to Money Island most asked questions!"
-    },
-    {
-      "at": 1793806270878,
-      "kind": "content",
-      "text": "Updated icon of \"Money Island \": empty to coin"
-    },
-    {
-      "at": 1793806217786,
-      "kind": "content",
-      "text": "Updated tagline of \"Money Island\": The money island: the 83-node Upgrade Tree,… to The money island: the 83-node Upgrade Tree,…"
-    },
-    {
-      "at": 1793806217786,
-      "kind": "content",
-      "text": "Updated icon of \"Money Island\": coin to coin"
-    },
-    {
-      "at": 1793806217785,
-      "kind": "content",
-      "text": "Updated id of \"Money Island\": money-island to money-island"
-    },
-    {
-      "at": 1793806217785,
-      "kind": "content",
-      "text": "Renamed \"Money Island\" to \"Money Island\""
-    },
-    {
-      "at": 1793806207554,
-      "kind": "content",
-      "text": "Updated id of \"Money Island \": Money-Island-FAQ to Money-Island-FAQ"
-    },
-    {
-      "at": 1793806207554,
-      "kind": "content",
-      "text": "Renamed \"Money Island \" to \"Money Island \""
-    },
-    {
-      "at": 1793806207554,
-      "kind": "content",
-      "text": "Updated desc of \"Money Island \": Money Island most asked questions! to Money Island most asked questions!"
-    },
-    {
-      "at": 1793806207554,
-      "kind": "content",
-      "text": "Updated icon of \"Money Island \": empty to empty"
-    },
-    {
-      "at": 1793806137922,
-      "kind": "content",
-      "text": "Updated id of \"FAQ\": FAQ to FAQ"
-    },
-    {
-      "at": 1793806137922,
-      "kind": "content",
-      "text": "Renamed \"FAQ\" to \"FAQ\""
-    },
-    {
-      "at": 1793806137922,
-      "kind": "content",
-      "text": "Updated tagline of \"FAQ\": Frequently Asked Questions (FAQ) that are m… to Frequently Asked Questions (FAQ) that are m…"
-    },
-    {
-      "at": 1793806137922,
-      "kind": "content",
-      "text": "Updated icon of \"FAQ\": sprout to badge-help"
-    },
-    {
-      "at": 1793806109187,
-      "kind": "content",
-      "text": "Updated id of \"Main Island\": Main-Island-FAQ to Main-Island-FAQ"
-    },
-    {
-      "at": 1793806109187,
-      "kind": "content",
-      "text": "Renamed \"Main Island\" to \"Main Island\""
-    },
-    {
-      "at": 1793806109187,
-      "kind": "content",
-      "text": "Updated desc of \"Main Island\": Main Island most asked questions! to Main Island most asked questions!"
-    },
-    {
-      "at": 1793806109187,
-      "kind": "content",
-      "text": "Updated icon of \"Main Island\": sparkles to sparkles"
-    },
-    {
-      "at": 1793805414626,
-      "kind": "colors",
-      "text": "Linked \"FAQ\" to #/FAQ"
-    },
-    {
-      "at": 1793805380809,
-      "kind": "colors",
-      "text": "Colored \"FAQ\" (#8c3434)"
-    },
-    {
-      "at": 1793805326765,
-      "kind": "content",
-      "text": "Updated id of \"New page1\": new-page1 to new-page1"
-    },
-    {
-      "at": 1793805326765,
-      "kind": "content",
-      "text": "Renamed \"New page1\" to \"New page1\""
-    },
-    {
-      "at": 1793805326765,
-      "kind": "content",
-      "text": "Updated desc of \"New page1\": Describe this page here. to Describe this page here."
     }
   ]
 }
