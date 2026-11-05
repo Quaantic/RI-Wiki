@@ -7959,153 +7959,264 @@
           "itemLabel": "Stage",
           "stages": [
             {
-              "num": "2",
+              "num": "1",
               "requirements": [
-                "1M Energy"
+                "xxx XP"
               ],
               "boosts": [
-                "2x Energy"
+                "-"
               ],
               "unlocks": {
                 "area": "",
                 "places": [],
-                "features": []
+                "features": [
+                  {
+                    "name": "New Tree Every Tier",
+                    "subs": []
+                  }
+                ]
               },
-              "title": "Tier 2"
+              "title": "Tier 1"
+            },
+            {
+              "title": "Tier 2",
+              "num": "2",
+              "requirements": [
+                "xxx XP"
+              ],
+              "boosts": [
+                "-"
+              ],
+              "unlocks": {
+                "area": "",
+                "places": [],
+                "features": [
+                  {
+                    "name": "New Log Upgrade",
+                    "subs": []
+                  }
+                ]
+              }
             },
             {
               "title": "Tier 3",
               "num": "3",
               "requirements": [
-                "1M Energy"
+                "xxx XP"
               ],
               "boosts": [
-                "2x Energy"
+                "Passive Roots Multi (+/tier)"
               ],
               "unlocks": {
                 "area": "",
                 "places": [],
-                "features": []
+                "features": [
+                  {
+                    "name": "Tree Tier Multiplies Roots",
+                    "subs": []
+                  }
+                ]
               }
             },
             {
               "title": "Tier 4",
               "num": "4",
               "requirements": [
-                "1M Energy"
+                "xxx XP"
               ],
               "boosts": [
-                "2x Energy"
+                "Passive Roots Multi (+/tier)"
               ],
               "unlocks": {
                 "area": "",
                 "places": [],
-                "features": []
+                "features": [
+                  {
+                    "name": "1.25x Normal, Golden and Diamond Apple",
+                    "subs": []
+                  },
+                  {
+                    "name": "Expand Tree Upgrades",
+                    "subs": []
+                  }
+                ]
               }
             },
             {
               "title": "Tier 5",
               "num": "5",
               "requirements": [
-                "1M Energy"
+                "xxx XP"
               ],
               "boosts": [
-                "2x Energy"
+                "Passive Roots Multi (+/tier)"
               ],
               "unlocks": {
                 "area": "",
                 "places": [],
-                "features": []
+                "features": [
+                  {
+                    "name": "+0.25% Passive Roots per Second",
+                    "subs": []
+                  }
+                ]
               }
             },
             {
               "title": "Tier 6",
               "num": "6",
               "requirements": [
-                "1M Energy"
+                "xxx XP"
               ],
               "boosts": [
-                "2x Energy"
+                "Passive Roots Multi (+/tier)",
+                "Passive First 3 Apples Multi (+/tier)"
               ],
               "unlocks": {
                 "area": "",
                 "places": [],
-                "features": []
+                "features": [
+                  {
+                    "name": "Tree Tier Multiplies Normal, Golden and Diamond Apples",
+                    "subs": []
+                  }
+                ]
               }
             },
             {
               "title": "Tier 7",
               "num": "7",
-              "requirements": [
-                "1M Energy"
-              ],
+              "requirements": [],
               "boosts": [
-                "2x Energy"
+                "Passive Roots Multi (+/tier)",
+                "Passive First 3 Apples (+/tier)"
               ],
               "unlocks": {
                 "area": "",
                 "places": [],
-                "features": []
+                "features": [
+                  {
+                    "name": "+2% Passive Roots per Second",
+                    "subs": []
+                  }
+                ]
               }
             },
             {
               "title": "Tier 8",
               "num": "8",
               "requirements": [
-                "1M Energy"
+                "xxx XP"
               ],
               "boosts": [
-                "2x Energy"
+                "Passive Roots Multi (+/tier)",
+                "Passive First 3 Apples (+/tier)"
               ],
               "unlocks": {
                 "area": "",
                 "places": [],
-                "features": []
+                "features": [
+                  {
+                    "name": "Unlocks Void Apple",
+                    "subs": []
+                  }
+                ]
               }
             },
             {
               "title": "Tier 9",
               "num": "9",
               "requirements": [
-                "1M Energy"
+                "xxx XP"
               ],
               "boosts": [
-                "2x Energy"
+                "Passive Roots Multi (+/tier)",
+                "Passive First 3 Apples (+/tier)"
               ],
               "unlocks": {
                 "area": "",
                 "places": [],
-                "features": []
+                "features": [
+                  {
+                    "name": "New Roots Upgrades",
+                    "subs": []
+                  },
+                  {
+                    "name": "5x Tree Damage",
+                    "subs": []
+                  }
+                ]
               }
             },
             {
               "title": "Tier 10",
               "num": "10",
               "requirements": [
-                "1M Energy"
+                "xxx XP"
               ],
               "boosts": [
-                "2x Energy"
+                "Passive Roots Multi (+/tier)",
+                "Passive First 3 Apples (+/tier)"
               ],
               "unlocks": {
                 "area": "",
                 "places": [],
-                "features": []
+                "features": [
+                  {
+                    "name": "New Roots Upgrade",
+                    "subs": []
+                  },
+                  {
+                    "name": "2x Void Apple",
+                    "subs": []
+                  }
+                ]
               }
             },
             {
               "title": "Tier 11",
               "num": "11",
               "requirements": [
-                "1M Energy"
+                "1T XP"
               ],
               "boosts": [
-                "2x Energy"
+                "Passive Roots Multi (+/tier)",
+                "Passive First 3 Apples (+/tier)"
               ],
               "unlocks": {
                 "area": "",
                 "places": [],
-                "features": []
+                "features": [
+                  {
+                    "name": "Unlocks Axe Crafting (SOON)",
+                    "subs": []
+                  },
+                  {
+                    "name": "Unlocks Rare Saps",
+                    "subs": []
+                  }
+                ]
+              }
+            },
+            {
+              "title": "Tier 12",
+              "num": "12",
+              "requirements": [
+                "10T XP"
+              ],
+              "boosts": [
+                "Passive Roots Multi (+/tier)",
+                "Passive First 3 Apples (+/tier)"
+              ],
+              "unlocks": {
+                "area": "",
+                "places": [],
+                "features": [
+                  {
+                    "name": "+50% Rare Saps Luck",
+                    "subs": []
+                  }
+                ]
               }
             }
           ]
@@ -13811,7 +13922,7 @@
   },
   "_baseShas": {
     "updates": "ecdf385fa2ac89c1665ed8efc0a942c1170d1dac",
-    "wiki": "ba53f71a8dbc3b8446613314973e34966e0da244",
-    "game": "99f497ec15466acfd662a7ab1723a80460dd48f7"
+    "game": "99f497ec15466acfd662a7ab1723a80460dd48f7",
+    "wiki": "ba53f71a8dbc3b8446613314973e34966e0da244"
   }
 }
