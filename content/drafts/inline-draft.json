@@ -1900,65 +1900,6 @@
       "compact-game-content-v2"
     ]
   },
-  "updates": {
-    "versions": [
-      {
-        "version": "1.01",
-        "date": "2026-11-03",
-        "entries": [
-          {
-            "context": "Feature",
-            "title": "Rare Saps",
-            "href": "#/life/rare-saps",
-            "description": "Added Silver, Golden, Diamond and Amethyst Sap with separate owned-amount calculators, three bonuses each and their tree-cutting drop chances.",
-            "id": "entry-a67b5755-0"
-          },
-          {
-            "context": "Feature",
-            "title": "Power of Fossils",
-            "href": "#/life/power-of-fossils",
-            "description": "Added seven permanent Fossil milestone bonuses, including More Life Gems and More Void Apples.",
-            "id": "entry-5263f34f-0"
-          },
-          {
-            "context": "Changes",
-            "title": "Named Sap and Fossil effects",
-            "description": "Bonus cards now show their real effects, including More Logs, Axe Damage, Better Sap Chance, More Research Cap and Mastery.",
-            "id": "entry-a1e3a61c-0"
-          },
-          {
-            "context": "Bugs",
-            "title": "Fossil calculator input",
-            "description": "Fixed empty Fossil amounts being rejected; an empty field now correctly behaves as zero, and game-number input is accepted.",
-            "id": "entry-aeda91a8-0"
-          },
-          {
-            "context": "Bugs",
-            "title": "Bonus card overflow and resource links",
-            "description": "Fixed cramped text and overflowing bonus cards. Colored resource names in the calculators now navigate to their matching wiki pages.",
-            "id": "entry-bba41a2-0"
-          },
-          {
-            "context": "UI",
-            "title": "Rare Sap colors and layout",
-            "description": "Grouped the four Rare Saps on one page, color-coded by type, and adjusted the bonus grids for desktop and mobile screens.",
-            "id": "entry-d2efda4e-0"
-          },
-          {
-            "context": "UI",
-            "title": "A refreshed Update Log",
-            "description": "Added a version overview, entry counts, category filters and colorful, clickable resource references throughout the release notes.",
-            "id": "entry-6d8a12de-0"
-          }
-        ]
-      },
-      {
-        "version": "1",
-        "date": "2026-10-30",
-        "entries": []
-      }
-    ]
-  },
   "game": {
     "uiCopy": {},
     "upgrades": {
@@ -7961,10 +7902,11 @@
             {
               "num": "1",
               "requirements": [
-                "xxx XP"
+                "??? XP"
               ],
               "boosts": [
-                "-"
+                "More Damage Multi (+/tier)",
+                "More Log Multi (+/tier)"
               ],
               "unlocks": {
                 "area": "",
@@ -7982,10 +7924,11 @@
               "title": "Tier 2",
               "num": "2",
               "requirements": [
-                "xxx XP"
+                "??? XP"
               ],
               "boosts": [
-                "-"
+                "More Damage Multi (+/tier)",
+                "More Log Multi (+/tier)"
               ],
               "unlocks": {
                 "area": "",
@@ -8002,10 +7945,12 @@
               "title": "Tier 3",
               "num": "3",
               "requirements": [
-                "xxx XP"
+                "??? XP"
               ],
               "boosts": [
-                "Passive Roots Multi (+/tier)"
+                "More Damage Multi (+/tier)",
+                "More Log Multi (+/tier)",
+                "More Roots Multi (+/tier)"
               ],
               "unlocks": {
                 "area": "",
@@ -8022,10 +7967,12 @@
               "title": "Tier 4",
               "num": "4",
               "requirements": [
-                "xxx XP"
+                "??? XP"
               ],
               "boosts": [
-                "Passive Roots Multi (+/tier)"
+                "More Damage Multi (+/tier)",
+                "More Log Multi (+/tier)",
+                "More Roots Multi (+/tier)"
               ],
               "unlocks": {
                 "area": "",
@@ -8046,10 +7993,12 @@
               "title": "Tier 5",
               "num": "5",
               "requirements": [
-                "xxx XP"
+                "??? XP"
               ],
               "boosts": [
-                "Passive Roots Multi (+/tier)"
+                "More Damage Multi (+/tier)",
+                "More Log Multi (+/tier)",
+                "More Roots Multi (+/tier)"
               ],
               "unlocks": {
                 "area": "",
@@ -8066,11 +8015,13 @@
               "title": "Tier 6",
               "num": "6",
               "requirements": [
-                "xxx XP"
+                "??? XP"
               ],
               "boosts": [
-                "Passive Roots Multi (+/tier)",
-                "Passive First 3 Apples Multi (+/tier)"
+                "More Damage Multi (+/tier)",
+                "More Log Multi (+/tier)",
+                "More Roots Multi (+/tier)",
+                "More \"First 3 Apples\" Multi (+/tier)"
               ],
               "unlocks": {
                 "area": "",
@@ -8086,10 +8037,14 @@
             {
               "title": "Tier 7",
               "num": "7",
-              "requirements": [],
+              "requirements": [
+                "??? XP"
+              ],
               "boosts": [
-                "Passive Roots Multi (+/tier)",
-                "Passive First 3 Apples (+/tier)"
+                "More Damage Multi (+/tier)",
+                "More Log Multi (+/tier)",
+                "More Roots Multi (+/tier)",
+                "More \"First 3 Apples\" Multi (+/tier)"
               ],
               "unlocks": {
                 "area": "",
@@ -8106,11 +8061,13 @@
               "title": "Tier 8",
               "num": "8",
               "requirements": [
-                "xxx XP"
+                "??? XP"
               ],
               "boosts": [
-                "Passive Roots Multi (+/tier)",
-                "Passive First 3 Apples (+/tier)"
+                "More Damage Multi (+/tier)",
+                "More Log Multi (+/tier)",
+                "More Roots Multi (+/tier)",
+                "More \"First 3 Apples\" Multi (+/tier)"
               ],
               "unlocks": {
                 "area": "",
@@ -8127,11 +8084,13 @@
               "title": "Tier 9",
               "num": "9",
               "requirements": [
-                "xxx XP"
+                "??? XP"
               ],
               "boosts": [
-                "Passive Roots Multi (+/tier)",
-                "Passive First 3 Apples (+/tier)"
+                "More Damage Multi (+/tier)",
+                "More Log Multi (+/tier)",
+                "More Roots Multi (+/tier)",
+                "More \"First 3 Apples\" Multi (+/tier)"
               ],
               "unlocks": {
                 "area": "",
@@ -8152,11 +8111,13 @@
               "title": "Tier 10",
               "num": "10",
               "requirements": [
-                "xxx XP"
+                "??? XP"
               ],
               "boosts": [
-                "Passive Roots Multi (+/tier)",
-                "Passive First 3 Apples (+/tier)"
+                "More Damage Multi (+/tier)",
+                "More Log Multi (+/tier)",
+                "More Roots Multi (+/tier)",
+                "More \"First 3 Apples\" Multi (+/tier)"
               ],
               "unlocks": {
                 "area": "",
@@ -8180,8 +8141,10 @@
                 "1T XP"
               ],
               "boosts": [
-                "Passive Roots Multi (+/tier)",
-                "Passive First 3 Apples (+/tier)"
+                "More Damage Multi (+/tier)",
+                "More Log Multi (+/tier)",
+                "More Roots Multi (+/tier)",
+                "More \"First 3 Apples\" Multi (+/tier)"
               ],
               "unlocks": {
                 "area": "",
@@ -8205,8 +8168,10 @@
                 "10T XP"
               ],
               "boosts": [
-                "Passive Roots Multi (+/tier)",
-                "Passive First 3 Apples (+/tier)"
+                "More Damage Multi (+/tier)",
+                "More Log Multi (+/tier)",
+                "More Roots Multi (+/tier)",
+                "More \"First 3 Apples\" Multi (+/tier)"
               ],
               "unlocks": {
                 "area": "",
@@ -13920,9 +13885,68 @@
       "compact-game-content-v2"
     ]
   },
+  "updates": {
+    "versions": [
+      {
+        "version": "1.01",
+        "date": "2026-11-03",
+        "entries": [
+          {
+            "context": "Feature",
+            "title": "Rare Saps",
+            "href": "#/life/rare-saps",
+            "description": "Added Silver, Golden, Diamond and Amethyst Sap with separate owned-amount calculators, three bonuses each and their tree-cutting drop chances.",
+            "id": "entry-a67b5755-0"
+          },
+          {
+            "context": "Feature",
+            "title": "Power of Fossils",
+            "href": "#/life/power-of-fossils",
+            "description": "Added seven permanent Fossil milestone bonuses, including More Life Gems and More Void Apples.",
+            "id": "entry-5263f34f-0"
+          },
+          {
+            "context": "Changes",
+            "title": "Named Sap and Fossil effects",
+            "description": "Bonus cards now show their real effects, including More Logs, Axe Damage, Better Sap Chance, More Research Cap and Mastery.",
+            "id": "entry-a1e3a61c-0"
+          },
+          {
+            "context": "Bugs",
+            "title": "Fossil calculator input",
+            "description": "Fixed empty Fossil amounts being rejected; an empty field now correctly behaves as zero, and game-number input is accepted.",
+            "id": "entry-aeda91a8-0"
+          },
+          {
+            "context": "Bugs",
+            "title": "Bonus card overflow and resource links",
+            "description": "Fixed cramped text and overflowing bonus cards. Colored resource names in the calculators now navigate to their matching wiki pages.",
+            "id": "entry-bba41a2-0"
+          },
+          {
+            "context": "UI",
+            "title": "Rare Sap colors and layout",
+            "description": "Grouped the four Rare Saps on one page, color-coded by type, and adjusted the bonus grids for desktop and mobile screens.",
+            "id": "entry-d2efda4e-0"
+          },
+          {
+            "context": "UI",
+            "title": "A refreshed Update Log",
+            "description": "Added a version overview, entry counts, category filters and colorful, clickable resource references throughout the release notes.",
+            "id": "entry-6d8a12de-0"
+          }
+        ]
+      },
+      {
+        "version": "1",
+        "date": "2026-10-30",
+        "entries": []
+      }
+    ]
+  },
   "_baseShas": {
+    "wiki": "ba53f71a8dbc3b8446613314973e34966e0da244",
     "updates": "ecdf385fa2ac89c1665ed8efc0a942c1170d1dac",
-    "game": "99f497ec15466acfd662a7ab1723a80460dd48f7",
-    "wiki": "ba53f71a8dbc3b8446613314973e34966e0da244"
+    "game": "99f497ec15466acfd662a7ab1723a80460dd48f7"
   }
 }
