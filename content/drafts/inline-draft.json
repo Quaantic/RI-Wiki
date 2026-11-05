@@ -685,47 +685,10 @@
                 "id": "apples",
                 "name": "Apples",
                 "icon": "heart",
-                "desc": "Apples drop randomly while cutting trees; Apple Chance and More Apples upgrades increase their drops. Every apple ever earned counts on the Apple Buffs board, where holding amounts of each type unlocks permanent multipliers across five milestones per type. Apples are never spent: they are milestone stats.",
+                "desc": "Apples drop randomly while cutting trees; Apple Chance and More Apples upgrades increase their drops. Every apple ever earned counts on the Apple Buffs board, where holding amounts of each type unlocks permanent multipliers at milestones for each type. Apples are never spent: they are milestone stats.",
                 "highlights": [],
                 "facts": [],
-                "children": [
-                  {
-                    "id": "apples-default",
-                    "name": "Default",
-                    "icon": "leaf",
-                    "desc": "Default Apples are the base tier and drop from the start of tree cutting. Holding them unlocks the first Apple Buffs milestones, which boost tree gains and scale with the amount held up to a 1000 requirement.",
-                    "highlights": [],
-                    "facts": [],
-                    "sections": []
-                  },
-                  {
-                    "id": "apples-golden",
-                    "name": "Golden",
-                    "icon": "star",
-                    "desc": "Golden Apples are the second tier, unlocked with the Golden Apple Roots upgrade and increased by More Golden Apples. Their Apple Buffs milestones are among the strongest and scale up to 1000 held. The More Apples Eternal upgrade multiplies Red, Golden and Diamond apples together.",
-                    "highlights": [],
-                    "facts": [],
-                    "sections": []
-                  },
-                  {
-                    "id": "apples-diamond",
-                    "name": "Diamond",
-                    "icon": "diamond",
-                    "desc": "Diamond Apples are the third tier, unlocked with the Diamond Apple Roots upgrade. They are much rarer than Golden Apples, their bonuses scale up to a 100 thousand requirement, and they unlock Void Apples through the Void Chance upgrade.",
-                    "highlights": [],
-                    "facts": [],
-                    "sections": []
-                  },
-                  {
-                    "id": "apples-void",
-                    "name": "Void",
-                    "icon": "moon",
-                    "desc": "Void Apples are the final tier, unlocked with the Void Chance Roots upgrade, which starts at a 0.15 percent chance and grows with levels. Their five Apple Buffs milestones scale to 1000 Void Apples and give the strongest multipliers in the tree system.",
-                    "highlights": [],
-                    "facts": [],
-                    "sections": []
-                  }
-                ],
+                "children": [],
                 "sections": []
               }
             ],
@@ -816,19 +779,10 @@
                 "id": "sacrifice",
                 "name": "Sacrifice",
                 "icon": "skull",
-                "desc": "The Sacrifice board lets you sacrifice your monster for Dark Liquid. It shows the gain before confirmation and tracks every sacrifice. It unlocks through Terraform progression and has Sacrifice Upgrades that increase Dark Liquid gained per sacrifice.",
+                "desc": "The Sacrifice board lets you sacrifice your monster for Dark Liquid. It shows the gain before confirmation and tracks every sacrifice. It unlocks through Terraform progression and has Sacrifice Upgrades that increase Dark Liquid gained per sacrifice.\n\nDark Liquid is the currency earned by sacrificing monsters. It pays for the separate Dark Monster Upgrades board, which further boosts the monster area, and is tracked in your Life Island inventory.",
                 "highlights": [],
                 "facts": [],
                 "children": [
-                  {
-                    "id": "dark-liquid",
-                    "name": "Dark Liquid",
-                    "icon": "drop",
-                    "desc": "Dark Liquid is the currency earned by sacrificing monsters. It pays for the separate Dark Monster Upgrades board, which further boosts the monster area, and is tracked in your Life Island inventory.",
-                    "highlights": [],
-                    "facts": [],
-                    "sections": []
-                  },
                   {
                     "id": "sacrifice-upgrades",
                     "name": "Sacrifice Upgrades",
@@ -1885,11 +1839,16 @@
       "life/packed-frost": "#/life/frost-conversion",
       "life/dense-frost": "#/life/frost-conversion",
       "life/compact-frost": "#/life/frost-conversion",
-      "life/neutron-frost": "#/life/frost-conversion"
+      "life/neutron-frost": "#/life/frost-conversion",
+      "life/apples-default": "#/life/apples",
+      "life/apples-golden": "#/life/apples",
+      "life/apples-diamond": "#/life/apples",
+      "life/apples-void": "#/life/apples"
     },
     "contentMigrations": [
       "game-notes-2026-11-v1",
-      "compact-game-content-v2"
+      "compact-game-content-v2",
+      "apple-buffs-v1"
     ]
   },
   "updates": {
@@ -1932,13 +1891,6 @@
             "title": "Typos",
             "href": "",
             "description": "Fixed typos and wrong informations."
-          },
-          {
-            "id": "entry-c8d9f72b-c7a9-45ab-8a6b-fd97b6cafe37",
-            "context": "Feature",
-            "title": "FAQ Tab (WIP)",
-            "href": "",
-            "description": "Your most frequently made questions are now answered in FAQ (wip for all questions, leave us questions in server or feedback!)!"
           },
           {
             "id": "entry-1ed190dd-f75c-4250-8e06-0d9a32a386fd",
@@ -1995,6 +1947,13 @@
             "title": "Background",
             "href": "",
             "description": "Added lightweight backgrounds and more consistent styling across the wiki."
+          },
+          {
+            "id": "entry-c8d9f72b-c7a9-45ab-8a6b-fd97b6cafe37",
+            "context": "Feature",
+            "title": "FAQ Tab (WIP)",
+            "href": "",
+            "description": "Your most frequently made questions are now answered in FAQ (wip for all questions, leave us questions in server or feedback!)!"
           },
           {
             "id": "entry-5f705e92-adb7-489a-92e2-bcdc95fc9b36",
@@ -13825,15 +13784,201 @@
               "description": ""
             }
           ]
+        },
+        "life/apples": {
+          "title": "Apple Buffs",
+          "inputs": [],
+          "kind": "amount-groups",
+          "groups": [
+            {
+              "id": "apple-default",
+              "name": "Red Apples",
+              "color": "#ffFFFF",
+              "amountLabel": "Red Apples owned",
+              "bonuses": [
+                {
+                  "id": "apple-default-1",
+                  "name": "Logs",
+                  "value": "formula: (amount/5+1)^0.365",
+                  "unit": "x",
+                  "unlockAt": 1
+                },
+                {
+                  "id": "apple-default-2",
+                  "name": "Sap",
+                  "value": "formula: (amount/7+1)^0.25",
+                  "unit": "x",
+                  "unlockAt": 5
+                },
+                {
+                  "id": "apple-default-3",
+                  "name": "Red Apples",
+                  "value": "formula: (amount/12+1)^0.2",
+                  "unit": "x",
+                  "unlockAt": 10
+                },
+                {
+                  "id": "apple-default-4",
+                  "name": "Log Perks",
+                  "value": "formula: (amount/20+1)^0.125",
+                  "unit": "x",
+                  "unlockAt": 50
+                },
+                {
+                  "id": "apple-default-5",
+                  "name": "Sap Perks",
+                  "value": "formula: (amount/50+1)^0.1",
+                  "unit": "x",
+                  "unlockAt": 250
+                }
+              ]
+            },
+            {
+              "id": "apple-golden",
+              "name": "Golden Apples",
+              "color": "#e7b52a",
+              "amountLabel": "Golden Apples owned",
+              "bonuses": [
+                {
+                  "id": "apple-golden-1",
+                  "name": "Red Apples",
+                  "value": "formula: (amount/3+1)^0.425",
+                  "unit": "x",
+                  "unlockAt": 1
+                },
+                {
+                  "id": "apple-golden-2",
+                  "name": "Axe Damage",
+                  "value": "formula: (amount/2+1)^0.27",
+                  "unit": "x",
+                  "unlockAt": 3
+                },
+                {
+                  "id": "apple-golden-3",
+                  "name": "Roots",
+                  "value": "formula: (amount/10+1)^0.235",
+                  "unit": "x",
+                  "unlockAt": 10
+                },
+                {
+                  "id": "apple-golden-4",
+                  "name": "Golden Apples",
+                  "value": "formula: (amount/20+1)^0.15",
+                  "unit": "x",
+                  "unlockAt": 50
+                },
+                {
+                  "id": "apple-golden-5",
+                  "name": "Life Gems",
+                  "value": "formula: min(5,(amount/300+1)^0.15)",
+                  "unit": "x",
+                  "unlockAt": 1000,
+                  "cap": 5,
+                  "capUnit": "x"
+                }
+              ]
+            },
+            {
+              "id": "apple-diamond",
+              "name": "Diamond Apples",
+              "color": "#40bcff",
+              "amountLabel": "Diamond Apples owned",
+              "bonuses": [
+                {
+                  "id": "apple-diamond-1",
+                  "name": "Red & Golden Apples",
+                  "value": "formula: (amount/1.75+1)^0.4",
+                  "unit": "x",
+                  "unlockAt": 1
+                },
+                {
+                  "id": "apple-diamond-2",
+                  "name": "Research",
+                  "value": "formula: min(5,(amount/5+1)^0.225)",
+                  "unit": "x",
+                  "unlockAt": 15,
+                  "cap": 5,
+                  "capUnit": "x"
+                },
+                {
+                  "id": "apple-diamond-3",
+                  "name": "Golden Research",
+                  "value": "formula: min(3,(amount/35+1)^0.095)",
+                  "unit": "x",
+                  "unlockAt": 100,
+                  "cap": 3,
+                  "capUnit": "x"
+                },
+                {
+                  "id": "apple-diamond-4",
+                  "name": "Void Apples",
+                  "value": "formula: (amount/100000+1)^0.1",
+                  "unit": "x",
+                  "unlockAt": 250000
+                }
+              ]
+            },
+            {
+              "id": "apple-void",
+              "name": "Void Apples",
+              "color": "#b286ff",
+              "amountLabel": "Void Apples owned",
+              "bonuses": [
+                {
+                  "id": "apple-void-1",
+                  "name": "Red, Golden & Diamond Apples",
+                  "value": "formula: (amount+1)^0.365",
+                  "unit": "x",
+                  "unlockAt": 1
+                },
+                {
+                  "id": "apple-void-2",
+                  "name": "Tree Tier XP",
+                  "value": "formula: min(25,(amount/5+1)^0.2)",
+                  "unit": "x",
+                  "unlockAt": 5,
+                  "cap": 25,
+                  "capUnit": "x"
+                },
+                {
+                  "id": "apple-void-3",
+                  "name": "Frost",
+                  "value": "formula: min(15,(amount/25+1)^0.125)",
+                  "unit": "x",
+                  "unlockAt": 35,
+                  "cap": 15,
+                  "capUnit": "x"
+                },
+                {
+                  "id": "apple-void-4",
+                  "name": "Californium",
+                  "value": "formula: min(10,(amount/50+1)^0.11)",
+                  "unit": "x",
+                  "unlockAt": 100,
+                  "cap": 10,
+                  "capUnit": "x"
+                },
+                {
+                  "id": "apple-void-5",
+                  "name": "Dark Liquid",
+                  "value": "formula: min(25,(amount/500+1)^0.145)",
+                  "unit": "x",
+                  "unlockAt": 1000,
+                  "cap": 25,
+                  "capUnit": "x"
+                }
+              ]
+            }
+          ]
         }
       }
     },
     "resources": {
       "colors": {
-        "Diamond Apples": "#00A9FF",
+        "Diamond Apples": "#40bcff",
         "Prestige": "#42C5FF",
         "Magnets": "#D71920",
-        "Golden Apples": "#E7B52A",
+        "Golden Apples": "#e7b52a",
         "Dark Crystals": "#8D258F",
         "Silver Energy": "#D9D9D9",
         "Crystal Shards": "#D58BFF",
@@ -13868,7 +14013,7 @@
         "Tree": "#f7750b",
         "Bluesteel": "#78B8FF",
         "Jewels": "#A64BFF",
-        "Void Apples": "#8A00FF",
+        "Void Apples": "#b286ff",
         "Adamantium": "#D9D9D9",
         "Frost": "#8BEFFF",
         "Strength": "#D52B1E",
@@ -13979,7 +14124,8 @@
         "FAQ": "#8c3434",
         "Tree Tier": "#694931",
         "Gamepasses": "#38612d",
-        "Update Log": "#ffffff"
+        "Update Log": "#ffffff",
+        "Red Apples": "#ff6569"
       },
       "pageLinks": {
         "main": "#/main",
@@ -14092,17 +14238,21 @@
         "Iron": "#/mining/ores",
         "Item": "#/dungeon/items",
         "Health": "#/dungeon/training",
-        "FAQ": "#/FAQ"
+        "FAQ": "#/FAQ",
+        "red apples": "#/life/apples",
+        "golden apples": "#/life/apples",
+        "diamond apples": "#/life/apples"
       }
     },
     "contentMigrations": [
       "game-notes-2026-11-v1",
-      "compact-game-content-v2"
+      "compact-game-content-v2",
+      "apple-buffs-v1"
     ]
   },
   "_baseShas": {
     "wiki": "ba53f71a8dbc3b8446613314973e34966e0da244",
-    "updates": "ecdf385fa2ac89c1665ed8efc0a942c1170d1dac",
-    "game": "99f497ec15466acfd662a7ab1723a80460dd48f7"
+    "game": "99f497ec15466acfd662a7ab1723a80460dd48f7",
+    "updates": "ecdf385fa2ac89c1665ed8efc0a942c1170d1dac"
   }
 }
