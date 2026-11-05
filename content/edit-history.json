@@ -2,6 +2,382 @@
   "format": 1,
   "entries": [
     {
+      "id": "1626d956-36bd-43e4-a019-c384ded7e73d",
+      "at": 1793853902074,
+      "kind": "colors",
+      "text": "Colored \"Update Log\" (#ffffff)",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "7b662320-5321-4970-9b01-89fbc74c1c4a",
+      "at": 1793853872617,
+      "kind": "colors",
+      "text": "Colored \"Update Log\" (#86d62b)",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "5e664576-5e6c-4fda-a969-3c2b3e4dd322",
+      "at": 1793853694500,
+      "kind": "content",
+      "text": "Removed \"New update\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "e513393d-a24a-4298-af7c-007e517d3215",
+      "at": 1793853684636,
+      "kind": "content",
+      "text": "Updated description of \"Background\": What changed in the game. to Added lightweight backgrounds and more cons…",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "0f5b12a7-1751-4ed4-a9a8-f349296775bb",
+      "at": 1793853684620,
+      "kind": "content",
+      "text": "Updated text of \"Background\": New update to Background",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "4dede273-a4c9-441c-b4a0-7491501fc709",
+      "at": 1793853684602,
+      "kind": "content",
+      "text": "Updated context of \"New update\": Feature to UI",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "f5ff48c6-1916-4280-abc2-dbca7a8a470f",
+      "at": 1793853678462,
+      "kind": "content",
+      "text": "Added \"New update\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "629f7861-a56c-4113-98b2-9ac7fbf35d46",
+      "at": 1793853669996,
+      "kind": "content",
+      "text": "Updated description of \"Brand New UpdateLog\": Refreshed the Update Log with collapsible F… to Updates with collapsible Features, Changes,…",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "c5024c78-4f6f-4e42-b2b6-6a426c8a1905",
+      "at": 1793853658430,
+      "kind": "content",
+      "text": "Updated text of \"Brand New UpdateLog\": Brand New Update LOG to Brand New UpdateLog",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "05b27d08-4f2a-4054-93b6-42ca22a515c1",
+      "at": 1793853651534,
+      "kind": "content",
+      "text": "Updated description of \"Brand New Update LOG\": What changed in the game. to Refreshed the Update Log with collapsible F…",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "2a3f83af-85e4-4190-861b-fcaafb61c23d",
+      "at": 1793853651515,
+      "kind": "content",
+      "text": "Updated text of \"Brand New Update LOG\": New update to Brand New Update LOG",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "7306fb7f-14ef-455d-ac2b-ef925a6b2323",
+      "at": 1793853651495,
+      "kind": "content",
+      "text": "Updated context of \"New update\": Feature to UI",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "c2fcf66d-493f-48a9-ab58-314cfbde82fd",
+      "at": 1793853641452,
+      "kind": "content",
+      "text": "Added \"New update\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "f486f0a2-a299-4a37-82a8-1adeb4182603",
+      "at": 1793853632818,
+      "kind": "content",
+      "text": "Updated description of \"Mobiles\": What changed in the game. to Improved mobile layouts and reduced horizon…",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "f150902b-015d-4d79-91e4-caad70979d73",
+      "at": 1793853632802,
+      "kind": "content",
+      "text": "Updated text of \"Mobiles\": New update to Mobiles",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "d97a67c8-a36a-4253-8521-90b5adeec789",
+      "at": 1793853632785,
+      "kind": "content",
+      "text": "Updated context of \"New update\": Feature to UI",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "ffedff9b-bcfe-473b-ba69-979ed41a11bb",
+      "at": 1793853624312,
+      "kind": "content",
+      "text": "Added \"New update\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "0381aa0e-178a-4576-bd03-3454f0606629",
+      "at": 1793853618113,
+      "kind": "content",
+      "text": "Updated description of \"Stages\": mproved stage layouts to reduce empty space… to Improved \"stage typo\" layouts to reduce emp…",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "8ff4a7e3-f372-41b9-b68a-2faa0f73497f",
+      "at": 1793853598825,
+      "kind": "content",
+      "text": "Updated description of \"Stages\": What changed in the game. to mproved stage layouts to reduce empty space…",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "42284db4-67d2-4d56-8ea6-47de3ca01d8c",
+      "at": 1793853598810,
+      "kind": "content",
+      "text": "Updated text of \"Stages\": New update to Stages",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "0dabc84c-385f-4866-a0ee-6f7da4c53422",
+      "at": 1793853598794,
+      "kind": "content",
+      "text": "Updated context of \"New update\": Feature to UI",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "9a15bb6b-6620-41fa-9364-ec9f0b517c94",
+      "at": 1793853595055,
+      "kind": "content",
+      "text": "Added \"New update\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "3b3f8730-77bc-4e10-9786-9655e9f72feb",
+      "at": 1793853591165,
+      "kind": "content",
+      "text": "Updated context of \"Better UX\": Feature to UI",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "5182245b-3f7e-4af6-a175-219b4e508a13",
+      "at": 1793853586225,
+      "kind": "content",
+      "text": "Updated description of \"Better UX\": What changed in the game. to Made tiers and milestones more compact, wit…",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "d9a0ca9b-903f-4682-a535-d1c2b6b64939",
+      "at": 1793853586207,
+      "kind": "content",
+      "text": "Updated text of \"Better UX\": New update to Better UX",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "9814a947-46d4-4efb-8c83-d0f04d2bc1c1",
+      "at": 1793853580762,
+      "kind": "content",
+      "text": "Added \"New update\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "a0da3430-ec0d-4512-be15-b6181d704af7",
+      "at": 1793853574701,
+      "kind": "content",
+      "text": "Updated context of \"Cards\": Feature to Bugs",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "34c3906f-2c60-47c1-a68e-c3b79482cd98",
+      "at": 1793853566387,
+      "kind": "content",
+      "text": "Updated description of \"Cards\": What changed in the game. to Fixed some progression cards remaining invi…",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "25141d3d-cf9b-4f4c-997a-c29f14557928",
+      "at": 1793853566371,
+      "kind": "content",
+      "text": "Updated text of \"Cards\": New update to Cards",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "9d4e47de-7971-4a13-911a-6101b825aa0f",
+      "at": 1793853562623,
+      "kind": "content",
+      "text": "Added \"New update\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "03d52d6f-fb54-42ae-882f-75705a734c90",
+      "at": 1793853555408,
+      "kind": "content",
+      "text": "Updated description of \"Pages\": What changed in the game. to Fixed page content disappearing after movin…",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "1552c554-9aa5-4a2a-b44f-b6e5ce102e22",
+      "at": 1793853555392,
+      "kind": "content",
+      "text": "Updated text of \"Pages\": New update to Pages",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "a53aab0d-c67f-41b3-b933-4e52f6162cb1",
+      "at": 1793853555375,
+      "kind": "content",
+      "text": "Updated context of \"New update\": Feature to Bugs",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "fd10656e-6960-4d34-a66b-9f7d6d44f374",
+      "at": 1793853550601,
+      "kind": "content",
+      "text": "Added \"New update\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "8d25ef5e-dd14-4f21-aa82-a8c51219a5be",
+      "at": 1793853534732,
+      "kind": "content",
+      "text": "Updated description of \"Categories\": Fixed missing categories and nested pages i… to Fixed missing categories and nested pages i…",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "f90f4f39-ec00-46f5-a8f6-97bdeac6299c",
+      "at": 1793853526436,
+      "kind": "content",
+      "text": "Updated description of \"Categories\": Fixed missing categories and nested pages i… to Fixed missing categories and nested pages i…",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "c7785240-6f26-424d-82e7-d4580e263d54",
+      "at": 1793853522108,
+      "kind": "content",
+      "text": "Updated description of \"Categories\": Fixed missing categories and nested pages i… to Fixed missing categories and nested pages i…",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "c1ec7a50-c6f5-43c0-ad11-a935de42fe6a",
+      "at": 1793853509987,
+      "kind": "content",
+      "text": "Added \"New update\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "a20c64af-95c4-4f3f-a4d2-50ed3cfc6e47",
+      "at": 1793853499682,
+      "kind": "content",
+      "text": "Updated description of \"Categories\": What changed in the game. to Fixed missing categories and nested pages i…",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "a804efe0-565c-45c6-90ae-d2a9c7c728a8",
+      "at": 1793853499660,
+      "kind": "content",
+      "text": "Updated text of \"Categories\": New update to Categories",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "f7ccc32b-1bba-40a1-ada0-94881eeb2821",
+      "at": 1793853499641,
+      "kind": "content",
+      "text": "Updated context of \"New update\": Feature to Bugs",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "82d373ea-c34d-474c-978f-17b39fc2475d",
+      "at": 1793853480830,
+      "kind": "content",
+      "text": "Added \"New update\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "b27ee829-c99d-4f87-862c-b7b11e3d21d8",
+      "at": 1793853320785,
+      "kind": "content",
+      "text": "Renamed \"FAQ (WIP)\" to \"FAQ\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "2866a1d4-855d-48ec-b3ff-9b1f9a9d0957",
+      "at": 1793853315628,
+      "kind": "content",
+      "text": "Updated desc of \"FAQ (WIP)\": look here the answer of most asked question! to Faq currently with WIP",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "7346acee-354a-42b6-9bd6-9bd04a0fed93",
+      "at": 1793853228143,
+      "kind": "content",
+      "text": "Moved \"Sap\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "ed1bb40e-ae1a-4d1c-8b0e-18bea747ae66",
+      "at": 1793853223529,
+      "kind": "content",
+      "text": "Moved \"Tree Tier\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "9f6e62c4-01c4-4168-b310-ccbd5b529089",
+      "at": 1793853212362,
+      "kind": "content",
+      "text": "Removed \"New category\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
       "id": "a5b1fec4-3e60-4959-abfd-8266d2c1dcba",
       "at": 1793851590921,
       "kind": "content",
@@ -2023,382 +2399,6 @@
       "kind": "content",
       "text": "Updated 1 of \"row-2fced816-1d99-4a3d-8ef4-973b259a5fe0\": empty to 149",
       "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "bd004a6c-c93e-46bb-b355-6a18f721aeb8",
-      "at": 1793845061412,
-      "kind": "content",
-      "text": "Updated 2 of \"row-2fced816-1d99-4a3d-8ef4-973b259a5fe0\": empty to 3x Energy, 2.5x Perks, 2x Perks, 1.5x Gears",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "60fd256c-5e32-4a82-86b3-5d3f596b58df",
-      "at": 1793845061411,
-      "kind": "content",
-      "text": "Updated 0 of \"row-2fced816-1d99-4a3d-8ef4-973b259a5fe0\": empty to Factory Master",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "2d4d3480-23e0-47da-b1be-24bb9d5fb2f0",
-      "at": 1793845035905,
-      "kind": "content",
-      "text": "Added \"row-2fced816-1d99-4a3d-8ef4-973b259a5fe0\"",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "05dd68e0-7f83-4ac0-9335-6ff851740383",
-      "at": 1793845034692,
-      "kind": "content",
-      "text": "Updated columns of \"Gamepasses \": [\"Name\",\"Requirement\",\"Effect\"] to [\"Name\",\"Price\",\"Boosts\"]",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "3408a805-9bff-4c9e-a61c-da7188197b95",
-      "at": 1793845034691,
-      "kind": "content",
-      "text": "Updated text of \"Gamepasses \": New table to Gamepasses",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "21aedaf0-7c06-43fd-a1b2-f677c094062d",
-      "at": 1793845017614,
-      "kind": "content",
-      "text": "Added \"New table\"",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "812b0be2-12a7-4a83-8765-c8c338028bb3",
-      "at": 1793845012058,
-      "kind": "content",
-      "text": "Removed \"Name\"",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "7233802f-6a63-4555-ba62-c47492f19017",
-      "at": 1793814557810,
-      "kind": "content",
-      "text": "Updated text of \"Name\": Write a description or FAQ answer here. to Price: xxx Robux Boosts: x stat, x stat, x …",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "1526bb62-a85a-4e83-a377-2cb42660fded",
-      "at": 1793814557804,
-      "kind": "content",
-      "text": "Updated text of \"Name\": N to Name",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "07045510-d45b-4c92-99f2-6b8b25a71693",
-      "at": 1793814514943,
-      "kind": "content",
-      "text": "Updated text of \"N\": New section to N",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "406f2fba-186a-41c3-b4b7-38dd46852285",
-      "at": 1793814510729,
-      "kind": "content",
-      "text": "Set sections of \"Gamepasses\" ([])",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "ef719e8e-a1a3-468c-83c6-f77cf864d479",
-      "at": 1793814510729,
-      "kind": "content",
-      "text": "Added \"New section\"",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "d89f9e70-5497-4131-95a0-416918c5d86c",
-      "at": 1793814446929,
-      "kind": "content",
-      "text": "Removed \"New page\"",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "86a0ff6f-2e16-4b24-9cb4-3a2b0ebed8d6",
-      "at": 1793814422894,
-      "kind": "content",
-      "text": "Added \"New page\"",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "0a79e158-b7b5-4e31-8231-c5398aa6848b",
-      "at": 1793814094524,
-      "kind": "content",
-      "text": "Removed \"New page\"",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "bcd058fb-bb2e-44ab-b759-191f044eaea0",
-      "at": 1793814056666,
-      "kind": "content",
-      "text": "Moved \"Eternal Shards\"",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "a2253850-ed97-4cb7-a3d8-053c45696857",
-      "at": 1793814051811,
-      "kind": "content",
-      "text": "Moved \"Eternal Shards\"",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "1ac081ee-3f54-4396-8706-ccd2235a57ab",
-      "at": 1793814049126,
-      "kind": "content",
-      "text": "Moved \"Eternal Shards\"",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "b01cd1d3-59ce-496e-b7fb-621e3a3dfe73",
-      "at": 1793813921501,
-      "kind": "content",
-      "text": "Added \"New page\"",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "1600d2e5-b89e-43a1-82f6-a57fd394e902",
-      "at": 1793813623153,
-      "kind": "content",
-      "text": "Updated requirements of \"Evolution 6\": [\"1M Energy\"] to [\"250Qa Red Liquid\"]",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "a262177e-0772-443c-8fc0-725e2b4a0f26",
-      "at": 1793813623153,
-      "kind": "content",
-      "text": "Updated boosts of \"Evolution 6\": [\"2x Energy\"] to [\"64x Red Liquid gains\",\"2.99x Energy\",\"2.9…",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "4495620d-2e70-4386-a60c-17c005f7ebb0",
-      "at": 1793813623153,
-      "kind": "content",
-      "text": "Updated places of \"Evolution 6\": [] to [\"Unlock Monster Sacrifice\"]",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "fc43d592-0bab-446b-8144-6b3d99c615df",
-      "at": 1793813623153,
-      "kind": "content",
-      "text": "Updated features of \"Evolution 6\": [] to [{\"name\":\"Auto Monster Click [10/s]\",\"subs\"…",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "5e732712-1a50-4417-95a8-6966d3696d3d",
-      "at": 1793813587813,
-      "kind": "content",
-      "text": "Added \"Evolution 6\"",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "d8d411ca-fd82-49a7-b002-1878c36fc2ef",
-      "at": 1793813579877,
-      "kind": "content",
-      "text": "Updated requirements of \"Evolution 5\": [\"1M Energy\"] to [\"10T Red Liquid\"]",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "af6b1495-c42b-470d-a009-120c3a724b3a",
-      "at": 1793813579877,
-      "kind": "content",
-      "text": "Updated boosts of \"Evolution 5\": [\"2x Energy\"] to [\"32x Red Liquid gains\",\"2.49x Energy\",\"2.4…",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "c56da816-22a5-4c9e-9a5c-e720a30595ec",
-      "at": 1793813579877,
-      "kind": "content",
-      "text": "Updated places of \"Evolution 5\": [] to [\"Unlock Monster Levels\"]",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "02083271-4d7f-40f9-a3b4-5f671e0cf9e2",
-      "at": 1793813579877,
-      "kind": "content",
-      "text": "Updated features of \"Evolution 5\": [] to [{\"name\":\"2 New Monster Upgrades\",\"subs\":[]…",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "77733fd0-1753-4139-94e0-38d5efe09b64",
-      "at": 1793813541182,
-      "kind": "content",
-      "text": "Updated requirements of \"Evolution 4\": [\"1M Energy\"] to [\"10B Red Liquid\"]",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "742882b1-80d7-4e29-a84d-ef22d9d810f8",
-      "at": 1793813541182,
-      "kind": "content",
-      "text": "Updated boosts of \"Evolution 4\": [\"2x Energy\"] to [\"16x Red Liquid gains\",\"2.07x Energy\",\"2.0…",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "51b06d50-6adf-4d0c-bcb9-f0bde0123f77",
-      "at": 1793813541182,
-      "kind": "content",
-      "text": "Updated features of \"Evolution 4\": [] to [{\"name\":\"1 New Monster Upgrade\",\"subs\":[]}…",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "52a8e5c9-d45e-46b7-93e7-97183854c94d",
-      "at": 1793813511549,
-      "kind": "content",
-      "text": "Updated features of \"Evolution 2\": [{\"name\":\"2 Monster Upgrades\",\"subs\":[]},{\"… to [{\"name\":\"2 New Monster Upgrades\",\"subs\":[]…",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "b378a480-127f-47f8-8656-c1e599280e95",
-      "at": 1793813506689,
-      "kind": "content",
-      "text": "Updated requirements of \"Evolution 3\": [\"1M Energy\"] to [\"10M Red Liquid\"]",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "768326bb-e5f9-4fab-9921-2916fd0ccfe9",
-      "at": 1793813506689,
-      "kind": "content",
-      "text": "Updated boosts of \"Evolution 3\": [\"2x Energy\"] to [\"8x Red Liquid gains\",\"1.73x Energy\",\"1.73…",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "a2951410-a92b-4cc0-b3b2-1b7734942447",
-      "at": 1793813506689,
-      "kind": "content",
-      "text": "Updated features of \"Evolution 3\": [] to [{\"name\":\"1 New Monster Upgrade\",\"subs\":[]}…",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "0ddb0ed1-8883-4087-84a8-851d5dff2847",
-      "at": 1793813463596,
-      "kind": "content",
-      "text": "Updated boosts Note of \"Evolution 1\": teste to empty",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "3ea73381-1b37-4721-8c12-a5bc3a69ed25",
-      "at": 1793813455164,
-      "kind": "content",
-      "text": "Updated requirements of \"Evolution 2\": [\"1M Energy\"] to [\"5K Red Liquid\"]",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "f8e0a69c-dc7e-454c-8608-e51dcacbd709",
-      "at": 1793813455164,
-      "kind": "content",
-      "text": "Updated boosts of \"Evolution 2\": [\"2x Energy\"] to [\"4x Red Liquid gains\",\"1.44x Energy\",\"1.44…",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "bf247bf5-120d-470a-b4af-0b594f99bfbb",
-      "at": 1793813455164,
-      "kind": "content",
-      "text": "Updated features of \"Evolution 2\": [] to [{\"name\":\"2 Monster Upgrades\",\"subs\":[]},{\"…",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "d3e23e7c-d44b-4e0a-8f95-b9ee8904437f",
-      "at": 1793813400461,
-      "kind": "content",
-      "text": "Added \"Evolution 5\"",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "421ae8a2-ba3f-45db-a1a3-5fa81330d4db",
-      "at": 1793813398938,
-      "kind": "content",
-      "text": "Added \"Evolution 4\"",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "7107d79a-f7be-4afb-97e5-c22f7de155e0",
-      "at": 1793813397775,
-      "kind": "content",
-      "text": "Added \"Evolution 3\"",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "e737996d-438b-4acf-9ec6-331a4e2b8596",
-      "at": 1793813394809,
-      "kind": "content",
-      "text": "Added \"Evolution 2\"",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "526336bf-ea2c-429a-bf3c-0cfedb9bc1ce",
-      "at": 1793813390374,
-      "kind": "content",
-      "text": "Updated features of \"Evolution 1\": [{\"name\":\"2 Monster Upgrades\",\"subs\":[]},{\"… to [{\"name\":\"2 New Monster Upgrades\",\"subs\":[]…",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "08de534d-0e28-4f25-81a1-44056d086730",
-      "at": 1793813381169,
-      "kind": "content",
-      "text": "Updated features of \"Evolution 1\": [{\"name\":\"• 2 Monster Upgrades\",\"subs\":[]},… to [{\"name\":\"2 Monster Upgrades\",\"subs\":[]},{\"…",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "ce193cb0-96cf-45e5-a72f-c06954b3260b",
-      "at": 1793813375854,
-      "kind": "content",
-      "text": "Updated area of \"Evolution 1\": teste1 to empty",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "66038c92-f33c-468b-a7fa-2b45fb76a870",
-      "at": 1793813375854,
-      "kind": "content",
-      "text": "Updated places of \"Evolution 1\": [\"teste2\"] to []",
-      "actor": "Quaantic",
       "pending": true
     }
   ]
