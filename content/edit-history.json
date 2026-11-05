@@ -2,6 +2,46 @@
   "format": 1,
   "entries": [
     {
+      "id": "4272a8f1-fac8-4bd3-9e3b-38835137da00",
+      "at": 1793848763754,
+      "kind": "content",
+      "text": "Updated requirements of \"Tier 1\": [\"??? XP\"] to [\"25K XP\"]",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "5d5b8075-f00c-4a46-b3f4-b88bc9f87e3a",
+      "at": 1793848756054,
+      "kind": "content",
+      "text": "Updated desc of \"Tree Tier\": Tree Tiers are a feature unlocked through R… to Tree Tiers are a feature unlocked through R…",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "34183135-8463-4509-a4ac-a53546b5e682",
+      "at": 1793848712177,
+      "kind": "content",
+      "text": "Removed \"Tree Milestones\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "83357de0-1768-4cbc-92ab-a9fd8bf84d3b",
+      "at": 1793848640743,
+      "kind": "content",
+      "text": "Updated item Label of \"Tiers\": Stage to Tiers",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "5610212e-5f3b-4ecc-97b5-8fc968719a66",
+      "at": 1793848640742,
+      "kind": "content",
+      "text": "Updated text of \"Tiers\": Stages to Tiers",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
       "id": "5a573e04-37a4-4cd6-8678-6642fc088725",
       "at": 1793848385895,
       "kind": "content",
@@ -2225,31 +2265,6 @@
       "at": 1793806349282,
       "kind": "content",
       "text": "Updated desc of \"Training Island \": Training Island most asked questions (dunge… to Training Island most asked questions (dunge…"
-    },
-    {
-      "at": 1793806349282,
-      "kind": "content",
-      "text": "Updated icon of \"Training Island \": punch to biceps-flexed"
-    },
-    {
-      "at": 1793806297154,
-      "kind": "content",
-      "text": "Renamed \"Training Island \" to \"Training Island \""
-    },
-    {
-      "at": 1793806297154,
-      "kind": "content",
-      "text": "Updated desc of \"Training Island \": Training Island most asked questions (dunge… to Training Island most asked questions (dunge…"
-    },
-    {
-      "at": 1793806297154,
-      "kind": "content",
-      "text": "Updated icon of \"Training Island \": sparkles to punch"
-    },
-    {
-      "at": 1793806297153,
-      "kind": "content",
-      "text": "Updated id of \"Training Island \": TrainingIsland-FAQ to TrainingIsland-FAQ"
     }
   ]
 }
