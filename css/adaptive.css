@@ -122,3 +122,12 @@
   .stage-card--full .stage-card__col { display:flex; }
   .site-footer { padding:20px 16px; }
 }
+/* Readable release notes with neutral surfaces. */
+.upd-entry > div { width:100%; min-width:0; }
+.upd-entry__title, .upd-entry__title-text { font-size:16px; line-height:1.4; }
+.upd-entry__description { font-size:14px; line-height:1.6; max-width:none; width:100%; }
+.upd-entry { padding:12px 14px; }
+:root:not([data-theme='light']) .upd-entry { background:#ffffff04; }
+:root:not([data-theme='light']) .upd-group { background:#101510e8; }
+:root:not([data-theme='light']) .upd-version { background:#111611e8; }
+.upd-entry__order { float:right; gap:4px; margin-left:12px; }

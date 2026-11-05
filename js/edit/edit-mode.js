@@ -2347,6 +2347,22 @@ function installInteraction() {
       return;
     }
 
+    const moveTrigger = event.target.closest('[data-update-move]');
+    if (moveTrigger && session.editing) {
+      event.preventDefault(); event.stopPropagation();
+      const [version,index,direction]=moveTrigger.dataset.updateMove.split(':').map(Number);
+      const path=`versions.${version}.entries`;
+      const entries=draft.getValue('updates',path);
+      let target=index+direction;
+      while(target>=0&&target<entries.length&&entries[target].context!==entries[index].context) target+=direction;
+      if(target>=0&&target<entries.length){
+        draft.moveValue('updates',path,index,path,target);
+        draft.applyDraftToSite();
+        window.dispatchEvent(new CustomEvent('ri-edit-content'));
+        void rerender({scroll:'preserve'});
+      }
+      return;
+    }
     const addTrigger = event.target.closest('[data-edit-add]');
     if (addTrigger && session.editing) {
       event.preventDefault();
