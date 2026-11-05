@@ -42,14 +42,14 @@ test('a racing save rebases only local changes and retries history without overw
     editorA.setValue('updates','versions.0.entries.0.description','My release note');
     const life=editorB.doc('wiki').categories.findIndex(cat=>cat.id==='life');
     const tree=editorB.doc('wiki').categories[life].subcategories.findIndex(page=>page.id==='tree');
-    editorB.pushValue('wiki',`categories.${life}.subcategories.${tree}.children`,{id:'tree-tier',name:'Tree Tier',desc:'Tree tiers',icon:'arrow-up',children:[]});
-    editorB.setValue('game','progression.stages.life/tree-tier',{title:'Tiers',stages:[{num:'1',title:'Tier 1',requirements:['25K XP'],boosts:['More Logs'],unlocks:{area:'',places:[],features:[]}}]});
+    editorB.pushValue('wiki',`categories.${life}.subcategories.${tree}.children`,{id:'test-tree-tier',name:'Tree Tier',desc:'Tree tiers',icon:'arrow-up',children:[]});
+    editorB.setValue('game','progression.stages.life/test-tree-tier',{title:'Tiers',stages:[{num:'1',title:'Tier 1',requirements:['25K XP'],boosts:['More Logs'],unlocks:{area:'',places:[],features:[]}}]});
     await Promise.all([editorA.saveDraft('editor-a'),editorA.saveDraft('editor-a')]);
     const saved=decode(repo.get(schema.DRAFT_FILE));
     assert.deepEqual(saved.wiki,websiteAfterFriendSave.wiki);
     assert.deepEqual(saved.game,websiteAfterFriendSave.game);
     assert.equal(saved.updates.versions[0].entries[0].description,'My release note');
-    assert.equal(saved.game.progression.stages['life/tree-tier'].stages[0].requirements[0],'25K XP');
+    assert.equal(saved.game.progression.stages['life/test-tree-tier'].stages[0].requirements[0],'25K XP');
     const history=decode(repo.get('content/edit-history.json')).entries;
     assert.deepEqual(new Set(history.map(entry=>entry.actor)),new Set(['test-race-a','test-race-b','editor-c']));
     assert.equal(new Set(history.map(entry=>entry.id)).size,history.length);

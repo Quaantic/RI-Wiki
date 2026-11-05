@@ -450,10 +450,12 @@ function confirmReleaseOrder(version, source) {
 }
 
 async function restoreDownloadedDraft(file) {
-  if (!session.ready || !session.allowed || session.busy || sharedRefreshChecking) return;
+  if (!session.ready || !session.allowed || session.busy) return;
   session.busy = true;
   updateToolbar();
   try {
+    // Closing the file picker can trigger a focus refresh before its change event.
+    await sharedRefreshChecking;
     const snapshot = JSON.parse(await file.text());
     const unfinished = snapshot?._unfinishedForm;
     const forms = unfinished ? [...(unfinished.pending || []), unfinished] : [];
@@ -693,12 +695,10 @@ function setEditing(on) {
 }
 
 let sharedRefreshTimer;
-let sharedRefreshChecking = false;
+let sharedRefreshChecking = null;
 function startSharedRefresh() {
   clearInterval(sharedRefreshTimer);
-  const check = async () => {
-    if (!session.ready || session.busy || sharedRefreshChecking || popState || dragSource || document.hidden) return;
-    sharedRefreshChecking = true;
+  const refresh = async () => {
     try {
       if (await draft.syncRemote(session.token)) {
         session.syncError = '';
@@ -712,9 +712,13 @@ function startSharedRefresh() {
       session.syncError = error.release ? 'Update Log order conflict'
         : error.name === 'SyncConflict' ? 'Sync conflict — download your draft' : 'Sync unavailable — local edits kept';
     } finally {
-      sharedRefreshChecking = false;
+      sharedRefreshChecking = null;
       updateToolbar();
     }
+  };
+  const check = () => {
+    if (!session.ready || session.busy || sharedRefreshChecking || popState || dragSource || document.hidden) return;
+    sharedRefreshChecking = refresh();
   };
   sharedRefreshTimer = setInterval(check, 15000);
   window.addEventListener('focus', check);

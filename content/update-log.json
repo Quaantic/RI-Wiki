@@ -1,6 +1,173 @@
 {
   "versions": [
     {
+      "version": "1.02",
+      "date": "2026-11-05",
+      "entries": [
+        {
+          "id": "entry-c8d9f72b-c7a9-45ab-8a6b-fd97b6cafe37",
+          "context": "Feature",
+          "title": "Frequently Asked Questions [FAQ]",
+          "href": "",
+          "description": "Your most frequently made questions are now answered in FAQ (WIP), leave us a feedback!"
+        },
+        {
+          "id": "entry-5f705e92-adb7-489a-92e2-bcdc95fc9b36",
+          "context": "Feature",
+          "title": "Apples",
+          "href": "#/life/apples",
+          "description": "Added the 4 types of Apples and their bonuses"
+        },
+        {
+          "id": "entry-8eacbe44-9775-41cf-b747-99d9e261e621",
+          "context": "Changes",
+          "title": "Eternal Shard Moved ",
+          "href": "",
+          "description": "Eternal Shards category was moved from Main to Miscellaneous tab."
+        },
+        {
+          "id": "entry-3f61b2bc-2f6b-4734-bed8-42b7c5c03960",
+          "context": "Feature",
+          "title": "Tree Tiers",
+          "href": "#/life/tree-tier",
+          "description": "Added the 12 Tree Tiers and their bonuses "
+        },
+        {
+          "id": "entry-789ebe48-e15f-4664-938f-13aff11b7cef",
+          "context": "Feature",
+          "title": "Golden Research",
+          "href": "#/life/golden-research",
+          "description": "Added Golden Research Milestones and Golden Points bonuses."
+        },
+        {
+          "id": "entry-e6a8b792-16ec-4767-866b-d292378a3ba2",
+          "context": "Feature",
+          "title": "Special Energies",
+          "href": "#/money-island/energies",
+          "description": "Added all 4 types of energies: Silver Energy | Gold Energy | Diamond Energy & Ruby Energy"
+        },
+        {
+          "id": "entry-82acfc87-90e5-4d36-b958-d17d5a14bfc1",
+          "context": "Feature",
+          "title": "Frost Expansion",
+          "href": "#/life/frost",
+          "description": "Added Frost Generators and all 4 types of Frost Conversions."
+        },
+        {
+          "id": "entry-b25b1c07-44b9-4e36-9b4a-53a2497fb508",
+          "context": "Feature",
+          "title": "Monster",
+          "href": "#/life/monster-evolution",
+          "description": "Added all 6 Monster Evolutions and their bonuses"
+        },
+        {
+          "id": "entry-1962aaa4-ffd1-4837-ac0b-244994a8b538",
+          "context": "Feature",
+          "title": "Astatine",
+          "href": "#/main/astatine",
+          "description": "Added Astatine Powers and Milestones."
+        },
+        {
+          "id": "entry-c75c2bc8-0444-4ab2-8587-e68adc857736",
+          "context": "Feature",
+          "title": "Californium",
+          "href": "#/main/californium-milestones",
+          "description": "Added Californium Milestones."
+        },
+        {
+          "id": "entry-dada62bf-3028-4064-bac1-ddc4bbc50e30",
+          "context": "Feature",
+          "title": "Miscellaneous",
+          "href": "",
+          "description": "A New Miscellaneous tab was created: it contains informations of game side-stats or paid-resources!"
+        },
+        {
+          "id": "entry-3f67d361-7416-482b-89d9-a20633dd5a84",
+          "context": "Feature",
+          "title": "Gamepasses",
+          "href": "",
+          "description": "Added Gamepasses Prices and Boosts in the wiki."
+        },
+        {
+          "id": "entry-2d3a8d0c-e2b0-47fb-804f-65d182ea8c5a",
+          "context": "Bugs",
+          "title": "Typos",
+          "href": "",
+          "description": "Fixed typos and wrong informations."
+        },
+        {
+          "id": "entry-1ed190dd-f75c-4250-8e06-0d9a32a386fd",
+          "context": "Bugs",
+          "title": "Categories",
+          "href": "",
+          "description": "Fixed missing categories and nested pages in the sidebar and category branches sometimes refusing to collapse."
+        },
+        {
+          "id": "entry-3ad3acb8-02b3-4f1d-8340-570ba34613d7",
+          "context": "Bugs",
+          "title": "Pages",
+          "href": "",
+          "description": "Fixed page content disappearing after moving pages between categories."
+        },
+        {
+          "id": "entry-9a05453c-d663-4456-9836-7aed7e02ffa5",
+          "context": "Bugs",
+          "title": "Cards",
+          "href": "",
+          "description": "Fixed some progression cards remaining invisible until scrolling."
+        },
+        {
+          "id": "entry-b9094f46-acb0-45cc-81da-cd47b04c4ff0",
+          "context": "UI",
+          "title": "Better UX",
+          "href": "",
+          "description": "Made tiers and milestones more compact, with aligned cards and clearer Requirements, Boosts, and Unlocks labels."
+        },
+        {
+          "id": "entry-18fed434-ba97-4b0e-9306-65513e7b4958",
+          "context": "UI",
+          "title": "Stages",
+          "href": "",
+          "description": "Improved \"stage typo\" layouts to reduce empty space and keep related information together."
+        },
+        {
+          "id": "entry-57320250-0815-4878-9511-b78a40f84f27",
+          "context": "UI",
+          "title": "Mobiles",
+          "href": "",
+          "description": "Improved mobile layouts and reduced horizontal overflow."
+        },
+        {
+          "id": "entry-a18552c6-29c5-4c53-96e6-116d918dffaa",
+          "context": "UI",
+          "title": "Brand New UpdateLog",
+          "href": "",
+          "description": "Updates with collapsible Features, Changes, UI, and Bugs sections, plus release filters."
+        },
+        {
+          "id": "entry-0f9cf1c9-db12-4a8c-a301-c63c98dc669a",
+          "context": "UI",
+          "title": "Background",
+          "href": "",
+          "description": "Added lightweight backgrounds and more consistent styling across the wiki."
+        },
+        {
+          "id": "entry-0011c252-d46e-453a-bc8e-d3eca0eed22d",
+          "context": "UI",
+          "title": "New Colors",
+          "href": "",
+          "description": "A lot of texts got new colors."
+        },
+        {
+          "id": "entry-328e6823-6d9a-4ced-bf7b-269f9790c0ca",
+          "context": "Changes",
+          "title": "Life",
+          "href": "#/life/terra-life",
+          "description": "Added Life 6."
+        }
+      ]
+    },
+    {
       "version": "1.01",
       "date": "2026-11-03",
       "entries": [
@@ -8,38 +175,45 @@
           "context": "Feature",
           "title": "Rare Saps",
           "href": "#/life/rare-saps",
-          "description": "Added Silver, Golden, Diamond and Amethyst Sap with separate owned-amount calculators, three bonuses each and their tree-cutting drop chances."
+          "description": "Added Silver, Golden, Diamond and Amethyst Sap with separate owned-amount calculators, three bonuses each and their tree-cutting drop chances.",
+          "id": "entry-a67b5755-0"
         },
         {
           "context": "Feature",
           "title": "Power of Fossils",
           "href": "#/life/power-of-fossils",
-          "description": "Added seven permanent Fossil milestone bonuses, including More Life Gems and More Void Apples."
+          "description": "Added seven permanent Fossil milestone bonuses, including More Life Gems and More Void Apples.",
+          "id": "entry-5263f34f-0"
         },
         {
           "context": "Changes",
           "title": "Named Sap and Fossil effects",
-          "description": "Bonus cards now show their real effects, including More Logs, Axe Damage, Better Sap Chance, More Research Cap and Mastery."
+          "description": "Bonus cards now show their real effects, including More Logs, Axe Damage, Better Sap Chance, More Research Cap and Mastery.",
+          "id": "entry-a1e3a61c-0"
         },
         {
           "context": "Bugs",
           "title": "Fossil calculator input",
-          "description": "Fixed empty Fossil amounts being rejected; an empty field now correctly behaves as zero, and game-number input is accepted."
+          "description": "Fixed empty Fossil amounts being rejected; an empty field now correctly behaves as zero, and game-number input is accepted.",
+          "id": "entry-aeda91a8-0"
         },
         {
           "context": "Bugs",
           "title": "Bonus card overflow and resource links",
-          "description": "Fixed cramped text and overflowing bonus cards. Colored resource names in the calculators now navigate to their matching wiki pages."
+          "description": "Fixed cramped text and overflowing bonus cards. Colored resource names in the calculators now navigate to their matching wiki pages.",
+          "id": "entry-bba41a2-0"
         },
         {
           "context": "UI",
           "title": "Rare Sap colors and layout",
-          "description": "Grouped the four Rare Saps on one page, color-coded by type, and adjusted the bonus grids for desktop and mobile screens."
+          "description": "Grouped the four Rare Saps on one page, color-coded by type, and adjusted the bonus grids for desktop and mobile screens.",
+          "id": "entry-d2efda4e-0"
         },
         {
           "context": "UI",
           "title": "A refreshed Update Log",
-          "description": "Added a version overview, entry counts, category filters and colorful, clickable resource references throughout the release notes."
+          "description": "Added a version overview, entry counts, category filters and colorful, clickable resource references throughout the release notes.",
+          "id": "entry-6d8a12de-0"
         }
       ]
     },

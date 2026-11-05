@@ -237,6 +237,11 @@ test('moving Eternal Shards preserves Eternal Tree data and editable bindings', 
   const views = await import('../js/views.js');
   const { getFormulaPage } = await import('../js/data/formulas.js');
   const docs = { wiki: JSON.parse(fs.readFileSync('content/wiki-data.json')), game: JSON.parse(fs.readFileSync('content/game-data.json')), updates: JSON.parse(fs.readFileSync('content/update-log.json')) };
+  const previousCategory = docs.wiki.categories.find(category => category.id !== 'main' && category.subcategories.some(page => page.id === 'eternal-shards'));
+  if (previousCategory) {
+    const index = previousCategory.subcategories.findIndex(page => page.id === 'eternal-shards');
+    docs.wiki.categories[0].subcategories.push(...previousCategory.subcategories.splice(index, 1));
+  }
   draft.__testInjectDocs(docs); draft.applyDraftToSite();
   const original = structuredClone(getFormulaPage('main','eternal-tree'));
   draft.pushValue('wiki','categories',{id:'miscellaneous',name:'Miscellaneous',desc:'',tagline:'',subcategories:[]});
@@ -334,6 +339,8 @@ test('update log uses collapsible release/category groups and no leading entry i
   const draft=await import('../js/edit/draft.js');
   const {updatesView}=await import('../js/views.js');
   draft.__testInjectDocs({wiki:JSON.parse(fs.readFileSync('content/wiki-data.json')),game:JSON.parse(fs.readFileSync('content/game-data.json')),updates:JSON.parse(fs.readFileSync('content/update-log.json'))});
+  const updates = draft.doc('updates');
+  updates.versions = updates.versions.filter(version => version.version === '1.01');
   draft.applyDraftToSite();
   const root=mkEl();await updatesView.render(root);
   assert.match(root.innerHTML,/<details[^>]+data-update-version[^>]+data-release-kind="minor"/);
@@ -343,7 +350,6 @@ test('update log uses collapsible release/category groups and no leading entry i
   assert.doesNotMatch(root.innerHTML,/<article[^>]*>\s*<svg/);
   assert.match(root.innerHTML,/data-update-filter="hotfix"/);
 
-  const updates = draft.doc('updates');
   const older = { ...updates.versions[0], version: '1.00' };
   draft.pushValue('updates', 'versions', older);
   draft.applyDraftToSite();
@@ -378,6 +384,8 @@ test('legacy Tree Milestones bookmarks resolve a renamed Tree Tier without repla
   const {getSubcategory,getCategory}=await import('../js/data/wiki-data.js');
   const fixture=JSON.parse(fs.readFileSync('content/wiki-data.json'));
   const tree=fixture.categories.find(category=>category.id==='life').subcategories.find(page=>page.id==='tree');
+  tree.children = tree.children.filter(page => !['tree-tier', 'tree-milestones'].includes(page.id));
+  tree.children.push({id:'tree-milestones',name:'Tree Milestones',desc:'Legacy page',children:[]});
   const old=tree.children.find(page=>page.id==='tree-milestones');
   tree.children.push({id:'tree-tier',name:'Tree Tier',desc:'Editor data',children:[]});
   applyWikiContent(fixture);
