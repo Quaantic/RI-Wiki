@@ -734,7 +734,8 @@
                 "highlights": [],
                 "facts": [],
                 "vitals": [],
-                "children": []
+                "children": [],
+                "contentKey": "life/tree-tier"
               }
             ],
             "sections": []
@@ -1612,7 +1613,7 @@
       },
       {
         "id": "FAQ",
-        "name": "FAQ",
+        "name": "FAQ (WIP)",
         "desc": "look here the answer of most asked question!",
         "tagline": "Frequently Asked Questions (FAQ) that are made in community server and in our feedback page!",
         "icon": "badge-help",
@@ -1761,7 +1762,7 @@
                     "id": "row-c8051d53-83c2-476c-83ff-1f4edadc48b5",
                     "cells": [
                       "Barn Master ",
-                      "",
+                      "379",
                       "3x Crystal Shards, 2x Crystal Perks, 2x Quartz, 2x Bluesteel, 2.25x Energy"
                     ]
                   },
@@ -1825,7 +1826,7 @@
                     "id": "row-c9b90c43-e7c2-4df0-86bb-aaa5139dd047",
                     "cells": [
                       "Dungeon Hunter",
-                      "",
+                      "449",
                       "2x Strength, 2x Health, 2x Coins, 2x Bones, 2x Souls"
                     ]
                   }
