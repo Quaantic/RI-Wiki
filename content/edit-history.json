@@ -2,6 +2,254 @@
   "format": 1,
   "entries": [
     {
+      "id": "82569ced-9972-46dc-8a54-2c6f768bc59e",
+      "at": 1793850023575,
+      "kind": "content",
+      "text": "Removed \"New update\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "45101e49-520d-4929-a659-0f105d2a9f92",
+      "at": 1793850016365,
+      "kind": "content",
+      "text": "Removed \"New update\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "523de3e3-975d-4357-9c9c-dd671b996850",
+      "at": 1793849998144,
+      "kind": "content",
+      "text": "Added \"New update\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "be6e4302-86ca-4a3c-9d7a-169658564cf5",
+      "at": 1793849983868,
+      "kind": "content",
+      "text": "Updated text of \"FAQ Tab (WIP)\": New update to FAQ Tab (WIP)",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "68b2bb20-5393-4ea4-8306-94bd726636da",
+      "at": 1793849983868,
+      "kind": "content",
+      "text": "Updated description of \"FAQ Tab (WIP)\": What changed in the game. to Your most frequently made questions are now…",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "c017b060-6e9a-4feb-a78b-c195a8922716",
+      "at": 1793849908706,
+      "kind": "content",
+      "text": "Added \"New update\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "d7efbe10-7112-449a-b86c-dd7ab54fb780",
+      "at": 1793849890637,
+      "kind": "content",
+      "text": "Added \"New update\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "46862a6a-1f72-400e-a33c-65ab5f0f9ff1",
+      "at": 1793849878582,
+      "kind": "content",
+      "text": "Updated description of \"Typos\": What changed in the game. to Fixed typos and wrong informations.",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "0b1f2564-3c31-422c-b4e1-bdc684b690b9",
+      "at": 1793849878581,
+      "kind": "content",
+      "text": "Updated context of \"New update\": Feature to Bugs",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "5ed57f2c-75f3-4bd0-8689-2dabb97cdab8",
+      "at": 1793849878581,
+      "kind": "content",
+      "text": "Updated text of \"Typos\": New update to Typos",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "57607135-707b-4b15-8733-661266fc144d",
+      "at": 1793849850069,
+      "kind": "content",
+      "text": "Added \"New update\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "6b7ad91c-3de3-42cc-9b5b-53d52635b326",
+      "at": 1793849843960,
+      "kind": "content",
+      "text": "Updated text of \"Tree Tiers\": New update to Tree Tiers",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "b4b21fc6-62a5-4f37-97de-31217c0feaa5",
+      "at": 1793849843960,
+      "kind": "content",
+      "text": "Updated description of \"Tree Tiers\": What changed in the game. to Added Tree Tiers to the Tree page (some tie…",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "d235887f-a970-4c57-a747-4bf539a0ba0d",
+      "at": 1793849781234,
+      "kind": "content",
+      "text": "Added \"New update\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "a562c2dd-dd11-4e76-935d-559fc3b53f12",
+      "at": 1793849777930,
+      "kind": "content",
+      "text": "Updated context of \"New update\": Feature to Changes",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "84ddb3c8-33cd-4ba2-a44e-5eb110c2d1c7",
+      "at": 1793849777930,
+      "kind": "content",
+      "text": "Updated text of \"Eternal Shard Moved \": New update to Eternal Shard Moved",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "299c3e21-e743-4cf5-87d4-c3d821554f88",
+      "at": 1793849777930,
+      "kind": "content",
+      "text": "Updated description of \"Eternal Shard Moved \": What changed in the game. to Eternal Shards category was moved from Main…",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "676775b2-a2c1-4201-8e8b-00606b63c883",
+      "at": 1793849747218,
+      "kind": "content",
+      "text": "Added \"New update\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "10a3508e-7b22-4761-853e-568d0000b54c",
+      "at": 1793849741575,
+      "kind": "content",
+      "text": "Updated text of \"Miscellaneous\": New update to Miscellaneous",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "7aa65aaf-5d0e-4d58-a670-876258ce00fa",
+      "at": 1793849741575,
+      "kind": "content",
+      "text": "Updated description of \"Miscellaneous\": What changed in the game. to A New Miscellaneous tab was created: it con…",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "aa134846-5b48-428e-92b3-5db7a258ec94",
+      "at": 1793849683925,
+      "kind": "content",
+      "text": "Added \"New update\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "761d098d-66b9-4bfd-8ecc-785eb7100d21",
+      "at": 1793849682360,
+      "kind": "content",
+      "text": "Updated text of \"Gamepasses\": New update to Gamepasses",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "7611e44e-89da-47e7-81cc-c95355ed52d6",
+      "at": 1793849682360,
+      "kind": "content",
+      "text": "Updated description of \"Gamepasses\": What changed in the game. to Added Gamepasses Prices and Boosts in the w…",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "d64f3e58-ed81-4f5d-acac-6468393c6657",
+      "at": 1793849659073,
+      "kind": "content",
+      "text": "Added \"New update\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "2e13549f-11ac-4d1b-9da6-84a2cba1e032",
+      "at": 1793849657312,
+      "kind": "content",
+      "text": "Moved \"1.02\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "af3b981d-4b1e-42a6-b08d-f59b4fc34d16",
+      "at": 1793849657311,
+      "kind": "content",
+      "text": "Added \"1.02\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "f1e26e26-40d8-433d-a1f5-968a188a2435",
+      "at": 1793849655011,
+      "kind": "content",
+      "text": "Removed \"Gamepasses\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "cf357062-0160-4990-981f-bd5f46df82bd",
+      "at": 1793849647777,
+      "kind": "content",
+      "text": "Updated text of \"Gamepasses\": New update to Gamepasses",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "84908615-2243-4a75-8a85-9aa91cbc7740",
+      "at": 1793849647777,
+      "kind": "content",
+      "text": "Updated description of \"Gamepasses\": What changed in the game. to Added Gamepasses prices and boosts.",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "7a6a6beb-47b5-4299-9457-9db949676372",
+      "at": 1793849607638,
+      "kind": "content",
+      "text": "Added \"New update\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "c1e08740-d8f9-44b1-a4c5-b347fbf4d9e9",
+      "at": 1793849520467,
+      "kind": "content",
+      "text": "Updated desc of \"Void\": Void Apples are the final tier, unlocked wi… to Void Apples are the final tier, unlocked wi…",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
       "id": "6eda4b25-ba72-4296-bec2-8e940bc2d012",
       "at": 1793849150214,
       "kind": "content",
@@ -2137,161 +2385,6 @@
       "at": 1793807592023,
       "kind": "content",
       "text": "Removed \"Eternal Shards \""
-    },
-    {
-      "at": 1793807579516,
-      "kind": "content",
-      "text": "Removed \"a\""
-    },
-    {
-      "at": 1793807555275,
-      "kind": "content",
-      "text": "Added \"a\""
-    },
-    {
-      "at": 1793806753424,
-      "kind": "content",
-      "text": "Renamed \"Eternal Shards \" to \"Eternal Shards \""
-    },
-    {
-      "at": 1793806753424,
-      "kind": "content",
-      "text": "Updated desc of \"Eternal Shards \": See here eternal shards information and tre… to See here eternal shards information and ete…"
-    },
-    {
-      "at": 1793806753424,
-      "kind": "content",
-      "text": "Updated icon of \"Eternal Shards \": infinity to infinity"
-    },
-    {
-      "at": 1793806753419,
-      "kind": "content",
-      "text": "Updated id of \"Eternal Shards \": Eternal-shards to Eternal-shards"
-    },
-    {
-      "at": 1793806732151,
-      "kind": "content",
-      "text": "Updated id of \"New page\": new-page to Eternal-shards"
-    },
-    {
-      "at": 1793806732151,
-      "kind": "content",
-      "text": "Renamed \"New page\" to \"Eternal Shards \""
-    },
-    {
-      "at": 1793806732151,
-      "kind": "content",
-      "text": "Updated desc of \"Eternal Shards \": Describe this page here. to See here eternal shards information and tre…"
-    },
-    {
-      "at": 1793806732151,
-      "kind": "content",
-      "text": "Updated icon of \"Eternal Shards \": sparkles to infinity"
-    },
-    {
-      "at": 1793806661560,
-      "kind": "content",
-      "text": "Added \"New page\""
-    },
-    {
-      "at": 1793806660030,
-      "kind": "content",
-      "text": "Updated id of \"New page\": new-page to Gamepasses"
-    },
-    {
-      "at": 1793806660030,
-      "kind": "content",
-      "text": "Renamed \"New page\" to \"Gamepasses\""
-    },
-    {
-      "at": 1793806660030,
-      "kind": "content",
-      "text": "Updated desc of \"Gamepasses\": Describe this page here. to See here the gamepass boosts, a tier of whi…"
-    },
-    {
-      "at": 1793806660030,
-      "kind": "content",
-      "text": "Updated icon of \"Gamepasses\": sparkles to hand-coins"
-    },
-    {
-      "at": 1793806540782,
-      "kind": "content",
-      "text": "Added \"New page\""
-    },
-    {
-      "at": 1793806534797,
-      "kind": "content",
-      "text": "Renamed \"New category\" to \"Miscellaneous \""
-    },
-    {
-      "at": 1793806534797,
-      "kind": "content",
-      "text": "Updated tagline of \"Miscellaneous \": What this category is about. to Gamepasses and Eternal Shards are side stat…"
-    },
-    {
-      "at": 1793806534797,
-      "kind": "content",
-      "text": "Updated icon of \"Miscellaneous \": sprout to blend"
-    },
-    {
-      "at": 1793806534796,
-      "kind": "content",
-      "text": "Updated id of \"New category\": new-category to Miscellaneous"
-    },
-    {
-      "at": 1793806430106,
-      "kind": "content",
-      "text": "Added \"New category\""
-    },
-    {
-      "at": 1793806402348,
-      "kind": "content",
-      "text": "Updated id of \"Main Island\": Main-Island-FAQ to Main-Island-FAQ"
-    },
-    {
-      "at": 1793806402348,
-      "kind": "content",
-      "text": "Renamed \"Main Island\" to \"Main Island\""
-    },
-    {
-      "at": 1793806402348,
-      "kind": "content",
-      "text": "Updated desc of \"Main Island\": Main Island most asked questions! to Main Island most asked questions!"
-    },
-    {
-      "at": 1793806402348,
-      "kind": "content",
-      "text": "Updated icon of \"Main Island\": sparkles to compass"
-    },
-    {
-      "at": 1793806396001,
-      "kind": "content",
-      "text": "Updated id of \"General\": General-FAQ to General-FAQ"
-    },
-    {
-      "at": 1793806396001,
-      "kind": "content",
-      "text": "Renamed \"General\" to \"General\""
-    },
-    {
-      "at": 1793806396001,
-      "kind": "content",
-      "text": "Updated desc of \"General\": General most asked questions (extra content… to General most asked questions (extra content…"
-    },
-    {
-      "at": 1793806396001,
-      "kind": "content",
-      "text": "Updated icon of \"General\": album to album"
-    },
-    {
-      "at": 1793806388364,
-      "kind": "content",
-      "text": "Updated id of \"Main\": main to main"
-    },
-    {
-      "at": 1793806388364,
-      "kind": "content",
-      "text": "Renamed \"Main\" to \"Main\""
     }
   ]
 }
