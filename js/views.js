@@ -423,10 +423,7 @@ function resetCalcCard(bonus, requiredLabel, index, amountMode = false, accentCo
         ${!amountMode && bonus.unlockAt ? `<small>unlocks at ${esc(fmtSuffix(bonus.unlockAt))} ${esc(bonus.unlockResource || requiredLabel)}</small>` : ''}
       </header>
       ${amountMode ? `
-      <div class="reset-calc-card__meta">
-        ${bonus.cap ? `<small>Cap: ${esc(fmtSuffix(bonus.cap))} ${esc(bonus.capUnit || 'x')}</small>` : ''}
-        ${bonus.unlockAt ? `<small>Unlocks at ${esc(fmtValue(bonus.unlockLabel || bonus.unlockAt))} ${esc(bonus.unlockResource || requiredLabel)}</small>` : ''}
-      </div>
+      ${bonus.cap ? `<div class="reset-calc-card__meta"><small>Cap: ${esc(fmtSuffix(bonus.cap))} ${esc(bonus.capUnit || 'x')}</small></div>` : ''}
       <div class="reset-calc-answer" data-reset-answer aria-live="polite"></div>` : `
       <label class="reset-calc-field">
         <span>Desired bonus</span>
@@ -485,12 +482,15 @@ function resetLayerSections(page, basePath = '') {
     return `
       <section class="section reset-layer-page">
         ${sectionHead(page.title)}${settings}${inputs}
-        ${basePath ? `<div class="ri-add-row"><button type="button" class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="${esc(basePath)}.groups" data-edit-add-template="bonus-group">${icon('plus', 13)} Add group</button><small class="ri-edit-help">Group related resources on this page. Edit a heading to change its name, owned amount label and notes.</small></div>` : ''}
+        ${basePath ? `<div class="ri-add-row"><button type="button" class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="${esc(basePath)}.groups" data-edit-add-template="bonus-group">${icon('plus', 13)} Add group</button></div>` : ''}
         <div class="bonus-groups-grid">${page.groups.map((group, gi) => `
           <section class="reset-layer-tier rare-sap-group" style="--rare-sap-color:${esc(group.color || '#86d62b')}">
             <div class="reset-tier-head">
               <h3 data-resource-links ${basePath ? ed(`${basePath}.groups.${gi}`, 'game:bonus-group', esc(group.name)) : ''}>${colorizeResources(esc(group.name))} ${group.dropChance ? `<small>Drop chance: ${esc(group.dropChance)}</small>` : ''}</h3>
-              ${bonusAdd(basePath ? `${basePath}.groups.${gi}.bonuses` : '')}
+              <div class="reset-tier-actions">
+                ${basePath ? `<button type="button" class="btn btn--ghost btn--sm ri-edit-add" ${ed(`${basePath}.groups.${gi}`, 'game:bonus-group', group.name)}>${icon('settings', 13)} Edit group</button>` : ''}
+                ${bonusAdd(basePath ? `${basePath}.groups.${gi}.bonuses` : '')}
+              </div>
             </div>
             ${group.description ? `<p class="ri-form-help" ${basePath ? ed(`${basePath}.groups.${gi}.description`, 'long', 'Group notes') : ''}>${esc(group.description)}</p>` : ''}
             <label class="reset-calc-power" ${page.showAmount === false ? 'hidden' : ''}>
@@ -574,7 +574,7 @@ function wireResetCalculators(root, page) {
       qsa('[data-reset-amount][data-group-id]', root).forEach((input) => { values[input.dataset.groupId] = parseGameNumber(input.value) ?? 0; });
       return values;
     };
-    const updateAmounts = (amountInput, group) => {
+    const updateAmounts = (amountInput, group, variables) => {
       const inputValue = amountInput.value.trim();
       const amount = inputValue ? parseGameNumber(inputValue) : 0;
       const groupCards = group
@@ -595,7 +595,7 @@ function wireResetCalculators(root, page) {
           answer.innerHTML = `<span class="reset-calc-error">Locked — requires ${esc(fmtValue(bonus.unlockLabel || bonus.unlockAt))} ${esc(bonus.unlockResource || group?.name || page.amountLabel || 'owned')}.</span>`;
           return;
         }
-        const value = Math.min(bonus.cap ?? Infinity, bonus.value(amount, context()));
+        const value = Math.min(bonus.cap ?? Infinity, bonus.value(amount, variables));
         const display = bonus.unit === 'cap'
           ? `+${fmtSuffix(value)} CAP`
           : `${fmtSuffix(value)}${bonus.unit ? ` ${bonus.unit}` : ''}`;
@@ -604,17 +604,18 @@ function wireResetCalculators(root, page) {
     };
 
     if (page.kind === 'amount-groups') {
-      const updateAll = () => page.groups.forEach((group) => updateAmounts(qs(`[data-reset-amount][data-group-id="${group.id}"]`, root), group));
-      page.groups.forEach((group) => {
-        const amountInput = qs(`[data-reset-amount][data-group-id="${group.id}"]`, root);
-        const updateGroup = updateAll;
-        amountInput.addEventListener('input', updateGroup);
-        updateGroup();
-      });
+      const amounts = qsa('[data-reset-amount][data-group-id]', root);
+      const groups = new Map(page.groups.map(group => [group.id, group]));
+      const updateAll = () => {
+        const variables = context();
+        amounts.forEach(input => updateAmounts(input, groups.get(input.dataset.groupId), variables));
+      };
+      amounts.forEach(input => input.addEventListener('input', updateAll));
       qsa('[data-calc-variable]', root).forEach((input) => input.addEventListener('input', updateAll));
+      updateAll();
     } else {
       const amountInput = qs('[data-reset-amount]', root);
-      const updatePage = () => updateAmounts(amountInput);
+      const updatePage = () => updateAmounts(amountInput, null, context());
       amountInput.addEventListener('input', updatePage);
       updatePage();
       qsa('[data-calc-variable]', root).forEach((input) => input.addEventListener('input', updatePage));

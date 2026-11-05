@@ -15,6 +15,82 @@ const mergeList = (existing = [], incoming = [], key = 'id') => {
   return result;
 };
 
+const APPLE_BUFFS = [
+  ['default', 'Red Apples', '#ff6569', [
+    [1, '(amount/5+1)^0.365'], [5, '(amount/7+1)^0.25'], [10, '(amount/12+1)^0.2'],
+    [50, '(amount/20+1)^0.125'], [250, '(amount/50+1)^0.1'],
+  ]],
+  ['golden', 'Golden Apples', '#e7b52a', [
+    [1, '(amount/3+1)^0.425'], [3, '(amount/2+1)^0.27'], [10, '(amount/10+1)^0.235'],
+    [50, '(amount/20+1)^0.15'], [1000, 'min(5,(amount/300+1)^0.15)', 5],
+  ]],
+  ['diamond', 'Diamond Apples', '#40bcff', [
+    [1, '(amount/1.75+1)^0.4'], [15, 'min(5,(amount/5+1)^0.225)', 5],
+    [100, 'min(3,(amount/35+1)^0.095)', 3], [250000, '(amount/100000+1)^0.1'],
+  ]],
+  ['void', 'Void Apples', '#b286ff', [
+    [1, '(amount+1)^0.365'], [5, 'min(25,(amount/5+1)^0.2)', 25],
+    [35, 'min(15,(amount/25+1)^0.125)', 15], [100, 'min(10,(amount/50+1)^0.11)', 10],
+    [1000, 'min(25,(amount/500+1)^0.145)', 25],
+  ]],
+];
+
+function consolidateApples(wiki, game) {
+  const revision = 'apple-buffs-v1';
+  const page = find(wiki.categories.find(cat => cat.id === 'life')?.subcategories, 'apples');
+  if (!page) return false;
+  const wikiDone = wiki.contentMigrations?.includes(revision);
+  const gameDone = game.contentMigrations?.includes(revision);
+  const route = page.contentKey || 'life/apples';
+  const current = game.calculators.pages[route];
+  if (wikiDone && gameDone) return false;
+  // Leave a custom calculator of another kind intact.
+  if (!gameDone && current && current.kind !== 'amount-groups' && current.kind !== 'amount') return false;
+
+  if (!gameDone) {
+    const groups = APPLE_BUFFS.map(([type, name, color, formulas]) => ({
+      id: `apple-${type}`, name, color, amountLabel: `${name} owned`,
+      bonuses: formulas.map(([unlockAt, formula, cap], index) => ({
+        id: `apple-${type}-${index + 1}`, name: `Bonus ${index + 1}`,
+        value: `formula: ${formula}`, unit: 'x', unlockAt,
+        ...(cap === undefined ? {} : { cap, capUnit: 'x' }),
+      })),
+    }));
+    const existingGroups = current?.kind === 'amount' ? [{
+      id: 'existing-apple-bonuses', name: current.title || 'Apple bonuses',
+      amountLabel: current.amountLabel || 'Apples owned',
+      defaultAmount: current.defaultAmount, bonuses: current.bonuses,
+    }] : current?.groups;
+    game.calculators.pages[route] = {
+      ...current, title: 'Apple Buffs', inputs: current?.inputs || [], kind: 'amount-groups',
+      groups: mergeList(existingGroups, groups),
+    };
+    delete game.calculators.pages[route].bonuses;
+    game.resources ||= {};
+    game.resources.colors ||= {};
+    game.resources.pageLinks ||= {};
+    for (const [, name, color] of APPLE_BUFFS) {
+      game.resources.colors[name] = color;
+      game.resources.pageLinks[name.toLowerCase()] = '#/life/apples';
+    }
+    game.contentMigrations = [...(game.contentMigrations || []), revision];
+  }
+
+  if (!wikiDone) {
+    const childIds = new Set(APPLE_BUFFS.map(([type]) => `apples-${type}`));
+    wiki.redirects ||= {};
+    page.children = (page.children || []).flatMap(child => {
+      if (!childIds.has(child.id)) return [child];
+      page.sections = mergeList(page.sections, child.sections);
+      wiki.redirects[`life/${child.id}`] = '#/life/apples';
+      return child.children || [];
+    });
+    page.desc = page.desc?.replace('across five milestones per type', 'at milestones for each type');
+    wiki.contentMigrations = [...(wiki.contentMigrations || []), revision];
+  }
+  return true;
+}
+
 // A saved marker prevents this repair from undoing subsequent intentional edits
 // or removals. An old shared draft without the marker receives the repair too.
 export function installImportedNotes(wiki,game) {
@@ -68,5 +144,6 @@ export function installImportedNotes(wiki,game) {
     game.contentMigrations = [...(game.contentMigrations || []),id];
     changed = true;
   }
-  return refineImportedContent(wiki,game) || changed;
+  const applesChanged = consolidateApples(wiki, game);
+  return refineImportedContent(wiki,game) || applesChanged || changed;
 }

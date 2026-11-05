@@ -627,9 +627,8 @@ function startSharedRefresh() {
       if (await draft.syncRemote(session.token)) {
         session.syncError = '';
         draft.applyDraftToSite();
-        buildNav();
-        await rerender({ scroll: 'preserve' });
         window.dispatchEvent(new CustomEvent('ri-edit-content'));
+        await rerender({ scroll: 'preserve' });
         notify('Synced your collaborators’ changes. Your unsaved edits are still here.');
       }
     } catch (error) {
@@ -2360,7 +2359,8 @@ function installInteraction() {
       let target=index+direction;
       while(target>=0&&target<entries.length&&entries[target].context!==entries[index].context) target+=direction;
       if(target>=0&&target<entries.length){
-        draft.moveValue('updates',path,index,path,target);
+        // moveValue takes an insertion boundary in the original list.
+        draft.moveValue('updates',path,index,path,target + (direction > 0 ? 1 : 0));
         draft.applyDraftToSite();
         window.dispatchEvent(new CustomEvent('ri-edit-content'));
         void rerender({scroll:'preserve'});
@@ -2387,9 +2387,10 @@ function installInteraction() {
   }, true);
 
   document.addEventListener('mouseover', (event) => {
-    if (!session.editing) return;
+    if (!session.editing || popState) return;
     const binding = event.target.closest('[data-edit]');
     if (!binding) { hideChip(); return; }
+    if (event.relatedTarget?.closest?.('[data-edit]') === binding) return;
     const info = parseBinding(binding);
     if (!info) { hideChip(); return; }
     showChip({ el: binding, label: info.label });
