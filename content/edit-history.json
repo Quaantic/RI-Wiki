@@ -2,6 +2,366 @@
   "format": 1,
   "entries": [
     {
+      "id": "6e6c9198-fa82-48fb-b408-9ac59b8b0738",
+      "at": 1793973672580,
+      "kind": "content",
+      "text": "Updated cap of \"Dungeon Coins\": 25 to 75",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:01:13.906Z"
+    },
+    {
+      "id": "e0b559e4-787d-4328-8bd9-0c8b630dd069",
+      "at": 1793973657052,
+      "kind": "content",
+      "text": "Renamed \"Souls\" to \"Dungeon Coins\"",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:01:13.906Z"
+    },
+    {
+      "id": "d2c96e4d-2cc0-455c-b37e-aceb2b5faefd",
+      "at": 1793973639643,
+      "kind": "content",
+      "text": "Updated cap of \"Bones\": 50 to 100",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:01:13.906Z"
+    },
+    {
+      "id": "a5d75f85-cfef-4ca1-8f50-fccbe3c8b554",
+      "at": 1793973630363,
+      "kind": "content",
+      "text": "Updated cap of \"Golden Energy\": 25 to 75",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:01:13.906Z"
+    },
+    {
+      "id": "916b1c59-fbc2-4f04-ae7c-99a626cb36f1",
+      "at": 1793973623882,
+      "kind": "content",
+      "text": "Updated cap of \"Life Gem\": 40 to 90",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:01:13.906Z"
+    },
+    {
+      "id": "464b00cd-eace-49e2-8b73-6f9c00ada38c",
+      "at": 1793973619723,
+      "kind": "content",
+      "text": "Updated cap of \"Roots\": 35 to 85",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:01:13.906Z"
+    },
+    {
+      "id": "1fb9b44a-4229-4b3a-9bd7-7ee21f20e67a",
+      "at": 1793973609360,
+      "kind": "content",
+      "text": "Updated cap of \"Crystal Shards\": 25 to 75",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:01:13.906Z"
+    },
+    {
+      "id": "26e4a186-1df8-4821-aa48-103265934fe0",
+      "at": 1793973603182,
+      "kind": "content",
+      "text": "Updated cap of \"Emerald Coins\": 25 to 75",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:01:13.906Z"
+    },
+    {
+      "id": "4f54dac5-decc-4f6d-849f-306bf5ca5565",
+      "at": 1793973600790,
+      "kind": "content",
+      "text": "Updated cap of \"Energy Shards\": 49 to 100",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:01:13.906Z"
+    },
+    {
+      "id": "c3f2b23e-1fe0-4d71-bd4b-b3f3834db49e",
+      "at": 1793973597000,
+      "kind": "content",
+      "text": "Updated cap of \"Silver Energy\": 50 to 100",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:01:13.906Z"
+    },
+    {
+      "id": "32e677db-158d-44d8-a4ce-580bac344d77",
+      "at": 1793973592665,
+      "kind": "content",
+      "text": "Updated cap of \"Adamantium\": 25 to 75",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:01:13.906Z"
+    },
+    {
+      "id": "517b9334-0b1d-41e6-bced-062e56909da7",
+      "at": 1793973587024,
+      "kind": "content",
+      "text": "Updated cap of \"Infi Research\": 999 to 1050",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:01:13.906Z"
+    },
+    {
+      "id": "f64d26cd-e4c0-4be7-a77b-6b8e71d7ce72",
+      "at": 1793973577069,
+      "kind": "content",
+      "text": "Updated cap of \"More Depth\": 25 to 75",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:01:13.906Z"
+    },
+    {
+      "id": "8d0170c4-8c75-4bc4-9e8d-ed3480e53903",
+      "at": 1793973574067,
+      "kind": "content",
+      "text": "Updated cap of \"More Ores\": 30 to 80",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:01:13.906Z"
+    },
+    {
+      "id": "3b282a6d-6d59-4389-bbb7-97af180b45c1",
+      "at": 1793973569130,
+      "kind": "content",
+      "text": "Updated cap of \"Mining Damage\": 99 to 150",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:01:13.906Z"
+    },
+    {
+      "id": "4d7efdcf-2bd0-4c14-8f14-d9f9c8dd8186",
+      "at": 1793973562693,
+      "kind": "content",
+      "text": "Updated cap of \"Gold Bars\": 25 to 75",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:01:13.906Z"
+    },
+    {
+      "id": "d057da67-79d2-4874-a8e9-7f543620bb28",
+      "at": 1793973557441,
+      "kind": "content",
+      "text": "Updated cap of \"Infi Energy\": 999 to 1050",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:01:13.906Z"
+    },
+    {
+      "id": "b0b1c2aa-9e71-47ec-9854-01efd93962f0",
+      "at": 1793973475798,
+      "kind": "content",
+      "text": "Updated cap of \"Monster Feed\": 30 to 75",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:01:13.906Z"
+    },
+    {
+      "id": "f5f4a7fd-271c-418b-9a5c-f010cf6ec4c5",
+      "at": 1793973471112,
+      "kind": "content",
+      "text": "Updated cap of \"Super Life Shards\": 50 to 100",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:01:13.906Z"
+    },
+    {
+      "id": "9a62bd2c-a6bb-4d61-a694-eeecc1acf3e5",
+      "at": 1793973466563,
+      "kind": "content",
+      "text": "Updated cap of \"Crystal Expansion\": 99 to 149",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:01:13.906Z"
+    },
+    {
+      "id": "236fcd93-88ca-46e7-af23-d3bac8723fa3",
+      "at": 1793973462470,
+      "kind": "content",
+      "text": "Updated cap of \"Money Income\": 99 to 149",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:01:13.906Z"
+    },
+    {
+      "id": "2a3a0cdf-f5cf-426b-a37b-4c6c0baaafab",
+      "at": 1793973457239,
+      "kind": "content",
+      "text": "Updated cap of \"Sap\": 30 to 80",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:01:13.906Z"
+    },
+    {
+      "id": "86b64ec6-b127-4d21-b12d-2825b4b31c1b",
+      "at": 1793973454141,
+      "kind": "content",
+      "text": "Updated cap of \"More Energy III\": 40 to 90",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:01:13.906Z"
+    },
+    {
+      "id": "849d5cc6-cd9c-4291-9136-c64707e5fe7a",
+      "at": 1793973450131,
+      "kind": "content",
+      "text": "Updated cap of \"More Research\": 40 to 90",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:01:13.906Z"
+    },
+    {
+      "id": "79269789-2e4d-4db3-8075-c181ecd23b3c",
+      "at": 1793973443666,
+      "kind": "content",
+      "text": "Updated cap of \"Super Trees\": 40 to 90",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:01:13.906Z"
+    },
+    {
+      "id": "3dae3ab0-a927-4771-ae4a-c58c83fea656",
+      "at": 1793973433778,
+      "kind": "content",
+      "text": "Updated cap of \"Fossils\": 30 to 80",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:01:13.906Z"
+    },
+    {
+      "id": "2619b25f-57c6-4ec8-8d41-2801b5ffdb1d",
+      "at": 1793973428304,
+      "kind": "content",
+      "text": "Updated cap of \"Life Shards\": 40 to 90",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:01:13.906Z"
+    },
+    {
+      "id": "660a20aa-0566-4676-bf60-21c650c218e3",
+      "at": 1793973420921,
+      "kind": "content",
+      "text": "Updated cap of \"More Energy II\": 30 to 80",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:01:13.906Z"
+    },
+    {
+      "id": "283d1eaa-edb4-4808-952b-9cc5d1e5e567",
+      "at": 1793973410063,
+      "kind": "content",
+      "text": "Updated cap of \"More Energy\": 25 to 75",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:01:13.906Z"
+    },
+    {
+      "id": "6ef40652-4053-49cd-82a1-945a31fd971a",
+      "at": 1793973395024,
+      "kind": "content",
+      "text": "Updated cap of \"More XP\": 99 to 149",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:01:13.906Z"
+    },
+    {
+      "id": "6680127d-db91-49fd-94b3-a12618792105",
+      "at": 1793973387742,
+      "kind": "content",
+      "text": "Updated cap of \"Crystals\": 25 to 75",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:01:13.906Z"
+    },
+    {
+      "id": "7971e8fa-2be2-4231-a25f-a2cba377199c",
+      "at": 1793973385105,
+      "kind": "content",
+      "text": "Updated cap of \"Cells Boost\": 150 to 149",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:01:13.906Z"
+    },
+    {
+      "id": "4721dffb-95a6-45b8-85f3-5d504763f458",
+      "at": 1793973374149,
+      "kind": "content",
+      "text": "Updated cap of \"Cells Boost\": 90 to 150",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:01:13.906Z"
+    },
+    {
+      "id": "0f005014-891d-4415-b76c-9e1d051cdab9",
+      "at": 1793973366999,
+      "kind": "content",
+      "text": "Updated cap of \"Research II\": 25 to 75",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:01:13.906Z"
+    },
+    {
+      "id": "4e77799b-6d22-4c2d-867f-f9b119bcce26",
+      "at": 1793973049920,
+      "kind": "content",
+      "text": "Removed \"New section\"",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:01:13.906Z"
+    },
+    {
+      "id": "0283c9a9-d752-4719-be60-4585f191c4a1",
+      "at": 1793973045408,
+      "kind": "content",
+      "text": "Added \"New section\"",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:01:13.906Z"
+    },
+    {
       "id": "80eac6e2-7edf-4b9d-b763-50c409c1bc34",
       "at": 1793972986364,
       "kind": "content",
