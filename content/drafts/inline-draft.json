@@ -14329,7 +14329,7 @@
                 {
                   "id": "b",
                   "name": "Tree Essence",
-                  "value": "formula: amount",
+                  "value": "formula: ((amount / 1) + 1)^0.19",
                   "capUnit": "x",
                   "unit": "x"
                 },
