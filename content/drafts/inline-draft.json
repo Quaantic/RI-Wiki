@@ -14261,8 +14261,10 @@
               "bonuses": [
                 {
                   "id": "b1",
-                  "name": "New bonus",
-                  "value": "formula: amount"
+                  "name": "Minedamage",
+                  "value": "formula: amount",
+                  "capUnit": "x",
+                  "unit": "x"
                 },
                 {
                   "id": "b",
@@ -14292,6 +14294,11 @@
                   "id": "b",
                   "name": "New bonus",
                   "value": "formula: amount"
+                },
+                {
+                  "id": "b2",
+                  "name": "New bonus",
+                  "value": "formula: amount"
                 }
               ]
             },
@@ -14306,6 +14313,16 @@
                   "id": "b1",
                   "name": "New bonus",
                   "value": "formula: amount"
+                },
+                {
+                  "id": "b",
+                  "name": "New bonus",
+                  "value": "formula: amount"
+                },
+                {
+                  "id": "b2",
+                  "name": "New bonus",
+                  "value": "formula: amount"
                 }
               ]
             },
@@ -14318,6 +14335,16 @@
               "bonuses": [
                 {
                   "id": "b1",
+                  "name": "New bonus",
+                  "value": "formula: amount"
+                },
+                {
+                  "id": "b",
+                  "name": "New bonus",
+                  "value": "formula: amount"
+                },
+                {
+                  "id": "b2",
                   "name": "New bonus",
                   "value": "formula: amount"
                 }
@@ -14896,42 +14923,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.game.resources.pageLinks.Unnatural": {
-      "actor": "Nathy365"
-    },
-    "content.game.resources.pageLinks.Dark": {
-      "actor": "Nathy365"
-    },
-    "content.wiki.categories[main]": {
-      "actor": "Quaantic"
-    },
-    "content.wiki.categories[main].icon": {
-      "actor": "Quaantic"
-    },
-    "content.wiki.categories[life].icon": {
-      "actor": "Quaantic"
-    },
-    "content.wiki.categories[life].subcategories order": {
-      "actor": "Quaantic"
-    },
-    "content.wiki.categories[money-island]": {
-      "actor": "Quaantic"
-    },
-    "content.wiki.categories[money-island].icon": {
-      "actor": "Quaantic"
-    },
-    "content.wiki.categories[mining]": {
-      "actor": "Quaantic"
-    },
-    "content.wiki.categories[mining].icon": {
-      "actor": "Quaantic"
-    },
-    "content.wiki.categories[dungeon]": {
-      "actor": "Quaantic"
-    },
-    "content.wiki.categories[dungeon].icon": {
-      "actor": "Quaantic"
-    },
     "content.wiki.categories[runes].icon": {
       "actor": "Quaantic"
     },
@@ -15968,6 +15959,72 @@
       "actor": "Nathy365"
     },
     "content.game.calculators.pages.runes/secret.groups[group4].bonuses[b2].value": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group6].bonuses[b]": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group6].bonuses[b].id": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group6].bonuses[b].name": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group6].bonuses[b].value": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group4].bonuses[b1].capUnit": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group4].bonuses[b1].unit": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group5].bonuses[b2]": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group5].bonuses[b2].id": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group5].bonuses[b2].name": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group5].bonuses[b2].value": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group6].bonuses[b2]": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group6].bonuses[b2].id": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group6].bonuses[b2].name": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group6].bonuses[b2].value": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group7].bonuses[b]": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group7].bonuses[b].id": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group7].bonuses[b].name": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group7].bonuses[b].value": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group7].bonuses[b2]": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group7].bonuses[b2].id": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group7].bonuses[b2].name": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group7].bonuses[b2].value": {
       "actor": "Nathy365"
     }
   }
