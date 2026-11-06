@@ -2,6 +2,16 @@
   "format": 1,
   "entries": [
     {
+      "id": "af3b989f-fd13-4c52-8f7a-fe4e1d0d81e8",
+      "at": 1793980274568,
+      "kind": "content",
+      "text": "Added \"New update\"",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:51:16.581Z"
+    },
+    {
       "id": "9b2e099d-7c2e-4d19-996b-3cdc0fe29438",
       "at": 1793980258017,
       "kind": "content",
@@ -2986,16 +2996,6 @@
       "at": 1793948846247,
       "kind": "content",
       "text": "Updated value of \"Mine Perks\": formula: amount to formula: ((amount / 0.75) + 1)^0.145",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T07:07:28.996Z"
-    },
-    {
-      "id": "ab4145b8-33a6-4a26-aa10-a286746f71df",
-      "at": 1793948828548,
-      "kind": "content",
-      "text": "Set unit of \"Rare Sap\" (x)",
       "actor": "Nathy365",
       "pending": false,
       "status": "saved",
