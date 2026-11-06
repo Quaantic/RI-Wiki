@@ -450,6 +450,8 @@ function confirmReleaseOrder(version, source) {
   return window.confirm(`Update Log ${version}\n\n${explanation}\n\nCompatible edits and entries from both versions are kept. Cancel to keep working without writing to GitHub.`);
 }
 
+confirmReleaseOrder.confirmInvalidDraft = () => window.confirm('The shared draft file on GitHub contains invalid JSON. The currently published wiki is safe. Back up the exact broken file to content/backups and replace it with your current edits? Cancel keeps everything unchanged.');
+
 // No write occurs until all conflicts have a choice. Cancel preserves the draft.
 confirmReleaseOrder.resolveConflict = ({ path, local, remote, source }) => {
   const describe = (value) => {
@@ -647,7 +649,7 @@ async function startSession(token, {deferRender=false}={}) {
     }
     barStatus('Loading repository content…', 'busy');
     const info = await draft.initSession(token, user.login);
-    if (info.invalidSharedDraft) session.syncError = 'Shared draft contains invalid JSON — restore the draft on GitHub before saving or publishing';
+    if (info.invalidSharedDraft) session.syncError = 'Shared draft is invalid — Save can repair it after making a backup';
     if (info.contentConflict) session.syncError = 'Draft conflict — open Save to choose versions';
     else if (info.orderConflict) session.syncError = 'Update Log order conflict';
     else if (info.recoveryConflict) session.syncError = 'Sync conflict — Save to choose versions';
@@ -671,7 +673,7 @@ async function startSession(token, {deferRender=false}={}) {
     installSidebarTools();
     {
       if(!deferRender)await rerender({ scroll: 'preserve' });
-      notify(info.invalidSharedDraft ? 'Signed in, but the shared draft on GitHub is invalid. Editing is available for recovery; Save/Publish will remain blocked until the draft is repaired.' : (info.recovered ? 'Your unsaved work was recovered from this browser.' : 'The shared draft is ready.'), info.invalidSharedDraft);
+      notify(info.invalidSharedDraft ? 'Shared draft is invalid. Your published content is safe; Save can back up and repair the broken draft.' : (info.recovered ? 'Your unsaved work was recovered from this browser.' : 'The shared draft is ready.'), info.invalidSharedDraft);
     }
     updateToolbar();
     if(!deferRender&&session.editing)restoreForm();

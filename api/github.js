@@ -20,7 +20,7 @@ module.exports=async(req,res)=>{
   }
   const body=typeof input.body==='string'?JSON.parse(input.body):input.body;
   const allowed=content==='content/drafts/inline-draft.json' || content==='content/edit-history.json'
-   || /^content\/backups\/backup-[a-zA-Z0-9_.-]+\.json$/.test(content||'')
+   || /^content\/backups\/(?:backup-[a-zA-Z0-9_.-]+|(?:save|publish)\.[a-zA-Z0-9_-]+\.(?:\d{8}T\d{6}\d{3}Z|\d{4}-\d{2}-\d{2}-\d{2}:\d{2}(?:-\d+)?))\.json$/.test(content||'')
    || method==='PUT' && /^images\/credits\/[a-zA-Z0-9-]+\.(png|jpg|jpeg|webp|gif)$/.test(content||'') && !body?.sha;
   if(!allowed || !['PUT','DELETE'].includes(method) || body?.branch!=='main') throw Object.assign(Error('Permission denied. Publishing requires the protected Publish endpoint.'),{status:403});
   const safe={branch:'main',message:'RI Wiki: save editor data',...(body.sha?{sha:body.sha}:{}),...(method==='PUT'?{content:body.content}:{})};

@@ -36,6 +36,7 @@ const draftState = {
   sharedBase: null,
   needsMerge: false,
   sharedOrderNeedsSave: false,
+  invalidDraftBackup: null,
 };
 
 // Diario automatico de edicoes ("Update History"). Em memoria durante a
@@ -415,6 +416,7 @@ export async function initSession(token, actor = '') {
   draftState.savedDraftRaw = '';
   draftState.needsMerge = false;
   draftState.sharedOrderNeedsSave = false;
+  draftState.invalidDraftBackup = null;
   changeLog.length = 0;
   const sharedFile = githubRequest(githubContentsUrl(DRAFT_FILE), token, { allowNotFound: true })
     .then((result) => ({ result }), (error) => ({ error }));
@@ -467,6 +469,7 @@ export async function initSession(token, actor = '') {
       // remote draft: Save/Publish must still validate it through syncRemote.
       console.warn('[inline-editor] Invalid shared draft; opening published content in recovery mode.', error);
       invalidSharedDraft = true;
+      draftState.draftSha = (await sharedFile).result?.sha || null;
       draftLoaded = false;
     } else if (/(404|not found)/i.test(msg)) {
       draftLoaded = false;
@@ -516,15 +519,37 @@ export async function saveDraft(token, keepLocalOrder) {
   try{return await savePromise;}finally{savePromise=null;}
 }
 
+// Preserve the exact broken remote blob before repairing it. Never replace a
+// shared draft without a recoverable GitHub copy and explicit user consent.
+async function backupInvalidDraft(token) {
+  const broken = draftState.invalidDraftBackup;
+  if (!broken) return;
+  const stamp = new Date().toISOString().replace(/[^0-9TZ]/g, '');
+  const path = `${BACKUP_DIRECTORY}/invalid-inline-draft-${stamp}-${broken.sha.slice(0, 8)}.json`;
+  await githubRequest(githubContentsUrl(path), token, {
+    method: 'PUT',
+    body: JSON.stringify({
+      message: 'Backup unreadable shared inline draft before repair',
+      content: encodeBase64Content(`${JSON.stringify({ originalPath: DRAFT_FILE, originalSha: broken.sha, originalBase64: broken.content, savedAt: new Date().toISOString() }, null, 2)}\n`),
+      branch: BRANCH,
+    }),
+  });
+  draftState.invalidDraftBackup = null;
+}
+
 async function saveChangedDraft(token, keepLocalOrder){
   for(let attempt=0;attempt<4;attempt++){
     await syncRemote(token, keepLocalOrder);
     validateDocuments(draftState.docs);
+    await backupInvalidDraft(token);
     // Save is relative to the last shared revision, never a stale published
     // snapshot. An unchanged editor must not create a new shared revision.
     if(!draftState.sharedOrderNeedsSave && JSON.stringify(draftState.docs)===JSON.stringify(draftState.sharedBase))break;
     const raw=currentDraftRaw();
     try{
+      // Back up the previous shared state before replacing it. A Save is not a Publish.
+      // On a revision conflict the next attempt will re-sync before taking its backup.
+      await createVersion(token, draftState.sharedBase, 'save', 'save');
       const result=await githubRequest(githubContentsUrl(DRAFT_FILE), token, {
         method: 'PUT',
         body: JSON.stringify({
@@ -586,6 +611,7 @@ export async function discardDraft(token) {
 export async function publishChanges(token, keepLocalOrder) {
   await syncRemote(token, keepLocalOrder);
   validateDocuments(draftState.docs);
+  await backupInvalidDraft(token);
   if (token === 'ri-session') {
     const result = await publishDocuments({docs:draftState.docs,shas:draftState.shas,draftSha:draftState.draftSha});
     draftState.shas=result.shas;
@@ -604,22 +630,7 @@ export async function publishChanges(token, keepLocalOrder) {
   }
   const changed = changedFiles();
   if (changed.length) {
-    // Mesmo formato de nome/timestamp dos backups ("backup-*.json") listados
-    // pela ferramenta Versions do editor inline.
-    const stamp = new Date().toISOString().replace(/[-:]/g, '').replace(/\.(\d{3})Z$/, '$1Z');
-    const backupName = `backup-inline-${stamp}.json`;
-    const documents = { format: 1, createdAt: new Date().toISOString(), documents: draftState.baseDocs };
-    await githubRequest(githubContentsUrl(`${BACKUP_DIRECTORY}/${backupName}`), token, {
-      method: 'PUT',
-      body: JSON.stringify({
-        message: `Backup before publishing inline changes (${new Date().toLocaleString()})`,
-        content: encodeBase64Content(`${JSON.stringify(documents, null, 2)}\n`),
-        branch: BRANCH,
-      }),
-    });
-    // Mantem a lista de versoes dentro do limite (25). Best-effort: nao
-    // bloqueia a publicacao se a limpeza falhar.
-    await pruneVersions(token).catch(() => {});
+    await createVersion(token, draftState.baseDocs, 'publish', 'publish');
     for (const name of changed) {
       const path = FILES[name];
       const content = `${JSON.stringify(draftState.docs[name], null, 2)}\n`;
@@ -718,9 +729,26 @@ async function readAndMergeRemote(token, keepLocalOrder) {
     if (choice === 'local' || choice === 'remote') sharedOrderNeedsSave = true;
     return choice;
   };
-  const remote = remoteDraft ? await readSharedDraft(remoteDraft, published, shas, token, sharedResolver) : published;
+  let remote = published;
+  let remoteAuthors = {};
+  let invalidDraftBackup = null;
+  if (remoteDraft) {
+    try {
+      remote = await readSharedDraft(remoteDraft, published, shas, token, sharedResolver);
+      remoteAuthors = JSON.parse(decodeBase64Content(remoteDraft.content))._authors || {};
+    } catch (error) {
+      // Only recover from malformed JSON. Other errors (permissions, merge
+      // conflicts, missing Git blobs) must still be surfaced normally.
+      if (!(error instanceof SyntaxError)) throw error;
+      if (!keepLocalOrder?.confirmInvalidDraft?.()) {
+        throw new Error('The shared draft on GitHub is invalid. Save cancelled; your edits remain in this browser.');
+      }
+      invalidDraftBackup = { sha: remoteDraft.sha, content: remoteDraft.content };
+      sharedOrderNeedsSave = true;
+      console.warn('[inline-editor] Backing up malformed shared draft before repairing it.', error);
+    }
+  }
   validateDocuments(remote);
-  const remoteAuthors = remoteDraft ? JSON.parse(decodeBase64Content(remoteDraft.content))._authors || {} : {};
   const localAuthors = authorsForChanges(draftState.sharedBase, draftState.docs, draftState.authors, draftState.actor);
   const merged = mergeDocuments(draftState.sharedBase, draftState.docs, remote, 'content', priorityResolver(keepLocalOrder, localAuthors, remoteAuthors));
   validateDocuments(merged);
@@ -733,6 +761,7 @@ async function readAndMergeRemote(token, keepLocalOrder) {
   draftState.savedDraftRaw = remoteDraft ? `${JSON.stringify(remote, null, 2)}\n` : '';
   draftState.needsMerge = false;
   draftState.sharedOrderNeedsSave = sharedOrderNeedsSave;
+  draftState.invalidDraftBackup = invalidDraftBackup;
   // Numeric undo targets must never apply to a collaborator's reordered list.
   history.length = 0;
   persistLocalRecovery();
@@ -805,30 +834,53 @@ export async function listEditHistory(token) {
 const VERSIONS_MAX = 25;
 
 function backupStamp() {
-  return new Date().toISOString().replace(/[-:]/g, '').replace(/\.(\d{3})Z$/, '$1Z');
+  // America/Sao_Paulo; filename date and time in local Brazilian time.
+  const parts = new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'America/Sao_Paulo', year: 'numeric', month: '2-digit', day: '2-digit',
+    hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
+  }).formatToParts(new Date());
+  const part = (type) => parts.find((item) => item.type === type)?.value || '00';
+  return `${part('year')}-${part('month')}-${part('day')}-${part('hour')}:${part('minute')}`;
+}
+
+function backupActor() {
+  return String(draftState.actor || 'unknown').replace(/[^a-zA-Z0-9_-]/g, '_').slice(0, 60) || 'unknown';
+}
+
+function versionTimestamp(name) {
+  const modern = /^(?:save|publish)\.[^.]+\.(\d{4}-\d{2}-\d{2}-\d{2}:\d{2})(?:-\d+)?\.json$/.exec(name);
+  if (modern) return modern[1].replace(/[-:]/g, '').padEnd(17, '0');
+  const legacy = /(?:^|\.)(\d{8}T\d{6}(?:\d{3})?Z)(?:\.json$)/.exec(name)
+    || /^backup-(\d{8}T\d{6}(?:\d{3})?Z?)/.exec(name);
+  return legacy ? legacy[1].replace(/[^0-9]/g, '').padEnd(17, '0') : '';
 }
 
 export function versionLabel(name) {
-  const match = /^backup-(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})/.exec(name || '');
+  const modern = /^(save|publish)\.([^.]+)\.(\d{4}-\d{2}-\d{2})-(\d{2}:\d{2})(?:-\d+)?\.json$/.exec(name);
+  if (modern) return `${modern[1] === 'save' ? 'Save' : 'Publish'} · @${modern[2]} · ${modern[3]} ${modern[4]} (Brasília)`;
+  const timestamp = versionTimestamp(name);
+  if (!timestamp) return name;
+  const match = /^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})/.exec(timestamp);
   if (!match) return name;
   const [, y, mo, d, h, mi] = match;
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  return `${months[Number(mo) - 1]} ${Number(d)}, ${y} at ${h}:${mi} UTC`;
+  const action = name.startsWith('save.') ? 'Save' : name.startsWith('publish.') ? 'Publish' : 'Backup';
+  const actor = /^(?:save|publish)\.([^.]+)\./.exec(name)?.[1];
+  return `${action}${actor ? ` · @${actor}` : ''} · ${y}-${mo}-${d} ${h}:${mi} (legacy UTC)`;
 }
 
 export async function listVersions(token) {
   const result = await githubRequest(githubContentsUrl(BACKUP_DIRECTORY), token, { allowNotFound: true });
   return Array.isArray(result)
     ? result
-        .filter((item) => item.type === 'file' && /^backup-.*\.json$/.test(item.name))
+        .filter((item) => item.type === 'file' && (/^backup-.*\.json$/.test(item.name) || /^(?:save|publish)\.[a-zA-Z0-9_-]+\.(?:\d{8}T\d{6}\d{3}Z|\d{4}-\d{2}-\d{2}-\d{2}:\d{2}(?:-\d+)?)\.json$/.test(item.name)))
         .map((item) => ({ name: item.name, sha: item.sha }))
-        .sort((a, b) => b.name.localeCompare(a.name))
+        .sort((a, b) => versionTimestamp(a.name).localeCompare(versionTimestamp(b.name)))
     : [];
 }
 
 export async function pruneVersions(token, keep = VERSIONS_MAX) {
   const versions = await listVersions(token);
-  const excess = versions.slice(keep); // ordenada desc: tudo alem do limite e o mais antigo
+  const excess = versions.slice(0, Math.max(0, versions.length - keep));
   for (const item of excess) {
     await githubRequest(githubContentsUrl(`${BACKUP_DIRECTORY}/${item.name}`), token, {
       method: 'DELETE',
@@ -842,19 +894,25 @@ export async function pruneVersions(token, keep = VERSIONS_MAX) {
   return excess.map((item) => item.name);
 }
 
-export async function createVersion(token, documents = draftState.baseDocs, message = 'Manual version') {
+export async function createVersion(token, documents = draftState.baseDocs, message = 'Manual version', action = 'save') {
+  validateDocuments(documents);
   const stamp = backupStamp();
-  const name = `backup-${stamp}.json`;
+  let name = `${action}.${backupActor()}.${stamp}.json`;
+  const existing = await listVersions(token);
+  for (let suffix = 2; existing.some((v) => v.name === name); suffix++) {
+    name = `${action}.${backupActor()}.${stamp}-${suffix}.json`;
+  }
   const payload = { format: 1, createdAt: new Date().toISOString(), documents: clone(documents) };
   await githubRequest(githubContentsUrl(`${BACKUP_DIRECTORY}/${name}`), token, {
     method: 'PUT',
     body: JSON.stringify({
-      message: `${message} (${stamp})`,
+      message: `${message} backup (${stamp})`,
       content: encodeBase64Content(`${JSON.stringify(payload, null, 2)}\n`),
       branch: BRANCH,
     }),
   });
-  await pruneVersions(token);
+  // Version cleanup is best effort; never fail a successful backup because pruning failed.
+  await pruneVersions(token).catch(() => {});
   return name;
 }
 
