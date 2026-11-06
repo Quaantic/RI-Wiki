@@ -857,7 +857,7 @@
           {
             "id": "tree-essence",
             "name": "Tree Essence",
-            "desc": "Describe this page here.",
+            "desc": "Tree Essence is he fourth Tree related stat, you obtain it with roots, and can get milestones up to 1M, whose boosts: Fossils, Logs, Researches and unlocks new upgrades!",
             "icon": "game-icons:soul",
             "highlights": [],
             "facts": [],
@@ -14981,39 +14981,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.game.upgrades.sections.life-tree-essence.upgrades[7].n": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[7].name": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[7].cap": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[7].price": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[7].multi": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[8]": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[8].n": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[8].name": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[8].cap": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[8].price": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[8].multi": {
-      "actor": "Quaantic"
-    },
     "content.game.upgrades.sections.life-tree-essence.upgrades[9]": {
       "actor": "Quaantic"
     },
@@ -15462,7 +15429,7 @@
       "actor": "zzinss"
     },
     "content.wiki": {
-      "actor": "Quaantic"
+      "actor": "zzinss"
     },
     "content.game.calculators.pages.runes/secret.groups[group3]": {
       "actor": "Nathy365"
@@ -16062,6 +16029,21 @@
       "actor": "zzinss"
     },
     "content.game.upgrades.sections.logs.upgrades[15].multi": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life]": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[tree-essence]": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[tree-essence].desc": {
       "actor": "zzinss"
     }
   }
