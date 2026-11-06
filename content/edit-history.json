@@ -2,6 +2,36 @@
   "format": 1,
   "entries": [
     {
+      "id": "abb242d6-4466-4fa5-9943-6feb2d3bed7f",
+      "at": 1793949254223,
+      "kind": "content",
+      "text": "Added \"New update\"",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:14:20.927Z"
+    },
+    {
+      "id": "4246a6b3-0565-43fe-8ef2-36f62a7e482d",
+      "at": 1793949243318,
+      "kind": "content",
+      "text": "Updated description of \"Secret Runes\": What changed in the game. to added in 8 secret runes",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:14:20.927Z"
+    },
+    {
+      "id": "0229a326-7db3-40f6-8ee4-88a0b15ca2fc",
+      "at": 1793949243263,
+      "kind": "content",
+      "text": "Updated text of \"Secret Runes\": New update to Secret Runes",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:14:20.927Z"
+    },
+    {
       "id": "e81c3243-b68a-4ed1-8d78-25ec2ec196d3",
       "at": 1793949204747,
       "kind": "content",
