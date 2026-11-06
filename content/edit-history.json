@@ -2,6 +2,36 @@
   "format": 1,
   "entries": [
     {
+      "id": "f6f014dc-d19c-4665-85a7-0ff83ef6be2b",
+      "at": 1793974457843,
+      "kind": "content",
+      "text": "Updated multi of \"More Tree Essence\": *(1 + 0.1*L) to * (1 + 0.1 * L)",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:15:28.856Z"
+    },
+    {
+      "id": "43a43403-dd07-411e-acae-39eb5d1c9ad5",
+      "at": 1793974418522,
+      "kind": "content",
+      "text": "Updated multi of \"More Tree Essence\": *(1 + 0.1·L) to *(1 + 0.1*L)",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:15:28.856Z"
+    },
+    {
+      "id": "32dcd7f8-2f2b-497b-9ac7-d80e4a7f0144",
+      "at": 1793974412261,
+      "kind": "content",
+      "text": "Updated multi of \"More Tree Essence\": 0.1*L to *(1 + 0.1·L)",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:15:28.856Z"
+    },
+    {
       "id": "8ea4ab7f-00a1-41b4-b327-7edd2feee7da",
       "at": 1793974388366,
       "kind": "content",
@@ -2923,26 +2953,6 @@
       "pending": false,
       "status": "saved",
       "savedAt": "2026-11-06T06:46:00.541Z"
-    },
-    {
-      "id": "3c6c5e44-9aba-4355-8763-72c61745dc48",
-      "at": 1793947475264,
-      "kind": "content",
-      "text": "Added \"New contributor\"",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T06:45:18.125Z"
-    },
-    {
-      "id": "a979dbef-5619-4684-bf83-f3d62f0d1718",
-      "at": 1793947388827,
-      "kind": "draft-restore",
-      "text": "Restored a downloaded draft in this browser",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T06:43:48.787Z"
     }
   ]
 }
