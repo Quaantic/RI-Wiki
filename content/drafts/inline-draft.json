@@ -15290,6 +15290,13 @@
             "title": "Trees",
             "href": "",
             "description": "Added all the 33 Types of trees and their bonuses."
+          },
+          {
+            "id": "entry-09a38892-babc-44dc-b1a1-98d0ade771f9",
+            "context": "Feature",
+            "title": "Cells",
+            "href": "",
+            "description": "Added cells tab to the Life Generation tab."
           }
         ]
       },
@@ -15523,24 +15530,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.wiki.categories[life].subcategories[fossil].children[power-of-fossils]": {
-      "actor": "Quaantic"
-    },
-    "content.wiki.categories[life].subcategories[fossil].children[power-of-fossils].icon": {
-      "actor": "Quaantic"
-    },
-    "content.wiki.categories[life].subcategories[tree]": {
-      "actor": "Quaantic"
-    },
-    "content.wiki.categories[life].subcategories[tree].icon": {
-      "actor": "Quaantic"
-    },
-    "content.wiki.categories[life].subcategories[monster]": {
-      "actor": "Quaantic"
-    },
-    "content.wiki.categories[life].subcategories[monster].icon": {
-      "actor": "Quaantic"
-    },
     "content.wiki.categories[life].subcategories[frost]": {
       "actor": "Quaantic"
     },
@@ -16361,19 +16350,19 @@
       "actor": "Quaantic"
     },
     "content.updates": {
-      "actor": "Quaantic"
+      "actor": "zzinss"
     },
     "content.updates.versions": {
-      "actor": "Quaantic"
+      "actor": "zzinss"
     },
     "content.updates.versions[1.03]": {
-      "actor": "Quaantic"
+      "actor": "zzinss"
     },
     "content.updates.versions[1.03].entries": {
-      "actor": "Quaantic"
+      "actor": "zzinss"
     },
     "content.updates.versions[1.03].entries order": {
-      "actor": "Quaantic"
+      "actor": "zzinss"
     },
     "content.updates.versions[1.03].entries[entry-38c5454e-f637-47b0-a3a2-14b4c6b9e7a6]": {
       "actor": "Quaantic"
@@ -16571,6 +16560,24 @@
       "actor": "zzinss"
     },
     "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba].title": {
+      "actor": "zzinss"
+    },
+    "content.updates.versions[1.03].entries[entry-09a38892-babc-44dc-b1a1-98d0ade771f9]": {
+      "actor": "zzinss"
+    },
+    "content.updates.versions[1.03].entries[entry-09a38892-babc-44dc-b1a1-98d0ade771f9].id": {
+      "actor": "zzinss"
+    },
+    "content.updates.versions[1.03].entries[entry-09a38892-babc-44dc-b1a1-98d0ade771f9].context": {
+      "actor": "zzinss"
+    },
+    "content.updates.versions[1.03].entries[entry-09a38892-babc-44dc-b1a1-98d0ade771f9].title": {
+      "actor": "zzinss"
+    },
+    "content.updates.versions[1.03].entries[entry-09a38892-babc-44dc-b1a1-98d0ade771f9].href": {
+      "actor": "zzinss"
+    },
+    "content.updates.versions[1.03].entries[entry-09a38892-babc-44dc-b1a1-98d0ade771f9].description": {
       "actor": "zzinss"
     }
   }
