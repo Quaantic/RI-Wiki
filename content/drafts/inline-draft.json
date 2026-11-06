@@ -3039,7 +3039,7 @@
               "name": "More Tree Essence",
               "cap": "99",
               "price": "3*L",
-              "multi": "1"
+              "multi": "0.1*L"
             }
           ]
         },
