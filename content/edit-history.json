@@ -2,6 +2,14 @@
   "format": 1,
   "entries": [
     {
+      "id": "b87a1619-f803-4d45-a43b-c44b6d032225",
+      "at": 1793930790573,
+      "kind": "content",
+      "text": "Updated money-island/upgrade-tree of \"calculators\": {\"kind\":\"amount\",\"title\":\"Upgrade Tree\",\"am… to empty",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
       "id": "c85e6e31-9b2a-416c-b33b-10316622f07a",
       "at": 1793930551081,
       "kind": "content",
@@ -2390,14 +2398,6 @@
       "at": 1793853228143,
       "kind": "content",
       "text": "Moved \"Sap\"",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "ed1bb40e-ae1a-4d1c-8b0e-18bea747ae66",
-      "at": 1793853223529,
-      "kind": "content",
-      "text": "Moved \"Tree Tier\"",
       "actor": "Quaantic",
       "pending": true
     }
