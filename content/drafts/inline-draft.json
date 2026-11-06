@@ -15254,6 +15254,20 @@
             "title": "Research Upgrades",
             "href": "",
             "description": "3 New Research upgrades have been added and caps have been increased due to upgrades increasing Cap"
+          },
+          {
+            "id": "entry-e430d6a6-11d6-442f-a168-68a1df38f372",
+            "context": "Feature",
+            "title": "Animals Tiers",
+            "href": "",
+            "description": "Added Animal Tiers to the Life Generation tab!"
+          },
+          {
+            "id": "entry-d4ca3f4b-306d-4d59-bf7a-02beaddaccae",
+            "context": "Feature",
+            "title": "New update",
+            "href": "",
+            "description": "What changed in the game."
           }
         ]
       },
@@ -15487,36 +15501,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.game.upgrades.sections.research.upgrades[18].cap": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[19]": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[19].cap": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[20]": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[20].cap": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[21]": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[21].cap": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[22]": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[22].cap": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[23]": {
-      "actor": "Quaantic"
-    },
     "content.game.upgrades.sections.research.upgrades[23].cap": {
       "actor": "Quaantic"
     },
@@ -15590,7 +15574,7 @@
       "actor": "Quaantic"
     },
     "content": {
-      "actor": "Quaantic"
+      "actor": "zzinss"
     },
     "content.game.upgrades.sections.research.upgrades[36]": {
       "actor": "Quaantic"
@@ -16484,19 +16468,19 @@
       "actor": "Quaantic"
     },
     "content.updates": {
-      "actor": "Quaantic"
+      "actor": "zzinss"
     },
     "content.updates.versions": {
-      "actor": "Quaantic"
+      "actor": "zzinss"
     },
     "content.updates.versions[1.03]": {
-      "actor": "Quaantic"
+      "actor": "zzinss"
     },
     "content.updates.versions[1.03].entries": {
-      "actor": "Quaantic"
+      "actor": "zzinss"
     },
     "content.updates.versions[1.03].entries order": {
-      "actor": "Quaantic"
+      "actor": "zzinss"
     },
     "content.updates.versions[1.03].entries[entry-38c5454e-f637-47b0-a3a2-14b4c6b9e7a6]": {
       "actor": "Quaantic"
@@ -16566,6 +16550,42 @@
     },
     "content.game.calculators.pages.life/tree-tier.bonuses order": {
       "actor": "Quaantic"
+    },
+    "content.updates.versions[1.03].entries[entry-e430d6a6-11d6-442f-a168-68a1df38f372]": {
+      "actor": "zzinss"
+    },
+    "content.updates.versions[1.03].entries[entry-e430d6a6-11d6-442f-a168-68a1df38f372].id": {
+      "actor": "zzinss"
+    },
+    "content.updates.versions[1.03].entries[entry-e430d6a6-11d6-442f-a168-68a1df38f372].context": {
+      "actor": "zzinss"
+    },
+    "content.updates.versions[1.03].entries[entry-e430d6a6-11d6-442f-a168-68a1df38f372].title": {
+      "actor": "zzinss"
+    },
+    "content.updates.versions[1.03].entries[entry-e430d6a6-11d6-442f-a168-68a1df38f372].href": {
+      "actor": "zzinss"
+    },
+    "content.updates.versions[1.03].entries[entry-e430d6a6-11d6-442f-a168-68a1df38f372].description": {
+      "actor": "zzinss"
+    },
+    "content.updates.versions[1.03].entries[entry-d4ca3f4b-306d-4d59-bf7a-02beaddaccae]": {
+      "actor": "zzinss"
+    },
+    "content.updates.versions[1.03].entries[entry-d4ca3f4b-306d-4d59-bf7a-02beaddaccae].id": {
+      "actor": "zzinss"
+    },
+    "content.updates.versions[1.03].entries[entry-d4ca3f4b-306d-4d59-bf7a-02beaddaccae].context": {
+      "actor": "zzinss"
+    },
+    "content.updates.versions[1.03].entries[entry-d4ca3f4b-306d-4d59-bf7a-02beaddaccae].title": {
+      "actor": "zzinss"
+    },
+    "content.updates.versions[1.03].entries[entry-d4ca3f4b-306d-4d59-bf7a-02beaddaccae].href": {
+      "actor": "zzinss"
+    },
+    "content.updates.versions[1.03].entries[entry-d4ca3f4b-306d-4d59-bf7a-02beaddaccae].description": {
+      "actor": "zzinss"
     }
   }
 }
