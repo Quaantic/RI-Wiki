@@ -2,6 +2,46 @@
   "format": 1,
   "entries": [
     {
+      "id": "158dadfa-6f15-410c-9110-d1e6de380efc",
+      "at": 1793980313682,
+      "kind": "content",
+      "text": "Removed \"New update\"",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:52:11.269Z"
+    },
+    {
+      "id": "479289b7-103c-480f-8282-dc5ff970f41a",
+      "at": 1793980304499,
+      "kind": "content",
+      "text": "Added \"New update\"",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:52:11.269Z"
+    },
+    {
+      "id": "53396baa-86b5-48aa-bc35-cdb83432d9c0",
+      "at": 1793980297297,
+      "kind": "content",
+      "text": "Updated description of \"Cells\": What changed in the game. to Added cells tab to the Life Generation tab.",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:52:11.269Z"
+    },
+    {
+      "id": "27bfac6e-02e8-475d-8cd0-0e1afb3165a0",
+      "at": 1793980297143,
+      "kind": "content",
+      "text": "Updated text of \"Cells\": New update to Cells",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:52:11.269Z"
+    },
+    {
       "id": "af3b989f-fd13-4c52-8f7a-fe4e1d0d81e8",
       "at": 1793980274568,
       "kind": "content",
@@ -2960,46 +3000,6 @@
       "pending": false,
       "status": "saved",
       "savedAt": "2026-11-06T07:09:26.038Z"
-    },
-    {
-      "id": "f8bceb19-35aa-4755-9616-54f8735a7e90",
-      "at": 1793948908716,
-      "kind": "content",
-      "text": "Updated value of \"Astatine\": formula: amount to formula: ((amount / 0.5) + 1)^0.09",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T07:09:26.038Z"
-    },
-    {
-      "id": "8a8dba59-32df-45d3-bf5b-11a1f74811b4",
-      "at": 1793948892752,
-      "kind": "content",
-      "text": "Updated value of \"Magnets\": formula: amount to formula: ((amount / 1.25) + 1)^0.13",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T07:09:26.038Z"
-    },
-    {
-      "id": "fa3b20f3-5c2a-4108-93e9-267c294c9312",
-      "at": 1793948862558,
-      "kind": "content",
-      "text": "Updated value of \"Tree Essence\": formula: amount to formula: ((amount / 1) + 1)^0.19",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T07:07:45.965Z"
-    },
-    {
-      "id": "f61d1dfc-3717-44f3-aaf6-2191e75d0d1d",
-      "at": 1793948846247,
-      "kind": "content",
-      "text": "Updated value of \"Mine Perks\": formula: amount to formula: ((amount / 0.75) + 1)^0.145",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T07:07:28.996Z"
     }
   ]
 }
