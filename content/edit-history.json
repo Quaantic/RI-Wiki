@@ -2,6 +2,22 @@
   "format": 1,
   "entries": [
     {
+      "id": "6fc20fc5-97f7-4423-9552-efd933256076",
+      "at": 1793934179706,
+      "kind": "colors",
+      "text": "Colored \"Secret\" (#690065)",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "5a1dcabd-d5a5-443e-9dee-94bf7a0d27a7",
+      "at": 1793934153258,
+      "kind": "content",
+      "text": "Updated tagline of \"Runes\": Socketable stones grouped into six families… to Socketable stones grouped into seven famili…",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
       "id": "49e9cb8a-5275-47c9-8a84-8ad44d92d448",
       "at": 1793933668086,
       "kind": "content",
@@ -2382,22 +2398,6 @@
       "at": 1793853902074,
       "kind": "colors",
       "text": "Colored \"Update Log\" (#ffffff)",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "7b662320-5321-4970-9b01-89fbc74c1c4a",
-      "at": 1793853872617,
-      "kind": "colors",
-      "text": "Colored \"Update Log\" (#86d62b)",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "5e664576-5e6c-4fda-a969-3c2b3e4dd322",
-      "at": 1793853694500,
-      "kind": "content",
-      "text": "Removed \"New update\"",
       "actor": "Quaantic",
       "pending": true
     }
