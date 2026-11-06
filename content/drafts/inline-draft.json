@@ -459,7 +459,7 @@
           {
             "id": "life-generation",
             "name": "Life Generation",
-            "icon": "refresh",
+            "icon": "game-icons:paw-heart",
             "desc": "Life Generation is the first resource of the island. Cells accumulate over time with a slowdown limit. Choose one of 30 life forms, from Ant at 1 billion Cells to Ancient Cat at 2.5e40 Cells, then use Create Life to consume Cells and earn Life Shards multiplied by your bonuses. Every three creations advance your Life tier, which gates Terraform upgrades.",
             "highlights": [],
             "facts": [],
@@ -526,7 +526,7 @@
           {
             "id": "fossil",
             "name": "Fossil",
-            "icon": "hex",
+            "icon": "game-icons:fossil",
             "desc": "The Fossil reset consumes 250 thousand Life Shards and converts them into Fossils; the True Fossil Gain is shown before confirmation. Fossils pay for upgrades that boost Life Shards, Energy, Logs, Research, Terraform and more. Some Life and Sap upgrade limits open only as Terraform level rises.",
             "highlights": [],
             "facts": [],
@@ -544,7 +544,7 @@
               {
                 "id": "power-of-fossils",
                 "name": "Power of Fossils",
-                "icon": "chart",
+                "icon": "game-icons:ammonite-fossil",
                 "desc": "Power of Fossils unlocks seven permanent bonuses at total Fossil milestones. Enter your total Fossils to see each unlocked bonus, including Sap chance and CAP effects.",
                 "highlights": [],
                 "facts": [],
@@ -621,7 +621,7 @@
           {
             "id": "tree",
             "name": "Tree",
-            "icon": "branch",
+            "icon": "game-icons:fruit-tree",
             "desc": "The Tree is the Life Island forest, unlocked with the LogsUnlocked tycoon button. Swing your axe at 29 tree types, from Baby Tree with 10 health to Tiny Shadow Tree with 1e25 health. Trees drop Logs, Sap, Apples, Tree XP and, at higher tiers, Roots. Axe Damage, Critical Chance and Critical Damage speed up cutting; Autocut Power and Auto Cut Sap automate it.",
             "highlights": [],
             "facts": [],
@@ -776,7 +776,7 @@
           {
             "id": "monster",
             "name": "Monster",
-            "icon": "skull",
+            "icon": "game-icons:monster-grasp",
             "desc": "The Monster is your dragon pet in the Terraform area. Clicking it feeds the monster and generates Monster Points, which multiply stats with soft caps. It grows through 20 tiers, from Tiny Egg to King Dragon at 1e200 points. Monster Upgrades boost Red Liquid, stat bonuses, Life Gems, tier bonuses, Energy, Money and Monster Perks.",
             "highlights": [],
             "facts": [],
@@ -849,7 +849,7 @@
           {
             "id": "frost",
             "name": "Frost",
-            "icon": "wind",
+            "icon": "game-icons:frostfire",
             "desc": "The Frost area is Life Island’s frozen wing. Three machines produce IceShard every few seconds; Frost Upgrades improve income, machine speed, Tree Roots, Dark Liquid and Golden Research. The conversion chain turns IceShard into four higher frost tiers, each adding permanent global multipliers.",
             "highlights": [],
             "facts": [],
@@ -15589,13 +15589,13 @@
       "actor": "Quaantic"
     },
     "content.wiki.categories": {
-      "actor": "zzinss"
+      "actor": "Quaantic"
     },
     "content.wiki.categories[life]": {
-      "actor": "zzinss"
+      "actor": "Quaantic"
     },
     "content.wiki.categories[life].subcategories": {
-      "actor": "zzinss"
+      "actor": "Quaantic"
     },
     "content.wiki.categories[life].subcategories[tree-essence]": {
       "actor": "zzinss"
@@ -15760,7 +15760,7 @@
       "actor": "zzinss"
     },
     "content.wiki.categories[life].subcategories[life-generation]": {
-      "actor": "zzinss"
+      "actor": "Quaantic"
     },
     "content.wiki.categories[life].subcategories[life-generation].desc": {
       "actor": "zzinss"
@@ -16108,6 +16108,45 @@
       "actor": "Quaantic"
     },
     "content.game": {
+      "actor": "Quaantic"
+    },
+    "content.wiki": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].icon": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[fossil]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[fossil].icon": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[fossil].children": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[fossil].children[power-of-fossils]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[fossil].children[power-of-fossils].icon": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].icon": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[monster]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[monster].icon": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[frost]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[frost].icon": {
       "actor": "Quaantic"
     }
   }
