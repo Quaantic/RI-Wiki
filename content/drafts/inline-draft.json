@@ -2915,14 +2915,14 @@
               "name": "More Rare Saps",
               "cap": "20",
               "price": "3*L",
-              "multi": "0.1*L"
+              "multi": "1+(0.05*L)"
             },
             {
               "n": 49,
               "name": "More Astatine ",
               "cap": "20",
               "price": "3*L",
-              "multi": "0.15+(0.1*L)"
+              "multi": "1+(0.05*L)"
             },
             {
               "n": 50,
@@ -15018,9 +15018,9 @@
     ]
   },
   "_baseShas": {
+    "updates": "0eb97556919ed433f706883ac61ad637d09334ca",
     "wiki": "9589980a426f5352a7de8f3e444221f5b6374636",
-    "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba",
-    "updates": "0eb97556919ed433f706883ac61ad637d09334ca"
+    "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
     "content.game.progression.stages.life/tree-essence-milestones.stages[2].num": {
