@@ -590,6 +590,9 @@ html.ri-edit-bar .sub-pills-wrap {
   text-transform: uppercase;
   color: #f2c94c;
 }
+.ri-history-row__pending[data-status="pending"] { color: #ff626c; }
+.ri-history-row__pending[data-status="saved"] { color: #ffd75e; }
+.ri-history-row__pending[data-status="published"] { color: #73e892; }
 
 /* Campo de link pesquisavel */
 .ri-linkpick { position: relative; flex: 1; min-width: 0; }

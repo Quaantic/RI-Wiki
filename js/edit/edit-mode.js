@@ -579,7 +579,7 @@ function onToolbarAction(button) {
         buildNav();
         await rerender({ scroll: 'preserve' });
         window.dispatchEvent(new CustomEvent('ri-edit-content'));
-        notify(saved?.historyWarning ? 'Shared draft verified on GitHub. Update History could not sync; retry later.' : 'Saved for everyone and verified on GitHub.');
+        notify(`Saved for everyone and verified on GitHub.${saved?.backupWarning ? ' Warning: previous-version backup failed; keep a recovery copy.' : ''}${saved?.historyWarning ? ' Warning: Update History could not sync.' : ''}`, Boolean(saved?.backupWarning));
       } else if (act === 'publish') {
         if (!session.canPublish) throw new Error('Permission denied. Only Quaantic and zzinss can publish.');
         const message = draft.hasRestoredDraft()
@@ -1079,6 +1079,8 @@ export function makeIconPicker(initialValue) {
     input.dispatchEvent(new Event('input', { bubbles: true }));
     preview.innerHTML = icon(input.value || 'circle', 22);
     grid.querySelectorAll('.ri-icon-cell').forEach((el) => { el.classList.toggle('is-on', el === cell); el.setAttribute('aria-pressed', String(el === cell)); });
+    // Selecting an icon returns to the form, where Apply commits the edit.
+    closeBrowser();
   });
 
   input.addEventListener('input', () => {
@@ -1118,11 +1120,15 @@ export function makeIconPicker(initialValue) {
     resetGrid();
     search.focus({ preventScroll: true });
   });
+  // This modal lives under <body> while open, outside the edit popover.
+  // Stop its events before the page-level edit click handler can cancel them.
+  panel.addEventListener('click', (event) => event.stopPropagation());
+  panel.addEventListener('pointerdown', (event) => event.stopPropagation());
   panel.addEventListener('ri-picker-close', closeBrowser);
-  panel.querySelector('.ri-icon-picker__close').addEventListener('click', closeBrowser);
+  panel.querySelector('.ri-icon-picker__close').addEventListener('click', (event) => { event.preventDefault(); event.stopPropagation(); closeBrowser(); });
   search.addEventListener('input', resetGrid);
   collection.addEventListener('change', resetGrid);
-  more.addEventListener('click', () => { limit += 64; renderGrid(); });
+  more.addEventListener('click', (event) => { event.preventDefault(); event.stopPropagation(); limit += 64; renderGrid(); });
 
   return { row, panel, input, preview };
 }
@@ -1416,7 +1422,7 @@ function renderHistoryList(container, entries, filterKind) {
       <span class="ri-history-row__kind ri-history-row__kind--${entry.kind === 'colors' ? 'colors' : 'content'}">${entry.kind === 'colors' ? 'Colors' : 'Content'}</span>
       <span class="ri-history-row__text">${esc(entry.text)}</span>
       <span class="ri-history-row__actor">${entry.actor ? `@${esc(entry.actor)}` : 'Legacy edit'}</span>
-      <span class="ri-history-row__pending">${esc(entry.status || (entry.pending ? 'pending' : 'published'))}</span>
+      <span class="ri-history-row__pending" data-status="${esc(['pending','saved','published'].includes(entry.status) ? entry.status : (entry.pending ? 'pending' : 'published'))}">${esc(['pending','saved','published'].includes(entry.status) ? entry.status : (entry.pending ? 'pending' : 'published'))}</span>
     </div>`).join('');
 }
 
@@ -1440,8 +1446,8 @@ function renderVersionsPage(root) {
 
   const restoreFlow = async (name) => {
     if (session.busy) return;
-    if (!session.canPublish) { notify('Only Quaantic and zzinss can restore published content.', true); return; }
-    if (!window.confirm(`Restore "${draft.versionLabel(name)}"? This replaces the live Wiki and your current draft edits. A safety version of the current content is saved first.`)) return;
+    if (!session.canPublish) { notify('Only Quaantic and zzinss can stage full version restores.', true); return; }
+    if (!window.confirm(`Stage "${draft.versionLabel(name)}" into your local editor?\n\nThis does NOT publish to the live Wiki or save for everyone. Review the restored version first, then click Save for Everyone when ready. Publish is a separate action.\n\nYour unsaved local edits will be replaced; download a recovery copy first if needed.`)) return;
     session.busy = true;
     try {
       await draft.restoreVersion(session.token, name);
@@ -1450,7 +1456,7 @@ function renderVersionsPage(root) {
       window.dispatchEvent(new CustomEvent('ri-edit-content'));
       updateToolbar();
       await rerender({ scroll: 'preserve' });
-      notify(`Version restored and published: ${draft.versionLabel(name)}`);
+      notify(`Version staged in your editor only: ${draft.versionLabel(name)}. Review it, then Save for Everyone. Nothing was published.`);
     } catch (error) {
       notify(error.message || 'Restore failed.', true);
     } finally {
@@ -1472,7 +1478,7 @@ function renderVersionsPage(root) {
       session.syncError = '';
       draft.applyDraftToSite();
       window.dispatchEvent(new CustomEvent('ri-edit-content'));
-      notify(`Saved for everyone + created version ${draft.versionLabel(name)}.${saved?.historyWarning ? ' Update History could not sync.' : ''}`);
+      notify(`Saved for everyone + created version ${draft.versionLabel(name)}.${saved?.backupWarning ? ' Warning: automatic previous-version backup failed.' : ''}${saved?.historyWarning ? ' Update History could not sync.' : ''}`, Boolean(saved?.backupWarning));
       renderVersionsPage(root);
     } catch (error) {
       notify(error.message || 'Shared draft was not saved; no version was created.', true);
@@ -1497,8 +1503,8 @@ function renderVersionsPage(root) {
         list.innerHTML = versions.map((v) => `
           <div class="ri-version-row">
             <span class="ri-version-row__name" title="${esc(v.name)}">${esc(draft.versionLabel(v.name))}</span>
-            <button type="button" class="btn btn--ghost btn--sm" data-ri-version-recover="${esc(v.name)}" title="Add missing pages to your draft while keeping current content">${icon('plus', 12)} Recover missing pages</button>
-            <button type="button" class="btn btn--ghost btn--sm" data-ri-version-restore="${esc(v.name)}" ${session.canPublish ? '' : 'disabled title="Only Quaantic and zzinss can publish restores"'}>${icon('rotate-ccw', 12)} Restore</button>
+            <button type="button" class="btn btn--ghost btn--sm" data-ri-version-recover="${esc(v.name)}" title="Add missing pages to your working draft; does not Publish">${icon('plus', 12)} Recover missing pages</button>
+            <button type="button" class="btn btn--ghost btn--sm" data-ri-version-restore="${esc(v.name)}" title="Load this backup into your local editor only (does NOT publish)" ${session.canPublish ? '' : 'disabled title="Only Quaantic and zzinss can stage restores"'}>${icon('rotate-ccw', 12)} Restore</button>
           </div>`).join('');
         list.querySelectorAll('[data-ri-version-restore]').forEach((btn) => {
           btn.addEventListener('click', () => restoreFlow(btn.getAttribute('data-ri-version-restore')));
@@ -2528,7 +2534,7 @@ function installInteraction() {
   document.addEventListener('click', (event) => {
     if (!session.ready || !session.allowed) return;
     if (session.busy || sharedRefreshChecking) return;
-    if (event.target.closest('#ri-edit-bar, .ri-edit-popover, .ri-edit-chip')) return;
+    if (event.target.closest('#ri-edit-bar, .ri-edit-popover, .ri-edit-chip, .ri-icon-picker--fullscreen')) return;
     if(popState){
       // A mouse-up outside a textarea can produce a click on the page. It
       // must never cancel the form or open a different editor underneath it.

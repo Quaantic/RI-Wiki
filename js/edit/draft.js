@@ -445,9 +445,10 @@ export async function initSession(token, actor = '') {
         orderConflict = true;
         return true;
       };
-      // Opening the editor must not require resolving stale shared content.
-      // Display published values at conflicts; Save/Publish will ask explicitly.
-      provisional.resolveConflict = () => { contentConflict = true; return 'remote'; };
+      // Never silently replace already saved contributor work with the live
+      // site's value. Use the shared copy for display, then require an
+      // explicit conflict decision when the user saves/publishes.
+      provisional.resolveConflict = () => { contentConflict = true; return 'local'; };
       const remote = await readSharedDraft(result, draftState.baseDocs, draftState.shas, token, provisional);
       validateDocuments(remote);
       draftState.draftSha = result.sha;
@@ -565,6 +566,7 @@ async function assertSharedSaveCooldown(token) {
 }
 
 async function saveChangedDraft(token, keepLocalOrder){
+  let backupWarning = false;
   for(let attempt=0;attempt<4;attempt++){
     await syncRemote(token, keepLocalOrder);
     validateDocuments(draftState.docs);
@@ -574,10 +576,11 @@ async function saveChangedDraft(token, keepLocalOrder){
     if(!draftState.sharedOrderNeedsSave && JSON.stringify(draftState.docs)===JSON.stringify(draftState.sharedBase))break;
     await assertSharedSaveCooldown(token);
     const raw=currentDraftRaw();
+    const previousShared = clone(draftState.sharedBase);
     try{
-      // Back up the previous shared state before replacing it. A Save is not a Publish.
-      // On a revision conflict the next attempt will re-sync before taking its backup.
-      await createVersion(token, draftState.sharedBase, 'save', 'save');
+      // Save the verified merge first. A backup commit BEFORE the draft write
+      // used to leave phantom 'Save' versions when the actual Save failed.
+      // Keep the previous shared state in memory for its recovery backup.
       const result=await githubRequest(githubContentsUrl(DRAFT_FILE), token, {
         method: 'PUT',
         body: JSON.stringify({
@@ -606,6 +609,14 @@ async function saveChangedDraft(token, keepLocalOrder){
       draftState.savedDraftRaw=raw;
       draftState.sharedBase=expected;
       draftState.sharedOrderNeedsSave=false;
+      // The shared draft has been verified on GitHub. Now back up its prior
+      // contents. A backup failure must NEVER turn a completed Save into a
+      // misleading failure that tempts users to overwrite it again.
+      try { await createVersion(token, previousShared, 'save', 'save'); }
+      catch (backupError) {
+        backupWarning = true;
+        console.warn('[inline-editor] Shared draft saved, but previous-version backup failed.', backupError);
+      }
       break;
     }catch(error){
       persistLocalRecovery();
@@ -627,11 +638,11 @@ async function saveChangedDraft(token, keepLocalOrder){
     } catch (error) {
       console.warn('[inline-editor] Draft verified, but Update History could not be written.', error);
       persistLocalRecovery();
-      return { saved: true, historyWarning: true };
+      return { saved: true, historyWarning: true, backupWarning };
     }
   }
   persistLocalRecovery();
-  return { saved: true, historyWarning: false };
+  return { saved: true, historyWarning: false, backupWarning };
 }
 
 export async function discardDraft(token) {
@@ -846,7 +857,7 @@ async function writeHistoryRevision(token,newEntries,pending,discard){
       older = [];
     }
     if (discard) older = older.filter((entry) => entry.status !== 'saved' && !entry.pending);
-    else if (!pending) older = older.map((entry) => ({ ...entry, pending: false, status: 'published' }));
+    else if (!pending) older = older.map((entry) => entry.status === 'saved' || entry.pending ? { ...entry, pending: false, status: 'published' } : entry);
   }
   const byId = new Map([...older, ...newEntries].map((entry) => [entry.id || `${entry.at}:${entry.text}`, entry]));
   const entries = [...byId.values()]
@@ -970,9 +981,13 @@ export async function createVersion(token, documents = draftState.baseDocs, mess
 }
 
 export async function restoreVersion(token, name) {
-  // Restore is a PUBLISH action. The generic /api/github route deliberately
-  // refuses writes to live content, even from the owner. Use the protected,
-  // atomic /api/publish endpoint (Quaantic/zzinss only) instead.
+  // RESTORE IS NOT PUBLISH. Only stage the selected backup in this editor.
+  // Nothing is written to the shared GitHub draft or published wiki until
+  // the user explicitly clicks Save for Everyone or Publish, respectively.
+  // Sync first to avoid staging a restore on an obsolete shared snapshot.
+  if (await remoteChanged(token)) {
+    throw new Error('Someone saved newer shared changes. Sync first and review them before staging a restore. Nothing was overwritten.');
+  }
   const result = await githubRequest(githubContentsUrl(`${BACKUP_DIRECTORY}/${encodeURIComponent(name)}`), token);
   const backup = JSON.parse(decodeBase64Content(result.content));
   if (backup.format !== 1 || !backup.documents?.wiki || !backup.documents?.updates || !backup.documents?.game) {
@@ -980,31 +995,15 @@ export async function restoreVersion(token, name) {
   }
   const restored = clone({ wiki: backup.documents.wiki, updates: backup.documents.updates, game: backup.documents.game });
   validateDocuments(restored);
-  if (await remoteChanged(token)) {
-    throw new Error('Someone changed the shared data since you opened the editor. Sync first, then review the version to restore. Nothing was overwritten.');
-  }
-  // Protected endpoint creates a safety backup and updates all published
-  // documents in ONE commit; its HEAD CAS prevents concurrent restores.
-  const published = await publishDocuments({ docs: restored, shas: draftState.shas, draftSha: draftState.draftSha });
-  draftState.shas = published.shas;
-  draftState.baseDocs = clone(restored);
-  draftState.docs = clone(restored);
-  draftState.sharedBase = clone(restored);
-  draftState.draftSha = null;
-  draftState.savedDraftRaw = '';
+  // Preserve the shared baseline: this full-snapshot restore becomes a LOCAL
+  // delta that will participate in three-way merge/explicit conflict review.
+  // Do not clear current shared SHA, published SHAs, or GitHub draft.
+  draftState.docs = restored;
   draftState.needsMerge = false;
-  draftState.sharedOrderNeedsSave = false;
-  draftState.invalidDraftBackup = null;
   history.length = 0;
-  changeLog.length = 0;
+  logChange('draft-restore', `Staged version ${versionLabel(name)} for review (not published)`);
   persistLocalRecovery();
   applyDraftToSite();
-  // The restore is already live; audit is best-effort and cannot undo a
-  // successful publication if GitHub history has a transient failure.
-  const now = Date.now();
-  await writeHistory(token, [{ id: crypto.randomUUID(), at: now, actor: draftState.actor, kind: 'content',
-    text: `Restored version ${versionLabel(name)}`, pending: false, status: 'published' }], false)
-    .catch(error => console.warn('[inline-editor] Restore succeeded; history update failed.', error));
   return name;
 }
 

@@ -62,6 +62,27 @@ export function mergeDocuments(base, local, remote, path = 'content', keepLocalO
       return [...new Set(order)].map((id) => merged.get(id)).filter((item) => item !== undefined);
     }
   }
+  // Lists without stable IDs (form rows, strings, numbers, etc.) also need
+  // per-entry merging. The old implementation treated the WHOLE list as one
+  // value, so editing element 0 while another edited element 4 looked like a
+  // collision and could discard unrelated work. Keep unchanged indexes as
+  // independent fields. If both sides only append, retain both additions.
+  if (Array.isArray(local) && Array.isArray(remote) && Array.isArray(base)) {
+    const originalLength = base.length;
+    const localRetainsPositions = local.length >= originalLength;
+    const remoteRetainsPositions = remote.length >= originalLength;
+    if (localRetainsPositions && remoteRetainsPositions) {
+      const merged = base.map((item, index) => mergeDocuments(item, local[index], remote[index], `${path}[${index}]`, keepLocalOrder));
+      const newRemote = remote.slice(originalLength), newLocal = local.slice(originalLength);
+      // Added items have no common base. Preserve both independent appends;
+      // same-value additions are deduplicated to avoid identical duplicates.
+      const appended = [...newRemote];
+      for (const item of newLocal) if (!appended.some(existing => equal(existing, item))) appended.push(item);
+      return [...merged, ...appended];
+    }
+    // Index deletion/reorder cannot be safely inferred for unkeyed arrays:
+    // require an explicit choice rather than silently replacing unrelated work.
+  }
   if (object(local) && object(remote) && (base === undefined || object(base))) {
     const merged = {};
     for (const key of new Set([...Object.keys(base || {}), ...Object.keys(local), ...Object.keys(remote)])) {
