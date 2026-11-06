@@ -2,6 +2,46 @@
   "format": 1,
   "entries": [
     {
+      "id": "51da6137-c3c8-49e2-8ed7-73cef5a3a347",
+      "at": 1793979388647,
+      "kind": "content",
+      "text": "Updated 2 of \"row-48ac1323-c4a9-4b01-bef6-72efb7047369\": empty to 300Qi",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:36:58.873Z"
+    },
+    {
+      "id": "de8a3f59-b4d2-4bb3-bf1f-aade1bf45ebe",
+      "at": 1793979388495,
+      "kind": "content",
+      "text": "Updated 1 of \"row-48ac1323-c4a9-4b01-bef6-72efb7047369\": empty to 25DDe",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:36:58.873Z"
+    },
+    {
+      "id": "ad2d358a-e83f-4aba-87b2-b4ceed449aad",
+      "at": 1793979370748,
+      "kind": "content",
+      "text": "Updated 2 of \"row-e1745c79-18d4-4f2f-88b3-c092a77a5369\": empty to 30Qi",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:36:58.873Z"
+    },
+    {
+      "id": "a89c777f-d866-4a24-a925-37dd79231a6d",
+      "at": 1793979370583,
+      "kind": "content",
+      "text": "Updated 1 of \"row-e1745c79-18d4-4f2f-88b3-c092a77a5369\": empty to 5DDe",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:36:58.872Z"
+    },
+    {
       "id": "23a3ad30-2fc5-40bc-8622-3807002480c8",
       "at": 1793979353330,
       "kind": "content",
@@ -2960,46 +3000,6 @@
       "pending": false,
       "status": "saved",
       "savedAt": "2026-11-06T06:59:52.834Z"
-    },
-    {
-      "id": "4ecc9391-fe06-4ed3-81bd-75629c6c8790",
-      "at": 1793948346188,
-      "kind": "content",
-      "text": "Set unit of \"Minedamage\" (x)",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T06:59:23.573Z"
-    },
-    {
-      "id": "daa8d7a6-2c23-48d5-9f77-79ab9ef12502",
-      "at": 1793948346137,
-      "kind": "content",
-      "text": "Set cap Unit of \"Minedamage\" (x)",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T06:59:23.573Z"
-    },
-    {
-      "id": "6956b74c-fda3-4c30-a961-613ea0f7483e",
-      "at": 1793948346090,
-      "kind": "content",
-      "text": "Renamed \"New bonus\" to \"Minedamage\"",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T06:59:23.573Z"
-    },
-    {
-      "id": "faffc175-6133-4b28-ab14-79f9da06db6a",
-      "at": 1793948314996,
-      "kind": "content",
-      "text": "Added \"New bonus\"",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T06:59:23.573Z"
     }
   ]
 }
