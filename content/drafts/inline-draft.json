@@ -3076,7 +3076,7 @@
               "name": "More Tree Essence",
               "cap": "99",
               "price": "floor(1e57 * (2.35 + L/75)^L)",
-              "multi": "0.1*L"
+              "multi": "* (1 + 0.1 * L)"
             }
           ]
         },
@@ -15586,7 +15586,7 @@
       "actor": "Quaantic"
     },
     "content.game.upgrades.sections.logs.upgrades[15].multi": {
-      "actor": "zzinss"
+      "actor": "Quaantic"
     },
     "content.wiki.categories": {
       "actor": "zzinss"
