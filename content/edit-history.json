@@ -2,6 +2,16 @@
   "format": 1,
   "entries": [
     {
+      "id": "da176118-eade-4c56-8a78-f0a14e83c0cd",
+      "at": 1793947554786,
+      "kind": "content",
+      "text": "Added \"New bonus\"",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T06:46:00.541Z"
+    },
+    {
       "id": "ac3fc43c-bc4d-477f-8877-0fb12e71d0a8",
       "at": 1793947502246,
       "kind": "content",
@@ -605,6 +615,26 @@
       "pending": false
     },
     {
+      "id": "fff689ec-8413-4da7-978e-8e40cde05604",
+      "at": 1793947542229,
+      "kind": "content",
+      "text": "Updated drop Chance of \"Unnatural\": empty to 4.83%",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T06:46:00.541Z"
+    },
+    {
+      "id": "066d65d4-f5e2-4955-b73e-251f7dc0ecf3",
+      "at": 1793947542182,
+      "kind": "content",
+      "text": "Renamed \"New group\" to \"Unnatural\"",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T06:46:00.541Z"
+    },
+    {
       "id": "324d5ef1-aa46-4ef4-b19b-1e8c5356a465",
       "at": 1793947502201,
       "kind": "content",
@@ -623,6 +653,16 @@
       "pending": false,
       "status": "saved",
       "savedAt": "2026-11-06T06:45:18.125Z"
+    },
+    {
+      "id": "60772940-d488-462b-9c89-62af84890e75",
+      "at": 1793947491645,
+      "kind": "content",
+      "text": "Added \"New group\"",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T06:46:00.541Z"
     },
     {
       "id": "3c6c5e44-9aba-4355-8763-72c61745dc48",
