@@ -1,8 +1,8 @@
 // ==== ROUTER ====
 
 import { qs } from './utils.js';
-import { setCrumbs, setActiveNav, emblem, resetReveal } from './ui.js';
-import { mountPageMotion } from './page-motion.js';
+import { setCrumbs, setActiveNav, emblem } from './ui.js';
+import { mountPageMotion, clearPageMotion } from './page-motion.js';
 import {
   homeView, categoryView, subcategoryView,
   searchView, updatesView, creditsView, notFoundView,
@@ -83,6 +83,7 @@ async function renderView(view, params, query, opts = {}) {
   container.querySelectorAll('[data-emblem]').forEach((el) => {
     el.innerHTML = emblem(parseInt(el.dataset.emblem, 10) || 24);
   });
+  clearPageMotion();
   viewEl.replaceChildren(container);
   // The view is swapped immediately; animations never delay navigation.
   if (window.__riFlashNext) {
@@ -97,7 +98,6 @@ async function renderView(view, params, query, opts = {}) {
     pendingScrollAfterRender = null;
     window.scrollTo({ top: target ?? 0, behavior: 'instant' });
   }
-  resetReveal();
   mountPageMotion(container, { animate: opts.animate !== false });
   window.dispatchEvent(new Event('ri-route-rendered'));
 }

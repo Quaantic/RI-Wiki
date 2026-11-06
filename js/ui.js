@@ -1,6 +1,7 @@
 // ==== UI: ICONES, COMPONENTES E SHELL (nao precisa editar) ====
 
 import { qs, qsa, esc, html, debounce, markMatches } from './utils.js';
+import { animateDynamicContent } from './page-motion.js';
 import { CATEGORIES, getSubcategory } from './data/wiki-data.js';
 import { getInlineUpgradePages } from './data/formulas.js';
 import { colorizeResources, resourceColor } from './data/resource-colors.js';
@@ -68,163 +69,12 @@ export function emblem(size = 32, cls = '') {
 </svg>`;
 }
 
-// ==== REVEAL: entrada em sequencia (stagger) + escrita progressiva ====
-
-const REVEAL_STEP = 32;        // intervalo entre elementos que entram na tela juntos (ms)
-const REVEAL_MAX_STEPS = 5;    // limite do atraso acumulado (~630 ms)
-const TYPE_MS_PER_CHAR = 26;   // velocidade base da escrita
-const TYPE_MIN_MS = 450;       // textos curtos nao terminam em menos que isso
-const TYPE_MAX_MS = 1300;      // textos longos nao passam disso
-const TYPE_HIGHLIGHT = 'ri-untyped';
-
-// Textos que "sao escritos". Para incluir outro elemento, basta dar data-type="" nele.
-const TYPE_SELECTOR = [
-  '[data-type]',
-  '.hero__title', '.hero__sub',
-  '.cat-hero__name', '.cat-hero__tagline',
-  '.page-head h1', '.page-head p',
-  '.section-title',
-].join(',');
-
-let observer = null;
-let revealToken = 0;               // invalida callbacks de uma pagina anterior
-let untypedHL = null;              // CSS Custom Highlight: pinta de transparente o texto ainda nao escrito
-let typeRaf = 0;
-const typeSeen = new WeakSet();    // elementos que ja foram preparados (nunca reescreve duas vezes)
-const typePending = new Map();     // elemento -> job (esperando entrar na tela)
-const typeActive = new Set();      // jobs escrevendo agora
-
-const motionOff = () => document.documentElement.classList.contains('reduce-motion');
-const canTypeText = () => false; // no per-frame text masking; keep page content immediately readable
-
-// Escrita progressiva SEM dividir o texto em elementos: o texto continua inteiro no DOM
-// (layout fixo, sem espacos artificiais) e um Range "esconde" so a parte ainda nao escrita.
-function prepareTyping(el) {
-  if (typeSeen.has(el)) return false;
-  typeSeen.add(el);
-  const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
-  const nodes = [];
-  let total = 0;
-  for (let n = walker.nextNode(); n; n = walker.nextNode()) {
-    if (!n.nodeValue.trim()) continue;
-    nodes.push(n);
-    total += n.nodeValue.length;
-  }
-  if (!nodes.length) return false;
-
-  const range = document.createRange();
-  range.setStart(nodes[0], 0);
-  const last = nodes[nodes.length - 1];
-  range.setEnd(last, last.nodeValue.length);
-  if (!untypedHL) {
-    untypedHL = new Highlight();
-    CSS.highlights.set(TYPE_HIGHLIGHT, untypedHL);
-  }
-  untypedHL.add(range);
-
-  const duration = Math.min(TYPE_MAX_MS, Math.max(TYPE_MIN_MS, total * TYPE_MS_PER_CHAR));
-  typePending.set(el, { nodes, total, range, duration, begin: 0 });
-  return true;
-}
-
-function startTyping(el, delay) {
-  const job = typePending.get(el);
-  if (!job) return;
-  typePending.delete(el);
-  job.begin = performance.now() + delay;
-  typeActive.add(job);
-  if (!typeRaf) typeRaf = requestAnimationFrame(typeTick);
-}
-
-function typeTick(now) {
-  typeRaf = 0;
-  for (const job of typeActive) {
-    const p = (now - job.begin) / job.duration;
-    if (p <= 0) continue;                       // ainda no atraso do stagger
-    if (p >= 1) {                               // terminou: revela tudo
-      untypedHL.delete(job.range);
-      typeActive.delete(job);
-      continue;
-    }
-    let left = Math.floor(p * job.total);       // caracteres ja escritos
-    for (const node of job.nodes) {
-      const len = node.nodeValue.length;
-      if (left <= len) { job.range.setStart(node, left); break; }
-      left -= len;
-    }
-  }
-  if (typeActive.size) typeRaf = requestAnimationFrame(typeTick);
-}
-
-function onIntersect(entries, obs) {
-  const batch = entries
-    .filter((e) => e.isIntersecting && e.target.isConnected)
-    .sort((a, b) => (a.target.compareDocumentPosition(b.target) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1));
-
-  // Todos os elementos que entram juntos formam um lote: o atraso e a posicao no lote
-  // (e nao o indice no array de dados), entao o stagger funciona tambem ao rolar a pagina.
-  batch.forEach((entry, i) => {
-    const el = entry.target;
-    const delay = Math.min(i, REVEAL_MAX_STEPS) * REVEAL_STEP;
-    obs.unobserve(el);
-    if (el.classList.contains('reveal')) {
-      el.style.setProperty('--reveal-delay', `${delay}ms`);
-      el.classList.add('is-visible');
-    }
-    startTyping(el, delay);
-  });
-}
-
-function getObserver() {
-  if (!observer) {
-    observer = new IntersectionObserver(onIntersect, { rootMargin: '0px 0px -6% 0px', threshold: 0.06 });
-  }
-  return observer;
-}
-
-// Na primeira carga a tela de boot cobre a pagina por ~0,5 s: espera ela sair para
-// a animacao de entrada nao acontecer escondida atras dela.
-function whenBootDone(cb) {
-  const boot = document.getElementById('boot');
-  if (!boot || boot.classList.contains('is-done')) { cb(); return; }
-  const mo = new MutationObserver(() => {
-    if (boot.classList.contains('is-done')) { mo.disconnect(); cb(); }
-  });
-  mo.observe(boot, { attributes: true, attributeFilter: ['class'] });
-}
-
-// Chamada pelo router a cada pagina nova: descarta tudo da pagina anterior.
-export function resetReveal() {
-  revealToken++;
-  if (observer) { observer.disconnect(); observer = null; }
-  typePending.clear();
-  typeActive.clear();
-  if (typeRaf) { cancelAnimationFrame(typeRaf); typeRaf = 0; }
-  if (untypedHL) untypedHL.clear();
-}
+// Entrance animation is owned by the mounted route (page-motion.js).
 
 export function initReveal(root = document) {
-  // Raiz ainda fora do DOM (as views chamam isto dentro de render()):
-  // nao da para medir nada, o router chama de novo depois de inserir a pagina.
-  if (!root.isConnected) return;
-
-  const reveals = [...root.querySelectorAll('.reveal:not(.is-visible)')];
-  const typers = !motionOff() && canTypeText()
-    ? [...root.querySelectorAll(TYPE_SELECTOR)].filter(prepareTyping)
-    : [];
-  if (!reveals.length && !typers.length) return;
-
-  const token = revealToken;
-  whenBootDone(() => {
-    if (token !== revealToken) return;          // o usuario ja navegou para outra pagina
-    if (!('IntersectionObserver' in window)) {  // navegador sem IO: mostra tudo de uma vez
-      reveals.forEach((el) => el.classList.add('is-visible'));
-      typers.forEach((el) => startTyping(el, 0));
-      return;
-    }
-    const io = getObserver();
-    [...reveals, ...typers].forEach((el) => { if (el.isConnected) io.observe(el); });
-  });
+  // Views render off-DOM; the router owns the entrance after insertion.
+  // Connected search results use the same controller, never a second observer.
+  if (root.isConnected) animateDynamicContent(root);
 }
 
 export function reveal(index = 0, extra = '') {
