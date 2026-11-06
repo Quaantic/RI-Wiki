@@ -2,6 +2,16 @@
   "format": 1,
   "entries": [
     {
+      "id": "244f30f8-71ae-4085-b84a-e006d10d64fd",
+      "at": 1793975385491,
+      "kind": "content",
+      "text": "Updated icon of \"Gears Generators\": gauge to game-icons:gears",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:30:56.741Z"
+    },
+    {
       "id": "e551413b-2b32-42df-8af8-e9ae9b744111",
       "at": 1793975328438,
       "kind": "content",
@@ -2905,6 +2915,26 @@
       "pending": false
     },
     {
+      "id": "9f86fbcb-332f-4c28-a063-224f45dddcba",
+      "at": 1793975378640,
+      "kind": "content",
+      "text": "Updated icon of \"Special Gears\": star to game-icons:gear-hammer",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:30:56.741Z"
+    },
+    {
+      "id": "4207b04a-3f06-46fd-a8cc-c9ba82c3cbea",
+      "at": 1793975364738,
+      "kind": "content",
+      "text": "Updated icon of \"Automations\": refresh to game-icons:auto-repair",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:30:56.741Z"
+    },
+    {
       "id": "e2b4285a-ff0d-4bd2-b917-6a1422340ba1",
       "at": 1793975262372,
       "kind": "content",
@@ -2923,36 +2953,6 @@
       "pending": false,
       "status": "saved",
       "savedAt": "2026-11-06T14:28:45.131Z"
-    },
-    {
-      "id": "0457d4e1-3b2c-418f-84b9-0686e839d89c",
-      "at": 1793975236093,
-      "kind": "content",
-      "text": "Updated icon of \"Gears\": settings to game-icons:cog",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T14:28:45.131Z"
-    },
-    {
-      "id": "4962e48e-7bdb-4ae7-8d4b-16af1b260d85",
-      "at": 1793975210700,
-      "kind": "content",
-      "text": "Updated icon of \"Terraform\": map-pin to game-icons:star-shuriken",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T14:28:45.131Z"
-    },
-    {
-      "id": "643ddbd3-920f-4587-b16d-13b7fce519e1",
-      "at": 1793947614635,
-      "kind": "content",
-      "text": "Set unit of \"Soul\" (x)",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T06:47:11.375Z"
     }
   ]
 }
