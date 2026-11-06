@@ -14083,21 +14083,21 @@
                 {
                   "id": "b1",
                   "name": "Energy ",
-                  "value": "formula: amount",
+                  "value": "formula: ((amount / 2) + 1)^0.3",
                   "capUnit": "x",
                   "unit": "x"
                 },
                 {
                   "id": "b",
                   "name": "Dust",
-                  "value": "formula: amount",
+                  "value": "formula: ((amount / 4) + 1)^0.185",
                   "capUnit": "x",
                   "unit": "x"
                 },
                 {
                   "id": "b2",
                   "name": "Life Gem",
-                  "value": "formula: amount",
+                  "value": "formula: ((amount / 6) + 1)^0.11",
                   "capUnit": "x",
                   "unit": "x"
                 }
@@ -14113,21 +14113,21 @@
                 {
                   "id": "b1",
                   "name": "Money",
-                  "value": "formula: amount",
+                  "value": "formula: ((amount / 1) + 1)^0.275",
                   "capUnit": "x",
                   "unit": "x"
                 },
                 {
                   "id": "b",
                   "name": "Bones",
-                  "value": "formula: amount",
+                  "value": "formula: ((amount / 2) + 1)^0.245",
                   "capUnit": "x",
                   "unit": "x"
                 },
                 {
                   "id": "b2",
                   "name": "Research ",
-                  "value": "formula: amount",
+                  "value": "formula: ((amount / 4) + 1)^0.125",
                   "capUnit": "x",
                   "unit": "x"
                 }
@@ -14143,21 +14143,21 @@
                 {
                   "id": "b1",
                   "name": "Strength ",
-                  "value": "formula: amount",
+                  "value": "formula: ((amount / 1) + 1)^0.175",
                   "capUnit": "x",
                   "unit": "x"
                 },
                 {
                   "id": "b",
                   "name": "Health",
-                  "value": "formula: amount",
+                  "value": "formula: ((amount / 1) + 1)^0.175",
                   "capUnit": "x",
                   "unit": "x"
                 },
                 {
                   "id": "b2",
                   "name": "Souls",
-                  "value": "formula: amount",
+                  "value": "formula: ((amount / 3) + 1)^0.125",
                   "capUnit": "x",
                   "unit": "x"
                 }
@@ -14173,21 +14173,21 @@
                 {
                   "id": "b1",
                   "name": "Mine Damage",
-                  "value": "formula: amount",
+                  "value": "formula: ((amount / 1) + 1)^0.3",
                   "capUnit": "x",
                   "unit": "x"
                 },
                 {
                   "id": "b",
                   "name": "Coins",
-                  "value": "formula: amount",
+                  "value": "formula: ((amount / 1.5) + 1)^0.2",
                   "capUnit": "x",
                   "unit": "x"
                 },
                 {
                   "id": "b2",
                   "name": "Fossils",
-                  "value": "formula: amount",
+                  "value": "formula: ((amount / 2) + 1)^0.175",
                   "capUnit": "x",
                   "unit": "x"
                 }
@@ -14203,21 +14203,21 @@
                 {
                   "id": "b1",
                   "name": "Iron",
-                  "value": "formula: amount",
+                  "value": "formula: ((amount / 1) + 1)^0.1",
                   "capUnit": "x",
                   "unit": "x"
                 },
                 {
                   "id": "b",
                   "name": "Californium ",
-                  "value": "formula: amount",
+                  "value": "formula: ((amount/ 1.5) + 1)^0.125",
                   "capUnit": "x",
                   "unit": "x"
                 },
                 {
                   "id": "b2",
                   "name": "Bluesteel ",
-                  "value": "formula: amount",
+                  "value": "formula: ((amount / 2) + 1)^0.2",
                   "capUnit": "x",
                   "unit": "x"
                 }
@@ -14233,21 +14233,21 @@
                 {
                   "id": "b1",
                   "name": "Mining Perks",
-                  "value": "formula: amount",
+                  "value": "formula: ((amount / 0.75) + 1)^0.145",
                   "capUnit": "x",
                   "unit": "x"
                 },
                 {
                   "id": "b",
                   "name": "Tree Essence",
-                  "value": "formula: amount",
+                  "value": "formula: ((amount / 1) + 1)^0.19",
                   "capUnit": "x",
                   "unit": "x"
                 },
                 {
                   "id": "b2",
                   "name": "Magnets",
-                  "value": "formula: amount",
+                  "value": "formula: ((amount / 1.25) + 1)^0.13",
                   "capUnit": "x",
                   "unit": "x"
                 }
@@ -14263,21 +14263,21 @@
                 {
                   "id": "b1",
                   "name": "Astatine",
-                  "value": "formula: amount",
+                  "value": "formula: ((amount / 0.5) + 1)^0.09",
                   "capUnit": "x",
                   "unit": "x"
                 },
                 {
                   "id": "b",
                   "name": "Rare Sap 3",
-                  "value": "formula: amount",
+                  "value": "formula: ((amount / 0.75) + 1)^0.12",
                   "capUnit": "x",
                   "unit": "x"
                 },
                 {
                   "id": "b2",
                   "name": "Ruby Energy ",
-                  "value": "formula: amount",
+                  "value": "formula: ((amount / 1) + 1)^0.15",
                   "capUnit": "x",
                   "unit": "x"
                 }
@@ -14293,7 +14293,7 @@
                 {
                   "id": "b1",
                   "name": "Mastery",
-                  "value": "formula: amount",
+                  "value": "formula: ((amount / 1) + 1)^0.075",
                   "capUnit": "x",
                   "unit": "x"
                 }
