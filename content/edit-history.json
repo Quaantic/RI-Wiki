@@ -2,6 +2,134 @@
   "format": 1,
   "entries": [
     {
+      "id": "c7a76ee5-0889-479f-9db2-1db4dbf64648",
+      "at": 1793930105744,
+      "kind": "content",
+      "text": "Updated drop Chance of \"Soul\": xx% to 0.31%",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "964f4cfc-335c-41a4-bf42-8edf89412b1e",
+      "at": 1793930105684,
+      "kind": "content",
+      "text": "Updated color of \"Soul\": #86d62b to #8035C8",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "429fd7b0-dd28-472b-a8b0-2482dbf0bf8d",
+      "at": 1793930081862,
+      "kind": "content",
+      "text": "Updated drop Chance of \"Omnisoul\": xx% to 0.31%",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "fd2d622c-d5a1-446d-8f33-594f0ea71aab",
+      "at": 1793930081797,
+      "kind": "content",
+      "text": "Updated color of \"Omnisoul\": #86d62b to #43C944",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "fb226977-a729-46a5-af64-ac2f41e169cb",
+      "at": 1793930062309,
+      "kind": "content",
+      "text": "Updated drop Chance of \"Omega\": xx% to 0.03%",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "292bf76c-9fea-495c-8d7b-049f0a5f25bc",
+      "at": 1793930062243,
+      "kind": "content",
+      "text": "Updated color of \"Omega\": #86d62b to #2378E8",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "c11233c7-049b-4147-a4f3-276eb6cc66ba",
+      "at": 1793929933916,
+      "kind": "content",
+      "text": "Updated drop Chance of \"Infernal\": xx% to 0.8%",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "363e9ba0-a84e-49ce-9979-ed2b89cb23bb",
+      "at": 1793929933862,
+      "kind": "content",
+      "text": "Updated color of \"Infernal\": #86d62b to #FF173C",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "cb1ae15b-c68c-47ad-86f6-d9c46d1f3f31",
+      "at": 1793929905024,
+      "kind": "content",
+      "text": "Updated drop Chance of \"Plasma\": xx% to 2.19%",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "817b205d-5cfb-4005-b8d9-f2c5fb9157ff",
+      "at": 1793929904963,
+      "kind": "content",
+      "text": "Updated color of \"Plasma\": #86d62b to #A443F5",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "ebc3b29b-a69e-474b-9e57-c3f5360e2edd",
+      "at": 1793929872240,
+      "kind": "content",
+      "text": "Updated drop Chance of \"Unnatural \": xx% to 4.8%",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "46a2eeae-0815-41ef-95ea-6b958127ef88",
+      "at": 1793929872180,
+      "kind": "content",
+      "text": "Updated color of \"Unnatural \": #86d62b to #A84747",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "9792284b-2a67-4241-9bde-d0e879a0dc3e",
+      "at": 1793929851574,
+      "kind": "content",
+      "text": "Updated drop Chance of \"Void\": xx% to 13%",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "51e069c5-4cad-43e3-8793-63ac6682c08a",
+      "at": 1793929851511,
+      "kind": "content",
+      "text": "Updated color of \"Void\": #86d62b to #6550B8",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "b1d7240c-d61b-48dc-8660-afbfc8d9bc63",
+      "at": 1793929819234,
+      "kind": "content",
+      "text": "Updated drop Chance of \"Dark\": xx% to 78%",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "fd83a2ae-b9ca-475e-a122-c42ee1f31a8e",
+      "at": 1793929819197,
+      "kind": "content",
+      "text": "Updated color of \"Dark\": #86d62b to #555555",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
       "id": "5e4871c8-cd5f-48f9-9af1-a5c9a577f7f9",
       "at": 1793928469349,
       "kind": "content",
@@ -2271,134 +2399,6 @@
       "kind": "content",
       "text": "Updated tagline of \"Miscellaneous \": Gamepasses and Eternal Shards are side stat… to Gamepasses and Eternal Shards are side stat…",
       "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "76099bde-e58b-4e94-b039-5f0939ca59c4",
-      "at": 1793851335224,
-      "kind": "content",
-      "text": "Updated desc of \"Apples\": Apples drop randomly while cutting trees; A… to Apples drop randomly while cutting trees; A…",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "5afb9fe2-40c8-4c69-bcb5-5c6647521278",
-      "at": 1793851309546,
-      "kind": "content",
-      "text": "Updated id of \"FAQ (WIP)\": FAQa to FAQ",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "a13b7011-dc78-41a9-9f1f-1b1071335033",
-      "at": 1793851301964,
-      "kind": "content",
-      "text": "Updated id of \"FAQ (WIP)\": FAQ to FAQa",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "32b214ed-9c2f-44c6-9c60-e5940bf687bc",
-      "at": 1793851294891,
-      "kind": "content",
-      "text": "Updated id of \"FAQ (WIP)\": FAQq to FAQ",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "8e140f38-cba9-4343-83d9-e6d74e70edf4",
-      "at": 1793851292171,
-      "kind": "content",
-      "text": "Updated id of \"FAQ (WIP)\": FAQ to FAQq",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "0a77e56a-318a-4327-934d-969c3eceffd0",
-      "at": 1793851289204,
-      "kind": "content",
-      "text": "Removed \"New category\"",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "99eb1137-46e9-4787-a812-23c98f67e6d8",
-      "at": 1793851287275,
-      "kind": "content",
-      "text": "Added \"New category\"",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "0d912810-2784-4c40-add0-8dea4fbf1d95",
-      "at": 1793851269007,
-      "kind": "content",
-      "text": "Removed \"New category\"",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "fca653cc-06d2-4fe6-b067-511e623e62bc",
-      "at": 1793851265729,
-      "kind": "content",
-      "text": "Added \"New category\"",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "aea0ffa3-485e-4119-88ad-53a41e6d1e26",
-      "at": 1793851264387,
-      "kind": "content",
-      "text": "Removed \"test\"",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "b31a0132-2e40-4994-b95b-28add5f192b8",
-      "at": 1793850820357,
-      "kind": "content",
-      "text": "Added \"test\"",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "41063507-3633-47a3-a0cf-c6a073a557e8",
-      "at": 1793850513885,
-      "kind": "content",
-      "text": "Updated requirements of \"Tier 10\": [\"??? XP\"] to [\"50B XP\"]",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "c8cec4c6-b7d5-4e56-9440-16ab48a6719f",
-      "at": 1793850499955,
-      "kind": "content",
-      "text": "Updated requirements of \"Tier 9\": [\"??? XP\"] to [\"2.5B XP\"]",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "45d91110-6111-4f70-afb0-2e9ca6cdbe9d",
-      "at": 1793850487269,
-      "kind": "content",
-      "text": "Updated requirements of \"Tier 8\": [\"??? XP\"] to [\"500M XP\"]",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "2d6d93b3-8fe5-4957-9c08-179db72161d0",
-      "at": 1793850470802,
-      "kind": "content",
-      "text": "Updated requirements of \"Tier 7\": [\"??? XP\"] to [\"125M XP\"]",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "3442c15f-1258-4bf4-8057-71da06928d5e",
-      "at": 1793850460708,
-      "kind": "content",
-      "text": "Updated requirements of \"Tier 6\": [\"??? XP\"] to [\"25M XP\"]",
-      "actor": "zzinss",
       "pending": true
     }
   ]
