@@ -890,6 +890,26 @@
                       "9x",
                       "166x"
                     ]
+                  },
+                  {
+                    "id": "row-577ddcf7-1108-4e7e-9ec9-24187c0ccfc6",
+                    "cells": [
+                      "Pure Gold Baby",
+                      "200T",
+                      "2Bx",
+                      "10x",
+                      "200x"
+                    ]
+                  },
+                  {
+                    "id": "row-dc22af4d-437d-4d13-a569-929a81b92103",
+                    "cells": [
+                      "Tier Essence",
+                      "20Qa",
+                      "100Bx",
+                      "15x",
+                      "300x"
+                    ]
                   }
                 ],
                 "text": ""
@@ -15225,15 +15245,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.updates.versions[1.03].entries[entry-0c4daa65-21da-4f1e-ba45-030fd6465bd8].title": {
-      "actor": "Nathy365"
-    },
-    "content.updates.versions[1.03].entries[entry-0c4daa65-21da-4f1e-ba45-030fd6465bd8].href": {
-      "actor": "Nathy365"
-    },
-    "content.updates.versions[1.03].entries[entry-0c4daa65-21da-4f1e-ba45-030fd6465bd8].description": {
-      "actor": "Nathy365"
-    },
     "content.game.upgrades": {
       "actor": "Quaantic"
     },
@@ -16282,6 +16293,24 @@
       "actor": "Quaantic"
     },
     "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-04b8c5ab-e387-40fe-a146-500e19e91af3].cells": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-577ddcf7-1108-4e7e-9ec9-24187c0ccfc6]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-577ddcf7-1108-4e7e-9ec9-24187c0ccfc6].id": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-577ddcf7-1108-4e7e-9ec9-24187c0ccfc6].cells": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-dc22af4d-437d-4d13-a569-929a81b92103]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-dc22af4d-437d-4d13-a569-929a81b92103].id": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-dc22af4d-437d-4d13-a569-929a81b92103].cells": {
       "actor": "Quaantic"
     }
   }
