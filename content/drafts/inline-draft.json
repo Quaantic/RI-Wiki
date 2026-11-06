@@ -14262,19 +14262,23 @@
                 {
                   "id": "b1",
                   "name": "Mine Damage",
-                  "value": "formula: amount",
+                  "value": "formula: ((amount / 1) + 1)^0.3",
                   "capUnit": "x",
                   "unit": "x"
                 },
                 {
                   "id": "b",
-                  "name": "New bonus",
-                  "value": "formula: amount"
+                  "name": "Coins",
+                  "value": "formula: amount",
+                  "capUnit": "x",
+                  "unit": "x"
                 },
                 {
                   "id": "b2",
-                  "name": "New bonus",
-                  "value": "formula: amount"
+                  "name": "Fossils",
+                  "value": "formula: amount",
+                  "capUnit": "x",
+                  "unit": "x"
                 }
               ]
             },
@@ -15971,6 +15975,18 @@
       "actor": "Nathy365"
     },
     "content.game.calculators.pages.runes/secret.groups[group7].bonuses[b2].value": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group4].bonuses[b].capUnit": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group4].bonuses[b].unit": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group4].bonuses[b2].capUnit": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group4].bonuses[b2].unit": {
       "actor": "Nathy365"
     }
   }
