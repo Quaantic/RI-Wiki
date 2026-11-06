@@ -2,6 +2,46 @@
   "format": 1,
   "entries": [
     {
+      "id": "581baeea-d0c1-409f-bf2f-048bcf5e87a9",
+      "at": 1793980081778,
+      "kind": "content",
+      "text": "Added \"New update\"",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:48:07.569Z"
+    },
+    {
+      "id": "3ef18d34-6e05-49e4-b5fd-864bbb827324",
+      "at": 1793980069382,
+      "kind": "content",
+      "text": "Updated description of \"Animals Tiers\": What changed in the game. to Added Animal Tiers to the Life Generation t…",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:48:07.569Z"
+    },
+    {
+      "id": "201dc8ab-959f-41fb-bcae-3d553d2a9072",
+      "at": 1793980069219,
+      "kind": "content",
+      "text": "Updated text of \"Animals Tiers\": New update to Animals Tiers",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:48:07.569Z"
+    },
+    {
+      "id": "b2e3748c-9920-47cf-a95c-aa93877a0e7b",
+      "at": 1793980041677,
+      "kind": "content",
+      "text": "Added \"New update\"",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:48:07.568Z"
+    },
+    {
       "id": "536b5ead-beda-4167-9090-b9d0f31609b3",
       "at": 1793979987792,
       "kind": "content",
@@ -2956,46 +2996,6 @@
       "at": 1793948696106,
       "kind": "content",
       "text": "Renamed \"New bonus\" to \"Magnets\"",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T07:05:25.487Z"
-    },
-    {
-      "id": "bd32f00b-1449-4ed1-8a91-ea1c48609cab",
-      "at": 1793948684255,
-      "kind": "content",
-      "text": "Set unit of \"Essence\" (x)",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T07:05:25.487Z"
-    },
-    {
-      "id": "31a54af1-40ba-4994-8cd8-5288f8240523",
-      "at": 1793948684207,
-      "kind": "content",
-      "text": "Set cap Unit of \"Essence\" (x)",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T07:05:25.487Z"
-    },
-    {
-      "id": "707228be-57f4-4b8b-88d4-9514a7a041c3",
-      "at": 1793948684138,
-      "kind": "content",
-      "text": "Renamed \"New bonus\" to \"Essence\"",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T07:05:25.487Z"
-    },
-    {
-      "id": "17c398ab-d1da-4ca7-aa7f-826fab178d62",
-      "at": 1793948673879,
-      "kind": "content",
-      "text": "Set unit of \"Mine Perks\" (x)",
       "actor": "Nathy365",
       "pending": false,
       "status": "saved",
