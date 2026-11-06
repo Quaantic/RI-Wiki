@@ -17,7 +17,7 @@
           {
             "id": "stages",
             "name": "Stages",
-            "icon": "compass",
+            "icon": "game-icons:medal",
             "desc": "Stages are the big area gates of the game. Passing a stage requires a huge Energy payment plus a second currency: Stage 1 Life costs 200 billion Energy and 250 Jewels, Stage 2 Money Tree costs 5e29 Energy and 5 million Sap, Stage 3 Barn costs 2.5e47 Energy and 5 million Gold Bars, Stage 4 Mining costs 1e68 Energy and 500 Bluesteel, and Stage 5 Dungeon costs 2.5e124 Energy and 1 million Uranium. City and Industry are coming soon. Each stage permanently multiplies the gain of 22 currencies, so every gate is also a global boost.",
             "highlights": [],
             "facts": [
@@ -15060,42 +15060,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.game.calculators.pages.runes/secret.groups[group4].amountLabel": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group4].bonuses": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group4].bonuses order": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group4].bonuses[b1]": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group4].bonuses[b1].id": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group4].bonuses[b1].name": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group4].bonuses[b1].value": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group5]": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group5].id": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group5].name": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group5].color": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group5].dropChance": {
-      "actor": "Nathy365"
-    },
     "content.game.calculators.pages.runes/secret.groups[group5].amountLabel": {
       "actor": "Nathy365"
     },
@@ -16144,6 +16108,12 @@
       "actor": "Quaantic"
     },
     "content.wiki.categories[life].subcategories[terraforming].icon": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[main].subcategories[stages]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[main].subcategories[stages].icon": {
       "actor": "Quaantic"
     }
   }
