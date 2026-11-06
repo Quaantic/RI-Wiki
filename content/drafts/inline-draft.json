@@ -673,40 +673,40 @@
                         "id": "row-23ec6104-a6c9-42b5-ac6f-2d02e8c75dce",
                         "cells": [
                           "21",
-                          "",
-                          ""
+                          "100Oc",
+                          "250B"
                         ]
                       },
                       {
                         "id": "row-2d76a623-bcf4-4651-8967-1940eaa5980e",
                         "cells": [
                           "22",
-                          "",
-                          ""
+                          "1.75No",
+                          "1.75T"
                         ]
                       },
                       {
                         "id": "row-14273594-1196-4483-958d-fbc2ad66a94a",
                         "cells": [
                           "23",
-                          "",
-                          ""
+                          "30No",
+                          "12.5T"
                         ]
                       },
                       {
                         "id": "row-85e6b3d3-c37d-434d-a294-6bee528f6d82",
                         "cells": [
                           "24",
-                          "",
-                          ""
+                          "600No",
+                          "100T"
                         ]
                       },
                       {
                         "id": "row-879f4a74-92eb-4433-9d65-012b558509cb",
                         "cells": [
                           "25",
-                          "",
-                          ""
+                          "12.5De",
+                          "100T"
                         ]
                       },
                       {
@@ -15479,96 +15479,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.wiki.categories[dungeon].subcategories[souls]": {
-      "actor": "zzinss"
-    },
-    "content.wiki.categories[dungeon].subcategories[souls].desc": {
-      "actor": "zzinss"
-    },
-    "content.wiki.categories[life].subcategories[life-generation]": {
-      "actor": "zzinss"
-    },
-    "content.wiki.categories[life].subcategories[life-generation].desc": {
-      "actor": "zzinss"
-    },
-    "content.wiki.categories[life].subcategories[life-generation].children": {
-      "actor": "zzinss"
-    },
-    "content.wiki.categories[life].subcategories[life-generation].children order": {
-      "actor": "zzinss"
-    },
-    "content.wiki.categories[runes]": {
-      "actor": "zzinss"
-    },
-    "content.wiki.categories[runes].subcategories": {
-      "actor": "zzinss"
-    },
-    "content.wiki.categories[runes].subcategories[secret]": {
-      "actor": "zzinss"
-    },
-    "content.wiki.categories[life].subcategories[life-generation].children[cells]": {
-      "actor": "zzinss"
-    },
-    "content.wiki.categories[life].subcategories[life-generation].children[cells].id": {
-      "actor": "zzinss"
-    },
-    "content.wiki.categories[life].subcategories[life-generation].children[cells].name": {
-      "actor": "zzinss"
-    },
-    "content.wiki.categories[life].subcategories[life-generation].children[cells].desc": {
-      "actor": "zzinss"
-    },
-    "content.wiki.categories[life].subcategories[life-generation].children[cells].icon": {
-      "actor": "Quaantic"
-    },
-    "content.wiki.categories[life].subcategories[life-generation].children[cells].highlights": {
-      "actor": "zzinss"
-    },
-    "content.wiki.categories[life].subcategories[life-generation].children[cells].highlights order": {
-      "actor": "zzinss"
-    },
-    "content.wiki.categories[life].subcategories[life-generation].children[cells].facts": {
-      "actor": "zzinss"
-    },
-    "content.wiki.categories[life].subcategories[life-generation].children[cells].facts order": {
-      "actor": "zzinss"
-    },
-    "content.wiki.categories[life].subcategories[life-generation].children[cells].vitals": {
-      "actor": "zzinss"
-    },
-    "content.wiki.categories[life].subcategories[life-generation].children[cells].vitals order": {
-      "actor": "zzinss"
-    },
-    "content.wiki.categories[life].subcategories[life-generation].children[cells].children": {
-      "actor": "zzinss"
-    },
-    "content.wiki.categories[life].subcategories[life-generation].children[cells].children order": {
-      "actor": "zzinss"
-    },
-    "content.wiki.categories[life].subcategories[tree-essence].children[tree-essence-milestones].contentKey": {
-      "actor": "zzinss"
-    },
-    "content.wiki.categories[runes].subcategories[secret].contentKey": {
-      "actor": "zzinss"
-    },
-    "content.wiki.categories[life].subcategories[life-generation].children[cells].sections": {
-      "actor": "zzinss"
-    },
-    "content.wiki.categories[life].subcategories[life-generation].children[cells].sections order": {
-      "actor": "zzinss"
-    },
-    "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[text-28143f5e-1e05-4b3b-a479-ca861c4a3edc]": {
-      "actor": "zzinss"
-    },
-    "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[text-28143f5e-1e05-4b3b-a479-ca861c4a3edc].id": {
-      "actor": "zzinss"
-    },
-    "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[text-28143f5e-1e05-4b3b-a479-ca861c4a3edc].title": {
-      "actor": "zzinss"
-    },
-    "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[text-28143f5e-1e05-4b3b-a479-ca861c4a3edc].text": {
-      "actor": "zzinss"
-    },
     "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba]": {
       "actor": "zzinss"
     },
@@ -16617,6 +16527,18 @@
       "actor": "zzinss"
     },
     "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba].rows[row-48ac1323-c4a9-4b01-bef6-72efb7047369].cells": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation]": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells]": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].sections": {
       "actor": "zzinss"
     }
   }
