@@ -2891,8 +2891,43 @@
             },
             {
               "n": 45,
-              "name": "New upgrade",
-              "cap": null,
+              "name": "More Fossil",
+              "cap": "20",
+              "price": "3*L",
+              "multi": "1"
+            },
+            {
+              "n": 46,
+              "name": "More Souls ",
+              "cap": "55",
+              "price": "3*L",
+              "multi": "1"
+            },
+            {
+              "n": 47,
+              "name": "Increase Research upgrades cap",
+              "cap": "15",
+              "price": "3*L",
+              "multi": "1"
+            },
+            {
+              "n": 48,
+              "name": "More Rare Saps",
+              "cap": "20",
+              "price": "3*L",
+              "multi": "1"
+            },
+            {
+              "n": 49,
+              "name": "More Astatine ",
+              "cap": "20",
+              "price": "3*L",
+              "multi": "1"
+            },
+            {
+              "n": 50,
+              "name": "More Tree Essence",
+              "cap": "20",
               "price": "3*L",
               "multi": "1"
             }
@@ -14988,12 +15023,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.game.upgrades.sections.life-tree-essence.upgrades[11].multi": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[12]": {
-      "actor": "Quaantic"
-    },
     "content.game.upgrades.sections.life-tree-essence.upgrades[12].n": {
       "actor": "Quaantic"
     },
@@ -16042,6 +16071,96 @@
       "actor": "zzinss"
     },
     "content.wiki.categories[life].subcategories[research].desc": {
+      "actor": "zzinss"
+    },
+    "content.game.upgrades.sections.research.upgrades[46]": {
+      "actor": "zzinss"
+    },
+    "content.game.upgrades.sections.research.upgrades[46].n": {
+      "actor": "zzinss"
+    },
+    "content.game.upgrades.sections.research.upgrades[46].name": {
+      "actor": "zzinss"
+    },
+    "content.game.upgrades.sections.research.upgrades[46].cap": {
+      "actor": "zzinss"
+    },
+    "content.game.upgrades.sections.research.upgrades[46].price": {
+      "actor": "zzinss"
+    },
+    "content.game.upgrades.sections.research.upgrades[46].multi": {
+      "actor": "zzinss"
+    },
+    "content.game.upgrades.sections.research.upgrades[47]": {
+      "actor": "zzinss"
+    },
+    "content.game.upgrades.sections.research.upgrades[47].n": {
+      "actor": "zzinss"
+    },
+    "content.game.upgrades.sections.research.upgrades[47].name": {
+      "actor": "zzinss"
+    },
+    "content.game.upgrades.sections.research.upgrades[47].cap": {
+      "actor": "zzinss"
+    },
+    "content.game.upgrades.sections.research.upgrades[47].price": {
+      "actor": "zzinss"
+    },
+    "content.game.upgrades.sections.research.upgrades[47].multi": {
+      "actor": "zzinss"
+    },
+    "content.game.upgrades.sections.research.upgrades[48]": {
+      "actor": "zzinss"
+    },
+    "content.game.upgrades.sections.research.upgrades[48].n": {
+      "actor": "zzinss"
+    },
+    "content.game.upgrades.sections.research.upgrades[48].name": {
+      "actor": "zzinss"
+    },
+    "content.game.upgrades.sections.research.upgrades[48].cap": {
+      "actor": "zzinss"
+    },
+    "content.game.upgrades.sections.research.upgrades[48].price": {
+      "actor": "zzinss"
+    },
+    "content.game.upgrades.sections.research.upgrades[48].multi": {
+      "actor": "zzinss"
+    },
+    "content.game.upgrades.sections.research.upgrades[49]": {
+      "actor": "zzinss"
+    },
+    "content.game.upgrades.sections.research.upgrades[49].n": {
+      "actor": "zzinss"
+    },
+    "content.game.upgrades.sections.research.upgrades[49].name": {
+      "actor": "zzinss"
+    },
+    "content.game.upgrades.sections.research.upgrades[49].cap": {
+      "actor": "zzinss"
+    },
+    "content.game.upgrades.sections.research.upgrades[49].price": {
+      "actor": "zzinss"
+    },
+    "content.game.upgrades.sections.research.upgrades[49].multi": {
+      "actor": "zzinss"
+    },
+    "content.game.upgrades.sections.research.upgrades[50]": {
+      "actor": "zzinss"
+    },
+    "content.game.upgrades.sections.research.upgrades[50].n": {
+      "actor": "zzinss"
+    },
+    "content.game.upgrades.sections.research.upgrades[50].name": {
+      "actor": "zzinss"
+    },
+    "content.game.upgrades.sections.research.upgrades[50].cap": {
+      "actor": "zzinss"
+    },
+    "content.game.upgrades.sections.research.upgrades[50].price": {
+      "actor": "zzinss"
+    },
+    "content.game.upgrades.sections.research.upgrades[50].multi": {
       "actor": "zzinss"
     }
   }
