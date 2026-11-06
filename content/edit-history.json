@@ -58,11 +58,51 @@
       "pending": true
     },
     {
+      "id": "39a84c5c-baf4-48a4-8c10-37108607ef2e",
+      "at": 1793931200360,
+      "kind": "content",
+      "text": "Updated show Amount of \"Upgrade Tree\": false to true",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "1cd25688-5ea4-4714-83fe-b8517a3c4640",
+      "at": 1793931196616,
+      "kind": "content",
+      "text": "Updated show Amount of \"Upgrade Tree\": true to false",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "0d7d32e2-b1b1-456a-99ba-f1c66b8d381b",
+      "at": 1793931186392,
+      "kind": "content",
+      "text": "Removed \"1.03\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
       "id": "3d1a072e-bfae-4092-b9bc-6e4c10f95b19",
       "at": 1793931185985,
       "kind": "content",
       "text": "Removed \"New upgrade\"",
       "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "eb9ac7b5-e6d3-46cf-b948-e95d1e9f19a5",
+      "at": 1793931179625,
+      "kind": "content",
+      "text": "Moved \"1.03\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "c97b75cd-b8db-4064-88fe-4e05d4e24cb4",
+      "at": 1793931179608,
+      "kind": "content",
+      "text": "Added \"1.03\"",
+      "actor": "Quaantic",
       "pending": true
     },
     {
@@ -394,6 +434,54 @@
       "pending": true
     },
     {
+      "id": "e6eecdc5-6102-48e9-8d69-338598cd0311",
+      "at": 1793930129600,
+      "kind": "content",
+      "text": "Updated drop Chance of \"Omega -\": xx% to 0.03%",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "e1d0053a-d986-4a69-bed0-d1c8c9065979",
+      "at": 1793930129582,
+      "kind": "content",
+      "text": "Updated color of \"Omega -\": #86d62b to #2378E8",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "85f3f275-348d-4f49-9aa8-1dd2843f0f4c",
+      "at": 1793930129559,
+      "kind": "content",
+      "text": "Renamed \"Omega\" to \"Omega -\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "c68ee39c-4c7a-42aa-b3d1-074b3106f862",
+      "at": 1793930118893,
+      "kind": "content",
+      "text": "Updated drop Chance of \"Omnisoul -\": xx% to 0.12%",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "13f720e5-79b8-4dc1-a04d-677cc65b60d0",
+      "at": 1793930118875,
+      "kind": "content",
+      "text": "Updated color of \"Omnisoul -\": #86d62b to #43C944",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "8aceed58-c060-4d3f-930f-650435423713",
+      "at": 1793930118857,
+      "kind": "content",
+      "text": "Renamed \"Omnisoul\" to \"Omnisoul -\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
       "id": "c7a76ee5-0889-479f-9db2-1db4dbf64648",
       "at": 1793930105744,
       "kind": "content",
@@ -407,6 +495,54 @@
       "kind": "content",
       "text": "Updated color of \"Soul\": #86d62b to #8035C8",
       "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "27729070-6229-4ac6-899e-bc9aa9628def",
+      "at": 1793930103804,
+      "kind": "content",
+      "text": "Updated drop Chance of \"Soul -\": xx% to 0.31",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "5c15e744-bdde-42da-946e-33b26c64a5c0",
+      "at": 1793930103786,
+      "kind": "content",
+      "text": "Updated color of \"Soul -\": #86d62b to #8035C8",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "4ca8bb85-f605-494e-84c6-c62fc004c027",
+      "at": 1793930103766,
+      "kind": "content",
+      "text": "Renamed \"Soul\" to \"Soul -\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "a684a0b0-b213-44a8-98ba-8adb026a0246",
+      "at": 1793930083891,
+      "kind": "content",
+      "text": "Updated drop Chance of \"Infernal -\": xx% to 0.8",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "21ff5555-56c0-4e2c-875a-f694a028b161",
+      "at": 1793930083874,
+      "kind": "content",
+      "text": "Updated color of \"Infernal -\": #86d62b to #FF173C",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "b88f77c7-dce3-4812-a32a-0a1e0c158c7b",
+      "at": 1793930083857,
+      "kind": "content",
+      "text": "Renamed \"Infernal\" to \"Infernal -\"",
+      "actor": "Quaantic",
       "pending": true
     },
     {
@@ -426,6 +562,30 @@
       "pending": true
     },
     {
+      "id": "4f8ca1fa-9210-447a-b6d4-a9c44890e8c2",
+      "at": 1793930070840,
+      "kind": "content",
+      "text": "Updated drop Chance of \"Plasma -\": xx% to 2.19%",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "3e638342-aa96-483e-95c0-15294f10d1a3",
+      "at": 1793930070820,
+      "kind": "content",
+      "text": "Updated color of \"Plasma -\": #86d62b to #A443F5",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "fdc5aec9-983c-4c51-9117-09f4c72299f7",
+      "at": 1793930070794,
+      "kind": "content",
+      "text": "Renamed \"Plasma\" to \"Plasma -\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
       "id": "fb226977-a729-46a5-af64-ac2f41e169cb",
       "at": 1793930062309,
       "kind": "content",
@@ -439,6 +599,78 @@
       "kind": "content",
       "text": "Updated color of \"Omega\": #86d62b to #2378E8",
       "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "6c9ec520-297b-4a5c-b3d8-00503f2bd8e0",
+      "at": 1793930056702,
+      "kind": "content",
+      "text": "Updated drop Chance of \"Unnatural -\": xx% to 4.83",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "7b6fc2ef-e6dd-428b-9d62-4d1c3687eaff",
+      "at": 1793930056681,
+      "kind": "content",
+      "text": "Updated color of \"Unnatural -\": #86d62b to #A84747",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "d10d399b-ed4f-49b6-9bff-add50a4ea9b2",
+      "at": 1793930056662,
+      "kind": "content",
+      "text": "Renamed \"Unnatural \" to \"Unnatural -\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "b26fb40e-ff55-41fe-b412-c800ee9ddba5",
+      "at": 1793930036690,
+      "kind": "content",
+      "text": "Updated drop Chance of \"Void - \": xx% to 13%",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "957e9018-1d98-42e7-a679-b6202fc930b5",
+      "at": 1793930036673,
+      "kind": "content",
+      "text": "Updated color of \"Void - \": #86d62b to #6550B8",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "474786c8-503b-451b-bef6-f7093481b11b",
+      "at": 1793930036654,
+      "kind": "content",
+      "text": "Renamed \"Void\" to \"Void - \"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "f862bd91-f538-4b08-b8a8-8f420f8a289a",
+      "at": 1793929959413,
+      "kind": "content",
+      "text": "Renamed \"Dark\" to \"Dark -\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "45991312-a744-44d9-9253-d6843b4fa8ca",
+      "at": 1793929945948,
+      "kind": "content",
+      "text": "Updated drop Chance of \"Dark\": xx% to 78%",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "231fb23e-d1f4-4131-bd82-07a1fcb7e8bf",
+      "at": 1793929945930,
+      "kind": "content",
+      "text": "Updated color of \"Dark\": #86d62b to #555555",
+      "actor": "Quaantic",
       "pending": true
     },
     {
@@ -519,6 +751,14 @@
       "kind": "content",
       "text": "Updated color of \"Dark\": #86d62b to #555555",
       "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "fd7266a8-f777-48c1-8168-ae8d40bf37f1",
+      "at": 1793929549576,
+      "kind": "content",
+      "text": "Moved \"Secret \"",
+      "actor": "Quaantic",
       "pending": true
     },
     {
@@ -2158,246 +2398,6 @@
       "at": 1793856552976,
       "kind": "content",
       "text": "Updated boosts of \"Tier 4\": [\"More Damage Multi (+/tier)\",\"More Log Mul… to [\"15.19x Logs\",\"4.88x Tree Damage\",\"1.72x R…",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "c0e1a4ca-f031-4dc6-a1b7-dc20546bee5e",
-      "at": 1793856533120,
-      "kind": "content",
-      "text": "Updated boosts of \"Tier 3\": [\"More Damage Multi (+/tier)\",\"More Log Mul… to [\"8.44x Logs\",\"3.42x Tree Damage\",\"1.32x Ro…",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "4ca7df50-68e0-491d-a8a8-8444a18fbc2b",
-      "at": 1793856515483,
-      "kind": "content",
-      "text": "Updated boosts of \"Tier 2\": [\"More Damage Multi (+/tier)\",\"More Log Mul… to [\"4.5x Logs\",\"2.34x Tree Damage\"]",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "e7a1e91d-cad7-4da4-a9e5-780f3adaddbc",
-      "at": 1793856491234,
-      "kind": "content",
-      "text": "Updated boosts of \"Tier 1\": [\"More Damage Multi (+/tier)\",\"More Log Mul… to [\"2.25x Logs\",\"1.56x Tree Damage\"]",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "67726738-4200-4d42-ba8f-f7a6fe05349f",
-      "at": 1793856325759,
-      "kind": "content",
-      "text": "Renamed \"New bonus\" to \"Logs\"",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "08d93fd8-e6f9-4382-84b8-3d31701a7992",
-      "at": 1793856313569,
-      "kind": "content",
-      "text": "Set unlock At of \"New bonus\" (1)",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "d9bd9e12-ebd4-4f12-afcf-5f85f896dcae",
-      "at": 1793856313554,
-      "kind": "content",
-      "text": "Set unit of \"New bonus\" (x)",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "7a0d693c-4101-4845-9c8f-c31e306f25c0",
-      "at": 1793856313537,
-      "kind": "content",
-      "text": "Set cap Unit of \"New bonus\" (x)",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "0d4c0468-49cc-4b39-a487-cbd3e84a1b5f",
-      "at": 1793856313519,
-      "kind": "content",
-      "text": "Updated value of \"New bonus\": formula: amount to formula: (amount/5+1)^0.365",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "9f55acec-75ab-4427-b8e5-5b7cec322a44",
-      "at": 1793856229677,
-      "kind": "content",
-      "text": "Updated drop Chance of \"Red Apples\": 1 in 100 to empty",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "b9607d26-9bde-4a1d-9cbe-69e921b4c989",
-      "at": 1793856229659,
-      "kind": "content",
-      "text": "Renamed \"Group 1\" to \"Red Apples\"",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "65f71f5a-8756-44cf-b314-d5202906e94c",
-      "at": 1793856220580,
-      "kind": "content",
-      "text": "Updated description of \"Group 1\": teste to empty",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "04862dfd-5cc7-47b6-a493-5d048761d97c",
-      "at": 1793856215319,
-      "kind": "content",
-      "text": "Set description of \"Group 1\" (teste)",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "3effed17-4df0-478e-9115-2625d31b3f47",
-      "at": 1793856205826,
-      "kind": "content",
-      "text": "Set life/apples-golden of \"calculators\" ({\"kind\":\"amount-groups\",\"title\":\"Golden\",\"g…)",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "6eee1afc-2697-43ad-9dab-15242dc43ac1",
-      "at": 1793856180274,
-      "kind": "content",
-      "text": "Removed \"New bonus\"",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "234cf77e-b1fa-4b92-b6e2-1eab5f06e8ed",
-      "at": 1793856134636,
-      "kind": "content",
-      "text": "Set life/apples-golden of \"calculators\" ({\"kind\":\"amount\",\"title\":\"Golden\",\"amountLa…)",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "95c67700-40e7-4c14-9122-ba386eadb3bf",
-      "at": 1793856063578,
-      "kind": "content",
-      "text": "Removed \"New table\"",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "c32a1443-b33a-4550-9075-904d3739cfe2",
-      "at": 1793856060223,
-      "kind": "content",
-      "text": "Added \"New table\"",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "4696b7ad-0849-413e-bed5-7c42dd16de72",
-      "at": 1793856050057,
-      "kind": "content",
-      "text": "Removed \"New bonus\"",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "7f125544-6626-46e8-afd0-c007de1c7705",
-      "at": 1793856048229,
-      "kind": "content",
-      "text": "Set life/roots of \"calculators\" ({\"kind\":\"amount\",\"title\":\"Roots\",\"amountLab…)",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "a96baab7-d6f0-4430-854f-e72a219e8cfe",
-      "at": 1793856038610,
-      "kind": "content",
-      "text": "Removed \"New bonus\"",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "f41940a8-14a1-43f1-ac38-dd090678b89f",
-      "at": 1793856036830,
-      "kind": "content",
-      "text": "Set life/tree-tier of \"calculators\" ({\"kind\":\"amount\",\"title\":\"Tree Tier\",\"amoun…)",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "54f60ec5-4c97-4f9e-b546-5a43cfa59d4a",
-      "at": 1793856005081,
-      "kind": "content",
-      "text": "Removed \"New bonus\"",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "7588c55a-6129-4917-8254-1b8b48bcbf94",
-      "at": 1793856003002,
-      "kind": "content",
-      "text": "Set money-island/upgrade-tree of \"calculators\" ({\"kind\":\"amount\",\"title\":\"Upgrade Tree\",\"am…)",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "f6d0c42e-a443-4cf2-967b-d9da370db773",
-      "at": 1793854174738,
-      "kind": "content",
-      "text": "Added \"New update\"",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "b07263f8-4374-41ab-a37b-952a0f7d4a71",
-      "at": 1793854083783,
-      "kind": "content",
-      "text": "Set hero Title of \"heroTitle\" (Grow your knowledge.)",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "7a42d868-1be4-4e99-bbae-bbfcc509cde6",
-      "at": 1793854064668,
-      "kind": "content",
-      "text": "Updated hero Sub of \"heroSub\": Everything in Regrowht Incremental document… to Everything in Regrowht Incremental document…",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "2069c39c-84db-4173-9a94-d260aa89aebb",
-      "at": 1793854060570,
-      "kind": "content",
-      "text": "Updated hero Sub of \"heroSub\": Everything in Regrowht Incremental document… to Everything in Regrowht Incremental document…",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "a811dbe7-021c-457d-aeaa-a24dd442fdf4",
-      "at": 1793854054304,
-      "kind": "content",
-      "text": "Updated hero Sub of \"heroSub\": Every ore, rune, boss and perk — documented… to Everything in Regrowht Incremental document…",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "606670d2-d90f-434a-8b1c-202e05c44a96",
-      "at": 1793854028475,
-      "kind": "content",
-      "text": "Set hero Sub of \"heroSub\" (Every ore, rune, boss and perk — documented…)",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "1626d956-36bd-43e4-a019-c384ded7e73d",
-      "at": 1793853902074,
-      "kind": "colors",
-      "text": "Colored \"Update Log\" (#ffffff)",
       "actor": "Quaantic",
       "pending": true
     }
