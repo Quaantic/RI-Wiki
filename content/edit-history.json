@@ -2,6 +2,186 @@
   "format": 1,
   "entries": [
     {
+      "id": "f18c378b-6b86-4b08-9f3e-4649f8a1e8af",
+      "at": 1793966624627,
+      "kind": "content",
+      "text": "Updated desc of \"Tree Essence Milestones\": Describe this page here. to Milestones you unlock with defined amounts …",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T12:04:01.076Z"
+    },
+    {
+      "id": "50a4cae0-d991-4b21-829d-849cbaa00789",
+      "at": 1793966355912,
+      "kind": "content",
+      "text": "Updated cap of \"More Tree Essence\": empty to 20",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T12:04:01.076Z"
+    },
+    {
+      "id": "00b97921-6658-4049-b3c9-01d79baf91df",
+      "at": 1793966355760,
+      "kind": "content",
+      "text": "Renamed \"New upgrade\" to \"More Tree Essence\"",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T12:04:01.076Z"
+    },
+    {
+      "id": "b67b650c-c2c8-4d74-9969-99fdb24df1e7",
+      "at": 1793966344779,
+      "kind": "content",
+      "text": "Added \"New upgrade\"",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T12:04:01.076Z"
+    },
+    {
+      "id": "72d83fc6-73d7-4328-8c86-41075fc645a8",
+      "at": 1793966343169,
+      "kind": "content",
+      "text": "Updated cap of \"More Astatine \": empty to 20",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T12:04:01.076Z"
+    },
+    {
+      "id": "7f0de729-dc61-459f-a0fe-e4ea304ce2cc",
+      "at": 1793966343019,
+      "kind": "content",
+      "text": "Renamed \"New upgrade\" to \"More Astatine \"",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T12:04:01.076Z"
+    },
+    {
+      "id": "acc37781-3cef-4322-9289-b88b5a0d5ab6",
+      "at": 1793966332516,
+      "kind": "content",
+      "text": "Added \"New upgrade\"",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T12:04:01.076Z"
+    },
+    {
+      "id": "356edbdc-8ed0-4fe3-80ea-55e9ea15c8f0",
+      "at": 1793966330785,
+      "kind": "content",
+      "text": "Updated cap of \"More Rare Saps\": empty to 20",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T12:04:01.076Z"
+    },
+    {
+      "id": "55ed5784-6776-44b3-a3b7-c7c5871eea36",
+      "at": 1793966330611,
+      "kind": "content",
+      "text": "Renamed \"New upgrade\" to \"More Rare Saps\"",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T12:04:01.076Z"
+    },
+    {
+      "id": "d8a6726e-7b2b-47db-8b68-dddcd9b5516f",
+      "at": 1793966320516,
+      "kind": "content",
+      "text": "Added \"New upgrade\"",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T12:04:01.076Z"
+    },
+    {
+      "id": "ccfde519-346d-4bbd-a842-437207b4677f",
+      "at": 1793966318893,
+      "kind": "content",
+      "text": "Updated cap of \"Increase Research upgrades cap\": empty to 15",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T12:04:01.076Z"
+    },
+    {
+      "id": "4c805dc9-b342-4eb4-a2b4-84afc36fbde2",
+      "at": 1793966318728,
+      "kind": "content",
+      "text": "Renamed \"New upgrade\" to \"Increase Research upgrades cap\"",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T12:04:01.076Z"
+    },
+    {
+      "id": "d5dfd5d8-b04c-471b-b451-a3b2232d5530",
+      "at": 1793966299834,
+      "kind": "content",
+      "text": "Added \"New upgrade\"",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T12:04:01.076Z"
+    },
+    {
+      "id": "18a926f8-968b-4d47-ba02-88ef26f79d8e",
+      "at": 1793966298187,
+      "kind": "content",
+      "text": "Updated cap of \"More Souls \": empty to 55",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T12:04:01.076Z"
+    },
+    {
+      "id": "c8575942-1f62-4fa5-aabb-dc30c3ce889b",
+      "at": 1793966298035,
+      "kind": "content",
+      "text": "Renamed \"New upgrade\" to \"More Souls \"",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T12:04:01.076Z"
+    },
+    {
+      "id": "dc6ebac6-dd12-4b40-b375-f5b6ca0d2f12",
+      "at": 1793966284705,
+      "kind": "content",
+      "text": "Added \"New upgrade\"",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T12:04:01.076Z"
+    },
+    {
+      "id": "46464b4a-3c7f-4489-a985-3e3590f9f3f3",
+      "at": 1793966279131,
+      "kind": "content",
+      "text": "Updated cap of \"More Fossil\": empty to 20",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T12:04:01.076Z"
+    },
+    {
+      "id": "b45733bc-6fd6-4436-ad06-735cc4e4499c",
+      "at": 1793966278978,
+      "kind": "content",
+      "text": "Renamed \"New upgrade\" to \"More Fossil\"",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T12:04:01.070Z"
+    },
+    {
       "id": "c6d2a311-ff4c-4a8c-a00f-15561c5c66a3",
       "at": 1793965065048,
       "kind": "content",
