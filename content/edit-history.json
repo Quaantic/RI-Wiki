@@ -2915,44 +2915,44 @@
       "pending": false
     },
     {
-      "id": "9f86fbcb-332f-4c28-a063-224f45dddcba",
-      "at": 1793975378640,
+      "id": "1d7f6162-acad-460b-846a-5db68a436cfd",
+      "at": 1793975719181,
       "kind": "content",
-      "text": "Updated icon of \"Special Gears\": star to game-icons:gear-hammer",
+      "text": "Updated icon of \"Magnets\": magnet to game-icons:magnet-blast",
       "actor": "Quaantic",
       "pending": false,
       "status": "saved",
-      "savedAt": "2026-11-06T14:30:56.741Z"
+      "savedAt": "2026-11-06T14:35:35.175Z"
     },
     {
-      "id": "4207b04a-3f06-46fd-a8cc-c9ba82c3cbea",
-      "at": 1793975364738,
+      "id": "a58fb295-42a7-47e7-b631-87ababb84d89",
+      "at": 1793975712481,
       "kind": "content",
-      "text": "Updated icon of \"Automations\": refresh to game-icons:auto-repair",
+      "text": "Updated icon of \"Merge Perks\": star to game-icons:upgrade",
       "actor": "Quaantic",
       "pending": false,
       "status": "saved",
-      "savedAt": "2026-11-06T14:30:56.741Z"
+      "savedAt": "2026-11-06T14:35:35.175Z"
     },
     {
-      "id": "e2b4285a-ff0d-4bd2-b917-6a1422340ba1",
-      "at": 1793975262372,
+      "id": "46ba64c4-e053-4be6-865b-5538e15d2cc0",
+      "at": 1793975705080,
       "kind": "content",
-      "text": "Updated icon of \"Barn\": package to game-icons:barn",
+      "text": "Updated icon of \"Bluesteel\": shield to game-icons:steel-claws",
       "actor": "Quaantic",
       "pending": false,
       "status": "saved",
-      "savedAt": "2026-11-06T14:28:45.131Z"
+      "savedAt": "2026-11-06T14:35:35.175Z"
     },
     {
-      "id": "ab7983cd-adcd-4302-b354-caf20b939ac2",
-      "at": 1793975252292,
+      "id": "2fb85410-25e8-4dc9-b0cd-462cc176f7b4",
+      "at": 1793975699100,
       "kind": "content",
-      "text": "Updated icon of \"Crystals\": gem to game-icons:crystal-shrine",
+      "text": "Updated icon of \"Quartz\": gem to game-icons:checkered-diamond",
       "actor": "Quaantic",
       "pending": false,
       "status": "saved",
-      "savedAt": "2026-11-06T14:28:45.131Z"
+      "savedAt": "2026-11-06T14:35:35.175Z"
     }
   ]
 }
