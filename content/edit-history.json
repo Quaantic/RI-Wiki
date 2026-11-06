@@ -2,6 +2,196 @@
   "format": 1,
   "entries": [
     {
+      "id": "1c900cb6-2381-49cf-af41-f82db50a51b9",
+      "at": 1793981065190,
+      "kind": "content",
+      "text": "Renamed \"Inferna l-\" to \"Infernal -\"",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T16:04:41.434Z"
+    },
+    {
+      "id": "9b8aaa65-c14f-47c4-aa2d-4df684d875a0",
+      "at": 1793981059591,
+      "kind": "content",
+      "text": "Updated unlock At of \"Mastery\": 1 to empty",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T16:04:41.434Z"
+    },
+    {
+      "id": "d2aed495-1ee9-452d-bbb5-dc69131d0259",
+      "at": 1793981059544,
+      "kind": "content",
+      "text": "Updated cap of \"Mastery\": 1 to empty",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T16:04:41.434Z"
+    },
+    {
+      "id": "11f09f32-0c84-43ab-90a6-bedd2a234484",
+      "at": 1793981053499,
+      "kind": "content",
+      "text": "Set unlock At of \"Mastery\" (1)",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T16:04:41.434Z"
+    },
+    {
+      "id": "9639a0bd-a4c5-4477-8b66-68aaa7fe3aaa",
+      "at": 1793981053455,
+      "kind": "content",
+      "text": "Set cap of \"Mastery\" (1)",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T16:04:41.434Z"
+    },
+    {
+      "id": "a1def1d0-0b74-49a4-a862-25f69de51f95",
+      "at": 1793981049297,
+      "kind": "content",
+      "text": "Renamed \"Mastry\" to \"Mastery\"",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T16:04:41.434Z"
+    },
+    {
+      "id": "95b88b54-aacc-470c-a5d5-5d486d4686ee",
+      "at": 1793981036001,
+      "kind": "content",
+      "text": "Updated color of \"Omega -\": #86d62b to #2378E8",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T16:04:41.434Z"
+    },
+    {
+      "id": "0dacdc73-a985-4343-822f-bd4b6476336d",
+      "at": 1793981035943,
+      "kind": "content",
+      "text": "Renamed \"Omega-\" to \"Omega -\"",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T16:04:41.434Z"
+    },
+    {
+      "id": "fbeebf34-acea-4417-8c29-9a5a8ea024ce",
+      "at": 1793981031197,
+      "kind": "content",
+      "text": "Updated color of \"Omnisou l-\": #86d62b to #43C944",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T16:04:41.434Z"
+    },
+    {
+      "id": "26664bfa-6ca5-4643-af3a-f1d91348a0a2",
+      "at": 1793981031148,
+      "kind": "content",
+      "text": "Renamed \"Omnisoul-\" to \"Omnisou l-\"",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T16:04:41.434Z"
+    },
+    {
+      "id": "e3338f98-a5bf-4456-a35a-b30c878821dd",
+      "at": 1793981024633,
+      "kind": "content",
+      "text": "Updated color of \"Soul -\": #86d62b to #8035C8",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T16:04:41.434Z"
+    },
+    {
+      "id": "47e6a69b-6cdb-4a7d-9cc9-4b9892651a9b",
+      "at": 1793981024582,
+      "kind": "content",
+      "text": "Renamed \"Soul-\" to \"Soul -\"",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T16:04:41.434Z"
+    },
+    {
+      "id": "98d59331-2508-4c84-aece-c65712e13dfd",
+      "at": 1793981017637,
+      "kind": "content",
+      "text": "Updated color of \"Inferna l-\": #86d62b to #FF173C",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T16:04:41.434Z"
+    },
+    {
+      "id": "9f36a558-3c3e-4b9a-a3b4-fb107de7940c",
+      "at": 1793981017592,
+      "kind": "content",
+      "text": "Renamed \"Infernal-\" to \"Inferna l-\"",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T16:04:41.434Z"
+    },
+    {
+      "id": "7a8c4391-78e3-4edf-8c76-059412439d8e",
+      "at": 1793981010884,
+      "kind": "content",
+      "text": "Updated color of \"Plasma -\": #86d62b to #A443F5",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T16:04:41.434Z"
+    },
+    {
+      "id": "32fb728b-a828-4a1c-b61e-51bb048b3d57",
+      "at": 1793981010836,
+      "kind": "content",
+      "text": "Renamed \"Plasma-\" to \"Plasma -\"",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T16:04:41.434Z"
+    },
+    {
+      "id": "2c8342a4-185b-4fa3-8a1a-76f85455a75e",
+      "at": 1793981003057,
+      "kind": "content",
+      "text": "Updated color of \"Unnatural -\": #86d62b to #A84747",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T16:04:41.434Z"
+    },
+    {
+      "id": "54c2c4c8-4047-446c-b0d4-a7901ea8396e",
+      "at": 1793980995354,
+      "kind": "content",
+      "text": "Updated description of \"Dark -\": Energy Bone Dust Life Gems to empty",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T16:04:41.434Z"
+    },
+    {
+      "id": "56f2a848-331a-47b7-afb6-cfb456fa956c",
+      "at": 1793980984210,
+      "kind": "content",
+      "text": "Updated color of \"Void -\": #86d62b to #6550B8",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T16:04:41.434Z"
+    },
+    {
       "id": "e70b4d8f-316c-45ad-a417-148c45c6ee19",
       "at": 1793980954586,
       "kind": "content",
@@ -2810,196 +3000,6 @@
       "pending": false,
       "status": "saved",
       "savedAt": "2026-11-06T14:03:19.221Z"
-    },
-    {
-      "id": "78723c33-c988-4e9f-b7a0-3f73ffb415ac",
-      "at": 1793973742286,
-      "kind": "content",
-      "text": "Updated cap of \"Bluesteel\": 25 to 75",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T14:03:19.221Z"
-    },
-    {
-      "id": "6e6c9198-fa82-48fb-b408-9ac59b8b0738",
-      "at": 1793973672580,
-      "kind": "content",
-      "text": "Updated cap of \"Dungeon Coins\": 25 to 75",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T14:01:13.906Z"
-    },
-    {
-      "id": "e0b559e4-787d-4328-8bd9-0c8b630dd069",
-      "at": 1793973657052,
-      "kind": "content",
-      "text": "Renamed \"Souls\" to \"Dungeon Coins\"",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T14:01:13.906Z"
-    },
-    {
-      "id": "d2c96e4d-2cc0-455c-b37e-aceb2b5faefd",
-      "at": 1793973639643,
-      "kind": "content",
-      "text": "Updated cap of \"Bones\": 50 to 100",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T14:01:13.906Z"
-    },
-    {
-      "id": "a5d75f85-cfef-4ca1-8f50-fccbe3c8b554",
-      "at": 1793973630363,
-      "kind": "content",
-      "text": "Updated cap of \"Golden Energy\": 25 to 75",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T14:01:13.906Z"
-    },
-    {
-      "id": "916b1c59-fbc2-4f04-ae7c-99a626cb36f1",
-      "at": 1793973623882,
-      "kind": "content",
-      "text": "Updated cap of \"Life Gem\": 40 to 90",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T14:01:13.906Z"
-    },
-    {
-      "id": "464b00cd-eace-49e2-8b73-6f9c00ada38c",
-      "at": 1793973619723,
-      "kind": "content",
-      "text": "Updated cap of \"Roots\": 35 to 85",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T14:01:13.906Z"
-    },
-    {
-      "id": "1fb9b44a-4229-4b3a-9bd7-7ee21f20e67a",
-      "at": 1793973609360,
-      "kind": "content",
-      "text": "Updated cap of \"Crystal Shards\": 25 to 75",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T14:01:13.906Z"
-    },
-    {
-      "id": "26e4a186-1df8-4821-aa48-103265934fe0",
-      "at": 1793973603182,
-      "kind": "content",
-      "text": "Updated cap of \"Emerald Coins\": 25 to 75",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T14:01:13.906Z"
-    },
-    {
-      "id": "4f54dac5-decc-4f6d-849f-306bf5ca5565",
-      "at": 1793973600790,
-      "kind": "content",
-      "text": "Updated cap of \"Energy Shards\": 49 to 100",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T14:01:13.906Z"
-    },
-    {
-      "id": "c3f2b23e-1fe0-4d71-bd4b-b3f3834db49e",
-      "at": 1793973597000,
-      "kind": "content",
-      "text": "Updated cap of \"Silver Energy\": 50 to 100",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T14:01:13.906Z"
-    },
-    {
-      "id": "32e677db-158d-44d8-a4ce-580bac344d77",
-      "at": 1793973592665,
-      "kind": "content",
-      "text": "Updated cap of \"Adamantium\": 25 to 75",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T14:01:13.906Z"
-    },
-    {
-      "id": "517b9334-0b1d-41e6-bced-062e56909da7",
-      "at": 1793973587024,
-      "kind": "content",
-      "text": "Updated cap of \"Infi Research\": 999 to 1050",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T14:01:13.906Z"
-    },
-    {
-      "id": "f64d26cd-e4c0-4be7-a77b-6b8e71d7ce72",
-      "at": 1793973577069,
-      "kind": "content",
-      "text": "Updated cap of \"More Depth\": 25 to 75",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T14:01:13.906Z"
-    },
-    {
-      "id": "8d0170c4-8c75-4bc4-9e8d-ed3480e53903",
-      "at": 1793973574067,
-      "kind": "content",
-      "text": "Updated cap of \"More Ores\": 30 to 80",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T14:01:13.906Z"
-    },
-    {
-      "id": "3b282a6d-6d59-4389-bbb7-97af180b45c1",
-      "at": 1793973569130,
-      "kind": "content",
-      "text": "Updated cap of \"Mining Damage\": 99 to 150",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T14:01:13.906Z"
-    },
-    {
-      "id": "4d7efdcf-2bd0-4c14-8f14-d9f9c8dd8186",
-      "at": 1793973562693,
-      "kind": "content",
-      "text": "Updated cap of \"Gold Bars\": 25 to 75",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T14:01:13.906Z"
-    },
-    {
-      "id": "d057da67-79d2-4874-a8e9-7f543620bb28",
-      "at": 1793973557441,
-      "kind": "content",
-      "text": "Updated cap of \"Infi Energy\": 999 to 1050",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T14:01:13.906Z"
-    },
-    {
-      "id": "b0b1c2aa-9e71-47ec-9854-01efd93962f0",
-      "at": 1793973475798,
-      "kind": "content",
-      "text": "Updated cap of \"Monster Feed\": 30 to 75",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T14:01:13.906Z"
     }
   ]
 }
