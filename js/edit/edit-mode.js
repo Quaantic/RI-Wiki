@@ -11,7 +11,7 @@ import {
   hasWriteAccess,
 } from '../github.js';
 import { CONTEXTS,validateDocuments } from '../content-schema.js';
-import { LUCIDE_ICONS } from '../lib/lucide-data.js';
+import { searchIcons } from '../icon-catalog.js';
 import { CATEGORIES, getSubcategory, getSubcategoryDocPath, collectSubtreeIds } from '../data/wiki-data.js';
 import { buildNav } from '../ui.js';
 import * as draft from './draft.js';
@@ -21,7 +21,6 @@ import { nextReleaseVersion } from '../releases.js';
 import {readRecovery,storeFormRecovery,removeFormRecovery,isRecoveryStored} from './recovery.js';
 import {GENERATOR_FORMULAS} from '../data/generators.js';
 
-const LUCIDE_ICON_NAMES = Object.keys(LUCIDE_ICONS);
 
 const TOKEN_KEY = 'ri-edit-token';
 
@@ -102,20 +101,20 @@ const SCHEMAS = {
   ],
   card: [
     { key: 'title', label: 'Title', type: 'line' },
-    { key: 'icon', label: 'Icon (lucide)', type: 'line', mono: true, picker: 'icon' },
+    { key: 'icon', label: 'Icon', type: 'line', mono: true, picker: 'icon' },
     { key: 'text', label: 'Text', type: 'area' },
   ],
   'category-card': [
     { key: 'id', label: 'URL id (letters, numbers, -)', type: 'line', mono: true },
     { key: 'name', label: 'Name', type: 'line' },
     { key: 'tagline', label: 'Tagline', type: 'area' },
-    { key: 'icon', label: 'Icon (lucide)', type: 'line', mono: true, picker: 'icon' },
+    { key: 'icon', label: 'Icon', type: 'line', mono: true, picker: 'icon' },
   ],
   'sub-card': [
     { key: 'id', label: 'URL id (letters, numbers, -)', type: 'line', mono: true },
     { key: 'name', label: 'Name', type: 'line' },
     { key: 'desc', label: 'Description', type: 'area' },
-    { key: 'icon', label: 'Icon (lucide)', type: 'line', mono: true, picker: 'icon' },
+    { key: 'icon', label: 'Icon', type: 'line', mono: true, picker: 'icon' },
   ],
   entry: [
     { key: 'context', label: 'Category', type: 'select', options: () => CONTEXTS.map((id) => ({ id, label: id })) },
@@ -131,12 +130,12 @@ const SCHEMAS = {
     { key: 'name', label: 'Name', type: 'line' },
     { key: 'handle', label: '@handle (empty hides)', type: 'line' },
     { key: 'role', label: 'Role (empty = Contributor)', type: 'line' },
-    { key: 'avatar', label: 'Avatar image', type: 'image' },
+    { key: 'avatar', label: 'Image name (e.g. nath → images/credits/nath.png)', type: 'line' },
     { key: 'banner', label: 'Banner color (CSS color)', type: 'line', mono: true },
   ],
   'game:ore': [
     { key: 'name', label: 'Name', type: 'line' },
-    { key: 'icon', label: 'Icon (lucide)', type: 'line', mono: true, picker: 'icon' },
+    { key: 'icon', label: 'Icon', type: 'line', mono: true, picker: 'icon' },
     { key: 'color', label: 'Color (CSS color)', type: 'line', mono: true },
     { key: 'depth', label: 'Depth', type: 'line' },
     { key: 'luck', label: 'Best luck', type: 'line' },
@@ -192,7 +191,7 @@ const SCHEMAS = {
   ],
   'game:rune': [
     { key: 'name', label: 'Name', type: 'line' },
-    { key: 'icon', label: 'Icon (lucide)', type: 'line', mono: true, picker: 'icon' },
+    { key: 'icon', label: 'Icon', type: 'line', mono: true, picker: 'icon' },
     { key: 'luck', label: 'Recommended luck', type: 'line' },
     { key: 'baseChance', label: 'Base chance', type: 'line' },
     { key: 'recChance', label: 'Chance at rec. luck', type: 'line' },
@@ -982,8 +981,8 @@ function createField(meta, path, docName) {
 }
 
 // Campo com o seletor visual de ícones: mostra o ícone atual e abre uma
-// grade pesquisável (com preview) de todos os ícones lucide disponíveis.
-function makeIconPicker(initialValue) {
+// Official Game Icons and existing Lucide icons, with searchable previews.
+export function makeIconPicker(initialValue) {
   const row = document.createElement('div');
   row.className = 'ri-icon-row';
 
@@ -1011,28 +1010,36 @@ function makeIconPicker(initialValue) {
   panel.hidden = true;
   panel.innerHTML = `
     <div class="ri-icon-picker__search">
-      <input class="input" type="search" placeholder="Search icons (type a word)…" aria-label="Search icons" />
-      <small>Click an icon to select it.</small>
+      <input class="input" type="search" placeholder="Search: fire, sword, crystal, fogo…" aria-label="Search icons" />
+      <select class="input" aria-label="Icon collection"><option value="all">All icons</option><option value="game">Game Icons — game items & fantasy</option><option value="lucide">Lucide — interface & outlines</option></select>
+      <small class="ri-icon-picker__count" role="status" aria-live="polite"></small>
     </div>
-    <div class="ri-icon-picker__grid"></div>`;
+    <div class="ri-icon-picker__grid"></div>
+    <button type="button" class="btn btn--ghost btn--sm ri-icon-picker__more" hidden>Show more</button>
+    <small class="ri-icon-picker__source">Icons by <a href="https://game-icons.net/" target="_blank" rel="noopener noreferrer">Game-icons.net</a> · <a href="images/icons/game-icons/LICENSE.txt" target="_blank" rel="noopener noreferrer">Authors / CC BY 3.0</a> · <a href="https://lucide.dev/" target="_blank" rel="noopener noreferrer">Lucide</a></small>`;
 
   const grid = panel.querySelector('.ri-icon-picker__grid');
   const search = panel.querySelector('input');
+  const collection = panel.querySelector('select');
+  const count = panel.querySelector('.ri-icon-picker__count');
+  const more = panel.querySelector('.ri-icon-picker__more');
+  let limit = 64;
   const renderGrid = () => {
-    const query = search.value.trim().toLowerCase();
-    const all = LUCIDE_ICON_NAMES;
-    const names = (query ? all.filter((name) => name.includes(query)) : all).slice(0, 400);
-    grid.innerHTML = names
-      .map((name) => `<button type="button" class="ri-icon-cell${name === input.value ? ' is-on' : ''}" title="${esc(name)}" data-icon-name="${esc(name)}">${icon(name, 18)}<span>${esc(name)}</span></button>`)
-      .join('');
+    const matches = searchIcons(search.value, collection.value);
+    const visible = matches.slice(0, limit);
+    count.textContent = matches.length ? `${visible.length} of ${matches.length} icons · click to select` : 'No icons found. Try fire, sword, crystal or fogo.';
+    grid.innerHTML = visible.map(({id,name,source}) => `<button type="button" class="ri-icon-cell${id === input.value ? ' is-on' : ''}" aria-label="${esc(name)} (${source === 'game' ? 'Game Icons' : 'Lucide'})" aria-pressed="${id === input.value}" title="${esc(name)} — ${source === 'game' ? 'Game Icons' : 'Lucide'}" data-icon-name="${esc(id)}">${icon(id, 28)}<span>${esc(name.replaceAll('-', ' '))}</span></button>`).join('');
+    more.hidden = visible.length >= matches.length;
   };
+  const resetGrid = () => { limit = 64; renderGrid(); grid.scrollTop = 0; };
 
   grid.addEventListener('click', (event) => {
     const cell = event.target.closest('[data-icon-name]');
     if (!cell) return;
     input.value = cell.dataset.iconName;
+    input.dispatchEvent(new Event('input', { bubbles: true }));
     preview.innerHTML = icon(input.value || 'circle', 22);
-    grid.querySelectorAll('.ri-icon-cell').forEach((el) => el.classList.toggle('is-on', el === cell));
+    grid.querySelectorAll('.ri-icon-cell').forEach((el) => { el.classList.toggle('is-on', el === cell); el.setAttribute('aria-pressed', String(el === cell)); });
   });
 
   input.addEventListener('input', () => {
@@ -1043,11 +1050,13 @@ function makeIconPicker(initialValue) {
     panel.hidden = !panel.hidden;
     if (!panel.hidden) {
       search.value = '';
-      renderGrid();
+      resetGrid();
       search.focus({ preventScroll: true });
     }
   });
-  search.addEventListener('input', renderGrid);
+  search.addEventListener('input', resetGrid);
+  collection.addEventListener('change', resetGrid);
+  more.addEventListener('click', () => { limit += 64; renderGrid(); });
 
   return { row, panel, input, preview };
 }
@@ -2539,8 +2548,7 @@ function installInteraction() {
 
 // ==== EXPORT ====
 
-// Ganchos usados pelos testes (tests/page-types.test.cjs): criacao do
-// conteudo de jogo por tipo de pagina e templates de itens novos.
+// Criação do conteúdo de jogo por tipo de página e templates de itens novos.
 export { createGamePageContainer, buildAddValue };
 
 export function restoreEditorForm(){if(session.ready&&session.editing)restoreForm();}

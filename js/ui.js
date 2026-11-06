@@ -9,6 +9,7 @@ import { ed } from './edit/ed-attr.js';
 import { formatReleaseVersion } from './releases.js';
 
 import { LUCIDE_ICONS } from './lib/lucide-data.js';
+import { gameIconReference } from './icon-catalog.js';
 
 const ICON_ALIASES = {
   rune: 'hexagon',
@@ -21,6 +22,8 @@ const ICON_ALIASES = {
   refresh: 'refresh-cw',
   flask: 'flask-conical',
   drop: 'droplet',
+  fire: 'flame',
+  fogo: 'flame',
   chart: 'chart-no-axes-column',
   alert: 'triangle-alert',
   sort: 'arrow-up-down',
@@ -35,6 +38,8 @@ function iconNode(name) {
 }
 
 export function icon(name, size = 20, cls = '') {
+  const gameReference = gameIconReference(name);
+  if (gameReference) return `<svg ${cls ? `class="${esc(cls)}" ` : ''}width="${size}" height="${size}" viewBox="0 0 512 512" fill="currentColor" stroke="none" aria-hidden="true" focusable="false"><use href="${gameReference}" /></svg>`;
   const body = iconNode(name)
     .map(([tag, attrs]) => {
       const a = Object.entries(attrs).map(([k, v]) => ` ${k}="${v}"`).join('');

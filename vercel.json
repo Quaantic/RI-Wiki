@@ -1,4 +1,4 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "ignoreCommand": "node scripts/vercel-ignore.cjs"
+  "ignoreCommand": "node server/vercel-ignore.cjs"
 }

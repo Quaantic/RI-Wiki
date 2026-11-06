@@ -18,6 +18,7 @@ import { LATEST_UPDATE_ID } from './data/update-log.js';
 import { resolveContentKey } from './page-content.js';
 import { calculateGenerator } from './data/generators.js';
 import {releaseKind,formatReleaseVersion} from './releases.js';
+import { creditAvatar } from './credit-avatar.js';
 
 // ==== PAGINA DE FAMILIA DE RUNAS (cards por runa) ====
 
@@ -1460,12 +1461,13 @@ function initials(name = '') {
 }
 
 function profileCard(p, i, featured = false, listPath = '') {
+  const avatar = creditAvatar(p.avatar);
   return `
     <article class="credit-card${featured ? ' credit-card--featured' : ''} reveal" ${listPath ? ed(`${listPath}.${i}`, 'credit', esc(p.name)) : ''} style="--reveal-delay:${Math.min(i * 50, 400)}ms">
       <div class="credit-card__banner" style="--banner:${esc(p.banner || 'var(--c-accent)')}"></div>
       <div class="credit-card__avatar">
         <span class="credit-card__fallback">${initials(p.name)}</span>
-        <img src="${esc(p.avatar)}" alt="" loading="lazy" onerror="this.remove()" />
+        ${avatar ? `<img src="${esc(avatar)}" alt="" loading="lazy" onerror="this.remove()" />` : ''}
       </div>
       <div class="credit-card__info">
         <b class="credit-card__name">${esc(p.name)}</b>
@@ -1500,6 +1502,7 @@ export const creditsView = {
           ${CREDITS.thanks}
         </div>
       </div>
+      <p class="credits-icon-attribution"><small>Game icons by the <a href="https://game-icons.net/" target="_blank" rel="noopener noreferrer">Game-icons.net artists</a>, licensed under <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="noopener noreferrer">CC BY 3.0</a>. <a href="images/icons/game-icons/LICENSE.txt" target="_blank" rel="noopener noreferrer">Full author credits</a>. Interface icons by <a href="https://lucide.dev/" target="_blank" rel="noopener noreferrer">Lucide</a>.</small></p>
     `;
 
     initReveal(root);

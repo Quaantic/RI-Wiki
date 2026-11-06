@@ -383,12 +383,15 @@ html.ri-edit-bar .sub-pills-wrap {
   gap: 4px;
 }
 .ri-icon-picker__search small { color: var(--c-text-3); font-size: 10.5px; }
+.ri-icon-picker__source { color: var(--c-text-3); font-size: 10px; line-height: 1.5; }
+.ri-icon-picker__source a { color: inherit; text-decoration: underline; }
+.ri-icon-picker__more[hidden] { display: none; }
 
 .ri-icon-picker__grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(min(82px, 100%), 1fr));
   gap: 6px;
-  max-height: 240px;
+  max-height: 320px;
   overflow-y: auto;
   scrollbar-width: thin;
 }
@@ -397,8 +400,9 @@ html.ri-edit-bar .sub-pills-wrap {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3px;
-  padding: 6px 4px 5px;
+  gap: 6px;
+  padding: 8px 4px;
+  min-height: 66px;
   border-radius: 8px;
   border: 1px solid transparent;
   background: transparent;
@@ -408,13 +412,15 @@ html.ri-edit-bar .sub-pills-wrap {
 }
 .ri-icon-cell svg { color: var(--c-accent); flex: none; }
 .ri-icon-cell span {
-  font-size: 9px;
+  font-size: 10px;
   line-height: 1.2;
   color: var(--c-text-3);
   max-width: 100%;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 .ri-icon-cell:hover { background: rgba(168, 239, 69, 0.08); color: var(--c-text); }
 .ri-icon-cell.is-on { border-color: var(--c-accent); background: var(--c-accent-soft, rgba(168, 239, 69, 0.12)); }
