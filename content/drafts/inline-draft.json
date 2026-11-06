@@ -3140,6 +3140,13 @@
               "cap": "100",
               "price": "5e30 * (1.25 + L/85)^L",
               "multi": "(1 + L*0.1) * 1.05^L"
+            },
+            {
+              "n": 52,
+              "name": "Tree Tier XP",
+              "cap": "20",
+              "price": "5e30 * (1.45 + L/55)^L",
+              "multi": "1 + L*0.1"
             }
           ]
         },
@@ -15253,6 +15260,13 @@
             "title": "New icons",
             "href": "",
             "description": "Added many new icons to the stats description"
+          },
+          {
+            "id": "entry-38c5454e-f637-47b0-a3a2-14b4c6b9e7a6",
+            "context": "Feature",
+            "title": "New update",
+            "href": "",
+            "description": "What changed in the game."
           }
         ]
       },
@@ -15486,24 +15500,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.game.upgrades.sections.research.upgrades[5].cap": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[6]": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[6].cap": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[8]": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[8].cap": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[9]": {
-      "actor": "Quaantic"
-    },
     "content.game.upgrades.sections.research.upgrades[9].cap": {
       "actor": "Quaantic"
     },
@@ -16534,6 +16530,57 @@
       "actor": "Quaantic"
     },
     "content.game.upgrades.sections.research.upgrades[51].multi": {
+      "actor": "Quaantic"
+    },
+    "content.game.upgrades.sections.research.upgrades[52]": {
+      "actor": "Quaantic"
+    },
+    "content.game.upgrades.sections.research.upgrades[52].n": {
+      "actor": "Quaantic"
+    },
+    "content.game.upgrades.sections.research.upgrades[52].name": {
+      "actor": "Quaantic"
+    },
+    "content.game.upgrades.sections.research.upgrades[52].cap": {
+      "actor": "Quaantic"
+    },
+    "content.game.upgrades.sections.research.upgrades[52].price": {
+      "actor": "Quaantic"
+    },
+    "content.game.upgrades.sections.research.upgrades[52].multi": {
+      "actor": "Quaantic"
+    },
+    "content.updates": {
+      "actor": "Quaantic"
+    },
+    "content.updates.versions": {
+      "actor": "Quaantic"
+    },
+    "content.updates.versions[1.03]": {
+      "actor": "Quaantic"
+    },
+    "content.updates.versions[1.03].entries": {
+      "actor": "Quaantic"
+    },
+    "content.updates.versions[1.03].entries order": {
+      "actor": "Quaantic"
+    },
+    "content.updates.versions[1.03].entries[entry-38c5454e-f637-47b0-a3a2-14b4c6b9e7a6]": {
+      "actor": "Quaantic"
+    },
+    "content.updates.versions[1.03].entries[entry-38c5454e-f637-47b0-a3a2-14b4c6b9e7a6].id": {
+      "actor": "Quaantic"
+    },
+    "content.updates.versions[1.03].entries[entry-38c5454e-f637-47b0-a3a2-14b4c6b9e7a6].context": {
+      "actor": "Quaantic"
+    },
+    "content.updates.versions[1.03].entries[entry-38c5454e-f637-47b0-a3a2-14b4c6b9e7a6].title": {
+      "actor": "Quaantic"
+    },
+    "content.updates.versions[1.03].entries[entry-38c5454e-f637-47b0-a3a2-14b4c6b9e7a6].href": {
+      "actor": "Quaantic"
+    },
+    "content.updates.versions[1.03].entries[entry-38c5454e-f637-47b0-a3a2-14b4c6b9e7a6].description": {
       "actor": "Quaantic"
     }
   }
