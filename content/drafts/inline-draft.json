@@ -2908,7 +2908,7 @@
               "name": "Increase Research upgrades cap",
               "cap": "15",
               "price": "3*L",
-              "multi": "1"
+              "multi": "+ 1*L"
             },
             {
               "n": 48,
