@@ -14738,9 +14738,9 @@
           {
             "id": "entry-0c4daa65-21da-4f1e-ba45-030fd6465bd8",
             "context": "Feature",
-            "title": "New update",
+            "title": "New icons",
             "href": "",
-            "description": "What changed in the game."
+            "description": "Added many new icons to the stats description"
           }
         ]
       },
@@ -14974,24 +14974,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.game.upgrades.sections.life-tree-essence.upgrades[6].n": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[6].name": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[6].cap": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[6].price": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[6].multi": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[7]": {
-      "actor": "Quaantic"
-    },
     "content.game.upgrades.sections.life-tree-essence.upgrades[7].n": {
       "actor": "Quaantic"
     },
