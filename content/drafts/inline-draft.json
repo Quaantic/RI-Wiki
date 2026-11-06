@@ -14718,6 +14718,19 @@
   "updates": {
     "versions": [
       {
+        "version": "1.03",
+        "date": "2026-11-06",
+        "entries": [
+          {
+            "id": "entry-94ad59f9-1227-4aba-b0ee-cfe368e1edc7",
+            "context": "Feature",
+            "title": "New update",
+            "href": "",
+            "description": "What changed in the game."
+          }
+        ]
+      },
+      {
         "version": "1.02",
         "date": "2026-11-05",
         "entries": [
@@ -14881,13 +14894,6 @@
             "title": "Life",
             "href": "#/life/terra-life",
             "description": "Added Life 6."
-          },
-          {
-            "id": "entry-a63dc8e3-98a9-45d0-a988-70c58ed227f2",
-            "context": "Feature",
-            "title": "V1.03",
-            "href": "",
-            "description": "Tree essence/milestones\nSecret runes\nNew icons on ui"
           }
         ]
       },
@@ -14954,39 +14960,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.game.upgrades.sections.life-tree-essence.upgrades[1].name": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[1].cap": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[1].price": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[1].multi": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[2]": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[2].n": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[2].name": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[2].cap": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[2].price": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[2].multi": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[3]": {
-      "actor": "Quaantic"
-    },
     "content.game.upgrades.sections.life-tree-essence.upgrades[3].n": {
       "actor": "Quaantic"
     },
@@ -16035,6 +16008,42 @@
       "actor": "Nathy365"
     },
     "content.updates.versions[1.02].entries[entry-a63dc8e3-98a9-45d0-a988-70c58ed227f2].description": {
+      "actor": "Nathy365"
+    },
+    "content.updates.versions order": {
+      "actor": "Nathy365"
+    },
+    "content.updates.versions[1.03]": {
+      "actor": "Nathy365"
+    },
+    "content.updates.versions[1.03].version": {
+      "actor": "Nathy365"
+    },
+    "content.updates.versions[1.03].date": {
+      "actor": "Nathy365"
+    },
+    "content.updates.versions[1.03].entries": {
+      "actor": "Nathy365"
+    },
+    "content.updates.versions[1.03].entries order": {
+      "actor": "Nathy365"
+    },
+    "content.updates.versions[1.03].entries[entry-94ad59f9-1227-4aba-b0ee-cfe368e1edc7]": {
+      "actor": "Nathy365"
+    },
+    "content.updates.versions[1.03].entries[entry-94ad59f9-1227-4aba-b0ee-cfe368e1edc7].id": {
+      "actor": "Nathy365"
+    },
+    "content.updates.versions[1.03].entries[entry-94ad59f9-1227-4aba-b0ee-cfe368e1edc7].context": {
+      "actor": "Nathy365"
+    },
+    "content.updates.versions[1.03].entries[entry-94ad59f9-1227-4aba-b0ee-cfe368e1edc7].title": {
+      "actor": "Nathy365"
+    },
+    "content.updates.versions[1.03].entries[entry-94ad59f9-1227-4aba-b0ee-cfe368e1edc7].href": {
+      "actor": "Nathy365"
+    },
+    "content.updates.versions[1.03].entries[entry-94ad59f9-1227-4aba-b0ee-cfe368e1edc7].description": {
       "actor": "Nathy365"
     }
   }
