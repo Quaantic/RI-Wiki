@@ -15264,6 +15264,20 @@
           },
           {
             "id": "entry-d4ca3f4b-306d-4d59-bf7a-02beaddaccae",
+            "context": "Changes",
+            "title": "Log Upgrades",
+            "href": "",
+            "description": "Added new log upgrade to the wiki!"
+          },
+          {
+            "id": "entry-c67d43e6-e797-4e28-a49c-eb7f78f088f3",
+            "context": "Bugs",
+            "title": "Random Tabs",
+            "href": "",
+            "description": "Fixed random tabs disposed in places they don't make sense"
+          },
+          {
+            "id": "entry-22767fdf-15e5-432c-b034-d5e08d3b12dc",
             "context": "Feature",
             "title": "New update",
             "href": "",
@@ -15501,42 +15515,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.game.upgrades.sections.research.upgrades[23].cap": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[25]": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[25].cap": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[26]": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[26].cap": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[27]": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[27].cap": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[28]": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[28].cap": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[29]": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[29].cap": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[30]": {
-      "actor": "Quaantic"
-    },
     "content.game.upgrades.sections.research.upgrades[30].cap": {
       "actor": "Quaantic"
     },
@@ -16585,6 +16563,42 @@
       "actor": "zzinss"
     },
     "content.updates.versions[1.03].entries[entry-d4ca3f4b-306d-4d59-bf7a-02beaddaccae].description": {
+      "actor": "zzinss"
+    },
+    "content.updates.versions[1.03].entries[entry-c67d43e6-e797-4e28-a49c-eb7f78f088f3]": {
+      "actor": "zzinss"
+    },
+    "content.updates.versions[1.03].entries[entry-c67d43e6-e797-4e28-a49c-eb7f78f088f3].id": {
+      "actor": "zzinss"
+    },
+    "content.updates.versions[1.03].entries[entry-c67d43e6-e797-4e28-a49c-eb7f78f088f3].context": {
+      "actor": "zzinss"
+    },
+    "content.updates.versions[1.03].entries[entry-c67d43e6-e797-4e28-a49c-eb7f78f088f3].title": {
+      "actor": "zzinss"
+    },
+    "content.updates.versions[1.03].entries[entry-c67d43e6-e797-4e28-a49c-eb7f78f088f3].href": {
+      "actor": "zzinss"
+    },
+    "content.updates.versions[1.03].entries[entry-c67d43e6-e797-4e28-a49c-eb7f78f088f3].description": {
+      "actor": "zzinss"
+    },
+    "content.updates.versions[1.03].entries[entry-22767fdf-15e5-432c-b034-d5e08d3b12dc]": {
+      "actor": "zzinss"
+    },
+    "content.updates.versions[1.03].entries[entry-22767fdf-15e5-432c-b034-d5e08d3b12dc].id": {
+      "actor": "zzinss"
+    },
+    "content.updates.versions[1.03].entries[entry-22767fdf-15e5-432c-b034-d5e08d3b12dc].context": {
+      "actor": "zzinss"
+    },
+    "content.updates.versions[1.03].entries[entry-22767fdf-15e5-432c-b034-d5e08d3b12dc].title": {
+      "actor": "zzinss"
+    },
+    "content.updates.versions[1.03].entries[entry-22767fdf-15e5-432c-b034-d5e08d3b12dc].href": {
+      "actor": "zzinss"
+    },
+    "content.updates.versions[1.03].entries[entry-22767fdf-15e5-432c-b034-d5e08d3b12dc].description": {
       "actor": "zzinss"
     }
   }
