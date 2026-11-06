@@ -647,6 +647,7 @@ async function startSession(token, {deferRender=false}={}) {
     }
     barStatus('Loading repository content…', 'busy');
     const info = await draft.initSession(token, user.login);
+    if (info.invalidSharedDraft) session.syncError = 'Shared draft contains invalid JSON — restore the draft on GitHub before saving or publishing';
     if (info.contentConflict) session.syncError = 'Draft conflict — open Save to choose versions';
     else if (info.orderConflict) session.syncError = 'Update Log order conflict';
     else if (info.recoveryConflict) session.syncError = 'Sync conflict — Save to choose versions';
@@ -670,7 +671,7 @@ async function startSession(token, {deferRender=false}={}) {
     installSidebarTools();
     {
       if(!deferRender)await rerender({ scroll: 'preserve' });
-      notify(info.recovered ? 'Your unsaved work was recovered from this browser.' : 'The shared draft is ready.');
+      notify(info.invalidSharedDraft ? 'Signed in, but the shared draft on GitHub is invalid. Editing is available for recovery; Save/Publish will remain blocked until the draft is repaired.' : (info.recovered ? 'Your unsaved work was recovered from this browser.' : 'The shared draft is ready.'), info.invalidSharedDraft);
     }
     updateToolbar();
     if(!deferRender&&session.editing)restoreForm();

@@ -428,7 +428,7 @@ export async function initSession(token, actor = '') {
   }));
   validateDocuments(draftState.baseDocs);
   draftState.docs = clone(draftState.baseDocs);
-  let draftLoaded = false, orderConflict = false, contentConflict = false;
+  let draftLoaded = false, orderConflict = false, contentConflict = false, invalidSharedDraft = false;
   try {
     const { result, error } = await sharedFile;
     if (error) throw error;
@@ -461,10 +461,18 @@ export async function initSession(token, actor = '') {
       // Nao mascarar problemas de acesso como "esboco ausente".
       throw new Error(`Your GitHub session cannot read the inline draft (${msg}). Sign in again or ask for write access to ${REPOSITORY}.`);
     }
-    if (!/(404|not found)/i.test(msg)) {
+    if (error instanceof SyntaxError && /JSON|Unexpected end/i.test(msg)) {
+      // Do not block GitHub sign-in when the shared draft is empty or corrupt.
+      // Keep the published content visible, but never silently overwrite the
+      // remote draft: Save/Publish must still validate it through syncRemote.
+      console.warn('[inline-editor] Invalid shared draft; opening published content in recovery mode.', error);
+      invalidSharedDraft = true;
+      draftLoaded = false;
+    } else if (/(404|not found)/i.test(msg)) {
+      draftLoaded = false;
+    } else {
       throw new Error(`The inline draft file could not be read: ${msg}`);
     }
-    draftLoaded = false;
   }
   draftState.needsMerge = orderConflict || contentConflict;
   const dropped = sanitizeResources();
@@ -487,7 +495,7 @@ export async function initSession(token, actor = '') {
     }
   } catch { /* storage unavailable or an invalid recovery copy */ }
   const contentImported = installImportedNotes(draftState.docs.wiki,draftState.docs.game);
-  return { draftLoaded, sanitized: dropped, recovered, recoveryConflict, orderConflict, contentConflict, contentImported };
+  return { draftLoaded, invalidSharedDraft, sanitized: dropped, recovered, recoveryConflict, orderConflict, contentConflict, contentImported };
 }
 
 function recoveryKey() { return `ri-editor-recovery:${REPOSITORY}:${draftState.actor}`; }
