@@ -2,6 +2,66 @@
   "format": 1,
   "entries": [
     {
+      "id": "f036249f-68f5-4766-90a3-b9547d39e35c",
+      "at": 1793980231384,
+      "kind": "colors",
+      "text": "Colored \"Animal Tiers\" (#86d62b)",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:50:40.940Z"
+    },
+    {
+      "id": "0bd71dc6-ec26-4ecb-8783-f8e31303ce87",
+      "at": 1793980221219,
+      "kind": "content",
+      "text": "Removed \"New update\"",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:50:40.940Z"
+    },
+    {
+      "id": "dc973c54-5dba-4e3d-8b45-04b230048c1a",
+      "at": 1793980211744,
+      "kind": "content",
+      "text": "Updated description of \"New Contributors \": What changed in the game. to Added our new contributors to credits.",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:50:40.940Z"
+    },
+    {
+      "id": "f8eba7d4-9494-4bd2-af06-c86e237f8602",
+      "at": 1793980211577,
+      "kind": "content",
+      "text": "Updated text of \"New Contributors \": New update to New Contributors",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:50:40.940Z"
+    },
+    {
+      "id": "25db3ef1-a450-41de-be81-a8494fbe32bf",
+      "at": 1793980211415,
+      "kind": "content",
+      "text": "Updated context of \"New update\": Feature to Changes",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:50:40.940Z"
+    },
+    {
+      "id": "fd951a33-234f-40bd-9fc7-15a6a341a37d",
+      "at": 1793980179762,
+      "kind": "content",
+      "text": "Added \"New update\"",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:50:40.940Z"
+    },
+    {
       "id": "6696e47d-385c-47dd-926e-0c7c1d7f9f50",
       "at": 1793980166318,
       "kind": "content",
@@ -2940,66 +3000,6 @@
       "pending": false,
       "status": "saved",
       "savedAt": "2026-11-06T07:07:28.996Z"
-    },
-    {
-      "id": "1f7d2c8c-21be-4406-9e74-20d471db9883",
-      "at": 1793948822454,
-      "kind": "content",
-      "text": "Set cap Unit of \"Mastry\" (x)",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T07:07:28.996Z"
-    },
-    {
-      "id": "b7a98b78-8847-462d-aef9-6b0610ff1c46",
-      "at": 1793948818808,
-      "kind": "content",
-      "text": "Set unit of \"Astatine\" (x)",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T07:07:28.996Z"
-    },
-    {
-      "id": "7e459286-4400-409b-9c09-8c537926ed6e",
-      "at": 1793948818763,
-      "kind": "content",
-      "text": "Set cap Unit of \"Astatine\" (x)",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T07:07:28.996Z"
-    },
-    {
-      "id": "f1343ee7-0743-4e8a-b99d-1bbb6d3840c5",
-      "at": 1793948815771,
-      "kind": "content",
-      "text": "Set unit of \"Magnets\" (x)",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T07:06:57.507Z"
-    },
-    {
-      "id": "e4b5b4d9-2466-4aa2-8459-a42ea5df98ac",
-      "at": 1793948815726,
-      "kind": "content",
-      "text": "Set cap Unit of \"Magnets\" (x)",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T07:06:57.507Z"
-    },
-    {
-      "id": "334a4d36-4832-4de9-8d34-01922ddbbde6",
-      "at": 1793948799902,
-      "kind": "content",
-      "text": "Renamed \"Sap\" to \"Rare Sap\"",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T07:06:57.507Z"
     }
   ]
 }
