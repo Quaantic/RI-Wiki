@@ -2,6 +2,16 @@
   "format": 1,
   "entries": [
     {
+      "id": "1371eb5a-e895-4e6c-a84a-86a61f529982",
+      "at": 1793975273226,
+      "kind": "content",
+      "text": "Updated icon of \"Energy\": spark to game-icons:fire",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:28:45.131Z"
+    },
+    {
       "id": "82476605-241c-4d36-9946-84d332389824",
       "at": 1793975034042,
       "kind": "content",
@@ -2885,6 +2895,46 @@
       "pending": false
     },
     {
+      "id": "e2b4285a-ff0d-4bd2-b917-6a1422340ba1",
+      "at": 1793975262372,
+      "kind": "content",
+      "text": "Updated icon of \"Barn\": package to game-icons:barn",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:28:45.131Z"
+    },
+    {
+      "id": "ab7983cd-adcd-4302-b354-caf20b939ac2",
+      "at": 1793975252292,
+      "kind": "content",
+      "text": "Updated icon of \"Crystals\": gem to game-icons:crystal-shrine",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:28:45.131Z"
+    },
+    {
+      "id": "0457d4e1-3b2c-418f-84b9-0686e839d89c",
+      "at": 1793975236093,
+      "kind": "content",
+      "text": "Updated icon of \"Gears\": settings to game-icons:cog",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:28:45.131Z"
+    },
+    {
+      "id": "4962e48e-7bdb-4ae7-8d4b-16af1b260d85",
+      "at": 1793975210700,
+      "kind": "content",
+      "text": "Updated icon of \"Terraform\": map-pin to game-icons:star-shuriken",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:28:45.131Z"
+    },
+    {
       "id": "643ddbd3-920f-4587-b16d-13b7fce519e1",
       "at": 1793947614635,
       "kind": "content",
@@ -2899,56 +2949,6 @@
       "at": 1793947614585,
       "kind": "content",
       "text": "Set cap Unit of \"Soul\" (x)",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T06:47:11.375Z"
-    },
-    {
-      "id": "621e1fe1-f61f-48c8-a64d-7184ae82fb64",
-      "at": 1793947614541,
-      "kind": "content",
-      "text": "Renamed \"New bonus\" to \"Soul\"",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T06:47:11.375Z"
-    },
-    {
-      "id": "a0df8cf4-298b-4c5f-aaf2-4e4191c37b1c",
-      "at": 1793947607721,
-      "kind": "content",
-      "text": "Added \"New bonus\"",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T06:47:11.375Z"
-    },
-    {
-      "id": "716b4e60-6ef4-431a-a790-3b783e5ea055",
-      "at": 1793947606517,
-      "kind": "content",
-      "text": "Set unit of \"Health\" (x)",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T06:47:11.375Z"
-    },
-    {
-      "id": "9c1373b1-d0f1-4a29-8660-b2a66b90fc3e",
-      "at": 1793947606467,
-      "kind": "content",
-      "text": "Set cap Unit of \"Health\" (x)",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T06:47:11.375Z"
-    },
-    {
-      "id": "6dd900ae-6624-42f6-b3bc-107694d618a4",
-      "at": 1793947606419,
-      "kind": "content",
-      "text": "Renamed \"New bonus\" to \"Health\"",
       "actor": "Nathy365",
       "pending": false,
       "status": "saved",
