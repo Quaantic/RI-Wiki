@@ -460,7 +460,7 @@
             "id": "life-generation",
             "name": "Life Generation",
             "icon": "refresh",
-            "desc": "Life Generation is the core of the island. Cells accumulate over time with a slowdown limit. Choose one of 30 life forms, from Ant at 1 billion Cells to Ancient Cat at 2.5e40 Cells, then use Create Life to consume Cells and earn Life Shards multiplied by your bonuses. Every three creations advance your Life tier, which gates Terraform upgrades.",
+            "desc": "Life Generation is the first resource of the island. Cells accumulate over time with a slowdown limit. Choose one of 30 life forms, from Ant at 1 billion Cells to Ancient Cat at 2.5e40 Cells, then use Create Life to consume Cells and earn Life Shards multiplied by your bonuses. Every three creations advance your Life tier, which gates Terraform upgrades.",
             "highlights": [],
             "facts": [],
             "children": [
@@ -16071,6 +16071,12 @@
       "actor": "zzinss"
     },
     "content.wiki.categories[dungeon].subcategories[souls].desc": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation]": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].desc": {
       "actor": "zzinss"
     }
   }
