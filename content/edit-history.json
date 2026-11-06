@@ -2,6 +2,26 @@
   "format": 1,
   "entries": [
     {
+      "id": "8ea4ab7f-00a1-41b4-b327-7edd2feee7da",
+      "at": 1793974388366,
+      "kind": "content",
+      "text": "Updated price of \"More Tree Essence\": floor(1e57 × (2.35 + L/75)^L) to floor(1e57 * (2.35 + L/75)^L)",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:13:30.175Z"
+    },
+    {
+      "id": "b3025e2d-384e-41d5-b9c4-5c88e44100c2",
+      "at": 1793974382571,
+      "kind": "content",
+      "text": "Updated price of \"More Tree Essence\": 3*L to floor(1e57 × (2.35 + L/75)^L)",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:13:30.175Z"
+    },
+    {
       "id": "b1c03182-9de1-4e5c-b1cc-c377ccc2ce38",
       "at": 1793974327700,
       "kind": "content",
