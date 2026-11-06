@@ -2,6 +2,190 @@
   "format": 1,
   "entries": [
     {
+      "id": "5e4871c8-cd5f-48f9-9af1-a5c9a577f7f9",
+      "at": 1793928469349,
+      "kind": "content",
+      "text": "Updated value of \"Ruby Energy \": formula: amount to formula: ((amount / 1) + 1)^0.15",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "39a1c614-1573-4252-8f85-91e5bed4759a",
+      "at": 1793928455740,
+      "kind": "content",
+      "text": "Updated value of \"Rare Sap 3\": formula: amount to formula: ((amount / 0.75) + 1)^0.12",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "020159aa-1881-4a9d-ae50-5dafa7fd30c9",
+      "at": 1793928443492,
+      "kind": "content",
+      "text": "Updated value of \"Astatine\": formula: amount to formula: ((amount / 0.5) + 1)^0.09",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "20dd6663-cf21-46a7-9695-18a21f511dbb",
+      "at": 1793928274844,
+      "kind": "content",
+      "text": "Updated value of \"Magnets\": formula: amount to formula: ((amount / 1.25) + 1)^0.13",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "869929ea-6c48-4886-adbd-3c74fc1800b2",
+      "at": 1793928262333,
+      "kind": "content",
+      "text": "Updated value of \"Tree Essence\": formula: amount to formula: ((amount / 1) + 1)^0.19",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "45fd2b8f-7abe-47cc-9111-0f3a3398d562",
+      "at": 1793928247046,
+      "kind": "content",
+      "text": "Updated value of \"Mining Perks\": formula: amount to formula: ((amount / 0.75) + 1)^0.145",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "648555c0-44af-49fd-afde-f6d61608bc07",
+      "at": 1793928094813,
+      "kind": "content",
+      "text": "Updated value of \"Mastery\": formula: amount to formula: ((amount / 1) + 1)^0.075",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "95867ce6-cc2b-4da8-b169-1a054aa0def0",
+      "at": 1793927840160,
+      "kind": "content",
+      "text": "Updated value of \"Bluesteel \": formula: amount to formula: ((amount / 2) + 1)^0.2",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "d6c5c396-4371-490b-aa3a-47fffc12b2d5",
+      "at": 1793927826218,
+      "kind": "content",
+      "text": "Updated value of \"Californium \": formula: amount to formula: ((amount/ 1.5) + 1)^0.125",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "5f524b75-aa59-4807-b0ba-7aa31754004c",
+      "at": 1793927810817,
+      "kind": "content",
+      "text": "Updated value of \"Iron\": formula: amount to formula: ((amount / 1) + 1)^0.1",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "d402dfac-bf59-4640-8d40-8908abf782c2",
+      "at": 1793927708552,
+      "kind": "content",
+      "text": "Updated value of \"Fossils\": formula: amount to formula: ((amount / 2) + 1)^0.175",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "3a529bd1-b81e-4678-aff4-f8213f54ff1f",
+      "at": 1793927696920,
+      "kind": "content",
+      "text": "Updated value of \"Coins\": formula: amount to formula: ((amount / 1.5) + 1)^0.2",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "b77a7120-d6f5-4f9c-9ba5-6d518d286dae",
+      "at": 1793927684124,
+      "kind": "content",
+      "text": "Updated value of \"Mine Damage\": formula: amount to formula: ((amount / 1) + 1)^0.3",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "e9c7bba4-b698-4682-aa87-39ae719c844a",
+      "at": 1793927601725,
+      "kind": "content",
+      "text": "Updated value of \"Health\": formula: - ((amount / 1) + 1)^0.175 to formula: ((amount / 1) + 1)^0.175",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "9c354603-266b-4cac-9009-89549df67c11",
+      "at": 1793927597747,
+      "kind": "content",
+      "text": "Updated value of \"Souls\": formula: amount to formula: ((amount / 3) + 1)^0.125",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "1ad59cc1-ed3f-49e6-b69b-353b3bd6bae9",
+      "at": 1793927584797,
+      "kind": "content",
+      "text": "Updated value of \"Health\": formula: amount to formula: - ((amount / 1) + 1)^0.175",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "ecb07436-fe0d-4297-8115-c9138837ff1e",
+      "at": 1793927571200,
+      "kind": "content",
+      "text": "Updated value of \"Strength \": formula: amount to formula: ((amount / 1) + 1)^0.175",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "fe528dab-cc32-435a-95ae-13841f0d370e",
+      "at": 1793927460343,
+      "kind": "content",
+      "text": "Updated value of \"Research \": formula: amount to formula: ((amount / 4) + 1)^0.125",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "fc0d3b69-7a35-43e4-8fbe-cc3510327a88",
+      "at": 1793927448726,
+      "kind": "content",
+      "text": "Updated value of \"Bones\": formula: amount to formula: ((amount / 2) + 1)^0.245",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "9f76fb05-7223-4097-b48b-fd985228d1bc",
+      "at": 1793927426125,
+      "kind": "content",
+      "text": "Updated value of \"Money\": formula: amount to formula: ((amount / 1) + 1)^0.275",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "7f255a6b-35a2-4d8b-98c7-764a33a08f97",
+      "at": 1793927287328,
+      "kind": "content",
+      "text": "Updated value of \"Life Gem\": formula: amount to formula: ((amount / 6) + 1)^0.11",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "470c3f3b-592e-4d83-be54-9edbef628d1e",
+      "at": 1793927270532,
+      "kind": "content",
+      "text": "Updated value of \"Dust\": formula: amount to formula: ((amount / 4) + 1)^0.185",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "c08ef850-e553-41ca-83e3-13a56e471269",
+      "at": 1793927254767,
+      "kind": "content",
+      "text": "Updated value of \"Energy \": formula: amount to formula: ((amount / 2) + 1)^0.3",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
       "id": "42656297-028f-4cf3-b5c7-b7d378014f40",
       "at": 1793927123574,
       "kind": "content",
@@ -2214,190 +2398,6 @@
       "at": 1793850460708,
       "kind": "content",
       "text": "Updated requirements of \"Tier 6\": [\"??? XP\"] to [\"25M XP\"]",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "9c88101c-8837-422c-bcfc-45402597e224",
-      "at": 1793850445687,
-      "kind": "content",
-      "text": "Updated requirements of \"Tier 5\": [\"??? XP\"] to [\"5M XP\"]",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "9bb22af6-08be-4eb4-9db4-4a0f8670c212",
-      "at": 1793850433781,
-      "kind": "content",
-      "text": "Updated requirements of \"Tier 4\": [\"??? XP\"] to [\"1.25M XP\"]",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "a73bbf54-4692-4736-a515-420b265c8f4a",
-      "at": 1793850421114,
-      "kind": "content",
-      "text": "Updated requirements of \"Tier 3\": [\"??? XP\"] to [\"400K XP\"]",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "2e697932-f302-4c82-8692-848b84f01219",
-      "at": 1793850410646,
-      "kind": "content",
-      "text": "Updated requirements of \"Tier 2\": [\"??? XP\"] to [\"75K XP\"]",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "82569ced-9972-46dc-8a54-2c6f768bc59e",
-      "at": 1793850023575,
-      "kind": "content",
-      "text": "Removed \"New update\"",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "45101e49-520d-4929-a659-0f105d2a9f92",
-      "at": 1793850016365,
-      "kind": "content",
-      "text": "Removed \"New update\"",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "523de3e3-975d-4357-9c9c-dd671b996850",
-      "at": 1793849998144,
-      "kind": "content",
-      "text": "Added \"New update\"",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "be6e4302-86ca-4a3c-9d7a-169658564cf5",
-      "at": 1793849983868,
-      "kind": "content",
-      "text": "Updated text of \"FAQ Tab (WIP)\": New update to FAQ Tab (WIP)",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "68b2bb20-5393-4ea4-8306-94bd726636da",
-      "at": 1793849983868,
-      "kind": "content",
-      "text": "Updated description of \"FAQ Tab (WIP)\": What changed in the game. to Your most frequently made questions are now…",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "c017b060-6e9a-4feb-a78b-c195a8922716",
-      "at": 1793849908706,
-      "kind": "content",
-      "text": "Added \"New update\"",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "d7efbe10-7112-449a-b86c-dd7ab54fb780",
-      "at": 1793849890637,
-      "kind": "content",
-      "text": "Added \"New update\"",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "46862a6a-1f72-400e-a33c-65ab5f0f9ff1",
-      "at": 1793849878582,
-      "kind": "content",
-      "text": "Updated description of \"Typos\": What changed in the game. to Fixed typos and wrong informations.",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "0b1f2564-3c31-422c-b4e1-bdc684b690b9",
-      "at": 1793849878581,
-      "kind": "content",
-      "text": "Updated context of \"New update\": Feature to Bugs",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "5ed57f2c-75f3-4bd0-8689-2dabb97cdab8",
-      "at": 1793849878581,
-      "kind": "content",
-      "text": "Updated text of \"Typos\": New update to Typos",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "57607135-707b-4b15-8733-661266fc144d",
-      "at": 1793849850069,
-      "kind": "content",
-      "text": "Added \"New update\"",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "6b7ad91c-3de3-42cc-9b5b-53d52635b326",
-      "at": 1793849843960,
-      "kind": "content",
-      "text": "Updated text of \"Tree Tiers\": New update to Tree Tiers",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "b4b21fc6-62a5-4f37-97de-31217c0feaa5",
-      "at": 1793849843960,
-      "kind": "content",
-      "text": "Updated description of \"Tree Tiers\": What changed in the game. to Added Tree Tiers to the Tree page (some tie…",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "d235887f-a970-4c57-a747-4bf539a0ba0d",
-      "at": 1793849781234,
-      "kind": "content",
-      "text": "Added \"New update\"",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "a562c2dd-dd11-4e76-935d-559fc3b53f12",
-      "at": 1793849777930,
-      "kind": "content",
-      "text": "Updated context of \"New update\": Feature to Changes",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "84ddb3c8-33cd-4ba2-a44e-5eb110c2d1c7",
-      "at": 1793849777930,
-      "kind": "content",
-      "text": "Updated text of \"Eternal Shard Moved \": New update to Eternal Shard Moved",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "299c3e21-e743-4cf5-87d4-c3d821554f88",
-      "at": 1793849777930,
-      "kind": "content",
-      "text": "Updated description of \"Eternal Shard Moved \": What changed in the game. to Eternal Shards category was moved from Main…",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "676775b2-a2c1-4201-8e8b-00606b63c883",
-      "at": 1793849747218,
-      "kind": "content",
-      "text": "Added \"New update\"",
-      "actor": "zzinss",
-      "pending": true
-    },
-    {
-      "id": "10a3508e-7b22-4761-853e-568d0000b54c",
-      "at": 1793849741575,
-      "kind": "content",
-      "text": "Updated text of \"Miscellaneous\": New update to Miscellaneous",
       "actor": "zzinss",
       "pending": true
     }
