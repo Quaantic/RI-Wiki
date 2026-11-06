@@ -497,7 +497,7 @@
                 "sections": [
                   {
                     "id": "table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba",
-                    "title": "Animals",
+                    "title": "Animals Tiers",
                     "columns": [
                       "Tier",
                       "Cells to create",
@@ -15523,12 +15523,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.wiki.categories[life].subcategories[fossil].icon": {
-      "actor": "Quaantic"
-    },
-    "content.wiki.categories[life].subcategories[fossil].children": {
-      "actor": "Quaantic"
-    },
     "content.wiki.categories[life].subcategories[fossil].children[power-of-fossils]": {
       "actor": "Quaantic"
     },
@@ -16109,13 +16103,13 @@
       "actor": "zzinss"
     },
     "content.wiki.categories": {
-      "actor": "Quaantic"
+      "actor": "zzinss"
     },
     "content.wiki.categories[life]": {
-      "actor": "Quaantic"
+      "actor": "zzinss"
     },
     "content.wiki.categories[life].subcategories": {
-      "actor": "Quaantic"
+      "actor": "zzinss"
     },
     "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba].rows[row-b98190b6-d456-4a5e-99d8-d1378962b0f3]": {
       "actor": "zzinss"
@@ -16298,19 +16292,19 @@
       "actor": "zzinss"
     },
     "content.wiki.categories[life].subcategories[life-generation]": {
-      "actor": "Quaantic"
+      "actor": "zzinss"
     },
     "content.wiki.categories[life].subcategories[life-generation].children": {
-      "actor": "Quaantic"
+      "actor": "zzinss"
     },
     "content.wiki.categories[life].subcategories[life-generation].children[cells]": {
-      "actor": "Quaantic"
+      "actor": "zzinss"
     },
     "content.wiki.categories[life].subcategories[life-generation].children[cells].sections": {
-      "actor": "Quaantic"
+      "actor": "zzinss"
     },
     "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba]": {
-      "actor": "Quaantic"
+      "actor": "zzinss"
     },
     "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba].rows": {
       "actor": "zzinss"
@@ -16571,6 +16565,12 @@
       "actor": "Quaantic"
     },
     "content.game": {
+      "actor": "zzinss"
+    },
+    "content.wiki": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba].title": {
       "actor": "zzinss"
     }
   }
