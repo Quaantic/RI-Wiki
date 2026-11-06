@@ -2,6 +2,36 @@
   "format": 1,
   "entries": [
     {
+      "id": "3f9c8141-ec78-4a1f-8e66-442b892c2a20",
+      "at": 1793948564215,
+      "kind": "content",
+      "text": "Set unit of \"iron\" (x)",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:03:01.446Z"
+    },
+    {
+      "id": "5cd5f6c0-c533-4b57-885c-b2705e7a276c",
+      "at": 1793948564170,
+      "kind": "content",
+      "text": "Set cap Unit of \"iron\" (x)",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:03:01.446Z"
+    },
+    {
+      "id": "93353313-a705-4477-b872-10adad1faf7d",
+      "at": 1793948556774,
+      "kind": "content",
+      "text": "Updated value of \"iron\": formula: amount to formula: ((amount / 1) + 1)^0.1",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:03:01.446Z"
+    },
+    {
       "id": "2f75be65-dce2-4f10-8891-9ad305f0d7be",
       "at": 1793948540045,
       "kind": "content",
