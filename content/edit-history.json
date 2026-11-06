@@ -2,6 +2,26 @@
   "format": 1,
   "entries": [
     {
+      "id": "e9f5ae73-cbe8-4384-ab1b-204efed41313",
+      "at": 1793980701716,
+      "kind": "content",
+      "text": "Updated text of \"Tree Essence\": Tree Essence/Milestones to Tree Essence",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:58:51.237Z"
+    },
+    {
+      "id": "cfb15fc0-7d68-4264-b253-7e385299e3cb",
+      "at": 1793980686932,
+      "kind": "content",
+      "text": "Updated description of \"New icons\": Added many new icons to the stats descripti… to Added many new icons and descriptions",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:58:51.237Z"
+    },
+    {
       "id": "06ed2f11-8ecf-4f3a-a176-e33da3a7afd0",
       "at": 1793980589910,
       "kind": "content",
@@ -2976,26 +2996,6 @@
       "at": 1793973457239,
       "kind": "content",
       "text": "Updated cap of \"Sap\": 30 to 80",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T14:01:13.906Z"
-    },
-    {
-      "id": "86b64ec6-b127-4d21-b12d-2825b4b31c1b",
-      "at": 1793973454141,
-      "kind": "content",
-      "text": "Updated cap of \"More Energy III\": 40 to 90",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T14:01:13.906Z"
-    },
-    {
-      "id": "849d5cc6-cd9c-4291-9136-c64707e5fe7a",
-      "at": 1793973450131,
-      "kind": "content",
-      "text": "Updated cap of \"More Research\": 40 to 90",
       "actor": "Quaantic",
       "pending": false,
       "status": "saved",
