@@ -2,6 +2,26 @@
   "format": 1,
   "entries": [
     {
+      "id": "a0675653-075c-4ed5-b665-34563edb8224",
+      "at": 1793982443221,
+      "kind": "content",
+      "text": "Added \"New section\"",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T16:27:24.780Z"
+    },
+    {
+      "id": "5e94b743-526f-48fe-8841-54fe1041f660",
+      "at": 1793982428972,
+      "kind": "content",
+      "text": "Updated text of \"How much Tree Essence should I get on my first reset?\": How much tree essence should I get on my fi… to How much Tree Essence should I get on my fi…",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T16:27:24.780Z"
+    },
+    {
       "id": "7eab126b-965b-4bc1-b89e-19126c326eb0",
       "at": 1793982405000,
       "kind": "content",
@@ -2980,26 +3000,6 @@
       "pending": false,
       "status": "published",
       "savedAt": "2026-11-06T14:13:30.175Z"
-    },
-    {
-      "id": "b3025e2d-384e-41d5-b9c4-5c88e44100c2",
-      "at": 1793974382571,
-      "kind": "content",
-      "text": "Updated price of \"More Tree Essence\": 3*L to floor(1e57 × (2.35 + L/75)^L)",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "published",
-      "savedAt": "2026-11-06T14:13:30.175Z"
-    },
-    {
-      "id": "b1c03182-9de1-4e5c-b1cc-c377ccc2ce38",
-      "at": 1793974327700,
-      "kind": "content",
-      "text": "Updated price of \"More Tree Essence\": floor(5e30 × (1.65 + L/65)^L) to floor(5e30*(1.65 + L/65)^L)",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "published",
-      "savedAt": "2026-11-06T14:12:57.730Z"
     }
   ]
 }
