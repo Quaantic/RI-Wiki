@@ -2922,7 +2922,7 @@
               "name": "More Astatine ",
               "cap": "20",
               "price": "3*L",
-              "multi": "1"
+              "multi": "0.15+(0.1*L)"
             },
             {
               "n": 50,
