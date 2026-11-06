@@ -2866,14 +2866,14 @@
             {
               "n": 36,
               "name": "Bluesteel",
-              "cap": 25,
+              "cap": 75,
               "price": "10000000000000*(1.475+L/50)^L",
               "multi": "1 + L / 10"
             },
             {
               "n": 37,
               "name": "Diamond Energy",
-              "cap": 25,
+              "cap": 75,
               "price": "20000000000000*(1.45+L/45)^L",
               "multi": "(1 + L / 20) * 1.05 ^ L"
             },
@@ -2894,21 +2894,21 @@
             {
               "n": 40,
               "name": "More Golden Research",
-              "cap": 40,
+              "cap": 90,
               "price": "1e22*1.75^L",
               "multi": "1 + L / 20"
             },
             {
               "n": 41,
               "name": "More Research",
-              "cap": 25,
+              "cap": 75,
               "price": "1e23*(1.75+L/30)^L",
               "multi": "(1 + L / 20) * 1.05 ^ L"
             },
             {
               "n": 42,
               "name": "Californium",
-              "cap": 25,
+              "cap": 75,
               "price": "3e23*(1.65+L/30)^L",
               "multi": "1 + L / 10"
             },
@@ -2922,21 +2922,21 @@
             {
               "n": 44,
               "name": "Mining Gemstones",
-              "cap": 25,
+              "cap": 75,
               "price": "1e24*(1.575+L/35)^L",
               "multi": "1 + L / 10"
             },
             {
               "n": 45,
               "name": "More Fossil",
-              "cap": "20",
+              "cap": "99",
               "price": "3*L",
               "multi": "1"
             },
             {
               "n": 46,
               "name": "More Souls ",
-              "cap": "55",
+              "cap": "99",
               "price": "3*L",
               "multi": "1+(0.1*L)"
             },
@@ -15060,9 +15060,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.game.calculators.pages.runes/secret.groups[group3].bonuses[b1].name": {
-      "actor": "Nathy365"
-    },
     "content.game.calculators.pages.runes/secret.groups[group3].bonuses[b1].value": {
       "actor": "Nathy365"
     },
@@ -15667,7 +15664,7 @@
       "actor": "zzinss"
     },
     "content.game.upgrades.sections.research.upgrades[45]": {
-      "actor": "zzinss"
+      "actor": "Quaantic"
     },
     "content.game.upgrades.sections.research.upgrades[45].n": {
       "actor": "zzinss"
@@ -15676,7 +15673,7 @@
       "actor": "zzinss"
     },
     "content.game.upgrades.sections.research.upgrades[45].cap": {
-      "actor": "zzinss"
+      "actor": "Quaantic"
     },
     "content.game.upgrades.sections.research.upgrades[45].price": {
       "actor": "zzinss"
@@ -15691,7 +15688,7 @@
       "actor": "zzinss"
     },
     "content.game.upgrades.sections.research.upgrades[46]": {
-      "actor": "zzinss"
+      "actor": "Quaantic"
     },
     "content.game.upgrades.sections.research.upgrades[46].n": {
       "actor": "zzinss"
@@ -15700,7 +15697,7 @@
       "actor": "zzinss"
     },
     "content.game.upgrades.sections.research.upgrades[46].cap": {
-      "actor": "zzinss"
+      "actor": "Quaantic"
     },
     "content.game.upgrades.sections.research.upgrades[46].price": {
       "actor": "zzinss"
@@ -16111,6 +16108,42 @@
       "actor": "Quaantic"
     },
     "content": {
+      "actor": "Quaantic"
+    },
+    "content.game.upgrades.sections.research.upgrades[36]": {
+      "actor": "Quaantic"
+    },
+    "content.game.upgrades.sections.research.upgrades[36].cap": {
+      "actor": "Quaantic"
+    },
+    "content.game.upgrades.sections.research.upgrades[37]": {
+      "actor": "Quaantic"
+    },
+    "content.game.upgrades.sections.research.upgrades[37].cap": {
+      "actor": "Quaantic"
+    },
+    "content.game.upgrades.sections.research.upgrades[40]": {
+      "actor": "Quaantic"
+    },
+    "content.game.upgrades.sections.research.upgrades[40].cap": {
+      "actor": "Quaantic"
+    },
+    "content.game.upgrades.sections.research.upgrades[41]": {
+      "actor": "Quaantic"
+    },
+    "content.game.upgrades.sections.research.upgrades[41].cap": {
+      "actor": "Quaantic"
+    },
+    "content.game.upgrades.sections.research.upgrades[42]": {
+      "actor": "Quaantic"
+    },
+    "content.game.upgrades.sections.research.upgrades[42].cap": {
+      "actor": "Quaantic"
+    },
+    "content.game.upgrades.sections.research.upgrades[44]": {
+      "actor": "Quaantic"
+    },
+    "content.game.upgrades.sections.research.upgrades[44].cap": {
       "actor": "Quaantic"
     }
   }
