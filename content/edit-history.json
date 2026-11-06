@@ -9,7 +9,37 @@
       "actor": "zzinss",
       "pending": false,
       "status": "saved",
-      "savedAt": "2026-11-06T15:21:14.606Z"
+      "savedAt": "2026-11-06T15:21:27.958Z"
+    },
+    {
+      "id": "e5f47edd-7b6c-4d53-b098-20b97107379b",
+      "at": 1793978473536,
+      "kind": "content",
+      "text": "Updated 1 of \"row-942535b7-03da-4277-96c3-dba231ef8f56\": empty to 5T",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:21:27.958Z"
+    },
+    {
+      "id": "c2bf4ca4-f5b9-4bb0-859c-49fa1830fa60",
+      "at": 1793978460081,
+      "kind": "content",
+      "text": "Set 2 of \"row-806923f5-ce1c-45f9-a0e3-fb74829c7a87\" (750)",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:21:27.958Z"
+    },
+    {
+      "id": "68905d32-ae82-43ca-a8f1-b9548abe6282",
+      "at": 1793978459919,
+      "kind": "content",
+      "text": "Updated 1 of \"row-806923f5-ce1c-45f9-a0e3-fb74829c7a87\": empty to 100B",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:21:27.958Z"
     },
     {
       "id": "943f01c1-db53-484d-a77f-735b212e0abb",
@@ -2923,33 +2953,6 @@
       "at": 1793935462327,
       "kind": "content",
       "text": "Renamed \"New page\" to \"Tree Essence\"",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "published"
-    },
-    {
-      "id": "40346489-488d-4339-853f-7708f6004903",
-      "at": 1793935462309,
-      "kind": "content",
-      "text": "Updated id of \"New page\": new-page to tree-essence",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "published"
-    },
-    {
-      "id": "7396b734-f701-4094-a973-420ee78c674b",
-      "at": 1793935391326,
-      "kind": "content",
-      "text": "Added \"New page\"",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "published"
-    },
-    {
-      "id": "2edb9c23-c8c3-4938-a700-93ebbaa8d33b",
-      "at": 1793935000849,
-      "kind": "content",
-      "text": "Removed \"Nathy\"",
       "actor": "Quaantic",
       "pending": false,
       "status": "published"
