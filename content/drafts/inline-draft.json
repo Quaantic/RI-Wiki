@@ -735,14 +735,140 @@
                 "title": "Trees",
                 "columns": [
                   "Name",
-                  "Effect"
+                  "HP",
+                  "Base Logs",
+                  "Tree Tier XP",
+                  "XP"
                 ],
                 "rows": [
                   {
-                    "id": "row-42b8a62e-7792-4b0b-9e47-d3c5457f408b",
+                    "id": "row-558c4fb5-5d5a-4657-b598-839d192ae8f6",
                     "cells": [
-                      "",
-                      ""
+                      "Baby Tree",
+                      "10",
+                      "1x",
+                      "1x",
+                      "1x"
+                    ]
+                  },
+                  {
+                    "id": "row-acde9323-16ac-4099-89a2-d366e36e3de9",
+                    "cells": [
+                      "Tiny Tree",
+                      "60",
+                      "2x",
+                      "1.5x",
+                      "2x"
+                    ]
+                  },
+                  {
+                    "id": "row-40b4cdd6-8f37-4790-81b0-4d33a0fab9eb",
+                    "cells": [
+                      "Young Tree",
+                      "350",
+                      "8x",
+                      "2x",
+                      "3x"
+                    ]
+                  },
+                  {
+                    "id": "row-2ff8a062-88d5-48b8-8f4d-1a7a390b1bf9",
+                    "cells": [
+                      "Growing Tree",
+                      "1.7K",
+                      "25x",
+                      "2.5x",
+                      "5x"
+                    ]
+                  },
+                  {
+                    "id": "row-24d3e238-055c-48f8-952e-70ded8a70b9d",
+                    "cells": [
+                      "Small Tree",
+                      "4.25K",
+                      "125X",
+                      "3X",
+                      "7X"
+                    ]
+                  },
+                  {
+                    "id": "row-570f510b-a763-4ca0-9abc-1060fe0bfdf0",
+                    "cells": [
+                      "Basic Tree",
+                      "15K",
+                      "500x",
+                      "3.5x",
+                      "12x"
+                    ]
+                  },
+                  {
+                    "id": "row-8181508c-1ca8-45b6-9917-9f517131fa05",
+                    "cells": [
+                      "Large Tree",
+                      "60K",
+                      "1.75Kx",
+                      "4x",
+                      "17x"
+                    ]
+                  },
+                  {
+                    "id": "row-f6702516-07b0-4083-ae56-0bc2e58ea88f",
+                    "cells": [
+                      "Pine Tree",
+                      "250K",
+                      "6Kx",
+                      "4.5x",
+                      "25x"
+                    ]
+                  },
+                  {
+                    "id": "row-ed60b2c0-f13c-4000-b8d1-4a228d1917c5",
+                    "cells": [
+                      "Cactus",
+                      "1.5M",
+                      "20Kx",
+                      "5x",
+                      "35x"
+                    ]
+                  },
+                  {
+                    "id": "row-58e42ecc-f00f-47f5-864d-500569b74553",
+                    "cells": [
+                      "Old Tree",
+                      "12M",
+                      "75Kx",
+                      "5.5x",
+                      "52x"
+                    ]
+                  },
+                  {
+                    "id": "row-36f2d17c-a0c5-4db2-86f7-439eb55b1c24",
+                    "cells": [
+                      "Palm Tree",
+                      "100M",
+                      "225Kx",
+                      "6x",
+                      "65x"
+                    ]
+                  },
+                  {
+                    "id": "row-46cf078f-368b-425e-be03-f0caf7167729",
+                    "cells": [
+                      "Tall Tree",
+                      "1B",
+                      "1Mx",
+                      "6.5x",
+                      "78x"
+                    ]
+                  },
+                  {
+                    "id": "row-1367c133-feac-41df-ab06-1fd67ee4d4ae",
+                    "cells": [
+                      "Huge Tree",
+                      "6.5B",
+                      "10Mx",
+                      "7X",
+                      "100X"
                     ]
                   }
                 ],
@@ -15079,15 +15205,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.game.calculators.pages.runes/secret.groups[group6].bonuses[b2].unit": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group7].bonuses[b1].capUnit": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group7].bonuses[b1].unit": {
-      "actor": "Nathy365"
-    },
     "content.game.calculators.pages.runes/secret.groups[group7].bonuses[b].capUnit": {
       "actor": "Nathy365"
     },
@@ -16136,6 +16253,123 @@
       "actor": "Quaantic"
     },
     "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-42b8a62e-7792-4b0b-9e47-d3c5457f408b].cells": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-558c4fb5-5d5a-4657-b598-839d192ae8f6]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-558c4fb5-5d5a-4657-b598-839d192ae8f6].id": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-558c4fb5-5d5a-4657-b598-839d192ae8f6].cells": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-acde9323-16ac-4099-89a2-d366e36e3de9]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-acde9323-16ac-4099-89a2-d366e36e3de9].id": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-acde9323-16ac-4099-89a2-d366e36e3de9].cells": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-40b4cdd6-8f37-4790-81b0-4d33a0fab9eb]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-40b4cdd6-8f37-4790-81b0-4d33a0fab9eb].id": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-40b4cdd6-8f37-4790-81b0-4d33a0fab9eb].cells": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-2ff8a062-88d5-48b8-8f4d-1a7a390b1bf9]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-2ff8a062-88d5-48b8-8f4d-1a7a390b1bf9].id": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-2ff8a062-88d5-48b8-8f4d-1a7a390b1bf9].cells": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-24d3e238-055c-48f8-952e-70ded8a70b9d]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-24d3e238-055c-48f8-952e-70ded8a70b9d].id": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-24d3e238-055c-48f8-952e-70ded8a70b9d].cells": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-570f510b-a763-4ca0-9abc-1060fe0bfdf0]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-570f510b-a763-4ca0-9abc-1060fe0bfdf0].id": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-570f510b-a763-4ca0-9abc-1060fe0bfdf0].cells": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-8181508c-1ca8-45b6-9917-9f517131fa05]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-8181508c-1ca8-45b6-9917-9f517131fa05].id": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-8181508c-1ca8-45b6-9917-9f517131fa05].cells": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-f6702516-07b0-4083-ae56-0bc2e58ea88f]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-f6702516-07b0-4083-ae56-0bc2e58ea88f].id": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-f6702516-07b0-4083-ae56-0bc2e58ea88f].cells": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-ed60b2c0-f13c-4000-b8d1-4a228d1917c5]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-ed60b2c0-f13c-4000-b8d1-4a228d1917c5].id": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-ed60b2c0-f13c-4000-b8d1-4a228d1917c5].cells": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-58e42ecc-f00f-47f5-864d-500569b74553]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-58e42ecc-f00f-47f5-864d-500569b74553].id": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-58e42ecc-f00f-47f5-864d-500569b74553].cells": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-36f2d17c-a0c5-4db2-86f7-439eb55b1c24]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-36f2d17c-a0c5-4db2-86f7-439eb55b1c24].id": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-36f2d17c-a0c5-4db2-86f7-439eb55b1c24].cells": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-46cf078f-368b-425e-be03-f0caf7167729]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-46cf078f-368b-425e-be03-f0caf7167729].id": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-46cf078f-368b-425e-be03-f0caf7167729].cells": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-1367c133-feac-41df-ab06-1fd67ee4d4ae]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-1367c133-feac-41df-ab06-1fd67ee4d4ae].id": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-1367c133-feac-41df-ab06-1fd67ee4d4ae].cells": {
       "actor": "Quaantic"
     }
   }
