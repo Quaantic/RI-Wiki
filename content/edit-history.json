@@ -2,11 +2,59 @@
   "format": 1,
   "entries": [
     {
+      "id": "f62ae77c-7cf3-4027-8b79-e364b5fc0187",
+      "at": 1793930947627,
+      "kind": "content",
+      "text": "Updated text of \"How do I get Sap?\": empty to Sap is from resetting Logs, Logs are from u…",
+      "actor": "destroyerboi99",
+      "pending": true
+    },
+    {
+      "id": "4fef28e7-7680-43b8-a735-0eb54fc1c131",
+      "at": 1793930947616,
+      "kind": "content",
+      "text": "Updated text of \"How do I get Sap?\": How do I get sap? to How do I get Sap?",
+      "actor": "destroyerboi99",
+      "pending": true
+    },
+    {
+      "id": "52111296-8610-44d2-90d8-a31cedea2aaa",
+      "at": 1793930909542,
+      "kind": "content",
+      "text": "Updated text of \"How do I get sap?\": Saps are gained from resetting Logs, Logs a… to empty",
+      "actor": "destroyerboi99",
+      "pending": true
+    },
+    {
+      "id": "2a404d60-2d6e-4f4c-bad3-106b939e3941",
+      "at": 1793930909531,
+      "kind": "content",
+      "text": "Updated text of \"How do I get sap?\": New section to How do I get sap?",
+      "actor": "destroyerboi99",
+      "pending": true
+    },
+    {
+      "id": "8b9e6eab-1410-48d0-a472-6ad4071e2292",
+      "at": 1793930903728,
+      "kind": "content",
+      "text": "Updated text of \"New section\": Write a description or FAQ answer here. to Saps are gained from resetting Logs, Logs a…",
+      "actor": "destroyerboi99",
+      "pending": true
+    },
+    {
       "id": "b87a1619-f803-4d45-a43b-c44b6d032225",
       "at": 1793930790573,
       "kind": "content",
       "text": "Updated money-island/upgrade-tree of \"calculators\": {\"kind\":\"amount\",\"title\":\"Upgrade Tree\",\"am… to empty",
       "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "ee21c984-6220-413c-ad8b-7b8363337714",
+      "at": 1793930654791,
+      "kind": "content",
+      "text": "Added \"New section\"",
+      "actor": "destroyerboi99",
       "pending": true
     },
     {
@@ -2350,54 +2398,6 @@
       "at": 1793853499682,
       "kind": "content",
       "text": "Updated description of \"Categories\": What changed in the game. to Fixed missing categories and nested pages i…",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "a804efe0-565c-45c6-90ae-d2a9c7c728a8",
-      "at": 1793853499660,
-      "kind": "content",
-      "text": "Updated text of \"Categories\": New update to Categories",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "f7ccc32b-1bba-40a1-ada0-94881eeb2821",
-      "at": 1793853499641,
-      "kind": "content",
-      "text": "Updated context of \"New update\": Feature to Bugs",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "82d373ea-c34d-474c-978f-17b39fc2475d",
-      "at": 1793853480830,
-      "kind": "content",
-      "text": "Added \"New update\"",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "b27ee829-c99d-4f87-862c-b7b11e3d21d8",
-      "at": 1793853320785,
-      "kind": "content",
-      "text": "Renamed \"FAQ (WIP)\" to \"FAQ\"",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "2866a1d4-855d-48ec-b3ff-9b1f9a9d0957",
-      "at": 1793853315628,
-      "kind": "content",
-      "text": "Updated desc of \"FAQ (WIP)\": look here the answer of most asked question! to Faq currently with WIP",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "7346acee-354a-42b6-9bd6-9bd04a0fed93",
-      "at": 1793853228143,
-      "kind": "content",
-      "text": "Moved \"Sap\"",
       "actor": "Quaantic",
       "pending": true
     }
