@@ -504,21 +504,77 @@
                     "id": "table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba",
                     "title": "Animals",
                     "columns": [
-                      "Animal",
+                      "Tier",
                       "Cells to create"
                     ],
                     "rows": [
                       {
                         "id": "row-63b6e59d-b810-4132-984a-5267df9c0212",
                         "cells": [
-                          "",
+                          "1",
                           ""
                         ]
                       },
                       {
                         "id": "row-87f73595-f80f-4d86-bca4-a68ad9ac49f1",
                         "cells": [
-                          "",
+                          "2",
+                          ""
+                        ]
+                      },
+                      {
+                        "id": "row-46638e90-db28-433c-a42c-6c83a6fb1208",
+                        "cells": [
+                          "3",
+                          ""
+                        ]
+                      },
+                      {
+                        "id": "row-806923f5-ce1c-45f9-a0e3-fb74829c7a87",
+                        "cells": [
+                          "4",
+                          ""
+                        ]
+                      },
+                      {
+                        "id": "row-942535b7-03da-4277-96c3-dba231ef8f56",
+                        "cells": [
+                          "5\n",
+                          ""
+                        ]
+                      },
+                      {
+                        "id": "row-f15125b6-ae82-4878-867a-78c3aa2ee0da",
+                        "cells": [
+                          "6",
+                          ""
+                        ]
+                      },
+                      {
+                        "id": "row-16077b71-4ce2-41a4-8073-1c042f2ae37f",
+                        "cells": [
+                          "7",
+                          ""
+                        ]
+                      },
+                      {
+                        "id": "row-5929ed28-5177-4d86-8ced-ccd57b6926e6",
+                        "cells": [
+                          "8",
+                          ""
+                        ]
+                      },
+                      {
+                        "id": "row-508bf54b-925e-43b5-b9db-8cd99de2b0da",
+                        "cells": [
+                          "9",
+                          ""
+                        ]
+                      },
+                      {
+                        "id": "row-990fbea6-b431-450a-91dd-fe197562dbf5",
+                        "cells": [
+                          "10",
                           ""
                         ]
                       }
@@ -15252,15 +15308,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.game.upgrades.sections.logs.upgrades[15].n": {
-      "actor": "zzinss"
-    },
-    "content.game.upgrades.sections.logs.upgrades[15].name": {
-      "actor": "zzinss"
-    },
-    "content.game.upgrades.sections.logs.upgrades[15].cap": {
-      "actor": "zzinss"
-    },
     "content.game.upgrades.sections.logs.upgrades[15].price": {
       "actor": "Quaantic"
     },
@@ -16309,6 +16356,78 @@
       "actor": "zzinss"
     },
     "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba].rows[row-87f73595-f80f-4d86-bca4-a68ad9ac49f1].cells": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba].rows[row-46638e90-db28-433c-a42c-6c83a6fb1208]": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba].rows[row-46638e90-db28-433c-a42c-6c83a6fb1208].id": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba].rows[row-46638e90-db28-433c-a42c-6c83a6fb1208].cells": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba].rows[row-806923f5-ce1c-45f9-a0e3-fb74829c7a87]": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba].rows[row-806923f5-ce1c-45f9-a0e3-fb74829c7a87].id": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba].rows[row-806923f5-ce1c-45f9-a0e3-fb74829c7a87].cells": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba].rows[row-942535b7-03da-4277-96c3-dba231ef8f56]": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba].rows[row-942535b7-03da-4277-96c3-dba231ef8f56].id": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba].rows[row-942535b7-03da-4277-96c3-dba231ef8f56].cells": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba].rows[row-f15125b6-ae82-4878-867a-78c3aa2ee0da]": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba].rows[row-f15125b6-ae82-4878-867a-78c3aa2ee0da].id": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba].rows[row-f15125b6-ae82-4878-867a-78c3aa2ee0da].cells": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba].rows[row-16077b71-4ce2-41a4-8073-1c042f2ae37f]": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba].rows[row-16077b71-4ce2-41a4-8073-1c042f2ae37f].id": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba].rows[row-16077b71-4ce2-41a4-8073-1c042f2ae37f].cells": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba].rows[row-5929ed28-5177-4d86-8ced-ccd57b6926e6]": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba].rows[row-5929ed28-5177-4d86-8ced-ccd57b6926e6].id": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba].rows[row-5929ed28-5177-4d86-8ced-ccd57b6926e6].cells": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba].rows[row-508bf54b-925e-43b5-b9db-8cd99de2b0da]": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba].rows[row-508bf54b-925e-43b5-b9db-8cd99de2b0da].id": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba].rows[row-508bf54b-925e-43b5-b9db-8cd99de2b0da].cells": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba].rows[row-990fbea6-b431-450a-91dd-fe197562dbf5]": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba].rows[row-990fbea6-b431-450a-91dd-fe197562dbf5].id": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba].rows[row-990fbea6-b431-450a-91dd-fe197562dbf5].cells": {
       "actor": "zzinss"
     }
   }
