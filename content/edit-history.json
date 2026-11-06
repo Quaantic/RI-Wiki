@@ -2,6 +2,14 @@
   "format": 1,
   "entries": [
     {
+      "id": "5d336415-7ab6-460f-bbea-b61bbfdf8883",
+      "at": 1793930131672,
+      "kind": "content",
+      "text": "Updated drop Chance of \"Omnisoul\": 0.31% to 0.12%",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
       "id": "c7a76ee5-0889-479f-9db2-1db4dbf64648",
       "at": 1793930105744,
       "kind": "content",
@@ -2390,14 +2398,6 @@
       "at": 1793851588363,
       "kind": "content",
       "text": "Added \"New category\"",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "ec3a0cd9-6716-44a4-a9c8-13354ddc8dc5",
-      "at": 1793851436949,
-      "kind": "content",
-      "text": "Updated tagline of \"Miscellaneous \": Gamepasses and Eternal Shards are side stat… to Gamepasses and Eternal Shards are side stat…",
       "actor": "Quaantic",
       "pending": true
     }
