@@ -2,6 +2,16 @@
   "format": 1,
   "entries": [
     {
+      "id": "e28889d0-e3a3-4952-b890-548025fc3303",
+      "at": 1793976297024,
+      "kind": "content",
+      "text": "Added \"row-42b8a62e-7792-4b0b-9e47-d3c5457f408b\"",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:49:25.518Z"
+    },
+    {
       "id": "244f30f8-71ae-4085-b84a-e006d10d64fd",
       "at": 1793975385491,
       "kind": "content",
@@ -2915,40 +2925,30 @@
       "pending": false
     },
     {
+      "id": "5579d882-a3bf-4f85-942e-7833d22c8770",
+      "at": 1793976293852,
+      "kind": "content",
+      "text": "Updated columns of \"Trees\": [\"Name\",\"Requirement\",\"Effect\"] to [\"Name\",\"Effect\"]",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:49:25.518Z"
+    },
+    {
+      "id": "47cb88b1-90e6-4107-b76d-723a3574ebfa",
+      "at": 1793976293807,
+      "kind": "content",
+      "text": "Updated text of \"Trees\": New table to Trees",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:49:25.518Z"
+    },
+    {
       "id": "02304fbe-4806-4a95-92d6-5034d12d808c",
       "at": 1793976262843,
       "kind": "content",
       "text": "Added \"New table\"",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T14:44:27.232Z"
-    },
-    {
-      "id": "bc091770-3773-4849-888e-358b02c4280b",
-      "at": 1793976251389,
-      "kind": "content",
-      "text": "Updated icon of \"Frost Generators\": gauge to game-icons:ice-bolt",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T14:44:27.232Z"
-    },
-    {
-      "id": "e16178ef-a237-404d-bcf6-fe24fbb9a380",
-      "at": 1793976243093,
-      "kind": "content",
-      "text": "Updated icon of \"Frost Conversion\": refresh to game-icons:ice-cube",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T14:44:27.232Z"
-    },
-    {
-      "id": "aedbd3fb-0534-45bf-b564-03abaa8011df",
-      "at": 1793976232520,
-      "kind": "content",
-      "text": "Updated icon of \"Red Liquid\": drop to game-icons:bird-claw",
       "actor": "Quaantic",
       "pending": false,
       "status": "saved",
