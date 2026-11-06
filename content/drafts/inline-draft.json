@@ -1877,6 +1877,13 @@
           "role": "Contributor",
           "avatar": "nath",
           "banner": "#FF003F"
+        },
+        {
+          "name": "Dest",
+          "handle": "",
+          "role": "Contributor",
+          "avatar": "dest",
+          "banner": "#be30ff"
         }
       ],
       "thanks": "To everyone in the RI Gaming community logging drops and sharing finds — this wiki runs on that."
@@ -14774,36 +14781,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content": {
-      "actor": "Quaantic"
-    },
-    "content.wiki": {
-      "actor": "Quaantic"
-    },
-    "content.wiki.categories": {
-      "actor": "Quaantic"
-    },
-    "content.wiki.categories[life]": {
-      "actor": "Quaantic"
-    },
-    "content.wiki.categories[life].subcategories": {
-      "actor": "Quaantic"
-    },
-    "content.wiki.categories[life].subcategories[tree]": {
-      "actor": "Nathy365"
-    },
-    "content.wiki.categories[life].subcategories[tree].children": {
-      "actor": "Nathy365"
-    },
-    "content.wiki.categories[life].subcategories[tree].children[roots]": {
-      "actor": "Nathy365"
-    },
-    "content.wiki.categories[life].subcategories[tree].children[apples]": {
-      "actor": "Nathy365"
-    },
-    "content.wiki.categories[runes]": {
-      "actor": "Quaantic"
-    },
     "content.wiki.categories[runes].subcategories": {
       "actor": "Nathy365"
     },
@@ -14811,10 +14788,10 @@
       "actor": "Nathy365"
     },
     "content.wiki.credits": {
-      "actor": "Nathy365"
+      "actor": "Quaantic"
     },
     "content.wiki.credits.contributors": {
-      "actor": "Nathy365"
+      "actor": "Quaantic"
     },
     "content.game": {
       "actor": "Quaantic"
@@ -15852,6 +15829,12 @@
       "actor": "Quaantic"
     },
     "content.game.resources.pageLinks.Gold Energy": {
+      "actor": "Quaantic"
+    },
+    "content": {
+      "actor": "Quaantic"
+    },
+    "content.wiki": {
       "actor": "Quaantic"
     }
   }
