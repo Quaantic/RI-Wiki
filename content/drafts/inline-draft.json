@@ -14292,7 +14292,9 @@
                 {
                   "id": "b1",
                   "name": "iron",
-                  "value": "formula: amount"
+                  "value": "formula: ((amount / 1) + 1)^0.1",
+                  "capUnit": "x",
+                  "unit": "x"
                 },
                 {
                   "id": "b",
@@ -15975,6 +15977,12 @@
       "actor": "Nathy365"
     },
     "content.game.calculators.pages.runes/secret.groups[group4].bonuses[b2].unit": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group5].bonuses[b1].capUnit": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group5].bonuses[b1].unit": {
       "actor": "Nathy365"
     }
   }
