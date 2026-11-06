@@ -14724,6 +14724,13 @@
           {
             "id": "entry-94ad59f9-1227-4aba-b0ee-cfe368e1edc7",
             "context": "Feature",
+            "title": "Secret Runes",
+            "href": "",
+            "description": "added in 8 secret runes"
+          },
+          {
+            "id": "entry-b15bf40f-7e3f-4409-a8e1-b01be799cb33",
+            "context": "Feature",
             "title": "New update",
             "href": "",
             "description": "What changed in the game."
@@ -14960,42 +14967,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.game.upgrades.sections.life-tree-essence.upgrades[3].n": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[3].name": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[3].cap": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[3].price": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[3].multi": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[4]": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[4].n": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[4].name": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[4].cap": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[4].price": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[4].multi": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[5]": {
-      "actor": "Quaantic"
-    },
     "content.game.upgrades.sections.life-tree-essence.upgrades[5].n": {
       "actor": "Quaantic"
     },
@@ -16044,6 +16015,24 @@
       "actor": "Nathy365"
     },
     "content.updates.versions[1.03].entries[entry-94ad59f9-1227-4aba-b0ee-cfe368e1edc7].description": {
+      "actor": "Nathy365"
+    },
+    "content.updates.versions[1.03].entries[entry-b15bf40f-7e3f-4409-a8e1-b01be799cb33]": {
+      "actor": "Nathy365"
+    },
+    "content.updates.versions[1.03].entries[entry-b15bf40f-7e3f-4409-a8e1-b01be799cb33].id": {
+      "actor": "Nathy365"
+    },
+    "content.updates.versions[1.03].entries[entry-b15bf40f-7e3f-4409-a8e1-b01be799cb33].context": {
+      "actor": "Nathy365"
+    },
+    "content.updates.versions[1.03].entries[entry-b15bf40f-7e3f-4409-a8e1-b01be799cb33].title": {
+      "actor": "Nathy365"
+    },
+    "content.updates.versions[1.03].entries[entry-b15bf40f-7e3f-4409-a8e1-b01be799cb33].href": {
+      "actor": "Nathy365"
+    },
+    "content.updates.versions[1.03].entries[entry-b15bf40f-7e3f-4409-a8e1-b01be799cb33].description": {
       "actor": "Nathy365"
     }
   }
