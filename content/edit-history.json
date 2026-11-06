@@ -2,6 +2,36 @@
   "format": 1,
   "entries": [
     {
+      "id": "69dba1c7-3a47-4e2c-b8ef-4c321e77ef4e",
+      "at": 1793949346693,
+      "kind": "content",
+      "text": "Added \"New update\"",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:15:53.399Z"
+    },
+    {
+      "id": "f6730fb1-823b-451f-91c8-bcdfbf5abe09",
+      "at": 1793949336447,
+      "kind": "content",
+      "text": "Updated description of \"Tree Essence/Milestones\": What changed in the game. to Added 14 upgrades in tree essences and 8 ne…",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:15:53.399Z"
+    },
+    {
+      "id": "18f585c9-b683-49b4-abac-450e7fe0728e",
+      "at": 1793949336404,
+      "kind": "content",
+      "text": "Updated text of \"Tree Essence/Milestones\": New update to Tree Essence/Milestones",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:15:53.399Z"
+    },
+    {
       "id": "abb242d6-4466-4fa5-9943-6feb2d3bed7f",
       "at": 1793949254223,
       "kind": "content",
