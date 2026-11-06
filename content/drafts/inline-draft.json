@@ -3075,7 +3075,7 @@
               "n": 15,
               "name": "More Tree Essence",
               "cap": "99",
-              "price": "3*L",
+              "price": "floor(1e57 * (2.35 + L/75)^L)",
               "multi": "0.1*L"
             }
           ]
@@ -15060,9 +15060,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.game.calculators.pages.runes/secret.groups[group3].bonuses[b2]": {
-      "actor": "Nathy365"
-    },
     "content.game.calculators.pages.runes/secret.groups[group3].bonuses[b2].id": {
       "actor": "Nathy365"
     },
@@ -15565,16 +15562,16 @@
       "actor": "Quaantic"
     },
     "content.game.upgrades.sections.logs": {
-      "actor": "zzinss"
+      "actor": "Quaantic"
     },
     "content.game.upgrades.sections.logs.upgrades": {
-      "actor": "zzinss"
+      "actor": "Quaantic"
     },
     "content.game.upgrades.sections.logs.upgrades order": {
       "actor": "zzinss"
     },
     "content.game.upgrades.sections.logs.upgrades[15]": {
-      "actor": "zzinss"
+      "actor": "Quaantic"
     },
     "content.game.upgrades.sections.logs.upgrades[15].n": {
       "actor": "zzinss"
@@ -15586,7 +15583,7 @@
       "actor": "zzinss"
     },
     "content.game.upgrades.sections.logs.upgrades[15].price": {
-      "actor": "zzinss"
+      "actor": "Quaantic"
     },
     "content.game.upgrades.sections.logs.upgrades[15].multi": {
       "actor": "zzinss"
