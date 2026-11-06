@@ -2,6 +2,56 @@
   "format": 1,
   "entries": [
     {
+      "id": "536b5ead-beda-4167-9090-b9d0f31609b3",
+      "at": 1793979987792,
+      "kind": "content",
+      "text": "Added \"New update\"",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:46:31.396Z"
+    },
+    {
+      "id": "49ec92db-4716-44ec-89e4-2a4c664ef919",
+      "at": 1793979976386,
+      "kind": "content",
+      "text": "Updated life/tree-tier of \"calculators\": {\"kind\":\"amount\",\"title\":\"\",\"amountLabel\":\"… to empty",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:46:31.396Z"
+    },
+    {
+      "id": "042eff12-feb5-4f0e-a9db-ff2b14efb29e",
+      "at": 1793979969283,
+      "kind": "content",
+      "text": "Updated show Amount of \"pages\": true to false",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:46:31.396Z"
+    },
+    {
+      "id": "e3c39272-c39a-4788-ba61-4d5b20949fcc",
+      "at": 1793979969234,
+      "kind": "content",
+      "text": "Updated text of \"pages\": Tree Tier to empty",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:46:31.396Z"
+    },
+    {
+      "id": "21655a2e-3c87-4513-a3f9-101c8d997b3b",
+      "at": 1793979962962,
+      "kind": "content",
+      "text": "Updated amount Label of \"Tree Tier\": Tree Tier owned to empty",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:46:31.396Z"
+    },
+    {
       "id": "a09fa535-51df-46d3-884b-0263c5c274e7",
       "at": 1793979898734,
       "kind": "content",
@@ -2950,56 +3000,6 @@
       "pending": false,
       "status": "saved",
       "savedAt": "2026-11-06T07:05:25.487Z"
-    },
-    {
-      "id": "f604c129-acb0-4202-ac8c-39de436a87ce",
-      "at": 1793948673821,
-      "kind": "content",
-      "text": "Set cap Unit of \"Mine Perks\" (x)",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T07:05:25.487Z"
-    },
-    {
-      "id": "33ee2490-a8e1-4fb9-963f-55a1b2dd43a7",
-      "at": 1793948673776,
-      "kind": "content",
-      "text": "Renamed \"New bonus\" to \"Mine Perks\"",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T07:05:25.487Z"
-    },
-    {
-      "id": "4a81dd9f-5510-43ac-ab5e-2d8beb63707a",
-      "at": 1793948635169,
-      "kind": "content",
-      "text": "Set unit of \"Bluesteel\" (x)",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T07:04:14.795Z"
-    },
-    {
-      "id": "bcfd869b-f668-42c0-89cf-e1fe0775cd85",
-      "at": 1793948635121,
-      "kind": "content",
-      "text": "Set cap Unit of \"Bluesteel\" (x)",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T07:04:14.795Z"
-    },
-    {
-      "id": "c11636cc-d315-4cf2-9e63-49d15a6e9f31",
-      "at": 1793948635074,
-      "kind": "content",
-      "text": "Updated value of \"Bluesteel\": formula: amount to formula: ((amount / 2) + 1)^0.2",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T07:04:14.795Z"
     }
   ]
 }
