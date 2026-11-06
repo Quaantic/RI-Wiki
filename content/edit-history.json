@@ -2,6 +2,16 @@
   "format": 1,
   "entries": [
     {
+      "id": "a2585f4e-8fb9-40b0-ab31-4dafbc7d4165",
+      "at": 1793947663722,
+      "kind": "content",
+      "text": "Updated value of \"Soul\": formula: amount to formula: ((amount / 3) + 1)^0.125",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T06:47:57.303Z"
+    },
+    {
       "id": "9a8a3423-3c38-45a6-8bb8-3310c1fec733",
       "at": 1793947647910,
       "kind": "content",
