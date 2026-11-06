@@ -14261,7 +14261,7 @@
               "bonuses": [
                 {
                   "id": "b1",
-                  "name": "Minedamage",
+                  "name": "Mine Damage",
                   "value": "formula: amount",
                   "capUnit": "x",
                   "unit": "x"
@@ -14923,60 +14923,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.wiki.categories[runes].icon": {
-      "actor": "Quaantic"
-    },
-    "content.wiki.categories[perks]": {
-      "actor": "Quaantic"
-    },
-    "content.wiki.categories[perks].icon": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.souls-upgrades": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.souls-upgrades.upgrades": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.souls-upgrades.upgrades[12]": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.souls-upgrades.upgrades[12].name": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.souls-upgrades.upgrades[12].price": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.routes": {
-      "actor": "Quaantic"
-    },
-    "content.game.progression": {
-      "actor": "Quaantic"
-    },
-    "content.game.progression.stages": {
-      "actor": "Quaantic"
-    },
-    "content.wiki.categories[life].subcategories[tree-essence]": {
-      "actor": "Quaantic"
-    },
-    "content.wiki.categories[life].subcategories[tree-essence].id": {
-      "actor": "Quaantic"
-    },
-    "content.wiki.categories[life].subcategories[tree-essence].name": {
-      "actor": "Quaantic"
-    },
-    "content.wiki.categories[life].subcategories[tree-essence].desc": {
-      "actor": "Quaantic"
-    },
-    "content.wiki.categories[life].subcategories[tree-essence].icon": {
-      "actor": "Quaantic"
-    },
     "content.wiki.categories[life].subcategories[tree-essence].highlights": {
       "actor": "Quaantic"
     },
