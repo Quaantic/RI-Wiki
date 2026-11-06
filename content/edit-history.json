@@ -2,6 +2,26 @@
   "format": 1,
   "entries": [
     {
+      "id": "9a8a3423-3c38-45a6-8bb8-3310c1fec733",
+      "at": 1793947647910,
+      "kind": "content",
+      "text": "Updated value of \"Health\": formula: amount to formula: ((amount / 1) + 1)^0.175",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T06:47:42.988Z"
+    },
+    {
+      "id": "b02ba08c-e3ac-44e2-97d3-b0c721d1986a",
+      "at": 1793947632208,
+      "kind": "content",
+      "text": "Updated value of \"Strength\": formula: amount to formula: ((amount / 1) + 1)^0.175",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T06:47:42.988Z"
+    },
+    {
       "id": "da176118-eade-4c56-8a78-f0a14e83c0cd",
       "at": 1793947554786,
       "kind": "content",
