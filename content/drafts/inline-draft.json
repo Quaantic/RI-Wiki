@@ -1367,7 +1367,7 @@
             "id": "souls",
             "name": "Souls",
             "icon": "drop",
-            "desc": "The Souls Reset consumes Dungeon Coins, Bones and Bone Dust and grants Souls, with a cooldown. Souls pay for 12 upgrades that boost Coins, Souls, Strength, Health, Bones, drop luck, Dungeon XP, Bone Dust and more. Equipping your best Souls accessory before resetting multiplies the gain; upgrades use Buy Max.",
+            "desc": "The Souls Reset consumes Dungeon Coins, Bones and Bone Dust and grants Souls, but drain 15% of your health and strength, with a 5 minutes cooldown. Souls pay for 12 upgrades that boost Coins, Souls, Strength, Health, Bones, drop luck, Dungeon XP, Bone Dust and more. Equipping your best Souls accessory before resetting multiplies the gain; upgrades use Buy Max.",
             "highlights": [],
             "facts": [],
             "children": [
@@ -15023,15 +15023,6 @@
     "updates": "0eb97556919ed433f706883ac61ad637d09334ca"
   },
   "_authors": {
-    "content.game.progression.stages.life/tree-essence-milestones.stages[1].unlocks.places order": {
-      "actor": "Quaantic"
-    },
-    "content.game.progression.stages.life/tree-essence-milestones.stages[1].unlocks.features": {
-      "actor": "Quaantic"
-    },
-    "content.game.progression.stages.life/tree-essence-milestones.stages[1].unlocks.features order": {
-      "actor": "Quaantic"
-    },
     "content.game.progression.stages.life/tree-essence-milestones.stages[1].title": {
       "actor": "Quaantic"
     },
@@ -16080,6 +16071,18 @@
       "actor": "zzinss"
     },
     "content.wiki.categories[life].subcategories[tree-essence].children[tree-essence-milestones].desc": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[dungeon]": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[dungeon].subcategories": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[dungeon].subcategories[souls]": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[dungeon].subcategories[souls].desc": {
       "actor": "zzinss"
     }
   }
