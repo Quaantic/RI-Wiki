@@ -2,6 +2,66 @@
   "format": 1,
   "entries": [
     {
+      "id": "4a81dd9f-5510-43ac-ab5e-2d8beb63707a",
+      "at": 1793948635169,
+      "kind": "content",
+      "text": "Set unit of \"Bluesteel\" (x)",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:04:14.795Z"
+    },
+    {
+      "id": "bcfd869b-f668-42c0-89cf-e1fe0775cd85",
+      "at": 1793948635121,
+      "kind": "content",
+      "text": "Set cap Unit of \"Bluesteel\" (x)",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:04:14.795Z"
+    },
+    {
+      "id": "c11636cc-d315-4cf2-9e63-49d15a6e9f31",
+      "at": 1793948635074,
+      "kind": "content",
+      "text": "Updated value of \"Bluesteel\": formula: amount to formula: ((amount / 2) + 1)^0.2",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:04:14.795Z"
+    },
+    {
+      "id": "166a00a1-e353-450c-bafb-06aece187897",
+      "at": 1793948582288,
+      "kind": "content",
+      "text": "Set unit of \"Californium\" (x)",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:04:14.795Z"
+    },
+    {
+      "id": "3bcb9089-9615-43ce-9c7d-d56e405e68a5",
+      "at": 1793948582241,
+      "kind": "content",
+      "text": "Set cap Unit of \"Californium\" (x)",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:04:14.795Z"
+    },
+    {
+      "id": "eeff4427-447e-429f-be7e-b6c1c2a89965",
+      "at": 1793948582197,
+      "kind": "content",
+      "text": "Updated value of \"Californium\": formula: amount to formula: ((amount / 1.5) + 1)^0.125",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:04:14.795Z"
+    },
+    {
       "id": "3f9c8141-ec78-4a1f-8e66-442b892c2a20",
       "at": 1793948564215,
       "kind": "content",
