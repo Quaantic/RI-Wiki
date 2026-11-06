@@ -2,6 +2,38 @@
   "format": 1,
   "entries": [
     {
+      "id": "6208f5ae-c9b9-4b7a-8b02-036b64766e8a",
+      "at": 1793937540197,
+      "kind": "content",
+      "text": "Updated icon of \"Sacrifice\": skull to game-icons:beast-eye",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "a50f538c-d25c-42c3-8b85-81b2eee4c6dd",
+      "at": 1793937460240,
+      "kind": "content",
+      "text": "Removed \"New category\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "0b5238e0-1cf3-4d0a-b38a-12acdd158630",
+      "at": 1793937394090,
+      "kind": "content",
+      "text": "Updated icon of \"Fossil\": hex to game-icons:fossil",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
+      "id": "8fc356c7-7d80-4f35-baa4-e135f953683c",
+      "at": 1793937355743,
+      "kind": "content",
+      "text": "Added \"New category\"",
+      "actor": "Quaantic",
+      "pending": true
+    },
+    {
       "id": "fbb29cde-e018-49dc-9916-662223eade7c",
       "at": 1793935612383,
       "kind": "content",
