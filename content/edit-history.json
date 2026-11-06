@@ -2,6 +2,16 @@
   "format": 1,
   "entries": [
     {
+      "id": "0f58c3db-c385-4ab9-b348-363f264d1207",
+      "at": 1793980360831,
+      "kind": "content",
+      "text": "Updated description of \"Animals Tiers\": Added Animal Tiers to the Life Generation t… to Added Animal Tiers to the Cells tab!",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:52:58.032Z"
+    },
+    {
       "id": "158dadfa-6f15-410c-9110-d1e6de380efc",
       "at": 1793980313682,
       "kind": "content",
@@ -2986,16 +2996,6 @@
       "at": 1793948935536,
       "kind": "content",
       "text": "Updated value of \"Ruby Energy\": formula: amount to formula: ((amount / 1) + 1)^0.15",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T07:09:26.038Z"
-    },
-    {
-      "id": "cbc26a01-9151-4565-9cbe-b59099ff3917",
-      "at": 1793948922290,
-      "kind": "content",
-      "text": "Updated value of \"Rare Sap\": formula: amount to formula: ((amount / 0.75) + 1)^0.12",
       "actor": "Nathy365",
       "pending": false,
       "status": "saved",
