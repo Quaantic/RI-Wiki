@@ -15303,83 +15303,11 @@
     ]
   },
   "_baseShas": {
-    "updates": "0eb97556919ed433f706883ac61ad637d09334ca",
     "wiki": "9589980a426f5352a7de8f3e444221f5b6374636",
+    "updates": "0eb97556919ed433f706883ac61ad637d09334ca",
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.game.upgrades.sections.logs.upgrades[15].price": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.logs.upgrades[15].multi": {
-      "actor": "Quaantic"
-    },
-    "content.wiki.categories": {
-      "actor": "zzinss"
-    },
-    "content.wiki.categories[life]": {
-      "actor": "zzinss"
-    },
-    "content.wiki.categories[life].subcategories": {
-      "actor": "zzinss"
-    },
-    "content.wiki.categories[life].subcategories[tree-essence]": {
-      "actor": "zzinss"
-    },
-    "content.wiki.categories[life].subcategories[tree-essence].desc": {
-      "actor": "zzinss"
-    },
-    "content.game.upgrades.sections.life-tree-essence": {
-      "actor": "zzinss"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades": {
-      "actor": "zzinss"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[3]": {
-      "actor": "zzinss"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[3].name": {
-      "actor": "zzinss"
-    },
-    "content.game.upgrades.sections.research": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades order": {
-      "actor": "zzinss"
-    },
-    "content.game.upgrades.sections.research.upgrades[45]": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[45].n": {
-      "actor": "zzinss"
-    },
-    "content.game.upgrades.sections.research.upgrades[45].name": {
-      "actor": "zzinss"
-    },
-    "content.game.upgrades.sections.research.upgrades[45].cap": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[45].price": {
-      "actor": "zzinss"
-    },
-    "content.game.upgrades.sections.research.upgrades[45].multi": {
-      "actor": "zzinss"
-    },
-    "content.wiki.categories[life].subcategories[research]": {
-      "actor": "Quaantic"
-    },
-    "content.wiki.categories[life].subcategories[research].desc": {
-      "actor": "zzinss"
-    },
-    "content.game.upgrades.sections.research.upgrades[46]": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[46].n": {
-      "actor": "zzinss"
-    },
     "content.game.upgrades.sections.research.upgrades[46].name": {
       "actor": "zzinss"
     },
