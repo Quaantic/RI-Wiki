@@ -467,7 +467,7 @@
               {
                 "id": "life-shards",
                 "name": "Life Shards",
-                "icon": "spark",
+                "icon": "game-icons:emerald",
                 "desc": "Life Shards are earned whenever you create life. They pay for a long board of upgrades boosting Energy, Crystals, Fossils, Logs, Research and more. Holding 250 thousand Life Shards unlocks the Fossil reset.",
                 "highlights": [],
                 "facts": [],
@@ -489,7 +489,7 @@
                 "id": "cells",
                 "name": "Cells",
                 "desc": "Cell is the passive earning stat of Life, and it is used to created animals to earn Life Shards. With them, you can unlock new animals after a determined amount of the previous animal created.",
-                "icon": "game-icons:ball-pyramid",
+                "icon": "virus",
                 "highlights": [],
                 "facts": [],
                 "vitals": [],
@@ -575,7 +575,7 @@
               {
                 "id": "golden-research",
                 "name": "Golden Research",
-                "icon": "star",
+                "icon": "game-icons:magic-potion",
                 "desc": "Golden Research is a clicker minigame on the Otters board. Click to earn Golden RP; Click Power increases manual clicks, Auto Power clicks every second, and Auto Speed makes auto-clicks faster. Golden Research and Golden Research #2 multiply earnings, while the Unlocker opens more Golden Points investments.",
                 "highlights": [],
                 "facts": [],
@@ -583,7 +583,7 @@
                   {
                     "id": "golden-research-milestones",
                     "name": "Golden Research Milestones",
-                    "icon": "star",
+                    "icon": "game-icons:achievement",
                     "desc": "Seven rewards from total Golden Research, including research caps, automation and passive income.",
                     "highlights": [],
                     "facts": [],
@@ -604,7 +604,7 @@
                   {
                     "id": "golden-points",
                     "name": "Golden Points",
-                    "icon": "coin",
+                    "icon": "game-icons:two-coins",
                     "desc": "Invest Golden Points into six targets. Each bonus starts at its required investment.",
                     "highlights": [],
                     "facts": [],
@@ -630,7 +630,7 @@
                 "id": "tree-tier",
                 "name": "Tree Tier",
                 "desc": "Tree Tiers are a feature unlocked through Roots, and it works based on XP, which you gain a certain amount each time you break the tree. It goes all the way up to 11 tiers, and give multiple feature as: Rare Saps, Apples and Axe Crafting!",
-                "icon": "arrow-big-up",
+                "icon": "game-icons:upgrade",
                 "highlights": [],
                 "facts": [],
                 "vitals": [],
@@ -640,7 +640,7 @@
               {
                 "id": "logs",
                 "name": "Logs",
-                "icon": "leaf",
+                "icon": "game-icons:log",
                 "desc": "Logs are the principal tree currency, dropped by every tree you cut. They pay for Logs Upgrades that boost axe damage, Logs gain, critical hits, Tree XP, Apple Chance, Sap, Research and more. Log Perks are earned whenever Log Level rises.",
                 "highlights": [],
                 "facts": [],
@@ -661,7 +661,7 @@
               {
                 "id": "sap",
                 "name": "Sap",
-                "icon": "drop",
+                "icon": "game-icons:drop",
                 "desc": "Sap is the second tree currency, dropped alongside Logs. Sap Upgrades boost Logs, Sap, Apples, axe damage, Tree Level Perks, Auto Cut, Fossils, Research, Roots, Life Gems and tree XP and perks. Rare Silver, Golden, Diamond and Amethyst Saps also drop while cutting trees and grant bonuses based on how many you own. Unlock Levels opens the tree leveling system; Sap Perks are earned whenever Sap Level rises.",
                 "highlights": [],
                 "facts": [],
@@ -683,7 +683,7 @@
               {
                 "id": "rare-saps",
                 "name": "Rare Saps",
-                "icon": "drop",
+                "icon": "game-icons:water-drop",
                 "desc": "Silver, Golden, Diamond and Amethyst Sap drop while cutting trees at flat chances of 1 / 100, 1 / 500, 1 / 1,500 and 1 / 5,000. Enter the owned amount for each sap to see its three bonuses. Whether a drop is per chop or per tree-fall is decided server-side and is not exposed.",
                 "highlights": [],
                 "facts": [
@@ -698,7 +698,7 @@
               {
                 "id": "roots",
                 "name": "Roots",
-                "icon": "branch",
+                "icon": "game-icons:root-tip",
                 "desc": "Roots are the third tree currency, dropped at higher tree tiers and gated by Tree Tier requirements. Roots Upgrades boost Logs, Sap, Roots, Apples, Log and Sap Perks, Research, Life Gems, Golden Research and Autocut Power. This board also unlocks Golden Apple, Diamond Apple, More Golden Apples and Void Chance.",
                 "highlights": [],
                 "facts": [],
@@ -720,7 +720,7 @@
               {
                 "id": "apples",
                 "name": "Apples",
-                "icon": "heart",
+                "icon": "game-icons:shiny-apple",
                 "desc": "Apples drop randomly while cutting trees; Apple Chance and More Apples upgrades increase their drops. Every apple ever earned counts on the Apple Buffs board, where holding amounts of each type unlocks permanent multipliers at milestones for each type. Apples are never spent: they are milestone stats.",
                 "highlights": [],
                 "facts": [],
@@ -729,7 +729,19 @@
                 "contentKey": "life/apples"
               }
             ],
-            "sections": []
+            "sections": [
+              {
+                "id": "table-ae4ff944-57a2-4656-94bd-046bcf7a7517",
+                "title": "New table",
+                "columns": [
+                  "Name",
+                  "Requirement",
+                  "Effect"
+                ],
+                "rows": [],
+                "text": ""
+              }
+            ]
           },
           {
             "id": "terraforming",
@@ -742,7 +754,7 @@
               {
                 "id": "terra-life",
                 "name": "Life",
-                "icon": "leaf",
+                "icon": "game-icons:rose",
                 "desc": "Life is the creation-tier stat shown on your nametag milestone. It rises every three lives created in Life Generation and gates Terraform upgrades, Life upgrade limits and the Fossil board. It can also be ranked up without losing progress by paying Eternal Shards.",
                 "highlights": [],
                 "facts": [],
@@ -752,7 +764,7 @@
               {
                 "id": "life-gems",
                 "name": "Life Gems",
-                "icon": "heart",
+                "icon": "game-icons:dagger-rose",
                 "desc": "Life Gems are Life Island’s main currency, earned passively and multiplied by Terraform income bonuses, Monster, Fossils and other upgrades. They pay for every Terraform upgrade and Advanced runes, and have a leaderboard for the highest amounts held.",
                 "highlights": [],
                 "facts": [],
@@ -784,7 +796,7 @@
               {
                 "id": "monster-evolution",
                 "name": "Monster Evolution",
-                "icon": "refresh",
+                "icon": "game-icons:spiked-dragon-head",
                 "desc": "Monster Evolution upgrades evolve your monster permanently. There are six evolutions with escalating prices; each multiplies monster gains, with the first five doubling it and the last ones growing by 25 percent. Every Monster Upgrade also requires a minimum evolution level, so evolving is mandatory for further upgrades.",
                 "highlights": [],
                 "facts": [],
@@ -794,7 +806,7 @@
               {
                 "id": "red-liquid",
                 "name": "Red Liquid",
-                "icon": "drop",
+                "icon": "game-icons:bird-claw",
                 "desc": "Red Liquid is the Monster area’s feed currency, earned through the monster and boosted by the first Monster Upgrade. The Terraform Red Liquid upgrade converts it into faster Monster Points gain, and the Level Perk Tree has a permanent Red Liquid perk.",
                 "highlights": [],
                 "facts": [],
@@ -815,7 +827,7 @@
               {
                 "id": "sacrifice",
                 "name": "Sacrifice",
-                "icon": "skull",
+                "icon": "game-icons:broken-skull",
                 "desc": "The Sacrifice board lets you sacrifice your monster for Dark Liquid. It shows the gain before confirmation and tracks every sacrifice. It unlocks through Terraform progression and has Sacrifice Upgrades that increase Dark Liquid gained per sacrifice.",
                 "highlights": [],
                 "facts": [],
@@ -857,7 +869,7 @@
               {
                 "id": "frost-generators",
                 "name": "Frost Generators",
-                "icon": "gauge",
+                "icon": "game-icons:ice-bolt",
                 "desc": "Adjust generator levels and speed to calculate Frost output and the next upgrade costs.",
                 "highlights": [],
                 "facts": [],
@@ -878,7 +890,7 @@
               {
                 "id": "frost-conversion",
                 "name": "Frost Conversion",
-                "icon": "refresh",
+                "icon": "game-icons:ice-cube",
                 "desc": "All four Frost conversions and their current bonuses. Enter your owned amounts below.",
                 "highlights": [],
                 "facts": [],
@@ -15060,108 +15072,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.game.calculators.pages.runes/secret.groups[group6].name": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group6].color": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group6].dropChance": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group6].amountLabel": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group6].bonuses": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group6].bonuses order": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group6].bonuses[b1]": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group6].bonuses[b1].id": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group6].bonuses[b1].name": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group6].bonuses[b1].value": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group7]": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group7].id": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group7].name": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group7].color": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group7].dropChance": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group7].amountLabel": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group7].bonuses": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group7].bonuses order": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group7].bonuses[b1]": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group7].bonuses[b1].id": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group7].bonuses[b1].name": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group7].bonuses[b1].value": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group8]": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group8].id": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group8].name": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group8].color": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group8].dropChance": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group8].amountLabel": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group8].bonuses": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group8].bonuses order": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group8].bonuses[b1]": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group8].bonuses[b1].id": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group8].bonuses[b1].name": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group8].bonuses[b1].value": {
-      "actor": "Nathy365"
-    },
     "content.game.calculators.pages.runes/secret.groups[group5].bonuses[b]": {
       "actor": "Nathy365"
     },
@@ -15541,7 +15451,7 @@
       "actor": "zzinss"
     },
     "content.wiki.categories[life].subcategories[research]": {
-      "actor": "zzinss"
+      "actor": "Quaantic"
     },
     "content.wiki.categories[life].subcategories[research].desc": {
       "actor": "zzinss"
@@ -15664,7 +15574,7 @@
       "actor": "zzinss"
     },
     "content.wiki.categories[life].subcategories[life-generation].children": {
-      "actor": "zzinss"
+      "actor": "Quaantic"
     },
     "content.wiki.categories[life].subcategories[life-generation].children order": {
       "actor": "zzinss"
@@ -15679,7 +15589,7 @@
       "actor": "zzinss"
     },
     "content.wiki.categories[life].subcategories[life-generation].children[cells]": {
-      "actor": "zzinss"
+      "actor": "Quaantic"
     },
     "content.wiki.categories[life].subcategories[life-generation].children[cells].id": {
       "actor": "zzinss"
@@ -15691,7 +15601,7 @@
       "actor": "zzinss"
     },
     "content.wiki.categories[life].subcategories[life-generation].children[cells].icon": {
-      "actor": "zzinss"
+      "actor": "Quaantic"
     },
     "content.wiki.categories[life].subcategories[life-generation].children[cells].highlights": {
       "actor": "zzinss"
@@ -16210,6 +16120,153 @@
       "actor": "Quaantic"
     },
     "content.wiki.categories[main].subcategories[merge].children[magnets].icon": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[life-shards]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[life-shards].icon": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[research].children": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[research].children[golden-research]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[research].children[golden-research].icon": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[research].children[golden-research].children": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[research].children[golden-research].children[golden-research-milestones]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[research].children[golden-research].children[golden-research-milestones].icon": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[research].children[golden-research].children[golden-points]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[research].children[golden-research].children[golden-points].icon": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].children": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].children[tree-tier]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].children[tree-tier].icon": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].children[logs]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].children[logs].icon": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].children[sap]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].children[sap].icon": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].children[rare-saps]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].children[rare-saps].icon": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].children[roots]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].children[roots].icon": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].children[apples]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].children[apples].icon": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections order": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[terraforming].children": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[terraforming].children[terra-life]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[terraforming].children[terra-life].icon": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[terraforming].children[life-gems]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[terraforming].children[life-gems].icon": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[monster].children": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[monster].children[monster-evolution]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[monster].children[monster-evolution].icon": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[monster].children[red-liquid]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[monster].children[red-liquid].icon": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[monster].children[sacrifice]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[monster].children[sacrifice].icon": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[frost].children": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[frost].children[frost-generators]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[frost].children[frost-generators].icon": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[frost].children[frost-conversion]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[frost].children[frost-conversion].icon": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].id": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].title": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].columns": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows order": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].text": {
       "actor": "Quaantic"
     }
   }
