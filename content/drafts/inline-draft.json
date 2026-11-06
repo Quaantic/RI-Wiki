@@ -15069,7 +15069,8 @@
         "Soul": "#8035c8",
         "Omnisoul": "#43c944",
         "Omega": "#2378e8",
-        "Tree Essence": "#00ffaa"
+        "Tree Essence": "#00ffaa",
+        "Animal Tiers": "#86d62b"
       },
       "pageLinks": {
         "main": "#/main",
@@ -15277,11 +15278,11 @@
             "description": "Fixed random tabs disposed in places they don't make sense"
           },
           {
-            "id": "entry-22767fdf-15e5-432c-b034-d5e08d3b12dc",
-            "context": "Feature",
-            "title": "New update",
+            "id": "entry-147395b0-b50e-4f99-874c-e301d85e3872",
+            "context": "Changes",
+            "title": "New Contributors ",
             "href": "",
-            "description": "What changed in the game."
+            "description": "Added our new contributors to credits."
           }
         ]
       },
@@ -15515,42 +15516,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.game.upgrades.sections.research.upgrades[30].cap": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[31]": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[31].cap": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[32]": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[32].cap": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[33]": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[33].cap": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[34]": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[34].cap": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[35]": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[35].name": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[35].cap": {
-      "actor": "Quaantic"
-    },
     "content": {
       "actor": "zzinss"
     },
@@ -15591,7 +15556,7 @@
       "actor": "Quaantic"
     },
     "content.game": {
-      "actor": "Quaantic"
+      "actor": "zzinss"
     },
     "content.wiki": {
       "actor": "Quaantic"
@@ -16599,6 +16564,33 @@
       "actor": "zzinss"
     },
     "content.updates.versions[1.03].entries[entry-22767fdf-15e5-432c-b034-d5e08d3b12dc].description": {
+      "actor": "zzinss"
+    },
+    "content.game.resources": {
+      "actor": "zzinss"
+    },
+    "content.game.resources.colors": {
+      "actor": "zzinss"
+    },
+    "content.game.resources.colors.Animal Tiers": {
+      "actor": "zzinss"
+    },
+    "content.updates.versions[1.03].entries[entry-147395b0-b50e-4f99-874c-e301d85e3872]": {
+      "actor": "zzinss"
+    },
+    "content.updates.versions[1.03].entries[entry-147395b0-b50e-4f99-874c-e301d85e3872].id": {
+      "actor": "zzinss"
+    },
+    "content.updates.versions[1.03].entries[entry-147395b0-b50e-4f99-874c-e301d85e3872].context": {
+      "actor": "zzinss"
+    },
+    "content.updates.versions[1.03].entries[entry-147395b0-b50e-4f99-874c-e301d85e3872].title": {
+      "actor": "zzinss"
+    },
+    "content.updates.versions[1.03].entries[entry-147395b0-b50e-4f99-874c-e301d85e3872].href": {
+      "actor": "zzinss"
+    },
+    "content.updates.versions[1.03].entries[entry-147395b0-b50e-4f99-874c-e301d85e3872].description": {
       "actor": "zzinss"
     }
   }
