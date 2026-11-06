@@ -2,6 +2,16 @@
   "format": 1,
   "entries": [
     {
+      "id": "b072f208-84ed-4d3f-a3e0-2214278cdd36",
+      "at": 1793974551419,
+      "kind": "content",
+      "text": "Updated multi of \"More Tree Essence\": * (1 + 0.1 * L) to 1+(0.1*L)",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:17:03.919Z"
+    },
+    {
       "id": "f6f014dc-d19c-4665-85a7-0ff83ef6be2b",
       "at": 1793974457843,
       "kind": "content",
@@ -2943,16 +2953,6 @@
       "pending": false,
       "status": "saved",
       "savedAt": "2026-11-06T06:45:18.125Z"
-    },
-    {
-      "id": "60772940-d488-462b-9c89-62af84890e75",
-      "at": 1793947491645,
-      "kind": "content",
-      "text": "Added \"New group\"",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T06:46:00.541Z"
     }
   ]
 }
