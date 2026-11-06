@@ -1,3 +1,4 @@
+import { live } from './live-client.js';
 // ==== EDIT MODE: STATE DO RASCUNHO (GitHub draft file + documentos locais) ====
 
 import {
@@ -37,6 +38,9 @@ const draftState = {
   needsMerge: false,
   sharedOrderNeedsSave: false,
   invalidDraftBackup: null,
+  liveRevision: null,
+  liveReady: false,
+  livePublishedRevision: 0,
 };
 
 // Diario automatico de edicoes ("Update History"). Em memoria durante a
@@ -349,7 +353,7 @@ function currentDraftRaw() {
 }
 
 export function draftOnline() {
-  return Boolean(draftState.savedDraftRaw);
+  return draftState.liveReady;
 }
 
 export function draftDirty() {
@@ -420,8 +424,7 @@ export async function initSession(token, actor = '') {
   draftState.sharedOrderNeedsSave = false;
   draftState.invalidDraftBackup = null;
   changeLog.length = 0;
-  const sharedFile = githubRequest(githubContentsUrl(DRAFT_FILE), token, { allowNotFound: true })
-    .then((result) => ({ result }), (error) => ({ error }));
+  const sharedFile = Promise.resolve({ result: null });
   await Promise.all(Object.entries(FILES).map(async ([name, path]) => {
     const result = await githubRequest(githubContentsUrl(path), token);
     if (result.type !== 'file' || typeof result.content !== 'string') {
@@ -437,8 +440,7 @@ export async function initSession(token, actor = '') {
     const { result, error } = await sharedFile;
     if (error) throw error;
     if (result === null) {
-      // Esboco ausente no GitHub: primeiro uso do editor (normal).
-      console.info('[inline-editor] No inline draft on GitHub yet — that is normal before the first "Save draft".');
+      // The old GitHub draft is intentionally not used by live collaboration.
       draftLoaded = false;
     } else if (result?.type === 'file' && typeof result.content === 'string') {
       // Show the shared order on startup so local recovery remains available.
@@ -480,6 +482,20 @@ export async function initSession(token, actor = '') {
       throw new Error(`The inline draft file could not be read: ${msg}`);
     }
   }
+  // Supabase is the only shared draft source. Do NOT silently reimport an
+  // old GitHub draft (that could overwrite newer edits from another browser).
+  const current = await live('read');
+  draftState.liveRevision = current.revision;
+  draftState.liveReady = current.ready;
+  draftState.livePublishedRevision = current.publishedRevision || 0;
+  if (current.ready) {
+    validateDocuments(current.documents);
+    draftState.docs = clone(current.documents);
+    draftLoaded = true;
+    draftState.savedDraftRaw = 'live';
+  } else {
+    draftState.savedDraftRaw = '';
+  }
   draftState.needsMerge = orderConflict || contentConflict;
   const dropped = sanitizeResources();
   draftState.sharedBase = clone(draftState.docs);
@@ -511,7 +527,7 @@ export async function initSession(token, actor = '') {
     }
   } catch { /* storage unavailable or an invalid recovery copy */ }
   const contentImported = installImportedNotes(draftState.docs.wiki,draftState.docs.game);
-  return { draftLoaded, invalidSharedDraft, sanitized: dropped, recovered, recoveryConflict, orderConflict, contentConflict, contentImported };
+  return { draftLoaded, liveUninitialized: !draftState.liveReady, invalidSharedDraft, sanitized: dropped, recovered, recoveryConflict, orderConflict, contentConflict, contentImported };
 }
 
 function recoveryKey() { return `ri-editor-recovery:${REPOSITORY}:${draftState.actor}`; }
@@ -528,10 +544,72 @@ export function persistLocalRecovery() {
 let savePromise;
 export async function saveDraft(token, keepLocalOrder, { automatic = false } = {}) {
   if(savePromise)return savePromise;
-  savePromise=saveChangedDraft(token, keepLocalOrder, automatic);
+  savePromise=saveLiveDraft(token, keepLocalOrder, automatic);
   try{return await savePromise;}finally{savePromise=null;}
 }
 
+
+// All editor saves are atomic revisions in Supabase. GitHub is never written
+// during an autosave, Sync, Restore, or Versions operation.
+async function saveLiveDraft(token, keepLocalOrder, automatic=false) {
+  if (!draftState.liveReady && !hasRestoredDraft()) {
+    throw new Error('Live collaboration is not initialized. Quaantic/zzinss: use Restore draft, select your latest exported JSON, then Share restored draft.');
+  }
+  for (let attempt=0;attempt<5;attempt++) {
+    await syncLive(token, keepLocalOrder);
+    validateDocuments(draftState.docs);
+    if (draftState.liveReady && !draftDirty()) return {saved:true, unchanged:true};
+    // Capture a snapshot before awaiting network; new keystrokes during PUT
+    // remain local and must still be sent on the next revision.
+    const snapshot=clone(draftState.docs);
+    const changes=changeLog.slice();
+    try {
+      const result=await live('save',{
+        revision:draftState.liveRevision,
+        documents:snapshot,
+        initialize:!draftState.liveReady && hasRestoredDraft(),
+        summary:changes.slice(-6).map(x=>x.text).join(' | ') || 'Wiki editor changes'
+      });
+      if (!result.saved || !Number.isSafeInteger(result.revision)) throw new Error('Live store did not confirm the write.');
+      draftState.liveRevision=result.revision;
+      draftState.liveReady=true;
+      draftState.savedDraftRaw='live';
+      draftState.sharedBase=snapshot;
+      draftState.needsMerge=false;
+      // Never clear new changes made while the save request was in-flight.
+      changeLog.splice(0,changes.length);
+      persistLocalRecovery();
+      return {saved:true, automatic};
+    } catch(error) {
+      persistLocalRecovery();
+      if (error.status!==409 || attempt===4) throw error;
+      // Compare-and-swap failed. Read the newer shared revision and rebase
+      // only local changes. Conflicting fields require a user decision.
+    }
+  }
+  throw new Error('Changes are still being edited by another contributor. Retry Sync.');
+}
+
+async function syncLive(token, resolver) {
+  const probe=await live('peek');
+  if (probe.revision===draftState.liveRevision) return false;
+  const current=await live('read');
+  if (!current.ready) throw new Error('Shared draft has not been initialized.');
+  validateDocuments(current.documents);
+  // Do not merge against published content: the current shared snapshot is
+  // the common ancestor of the local edits and the remote revision.
+  const merged=mergeDocuments(draftState.sharedBase,draftState.docs,current.documents,'content',resolver);
+  validateDocuments(merged);
+  draftState.docs=merged;
+  draftState.sharedBase=clone(current.documents);
+  draftState.liveRevision=current.revision;
+  draftState.liveReady=true;
+  draftState.livePublishedRevision=current.publishedRevision||0;
+  draftState.savedDraftRaw='live';
+  history.length=0;
+  persistLocalRecovery();
+  return true;
+}
 // Preserve the exact broken remote blob before repairing it. Never replace a
 // shared draft without a recoverable GitHub copy and explicit user consent.
 async function backupInvalidDraft(token) {
@@ -651,6 +729,17 @@ async function saveChangedDraft(token, keepLocalOrder, automatic = false){
 }
 
 export async function discardDraft(token) {
+  // Discard only this browser's unshared edits. Never discard other people's
+  // work, never erase Supabase and never make a GitHub commit.
+  const current=await live('read');
+  if(!current.ready) throw new Error('Live draft is not initialized.');
+  draftState.docs=clone(current.documents);
+  draftState.sharedBase=clone(current.documents);
+  draftState.liveRevision=current.revision;
+  draftState.liveReady=true;
+  changeLog.length=0;history.length=0;
+  persistLocalRecovery();applyDraftToSite();
+  return;
   await assertRemoteUnchanged(token);
   if (draftState.draftSha) {
     await githubRequest(githubContentsUrl(DRAFT_FILE), token, {
@@ -679,6 +768,17 @@ export async function discardDraft(token) {
 }
 
 export async function publishChanges(token, keepLocalOrder) {
+  await syncLive(token,keepLocalOrder);
+  if(draftDirty())throw new Error('Unsynced edits remain. Check the shared editor before publishing.');
+  if(!draftState.liveReady)throw new Error('Initialize the live collaboration draft first.');
+  validateDocuments(draftState.docs);
+  const result=await publishDocuments({revision:draftState.liveRevision,shas:draftState.shas});
+  draftState.shas=result.shas;
+  draftState.baseDocs=clone(draftState.docs);
+  draftState.livePublishedRevision=draftState.liveRevision;
+  changeLog.length=0;history.length=0;
+  persistLocalRecovery();
+  return result;
   await syncRemote(token, keepLocalOrder);
   validateDocuments(draftState.docs);
   await backupInvalidDraft(token);
@@ -749,6 +849,7 @@ export async function publishChanges(token, keepLocalOrder) {
 }
 
 export async function remoteChanged(token) {
+  return (await live('peek')).revision !== draftState.liveRevision;
   const remote = await githubRequest(githubContentsUrl(DRAFT_FILE), token, { allowNotFound: true, cache: 'no-store' });
   if ((remote?.sha || null) !== draftState.draftSha) return true;
   const files = await Promise.all(Object.entries(FILES).map(async ([name, path]) => {
@@ -767,6 +868,7 @@ async function assertRemoteUnchanged(token) {
 // fetched SHA, so a save racing this read is rejected by GitHub.
 let syncPromise;
 export async function syncRemote(token, keepLocalOrder) {
+  return syncLive(token, keepLocalOrder);
   if (syncPromise) {
     try {
       return await syncPromise;
@@ -882,6 +984,14 @@ async function writeHistoryRevision(token,newEntries,pending,discard){
 // Lista do "Update History": pendencias da sessao + arquivo no GitHub
 // (mais recentes primeiro).
 export async function listEditHistory(token) {
+  const data=await live('history');
+  const remote=(data.entries||[]).map(item=>({
+    id:`live-${item.id}`, at:Date.parse(item.created_at), kind:'content',
+    text:item.description||'Edited shared draft', actor:item.editor,
+    pending:false, status:item.published?'published':'saved'
+  }));
+  const pendingLive=changeLog.map(entry=>({...entry,pending:true,status:'pending'}));
+  return [...pendingLive,...remote].sort((a,b)=>b.at-a.at).slice(0,LOG_STORAGE_MAX);
   let fileEntries = [];
   const current = await githubRequest(githubContentsUrl(HISTORY_FILE), token, { allowNotFound: true });
   if (current?.type === 'file') {
@@ -926,6 +1036,7 @@ function versionTimestamp(name) {
 }
 
 export function versionLabel(name) {
+  if(name.startsWith('live-')) return name.slice(5).replaceAll('_',' · ');
   const modern = /^(save|publish)\.([^.]+)\.(\d{4}-\d{2}-\d{2})-(\d{2}:\d{2})(?:-\d+)?\.json$/.exec(name);
   if (modern) return `${modern[1] === 'save' ? 'Save' : 'Publish'} · @${modern[2]} · ${modern[3]} ${modern[4]}`;
   const timestamp = versionTimestamp(name);
@@ -939,6 +1050,16 @@ export function versionLabel(name) {
 }
 
 export async function listVersions(token) {
+  const data=await live('versions');
+  const versions=(data.versions||[]).map(row=>({
+    name:`live-${row.action}_${row.created_by}_${row.created_at.replace('T',' ').slice(0,16)}_${row.id}`,
+    liveId:row.id, sha:String(row.id)
+  }));
+  // Historical GitHub backups remain available as read-only recovery copies.
+  const old=await listLegacyVersions(token).catch(()=>[]);
+  return [...versions,...old];
+}
+async function listLegacyVersions(token) {
   const result = await githubRequest(githubContentsUrl(BACKUP_DIRECTORY), token, { allowNotFound: true });
   return Array.isArray(result)
     ? result
@@ -949,6 +1070,8 @@ export async function listVersions(token) {
 }
 
 export async function pruneVersions(token, keep = VERSIONS_MAX) {
+  // Never delete historical backups after migrating to live collaboration.
+  return [];
   const versions = await listVersions(token);
   const excess = versions.slice(Math.max(0, keep));
   for (const item of excess) {
@@ -965,6 +1088,10 @@ export async function pruneVersions(token, keep = VERSIONS_MAX) {
 }
 
 export async function createVersion(token, documents = draftState.baseDocs, message = 'Manual version', action = 'save') {
+  // A version snapshot is stored in Supabase, never committed to GitHub.
+  await saveLiveDraft(token,undefined,false);
+  const result=await live('snapshot',{versionAction:action});
+  return `live-${action}_${draftState.actor}_${new Date().toISOString().replace('T',' ').slice(0,16)}_${result.id}`;
   validateDocuments(documents);
   const stamp = backupStamp();
   let name = `${action}.${backupActor()}.${stamp}.json`;
@@ -993,8 +1120,9 @@ export async function restoreVersion(token, name) {
   if (await remoteChanged(token)) {
     throw new Error('Someone saved newer shared changes. Sync first and review them before staging a restore. Nothing was overwritten.');
   }
-  const result = await githubRequest(githubContentsUrl(`${BACKUP_DIRECTORY}/${encodeURIComponent(name)}`), token);
-  const backup = JSON.parse(decodeBase64Content(result.content));
+  const backup=name.startsWith('live-')
+    ? {format:1, documents:(await live('version',{id:Number(name.split('_').at(-1))})).documents}
+    : JSON.parse(decodeBase64Content((await githubRequest(githubContentsUrl(`${BACKUP_DIRECTORY}/${encodeURIComponent(name)}`), token)).content));
   if (backup.format !== 1 || !backup.documents?.wiki || !backup.documents?.updates || !backup.documents?.game) {
     throw new Error('This version is incomplete or has an unsupported format.');
   }
@@ -1013,8 +1141,9 @@ export async function restoreVersion(token, name) {
 }
 
 export async function recoverMissingPages(token, name) {
-  const result = await githubRequest(githubContentsUrl(`${BACKUP_DIRECTORY}/${encodeURIComponent(name)}`), token);
-  const backup = JSON.parse(decodeBase64Content(result.content));
+  const backup=name.startsWith('live-')
+    ? {documents:(await live('version',{id:Number(name.split('_').at(-1))})).documents}
+    : JSON.parse(decodeBase64Content((await githubRequest(githubContentsUrl(`${BACKUP_DIRECTORY}/${encodeURIComponent(name)}`), token)).content));
   validateDocuments(backup.documents);
   const recovered = clone(draftState.docs);
   let count = 0;

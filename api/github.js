@@ -19,6 +19,12 @@ module.exports=async(req,res)=>{
    return res.status(200).json(await github(token,path+url.search));
   }
   const body=typeof input.body==='string'?JSON.parse(input.body):input.body;
+  // Collaboration moved to server-side storage. Writing draft/history/backup
+  // files through GitHub creates accidental Vercel deployments and is now
+  // prohibited. Explicit credit-image uploads remain supported.
+  if(content && /^(content\/drafts\/|content\/edit-history\.json$|content\/backups\/)/.test(content)) {
+    throw Object.assign(Error('Editor saves now use live collaboration, not GitHub commits.'),{status:403});
+  }
   const allowed=content==='content/drafts/inline-draft.json' || content==='content/edit-history.json'
    || /^content\/backups\/(?:invalid-inline-draft-[a-zA-Z0-9TZ_-]+|backup-[a-zA-Z0-9_.-]+|(?:save|publish)\.[a-zA-Z0-9_-]+\.(?:\d{8}T\d{6}\d{3}Z|\d{4}-\d{2}-\d{2}-\d{2}:\d{2}(?:-\d+)?))\.json$/.test(content||'')
    || method==='PUT' && /^images\/credits\/[a-zA-Z0-9-]+\.(png|jpg|jpeg|webp|gif)$/.test(content||'') && !body?.sha;

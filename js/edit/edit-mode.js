@@ -309,7 +309,7 @@ function updateToolbar() {
   layer.bar.querySelector('[data-edit-save]').hidden = !draft.hasRestoredDraft();
   const saveLabel=layer.bar.querySelector('[data-edit-save] .ri-save-full');
   if(saveLabel)saveLabel.textContent=draft.hasRestoredDraft()?'Share restored draft':'Save for everyone';
-  layer.bar.querySelector('[data-edit-publish]').disabled = !ready || !session.canPublish || draftDirty || Boolean(autosaveWorking) || Boolean(autosaveTimer);
+  layer.bar.querySelector('[data-edit-publish]').disabled = !ready || !draftOnline || !session.canPublish || draftDirty || Boolean(autosaveWorking) || Boolean(autosaveTimer);
   layer.bar.querySelector('[data-edit-publish]').hidden = !session.canPublish;
   layer.bar.querySelector('[data-edit-discard]').disabled = !ready;
   layer.bar.querySelector('[data-edit-restore]').disabled = !ready;
@@ -336,9 +336,9 @@ function updateToolbar() {
   } else if (draftDirty) {
     barStatus(draft.hasRestoredDraft() ? 'Restored snapshot staged · not shared' : (localSaved ? 'Unsynced edits · autosave pending' : 'Local backup unavailable — download your draft'), 'dirty');
   } else if (draftOnline) {
-    barStatus('All edits synced · GitHub shared draft');
+    barStatus('Live · All edits shared');
   } else {
-    barStatus('Everything saved');
+    barStatus('Live editor not initialized · Restore draft to begin','dirty');
   }
 }
 
@@ -354,8 +354,8 @@ function buildToolbar() {
       <span data-edit-mode-label>Edit</span>
     </button>
     <button class="btn btn--ghost btn--sm" data-edit-undo title="Undo the last change in the draft (Ctrl+Z)">${icon('undo-2', 13)} Undo</button>
-    <button class="btn btn--ghost btn--sm" data-edit-sync title="Load your collaborators' latest shared changes from GitHub">${icon('refresh-cw', 13)} Sync</button>
-    <button class="btn btn--ghost btn--sm" data-edit-save hidden title="Merge the latest shared changes and save for all editors">${icon('save', 13)} <span class="ri-save-full">Save for everyone</span><span class="ri-save-short">Save</span></button>
+    <button class="btn btn--ghost btn--sm" data-edit-sync title="Load your collaborators' latest changes from live storage">${icon('refresh-cw', 13)} Sync</button>
+    <button class="btn btn--ghost btn--sm" data-edit-save hidden title="Share the restored snapshot with everyone">${icon('save', 13)} <span class="ri-save-full">Save for everyone</span><span class="ri-save-short">Save</span></button>
     <button class="btn btn--ghost btn--sm" data-edit-download title="Download a recovery copy of your current draft">${icon('download', 13)} Download draft</button>
     <button class="btn btn--ghost btn--sm" data-edit-restore title="Open a downloaded wiki draft in this browser">${icon('upload', 13)} Restore draft</button>
     <input type="file" accept=".json,application/json" data-edit-restore-file hidden>
@@ -457,7 +457,7 @@ function confirmReleaseOrder(version, source) {
   const explanation = source === 'shared'
     ? 'The shared draft and the published wiki have different orders. Keep the shared draft order when merging?'
     : 'Your draft and the latest shared revision have different orders. Keep your draft order when merging?';
-  return window.confirm(`Update Log ${version}\n\n${explanation}\n\nCompatible edits and entries from both versions are kept. Cancel to keep working without writing to GitHub.`);
+  return window.confirm(`Update Log ${version}\n\n${explanation}\n\nCompatible edits and entries from both versions are kept. Cancel to keep working without changing the shared draft.`);
 }
 
 confirmReleaseOrder.confirmInvalidDraft = () => window.confirm('The shared draft file on GitHub contains invalid JSON. The currently published wiki is safe. Back up the exact broken file to content/backups and replace it with your current edits? Cancel keeps everything unchanged.');
@@ -576,7 +576,7 @@ function onToolbarAction(button) {
         if (popState) return;
       }
       if (act === 'save') {
-        if (draft.hasRestoredDraft() && !window.confirm('Share this restored snapshot? It may replace changes made after the download.')) return;
+        if (draft.hasRestoredDraft() && !window.confirm('Share this restored snapshot? Newer collaborator edits will be checked for conflicts first. No site publication occurs.')) return;
         barStatus('Saving draft…', 'busy');
         const saved = await draft.saveDraft(session.token, confirmReleaseOrder);
         session.syncError = '';
@@ -584,7 +584,7 @@ function onToolbarAction(button) {
         buildNav();
         await rerender({ scroll: 'preserve' });
         window.dispatchEvent(new CustomEvent('ri-edit-content'));
-        notify(`Saved for everyone and verified on GitHub.${saved?.backupWarning ? ' Warning: previous-version backup failed; keep a recovery copy.' : ''}${saved?.historyWarning ? ' Warning: Update History could not sync.' : ''}`, Boolean(saved?.backupWarning));
+        notify('Restored draft shared with all editors. It has NOT been published.');
       } else if (act === 'publish') {
         if (!session.canPublish) throw new Error('Permission denied. Only Quaantic and zzinss can publish.');
         const message = draft.hasRestoredDraft()
@@ -596,7 +596,7 @@ function onToolbarAction(button) {
         cancelAutosave();
         await draft.saveDraft(session.token, confirmReleaseOrder, {automatic:true});
         barStatus('Publishing…', 'busy');
-        await draft.publishChanges(session.token, confirmReleaseOrder);
+        const result = await draft.publishChanges(session.token, confirmReleaseOrder);
         session.syncError = '';
         draft.applyDraftToSite();
         buildNav();
@@ -604,12 +604,12 @@ function onToolbarAction(button) {
         window.dispatchEvent(new CustomEvent('ri-edit-content'));
         notify('Published to GitHub. The live site updates only after Vercel finishes deployment. Check Vercel if the site stays unchanged.');
       } else {
-        if (!window.confirm('Discard the draft and return to the published content?')) return;
+        if (!window.confirm('Discard only your unsynced edits and reload the latest shared draft? Other contributors will not be affected.')) return;
         if (popState) closePopover(true);
         barStatus('Discarding draft…', 'busy');
         await draft.discardDraft(session.token);
         await rerender({ scroll: 'preserve' });
-        notify('Draft discarded. The published content is showing.');
+        notify('Local edits discarded. Latest shared draft loaded.');
       }
     } catch (error) {
       if (error.name === 'SyncConflict') session.syncError = error.release ? 'Update Log order conflict' : 'Sync conflict — click Sync to review';
@@ -690,11 +690,11 @@ async function startSession(token, {deferRender=false}={}) {
     installSidebarTools();
     {
       if(!deferRender)await rerender({ scroll: 'preserve' });
-      notify(info.invalidSharedDraft ? 'Shared draft is invalid. Your published content is safe; Save can back up and repair the broken draft.' : (info.recovered ? 'Your unsaved work was recovered from this browser.' : 'The shared draft is ready.'), info.invalidSharedDraft);
+      notify(info.liveUninitialized ? 'Live collaboration is empty. Quaantic or zzinss: Restore draft using your latest downloaded JSON, then click Share restored draft once to initialize.' : (info.recovered ? 'Unsynced edits from this browser recovered. They are not shared until synced.' : 'Live collaborative editor ready.'), info.liveUninitialized);
     }
     updateToolbar();
     if(!deferRender&&session.editing)restoreForm();
-    if(info.recovered && !info.invalidSharedDraft)queueAutosave(12000);
+    if(info.recovered && !info.liveUninitialized)queueAutosave(1200);
   } catch (error) {
     notify(error.message || 'Failed to load the editing session.', true);
     barStatus('Failed to load editing session');
@@ -737,8 +737,8 @@ function setEditing(on) {
 // remote SHA to prevent one contributor from overwriting another.
 let autosaveTimer=null, autosaveWorking=null, autosaveFailures=0;
 function cancelAutosave(){clearTimeout(autosaveTimer);autosaveTimer=null;}
-function queueAutosave(delay=60000){
-  if(!session.ready||!session.allowed||!draft.draftDirty()||draft.hasRestoredDraft())return;
+function queueAutosave(delay=1700){
+  if(!session.ready||!session.allowed||!draft.draftOnline()||!draft.draftDirty()||draft.hasRestoredDraft())return;
   cancelAutosave();
   autosaveTimer=setTimeout(()=>{autosaveTimer=null;void runAutosave();},delay);
   updateToolbar();
@@ -748,7 +748,7 @@ async function runAutosave(){
   if(session.busy||popState||dragSource||document.hidden){queueAutosave(6000);return;}
   autosaveWorking=(async()=>{
     try{
-      barStatus('Saving changes for everyone…','busy');
+      barStatus('Syncing live revision…','busy');
       // Unresolved conflicts must not be chosen silently by background saves.
       await draft.saveDraft(session.token, undefined,{automatic:true});
       autosaveFailures=0;
@@ -781,7 +781,7 @@ async function syncSharedNow() {
       window.dispatchEvent(new CustomEvent('ri-edit-content'));
       await rerender({ scroll: 'preserve' });
     }
-    notify(changed ? 'Synced the shared GitHub draft. Your local edits were merged.' : 'Already using the latest shared version.');
+    notify(changed ? 'Shared editor updated with collaborators’ changes.' : 'Already using the latest shared revision.');
   } catch (error) {
     session.syncError = 'Sync conflict — review before saving';
     notify(error.message || 'Could not load the shared draft.', true);
@@ -814,7 +814,7 @@ function startSharedRefresh() {
     if (!session.ready || session.busy || sharedRefreshChecking || autosaveWorking || popState || dragSource || document.hidden) return;
     sharedRefreshChecking = refresh();
   };
-  sharedRefreshTimer = setInterval(check, 30000);
+  sharedRefreshTimer = setInterval(check, 2500);
   window.addEventListener('focus', check);
 }
 
@@ -1490,7 +1490,7 @@ function renderVersionsPage(root) {
   const restoreFlow = async (name) => {
     if (session.busy) return;
     if (!session.canPublish) { notify('Only Quaantic and zzinss can stage full version restores.', true); return; }
-    if (!window.confirm(`Stage "${draft.versionLabel(name)}" into your local editor?\n\nThis does NOT publish to the live Wiki or save for everyone. Review the restored version first, then click Save for Everyone when ready. Publish is a separate action.\n\nYour unsaved local edits will be replaced; download a recovery copy first if needed.`)) return;
+    if (!window.confirm(`Stage "${draft.versionLabel(name)}" into your local editor?\n\nThis does NOT publish to the live Wiki or save for everyone. Review the restored version first, then click Share restored draft when ready. Publish is a separate action.\n\nYour unsaved local edits will be replaced; download a recovery copy first if needed.`)) return;
     session.busy = true;
     try {
       await draft.restoreVersion(session.token, name);
@@ -1499,7 +1499,7 @@ function renderVersionsPage(root) {
       window.dispatchEvent(new CustomEvent('ri-edit-content'));
       updateToolbar();
       await rerender({ scroll: 'preserve' });
-      notify(`Version staged in your editor only: ${draft.versionLabel(name)}. Review it, then Save for Everyone. Nothing was published.`);
+      notify(`Version staged locally: ${draft.versionLabel(name)}. Use Share restored draft to share changes; Publish is always separate.`);
     } catch (error) {
       notify(error.message || 'Restore failed.', true);
     } finally {
@@ -1562,7 +1562,7 @@ function renderVersionsPage(root) {
               draft.applyDraftToSite();
               buildNav();
               window.dispatchEvent(new CustomEvent('ri-edit-content'));
-              notify(`${count} missing page(s) recovered into your draft. Save for everyone when ready.`);
+              notify(`${count} missing page(s) recovered locally. They will be shared after confirmation.`);
             } catch (error) { notify(error.message, true); }
             finally { session.busy = false; updateToolbar(); }
           });

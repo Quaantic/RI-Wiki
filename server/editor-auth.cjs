@@ -4,6 +4,7 @@ const REPO = 'Quaantic/RI-Wiki';
 const PREFIX = `/repos/${REPO}`;
 const COOKIE = '__Host-ri-session';
 const PUBLISHERS = new Set([279064860, 352400146]);
+const authCache=new Map();
 function key() {
   if (!process.env.OAUTH_CLIENT_SECRET) throw new Error('Authentication is not configured.');
   return crypto.createHash('sha256').update(`ri-session-v1:${process.env.OAUTH_CLIENT_SECRET}`).digest();
@@ -42,10 +43,16 @@ async function authorize(req, publish=false) {
   checkRequest(req);
   const cookies = Object.fromEntries((req.headers.cookie || '').split(';').map(item=>item.trim().split('=')));
   const token = unseal(cookies[COOKIE] || '');
-  const user = await github(token, '/user');
-  if (!Number.isSafeInteger(user.id)) throw Object.assign(new Error('Permission denied.'), {status:403});
-  const repository = await github(token, PREFIX);
-  if (!repository.permissions?.push) throw Object.assign(new Error('Permission denied. Repository write access is required.'), {status:403});
+  const digest=crypto.createHash('sha256').update(token).digest('hex');
+  let result=authCache.get(digest);
+  if(!result||result.until<Date.now()){
+   const [user,repository]=await Promise.all([github(token,'/user'),github(token,PREFIX)]);
+   if(!Number.isSafeInteger(user.id)||!repository.permissions?.push)throw Object.assign(Error('Repository write access is required.'),{status:403});
+   result={user,until:Date.now()+30000};
+   if(authCache.size>150)authCache.clear();
+   authCache.set(digest,result);
+  }
+  const user=result.user;
   const canPublish = PUBLISHERS.has(user.id);
   if (publish && !canPublish) throw Object.assign(new Error('Permission denied. Only Quaantic and zzinss can publish.'), {status:403});
   return {token,user,canPublish};
