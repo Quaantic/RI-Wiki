@@ -14246,7 +14246,7 @@
                 {
                   "id": "b2",
                   "name": "Soul",
-                  "value": "formula: amount",
+                  "value": "formula: ((amount / 3) + 1)^0.125",
                   "capUnit": "x",
                   "unit": "x"
                 }
@@ -14811,12 +14811,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.game.calculators.pages.runes/secret.groups[group].id": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group].name": {
-      "actor": "Nathy365"
-    },
     "content.game.calculators.pages.runes/secret.groups[group].color": {
       "actor": "Nathy365"
     },
