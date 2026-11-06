@@ -14251,6 +14251,20 @@
                   "unit": "x"
                 }
               ]
+            },
+            {
+              "id": "group4",
+              "name": "New group",
+              "color": "#86d62b",
+              "dropChance": "",
+              "amountLabel": "Amount owned",
+              "bonuses": [
+                {
+                  "id": "b1",
+                  "name": "New bonus",
+                  "value": "formula: amount"
+                }
+              ]
             }
           ]
         }
@@ -15859,6 +15873,45 @@
       "actor": "Nathy365"
     },
     "content.game.calculators.pages.runes/secret.groups": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups order": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group4]": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group4].id": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group4].name": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group4].color": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group4].dropChance": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group4].amountLabel": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group4].bonuses": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group4].bonuses order": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group4].bonuses[b1]": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group4].bonuses[b1].id": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group4].bonuses[b1].name": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group4].bonuses[b1].value": {
       "actor": "Nathy365"
     }
   }
