@@ -2,6 +2,30 @@
   "format": 1,
   "entries": [
     {
+      "id": "57d3e8f4-74bf-4eb0-982a-0917a48abe27",
+      "at": 1793934492572,
+      "kind": "content",
+      "text": "Updated text of \"Where is Energy?\": Write a description or FAQ answer here. to Just follow the tutorial gng ✌️✌️",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "80b9dffe-92b3-4ef8-8fdc-339c5567f599",
+      "at": 1793934492508,
+      "kind": "content",
+      "text": "Updated text of \"Where is Energy?\": New section to Where is Energy?",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "08122743-f67f-48a8-b523-a25d691cba65",
+      "at": 1793934465183,
+      "kind": "content",
+      "text": "Added \"New section\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
       "id": "6fc20fc5-97f7-4423-9552-efd933256076",
       "at": 1793934179706,
       "kind": "colors",
@@ -2374,30 +2398,6 @@
       "at": 1793856625529,
       "kind": "content",
       "text": "Updated boosts of \"Tier 6\": [\"45.56x Logs\",\"9.54x Tree Damage\",\"2.8x Ro… to [\"45.56x Logs\",\"9.54x Tree Damage\",\"2.8x Ro…",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "06d9116f-7162-4526-8b27-519aad420d67",
-      "at": 1793856609845,
-      "kind": "content",
-      "text": "Updated boosts of \"Tier 6\": [\"More Damage Multi (+/tier)\",\"More Log Mul… to [\"45.56x Logs\",\"9.54x Tree Damage\",\"2.8x Ro…",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "8e4afc3a-4db4-4906-83c0-d46307248c8e",
-      "at": 1793856570042,
-      "kind": "content",
-      "text": "Updated boosts of \"Tier 5\": [\"More Damage Multi (+/tier)\",\"More Log Mul… to [\"26.58x Logs\",\"6.87x Tree Damage\",\"2.21x R…",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "a30420e9-1b60-49e3-86f1-180ca098733b",
-      "at": 1793856552976,
-      "kind": "content",
-      "text": "Updated boosts of \"Tier 4\": [\"More Damage Multi (+/tier)\",\"More Log Mul… to [\"15.19x Logs\",\"4.88x Tree Damage\",\"1.72x R…",
       "actor": "Quaantic",
       "pending": true
     }
