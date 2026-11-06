@@ -866,7 +866,7 @@
               {
                 "id": "tree-essence-milestones",
                 "name": "Tree Essence Milestones",
-                "desc": "Describe this page here.",
+                "desc": "Milestones you unlock with defined amounts of Tree Essence!",
                 "icon": "game-icons:trophy",
                 "highlights": [],
                 "facts": [],
@@ -15018,101 +15018,11 @@
     ]
   },
   "_baseShas": {
-    "updates": "0eb97556919ed433f706883ac61ad637d09334ca",
     "wiki": "9589980a426f5352a7de8f3e444221f5b6374636",
-    "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
+    "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba",
+    "updates": "0eb97556919ed433f706883ac61ad637d09334ca"
   },
   "_authors": {
-    "content.game.upgrades.sections.life-tree-essence.upgrades[12].n": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[12].name": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[12].cap": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[12].price": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[12].multi": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[13]": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[13].n": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[13].name": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[13].cap": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[13].price": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[13].multi": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[14]": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[14].n": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[14].name": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[14].cap": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[14].price": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[14].multi": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.routes.life/tree-essence": {
-      "actor": "Quaantic"
-    },
-    "content.game.progression.stages.life/tree-essence-milestones": {
-      "actor": "Quaantic"
-    },
-    "content.game.progression.stages.life/tree-essence-milestones.title": {
-      "actor": "Quaantic"
-    },
-    "content.game.progression.stages.life/tree-essence-milestones.itemLabel": {
-      "actor": "Quaantic"
-    },
-    "content.game.progression.stages.life/tree-essence-milestones.stages": {
-      "actor": "Quaantic"
-    },
-    "content.game.progression.stages.life/tree-essence-milestones.stages order": {
-      "actor": "Quaantic"
-    },
-    "content.game.progression.stages.life/tree-essence-milestones.stages[1]": {
-      "actor": "Quaantic"
-    },
-    "content.game.progression.stages.life/tree-essence-milestones.stages[1].num": {
-      "actor": "Quaantic"
-    },
-    "content.game.progression.stages.life/tree-essence-milestones.stages[1].requirements": {
-      "actor": "Quaantic"
-    },
-    "content.game.progression.stages.life/tree-essence-milestones.stages[1].boosts": {
-      "actor": "Quaantic"
-    },
-    "content.game.progression.stages.life/tree-essence-milestones.stages[1].unlocks": {
-      "actor": "Quaantic"
-    },
-    "content.game.progression.stages.life/tree-essence-milestones.stages[1].unlocks.area": {
-      "actor": "Quaantic"
-    },
-    "content.game.progression.stages.life/tree-essence-milestones.stages[1].unlocks.places": {
-      "actor": "Quaantic"
-    },
     "content.game.progression.stages.life/tree-essence-milestones.stages[1].unlocks.places order": {
       "actor": "Quaantic"
     },
@@ -16161,6 +16071,15 @@
       "actor": "zzinss"
     },
     "content.game.upgrades.sections.research.upgrades[50].multi": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[tree-essence].children": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[tree-essence].children[tree-essence-milestones]": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[tree-essence].children[tree-essence-milestones].desc": {
       "actor": "zzinss"
     }
   }
