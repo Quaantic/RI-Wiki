@@ -14829,7 +14829,7 @@
           "groups": [
             {
               "id": "group",
-              "name": "Dark-",
+              "name": "Dark -",
               "color": "#86d62b",
               "dropChance": "78%",
               "amountLabel": "Amount owned",
@@ -14860,7 +14860,7 @@
             },
             {
               "id": "group2",
-              "name": "Void-",
+              "name": "Void -",
               "color": "#86d62b",
               "dropChance": "13%",
               "amountLabel": "Amount owned",
@@ -14890,7 +14890,7 @@
             },
             {
               "id": "group3",
-              "name": "Unnatural-",
+              "name": "Unnatural -",
               "color": "#86d62b",
               "dropChance": "4.83%",
               "amountLabel": "Amount owned",
@@ -15690,18 +15690,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.wiki.categories[main].subcategories[merge].children[quartz]": {
-      "actor": "Quaantic"
-    },
-    "content.wiki.categories[main].subcategories[merge].children[quartz].icon": {
-      "actor": "Quaantic"
-    },
-    "content.wiki.categories[main].subcategories[merge].children[bluesteel]": {
-      "actor": "Quaantic"
-    },
-    "content.wiki.categories[main].subcategories[merge].children[bluesteel].icon": {
-      "actor": "Quaantic"
-    },
     "content.wiki.categories[main].subcategories[merge].children[merge-perks]": {
       "actor": "Quaantic"
     },
@@ -16567,7 +16555,7 @@
       "actor": "Quaantic"
     },
     "content.game": {
-      "actor": "zzinss"
+      "actor": "Quaantic"
     },
     "content.wiki": {
       "actor": "Quaantic"
@@ -16750,6 +16738,30 @@
       "actor": "Quaantic"
     },
     "content.updates.versions[1.03].entries[entry-0c4daa65-21da-4f1e-ba45-030fd6465bd8].description": {
+      "actor": "Quaantic"
+    },
+    "content.game.calculators.pages.runes/secret": {
+      "actor": "Quaantic"
+    },
+    "content.game.calculators.pages.runes/secret.groups": {
+      "actor": "Quaantic"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group]": {
+      "actor": "Quaantic"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group].name": {
+      "actor": "Quaantic"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group2]": {
+      "actor": "Quaantic"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group2].name": {
+      "actor": "Quaantic"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group3]": {
+      "actor": "Quaantic"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group3].name": {
       "actor": "Quaantic"
     }
   }
