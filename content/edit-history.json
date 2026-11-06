@@ -2,6 +2,56 @@
   "format": 1,
   "entries": [
     {
+      "id": "537bf07c-d7e9-4197-923c-c25109a5055e",
+      "at": 1793948948725,
+      "kind": "content",
+      "text": "Updated value of \"Mastry\": formula: amount to formula: ((amount / 1) + 1)^0.075",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:09:26.038Z"
+    },
+    {
+      "id": "94aefcb4-f67f-442f-b0df-cccca809d5dc",
+      "at": 1793948935536,
+      "kind": "content",
+      "text": "Updated value of \"Ruby Energy\": formula: amount to formula: ((amount / 1) + 1)^0.15",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:09:26.038Z"
+    },
+    {
+      "id": "cbc26a01-9151-4565-9cbe-b59099ff3917",
+      "at": 1793948922290,
+      "kind": "content",
+      "text": "Updated value of \"Rare Sap\": formula: amount to formula: ((amount / 0.75) + 1)^0.12",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:09:26.038Z"
+    },
+    {
+      "id": "f8bceb19-35aa-4755-9616-54f8735a7e90",
+      "at": 1793948908716,
+      "kind": "content",
+      "text": "Updated value of \"Astatine\": formula: amount to formula: ((amount / 0.5) + 1)^0.09",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:09:26.038Z"
+    },
+    {
+      "id": "8a8dba59-32df-45d3-bf5b-11a1f74811b4",
+      "at": 1793948892752,
+      "kind": "content",
+      "text": "Updated value of \"Magnets\": formula: amount to formula: ((amount / 1.25) + 1)^0.13",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:09:26.038Z"
+    },
+    {
       "id": "fa3b20f3-5c2a-4108-93e9-267c294c9312",
       "at": 1793948862558,
       "kind": "content",
