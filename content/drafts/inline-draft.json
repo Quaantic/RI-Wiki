@@ -2227,7 +2227,13 @@
             "facts": [],
             "vitals": [],
             "children": [],
-            "sections": []
+            "sections": [
+              {
+                "id": "text-dff3ecf7-3a3c-44ba-88b6-5b6de0217d87",
+                "title": "How do I get Astatine?",
+                "text": "100T californium milestone and it’s a base 0.5% chance from a crystal."
+              }
+            ]
           },
           {
             "id": "Life-island-FAQ",
@@ -2293,6 +2299,21 @@
                 "id": "text-5cc7cd6b-610d-41eb-9fb9-839010af26a0",
                 "title": "Where are Secret Runes",
                 "text": "Secret runes are located next to souls upgrades, at dungeon island."
+              },
+              {
+                "id": "text-b4b23578-baa4-4843-a7aa-4893f19c74bf",
+                "title": "Should I do runes",
+                "text": "Yes because even though they may take a while, they’re buffs are nice to get while you go on and once you’ve started slowing down"
+              },
+              {
+                "id": "text-310e8dd7-42f4-4c0e-a2c3-f4ef212308d9",
+                "title": "Can I get more than 1 rune?",
+                "text": "Yes, there’s rune luck and bulk upgrades starting about stage 3 with money and across stage 3-6 as well as sprinkled in life and factory that can help buff the rune luck and bulk, and the gamepass"
+              },
+              {
+                "id": "text-0ab7d3fd-db4a-4205-a6f0-cfba44cac142",
+                "title": "What gamepass should i get with my token?",
+                "text": "Depends on what you need, most likely factory master / barn if you want to grind for leaderboard, eternal boost if you afk a lot, and a specific boost (like dunegeon hunter) for buffs in a specific area you need"
               }
             ]
           }
@@ -15757,6 +15778,63 @@
       "actor": "Quaantic"
     },
     "content.wiki.categories[FAQ].subcategories[General-FAQ].sections[text-5cc7cd6b-610d-41eb-9fb9-839010af26a0].text": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[FAQ].subcategories[Main-Island-FAQ]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[FAQ].subcategories[Main-Island-FAQ].sections": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[FAQ].subcategories[Main-Island-FAQ].sections order": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[FAQ].subcategories[Main-Island-FAQ].sections[text-dff3ecf7-3a3c-44ba-88b6-5b6de0217d87]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[FAQ].subcategories[Main-Island-FAQ].sections[text-dff3ecf7-3a3c-44ba-88b6-5b6de0217d87].id": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[FAQ].subcategories[Main-Island-FAQ].sections[text-dff3ecf7-3a3c-44ba-88b6-5b6de0217d87].title": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[FAQ].subcategories[Main-Island-FAQ].sections[text-dff3ecf7-3a3c-44ba-88b6-5b6de0217d87].text": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[FAQ].subcategories[General-FAQ].sections[text-b4b23578-baa4-4843-a7aa-4893f19c74bf]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[FAQ].subcategories[General-FAQ].sections[text-b4b23578-baa4-4843-a7aa-4893f19c74bf].id": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[FAQ].subcategories[General-FAQ].sections[text-b4b23578-baa4-4843-a7aa-4893f19c74bf].title": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[FAQ].subcategories[General-FAQ].sections[text-b4b23578-baa4-4843-a7aa-4893f19c74bf].text": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[FAQ].subcategories[General-FAQ].sections[text-310e8dd7-42f4-4c0e-a2c3-f4ef212308d9]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[FAQ].subcategories[General-FAQ].sections[text-310e8dd7-42f4-4c0e-a2c3-f4ef212308d9].id": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[FAQ].subcategories[General-FAQ].sections[text-310e8dd7-42f4-4c0e-a2c3-f4ef212308d9].title": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[FAQ].subcategories[General-FAQ].sections[text-310e8dd7-42f4-4c0e-a2c3-f4ef212308d9].text": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[FAQ].subcategories[General-FAQ].sections[text-0ab7d3fd-db4a-4205-a6f0-cfba44cac142]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[FAQ].subcategories[General-FAQ].sections[text-0ab7d3fd-db4a-4205-a6f0-cfba44cac142].id": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[FAQ].subcategories[General-FAQ].sections[text-0ab7d3fd-db4a-4205-a6f0-cfba44cac142].title": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[FAQ].subcategories[General-FAQ].sections[text-0ab7d3fd-db4a-4205-a6f0-cfba44cac142].text": {
       "actor": "Quaantic"
     }
   }
