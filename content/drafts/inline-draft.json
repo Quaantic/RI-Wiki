@@ -14254,7 +14254,7 @@
             },
             {
               "id": "group4",
-              "name": "New group",
+              "name": "Plasma",
               "color": "#86d62b",
               "dropChance": "2.19%",
               "amountLabel": "Amount owned",
@@ -14263,12 +14263,22 @@
                   "id": "b1",
                   "name": "New bonus",
                   "value": "formula: amount"
+                },
+                {
+                  "id": "b",
+                  "name": "New bonus",
+                  "value": "formula: amount"
+                },
+                {
+                  "id": "b2",
+                  "name": "New bonus",
+                  "value": "formula: amount"
                 }
               ]
             },
             {
               "id": "group5",
-              "name": "New group",
+              "name": "Infernal",
               "color": "#86d62b",
               "dropChance": "0.8%",
               "amountLabel": "Amount owned",
@@ -14287,7 +14297,7 @@
             },
             {
               "id": "group6",
-              "name": "New group",
+              "name": "Soul",
               "color": "#86d62b",
               "dropChance": "0.31%",
               "amountLabel": "Amount owned",
@@ -14301,9 +14311,9 @@
             },
             {
               "id": "group7",
-              "name": "New group",
+              "name": "Omnisoul",
               "color": "#86d62b",
-              "dropChance": "",
+              "dropChance": "0.12%",
               "amountLabel": "Amount owned",
               "bonuses": [
                 {
@@ -14315,9 +14325,9 @@
             },
             {
               "id": "group8",
-              "name": "New group",
+              "name": "Omega",
               "color": "#86d62b",
-              "dropChance": "",
+              "dropChance": "0.03%",
               "amountLabel": "Amount owned",
               "bonuses": [
                 {
@@ -14886,18 +14896,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.game.resources.pageLinks.Void": {
-      "actor": "Nathy365"
-    },
-    "content.game.resources.pageLinks.Soul": {
-      "actor": "Nathy365"
-    },
-    "content.game.resources.pageLinks.Infernal": {
-      "actor": "Nathy365"
-    },
-    "content.game.resources.pageLinks.Plasma": {
-      "actor": "Nathy365"
-    },
     "content.game.resources.pageLinks.Unnatural": {
       "actor": "Nathy365"
     },
@@ -15946,6 +15944,30 @@
       "actor": "Nathy365"
     },
     "content.game.calculators.pages.runes/secret.groups[group5].bonuses[b].value": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group4].bonuses[b]": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group4].bonuses[b].id": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group4].bonuses[b].name": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group4].bonuses[b].value": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group4].bonuses[b2]": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group4].bonuses[b2].id": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group4].bonuses[b2].name": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group4].bonuses[b2].value": {
       "actor": "Nathy365"
     }
   }
