@@ -14231,13 +14231,24 @@
               "bonuses": [
                 {
                   "id": "b1",
-                  "name": "New bonus",
-                  "value": "formula: amount"
+                  "name": "Strength",
+                  "value": "formula: amount",
+                  "capUnit": "x",
+                  "unit": "x"
                 },
                 {
                   "id": "b",
-                  "name": "New bonus",
-                  "value": "formula: amount"
+                  "name": "Health",
+                  "value": "formula: amount",
+                  "capUnit": "x",
+                  "unit": "x"
+                },
+                {
+                  "id": "b2",
+                  "name": "Soul",
+                  "value": "formula: amount",
+                  "capUnit": "x",
+                  "unit": "x"
                 }
               ]
             }
@@ -14800,15 +14811,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.wiki.categories[runes].subcategories[secret].highlights order": {
-      "actor": "Nathy365"
-    },
-    "content.wiki.categories[runes].subcategories[secret].facts": {
-      "actor": "Nathy365"
-    },
-    "content.wiki.categories[runes].subcategories[secret].facts order": {
-      "actor": "Nathy365"
-    },
     "content.wiki.categories[runes].subcategories[secret].vitals": {
       "actor": "Nathy365"
     },
@@ -15857,6 +15859,36 @@
       "actor": "Nathy365"
     },
     "content.game.calculators.pages": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group3].bonuses[b1].capUnit": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group3].bonuses[b1].unit": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group3].bonuses[b].capUnit": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group3].bonuses[b].unit": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group3].bonuses[b2]": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group3].bonuses[b2].id": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group3].bonuses[b2].name": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group3].bonuses[b2].value": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group3].bonuses[b2].capUnit": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group3].bonuses[b2].unit": {
       "actor": "Nathy365"
     }
   }
