@@ -2,6 +2,26 @@
   "format": 1,
   "entries": [
     {
+      "id": "9b2e099d-7c2e-4d19-996b-3cdc0fe29438",
+      "at": 1793980258017,
+      "kind": "content",
+      "text": "Updated text of \"Animals Tiers\": Animals to Animals Tiers",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:50:58.952Z"
+    },
+    {
+      "id": "6e246738-7281-4ccb-a9bf-2f3daf11fe7f",
+      "at": 1793980242868,
+      "kind": "colors",
+      "text": "Colored \"Animal Tiers\" (#618a4d)",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:50:58.952Z"
+    },
+    {
       "id": "f036249f-68f5-4766-90a3-b9547d39e35c",
       "at": 1793980231384,
       "kind": "colors",
@@ -2976,26 +2996,6 @@
       "at": 1793948828548,
       "kind": "content",
       "text": "Set unit of \"Rare Sap\" (x)",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T07:07:28.996Z"
-    },
-    {
-      "id": "8c7b6011-d281-4003-93b3-b8e039a3e95e",
-      "at": 1793948828502,
-      "kind": "content",
-      "text": "Set cap Unit of \"Rare Sap\" (x)",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T07:07:28.996Z"
-    },
-    {
-      "id": "d784ddf2-92be-475e-af89-c1617facb65c",
-      "at": 1793948825600,
-      "kind": "content",
-      "text": "Set unit of \"Ruby Energy\" (x)",
       "actor": "Nathy365",
       "pending": false,
       "status": "saved",
