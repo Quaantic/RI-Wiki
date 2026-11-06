@@ -20,14 +20,12 @@ export function authorsForChanges(base, docs, authors = {}, actor = '') {
   }
   return next;
 }
+// Never silently prefer the owner (or any contributor) when two people edit
+// the same value. In particular background Sync has no confirmation callback:
+// it must throw SyncConflict and keep the local unsaved data intact.
 export function priorityResolver(fallback, localAuthors, remoteAuthors) {
   const resolver = (...args) => fallback?.(...args);
-  resolver.priority = ({ path, local, remote }) => {
-    const isOwner = (record, value) => record?.actor?.toLowerCase() === 'quaantic' && record.value === signature(value);
-    const left = isOwner(localAuthors[path], local), right = isOwner(remoteAuthors[path], remote);
-    // Both owner tabs: keep the already saved value rather than replay stale edits.
-    return right ? 'remote' : left ? 'local' : undefined;
-  };
-  resolver.resolveConflict = conflict => resolver.priority(conflict) ?? fallback?.resolveConflict?.(conflict);
+  resolver.priority = () => undefined;
+  resolver.resolveConflict = conflict => fallback?.resolveConflict?.(conflict);
   return resolver;
 }

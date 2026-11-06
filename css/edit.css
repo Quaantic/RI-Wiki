@@ -687,3 +687,67 @@ html.ri-edit-bar .sub-pills-wrap {
   .ri-edit-field .input { font-size: 16px; }
   .ri-version-row { flex-wrap: wrap; }
 }
+
+/* Fullscreen, searchable icon browser: moved to <body> while open so the
+   small inline editor cannot crop it or constrain its scroll area. */
+html.ri-icon-browser-open { overflow: hidden; }
+.ri-icon-picker__header { display: none; }
+.ri-icon-picker--fullscreen {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 2147483000 !important;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-sizing: border-box;
+  width: 100vw;
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  padding: clamp(14px, 3vw, 36px);
+  border: 0;
+  border-radius: 0;
+  background: #0c140e;
+  color: var(--c-text);
+  box-shadow: inset 0 0 0 1px rgba(144, 238, 100, .11);
+}
+.ri-icon-picker--fullscreen[hidden] { display: none; }
+.ri-icon-picker--fullscreen .ri-icon-picker__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  font-size: clamp(19px, 2vw, 25px);
+  letter-spacing: .02em;
+}
+.ri-icon-picker--fullscreen .ri-icon-picker__search {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(170px, 1fr);
+  gap: 10px;
+  align-items: stretch;
+}
+.ri-icon-picker--fullscreen .ri-icon-picker__search .input { min-height: 42px; font-size: 14px; }
+.ri-icon-picker--fullscreen .ri-icon-picker__count { grid-column: 1 / -1; font-size: 12px; }
+.ri-icon-picker--fullscreen .ri-icon-picker__grid {
+  flex: 1;
+  min-height: 0;
+  max-height: none;
+  overflow-y: auto;
+  display: grid;
+  align-content: start;
+  grid-template-columns: repeat(auto-fill, minmax(112px, 1fr));
+  gap: 10px;
+  padding: 6px 4px 16px;
+}
+.ri-icon-picker--fullscreen .ri-icon-cell { min-height: 100px; gap: 11px; padding: 18px 8px; border-color: rgba(180, 220, 180, .08); background: rgba(255,255,255,.015); }
+.ri-icon-picker--fullscreen .ri-icon-cell svg { width: 40px; height: 40px; }
+.ri-icon-picker--fullscreen .ri-icon-cell span { font-size: 12px; }
+.ri-icon-picker--fullscreen .ri-icon-picker__source { flex: none; }
+.ri-icon-picker--fullscreen .ri-icon-picker__more { align-self: center; flex: none; min-width: 160px; }
+@media (max-width: 600px) {
+  .ri-icon-picker--fullscreen { padding: 16px 12px; gap: 10px; }
+  .ri-icon-picker--fullscreen .ri-icon-picker__search { grid-template-columns: minmax(0, 1fr); }
+  .ri-icon-picker--fullscreen .ri-icon-picker__count { grid-column: 1; }
+  .ri-icon-picker--fullscreen .ri-icon-picker__grid { grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 6px; }
+  .ri-icon-picker--fullscreen .ri-icon-cell { min-height: 88px; padding: 10px 4px; }
+}

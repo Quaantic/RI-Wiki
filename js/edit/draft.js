@@ -587,10 +587,24 @@ async function saveChangedDraft(token, keepLocalOrder){
           branch: BRANCH,
         }),
       });
-      draftState.draftSha=result.content.sha;
+      // GitHub responding to PUT is not enough: verify that the exact draft
+      // exists remotely before telling the editor Save succeeded / clearing
+      // its recovery copy. If verification fails, retain the local edits.
+      const writtenSha = result?.content?.sha;
+      if (!writtenSha) throw new Error('GitHub did not confirm the saved revision. Your local edits are preserved.');
+      draftState.draftSha = writtenSha;
+      const verified = await githubRequest(githubContentsUrl(DRAFT_FILE), token, { cache: 'no-store' });
+      if (verified?.sha !== writtenSha || !verified.content) {
+        throw new Error('The shared draft changed during Save. Your work remains locally recoverable; Sync and check before retrying.');
+      }
+      const stored = JSON.parse(decodeBase64Content(verified.content));
+      const expected = JSON.parse(raw);
+      if (Object.keys(FILES).some(name => JSON.stringify(stored[name]) !== JSON.stringify(expected[name]))) {
+        throw new Error('GitHub returned different data from what was saved. Your local edits remain recoverable.');
+      }
       draftState.authors = authorsForChanges(draftState.sharedBase, draftState.docs, draftState.authors, draftState.actor);
       draftState.savedDraftRaw=raw;
-      draftState.sharedBase=JSON.parse(raw);
+      draftState.sharedBase=expected;
       draftState.sharedOrderNeedsSave=false;
       break;
     }catch(error){
@@ -605,10 +619,19 @@ async function saveChangedDraft(token, keepLocalOrder){
     const entries = changeLog.length
       ? changeLog.map((entry) => ({ ...entry, pending: false, status: 'saved', savedAt: now }))
       : [{ id: `save-${now}-${draftState.actor}`, at: now, savedAt: now, actor: draftState.actor, kind: 'content', text: 'Shared draft saved', status: 'saved', pending: false }];
-    await writeHistory(token, entries, true);
-    changeLog.splice(0, changeLog.length);
+    // History is a separate GitHub file. An error writing activity history
+    // must NOT report a successfully verified shared draft as a failed Save.
+    try {
+      await writeHistory(token, entries, true);
+      changeLog.splice(0, changeLog.length);
+    } catch (error) {
+      console.warn('[inline-editor] Draft verified, but Update History could not be written.', error);
+      persistLocalRecovery();
+      return { saved: true, historyWarning: true };
+    }
   }
   persistLocalRecovery();
+  return { saved: true, historyWarning: false };
 }
 
 export async function discardDraft(token) {
@@ -859,8 +882,8 @@ export async function listEditHistory(token) {
 }
 
 // ==== VERSOES (backups no GitHub; substitui o painel /admin/) ====
-// A lista vive em content/backups/ ("backup-*.json"). Limite de 25: ao criar
-// a 26, a mais antiga e removida. Versoes nao podem ser apagadas a mao.
+// A lista vive em content/backups/; nenhuma versao e apagada
+// automaticamente para evitar perder trabalhos de contribuidores.
 
 const VERSIONS_MAX = 25;
 
@@ -905,13 +928,13 @@ export async function listVersions(token) {
     ? result
         .filter((item) => item.type === 'file' && !['backup-inline-20261104T064959590Z.json', 'backup-inline-20261104T071338426Z.json'].includes(item.name) && (/^backup-.*\.json$/.test(item.name) || /^(?:save|publish)\.[a-zA-Z0-9_-]+\.(?:\d{8}T\d{6}\d{3}Z|\d{4}-\d{2}-\d{2}-\d{2}:\d{2}(?:-\d+)?)\.json$/.test(item.name)))
         .map((item) => ({ name: item.name, sha: item.sha }))
-        .sort((a, b) => versionTimestamp(a.name).localeCompare(versionTimestamp(b.name)))
+        .sort((a, b) => versionTimestamp(b.name).localeCompare(versionTimestamp(a.name)))
     : [];
 }
 
 export async function pruneVersions(token, keep = VERSIONS_MAX) {
   const versions = await listVersions(token);
-  const excess = versions.slice(0, Math.max(0, versions.length - keep));
+  const excess = versions.slice(Math.max(0, keep));
   for (const item of excess) {
     await githubRequest(githubContentsUrl(`${BACKUP_DIRECTORY}/${item.name}`), token, {
       method: 'DELETE',
@@ -942,41 +965,46 @@ export async function createVersion(token, documents = draftState.baseDocs, mess
       branch: BRANCH,
     }),
   });
-  // Version cleanup is best effort; never fail a successful backup because pruning failed.
-  await pruneVersions(token).catch(() => {});
+  // Never auto-delete a previous backup. Recovery files can contain irreplaceable edits.
   return name;
 }
 
 export async function restoreVersion(token, name) {
-  const result = await githubRequest(githubContentsUrl(`${BACKUP_DIRECTORY}/${encodeURIComponent(name)}`), token, {});
+  // Restore is a PUBLISH action. The generic /api/github route deliberately
+  // refuses writes to live content, even from the owner. Use the protected,
+  // atomic /api/publish endpoint (Quaantic/zzinss only) instead.
+  const result = await githubRequest(githubContentsUrl(`${BACKUP_DIRECTORY}/${encodeURIComponent(name)}`), token);
   const backup = JSON.parse(decodeBase64Content(result.content));
   if (backup.format !== 1 || !backup.documents?.wiki || !backup.documents?.updates || !backup.documents?.game) {
     throw new Error('This version is incomplete or has an unsupported format.');
   }
-  const restored = { wiki: backup.documents.wiki, updates: backup.documents.updates, game: backup.documents.game };
+  const restored = clone({ wiki: backup.documents.wiki, updates: backup.documents.updates, game: backup.documents.game });
   validateDocuments(restored);
-  // Seguranca: guarda o estado publicado atual como versao antes de restaurar.
-  await createVersion(token, draftState.baseDocs, 'Safety version before restore');
-  for (const docName of Object.keys(FILES)) {
-    const path = FILES[docName];
-    const content = `${JSON.stringify(restored[docName], null, 2)}\n`;
-    const put = await githubRequest(githubContentsUrl(path), token, {
-      method: 'PUT',
-      body: JSON.stringify({
-        message: `Restore ${path.split('/').at(-1).replace('.json', '')} from ${name}`,
-        content: encodeBase64Content(content),
-        sha: draftState.shas[docName],
-        branch: BRANCH,
-      }),
-    });
-    draftState.shas[docName] = put.content.sha;
+  if (await remoteChanged(token)) {
+    throw new Error('Someone changed the shared data since you opened the editor. Sync first, then review the version to restore. Nothing was overwritten.');
   }
+  // Protected endpoint creates a safety backup and updates all published
+  // documents in ONE commit; its HEAD CAS prevents concurrent restores.
+  const published = await publishDocuments({ docs: restored, shas: draftState.shas, draftSha: draftState.draftSha });
+  draftState.shas = published.shas;
   draftState.baseDocs = clone(restored);
   draftState.docs = clone(restored);
+  draftState.sharedBase = clone(restored);
+  draftState.draftSha = null;
+  draftState.savedDraftRaw = '';
+  draftState.needsMerge = false;
+  draftState.sharedOrderNeedsSave = false;
+  draftState.invalidDraftBackup = null;
   history.length = 0;
   changeLog.length = 0;
-  logChange('content', `Restored the version "${versionLabel(name)}" (pending edits were replaced)`);
+  persistLocalRecovery();
   applyDraftToSite();
+  // The restore is already live; audit is best-effort and cannot undo a
+  // successful publication if GitHub history has a transient failure.
+  const now = Date.now();
+  await writeHistory(token, [{ id: crypto.randomUUID(), at: now, actor: draftState.actor, kind: 'content',
+    text: `Restored version ${versionLabel(name)}`, pending: false, status: 'published' }], false)
+    .catch(error => console.warn('[inline-editor] Restore succeeded; history update failed.', error));
   return name;
 }
 

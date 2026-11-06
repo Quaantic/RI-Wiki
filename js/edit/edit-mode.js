@@ -436,7 +436,10 @@ function buildToolbar() {
   layer.popover.setAttribute('aria-label','Edit content');
   const preserve=(event)=>{
     const formSaved=persistForm(),draftSaved=draft.persistLocalRecovery();
-    if(event?.type==='beforeunload'&&(formSaved===false||draftSaved===false)){event.preventDefault();event.returnValue='';}
+    // A successful local recovery is not a GitHub Save. Warn before F5
+    // whenever the shared draft hasn't been verified, even if localStorage
+    // happened to accept the browser-only copy.
+    if(event?.type==='beforeunload'&&(formSaved===false||draftSaved===false||draft.draftDirty()||Boolean(popState))){event.preventDefault();event.returnValue='';}
   };
   window.addEventListener('pagehide',preserve);
   window.addEventListener('beforeunload',preserve);
@@ -570,13 +573,13 @@ function onToolbarAction(button) {
       if (act === 'save') {
         if (draft.hasRestoredDraft() && !window.confirm('Share this restored snapshot? It may replace changes made after the download.')) return;
         barStatus('Saving draft…', 'busy');
-        await draft.saveDraft(session.token, confirmReleaseOrder);
+        const saved = await draft.saveDraft(session.token, confirmReleaseOrder);
         session.syncError = '';
         draft.applyDraftToSite();
         buildNav();
         await rerender({ scroll: 'preserve' });
         window.dispatchEvent(new CustomEvent('ri-edit-content'));
-        notify('Saved for everyone. Shared changes merged; your work is preserved.');
+        notify(saved?.historyWarning ? 'Shared draft verified on GitHub. Update History could not sync; retry later.' : 'Saved for everyone and verified on GitHub.');
       } else if (act === 'publish') {
         if (!session.canPublish) throw new Error('Permission denied. Only Quaantic and zzinss can publish.');
         const message = draft.hasRestoredDraft()
@@ -1040,7 +1043,11 @@ export function makeIconPicker(initialValue) {
   const panel = document.createElement('div');
   panel.className = 'ri-icon-picker';
   panel.hidden = true;
+  panel.setAttribute('role', 'dialog');
+  panel.setAttribute('aria-modal', 'true');
+  panel.setAttribute('aria-label', 'Browse wiki icons');
   panel.innerHTML = `
+    <div class="ri-icon-picker__header"><strong>Browse icons</strong><button type="button" class="btn btn--ghost btn--sm ri-icon-picker__close" aria-label="Close icon browser">Close ✕</button></div>
     <div class="ri-icon-picker__search">
       <input class="input" type="search" placeholder="Search: fire, sword, crystal, fogo…" aria-label="Search icons" />
       <select class="input" aria-label="Icon collection"><option value="all">All icons</option><option value="game">Game Icons — game items & fantasy</option><option value="lucide">Lucide — interface & outlines</option></select>
@@ -1077,15 +1084,42 @@ export function makeIconPicker(initialValue) {
   input.addEventListener('input', () => {
     preview.innerHTML = icon(input.value.trim() || 'circle', 22);
   });
+  // Move the browser outside the small clipped editor popover so it can
+  // occupy the whole viewport. Keep input/preview in the original form.
+  let home = null;
+  let previousFocus = null;
+  const closeBrowser = () => {
+    if (panel.hidden) return;
+    panel.hidden = true;
+    panel.classList.remove('ri-icon-picker--fullscreen');
+    if (home?.isConnected) home.appendChild(panel);
+    else panel.remove();
+    document.documentElement.classList.remove('ri-icon-browser-open');
+    document.removeEventListener('keydown', onBrowserKeydown, true);
+    if (previousFocus?.isConnected) previousFocus.focus({ preventScroll: true });
+  };
+  const onBrowserKeydown = (event) => {
+    if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); closeBrowser(); }
+  };
   browse.addEventListener('click', (event) => {
     event.preventDefault();
-    panel.hidden = !panel.hidden;
-    if (!panel.hidden) {
-      search.value = '';
-      resetGrid();
-      search.focus({ preventScroll: true });
-    }
+    if (!panel.hidden) { closeBrowser(); return; }
+    // Close any other icon browser first, including one left open by a
+    // previous form. The full-screen panel is always a single active dialog.
+    document.querySelectorAll('.ri-icon-picker--fullscreen').forEach(el => el.dispatchEvent(new Event('ri-picker-close')));
+    home = panel.parentElement;
+    previousFocus = document.activeElement;
+    document.body.appendChild(panel);
+    panel.hidden = false;
+    panel.classList.add('ri-icon-picker--fullscreen');
+    document.documentElement.classList.add('ri-icon-browser-open');
+    document.addEventListener('keydown', onBrowserKeydown, true);
+    search.value = '';
+    resetGrid();
+    search.focus({ preventScroll: true });
   });
+  panel.addEventListener('ri-picker-close', closeBrowser);
+  panel.querySelector('.ri-icon-picker__close').addEventListener('click', closeBrowser);
   search.addEventListener('input', resetGrid);
   collection.addEventListener('change', resetGrid);
   more.addEventListener('click', () => { limit += 64; renderGrid(); });
@@ -1126,6 +1160,7 @@ function positionPopover(el) {
 }
 
 function closePopover(silent = false,discard = false) {
+  document.querySelectorAll('.ri-icon-picker--fullscreen').forEach(el => el.dispatchEvent(new Event('ri-picker-close')));
   if (!popState) return;
   if(discard)removeFormRecovery(formRecoveryKey(),{hash:popState.hash,binding:popState,targetId:popState.recoveryTargetId??draft.getValue(popState.docName,popState.valuePath)?.id});else persistForm();
   popState = null;
@@ -1394,7 +1429,7 @@ function renderVersionsPage(root) {
   root.innerHTML = `
     <section class="section ri-admin-section">
       <div class="ri-versions-actions">
-        <button type="button" class="btn btn--ghost btn--sm" data-ri-versions-save>${icon('save', 13)} Save version now</button>
+        <button type="button" class="btn btn--ghost btn--sm" data-ri-versions-save>${icon('save', 13)} Save for everyone + version</button>
       </div>
       <div data-ri-versions-list><p class="ri-color-row__empty">Loading versions…</p></div>
     </section>
@@ -1405,13 +1440,17 @@ function renderVersionsPage(root) {
 
   const restoreFlow = async (name) => {
     if (session.busy) return;
+    if (!session.canPublish) { notify('Only Quaantic and zzinss can restore published content.', true); return; }
     if (!window.confirm(`Restore "${draft.versionLabel(name)}"? This replaces the live Wiki and your current draft edits. A safety version of the current content is saved first.`)) return;
     session.busy = true;
     try {
       await draft.restoreVersion(session.token, name);
+      session.syncError = '';
+      buildNav();
+      window.dispatchEvent(new CustomEvent('ri-edit-content'));
       updateToolbar();
       await rerender({ scroll: 'preserve' });
-      notify(`Version restored: ${draft.versionLabel(name)}`);
+      notify(`Version restored and published: ${draft.versionLabel(name)}`);
     } catch (error) {
       notify(error.message || 'Restore failed.', true);
     } finally {
@@ -1421,12 +1460,25 @@ function renderVersionsPage(root) {
   };
 
   qs('[data-ri-versions-save]', root).addEventListener('click', async () => {
+    if (session.busy) return;
+    session.busy = true;
+    updateToolbar();
     try {
-      await draft.createVersion(session.token, draft.snapshotDocs() || undefined, 'Manual version');
-      notify('Version saved.');
+      // A version file alone used to leave the real shared draft unsaved,
+      // so a refresh appeared to erase edits. Save and VERIFY the shared
+      // draft first; never claim success for a backup-only snapshot.
+      const saved = await draft.saveDraft(session.token, confirmReleaseOrder);
+      const name = await draft.createVersion(session.token, draft.snapshotDocs(), 'Manual version', 'save');
+      session.syncError = '';
+      draft.applyDraftToSite();
+      window.dispatchEvent(new CustomEvent('ri-edit-content'));
+      notify(`Saved for everyone + created version ${draft.versionLabel(name)}.${saved?.historyWarning ? ' Update History could not sync.' : ''}`);
       renderVersionsPage(root);
     } catch (error) {
-      notify(error.message || 'Could not save the version.', true);
+      notify(error.message || 'Shared draft was not saved; no version was created.', true);
+    } finally {
+      session.busy = false;
+      updateToolbar();
     }
   });
 
@@ -1446,7 +1498,7 @@ function renderVersionsPage(root) {
           <div class="ri-version-row">
             <span class="ri-version-row__name" title="${esc(v.name)}">${esc(draft.versionLabel(v.name))}</span>
             <button type="button" class="btn btn--ghost btn--sm" data-ri-version-recover="${esc(v.name)}" title="Add missing pages to your draft while keeping current content">${icon('plus', 12)} Recover missing pages</button>
-            <button type="button" class="btn btn--ghost btn--sm" data-ri-version-restore="${esc(v.name)}">${icon('rotate-ccw', 12)} Restore</button>
+            <button type="button" class="btn btn--ghost btn--sm" data-ri-version-restore="${esc(v.name)}" ${session.canPublish ? '' : 'disabled title="Only Quaantic and zzinss can publish restores"'}>${icon('rotate-ccw', 12)} Restore</button>
           </div>`).join('');
         list.querySelectorAll('[data-ri-version-restore]').forEach((btn) => {
           btn.addEventListener('click', () => restoreFlow(btn.getAttribute('data-ri-version-restore')));
