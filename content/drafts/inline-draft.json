@@ -874,11 +874,21 @@
                   {
                     "id": "row-98d448b4-ad5e-49fb-9dc8-316ea3fea6ce",
                     "cells": [
-                      "",
-                      "",
-                      "",
-                      "",
-                      ""
+                      "Golden Palm Tree",
+                      "200B",
+                      "75Mx",
+                      "8x",
+                      "133x"
+                    ]
+                  },
+                  {
+                    "id": "row-04b8c5ab-e387-40fe-a146-500e19e91af3",
+                    "cells": [
+                      "Golden Cactus",
+                      "10T",
+                      "250Mx",
+                      "9x",
+                      "166x"
                     ]
                   }
                 ],
@@ -15215,15 +15225,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.updates.versions[1.03].entries[entry-0c4daa65-21da-4f1e-ba45-030fd6465bd8]": {
-      "actor": "Quaantic"
-    },
-    "content.updates.versions[1.03].entries[entry-0c4daa65-21da-4f1e-ba45-030fd6465bd8].id": {
-      "actor": "Nathy365"
-    },
-    "content.updates.versions[1.03].entries[entry-0c4daa65-21da-4f1e-ba45-030fd6465bd8].context": {
-      "actor": "Quaantic"
-    },
     "content.updates.versions[1.03].entries[entry-0c4daa65-21da-4f1e-ba45-030fd6465bd8].title": {
       "actor": "Nathy365"
     },
@@ -16272,6 +16273,15 @@
       "actor": "Quaantic"
     },
     "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-98d448b4-ad5e-49fb-9dc8-316ea3fea6ce].cells": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-04b8c5ab-e387-40fe-a146-500e19e91af3]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-04b8c5ab-e387-40fe-a146-500e19e91af3].id": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-04b8c5ab-e387-40fe-a146-500e19e91af3].cells": {
       "actor": "Quaantic"
     }
   }
