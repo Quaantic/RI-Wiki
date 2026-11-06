@@ -867,8 +867,18 @@
                       "Huge Tree",
                       "6.5B",
                       "10Mx",
-                      "7X",
-                      "100X"
+                      "7x",
+                      "10x"
+                    ]
+                  },
+                  {
+                    "id": "row-98d448b4-ad5e-49fb-9dc8-316ea3fea6ce",
+                    "cells": [
+                      "",
+                      "",
+                      "",
+                      "",
+                      ""
                     ]
                   }
                 ],
@@ -15205,123 +15215,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.game.calculators.pages.runes/secret.groups[group7].bonuses[b].capUnit": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group7].bonuses[b].unit": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group7].bonuses[b2].capUnit": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group7].bonuses[b2].unit": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group8].bonuses[b1].capUnit": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group8].bonuses[b1].unit": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group]": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group].name": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group2]": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group2].name": {
-      "actor": "Nathy365"
-    },
-    "content.updates": {
-      "actor": "Quaantic"
-    },
-    "content.updates.versions": {
-      "actor": "Quaantic"
-    },
-    "content.updates.versions[1.02]": {
-      "actor": "Nathy365"
-    },
-    "content.updates.versions[1.02].entries": {
-      "actor": "Nathy365"
-    },
-    "content.updates.versions[1.02].entries order": {
-      "actor": "Nathy365"
-    },
-    "content.updates.versions[1.02].entries[entry-a63dc8e3-98a9-45d0-a988-70c58ed227f2]": {
-      "actor": "Nathy365"
-    },
-    "content.updates.versions[1.02].entries[entry-a63dc8e3-98a9-45d0-a988-70c58ed227f2].id": {
-      "actor": "Nathy365"
-    },
-    "content.updates.versions[1.02].entries[entry-a63dc8e3-98a9-45d0-a988-70c58ed227f2].context": {
-      "actor": "Nathy365"
-    },
-    "content.updates.versions[1.02].entries[entry-a63dc8e3-98a9-45d0-a988-70c58ed227f2].title": {
-      "actor": "Nathy365"
-    },
-    "content.updates.versions[1.02].entries[entry-a63dc8e3-98a9-45d0-a988-70c58ed227f2].href": {
-      "actor": "Nathy365"
-    },
-    "content.updates.versions[1.02].entries[entry-a63dc8e3-98a9-45d0-a988-70c58ed227f2].description": {
-      "actor": "Nathy365"
-    },
-    "content.updates.versions order": {
-      "actor": "Nathy365"
-    },
-    "content.updates.versions[1.03]": {
-      "actor": "Quaantic"
-    },
-    "content.updates.versions[1.03].version": {
-      "actor": "Nathy365"
-    },
-    "content.updates.versions[1.03].date": {
-      "actor": "Nathy365"
-    },
-    "content.updates.versions[1.03].entries": {
-      "actor": "Quaantic"
-    },
-    "content.updates.versions[1.03].entries order": {
-      "actor": "Nathy365"
-    },
-    "content.updates.versions[1.03].entries[entry-94ad59f9-1227-4aba-b0ee-cfe368e1edc7]": {
-      "actor": "Nathy365"
-    },
-    "content.updates.versions[1.03].entries[entry-94ad59f9-1227-4aba-b0ee-cfe368e1edc7].id": {
-      "actor": "Nathy365"
-    },
-    "content.updates.versions[1.03].entries[entry-94ad59f9-1227-4aba-b0ee-cfe368e1edc7].context": {
-      "actor": "Nathy365"
-    },
-    "content.updates.versions[1.03].entries[entry-94ad59f9-1227-4aba-b0ee-cfe368e1edc7].title": {
-      "actor": "Nathy365"
-    },
-    "content.updates.versions[1.03].entries[entry-94ad59f9-1227-4aba-b0ee-cfe368e1edc7].href": {
-      "actor": "Nathy365"
-    },
-    "content.updates.versions[1.03].entries[entry-94ad59f9-1227-4aba-b0ee-cfe368e1edc7].description": {
-      "actor": "Nathy365"
-    },
-    "content.updates.versions[1.03].entries[entry-b15bf40f-7e3f-4409-a8e1-b01be799cb33]": {
-      "actor": "Nathy365"
-    },
-    "content.updates.versions[1.03].entries[entry-b15bf40f-7e3f-4409-a8e1-b01be799cb33].id": {
-      "actor": "Nathy365"
-    },
-    "content.updates.versions[1.03].entries[entry-b15bf40f-7e3f-4409-a8e1-b01be799cb33].context": {
-      "actor": "Nathy365"
-    },
-    "content.updates.versions[1.03].entries[entry-b15bf40f-7e3f-4409-a8e1-b01be799cb33].title": {
-      "actor": "Nathy365"
-    },
-    "content.updates.versions[1.03].entries[entry-b15bf40f-7e3f-4409-a8e1-b01be799cb33].href": {
-      "actor": "Nathy365"
-    },
-    "content.updates.versions[1.03].entries[entry-b15bf40f-7e3f-4409-a8e1-b01be799cb33].description": {
-      "actor": "Nathy365"
-    },
     "content.updates.versions[1.03].entries[entry-0c4daa65-21da-4f1e-ba45-030fd6465bd8]": {
       "actor": "Quaantic"
     },
@@ -16370,6 +16263,15 @@
       "actor": "Quaantic"
     },
     "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-1367c133-feac-41df-ab06-1fd67ee4d4ae].cells": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-98d448b4-ad5e-49fb-9dc8-316ea3fea6ce]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-98d448b4-ad5e-49fb-9dc8-316ea3fea6ce].id": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[life].subcategories[tree].sections[table-ae4ff944-57a2-4656-94bd-046bcf7a7517].rows[row-98d448b4-ad5e-49fb-9dc8-316ea3fea6ce].cells": {
       "actor": "Quaantic"
     }
   }
