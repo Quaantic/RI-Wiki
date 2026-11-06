@@ -737,16 +737,16 @@
                         "id": "row-e1745c79-18d4-4f2f-88b3-c092a77a5369",
                         "cells": [
                           "29",
-                          "",
-                          ""
+                          "5DDe",
+                          "30Qi"
                         ]
                       },
                       {
                         "id": "row-48ac1323-c4a9-4b01-bef6-72efb7047369",
                         "cells": [
                           "30",
-                          "",
-                          ""
+                          "25DDe",
+                          "300Qi"
                         ]
                       }
                     ],
@@ -15479,9 +15479,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba].rows": {
-      "actor": "zzinss"
-    },
     "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba].rows order": {
       "actor": "zzinss"
     },
@@ -16530,6 +16527,9 @@
       "actor": "zzinss"
     },
     "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba]": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba].rows": {
       "actor": "zzinss"
     }
   }
