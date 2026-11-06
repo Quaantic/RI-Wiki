@@ -2,6 +2,36 @@
   "format": 1,
   "entries": [
     {
+      "id": "93358512-1d46-4f6e-a67b-5189855e5888",
+      "at": 1793963569879,
+      "kind": "content",
+      "text": "Updated cap of \"More Tree Essence\": empty to 99",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T11:13:07.633Z"
+    },
+    {
+      "id": "a3ac7512-0726-4790-ab51-a8d4540ddc48",
+      "at": 1793963569719,
+      "kind": "content",
+      "text": "Renamed \"New upgrade\" to \"More Tree Essence\"",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T11:13:07.633Z"
+    },
+    {
+      "id": "dd680b9c-fdc7-489a-ae33-4016724e1bff",
+      "at": 1793963554752,
+      "kind": "content",
+      "text": "Added \"New upgrade\"",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T11:13:07.626Z"
+    },
+    {
       "id": "504c935f-bce6-43f2-b774-fe3f1f6f310d",
       "at": 1793949385099,
       "kind": "content",
