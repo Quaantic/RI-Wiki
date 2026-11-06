@@ -2,6 +2,86 @@
   "format": 1,
   "entries": [
     {
+      "id": "8db9b061-8f93-424a-b76b-3d60007ada7c",
+      "at": 1793973782820,
+      "kind": "content",
+      "text": "Updated cap of \"More Souls \": 55 to 99",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:03:19.221Z"
+    },
+    {
+      "id": "c90b1fb6-5936-4ba9-be0d-3ef7ea87b5ed",
+      "at": 1793973777628,
+      "kind": "content",
+      "text": "Updated cap of \"More Fossil\": 20 to 99",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:03:19.221Z"
+    },
+    {
+      "id": "712e83cb-821e-4f93-94ae-dcfb9969da30",
+      "at": 1793973763907,
+      "kind": "content",
+      "text": "Updated cap of \"Mining Gemstones\": 25 to 75",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:03:19.221Z"
+    },
+    {
+      "id": "1c857ef4-b0a4-4eae-804a-00fdd9397c38",
+      "at": 1793973759130,
+      "kind": "content",
+      "text": "Updated cap of \"Californium\": 25 to 75",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:03:19.221Z"
+    },
+    {
+      "id": "239b743b-c9dd-4c36-acba-cc1c0c803503",
+      "at": 1793973755822,
+      "kind": "content",
+      "text": "Updated cap of \"More Research\": 25 to 75",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:03:19.221Z"
+    },
+    {
+      "id": "3752880a-82d1-4b02-8d7d-1a9f395ab596",
+      "at": 1793973752363,
+      "kind": "content",
+      "text": "Updated cap of \"More Golden Research\": 40 to 90",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:03:19.221Z"
+    },
+    {
+      "id": "1ae48c34-929c-4b05-9415-ce9e9bcf3f13",
+      "at": 1793973746127,
+      "kind": "content",
+      "text": "Updated cap of \"Diamond Energy\": 25 to 75",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:03:19.221Z"
+    },
+    {
+      "id": "78723c33-c988-4e9f-b7a0-3f73ffb415ac",
+      "at": 1793973742286,
+      "kind": "content",
+      "text": "Updated cap of \"Bluesteel\": 25 to 75",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:03:19.221Z"
+    },
+    {
       "id": "6e6c9198-fa82-48fb-b408-9ac59b8b0738",
       "at": 1793973672580,
       "kind": "content",
