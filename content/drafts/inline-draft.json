@@ -14445,14 +14445,6 @@
           "defaultAmount": 0,
           "bonuses": []
         },
-        "life/tree-tier": {
-          "kind": "amount",
-          "title": "Tree Tier",
-          "amountLabel": "Tree Tier owned",
-          "showAmount": true,
-          "defaultAmount": 0,
-          "bonuses": []
-        },
         "life/roots": {
           "kind": "amount",
           "title": "Roots",
@@ -15495,27 +15487,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.game.upgrades.sections.research.upgrades[15]": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[15].cap": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[16]": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[16].cap": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[17]": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[17].cap": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[18]": {
-      "actor": "Quaantic"
-    },
     "content.game.upgrades.sections.research.upgrades[18].cap": {
       "actor": "Quaantic"
     },
@@ -16564,6 +16535,36 @@
       "actor": "Quaantic"
     },
     "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba].columns": {
+      "actor": "Quaantic"
+    },
+    "content.game.calculators": {
+      "actor": "Quaantic"
+    },
+    "content.game.calculators.pages": {
+      "actor": "Quaantic"
+    },
+    "content.game.calculators.pages.life/tree-tier": {
+      "actor": "Quaantic"
+    },
+    "content.game.calculators.pages.life/tree-tier.kind": {
+      "actor": "Quaantic"
+    },
+    "content.game.calculators.pages.life/tree-tier.title": {
+      "actor": "Quaantic"
+    },
+    "content.game.calculators.pages.life/tree-tier.amountLabel": {
+      "actor": "Quaantic"
+    },
+    "content.game.calculators.pages.life/tree-tier.showAmount": {
+      "actor": "Quaantic"
+    },
+    "content.game.calculators.pages.life/tree-tier.defaultAmount": {
+      "actor": "Quaantic"
+    },
+    "content.game.calculators.pages.life/tree-tier.bonuses": {
+      "actor": "Quaantic"
+    },
+    "content.game.calculators.pages.life/tree-tier.bonuses order": {
       "actor": "Quaantic"
     }
   }
