@@ -593,6 +593,16 @@
       "text": "Shared draft saved",
       "status": "saved",
       "pending": false
+    },
+    {
+      "id": "a979dbef-5619-4684-bf83-f3d62f0d1718",
+      "at": 1793947388827,
+      "kind": "draft-restore",
+      "text": "Restored a downloaded draft in this browser",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T06:43:48.787Z"
     }
   ]
 }
