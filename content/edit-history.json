@@ -2,6 +2,76 @@
   "format": 1,
   "entries": [
     {
+      "id": "4ecc9391-fe06-4ed3-81bd-75629c6c8790",
+      "at": 1793948346188,
+      "kind": "content",
+      "text": "Set unit of \"Minedamage\" (x)",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T06:59:23.573Z"
+    },
+    {
+      "id": "daa8d7a6-2c23-48d5-9f77-79ab9ef12502",
+      "at": 1793948346137,
+      "kind": "content",
+      "text": "Set cap Unit of \"Minedamage\" (x)",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T06:59:23.573Z"
+    },
+    {
+      "id": "6956b74c-fda3-4c30-a961-613ea0f7483e",
+      "at": 1793948346090,
+      "kind": "content",
+      "text": "Renamed \"New bonus\" to \"Minedamage\"",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T06:59:23.573Z"
+    },
+    {
+      "id": "faffc175-6133-4b28-ab14-79f9da06db6a",
+      "at": 1793948314996,
+      "kind": "content",
+      "text": "Added \"New bonus\"",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T06:59:23.573Z"
+    },
+    {
+      "id": "8fd67915-4009-4a12-9ca5-458beaf15321",
+      "at": 1793948311167,
+      "kind": "content",
+      "text": "Added \"New bonus\"",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T06:59:23.573Z"
+    },
+    {
+      "id": "62e03bea-c3b9-4bb9-9206-c6e52705df46",
+      "at": 1793948309419,
+      "kind": "content",
+      "text": "Added \"New bonus\"",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T06:59:23.573Z"
+    },
+    {
+      "id": "4e096651-457b-49f1-835f-f7ecc32e0e09",
+      "at": 1793948306912,
+      "kind": "content",
+      "text": "Added \"New bonus\"",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T06:59:23.573Z"
+    },
+    {
       "id": "1bce31b0-40bb-4670-8c16-8e4605ac50e3",
       "at": 1793948304926,
       "kind": "content",
