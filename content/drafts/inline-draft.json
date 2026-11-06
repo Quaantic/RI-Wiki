@@ -14163,7 +14163,7 @@
           "groups": [
             {
               "id": "group",
-              "name": "Dark -",
+              "name": "Dark-",
               "color": "#86d62b",
               "dropChance": "78%",
               "amountLabel": "Amount owned",
@@ -14194,7 +14194,7 @@
             },
             {
               "id": "group2",
-              "name": "Void",
+              "name": "Void-",
               "color": "#86d62b",
               "dropChance": "13%",
               "amountLabel": "Amount owned",
@@ -14224,7 +14224,7 @@
             },
             {
               "id": "group3",
-              "name": "Unnatural",
+              "name": "Unnatural-",
               "color": "#86d62b",
               "dropChance": "4.83%",
               "amountLabel": "Amount owned",
@@ -14254,7 +14254,7 @@
             },
             {
               "id": "group4",
-              "name": "Plasma",
+              "name": "Plasma-",
               "color": "#86d62b",
               "dropChance": "2.19%",
               "amountLabel": "Amount owned",
@@ -14284,7 +14284,7 @@
             },
             {
               "id": "group5",
-              "name": "Infernal",
+              "name": "Infernal-",
               "color": "#86d62b",
               "dropChance": "0.8%",
               "amountLabel": "Amount owned",
@@ -14314,7 +14314,7 @@
             },
             {
               "id": "group6",
-              "name": "Soul",
+              "name": "Soul-",
               "color": "#86d62b",
               "dropChance": "0.31%",
               "amountLabel": "Amount owned",
@@ -14344,7 +14344,7 @@
             },
             {
               "id": "group7",
-              "name": "Omnisoul",
+              "name": "Omnisoul-",
               "color": "#86d62b",
               "dropChance": "0.12%",
               "amountLabel": "Amount owned",
@@ -14374,7 +14374,7 @@
             },
             {
               "id": "group8",
-              "name": "Omega",
+              "name": "Omega-",
               "color": "#86d62b",
               "dropChance": "0.03%",
               "amountLabel": "Amount owned",
@@ -14947,12 +14947,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.game.upgrades.sections.life-tree-essence.upgrades": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades order": {
-      "actor": "Quaantic"
-    },
     "content.game.upgrades.sections.life-tree-essence.upgrades[1]": {
       "actor": "Quaantic"
     },
@@ -16001,6 +15995,12 @@
       "actor": "Nathy365"
     },
     "content.game.calculators.pages.runes/secret.groups[group].name": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group2]": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group2].name": {
       "actor": "Nathy365"
     }
   }
