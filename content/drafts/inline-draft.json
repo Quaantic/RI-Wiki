@@ -537,7 +537,8 @@
                         "id": "row-806923f5-ce1c-45f9-a0e3-fb74829c7a87",
                         "cells": [
                           "4",
-                          ""
+                          "100B",
+                          "750"
                         ]
                       },
                       {
@@ -15312,15 +15313,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.game.upgrades.sections.research.upgrades[46].name": {
-      "actor": "zzinss"
-    },
-    "content.game.upgrades.sections.research.upgrades[46].cap": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[46].price": {
-      "actor": "zzinss"
-    },
     "content.game.upgrades.sections.research.upgrades[46].multi": {
       "actor": "zzinss"
     },
