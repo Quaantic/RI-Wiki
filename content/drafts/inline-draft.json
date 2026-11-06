@@ -1389,6 +1389,17 @@
         ],
         "subcategories": [
           {
+            "id": "secret-runes",
+            "name": "Secret ",
+            "desc": "The Secret rune is a special rune acquired with Souls, that costs 200B Californium. Rune Luck and Bulk doesn't work on it, but Rune Hunter Gamepass and Secret Runes Upgrade from Souls gives you more bulk on it!",
+            "icon": "loader-pinwheel",
+            "highlights": [],
+            "facts": [],
+            "vitals": [],
+            "children": [],
+            "contentKey": "runes/secret-runes"
+          },
+          {
             "id": "energetic",
             "name": "Energetic",
             "icon": "spark",
@@ -1474,16 +1485,6 @@
             "facts": [],
             "sections": [],
             "contentKey": "runes/bones"
-          },
-          {
-            "id": "secret-runes",
-            "name": "Secret ",
-            "desc": "The Secret rune is a special rune acquired with Souls, that costs 200B Californium. Rune Luck and Bulk doesn't work on it, but Rune Hunter Gamepass and Secret Runes Upgrade from Souls gives you more bulk on it!",
-            "icon": "loader-pinwheel",
-            "highlights": [],
-            "facts": [],
-            "vitals": [],
-            "children": []
           }
         ],
         "sections": []
@@ -14133,7 +14134,7 @@
           "groups": [
             {
               "id": "g1",
-              "name": "Dark",
+              "name": "Dark -",
               "color": "#555555",
               "dropChance": "78%",
               "amountLabel": "Amount owned",
@@ -14163,7 +14164,7 @@
             },
             {
               "id": "group",
-              "name": "Void",
+              "name": "Void - ",
               "color": "#6550B8",
               "dropChance": "13%",
               "amountLabel": "Amount owned",
@@ -14193,9 +14194,9 @@
             },
             {
               "id": "group2",
-              "name": "Unnatural ",
+              "name": "Unnatural -",
               "color": "#A84747",
-              "dropChance": "4.8%",
+              "dropChance": "4.83",
               "amountLabel": "Amount owned",
               "bonuses": [
                 {
@@ -14223,7 +14224,7 @@
             },
             {
               "id": "group3",
-              "name": "Plasma",
+              "name": "Plasma -",
               "color": "#A443F5",
               "dropChance": "2.19%",
               "amountLabel": "Amount owned",
@@ -14253,9 +14254,9 @@
             },
             {
               "id": "group4",
-              "name": "Infernal",
+              "name": "Infernal -",
               "color": "#FF173C",
-              "dropChance": "0.8%",
+              "dropChance": "0.8",
               "amountLabel": "Amount owned",
               "bonuses": [
                 {
@@ -14283,9 +14284,9 @@
             },
             {
               "id": "group5",
-              "name": "Soul",
+              "name": "Soul -",
               "color": "#8035C8",
-              "dropChance": "0.31%",
+              "dropChance": "0.31",
               "amountLabel": "Amount owned",
               "bonuses": [
                 {
@@ -14313,7 +14314,7 @@
             },
             {
               "id": "group6",
-              "name": "Omnisoul",
+              "name": "Omnisoul -",
               "color": "#43C944",
               "dropChance": "0.12%",
               "amountLabel": "Amount owned",
@@ -14343,7 +14344,7 @@
             },
             {
               "id": "group7",
-              "name": "Omega",
+              "name": "Omega -",
               "color": "#2378E8",
               "dropChance": "0.03%",
               "amountLabel": "Amount owned",
@@ -14661,8 +14662,8 @@
     ]
   },
   "_baseShas": {
-    "updates": "0eb97556919ed433f706883ac61ad637d09334ca",
     "wiki": "9589980a426f5352a7de8f3e444221f5b6374636",
+    "updates": "0eb97556919ed433f706883ac61ad637d09334ca",
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   }
 }
