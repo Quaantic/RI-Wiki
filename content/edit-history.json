@@ -2,6 +2,36 @@
   "format": 1,
   "entries": [
     {
+      "id": "3ab1c06d-dbae-4565-a7b5-3f17f93eb13d",
+      "at": 1793949154847,
+      "kind": "content",
+      "text": "Updated description of \"V1.03\": What changed in the game. to Tree essence/milestones Secret runes New ic…",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:12:52.640Z"
+    },
+    {
+      "id": "6bb22d8d-be8e-4fc5-b5d6-e236da02a69d",
+      "at": 1793949154799,
+      "kind": "content",
+      "text": "Updated text of \"V1.03\": New update to V1.03",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:12:52.640Z"
+    },
+    {
+      "id": "589c3678-6908-4f35-a2f4-92a4e80ab0ac",
+      "at": 1793949112601,
+      "kind": "content",
+      "text": "Added \"New update\"",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:12:52.640Z"
+    },
+    {
       "id": "032c98d3-9a26-432a-8bf1-5d56f0e5f0c7",
       "at": 1793949011976,
       "kind": "content",
