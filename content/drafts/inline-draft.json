@@ -14336,7 +14336,9 @@
                 {
                   "id": "b2",
                   "name": "Magnets",
-                  "value": "formula: amount"
+                  "value": "formula: amount",
+                  "capUnit": "x",
+                  "unit": "x"
                 }
               ]
             },
@@ -14350,17 +14352,23 @@
                 {
                   "id": "b1",
                   "name": "Astatine",
-                  "value": "formula: amount"
+                  "value": "formula: amount",
+                  "capUnit": "x",
+                  "unit": "x"
                 },
                 {
                   "id": "b",
                   "name": "Rare Sap",
-                  "value": "formula: amount"
+                  "value": "formula: amount",
+                  "capUnit": "x",
+                  "unit": "x"
                 },
                 {
                   "id": "b2",
                   "name": "Ruby Energy",
-                  "value": "formula: amount"
+                  "value": "formula: amount",
+                  "capUnit": "x",
+                  "unit": "x"
                 }
               ]
             },
@@ -14374,7 +14382,9 @@
                 {
                   "id": "b1",
                   "name": "Mastry",
-                  "value": "formula: amount"
+                  "value": "formula: amount",
+                  "capUnit": "x",
+                  "unit": "x"
                 }
               ]
             }
@@ -14937,12 +14947,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.wiki.categories[life].subcategories[tree-essence].children[tree-essence-milestones].highlights order": {
-      "actor": "Quaantic"
-    },
-    "content.wiki.categories[life].subcategories[tree-essence].children[tree-essence-milestones].facts": {
-      "actor": "Quaantic"
-    },
     "content.wiki.categories[life].subcategories[tree-essence].children[tree-essence-milestones].facts order": {
       "actor": "Quaantic"
     },
@@ -15985,6 +15989,36 @@
       "actor": "Nathy365"
     },
     "content.game.calculators.pages.runes/secret.groups[group6].bonuses[b].unit": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group6].bonuses[b2].capUnit": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group6].bonuses[b2].unit": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group7].bonuses[b1].capUnit": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group7].bonuses[b1].unit": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group7].bonuses[b].capUnit": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group7].bonuses[b].unit": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group7].bonuses[b2].capUnit": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group7].bonuses[b2].unit": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group8].bonuses[b1].capUnit": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group8].bonuses[b1].unit": {
       "actor": "Nathy365"
     }
   }
