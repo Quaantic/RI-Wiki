@@ -2,6 +2,14 @@
   "format": 1,
   "entries": [
     {
+      "id": "49e9cb8a-5275-47c9-8a84-8ad44d92d448",
+      "at": 1793933668086,
+      "kind": "content",
+      "text": "Updated handle of \"Azure\": empty to Azureised",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
       "id": "268979e5-ce32-4521-bb48-42c976e62bbb",
       "at": 1793932606161,
       "kind": "content",
@@ -2390,14 +2398,6 @@
       "at": 1793853694500,
       "kind": "content",
       "text": "Removed \"New update\"",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "e513393d-a24a-4298-af7c-007e517d3215",
-      "at": 1793853684636,
-      "kind": "content",
-      "text": "Updated description of \"Background\": What changed in the game. to Added lightweight backgrounds and more cons…",
       "actor": "Quaantic",
       "pending": true
     }
