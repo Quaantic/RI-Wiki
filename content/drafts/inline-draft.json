@@ -14163,7 +14163,7 @@
           "groups": [
             {
               "id": "group",
-              "name": "Dark",
+              "name": "Dark -",
               "color": "#86d62b",
               "dropChance": "78%",
               "amountLabel": "Amount owned",
@@ -15995,6 +15995,12 @@
       "actor": "Nathy365"
     },
     "content.game.calculators.pages.runes/secret.groups[group8].bonuses[b1].unit": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group]": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group].name": {
       "actor": "Nathy365"
     }
   }
