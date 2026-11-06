@@ -45,6 +45,11 @@ export function mergeDocuments(base, local, remote, path = 'content', keepLocalO
         id, mergeDocuments(b.get(id), l.get(id), r.get(id), `${path}[${id}]`, keepLocalOrder),
       ]));
       if (localReorder && remoteReorder && !equal(localOrder, remoteOrder)) {
+        const priority = keepLocalOrder?.priority?.({ path: `${path} order`, local: localIds, remote: remoteIds });
+        if (priority) {
+          const preferred = priority === 'local' ? localIds : remoteIds;
+          return [...new Set([...preferred, ...remoteIds, ...localIds])].map((id) => merged.get(id)).filter((item) => item !== undefined);
+        }
         const release = /^content\.updates\.versions\[([^\]]+)\]\.entries$/.exec(path);
         if (release) {
           if (!keepLocalOrder?.(release[1])) throw new SyncConflict(`${path} order`, release[1]);

@@ -116,5 +116,6 @@ module.exports = async function callback(req, res) {
     return;
   }
 
-  sendPopup(res, { token: tokenData.access_token, provider: 'github' });
+  res.setHeader('Set-Cookie', require('../server/editor-auth.cjs').cookie(tokenData.access_token));
+  sendPopup(res, { token: 'ri-session', provider: 'github' });
 };

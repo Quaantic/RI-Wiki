@@ -14,9 +14,11 @@ import {
   githubRequest,
   githubContentsUrl,
   isRevisionConflict,
+  publishDocuments,
 } from '../github.js';
 import { applyWikiContent, applyUpdateContent, applyGameData } from '../services.js';
 import { mergeDocuments } from './merge.js';
+import { authorsForChanges, priorityResolver } from './authorship.js';
 import { pinContentKeys } from '../page-content.js';
 import { readSharedDraft, sharedDraftNeedsRebase } from './shared-draft.js';
 import { installImportedNotes } from '../content-migrations.js';
@@ -30,6 +32,7 @@ const draftState = {
   draftSha: null,
   savedDraftRaw: '',
   actor: '',
+  authors: {},
   sharedBase: null,
   needsMerge: false,
   sharedOrderNeedsSave: false,
@@ -404,6 +407,7 @@ function sanitizeResources() {
 export async function initSession(token, actor = '') {
   draftState.token = token;
   draftState.actor = actor;
+  draftState.authors = {};
   history.length = 0;
   draftState.baseDocs = {};
   draftState.shas = {};
@@ -445,6 +449,7 @@ export async function initSession(token, actor = '') {
       const remote = await readSharedDraft(result, draftState.baseDocs, draftState.shas, token, provisional);
       validateDocuments(remote);
       draftState.draftSha = result.sha;
+      draftState.authors = JSON.parse(decodeBase64Content(result.content))._authors || {};
       draftState.sharedOrderNeedsSave = sharedDraftNeedsRebase(result, draftState.shas);
       draftState.savedDraftRaw = `${JSON.stringify(remote, null, 2)}\n`;
       draftState.docs = remote;
@@ -516,12 +521,13 @@ async function saveChangedDraft(token, keepLocalOrder){
         method: 'PUT',
         body: JSON.stringify({
           message: 'Save inline draft',
-          content: encodeBase64Content(`${JSON.stringify({ ...JSON.parse(raw), _baseShas: draftState.shas }, null, 2)}\n`),
+          content: encodeBase64Content(`${JSON.stringify({ ...JSON.parse(raw), _baseShas: draftState.shas, _authors: authorsForChanges(draftState.sharedBase, draftState.docs, draftState.authors, draftState.actor) }, null, 2)}\n`),
           sha: draftState.draftSha || undefined,
           branch: BRANCH,
         }),
       });
       draftState.draftSha=result.content.sha;
+      draftState.authors = authorsForChanges(draftState.sharedBase, draftState.docs, draftState.authors, draftState.actor);
       draftState.savedDraftRaw=raw;
       draftState.sharedBase=JSON.parse(raw);
       draftState.sharedOrderNeedsSave=false;
@@ -572,6 +578,22 @@ export async function discardDraft(token) {
 export async function publishChanges(token, keepLocalOrder) {
   await syncRemote(token, keepLocalOrder);
   validateDocuments(draftState.docs);
+  if (token === 'ri-session') {
+    const result = await publishDocuments({docs:draftState.docs,shas:draftState.shas,draftSha:draftState.draftSha});
+    draftState.shas=result.shas;
+    draftState.baseDocs=clone(draftState.docs);
+    draftState.sharedBase=clone(draftState.docs);
+    draftState.draftSha=null;
+    draftState.savedDraftRaw='';
+    draftState.sharedOrderNeedsSave=false;
+    draftState.needsMerge=false;
+    const entries=changeLog.map(entry=>({...entry,pending:false}));
+    changeLog.length=0;
+    history.length=0;
+    persistLocalRecovery();
+    await writeHistory(token,entries,false).catch(()=>{});
+    return;
+  }
   const changed = changedFiles();
   if (changed.length) {
     // Mesmo formato de nome/timestamp dos backups ("backup-*.json") listados
@@ -690,9 +712,12 @@ async function readAndMergeRemote(token, keepLocalOrder) {
   };
   const remote = remoteDraft ? await readSharedDraft(remoteDraft, published, shas, token, sharedResolver) : published;
   validateDocuments(remote);
-  const merged = mergeDocuments(draftState.sharedBase, draftState.docs, remote, 'content', keepLocalOrder);
+  const remoteAuthors = remoteDraft ? JSON.parse(decodeBase64Content(remoteDraft.content))._authors || {} : {};
+  const localAuthors = authorsForChanges(draftState.sharedBase, draftState.docs, draftState.authors, draftState.actor);
+  const merged = mergeDocuments(draftState.sharedBase, draftState.docs, remote, 'content', priorityResolver(keepLocalOrder, localAuthors, remoteAuthors));
   validateDocuments(merged);
   draftState.docs = merged;
+  draftState.authors = authorsForChanges(remote, merged, remoteAuthors, draftState.actor);
   draftState.sharedBase = clone(remote);
   draftState.baseDocs = published;
   draftState.shas = Object.fromEntries(files.map(([name, file]) => [name, file.sha]));

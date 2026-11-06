@@ -18,7 +18,10 @@ export function githubHeaders(token, json = false) {
 
 export async function githubRequest(url, token, options = {}) {
   const { allowNotFound = false, ...requestOptions } = options;
-  const response = await fetch(url, { cache: 'no-store', ...requestOptions, headers: { ...githubHeaders(token, Boolean(requestOptions.body)), ...requestOptions.headers } });
+  if (typeof window !== 'undefined' && token !== 'ri-session') throw new Error('Sign in again to use the protected editor session. Your draft is preserved.');
+  const response = token === 'ri-session'
+    ? await fetch(`${SITE_ORIGIN}/api/github`, { method:'POST', credentials:'include', cache:'no-store', headers:{'Content-Type':'application/json','X-RI-Editor':'1'}, body:JSON.stringify({url,method:requestOptions.method || 'GET',body:requestOptions.body}) })
+    : await fetch(url, { cache: 'no-store', ...requestOptions, headers: { ...githubHeaders(token, Boolean(requestOptions.body)), ...requestOptions.headers } });
   const payload = await response.json().catch(() => ({}));
   if (response.status === 404 && allowNotFound) {
     // Recurso realmente inexistente (ex.: o esboco inline ainda nao foi
@@ -47,7 +50,14 @@ export const isRevisionConflict=error=>error?.status===409||(error?.status===422
 
 export async function githubUser(token) {
   const user = await githubRequest('https://api.github.com/user', token);
-  return { login: user.login, name: user.name || user.login, avatar: user.avatar_url || '' };
+  return { id: user.id, canPublish: user.canPublish === true, login: user.login, name: user.name || user.login, avatar: user.avatar_url || '' };
+}
+
+export async function publishDocuments(body) {
+  const response=await fetch(`${SITE_ORIGIN}/api/publish`, {method:'POST',credentials:'include',cache:'no-store',headers:{'Content-Type':'application/json','X-RI-Editor':'1'},body:JSON.stringify(body)});
+  const result=await response.json();
+  if(!response.ok) throw Object.assign(new Error(result.message || 'Publish failed. Your draft is preserved.'),{status:response.status});
+  return result;
 }
 
 export async function githubCollaboratorPermission(token, login) {

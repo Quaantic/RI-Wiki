@@ -30,6 +30,7 @@ const session = {
   user: '',
   avatar: '',
   allowed: false,
+  canPublish: false,
   ready: false,
   editing: false,
   started: false,
@@ -303,7 +304,8 @@ function updateToolbar() {
   layer.bar.querySelector('[data-edit-toggle]').disabled = !ready;
   layer.bar.querySelector('[data-edit-undo]').disabled = !ready || !draft.canUndo();
   layer.bar.querySelector('[data-edit-save]').disabled = !ready;
-  layer.bar.querySelector('[data-edit-publish]').disabled = !ready;
+  layer.bar.querySelector('[data-edit-publish]').disabled = !ready || !session.canPublish;
+  layer.bar.querySelector('[data-edit-publish]').hidden = !session.canPublish;
   layer.bar.querySelector('[data-edit-discard]').disabled = !ready;
   layer.bar.querySelector('[data-edit-restore]').disabled = !ready;
   layer.bar.querySelector('[data-edit-more]').disabled = !ready;
@@ -569,6 +571,7 @@ function onToolbarAction(button) {
         window.dispatchEvent(new CustomEvent('ri-edit-content'));
         notify('Saved for everyone. Shared changes merged; your work is preserved.');
       } else if (act === 'publish') {
+        if (!session.canPublish) throw new Error('Permission denied. Only Quaantic and zzinss can publish.');
         const message = draft.hasRestoredDraft()
           ? 'Publish this restored snapshot to the live Wiki? It may replace changes made after the download. A backup is created first.'
           : 'Publish the changes to the live Wiki? A backup is created first.';
@@ -632,6 +635,7 @@ async function startSession(token, {deferRender=false}={}) {
     updateToolbar();
     barStatus('Checking your write permission…', 'busy');
     const user = await githubUser(token);
+    session.canPublish = user.canPublish;
     const permission = await githubCollaboratorPermission(token, user.login).catch(() => 'none');
     session.allowed = hasWriteAccess(permission);
     if (!session.allowed) {

@@ -59,5 +59,27 @@ test('a racing save rebases only local changes and retries history without overw
     assert.equal(await editorB.syncRemote('editor-b'),true);
     assert.equal(editorB.doc('updates').versions[0].entries[0].description,'My release note');
     assert.deepEqual(editorB.doc('wiki'),saved.wiki);
+    await editorA.initSession('editor-a','Quaantic');
+    await editorB.initSession('editor-b','contributor');
+    editorA.setValue('updates','versions.0.entries.0.title','Owner title');
+    editorB.setValue('updates','versions.0.entries.0.title','Contributor title');
+    editorB.setValue('updates','versions.0.entries.0.description','Contributor description');
+    await editorA.saveDraft('editor-a');
+    await editorB.saveDraft('editor-b');
+    let result=decode(repo.get(schema.DRAFT_FILE));
+    assert.equal(result.updates.versions[0].entries[0].title,'Owner title');
+    assert.equal(result.updates.versions[0].entries[0].description,'Contributor description');
+    await editorA.initSession('editor-a','Quaantic');
+    await editorB.initSession('editor-b','contributor');
+    editorA.setValue('updates','versions.0.entries.0.title','Next owner title');
+    editorB.setValue('updates','versions.0.entries.0.title','Next contributor title');
+    await editorB.saveDraft('editor-b');
+    await editorA.saveDraft('editor-a');
+    result=decode(repo.get(schema.DRAFT_FILE));
+    assert.equal(result.updates.versions[0].entries[0].title,'Next owner title');
+    const count=draftWrites;
+    await editorB.syncRemote('editor-b');
+    await editorB.saveDraft('editor-b');
+    assert.equal(draftWrites,count,'an unchanged second tab must not create another revision');
   }finally{global.fetch=originalFetch;}
 });
