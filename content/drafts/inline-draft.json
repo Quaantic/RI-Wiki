@@ -706,31 +706,31 @@
                         "cells": [
                           "25",
                           "12.5De",
-                          "100T"
+                          "1Qa"
                         ]
                       },
                       {
                         "id": "row-5bb1e5dc-1985-407f-8806-b65f88dfffa9",
                         "cells": [
                           "26",
-                          "",
-                          ""
+                          "300De",
+                          "30Qa"
                         ]
                       },
                       {
                         "id": "row-23d1b01f-236f-401f-887c-b8106f10f0fe",
                         "cells": [
                           "27",
-                          "",
-                          ""
+                          "8UDe",
+                          "300Qa"
                         ]
                       },
                       {
                         "id": "row-d4b740a7-4a87-4ffd-9d4d-73bceea9f488",
                         "cells": [
                           "28",
-                          "",
-                          ""
+                          "150Ude",
+                          "3Qi"
                         ]
                       },
                       {
@@ -15479,18 +15479,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba]": {
-      "actor": "zzinss"
-    },
-    "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba].id": {
-      "actor": "zzinss"
-    },
-    "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba].title": {
-      "actor": "zzinss"
-    },
-    "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba].columns": {
-      "actor": "zzinss"
-    },
     "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba].rows": {
       "actor": "zzinss"
     },
@@ -16539,6 +16527,9 @@
       "actor": "zzinss"
     },
     "content.wiki.categories[life].subcategories[life-generation].children[cells].sections": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba]": {
       "actor": "zzinss"
     }
   }
