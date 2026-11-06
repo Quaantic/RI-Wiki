@@ -2414,3 +2414,12 @@ html:not(.ri-edit-on) [data-release-empty] { display:none; }
   .upd-version__head>.ri-edit-add { grid-column:1/-1; grid-row:3; }
 }
 @media(prefers-reduced-motion:reduce) { .upd-collapse-icon { transition: none; } }
+
+/* FAQ: collapsible questions with resource-aware title colors */
+.ri-faq-item summary {display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer;list-style:none;color:var(--c-text);font-weight:700;padding:8px 0;}
+.ri-faq-item summary::-webkit-details-marker {display:none;}
+.ri-faq-question {min-width:0;overflow-wrap:anywhere;}
+.ri-faq-item summary>svg {flex-shrink:0;transition:transform .2s ease;}
+.ri-faq-item[open] summary>svg {transform:rotate(180deg);}
+.ri-faq-item[open] .ri-text-section__body {padding-top:10px;border-top:1px solid var(--c-border);}
+.ri-faq-item summary:focus-visible {outline:2px solid var(--c-accent,#a3ff6b);outline-offset:3px;border-radius:4px;}

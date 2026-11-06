@@ -602,7 +602,7 @@ function onToolbarAction(button) {
         buildNav();
         await rerender({ scroll: 'preserve' });
         window.dispatchEvent(new CustomEvent('ri-edit-content'));
-        notify('Changes published! GitHub is deploying the update.');
+        notify('Published to GitHub. The live site updates only after Vercel finishes deployment. Check Vercel if the site stays unchanged.');
       } else {
         if (!window.confirm('Discard the draft and return to the published content?')) return;
         if (popState) closePopover(true);
@@ -733,11 +733,11 @@ function setEditing(on) {
 }
 
 // Auto-save shared drafts after a pause in editing. This does NOT Publish.
-// 10s debounce keeps GitHub commits under control and each PUT uses the
+// 60s debounce reduces GitHub commits and Vercel deployment pressure and each PUT uses the
 // remote SHA to prevent one contributor from overwriting another.
 let autosaveTimer=null, autosaveWorking=null, autosaveFailures=0;
 function cancelAutosave(){clearTimeout(autosaveTimer);autosaveTimer=null;}
-function queueAutosave(delay=10000){
+function queueAutosave(delay=60000){
   if(!session.ready||!session.allowed||!draft.draftDirty()||draft.hasRestoredDraft())return;
   cancelAutosave();
   autosaveTimer=setTimeout(()=>{autosaveTimer=null;void runAutosave();},delay);

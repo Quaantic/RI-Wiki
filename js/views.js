@@ -1125,9 +1125,10 @@ export const subcategoryView = {
       ${familyBody || ''}
       ${sub.sections?.length?'<div class="content-sections-grid">':''}${(sub.sections || []).map((section, i) => `
         <section class="section ri-text-section${section.columns || (section.text||'').length>900?' ri-text-section--full':(section.text||'').length>350?' ri-text-section--wide':''}">
+          ${!section.columns && /\?$/.test((section.title || '').trim()) ? `<details class="ri-faq-item"><summary ${ed(`${wikiPath}.sections.${i}`, 'text-section', section.title || 'FAQ question')}><span class="ri-faq-question">${colorizeResources(esc(section.title || ''))}</span>${icon('chevron-down', 16)}</summary><div class="ri-text-section__body" data-resource-links ${ed(`${wikiPath}.sections.${i}.text`, 'long', 'FAQ answer')}>${colorizeResources(esc(section.text || ''))}</div></details>` : `
           <div ${ed(`${wikiPath}.sections.${i}`, section.columns ? 'table-section' : 'text-section', section.title || 'Text / FAQ')}>${sectionHead(section.title || '')}</div>
           ${section.columns ? `<div class="table-wrap"><table class="data-table"><thead><tr>${section.columns.map((label) => `<th>${esc(label)}</th>`).join('')}</tr></thead><tbody>${(section.rows || []).map((row, ri) => `<tr ${ed(`${wikiPath}.sections.${i}.rows.${ri}`, 'table-row', `${section.title} · row ${ri + 1}`)}>${section.columns.map((_, ci) => `<td>${esc(row.cells[ci] || '')}</td>`).join('')}</tr>`).join('')}</tbody></table></div><button type="button" class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="${wikiPath}.sections.${i}.rows" data-edit-add-template="table-row">${icon('plus', 13)} Add row</button>` : ''}
-          <div class="ri-text-section__body" data-resource-links ${ed(`${wikiPath}.sections.${i}.text`, 'long', 'Section description')}>${colorizeResources(esc(section.text || ''))}</div>
+          <div class="ri-text-section__body" data-resource-links ${ed(`${wikiPath}.sections.${i}.text`, 'long', 'Section description')}>${colorizeResources(esc(section.text || ''))}</div>`}
         </section>`).join('')}${sub.sections?.length?'</div>':''}
       ${sub.highlights?.length ? `
       <section class="section">
