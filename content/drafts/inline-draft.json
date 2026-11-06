@@ -593,72 +593,72 @@
                         "id": "row-b98190b6-d456-4a5e-99d8-d1378962b0f3",
                         "cells": [
                           "11",
-                          "",
-                          ""
+                          "1Qi",
+                          "400K"
                         ]
                       },
                       {
                         "id": "row-f5968b8b-cc53-4763-9147-cb6acfb87765",
                         "cells": [
                           "12",
-                          "",
-                          ""
+                          "10Qi",
+                          "1.2M"
                         ]
                       },
                       {
                         "id": "row-88ec5f9e-900e-4e99-b2f6-b321f957c49a",
                         "cells": [
                           "13",
-                          "",
-                          ""
+                          "100Qi",
+                          "3M"
                         ]
                       },
                       {
                         "id": "row-294731d3-ad08-44a9-9a27-3d27a1dfcd31",
                         "cells": [
                           "14",
-                          "",
-                          ""
+                          "1Sx",
+                          "10M"
                         ]
                       },
                       {
                         "id": "row-c7f852a1-6d8a-4ee5-ac00-a0e0254a3ec9",
                         "cells": [
                           "15",
-                          "",
-                          ""
+                          "10Sx",
+                          "30M"
                         ]
                       },
                       {
                         "id": "row-acefbfde-af68-41cf-8f72-454112f74ee6",
                         "cells": [
                           "16",
-                          "",
-                          ""
+                          "150Sx",
+                          "100M"
                         ]
                       },
                       {
                         "id": "row-5c07885c-b96b-42c5-818d-cd1409f31a5d",
                         "cells": [
                           "17",
-                          "",
-                          ""
+                          "2.5Sp",
+                          "400M"
                         ]
                       },
                       {
                         "id": "row-b19e8293-b507-47ae-894a-ed33fdc48baa",
                         "cells": [
                           "18",
-                          "",
-                          ""
+                          "35Sp",
+                          "2B"
                         ]
                       },
                       {
                         "id": "row-f04bc601-3f13-41e2-bf07-482594f6bfb7",
                         "cells": [
                           "19",
-                          "",
-                          ""
+                          "500Sp",
+                          "10B"
                         ]
                       },
                       {
@@ -15399,96 +15399,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.game.upgrades.sections.research.upgrades[46].multi": {
-      "actor": "zzinss"
-    },
-    "content.game.upgrades.sections.research.upgrades[47]": {
-      "actor": "zzinss"
-    },
-    "content.game.upgrades.sections.research.upgrades[47].n": {
-      "actor": "zzinss"
-    },
-    "content.game.upgrades.sections.research.upgrades[47].name": {
-      "actor": "zzinss"
-    },
-    "content.game.upgrades.sections.research.upgrades[47].cap": {
-      "actor": "zzinss"
-    },
-    "content.game.upgrades.sections.research.upgrades[47].price": {
-      "actor": "zzinss"
-    },
-    "content.game.upgrades.sections.research.upgrades[47].multi": {
-      "actor": "zzinss"
-    },
-    "content.game.upgrades.sections.research.upgrades[48]": {
-      "actor": "zzinss"
-    },
-    "content.game.upgrades.sections.research.upgrades[48].n": {
-      "actor": "zzinss"
-    },
-    "content.game.upgrades.sections.research.upgrades[48].name": {
-      "actor": "zzinss"
-    },
-    "content.game.upgrades.sections.research.upgrades[48].cap": {
-      "actor": "zzinss"
-    },
-    "content.game.upgrades.sections.research.upgrades[48].price": {
-      "actor": "zzinss"
-    },
-    "content.game.upgrades.sections.research.upgrades[48].multi": {
-      "actor": "zzinss"
-    },
-    "content.game.upgrades.sections.research.upgrades[49]": {
-      "actor": "zzinss"
-    },
-    "content.game.upgrades.sections.research.upgrades[49].n": {
-      "actor": "zzinss"
-    },
-    "content.game.upgrades.sections.research.upgrades[49].name": {
-      "actor": "zzinss"
-    },
-    "content.game.upgrades.sections.research.upgrades[49].cap": {
-      "actor": "zzinss"
-    },
-    "content.game.upgrades.sections.research.upgrades[49].price": {
-      "actor": "zzinss"
-    },
-    "content.game.upgrades.sections.research.upgrades[49].multi": {
-      "actor": "zzinss"
-    },
-    "content.game.upgrades.sections.research.upgrades[50]": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[50].n": {
-      "actor": "zzinss"
-    },
-    "content.game.upgrades.sections.research.upgrades[50].name": {
-      "actor": "zzinss"
-    },
-    "content.game.upgrades.sections.research.upgrades[50].cap": {
-      "actor": "zzinss"
-    },
-    "content.game.upgrades.sections.research.upgrades[50].price": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[50].multi": {
-      "actor": "zzinss"
-    },
-    "content.wiki.categories[life].subcategories[tree-essence].children": {
-      "actor": "zzinss"
-    },
-    "content.wiki.categories[life].subcategories[tree-essence].children[tree-essence-milestones]": {
-      "actor": "zzinss"
-    },
-    "content.wiki.categories[life].subcategories[tree-essence].children[tree-essence-milestones].desc": {
-      "actor": "zzinss"
-    },
-    "content.wiki.categories[dungeon]": {
-      "actor": "zzinss"
-    },
-    "content.wiki.categories[dungeon].subcategories": {
-      "actor": "zzinss"
-    },
     "content.wiki.categories[dungeon].subcategories[souls]": {
       "actor": "zzinss"
     },
