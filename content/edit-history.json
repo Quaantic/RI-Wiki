@@ -2,6 +2,56 @@
   "format": 1,
   "entries": [
     {
+      "id": "d1d4827d-cfbf-4d05-8ddd-18dc4ead66a3",
+      "at": 1793979448890,
+      "kind": "content",
+      "text": "Added \"New upgrade\"",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:37:29.580Z"
+    },
+    {
+      "id": "eb09b737-87fd-46c2-ba2b-ae063b5dbc63",
+      "at": 1793979433230,
+      "kind": "content",
+      "text": "Updated multi of \"Axe Damage\": 1 to (1 + L*0.1) * 1.05^L",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:37:29.580Z"
+    },
+    {
+      "id": "a8be93e3-1706-476a-8f48-1e069e6c3da4",
+      "at": 1793979433183,
+      "kind": "content",
+      "text": "Updated price of \"Axe Damage\": 3*L to 5e30 * (1.25 + L/85)^L",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:37:29.580Z"
+    },
+    {
+      "id": "0fd59438-9afc-494c-8539-213c7e8b7e85",
+      "at": 1793979433138,
+      "kind": "content",
+      "text": "Updated cap of \"Axe Damage\": empty to 100",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:37:29.580Z"
+    },
+    {
+      "id": "d551c080-12da-48c5-baa6-5266ad21d0ca",
+      "at": 1793979433087,
+      "kind": "content",
+      "text": "Renamed \"New upgrade\" to \"Axe Damage\"",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:37:29.580Z"
+    },
+    {
       "id": "51da6137-c3c8-49e2-8ed7-73cef5a3a347",
       "at": 1793979388647,
       "kind": "content",
@@ -132,6 +182,16 @@
       "savedAt": "2026-11-06T15:35:14.779Z"
     },
     {
+      "id": "3f38c526-24db-4789-ba81-af8565c26222",
+      "at": 1793979279839,
+      "kind": "content",
+      "text": "Added \"New upgrade\"",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:37:29.580Z"
+    },
+    {
       "id": "b55fd25c-b4d8-4f7e-904b-954c7a4a7faf",
       "at": 1793979271692,
       "kind": "content",
@@ -210,6 +270,26 @@
       "pending": false,
       "status": "saved",
       "savedAt": "2026-11-06T15:35:14.779Z"
+    },
+    {
+      "id": "407f0138-f710-41b4-bda3-dcb0cbdb338f",
+      "at": 1793979213403,
+      "kind": "content",
+      "text": "Removed \"New page\"",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:37:29.580Z"
+    },
+    {
+      "id": "2be0b73f-636c-4c4c-9e28-fd4e43e3a55d",
+      "at": 1793979208585,
+      "kind": "content",
+      "text": "Added \"New page\"",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:37:29.580Z"
     },
     {
       "id": "66ca96f1-c927-4bba-811e-d43b2f55e702",
@@ -2920,86 +3000,6 @@
       "pending": false,
       "status": "saved",
       "savedAt": "2026-11-06T07:02:35.331Z"
-    },
-    {
-      "id": "8204f73d-0e77-4919-8b42-f5cf17bedd05",
-      "at": 1793948429553,
-      "kind": "content",
-      "text": "Updated value of \"Mine Damage\": formula: amount to formula: ((amount / 1) + 1)^0.3",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T07:00:44.372Z"
-    },
-    {
-      "id": "c3d49132-b427-4c41-844a-2642b97f9a25",
-      "at": 1793948409401,
-      "kind": "content",
-      "text": "Set unit of \"Fossils\" (x)",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T07:00:44.372Z"
-    },
-    {
-      "id": "647d8a2f-95a6-4509-a119-af158791fbb8",
-      "at": 1793948409346,
-      "kind": "content",
-      "text": "Set cap Unit of \"Fossils\" (x)",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T07:00:44.372Z"
-    },
-    {
-      "id": "b60b86aa-5e68-4b20-a463-4feb8fe01e15",
-      "at": 1793948406059,
-      "kind": "content",
-      "text": "Set unit of \"Coins\" (x)",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T07:00:44.372Z"
-    },
-    {
-      "id": "51a9b909-f851-4781-b9a6-6ed8a9c03834",
-      "at": 1793948406010,
-      "kind": "content",
-      "text": "Set cap Unit of \"Coins\" (x)",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T07:00:44.372Z"
-    },
-    {
-      "id": "7d32ad82-9a60-4ced-a726-8f99949406e5",
-      "at": 1793948399911,
-      "kind": "content",
-      "text": "Renamed \"New bonus\" to \"Fossils\"",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T07:00:44.372Z"
-    },
-    {
-      "id": "d880b68b-cff1-4c5b-8332-7f1d34c7ec54",
-      "at": 1793948394012,
-      "kind": "content",
-      "text": "Renamed \"New bonus\" to \"Coins\"",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T07:00:44.372Z"
-    },
-    {
-      "id": "2501517e-e562-4183-a620-e2ae32285913",
-      "at": 1793948375189,
-      "kind": "content",
-      "text": "Renamed \"Minedamage\" to \"Mine Damage\"",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T06:59:52.834Z"
     }
   ]
 }
