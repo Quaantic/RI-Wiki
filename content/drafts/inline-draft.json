@@ -116,7 +116,7 @@
               {
                 "id": "crystal",
                 "name": "Crystal",
-                "icon": "gem",
+                "icon": "game-icons:diamonds",
                 "desc": "Crystals are the base crystal currency, earned by collecting crystals that spawn on the crystal board. They feed Crystal Upgrades, the first Barn tiers and the Opal reset. Collecting them also builds Crystal Level, which awards Crystal Perks.",
                 "highlights": [],
                 "facts": [],
@@ -138,7 +138,7 @@
               {
                 "id": "jewels",
                 "name": "Jewels",
-                "icon": "gem",
+                "icon": "game-icons:floating-crystal",
                 "desc": "Jewels are the first special crystal currency, earned passively after unlocking them through crystal progression. Jewels Upgrades boost Energy, Money, Life Gems and more; each upgrade has its own Barn tier requirement. Jewels are also required for the first stage gate.",
                 "highlights": [],
                 "facts": [],
@@ -159,7 +159,7 @@
               {
                 "id": "platinum",
                 "name": "Platinum",
-                "icon": "coins",
+                "icon": "game-icons:ore",
                 "desc": "Platinum is a special crystal type that spawns on the board as you progress through the Barn. Collecting Platinum crystals earns the currency used for Platinum Upgrades, which boost Energy, Crystals, Jewels, Opal and other systems. The last Platinum upgrades unlock Adamantium.",
                 "highlights": [],
                 "facts": [],
@@ -180,7 +180,7 @@
               {
                 "id": "adamantium",
                 "name": "Adamantium",
-                "icon": "shield",
+                "icon": "game-icons:metal-bar",
                 "desc": "Adamantium is a rarer crystal type unlocked deeper in the Barn. Its upgrades boost Crystals, Jewels, Opal, Crystal Shards, Energy and more, and raise caps that Opal and Californium milestones extend further. The line unlocks from Platinum Upgrade 9 and also requires Barn progression.",
                 "highlights": [],
                 "facts": [],
@@ -201,7 +201,7 @@
               {
                 "id": "californium",
                 "name": "Californium",
-                "icon": "spark",
+                "icon": "game-icons:gems",
                 "desc": "Californium is the strongest classic crystal type, spawning late in the Barn. Its upgrades boost Energy, Crystals, Opal, Platinum, Adamantium and more; its caps are raised by Opal and Golden Diamond upgrades. Californium is also the price of Barn Tier 9.",
                 "highlights": [],
                 "facts": [],
@@ -219,7 +219,7 @@
                   {
                     "id": "californium-milestones",
                     "name": "Californium Milestones",
-                    "icon": "star",
+                    "icon": "game-icons:trophy",
                     "desc": "Sixteen permanent rewards from total Californium. Reach 100T to unlock Astatine.",
                     "highlights": [],
                     "facts": [],
@@ -233,7 +233,7 @@
               {
                 "id": "astatine",
                 "name": "Astatine",
-                "icon": "spark",
+                "icon": "game-icons:checkered-diamond",
                 "desc": "Astatine is the newest and rarest crystal type, spawning on the crystal board. It feeds ten Astatine Upgrades gated by milestones, boosting crystal spawning, Astatine gain, Ore Mastery, Ruby Energy, Energy and Californium bonuses. The game auto-collect skips Astatine crystals, so collect them manually or with scripts.",
                 "highlights": [],
                 "facts": [],
@@ -251,7 +251,7 @@
                   {
                     "id": "astatine-power",
                     "name": "Astatine Power",
-                    "icon": "spark",
+                    "icon": "game-icons:star-swirl",
                     "desc": "Calculate Astatine Power and Californium Buffs below. Power unlocks at milestone 7; its cap bonuses unlock at milestone 8.",
                     "highlights": [],
                     "facts": [],
@@ -276,7 +276,7 @@
               {
                 "id": "crystal-shards",
                 "name": "Crystal Shards",
-                "icon": "gem",
+                "icon": "game-icons:crystal-bars",
                 "desc": "Crystal Shards are a higher crystal currency earned through crystal progression, with Crystal, Platinum and Adamantium upgrades increasing their gain. They pay for Crystal Shards Upgrades, Barn Tier 3 and the Opal reset, which requires at least 1 million shards.",
                 "highlights": [],
                 "facts": [],
@@ -297,7 +297,7 @@
               {
                 "id": "crystal-perks",
                 "name": "Crystal Perks",
-                "icon": "star",
+                "icon": "game-icons:upgrade",
                 "desc": "Crystal Perks are earned from Crystal Level as you collect crystals. They are spent on a permanent perk board for Energy, Money and other stats, and are also consumed by the Opal reset, so you choose between spending them or sacrificing them.",
                 "highlights": [],
                 "facts": [],
@@ -351,7 +351,7 @@
               {
                 "id": "quartz",
                 "name": "Quartz",
-                "icon": "gem",
+                "icon": "game-icons:checkered-diamond",
                 "desc": "Quartz is the Merge Grid currency, produced every second by each element and multiplied by higher merge tiers. It is spent on Merge Upgrades, and 250 million Quartz is required for the Bluesteel reset.",
                 "highlights": [],
                 "facts": [],
@@ -372,7 +372,7 @@
               {
                 "id": "bluesteel",
                 "name": "Bluesteel",
-                "icon": "shield",
+                "icon": "game-icons:steel-claws",
                 "desc": "Bluesteel is the Merge Grid reset layer, unlocked with a Merge Upgrade. Resetting at 250 million Quartz clears Quartz, Merge Upgrades and grid progress in exchange for Bluesteel, which permanently increases Quartz gain and buys Bluesteel Upgrades. Bluesteel is also needed for Barn Tier 8, the Mining stage gate and Magnets.",
                 "highlights": [],
                 "facts": [],
@@ -393,7 +393,7 @@
               {
                 "id": "merge-perks",
                 "name": "Merge Perks",
-                "icon": "star",
+                "icon": "game-icons:upgrade",
                 "desc": "Merge Perks are earned from Merge Level as you merge elements. They are spent on permanent multipliers that boost the grid, merging speed and Quartz.",
                 "highlights": [],
                 "facts": [],
@@ -414,7 +414,7 @@
               {
                 "id": "magnets",
                 "name": "Magnets",
-                "icon": "magnet",
+                "icon": "game-icons:magnet-blast",
                 "desc": "Magnets are collectibles unlocked through Merge Upgrades in the Bluesteel area, costing Bluesteel. They have a 15-second base spawn rate and a maximum of ten spawned at once. Their upgrades boost Quartz and Bluesteel, raise Californium, Adamantium and Platinum caps, and unlock future features.",
                 "highlights": [],
                 "facts": [],
@@ -15060,27 +15060,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.game.calculators.pages.runes/secret.groups[group5].bonuses order": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group5].bonuses[b1]": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group5].bonuses[b1].id": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group5].bonuses[b1].name": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group5].bonuses[b1].value": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group6]": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group6].id": {
-      "actor": "Nathy365"
-    },
     "content.game.calculators.pages.runes/secret.groups[group6].name": {
       "actor": "Nathy365"
     },
@@ -16129,6 +16108,108 @@
       "actor": "Quaantic"
     },
     "content.wiki.categories[main].subcategories[gears].children[automations].icon": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[main].subcategories[crystals].children": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[main].subcategories[crystals].children[crystal]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[main].subcategories[crystals].children[crystal].icon": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[main].subcategories[crystals].children[jewels]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[main].subcategories[crystals].children[jewels].icon": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[main].subcategories[crystals].children[platinum]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[main].subcategories[crystals].children[platinum].icon": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[main].subcategories[crystals].children[adamantium]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[main].subcategories[crystals].children[adamantium].icon": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[main].subcategories[crystals].children[californium]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[main].subcategories[crystals].children[californium].icon": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[main].subcategories[crystals].children[californium].children": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[main].subcategories[crystals].children[californium].children[californium-milestones]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[main].subcategories[crystals].children[californium].children[californium-milestones].icon": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[main].subcategories[crystals].children[astatine]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[main].subcategories[crystals].children[astatine].icon": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[main].subcategories[crystals].children[astatine].children": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[main].subcategories[crystals].children[astatine].children[astatine-power]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[main].subcategories[crystals].children[astatine].children[astatine-power].icon": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[main].subcategories[barn].children": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[main].subcategories[barn].children[crystal-shards]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[main].subcategories[barn].children[crystal-shards].icon": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[main].subcategories[barn].children[crystal-perks]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[main].subcategories[barn].children[crystal-perks].icon": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[main].subcategories[merge]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[main].subcategories[merge].children": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[main].subcategories[merge].children[quartz]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[main].subcategories[merge].children[quartz].icon": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[main].subcategories[merge].children[bluesteel]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[main].subcategories[merge].children[bluesteel].icon": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[main].subcategories[merge].children[merge-perks]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[main].subcategories[merge].children[merge-perks].icon": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[main].subcategories[merge].children[magnets]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[main].subcategories[merge].children[magnets].icon": {
       "actor": "Quaantic"
     }
   }
