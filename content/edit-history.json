@@ -2,6 +2,16 @@
   "format": 1,
   "entries": [
     {
+      "id": "8c255e7c-9b64-4707-bee5-283f7a5e27e0",
+      "at": 1793967536366,
+      "kind": "content",
+      "text": "Updated multi of \"More Astatine \": 1 to 0.15+(0.1*L)",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T12:19:31.904Z"
+    },
+    {
       "id": "9ae441e4-dce3-41a6-9234-92c1eed133dd",
       "at": 1793967425664,
       "kind": "content",
