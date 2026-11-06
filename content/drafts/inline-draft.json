@@ -7133,7 +7133,7 @@
             },
             {
               "n": 3,
-              "name": "More Tree Damag",
+              "name": "More Tree Damage",
               "cap": "49",
               "price": "(1 + l/4) * (1.315 + l/115)^l",
               "multi": "(1 + 0.2 * l) * 1.05^l"
@@ -14981,21 +14981,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.game.upgrades.sections.life-tree-essence.upgrades[9]": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[9].n": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[9].name": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[9].cap": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[9].price": {
-      "actor": "Quaantic"
-    },
     "content.game.upgrades.sections.life-tree-essence.upgrades[9].multi": {
       "actor": "Quaantic"
     },
@@ -16044,6 +16029,18 @@
       "actor": "zzinss"
     },
     "content.wiki.categories[life].subcategories[tree-essence].desc": {
+      "actor": "zzinss"
+    },
+    "content.game.upgrades.sections.life-tree-essence": {
+      "actor": "zzinss"
+    },
+    "content.game.upgrades.sections.life-tree-essence.upgrades": {
+      "actor": "zzinss"
+    },
+    "content.game.upgrades.sections.life-tree-essence.upgrades[3]": {
+      "actor": "zzinss"
+    },
+    "content.game.upgrades.sections.life-tree-essence.upgrades[3].name": {
       "actor": "zzinss"
     }
   }
