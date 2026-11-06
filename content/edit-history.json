@@ -182,6 +182,26 @@
       "savedAt": "2026-11-06T15:48:07.568Z"
     },
     {
+      "id": "74595453-aa26-4435-8ef3-85074fb6f806",
+      "at": 1793980032668,
+      "kind": "content",
+      "text": "Updated description of \"Trees\": What changed in the game. to Added all the 33 Types of trees and their b…",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:50:51.482Z"
+    },
+    {
+      "id": "1cb570e3-806e-452b-bac5-b31ea0fc3682",
+      "at": 1793980003552,
+      "kind": "content",
+      "text": "Updated text of \"Trees\": New update to Trees",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:50:51.482Z"
+    },
+    {
       "id": "536b5ead-beda-4167-9090-b9d0f31609b3",
       "at": 1793979987792,
       "kind": "content",
@@ -2976,26 +2996,6 @@
       "at": 1793948825600,
       "kind": "content",
       "text": "Set unit of \"Ruby Energy\" (x)",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T07:07:28.996Z"
-    },
-    {
-      "id": "23285a7b-95ea-40fe-ac3f-e57447705fc8",
-      "at": 1793948825557,
-      "kind": "content",
-      "text": "Set cap Unit of \"Ruby Energy\" (x)",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T07:07:28.996Z"
-    },
-    {
-      "id": "ecc60adc-158e-48ca-90c4-befefe086c7f",
-      "at": 1793948822501,
-      "kind": "content",
-      "text": "Set unit of \"Mastry\" (x)",
       "actor": "Nathy365",
       "pending": false,
       "status": "saved",
