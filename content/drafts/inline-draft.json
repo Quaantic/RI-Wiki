@@ -523,7 +523,7 @@
             "id": "research",
             "name": "Research",
             "icon": "flask",
-            "desc": "Research Points are the currency of the Research board, unlocked with a tycoon button on Life Island. The board has 44 upgrades covering Energy, Super Trees, Mining, Emerald Coins, Souls and more, bought one level at a time or with Buy Max. Later researches require ResearchesUnlocked upgrades; Prestige upgrade 18 and Golden milestones extend board level limits.",
+            "desc": "Research Points are the currency of the Research board, unlocked with a tycoon button on Life Island. The board has 50 upgrades covering Energy, Super Trees, Mining, Emerald Coins, Souls and more, bought one level at a time or with Buy Max. Later researches require ResearchesUnlocked upgrades; Prestige upgrade 18 and Golden milestones extend board level limits.",
             "highlights": [],
             "facts": [],
             "children": [
@@ -14988,33 +14988,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.game.upgrades.sections.life-tree-essence.upgrades[10].cap": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[10].price": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[10].multi": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[10].requirement": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[11]": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[11].n": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[11].name": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[11].cap": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[11].price": {
-      "actor": "Quaantic"
-    },
     "content.game.upgrades.sections.life-tree-essence.upgrades[11].multi": {
       "actor": "Quaantic"
     },
@@ -16063,6 +16036,12 @@
       "actor": "zzinss"
     },
     "content.game.upgrades.sections.research.upgrades[45].multi": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[research]": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[research].desc": {
       "actor": "zzinss"
     }
   }
