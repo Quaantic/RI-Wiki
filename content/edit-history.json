@@ -615,6 +615,106 @@
       "pending": false
     },
     {
+      "id": "643ddbd3-920f-4587-b16d-13b7fce519e1",
+      "at": 1793947614635,
+      "kind": "content",
+      "text": "Set unit of \"Soul\" (x)",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T06:47:11.375Z"
+    },
+    {
+      "id": "52aa29c4-1d1b-4f1e-8e8d-6caa3824152e",
+      "at": 1793947614585,
+      "kind": "content",
+      "text": "Set cap Unit of \"Soul\" (x)",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T06:47:11.375Z"
+    },
+    {
+      "id": "621e1fe1-f61f-48c8-a64d-7184ae82fb64",
+      "at": 1793947614541,
+      "kind": "content",
+      "text": "Renamed \"New bonus\" to \"Soul\"",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T06:47:11.375Z"
+    },
+    {
+      "id": "a0df8cf4-298b-4c5f-aaf2-4e4191c37b1c",
+      "at": 1793947607721,
+      "kind": "content",
+      "text": "Added \"New bonus\"",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T06:47:11.375Z"
+    },
+    {
+      "id": "716b4e60-6ef4-431a-a790-3b783e5ea055",
+      "at": 1793947606517,
+      "kind": "content",
+      "text": "Set unit of \"Health\" (x)",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T06:47:11.375Z"
+    },
+    {
+      "id": "9c1373b1-d0f1-4a29-8660-b2a66b90fc3e",
+      "at": 1793947606467,
+      "kind": "content",
+      "text": "Set cap Unit of \"Health\" (x)",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T06:47:11.375Z"
+    },
+    {
+      "id": "6dd900ae-6624-42f6-b3bc-107694d618a4",
+      "at": 1793947606419,
+      "kind": "content",
+      "text": "Renamed \"New bonus\" to \"Health\"",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T06:47:11.375Z"
+    },
+    {
+      "id": "704ebcc0-3ed5-4690-91d1-ac48cd4d99e4",
+      "at": 1793947594779,
+      "kind": "content",
+      "text": "Set unit of \"Strength\" (x)",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T06:47:11.375Z"
+    },
+    {
+      "id": "313f1b77-91cf-4c63-9de9-a9e59a482911",
+      "at": 1793947594730,
+      "kind": "content",
+      "text": "Set cap Unit of \"Strength\" (x)",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T06:47:11.375Z"
+    },
+    {
+      "id": "192620e0-8aab-46d8-bd2f-3ad9c185bb7b",
+      "at": 1793947594690,
+      "kind": "content",
+      "text": "Renamed \"New bonus\" to \"Strength\"",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T06:47:11.375Z"
+    },
+    {
       "id": "fff689ec-8413-4da7-978e-8e40cde05604",
       "at": 1793947542229,
       "kind": "content",
