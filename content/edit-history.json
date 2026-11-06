@@ -2,6 +2,26 @@
   "format": 1,
   "entries": [
     {
+      "id": "504c935f-bce6-43f2-b774-fe3f1f6f310d",
+      "at": 1793949385099,
+      "kind": "content",
+      "text": "Updated description of \"New icons\": What changed in the game. to Added many new icons to the stats descripti…",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:16:42.789Z"
+    },
+    {
+      "id": "6dcf4309-584e-4981-9bbb-808919956f6b",
+      "at": 1793949385048,
+      "kind": "content",
+      "text": "Updated text of \"New icons\": New update to New icons",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:16:42.789Z"
+    },
+    {
       "id": "69dba1c7-3a47-4e2c-b8ef-4c321e77ef4e",
       "at": 1793949346693,
       "kind": "content",
