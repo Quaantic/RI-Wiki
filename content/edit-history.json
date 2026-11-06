@@ -2,6 +2,46 @@
   "format": 1,
   "entries": [
     {
+      "id": "35839af6-19b6-4720-8692-f4961bc163e1",
+      "at": 1793967851333,
+      "kind": "content",
+      "text": "Updated multi of \"More Tree Essence\": 1+(0.1*L) to 0.2*L",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T12:25:02.323Z"
+    },
+    {
+      "id": "15261f18-157f-44f0-8b71-1d3894cf8da3",
+      "at": 1793967830732,
+      "kind": "content",
+      "text": "Updated multi of \"More Tree Essence\": 0.2*L to 1+(0.1*L)",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T12:25:02.323Z"
+    },
+    {
+      "id": "82b45344-c752-4efe-aa66-4b3e6ca782a4",
+      "at": 1793967812172,
+      "kind": "content",
+      "text": "Updated multi of \"More Rare Saps\": 0.1*L to 1+(0.05*L)",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T12:25:02.323Z"
+    },
+    {
+      "id": "5d567a5b-1e19-4291-b55f-c22948e845df",
+      "at": 1793967762124,
+      "kind": "content",
+      "text": "Updated multi of \"More Astatine \": 0.15+(0.1*L) to 1+(0.05*L)",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T12:25:02.304Z"
+    },
+    {
       "id": "d4166ed0-5599-44f4-872b-e021bbba51fc",
       "at": 1793967575049,
       "kind": "content",
