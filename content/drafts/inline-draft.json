@@ -75,7 +75,7 @@
               {
                 "id": "gears-generators",
                 "name": "Gears Generators",
-                "icon": "gauge",
+                "icon": "game-icons:gears",
                 "desc": "Gears Generators are five production machines unlocked by the Unlock Gears Production button for 1e16 Energy: Wrench, Generator, Engine, Jet Engine and Accelerator. Each is leveled individually, produces Gears per second and gains a tier bonus every 10 levels. Each machine requires the previous one; Accelerator is the endgame generator.",
                 "highlights": [],
                 "facts": [],
@@ -85,7 +85,7 @@
               {
                 "id": "special-gears",
                 "name": "Special Gears",
-                "icon": "star",
+                "icon": "game-icons:gear-hammer",
                 "desc": "Special Gears are the prestige layer of the Gears system, unlocked by the Special Gears Frames button for 1.25 million Gears. The reset board converts Gears into special tiers: 2 million normal Gears become Shiny Gears, 10 thousand Shiny become Life Gears, and 10 thousand Life Gears become the final tier. The board previews the exact gain before resetting.",
                 "highlights": [],
                 "facts": [],
@@ -95,7 +95,7 @@
               {
                 "id": "automations",
                 "name": "Automations",
-                "icon": "refresh",
+                "icon": "game-icons:auto-repair",
                 "desc": "Automations are 24 auto-buyers paid in Gears, unlocked by Autobuy Frames for 250 Gears. They automatically buy upgrades for Machines, Factory, Crystals, Jewels, Platinum, Life Shards, Fossils, Research, Logs, Sap, Terraform, Roots, Monster, Money, Gold, Prestige, Emeralds, Crystal Shards, Crystal Perks, Opal, Adamantium, Merge and Californium. Each level unlocks more automatic purchases per tick.",
                 "highlights": [],
                 "facts": [],
@@ -15060,12 +15060,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.game.calculators.pages.runes/secret.groups[group5].amountLabel": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group5].bonuses": {
-      "actor": "Nathy365"
-    },
     "content.game.calculators.pages.runes/secret.groups[group5].bonuses order": {
       "actor": "Nathy365"
     },
@@ -16114,6 +16108,27 @@
       "actor": "Quaantic"
     },
     "content.wiki.categories[main].subcategories[stages].icon": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[main].subcategories[gears].children": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[main].subcategories[gears].children[gears-generators]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[main].subcategories[gears].children[gears-generators].icon": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[main].subcategories[gears].children[special-gears]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[main].subcategories[gears].children[special-gears].icon": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[main].subcategories[gears].children[automations]": {
+      "actor": "Quaantic"
+    },
+    "content.wiki.categories[main].subcategories[gears].children[automations].icon": {
       "actor": "Quaantic"
     }
   }
