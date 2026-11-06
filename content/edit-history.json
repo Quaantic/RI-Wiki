@@ -2,6 +2,56 @@
   "format": 1,
   "entries": [
     {
+      "id": "2f75be65-dce2-4f10-8891-9ad305f0d7be",
+      "at": 1793948540045,
+      "kind": "content",
+      "text": "Renamed \"New bonus\" to \"Bluesteel\"",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:02:35.331Z"
+    },
+    {
+      "id": "7e96619f-01ed-4323-8340-6b1333245882",
+      "at": 1793948527818,
+      "kind": "content",
+      "text": "Renamed \"New bonus\" to \"Californium\"",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:02:35.331Z"
+    },
+    {
+      "id": "e849dcd8-12df-4038-b9c7-b8052a51b792",
+      "at": 1793948509867,
+      "kind": "content",
+      "text": "Renamed \"New bonus\" to \"iron\"",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:02:35.331Z"
+    },
+    {
+      "id": "2ed1ce49-a428-4d1b-a695-9ca5d7e71f5e",
+      "at": 1793948480681,
+      "kind": "content",
+      "text": "Updated value of \"Fossils\": formula: amount to formula: ((amount / 2) + 1)^0.175",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:02:35.331Z"
+    },
+    {
+      "id": "3fe7e9ce-770e-4482-a12a-81d5ed512ebf",
+      "at": 1793948456356,
+      "kind": "content",
+      "text": "Updated value of \"Coins\": formula: amount to formula: ((amount / 1.5) + 1)^0.2",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:02:35.331Z"
+    },
+    {
       "id": "8204f73d-0e77-4919-8b42-f5cf17bedd05",
       "at": 1793948429553,
       "kind": "content",
