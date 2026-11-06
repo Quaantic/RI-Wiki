@@ -2,6 +2,76 @@
   "format": 1,
   "entries": [
     {
+      "id": "032c98d3-9a26-432a-8bf1-5d56f0e5f0c7",
+      "at": 1793949011976,
+      "kind": "content",
+      "text": "Renamed \"Omega\" to \"Omega-\"",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:10:29.012Z"
+    },
+    {
+      "id": "0909e8da-6182-4196-8c0f-63d8e38bdabb",
+      "at": 1793949008589,
+      "kind": "content",
+      "text": "Renamed \"Omnisoul\" to \"Omnisoul-\"",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:10:29.012Z"
+    },
+    {
+      "id": "ad1bbb0b-e5d2-4dbe-9098-8fd504e285bf",
+      "at": 1793949003625,
+      "kind": "content",
+      "text": "Renamed \"Soul\" to \"Soul-\"",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:10:29.012Z"
+    },
+    {
+      "id": "64b5b9bf-4f32-437d-abf8-1c8a56fe89c0",
+      "at": 1793948999663,
+      "kind": "content",
+      "text": "Renamed \"Infernal\" to \"Infernal-\"",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:10:29.012Z"
+    },
+    {
+      "id": "74da5852-2f11-4ab4-a686-19bb9c950bce",
+      "at": 1793948994402,
+      "kind": "content",
+      "text": "Renamed \"Plasma\" to \"Plasma-\"",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:10:29.012Z"
+    },
+    {
+      "id": "2b9cae10-10fc-4a22-b7ee-500383e29d88",
+      "at": 1793948989767,
+      "kind": "content",
+      "text": "Renamed \"Unnatural\" to \"Unnatural-\"",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:10:29.012Z"
+    },
+    {
+      "id": "288ce0fc-efe4-4825-b640-2b94df9b935a",
+      "at": 1793948985697,
+      "kind": "content",
+      "text": "Renamed \"Void\" to \"Void-\"",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:10:29.012Z"
+    },
+    {
       "id": "9eb499c3-07ee-4656-a764-e101d7db59e4",
       "at": 1793948976861,
       "kind": "content",
