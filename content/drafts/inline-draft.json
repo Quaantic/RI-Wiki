@@ -1371,7 +1371,7 @@
         "name": "Runes",
         "desc": "Runes are permanent stat multipliers bought at rune boards. Each rune type uses a different currency and each purchase rolls a random rarity from Basic to super-rare tiers. Runes permanently multiply stats on their boost list; higher rarities are dramatically rarer. Rune Luck from upgrades and items improves rolls, and the Golden rarity of the Bones rune also multiplies Runestone luck.",
         "icon": "rune",
-        "tagline": "Socketable stones grouped into six families — Energetic, Sky, Riches, Earth, Advanced and Bones. Every roll is gated by Rune Luck.",
+        "tagline": "Socketable stones grouped into seven families — Energetic, Sky, Riches, Earth, Advanced, Bones and Secret. Every roll (but in secret) is gated by Rune Luck.",
         "overview": {
           "desc": "\n",
           "highlights": [],
@@ -14523,7 +14523,8 @@
         "Neutron Frost": "#00ffcc",
         "Frost Conversion": "#82f7e4",
         "Frost Generators": "#4db2ff",
-        "Golden points": "#ffee00"
+        "Golden points": "#ffee00",
+        "Secret": "#690065"
       },
       "pageLinks": {
         "main": "#/main",
