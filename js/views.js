@@ -784,7 +784,6 @@ export const homeView = {
     root.innerHTML = html`
       <!-- ============ Hero ============ -->
       <section class="hero">
-        <div class="hero__hex hex-texture"></div>
         <div class="hero__inner">
           <div>
             <span class="hero__badge" ${ed('game:uiCopy.heroBadge', 'text', 'Hero badge')}><span class="hex-dot"></span> ${esc(UI_COPY.heroBadge || `Regrowth Incremental · Community Wiki`)}</span>
@@ -1291,6 +1290,7 @@ export const searchView = {
         </div>
       `;
       initReveal(target);
+      void import('./page-motion.js').then(({animateDynamicContent})=>animateDynamicContent(target));
     }
 
     const liveSearch = debounce(runSearch, 220);

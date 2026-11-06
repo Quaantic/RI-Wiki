@@ -1412,14 +1412,12 @@ function installSidebarTools() {
       <button type="button" class="ri-nav-tool" data-ri-nav-tool="add">${icon('plus', 14)} Add pages</button>
       <button type="button" class="ri-nav-tool" data-ri-nav-tool="drag" aria-pressed="false">${icon('folder-tree', 14)} Reorder / nest</button>
       <button type="button" class="ri-nav-tool" data-ri-nav-tool="colors">${icon('palette', 14)} Colors</button>
-      <button type="button" class="ri-nav-tool" data-ri-nav-tool="bulk">${icon('layers', 14)} Bulk editor</button>
       <button type="button" class="ri-nav-tool" data-ri-nav-tool="versions">${icon('history', 14)} Versions</button>
       <small class="ri-nav-tools__hint" hidden>Drag a page between two items to reposition it — or drop it in the middle of a category/page header to nest it inside. Only in Edit mode.</small>`;
     nav.appendChild(box);
     box.querySelector('[data-ri-nav-tool="add"]').addEventListener('click', (event) => openManageAdd(event.currentTarget));
     box.querySelector('[data-ri-nav-tool="colors"]').addEventListener('click', () => openAdminPage('colors'));
     box.querySelector('[data-ri-nav-tool="versions"]').addEventListener('click', () => openAdminPage('versions'));
-    box.querySelector('[data-ri-nav-tool="bulk"]').addEventListener('click', () => openAdminPage('bulk'));
     box.querySelector('[data-ri-nav-tool="drag"]').addEventListener('click', () => {
       dragArmed = !dragArmed;
       if (dragArmed && !session.editing) setEditing(true);
@@ -1482,83 +1480,6 @@ const versionsView = {
 registerRoute(/^colors$/, colorsView);
 registerRoute(/^versions$/, versionsView);
 
-const bulkView={
-  title:()=> 'Bulk editor — RI Gaming Wiki',
-  crumbs:()=>[{label:'Main',href:'#/',icon:'compass'},{label:'Bulk editor',icon:'layers'}],
-  nav:()=>null,
-  render(root){
-    if(!editorPageShell(root,'layers','Bulk editor'))return;
-    if(popState)closePopover(true);
-    if(!session.editing)setEditing(true);
-    renderBulkEditor(root);
-  }
-};
-registerRoute(/^bulk$/,bulkView);
-
-function allBulkPages(){
-  const pages=[];
-  const walk=(items,parentPath,group)=>{
-    (items||[]).forEach((page,index)=>{
-      const path=`${parentPath}.${index}`;
-      pages.push({path,id:page.id,name:page.name,group});
-      walk(page.children,`${path}.children`,`${group} › ${page.name}`);
-    });
-  };
-  (draft.doc('wiki')?.categories||[]).forEach((cat,i)=>{
-    pages.push({path:`categories.${i}`,id:cat.id,name:cat.name,group:'Categories'});
-    walk(cat.subcategories,`categories.${i}.subcategories`,cat.name);
-  });
-  return pages;
-}
-
-function renderBulkEditor(root){
-  const pages=allBulkPages();
-  root.innerHTML=`<section class="section ri-admin-section ri-bulk">
-    <h2 class="ri-admin-section__title">${icon('layers',16)} Bulk edit pages</h2>
-    <p class="ri-review-hint">Select pages, choose one operation and review the count before applying. This stages ordinary draft edits with Undo and Supabase autosave; it does <b>not Publish</b>. IDs, names, children and page hierarchy are protected.</p>
-    <div class="ri-bulk__controls"><label>Filter pages <input type="search" class="input" data-bulk-filter placeholder="Search pages…" /></label><label>Operation<select class="input" data-bulk-action><option value="icon">Set icon</option><option value="desc">Set description</option><option value="replace">Find and replace descriptions</option></select></label></div>
-    <div class="ri-bulk__inputs"><label data-bulk-find-label hidden>Find text <input class="input" data-bulk-find placeholder="Existing phrase"></label><label>New value <input class="input" data-bulk-value placeholder="e.g. game-icons:leaf" /></label></div>
-    <div class="ri-bulk__select"><label><input type="checkbox" data-bulk-all> Select visible</label><span data-bulk-count>0 selected</span></div>
-    <div class="ri-bulk__list">${pages.map((p,i)=>`<label class="ri-bulk__page" data-bulk-row data-bulk-key="${i}"><input type="checkbox" data-bulk-check value="${i}"><span><b>${esc(p.name)}</b><small>${esc(p.group)}</small></span></label>`).join('')}</div>
-    <div class="ri-bulk__actions"><button class="btn btn--primary" type="button" data-bulk-apply disabled>${icon('check',15)} Apply to selected pages</button></div>
-  </section>`;
-  const filter=root.querySelector('[data-bulk-filter]'),action=root.querySelector('[data-bulk-action]'),value=root.querySelector('[data-bulk-value]'),find=root.querySelector('[data-bulk-find]'),count=root.querySelector('[data-bulk-count]'),apply=root.querySelector('[data-bulk-apply]'),all=root.querySelector('[data-bulk-all]'),rows=[...root.querySelectorAll('[data-bulk-row]')];
-  const selected=()=>rows.filter(row=>row.querySelector('[data-bulk-check]').checked).map(row=>pages[Number(row.dataset.bulkKey)]);
-  const refresh=()=>{const n=selected().length;count.textContent=`${n} page${n===1?'':'s'} selected`;apply.disabled=!n||!value.value.trim()||(action.value==='replace'&&!find.value);root.querySelector('[data-bulk-find-label]').hidden=action.value!=='replace';value.placeholder=action.value==='icon'?'e.g. game-icons:leaf':action.value==='desc'?'Description for every selected page':'Replacement phrase';};
-  filter.addEventListener('input',()=>{const q=filter.value.toLowerCase().trim();rows.forEach(row=>{const page=pages[Number(row.dataset.bulkKey)];row.hidden=!(page.name+' '+page.group).toLowerCase().includes(q);});});
-  all.addEventListener('change',()=>{rows.filter(row=>!row.hidden).forEach(row=>{row.querySelector('[data-bulk-check]').checked=all.checked;});refresh()});
-  root.querySelector('.ri-bulk__list').addEventListener('change',refresh);
-  [action,value,find].forEach(el=>el.addEventListener('input',refresh));
-  apply.addEventListener('click',async()=>{
-    const chosen=selected(),op=action.value,next=value.value,term=find.value;
-    if(!chosen.length||!next.trim()||chosen.length>250)return;
-    if(op==='replace'&&!term)return;
-    if(op==='icon'&&!/^[a-z0-9_:.-]{1,100}$/i.test(next.trim())){notify('Use a valid icon name (e.g. leaf or game-icons:leaf).',true);return;}
-    const changes=chosen.flatMap(page=>{
-      const data=draft.doc('wiki'),node=locate(data,page.path);
-      if(!node)return [];
-      const key=op==='icon'?'icon':'desc';
-      const original=String(node[key]||'');
-      const newValue=op==='replace'?original.split(term).join(next):next;
-      return newValue!==original?[{page,key,value:newValue}]:[];
-    });
-    if(!changes.length){notify('No matching pages need to be changed.');return;}
-    const approved=await editorReviewDialog('Confirm bulk edit',`<p>This will update <b>${changes.length} page${changes.length===1?'':'s'}</b> in your working draft, and Supabase autosave may share them with collaborators. It will <b>not Publish</b> to GitHub. Use Undo or a version to recover if needed.</p><p>Operation: <b>${esc(action.selectedOptions[0].textContent)}</b>.</p>`,{confirmText:`Apply ${changes.length} edits`});
-    if(!approved)return;
-    try{
-      // Validate the entire hypothetical edit before changing a single field.
-      const candidate=draft.snapshotDocs();
-      changes.forEach(item=>{const node=locate(candidate.wiki,item.page.path);if(!node)throw new Error('Page moved during bulk edit. Refresh and try again.');node[item.key]=item.value;});
-      validateDocuments(candidate);
-      changes.forEach(item=>draft.setValue('wiki',`${item.page.path}.${item.key}`,item.value));
-      draft.applyDraftToSite();buildNav();window.dispatchEvent(new CustomEvent('ri-edit-content'));
-      notify(`${changes.length} bulk edit(s) staged. Autosave will share; Publish is separate.`);
-      await rerender({scroll:'preserve'});
-    }catch(error){notify(error.message||'Bulk edit failed.',true)}
-  });
-  refresh();
-}
-
 
 function formatHistoryDate(at) {
   const date = new Date(at || 0);
@@ -1586,7 +1507,7 @@ function renderHistoryList(container, entries, filterKind) {
 
 function openAdminPage(kind) {
   if (!session.ready || !session.allowed) return;
-  window.location.hash = kind === 'colors' ? '#/colors' : kind === 'bulk' ? '#/bulk' : '#/versions';
+  window.location.hash = kind === 'colors' ? '#/colors' : '#/versions';
 }
 
 // Native modal: scrollable, keyboard dismissible and read-only until confirmed.

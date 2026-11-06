@@ -328,8 +328,13 @@ input {
 /* "Latest" chip breathes */
 .upd-version__latest { animation: pulse-soft 2.6s ease-in-out infinite; }
 
-/* Lightweight, interruptible route change: no navigation wait, blur or layout animation. */
-@keyframes ri-page-arrive { from { opacity:.78; transform: translate3d(0,7px,0); } to { opacity:1; transform:translate3d(0,0,0); } }
-@media (prefers-reduced-motion: reduce) { .page-enter, .reveal, .hex-texture { animation:none !important; opacity:1 !important; transform:none !important; } }
+/* Motion is attached by the router to real page elements, not a permanent CSS loop. */
+.ri-motion-managed .reveal { animation:none; }
+.ri-motion-managed .hero__badge,
+.ri-motion-managed .hero__title,
+.ri-motion-managed .hero__sub,
+.ri-motion-managed .hero__search,
+.ri-motion-managed .hero__chips { animation:none; }
+@media(prefers-reduced-motion:reduce) { .reveal, .page-enter, .hex-texture { animation:none!important; opacity:1!important; transform:none!important; } }
 
 @media (max-width: 720px) { body { background-attachment: scroll; } body::before { background-attachment: scroll; } }

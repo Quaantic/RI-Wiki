@@ -2,7 +2,6 @@ const {authorize,github,PREFIX,fail}=require('../server/editor-auth.cjs');
 const FILES={wiki:'content/wiki-data.json',updates:'content/update-log.json',game:'content/game-data.json'};
 const DRAFT='content/drafts/inline-draft.json';
 const live=require('../server/live-store.cjs');
-const {changeIndex}=require('../server/change-index.cjs');
 module.exports=async(req,res)=>{
  res.setHeader('Cache-Control','no-store');
  try{
@@ -26,15 +25,6 @@ module.exports=async(req,res)=>{
   })));
   const changed=Object.keys(FILES).filter(name=>JSON.stringify(docs[name])!==JSON.stringify(before[name]));
   const updates=changed.map(name=>({path:FILES[name],mode:'100644',type:'blob',content:JSON.stringify(docs[name],null,2)+'\n'}));
-  if(changed.length){
-   let previous={};
-   const currentIndex=entries.get('content/change-index.json');
-   if(currentIndex?.sha){
-    try{const blob=await github(token,`${PREFIX}/git/blobs/${currentIndex.sha}`);previous=JSON.parse(Buffer.from(blob.content,'base64').toString());}catch(error){console.warn('[ri-publish] Could not load previous NEW badges index:',error.message);}
-   }
-   const index=changeIndex(before,docs,previous);
-   updates.push({path:'content/change-index.json',mode:'100644',type:'blob',content:JSON.stringify(index,null,2)+'\n'});
-  }
   if(changed.length) {
    const actor=String(user.login || 'unknown').replace(/[^a-zA-Z0-9_-]/g,'_').slice(0,60);
    const parts=new Intl.DateTimeFormat('en-GB',{timeZone:'America/Sao_Paulo',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(new Date());

@@ -230,9 +230,7 @@ html.ri-edit-bar .sidebar { top: var(--ri-edit-bar-h); }
 
 /* ---------- Corpo em modo edição ---------- */
 
-/* Revelações ficam instantâneas (elementos novos precisam ser clicáveis). */
-html.ri-edit-on .reveal { animation: none !important; opacity: 1 !important; transform: none !important; }
-html.ri-edit-on .page-enter { animation: none !important; opacity: 1 !important; }
+/* O editor não desativa transições de navegação. Rerenders durante digitação passam pelo modo sem animação. */
 html.ri-edit-on ::highlight(ri-untyped) { color: inherit !important; }
 
 /* Contorno sutil e cursor nas regiões editáveis. */
@@ -792,16 +790,4 @@ html.ri-icon-browser-open { overflow: hidden; }
 .ri-version-row__details small { color:var(--c-text-3); overflow-wrap:anywhere; }
 .ri-version-row[hidden] { display:none!important; }
 
-/* Bulk editor: compact, scoped selection with no destructive bulk-delete. */
-.ri-bulk__controls,.ri-bulk__inputs { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; margin-top:18px; }
-.ri-bulk label { display:grid; gap:6px; color:var(--c-text-2); font-size:12px; min-width:0; }
-.ri-bulk .input { display:block; width:100%; min-height:37px; padding:7px 9px; background:var(--c-bg); color:var(--c-text); border:1px solid var(--c-border); border-radius:7px; }
-.ri-bulk__select { display:flex; justify-content:space-between; gap:12px; align-items:center; margin-top:20px; border-bottom:1px solid var(--c-border); padding-bottom:9px; font-size:12px; }
-.ri-bulk__select label { display:flex; flex-direction:row; align-items:center; gap:9px; }
-.ri-bulk__list { max-height:340px; overflow:auto; border:1px solid var(--c-border); border-radius:9px; margin-top:10px; }
-.ri-bulk__page { padding:9px 12px; display:flex!important; flex-direction:row!important; align-items:center; gap:12px!important; border-bottom:1px solid var(--c-border); cursor:pointer; }
-.ri-bulk__page:last-child { border:0; }.ri-bulk__page[hidden] { display:none!important; }
-.ri-bulk__page input { accent-color:var(--c-accent); flex:none; }.ri-bulk__page span { display:grid; gap:2px; }.ri-bulk__page b { font-size:12px; color:var(--c-text); }.ri-bulk__page small { color:var(--c-text-3); font-size:11px; }
-.ri-bulk__page:hover { background:rgba(159,230,113,.04); }
-.ri-bulk__actions { display:flex; justify-content:flex-end; margin-top:16px; }
-@media(max-width:650px) { .ri-bulk__controls,.ri-bulk__inputs { grid-template-columns:1fr; }.ri-review-dialog__head,.ri-review-dialog__body { padding:12px; }.ri-presence small { display:none; } }
+@media(max-width:650px) { .ri-review-dialog__head,.ri-review-dialog__body { padding:12px; }.ri-presence small { display:none; } }

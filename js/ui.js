@@ -436,7 +436,7 @@ export function buildNav() {
         </a>
         ${renderSubTree(c.id, c.subcategories, 1)}
       </div>`;
-    }).join('') + `<a class="nav-item ri-nav-tool" href="#/calculator">${icon('calculator',19)} <span class="nav-item__label">Upgrade Calculator</span></a>`;
+    }).join('');
 
   qsa('.nav-group',nav).forEach(el=>el.classList.toggle('open',openGroups.has(el.dataset.cat)));
   qsa('[data-parent-sub]',nav).forEach(el=>el.classList.toggle('open',openBranches.has(`${el.closest('.nav-group')?.dataset.cat}/${el.dataset.parentSub}`)));
