@@ -2,6 +2,16 @@
   "format": 1,
   "entries": [
     {
+      "id": "e551413b-2b32-42df-8af8-e9ae9b744111",
+      "at": 1793975328438,
+      "kind": "content",
+      "text": "Updated icon of \"Stages\": compass to game-icons:medal",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:29:04.181Z"
+    },
+    {
       "id": "1371eb5a-e895-4e6c-a84a-86a61f529982",
       "at": 1793975273226,
       "kind": "content",
@@ -2939,16 +2949,6 @@
       "at": 1793947614635,
       "kind": "content",
       "text": "Set unit of \"Soul\" (x)",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T06:47:11.375Z"
-    },
-    {
-      "id": "52aa29c4-1d1b-4f1e-8e8d-6caa3824152e",
-      "at": 1793947614585,
-      "kind": "content",
-      "text": "Set cap Unit of \"Soul\" (x)",
       "actor": "Nathy365",
       "pending": false,
       "status": "saved",
