@@ -2,6 +2,156 @@
   "format": 1,
   "entries": [
     {
+      "id": "81c2a4c8-0c08-4905-afd6-c519c08c0af3",
+      "at": 1793982531674,
+      "kind": "content",
+      "text": "Updated text of \"What gamepass should i get with my token?\": Depends on what you need, most likely facto… to Depends on what you need, most likely facto…",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T16:29:28.044Z"
+    },
+    {
+      "id": "13ccb799-817b-494d-9bcb-4265636efea2",
+      "at": 1793982523378,
+      "kind": "content",
+      "text": "Updated text of \"What gamepass should i get with my token?\": Write a description or FAQ answer here. to Depends on what you need, most likely facto…",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T16:29:28.044Z"
+    },
+    {
+      "id": "9ad5b017-1089-4547-92b1-0a21f61bd5c8",
+      "at": 1793982523336,
+      "kind": "content",
+      "text": "Updated text of \"What gamepass should i get with my token?\": New section to What gamepass should i get with my token?",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T16:29:28.044Z"
+    },
+    {
+      "id": "95cf4132-330a-4c87-bfa1-32650f2beb8a",
+      "at": 1793982511625,
+      "kind": "content",
+      "text": "Added \"New section\"",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T16:29:28.044Z"
+    },
+    {
+      "id": "d1b8619c-10b6-430c-b9c6-35a0cb12c111",
+      "at": 1793982509136,
+      "kind": "content",
+      "text": "Removed \"New section\"",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T16:29:28.044Z"
+    },
+    {
+      "id": "bb158701-78ec-4f19-99ec-3d617e95f323",
+      "at": 1793982490124,
+      "kind": "content",
+      "text": "Added \"New section\"",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T16:29:28.044Z"
+    },
+    {
+      "id": "b711002e-eca4-4fd8-900d-b5bb2164520e",
+      "at": 1793982485129,
+      "kind": "content",
+      "text": "Updated text of \"Can I get more than 1 rune?\": can I get more than 1 rune? to Can I get more than 1 rune?",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T16:29:28.044Z"
+    },
+    {
+      "id": "12abc120-2965-423a-a894-53b5585e868b",
+      "at": 1793982479066,
+      "kind": "content",
+      "text": "Updated text of \"can I get more than 1 rune?\": Write a description or FAQ answer here. to Yes, there’s rune luck and bulk upgrades st…",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T16:29:28.044Z"
+    },
+    {
+      "id": "4821b18e-1205-484e-b4c7-2916eac146e1",
+      "at": 1793982479020,
+      "kind": "content",
+      "text": "Updated text of \"can I get more than 1 rune?\": New section to can I get more than 1 rune?",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T16:29:28.044Z"
+    },
+    {
+      "id": "a7ead734-48ec-418f-af55-615902eca57f",
+      "at": 1793982472860,
+      "kind": "content",
+      "text": "Added \"New section\"",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T16:29:28.044Z"
+    },
+    {
+      "id": "7b03a873-dd75-456e-ab45-906b70e38a47",
+      "at": 1793982468976,
+      "kind": "content",
+      "text": "Updated text of \"Should I do runes\": Write a description or FAQ answer here. to Yes because even though they may take a whi…",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T16:29:28.044Z"
+    },
+    {
+      "id": "7f9f0e09-e591-4721-877d-4e7332dfc081",
+      "at": 1793982468927,
+      "kind": "content",
+      "text": "Updated text of \"Should I do runes\": New section to Should I do runes",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T16:29:28.044Z"
+    },
+    {
+      "id": "baee1a56-e139-4560-a5aa-7d95d5c95fe3",
+      "at": 1793982464762,
+      "kind": "content",
+      "text": "Added \"New section\"",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T16:29:28.044Z"
+    },
+    {
+      "id": "8ca29ff7-08e3-456d-b114-a44572cdcf67",
+      "at": 1793982455481,
+      "kind": "content",
+      "text": "Updated text of \"How do I get Astatine?\": Write a description or FAQ answer here. to 100T californium milestone and it’s a base …",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T16:29:28.044Z"
+    },
+    {
+      "id": "1263c9f5-9369-47eb-9017-466c610238cd",
+      "at": 1793982455435,
+      "kind": "content",
+      "text": "Updated text of \"How do I get Astatine?\": New section to How do I get Astatine?",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T16:29:28.044Z"
+    },
+    {
       "id": "a0675653-075c-4ed5-b665-34563edb8224",
       "at": 1793982443221,
       "kind": "content",
@@ -2850,156 +3000,6 @@
       "pending": false,
       "status": "published",
       "savedAt": "2026-11-06T14:49:25.518Z"
-    },
-    {
-      "id": "244f30f8-71ae-4085-b84a-e006d10d64fd",
-      "at": 1793975385491,
-      "kind": "content",
-      "text": "Updated icon of \"Gears Generators\": gauge to game-icons:gears",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "published",
-      "savedAt": "2026-11-06T14:30:56.741Z"
-    },
-    {
-      "id": "e551413b-2b32-42df-8af8-e9ae9b744111",
-      "at": 1793975328438,
-      "kind": "content",
-      "text": "Updated icon of \"Stages\": compass to game-icons:medal",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "published",
-      "savedAt": "2026-11-06T14:29:04.181Z"
-    },
-    {
-      "id": "1371eb5a-e895-4e6c-a84a-86a61f529982",
-      "at": 1793975273226,
-      "kind": "content",
-      "text": "Updated icon of \"Energy\": spark to game-icons:fire",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "published",
-      "savedAt": "2026-11-06T14:28:45.131Z"
-    },
-    {
-      "id": "82476605-241c-4d36-9946-84d332389824",
-      "at": 1793975034042,
-      "kind": "content",
-      "text": "Updated icon of \"Monster\": skull to game-icons:monster-grasp",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "published",
-      "savedAt": "2026-11-06T14:24:10.489Z"
-    },
-    {
-      "id": "e0f04e8a-76fa-4aaf-9897-7e271a9e7056",
-      "at": 1793975024525,
-      "kind": "content",
-      "text": "Updated icon of \"Frost\": wind to game-icons:frostfire",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "published",
-      "savedAt": "2026-11-06T14:24:10.489Z"
-    },
-    {
-      "id": "b5d26521-36a2-416b-a7c5-835e3673280a",
-      "at": 1793974922539,
-      "kind": "content",
-      "text": "Updated icon of \"Tree\": game-icons:upgrade to game-icons:fruit-tree",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "published",
-      "savedAt": "2026-11-06T14:24:10.489Z"
-    },
-    {
-      "id": "1e448279-3b35-4c96-adb7-243037d069d2",
-      "at": 1793974912128,
-      "kind": "content",
-      "text": "Updated icon of \"Tree\": branch to game-icons:upgrade",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "published",
-      "savedAt": "2026-11-06T14:24:10.489Z"
-    },
-    {
-      "id": "4d166e0b-9857-4189-b61e-658cba1e3741",
-      "at": 1793974882863,
-      "kind": "content",
-      "text": "Updated icon of \"Life Generation\": refresh to game-icons:paw-heart",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "published",
-      "savedAt": "2026-11-06T14:24:10.489Z"
-    },
-    {
-      "id": "4382aa17-cbf1-41dd-bae3-ba516b050be6",
-      "at": 1793974855534,
-      "kind": "content",
-      "text": "Updated icon of \"Power of Fossils\": chart to game-icons:ammonite-fossil",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "published",
-      "savedAt": "2026-11-06T14:24:10.489Z"
-    },
-    {
-      "id": "f4a0d6b5-1403-4882-a003-825430ae62a2",
-      "at": 1793974839781,
-      "kind": "content",
-      "text": "Updated icon of \"Fossil\": hex to game-icons:fossil",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "published",
-      "savedAt": "2026-11-06T14:24:10.489Z"
-    },
-    {
-      "id": "b072f208-84ed-4d3f-a3e0-2214278cdd36",
-      "at": 1793974551419,
-      "kind": "content",
-      "text": "Updated multi of \"More Tree Essence\": * (1 + 0.1 * L) to 1+(0.1*L)",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "published",
-      "savedAt": "2026-11-06T14:17:03.919Z"
-    },
-    {
-      "id": "f6f014dc-d19c-4665-85a7-0ff83ef6be2b",
-      "at": 1793974457843,
-      "kind": "content",
-      "text": "Updated multi of \"More Tree Essence\": *(1 + 0.1*L) to * (1 + 0.1 * L)",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "published",
-      "savedAt": "2026-11-06T14:15:28.856Z"
-    },
-    {
-      "id": "43a43403-dd07-411e-acae-39eb5d1c9ad5",
-      "at": 1793974418522,
-      "kind": "content",
-      "text": "Updated multi of \"More Tree Essence\": *(1 + 0.1·L) to *(1 + 0.1*L)",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "published",
-      "savedAt": "2026-11-06T14:15:28.856Z"
-    },
-    {
-      "id": "32dcd7f8-2f2b-497b-9ac7-d80e4a7f0144",
-      "at": 1793974412261,
-      "kind": "content",
-      "text": "Updated multi of \"More Tree Essence\": 0.1*L to *(1 + 0.1·L)",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "published",
-      "savedAt": "2026-11-06T14:15:28.856Z"
-    },
-    {
-      "id": "8ea4ab7f-00a1-41b4-b327-7edd2feee7da",
-      "at": 1793974388366,
-      "kind": "content",
-      "text": "Updated price of \"More Tree Essence\": floor(1e57 × (2.35 + L/75)^L) to floor(1e57 * (2.35 + L/75)^L)",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "published",
-      "savedAt": "2026-11-06T14:13:30.175Z"
     }
   ]
 }
