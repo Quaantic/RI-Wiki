@@ -14336,7 +14336,7 @@
                 {
                   "id": "b2",
                   "name": "Magnets",
-                  "value": "formula: amount",
+                  "value": "formula: ((amount / 1.25) + 1)^0.13",
                   "capUnit": "x",
                   "unit": "x"
                 }
@@ -14352,21 +14352,21 @@
                 {
                   "id": "b1",
                   "name": "Astatine",
-                  "value": "formula: amount",
+                  "value": "formula: ((amount / 0.5) + 1)^0.09",
                   "capUnit": "x",
                   "unit": "x"
                 },
                 {
                   "id": "b",
                   "name": "Rare Sap",
-                  "value": "formula: amount",
+                  "value": "formula: ((amount / 0.75) + 1)^0.12",
                   "capUnit": "x",
                   "unit": "x"
                 },
                 {
                   "id": "b2",
                   "name": "Ruby Energy",
-                  "value": "formula: amount",
+                  "value": "formula: ((amount / 1) + 1)^0.15",
                   "capUnit": "x",
                   "unit": "x"
                 }
@@ -14382,7 +14382,7 @@
                 {
                   "id": "b1",
                   "name": "Mastry",
-                  "value": "formula: amount",
+                  "value": "formula: ((amount / 1) + 1)^0.075",
                   "capUnit": "x",
                   "unit": "x"
                 }
