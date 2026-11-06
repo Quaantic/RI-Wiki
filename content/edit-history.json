@@ -2,13 +2,22 @@
   "format": 1,
   "entries": [
     {
+      "id": "0f11015b-01cc-4f9e-827a-d870c5fcfcaf",
+      "at": 1793941474786,
+      "actor": "Quaantic",
+      "kind": "content",
+      "text": "Restored version Save · @Quaantic · 2026-11-06 02:02",
+      "pending": false,
+      "status": "published"
+    },
+    {
       "id": "c7c229f8-42d5-43f8-8ee0-d73e34ace1e7",
       "at": 1793941444640,
       "kind": "content",
       "text": "Updated tagline of \"Main\": tesradsadsadasdsadsa to The core islands: Stages, Energy, Gears, Cr…",
       "actor": "Quaantic",
       "pending": false,
-      "status": "saved",
+      "status": "published",
       "savedAt": "2026-11-06T05:04:23.184Z"
     },
     {
@@ -18,7 +27,7 @@
       "text": "Updated tagline of \"Main\": The core islands: Stages, Energy, Gears, Cr… to tesradsadsadasdsadsa",
       "actor": "Quaantic",
       "pending": false,
-      "status": "saved",
+      "status": "published",
       "savedAt": "2026-11-06T05:02:08.084Z"
     },
     {
@@ -28,7 +37,7 @@
       "text": "Updated tagline of \"Main\": The core islands: Stages, Energy, Gears, Cr… to nigggggggggggggggggggggaaaaaaaaaaaaaaaaaaaaa",
       "actor": "Quaantic",
       "pending": false,
-      "status": "saved",
+      "status": "published",
       "savedAt": "2026-11-06T04:58:17.434Z"
     },
     {
@@ -38,7 +47,7 @@
       "text": "Updated upgrades of \"upgrades\": {\"sections\":{\"crystal\":{\"name\":\"Crystal Upg… to {\"sections\":{\"crystal\":{\"name\":\"Crystal Upg…",
       "actor": "Quaantic",
       "pending": false,
-      "status": "saved",
+      "status": "published",
       "savedAt": "2026-11-06T04:58:17.434Z"
     },
     {
@@ -48,7 +57,7 @@
       "text": "Updated subcategories of \"Life Island\": [{\"id\":\"life-generation\",\"name\":\"Life Gener… to [{\"id\":\"life-generation\",\"name\":\"Life Gener…",
       "actor": "Quaantic",
       "pending": false,
-      "status": "saved",
+      "status": "published",
       "savedAt": "2026-11-06T04:58:17.434Z"
     },
     {
@@ -57,7 +66,8 @@
       "kind": "content",
       "text": "Updated desc of \"Runes\": Runes are permanent stat multipliers bought… to Runes are permanent stat multipliers bought…",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     },
     {
       "id": "90a24d18-d5e9-462b-9dbd-2717cb5d4220",
@@ -65,7 +75,8 @@
       "kind": "content",
       "text": "Updated desc of \"Runes\": Runes are permanent stat multipliers bought… to Runes are permanent stat multipliers bought…",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     },
     {
       "id": "299115a2-662c-469c-aada-4434224a40e0",
@@ -73,7 +84,8 @@
       "kind": "content",
       "text": "Updated desc of \"Runes\": Runes are permanent stat multipliers bought… to Runes are permanent stat multipliers bought…",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     },
     {
       "id": "2f29ae91-f722-4fb0-b8db-b0aeafe9ed7d",
@@ -81,7 +93,8 @@
       "kind": "content",
       "text": "Updated tagline of \"Runes\": Socketable stones grouped into six families… to Socketable stones grouped into six families…",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     },
     {
       "id": "80aa4033-eddb-44e0-bd1f-7aecc35d2713",
@@ -89,7 +102,8 @@
       "kind": "content",
       "text": "Updated icon of \"Runes\": rune to game-icons:rune-stone",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     },
     {
       "id": "6a12d5f9-81e6-4986-a97d-074fd6890985",
@@ -97,7 +111,8 @@
       "kind": "content",
       "text": "Set life/tree-essence of \"upgrades\" (life-tree-essence)",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     },
     {
       "id": "81096bd5-7626-4836-b210-8f557ba82f9f",
@@ -105,7 +120,8 @@
       "kind": "content",
       "text": "Set life-tree-essence of \"upgrades\" ({\"name\":\"Tree Essence\",\"upgrades\":[{\"n\":1,\"…)",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     },
     {
       "id": "734a6606-93fd-48cc-8ac4-89caace230d5",
@@ -113,7 +129,8 @@
       "kind": "content",
       "text": "Removed \"New page\"",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     },
     {
       "id": "69ccc6f4-a5d5-4658-9ffb-cba66fa66a44",
@@ -121,7 +138,8 @@
       "kind": "content",
       "text": "Added \"New page\"",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     },
     {
       "id": "5e256d0c-b004-49f8-8a05-7fd2be466a6b",
@@ -129,7 +147,8 @@
       "kind": "content",
       "text": "Updated icon of \"Tree Essence Milestones\": sparkles to game-icons:trophy",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     },
     {
       "id": "7e20788e-d5c9-453d-bcfa-fb5237f33cb7",
@@ -137,7 +156,8 @@
       "kind": "content",
       "text": "Renamed \"New page\" to \"Tree Essence Milestones\"",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     },
     {
       "id": "ab8c217d-d0e6-4dd0-9664-3440b8455b2c",
@@ -145,7 +165,8 @@
       "kind": "content",
       "text": "Updated id of \"New page\": new-page to tree-essence-milestones",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     },
     {
       "id": "7b9a16bb-c960-4191-bf85-e0af7b73870d",
@@ -153,7 +174,8 @@
       "kind": "content",
       "text": "Added \"New page\"",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     },
     {
       "id": "adfc6947-6bed-4b18-81eb-51cde6faf924",
@@ -161,7 +183,8 @@
       "kind": "content",
       "text": "Updated icon of \"Tree Essence\": sparkles to game-icons:dead-wood",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     },
     {
       "id": "480f3ee0-23b0-40ee-bd7f-b6f43d029ff5",
@@ -169,7 +192,8 @@
       "kind": "content",
       "text": "Renamed \"New page\" to \"Tree Essence\"",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     },
     {
       "id": "5aeb2372-395b-4bba-be8b-01a4d51759f7",
@@ -177,7 +201,8 @@
       "kind": "content",
       "text": "Updated id of \"New page\": new-page to tree-essence",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     },
     {
       "id": "20b67d9b-9a91-407b-9538-085b5b94e227",
@@ -185,7 +210,8 @@
       "kind": "content",
       "text": "Added \"New page\"",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     },
     {
       "id": "62b82610-f481-4810-9a10-86f4649609a5",
@@ -193,7 +219,8 @@
       "kind": "content",
       "text": "Updated icon of \"Mining\": pickaxe to game-icons:mining-helmet",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     },
     {
       "id": "85546ab0-f08f-43b3-a577-4d5f9d04eb1a",
@@ -201,7 +228,8 @@
       "kind": "content",
       "text": "Updated icon of \"Money Island\": coin to game-icons:cash",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     },
     {
       "id": "3851cd27-faac-4ca6-9841-361798366e37",
@@ -209,7 +237,8 @@
       "kind": "content",
       "text": "Updated icon of \"Miscellaneous \": blend to info",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     },
     {
       "id": "ddcf7b76-0989-47c2-b5f6-d6907a60831a",
@@ -217,7 +246,8 @@
       "kind": "content",
       "text": "Updated icon of \"Life Island\": leaf to game-icons:three-leaves",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     },
     {
       "id": "0d0190bc-4324-4a7c-b107-b859547da4bc",
@@ -225,7 +255,8 @@
       "kind": "content",
       "text": "Updated icon of \"Main\": compass to game-icons:factory",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     },
     {
       "id": "d97e71db-74c8-45cb-98ae-4bd5ecb631f8",
@@ -233,7 +264,8 @@
       "kind": "content",
       "text": "Updated avatar of \"Dest\": empty to dest.png",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     },
     {
       "id": "377b9fe5-ea9c-4613-958f-9e558a48d6cc",
@@ -241,7 +273,8 @@
       "kind": "content",
       "text": "Renamed \"New contributor\" to \"Dest\"",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     },
     {
       "id": "7a13a5a9-ff9b-4781-9fdb-f6f7d15d59ed",
@@ -249,7 +282,8 @@
       "kind": "content",
       "text": "Updated thanks of \"thanks\": To everyone in the RI Gaming community logg… to To everyone in the RI Gaming community logg…",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     },
     {
       "id": "cf9468ba-4c38-4eca-86cb-2925548052f0",
@@ -257,7 +291,8 @@
       "kind": "content",
       "text": "Added \"New contributor\"",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     },
     {
       "id": "6a75a902-dbfe-4faa-80ee-7f2602b76c68",
@@ -265,7 +300,8 @@
       "kind": "content",
       "text": "Updated banner of \"Nathy\": #355528 to #FF003F",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     },
     {
       "id": "c685185b-cacf-49d2-8983-b5d361d2faec",
@@ -273,7 +309,8 @@
       "kind": "content",
       "text": "Updated role of \"Qbeekr\": Contributor to Contributor & Tester",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     },
     {
       "id": "554b17a6-4ad8-4fbd-8afd-4796647c6df3",
@@ -281,7 +318,8 @@
       "kind": "content",
       "text": "Updated role of \"Nathy\": Contributor to Contributor & Tester",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     },
     {
       "id": "e3e45c75-39bc-459e-8d48-4fb4cec2b8fb",
@@ -289,7 +327,8 @@
       "kind": "content",
       "text": "Renamed \"New contributor\" to \"Nathy\"",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     },
     {
       "id": "03c9fa2a-935e-4de9-905b-c59070416890",
@@ -297,7 +336,8 @@
       "kind": "content",
       "text": "Updated avatar of \"New contributor\": empty to nath",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     },
     {
       "id": "3affe124-1d63-4c52-bb83-615d8a5e32d8",
@@ -305,7 +345,8 @@
       "kind": "content",
       "text": "Added \"New contributor\"",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     },
     {
       "id": "6208f5ae-c9b9-4b7a-8b02-036b64766e8a",
@@ -313,7 +354,8 @@
       "kind": "content",
       "text": "Updated icon of \"Sacrifice\": skull to game-icons:beast-eye",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     },
     {
       "id": "a50f538c-d25c-42c3-8b85-81b2eee4c6dd",
@@ -321,7 +363,8 @@
       "kind": "content",
       "text": "Removed \"New category\"",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     },
     {
       "id": "0b5238e0-1cf3-4d0a-b38a-12acdd158630",
@@ -329,7 +372,8 @@
       "kind": "content",
       "text": "Updated icon of \"Fossil\": hex to game-icons:fossil",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     },
     {
       "id": "8fc356c7-7d80-4f35-baa4-e135f953683c",
@@ -337,7 +381,8 @@
       "kind": "content",
       "text": "Added \"New category\"",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     },
     {
       "id": "fbb29cde-e018-49dc-9916-662223eade7c",
@@ -345,7 +390,8 @@
       "kind": "content",
       "text": "Added \"New page\"",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     },
     {
       "id": "c9739938-5648-40da-9be8-a0578970da23",
@@ -353,7 +399,8 @@
       "kind": "content",
       "text": "Removed \"New upgrade\"",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     },
     {
       "id": "a7fcd052-1b26-4cc2-8b9b-4ff886fa5420",
@@ -361,7 +408,8 @@
       "kind": "content",
       "text": "Set life/tree-essence of \"upgrades\" (life-tree-essence)",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     },
     {
       "id": "2d677f46-dfe9-465f-a661-4f6c19036875",
@@ -369,7 +417,8 @@
       "kind": "content",
       "text": "Set life-tree-essence of \"upgrades\" ({\"name\":\"Tree Essence\",\"upgrades\":[{\"n\":1,\"…)",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     },
     {
       "id": "c47a5228-bc1f-475d-a239-c32399111642",
@@ -377,7 +426,8 @@
       "kind": "colors",
       "text": "Linked \"Tree Essence\" to #/life/tree-essence",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     },
     {
       "id": "11b5e7b4-1958-49d4-9634-7a4d5825bf8c",
@@ -385,7 +435,8 @@
       "kind": "colors",
       "text": "Colored \"Tree Essence\" (#00ff7b)",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     },
     {
       "id": "8bed6101-51b8-41ae-9e56-af3e13dbddc5",
@@ -393,7 +444,8 @@
       "kind": "content",
       "text": "Renamed \"New page\" to \"Tree Essence\"",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     },
     {
       "id": "40346489-488d-4339-853f-7708f6004903",
@@ -401,7 +453,8 @@
       "kind": "content",
       "text": "Updated id of \"New page\": new-page to tree-essence",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     },
     {
       "id": "7396b734-f701-4094-a973-420ee78c674b",
@@ -409,7 +462,8 @@
       "kind": "content",
       "text": "Added \"New page\"",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     },
     {
       "id": "2edb9c23-c8c3-4938-a700-93ebbaa8d33b",
@@ -417,7 +471,8 @@
       "kind": "content",
       "text": "Removed \"Nathy\"",
       "actor": "Quaantic",
-      "pending": true
+      "pending": false,
+      "status": "published"
     }
   ]
 }
