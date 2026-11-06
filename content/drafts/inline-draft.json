@@ -505,28 +505,32 @@
                     "title": "Animals",
                     "columns": [
                       "Tier",
-                      "Cells to create"
+                      "Cells to create",
+                      "Life Shards obtained"
                     ],
                     "rows": [
                       {
                         "id": "row-63b6e59d-b810-4132-984a-5267df9c0212",
                         "cells": [
                           "1",
-                          ""
+                          "1B",
+                          "100"
                         ]
                       },
                       {
                         "id": "row-87f73595-f80f-4d86-bca4-a68ad9ac49f1",
                         "cells": [
                           "2",
-                          ""
+                          "5B",
+                          "225"
                         ]
                       },
                       {
                         "id": "row-46638e90-db28-433c-a42c-6c83a6fb1208",
                         "cells": [
                           "3",
-                          ""
+                          "25B",
+                          "450"
                         ]
                       },
                       {
@@ -16356,6 +16360,15 @@
       "actor": "zzinss"
     },
     "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba].rows[row-990fbea6-b431-450a-91dd-fe197562dbf5].cells": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life]": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories": {
       "actor": "zzinss"
     }
   }
