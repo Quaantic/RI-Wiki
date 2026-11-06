@@ -4,7 +4,7 @@
       "id": "main",
       "name": "Main",
       "desc": "Main is the starting island and the heart of the game, a tycoon that runs on Energy. You place machines that produce Energy every second, upgrade them through levels and tiers, and spend that Energy to open the Factory, Gears production, Crystals, the Barn, the Merge grid and the stage gates leading to Life Island, Money Island, Mining and the Dungeon. Almost every currency traces back to Energy, so growing the tycoon is the core loop.",
-      "icon": "compass",
+      "icon": "game-icons:factory",
       "tagline": "The core islands: Stages, Energy, Gears, Crystals, Barn and Merge.",
       "vitals": [
         {
@@ -16,7 +16,7 @@
         {
           "id": "stages",
           "name": "Stages",
-          "icon": "compass",
+          "icon": "game-icons:medal",
           "desc": "Stages are the big area gates of the game. Passing a stage requires a huge Energy payment plus a second currency: Stage 1 Life costs 200 billion Energy and 250 Jewels, Stage 2 Money Tree costs 5e29 Energy and 5 million Sap, Stage 3 Barn costs 2.5e47 Energy and 5 million Gold Bars, Stage 4 Mining costs 1e68 Energy and 500 Bluesteel, and Stage 5 Dungeon costs 2.5e124 Energy and 1 million Uranium. City and Industry are coming soon. Each stage permanently multiplies the gain of 22 currencies, so every gate is also a global boost.",
           "highlights": [],
           "facts": [
@@ -35,7 +35,7 @@
         {
           "id": "energy",
           "name": "Energy",
-          "icon": "spark",
+          "icon": "game-icons:fire",
           "desc": "Energy is the main tycoon currency, produced every second by your machines. It pays for new machines, machine and Factory upgrades, tycoon buttons and every stage gate. Stages, the Factory, Eternal Tree, Energies, Prestige, Terraform, runes and many other systems multiply its gain.",
           "highlights": [],
           "facts": [],
@@ -66,7 +66,7 @@
         {
           "id": "gears",
           "name": "Gears",
-          "icon": "settings",
+          "icon": "game-icons:cog",
           "desc": "Gears are the automation currency, produced by Gears Generators. They pay for every Automation upgrade and the Special Gears Frames tycoon button. Your Stage multiplies Gear production, so Gears continue scaling as you progress.",
           "highlights": [],
           "facts": [],
@@ -74,7 +74,7 @@
             {
               "id": "gears-generators",
               "name": "Gears Generators",
-              "icon": "gauge",
+              "icon": "game-icons:gears",
               "desc": "Gears Generators are five production machines unlocked by the Unlock Gears Production button for 1e16 Energy: Wrench, Generator, Engine, Jet Engine and Accelerator. Each is leveled individually, produces Gears per second and gains a tier bonus every 10 levels. Each machine requires the previous one; Accelerator is the endgame generator.",
               "highlights": [],
               "facts": [],
@@ -84,7 +84,7 @@
             {
               "id": "special-gears",
               "name": "Special Gears",
-              "icon": "star",
+              "icon": "game-icons:gear-hammer",
               "desc": "Special Gears are the prestige layer of the Gears system, unlocked by the Special Gears Frames button for 1.25 million Gears. The reset board converts Gears into special tiers: 2 million normal Gears become Shiny Gears, 10 thousand Shiny become Life Gears, and 10 thousand Life Gears become the final tier. The board previews the exact gain before resetting.",
               "highlights": [],
               "facts": [],
@@ -94,7 +94,7 @@
             {
               "id": "automations",
               "name": "Automations",
-              "icon": "refresh",
+              "icon": "game-icons:auto-repair",
               "desc": "Automations are 24 auto-buyers paid in Gears, unlocked by Autobuy Frames for 250 Gears. They automatically buy upgrades for Machines, Factory, Crystals, Jewels, Platinum, Life Shards, Fossils, Research, Logs, Sap, Terraform, Roots, Monster, Money, Gold, Prestige, Emeralds, Crystal Shards, Crystal Perks, Opal, Adamantium, Merge and Californium. Each level unlocks more automatic purchases per tick.",
               "highlights": [],
               "facts": [],
@@ -107,7 +107,7 @@
         {
           "id": "crystals",
           "name": "Crystals",
-          "icon": "gem",
+          "icon": "game-icons:crystal-shrine",
           "desc": "The Crystals area is the crystal wing of the tycoon, opened with the Crystalization Extractor button for 500 thousand Energy. It contains the crystal board, collector box, Barn and upgrade lines for Crystal, Jewels, Platinum, Adamantium, Californium and Astatine. Nearly everything here is gated by Barn tiers.",
           "highlights": [],
           "facts": [],
@@ -115,7 +115,7 @@
             {
               "id": "crystal",
               "name": "Crystal",
-              "icon": "gem",
+              "icon": "game-icons:diamonds",
               "desc": "Crystals are the base crystal currency, earned by collecting crystals that spawn on the crystal board. They feed Crystal Upgrades, the first Barn tiers and the Opal reset. Collecting them also builds Crystal Level, which awards Crystal Perks.",
               "highlights": [],
               "facts": [],
@@ -137,7 +137,7 @@
             {
               "id": "jewels",
               "name": "Jewels",
-              "icon": "gem",
+              "icon": "game-icons:floating-crystal",
               "desc": "Jewels are the first special crystal currency, earned passively after unlocking them through crystal progression. Jewels Upgrades boost Energy, Money, Life Gems and more; each upgrade has its own Barn tier requirement. Jewels are also required for the first stage gate.",
               "highlights": [],
               "facts": [],
@@ -158,7 +158,7 @@
             {
               "id": "platinum",
               "name": "Platinum",
-              "icon": "coins",
+              "icon": "game-icons:ore",
               "desc": "Platinum is a special crystal type that spawns on the board as you progress through the Barn. Collecting Platinum crystals earns the currency used for Platinum Upgrades, which boost Energy, Crystals, Jewels, Opal and other systems. The last Platinum upgrades unlock Adamantium.",
               "highlights": [],
               "facts": [],
@@ -179,7 +179,7 @@
             {
               "id": "adamantium",
               "name": "Adamantium",
-              "icon": "shield",
+              "icon": "game-icons:metal-bar",
               "desc": "Adamantium is a rarer crystal type unlocked deeper in the Barn. Its upgrades boost Crystals, Jewels, Opal, Crystal Shards, Energy and more, and raise caps that Opal and Californium milestones extend further. The line unlocks from Platinum Upgrade 9 and also requires Barn progression.",
               "highlights": [],
               "facts": [],
@@ -200,7 +200,7 @@
             {
               "id": "californium",
               "name": "Californium",
-              "icon": "spark",
+              "icon": "game-icons:gems",
               "desc": "Californium is the strongest classic crystal type, spawning late in the Barn. Its upgrades boost Energy, Crystals, Opal, Platinum, Adamantium and more; its caps are raised by Opal and Golden Diamond upgrades. Californium is also the price of Barn Tier 9.",
               "highlights": [],
               "facts": [],
@@ -218,7 +218,7 @@
                 {
                   "id": "californium-milestones",
                   "name": "Californium Milestones",
-                  "icon": "star",
+                  "icon": "game-icons:trophy",
                   "desc": "Sixteen permanent rewards from total Californium. Reach 100T to unlock Astatine.",
                   "highlights": [],
                   "facts": [],
@@ -232,7 +232,7 @@
             {
               "id": "astatine",
               "name": "Astatine",
-              "icon": "spark",
+              "icon": "game-icons:checkered-diamond",
               "desc": "Astatine is the newest and rarest crystal type, spawning on the crystal board. It feeds ten Astatine Upgrades gated by milestones, boosting crystal spawning, Astatine gain, Ore Mastery, Ruby Energy, Energy and Californium bonuses. The game auto-collect skips Astatine crystals, so collect them manually or with scripts.",
               "highlights": [],
               "facts": [],
@@ -250,7 +250,7 @@
                 {
                   "id": "astatine-power",
                   "name": "Astatine Power",
-                  "icon": "spark",
+                  "icon": "game-icons:star-swirl",
                   "desc": "Calculate Astatine Power and Californium Buffs below. Power unlocks at milestone 7; its cap bonuses unlock at milestone 8.",
                   "highlights": [],
                   "facts": [],
@@ -267,7 +267,7 @@
         {
           "id": "barn",
           "name": "Barn",
-          "icon": "package",
+          "icon": "game-icons:barn",
           "desc": "The Barn is the tier hub of the Crystals area, leveled with ten one-time purchases. Tiers 1–2 cost Crystals, Tier 3 Crystal Shards, Tiers 4–5 Opal, Tier 6 Adamantium, Tier 7 Platinum, Tier 8 Bluesteel and Tier 9 Californium. Each tier unlocks crystal features and types and raises Barn requirements for Jewels and Opal upgrades. Tier 3 opens the Opal reset.",
           "highlights": [],
           "facts": [],
@@ -275,7 +275,7 @@
             {
               "id": "crystal-shards",
               "name": "Crystal Shards",
-              "icon": "gem",
+              "icon": "game-icons:crystal-bars",
               "desc": "Crystal Shards are a higher crystal currency earned through crystal progression, with Crystal, Platinum and Adamantium upgrades increasing their gain. They pay for Crystal Shards Upgrades, Barn Tier 3 and the Opal reset, which requires at least 1 million shards.",
               "highlights": [],
               "facts": [],
@@ -296,7 +296,7 @@
             {
               "id": "crystal-perks",
               "name": "Crystal Perks",
-              "icon": "star",
+              "icon": "game-icons:upgrade",
               "desc": "Crystal Perks are earned from Crystal Level as you collect crystals. They are spent on a permanent perk board for Energy, Money and other stats, and are also consumed by the Opal reset, so you choose between spending them or sacrificing them.",
               "highlights": [],
               "facts": [],
@@ -350,7 +350,7 @@
             {
               "id": "quartz",
               "name": "Quartz",
-              "icon": "gem",
+              "icon": "game-icons:checkered-diamond",
               "desc": "Quartz is the Merge Grid currency, produced every second by each element and multiplied by higher merge tiers. It is spent on Merge Upgrades, and 250 million Quartz is required for the Bluesteel reset.",
               "highlights": [],
               "facts": [],
@@ -371,7 +371,7 @@
             {
               "id": "bluesteel",
               "name": "Bluesteel",
-              "icon": "shield",
+              "icon": "game-icons:steel-claws",
               "desc": "Bluesteel is the Merge Grid reset layer, unlocked with a Merge Upgrade. Resetting at 250 million Quartz clears Quartz, Merge Upgrades and grid progress in exchange for Bluesteel, which permanently increases Quartz gain and buys Bluesteel Upgrades. Bluesteel is also needed for Barn Tier 8, the Mining stage gate and Magnets.",
               "highlights": [],
               "facts": [],
@@ -392,7 +392,7 @@
             {
               "id": "merge-perks",
               "name": "Merge Perks",
-              "icon": "star",
+              "icon": "game-icons:upgrade",
               "desc": "Merge Perks are earned from Merge Level as you merge elements. They are spent on permanent multipliers that boost the grid, merging speed and Quartz.",
               "highlights": [],
               "facts": [],
@@ -413,7 +413,7 @@
             {
               "id": "magnets",
               "name": "Magnets",
-              "icon": "magnet",
+              "icon": "game-icons:magnet-blast",
               "desc": "Magnets are collectibles unlocked through Merge Upgrades in the Bluesteel area, costing Bluesteel. They have a 15-second base spawn rate and a maximum of ten spawned at once. Their upgrades boost Quartz and Bluesteel, raise Californium, Adamantium and Platinum caps, and unlock future features.",
               "highlights": [],
               "facts": [],
@@ -442,7 +442,7 @@
       "id": "life",
       "name": "Life Island",
       "desc": "Life Island is the second island, opened by the first stage gate for 200 billion Energy and 250 Jewels. It is an economy built around creating life: Cells accumulate and are spent to create creatures that pay Life Shards; upgrades use Life Gems. The island also hosts Research, Tree Cutting, Terraform, Monster and Frost, and boosts every other island.",
-      "icon": "leaf",
+      "icon": "game-icons:rose",
       "tagline": "The life island: Life Shards, Fossils, Research, the Tree, Terraform, Monsters and Frost.",
       "vitals": [
         {
@@ -458,15 +458,15 @@
         {
           "id": "life-generation",
           "name": "Life Generation",
-          "icon": "refresh",
-          "desc": "Life Generation is the core of the island. Cells accumulate over time with a slowdown limit. Choose one of 30 life forms, from Ant at 1 billion Cells to Ancient Cat at 2.5e40 Cells, then use Create Life to consume Cells and earn Life Shards multiplied by your bonuses. Every three creations advance your Life tier, which gates Terraform upgrades.",
+          "icon": "game-icons:paw-heart",
+          "desc": "Life Generation is the first resource of the island. Cells accumulate over time with a slowdown limit. Choose one of 30 life forms, from Ant at 1 billion Cells to Ancient Cat at 2.5e40 Cells, then use Create Life to consume Cells and earn Life Shards multiplied by your bonuses. Every three creations advance your Life tier, which gates Terraform upgrades.",
           "highlights": [],
           "facts": [],
           "children": [
             {
               "id": "life-shards",
               "name": "Life Shards",
-              "icon": "spark",
+              "icon": "game-icons:emerald",
               "desc": "Life Shards are earned whenever you create life. They pay for a long board of upgrades boosting Energy, Crystals, Fossils, Logs, Research and more. Holding 250 thousand Life Shards unlocks the Fossil reset.",
               "highlights": [],
               "facts": [],
@@ -483,6 +483,270 @@
                 }
               ],
               "sections": []
+            },
+            {
+              "id": "cells",
+              "name": "Cells",
+              "desc": "Cell is the passive earning stat of Life, and it is used to created animals to earn Life Shards. With them, you can unlock new animals after a determined amount of the previous animal created. How does cells work? They are gained passively each tick (time pre-defined by game that sets how much it takes to get it again), and is used to get life, or animals. They have a softcap, which is shown on the cells progression bar, and it works as a slowdown point, which, after you pass that amount, your gain is drastically decreased, making it way harder to get animals that are much above your softcap. To Increase your softcap, get Life Shards upgrades or buy tycoon buttons with cells.",
+              "icon": "virus",
+              "highlights": [],
+              "facts": [],
+              "vitals": [],
+              "children": [],
+              "sections": [
+                {
+                  "id": "table-3985bc99-60e8-4563-bcc2-dbdb9aaffeba",
+                  "title": "Animals Tiers",
+                  "columns": [
+                    "Tier",
+                    "Cells to create",
+                    "Base Life Shard Gain"
+                  ],
+                  "rows": [
+                    {
+                      "id": "row-63b6e59d-b810-4132-984a-5267df9c0212",
+                      "cells": [
+                        "1",
+                        "1B",
+                        "100"
+                      ]
+                    },
+                    {
+                      "id": "row-87f73595-f80f-4d86-bca4-a68ad9ac49f1",
+                      "cells": [
+                        "2",
+                        "5B",
+                        "225"
+                      ]
+                    },
+                    {
+                      "id": "row-46638e90-db28-433c-a42c-6c83a6fb1208",
+                      "cells": [
+                        "3",
+                        "25B",
+                        "450"
+                      ]
+                    },
+                    {
+                      "id": "row-806923f5-ce1c-45f9-a0e3-fb74829c7a87",
+                      "cells": [
+                        "4",
+                        "100B",
+                        "750"
+                      ]
+                    },
+                    {
+                      "id": "row-942535b7-03da-4277-96c3-dba231ef8f56",
+                      "cells": [
+                        "5\n",
+                        "5T",
+                        "1.75K"
+                      ]
+                    },
+                    {
+                      "id": "row-f15125b6-ae82-4878-867a-78c3aa2ee0da",
+                      "cells": [
+                        "6",
+                        "30T",
+                        "4.25K"
+                      ]
+                    },
+                    {
+                      "id": "row-16077b71-4ce2-41a4-8073-1c042f2ae37f",
+                      "cells": [
+                        "7",
+                        "200T",
+                        "9K"
+                      ]
+                    },
+                    {
+                      "id": "row-5929ed28-5177-4d86-8ced-ccd57b6926e6",
+                      "cells": [
+                        "8",
+                        "1.5Qa",
+                        "22.5K"
+                      ]
+                    },
+                    {
+                      "id": "row-508bf54b-925e-43b5-b9db-8cd99de2b0da",
+                      "cells": [
+                        "9",
+                        "12.5Qa",
+                        "50K"
+                      ]
+                    },
+                    {
+                      "id": "row-990fbea6-b431-450a-91dd-fe197562dbf5",
+                      "cells": [
+                        "10",
+                        "100Qa",
+                        "150K"
+                      ]
+                    },
+                    {
+                      "id": "row-b98190b6-d456-4a5e-99d8-d1378962b0f3",
+                      "cells": [
+                        "11",
+                        "1Qi",
+                        "400K"
+                      ]
+                    },
+                    {
+                      "id": "row-f5968b8b-cc53-4763-9147-cb6acfb87765",
+                      "cells": [
+                        "12",
+                        "10Qi",
+                        "1.2M"
+                      ]
+                    },
+                    {
+                      "id": "row-88ec5f9e-900e-4e99-b2f6-b321f957c49a",
+                      "cells": [
+                        "13",
+                        "100Qi",
+                        "3M"
+                      ]
+                    },
+                    {
+                      "id": "row-294731d3-ad08-44a9-9a27-3d27a1dfcd31",
+                      "cells": [
+                        "14",
+                        "1Sx",
+                        "10M"
+                      ]
+                    },
+                    {
+                      "id": "row-c7f852a1-6d8a-4ee5-ac00-a0e0254a3ec9",
+                      "cells": [
+                        "15",
+                        "10Sx",
+                        "30M"
+                      ]
+                    },
+                    {
+                      "id": "row-acefbfde-af68-41cf-8f72-454112f74ee6",
+                      "cells": [
+                        "16",
+                        "150Sx",
+                        "100M"
+                      ]
+                    },
+                    {
+                      "id": "row-5c07885c-b96b-42c5-818d-cd1409f31a5d",
+                      "cells": [
+                        "17",
+                        "2.5Sp",
+                        "400M"
+                      ]
+                    },
+                    {
+                      "id": "row-b19e8293-b507-47ae-894a-ed33fdc48baa",
+                      "cells": [
+                        "18",
+                        "35Sp",
+                        "2B"
+                      ]
+                    },
+                    {
+                      "id": "row-f04bc601-3f13-41e2-bf07-482594f6bfb7",
+                      "cells": [
+                        "19",
+                        "500Sp",
+                        "10B"
+                      ]
+                    },
+                    {
+                      "id": "row-ceb2b5a6-2cfd-4e77-b1e6-8866e10193ac",
+                      "cells": [
+                        "20",
+                        "7Oc",
+                        "50B"
+                      ]
+                    },
+                    {
+                      "id": "row-23ec6104-a6c9-42b5-ac6f-2d02e8c75dce",
+                      "cells": [
+                        "21",
+                        "100Oc",
+                        "250B"
+                      ]
+                    },
+                    {
+                      "id": "row-2d76a623-bcf4-4651-8967-1940eaa5980e",
+                      "cells": [
+                        "22",
+                        "1.75No",
+                        "1.75T"
+                      ]
+                    },
+                    {
+                      "id": "row-14273594-1196-4483-958d-fbc2ad66a94a",
+                      "cells": [
+                        "23",
+                        "30No",
+                        "12.5T"
+                      ]
+                    },
+                    {
+                      "id": "row-85e6b3d3-c37d-434d-a294-6bee528f6d82",
+                      "cells": [
+                        "24",
+                        "600No",
+                        "100T"
+                      ]
+                    },
+                    {
+                      "id": "row-879f4a74-92eb-4433-9d65-012b558509cb",
+                      "cells": [
+                        "25",
+                        "12.5De",
+                        "1Qa"
+                      ]
+                    },
+                    {
+                      "id": "row-5bb1e5dc-1985-407f-8806-b65f88dfffa9",
+                      "cells": [
+                        "26",
+                        "300De",
+                        "30Qa"
+                      ]
+                    },
+                    {
+                      "id": "row-23d1b01f-236f-401f-887c-b8106f10f0fe",
+                      "cells": [
+                        "27",
+                        "8UDe",
+                        "300Qa"
+                      ]
+                    },
+                    {
+                      "id": "row-d4b740a7-4a87-4ffd-9d4d-73bceea9f488",
+                      "cells": [
+                        "28",
+                        "150Ude",
+                        "3Qi"
+                      ]
+                    },
+                    {
+                      "id": "row-e1745c79-18d4-4f2f-88b3-c092a77a5369",
+                      "cells": [
+                        "29",
+                        "5DDe",
+                        "30Qi"
+                      ]
+                    },
+                    {
+                      "id": "row-48ac1323-c4a9-4b01-bef6-72efb7047369",
+                      "cells": [
+                        "30",
+                        "25DDe",
+                        "300Qi"
+                      ]
+                    }
+                  ],
+                  "text": ""
+                }
+              ]
             }
           ],
           "sections": []
@@ -490,7 +754,7 @@
         {
           "id": "fossil",
           "name": "Fossil",
-          "icon": "hex",
+          "icon": "game-icons:fossil",
           "desc": "The Fossil reset consumes 250 thousand Life Shards and converts them into Fossils; the True Fossil Gain is shown before confirmation. Fossils pay for upgrades that boost Life Shards, Energy, Logs, Research, Terraform and more. Some Life and Sap upgrade limits open only as Terraform level rises.",
           "highlights": [],
           "facts": [],
@@ -508,7 +772,7 @@
             {
               "id": "power-of-fossils",
               "name": "Power of Fossils",
-              "icon": "chart",
+              "icon": "game-icons:ammonite-fossil",
               "desc": "Power of Fossils unlocks seven permanent bonuses at total Fossil milestones. Enter your total Fossils to see each unlocked bonus, including Sap chance and CAP effects.",
               "highlights": [],
               "facts": [],
@@ -522,7 +786,7 @@
           "id": "research",
           "name": "Research",
           "icon": "flask",
-          "desc": "Research Points are the currency of the Research board, unlocked with a tycoon button on Life Island. The board has 44 upgrades covering Energy, Super Trees, Mining, Emerald Coins, Souls and more, bought one level at a time or with Buy Max. Later researches require ResearchesUnlocked upgrades; Prestige upgrade 18 and Golden milestones extend board level limits.",
+          "desc": "Research Points are the currency of the Research board, unlocked with a tycoon button on Life Island. The board has 50 upgrades covering Energy, Super Trees, Mining, Emerald Coins, Souls and more, bought one level at a time or with Buy Max. Later researches require ResearchesUnlocked upgrades; Prestige upgrade 18 and Golden milestones extend board level limits.",
           "highlights": [],
           "facts": [],
           "children": [
@@ -539,7 +803,7 @@
             {
               "id": "golden-research",
               "name": "Golden Research",
-              "icon": "star",
+              "icon": "game-icons:magic-potion",
               "desc": "Golden Research is a clicker minigame on the Otters board. Click to earn Golden RP; Click Power increases manual clicks, Auto Power clicks every second, and Auto Speed makes auto-clicks faster. Golden Research and Golden Research #2 multiply earnings, while the Unlocker opens more Golden Points investments.",
               "highlights": [],
               "facts": [],
@@ -547,7 +811,7 @@
                 {
                   "id": "golden-research-milestones",
                   "name": "Golden Research Milestones",
-                  "icon": "star",
+                  "icon": "game-icons:achievement",
                   "desc": "Seven rewards from total Golden Research, including research caps, automation and passive income.",
                   "highlights": [],
                   "facts": [],
@@ -568,7 +832,7 @@
                 {
                   "id": "golden-points",
                   "name": "Golden Points",
-                  "icon": "coin",
+                  "icon": "game-icons:two-coins",
                   "desc": "Invest Golden Points into six targets. Each bonus starts at its required investment.",
                   "highlights": [],
                   "facts": [],
@@ -585,7 +849,7 @@
         {
           "id": "tree",
           "name": "Tree",
-          "icon": "branch",
+          "icon": "game-icons:fruit-tree",
           "desc": "The Tree is the Life Island forest, unlocked with the LogsUnlocked tycoon button. Swing your axe at 29 tree types, from Baby Tree with 10 health to Tiny Shadow Tree with 1e25 health. Trees drop Logs, Sap, Apples, Tree XP and, at higher tiers, Roots. Axe Damage, Critical Chance and Critical Damage speed up cutting; Autocut Power and Auto Cut Sap automate it.",
           "highlights": [],
           "facts": [],
@@ -594,7 +858,7 @@
               "id": "tree-tier",
               "name": "Tree Tier",
               "desc": "Tree Tiers are a feature unlocked through Roots, and it works based on XP, which you gain a certain amount each time you break the tree. It goes all the way up to 11 tiers, and give multiple feature as: Rare Saps, Apples and Axe Crafting!",
-              "icon": "arrow-big-up",
+              "icon": "game-icons:upgrade",
               "highlights": [],
               "facts": [],
               "vitals": [],
@@ -604,7 +868,7 @@
             {
               "id": "logs",
               "name": "Logs",
-              "icon": "leaf",
+              "icon": "game-icons:log",
               "desc": "Logs are the principal tree currency, dropped by every tree you cut. They pay for Logs Upgrades that boost axe damage, Logs gain, critical hits, Tree XP, Apple Chance, Sap, Research and more. Log Perks are earned whenever Log Level rises.",
               "highlights": [],
               "facts": [],
@@ -625,7 +889,7 @@
             {
               "id": "sap",
               "name": "Sap",
-              "icon": "drop",
+              "icon": "game-icons:drop",
               "desc": "Sap is the second tree currency, dropped alongside Logs. Sap Upgrades boost Logs, Sap, Apples, axe damage, Tree Level Perks, Auto Cut, Fossils, Research, Roots, Life Gems and tree XP and perks. Rare Silver, Golden, Diamond and Amethyst Saps also drop while cutting trees and grant bonuses based on how many you own. Unlock Levels opens the tree leveling system; Sap Perks are earned whenever Sap Level rises.",
               "highlights": [],
               "facts": [],
@@ -647,7 +911,7 @@
             {
               "id": "rare-saps",
               "name": "Rare Saps",
-              "icon": "drop",
+              "icon": "game-icons:water-drop",
               "desc": "Silver, Golden, Diamond and Amethyst Sap drop while cutting trees at flat chances of 1 / 100, 1 / 500, 1 / 1,500 and 1 / 5,000. Enter the owned amount for each sap to see its three bonuses. Whether a drop is per chop or per tree-fall is decided server-side and is not exposed.",
               "highlights": [],
               "facts": [
@@ -662,7 +926,7 @@
             {
               "id": "roots",
               "name": "Roots",
-              "icon": "branch",
+              "icon": "game-icons:root-tip",
               "desc": "Roots are the third tree currency, dropped at higher tree tiers and gated by Tree Tier requirements. Roots Upgrades boost Logs, Sap, Roots, Apples, Log and Sap Perks, Research, Life Gems, Golden Research and Autocut Power. This board also unlocks Golden Apple, Diamond Apple, More Golden Apples and Void Chance.",
               "highlights": [],
               "facts": [],
@@ -678,25 +942,372 @@
                   "contentKey": "life/roots-upgrades"
                 }
               ],
-              "sections": []
+              "sections": [],
+              "contentKey": "life/roots"
             },
             {
               "id": "apples",
               "name": "Apples",
-              "icon": "heart",
+              "icon": "game-icons:shiny-apple",
               "desc": "Apples drop randomly while cutting trees; Apple Chance and More Apples upgrades increase their drops. Every apple ever earned counts on the Apple Buffs board, where holding amounts of each type unlocks permanent multipliers at milestones for each type. Apples are never spent: they are milestone stats.",
               "highlights": [],
               "facts": [],
               "children": [],
-              "sections": []
+              "sections": [],
+              "contentKey": "life/apples"
             }
           ],
-          "sections": []
+          "sections": [
+            {
+              "id": "table-ae4ff944-57a2-4656-94bd-046bcf7a7517",
+              "title": "Trees",
+              "columns": [
+                "Name",
+                "HP",
+                "Base Logs",
+                "Tree Tier XP",
+                "XP"
+              ],
+              "rows": [
+                {
+                  "id": "row-558c4fb5-5d5a-4657-b598-839d192ae8f6",
+                  "cells": [
+                    "Baby Tree",
+                    "10",
+                    "1x",
+                    "1x",
+                    "1x"
+                  ]
+                },
+                {
+                  "id": "row-acde9323-16ac-4099-89a2-d366e36e3de9",
+                  "cells": [
+                    "Tiny Tree",
+                    "60",
+                    "2x",
+                    "1.5x",
+                    "2x"
+                  ]
+                },
+                {
+                  "id": "row-40b4cdd6-8f37-4790-81b0-4d33a0fab9eb",
+                  "cells": [
+                    "Young Tree",
+                    "350",
+                    "8x",
+                    "2x",
+                    "3x"
+                  ]
+                },
+                {
+                  "id": "row-2ff8a062-88d5-48b8-8f4d-1a7a390b1bf9",
+                  "cells": [
+                    "Growing Tree",
+                    "1.7K",
+                    "25x",
+                    "2.5x",
+                    "5x"
+                  ]
+                },
+                {
+                  "id": "row-24d3e238-055c-48f8-952e-70ded8a70b9d",
+                  "cells": [
+                    "Small Tree",
+                    "4.25K",
+                    "125X",
+                    "3X",
+                    "7X"
+                  ]
+                },
+                {
+                  "id": "row-570f510b-a763-4ca0-9abc-1060fe0bfdf0",
+                  "cells": [
+                    "Basic Tree",
+                    "15K",
+                    "500x",
+                    "3.5x",
+                    "12x"
+                  ]
+                },
+                {
+                  "id": "row-8181508c-1ca8-45b6-9917-9f517131fa05",
+                  "cells": [
+                    "Large Tree",
+                    "60K",
+                    "1.75Kx",
+                    "4x",
+                    "17x"
+                  ]
+                },
+                {
+                  "id": "row-f6702516-07b0-4083-ae56-0bc2e58ea88f",
+                  "cells": [
+                    "Pine Tree",
+                    "250K",
+                    "6Kx",
+                    "4.5x",
+                    "25x"
+                  ]
+                },
+                {
+                  "id": "row-ed60b2c0-f13c-4000-b8d1-4a228d1917c5",
+                  "cells": [
+                    "Cactus",
+                    "1.5M",
+                    "20Kx",
+                    "5x",
+                    "35x"
+                  ]
+                },
+                {
+                  "id": "row-58e42ecc-f00f-47f5-864d-500569b74553",
+                  "cells": [
+                    "Old Tree",
+                    "12M",
+                    "75Kx",
+                    "5.5x",
+                    "52x"
+                  ]
+                },
+                {
+                  "id": "row-36f2d17c-a0c5-4db2-86f7-439eb55b1c24",
+                  "cells": [
+                    "Palm Tree",
+                    "100M",
+                    "225Kx",
+                    "6x",
+                    "65x"
+                  ]
+                },
+                {
+                  "id": "row-46cf078f-368b-425e-be03-f0caf7167729",
+                  "cells": [
+                    "Tall Tree",
+                    "1B",
+                    "1Mx",
+                    "6.5x",
+                    "78x"
+                  ]
+                },
+                {
+                  "id": "row-1367c133-feac-41df-ab06-1fd67ee4d4ae",
+                  "cells": [
+                    "Huge Tree",
+                    "6.5B",
+                    "10Mx",
+                    "7x",
+                    "10x"
+                  ]
+                },
+                {
+                  "id": "row-98d448b4-ad5e-49fb-9dc8-316ea3fea6ce",
+                  "cells": [
+                    "Golden Palm Tree",
+                    "200B",
+                    "75Mx",
+                    "8x",
+                    "133x"
+                  ]
+                },
+                {
+                  "id": "row-04b8c5ab-e387-40fe-a146-500e19e91af3",
+                  "cells": [
+                    "Golden Cactus",
+                    "10T",
+                    "250Mx",
+                    "9x",
+                    "166x"
+                  ]
+                },
+                {
+                  "id": "row-577ddcf7-1108-4e7e-9ec9-24187c0ccfc6",
+                  "cells": [
+                    "Pure Gold Baby",
+                    "200T",
+                    "2Bx",
+                    "10x",
+                    "200x"
+                  ]
+                },
+                {
+                  "id": "row-dc22af4d-437d-4d13-a569-929a81b92103",
+                  "cells": [
+                    "Tier Essence",
+                    "20Qa",
+                    "100Bx",
+                    "15x",
+                    "300x"
+                  ]
+                },
+                {
+                  "id": "row-44ebc66c-8628-469f-8916-c8afc642995b",
+                  "cells": [
+                    "Giant Vines",
+                    "100Qa",
+                    "300Bx",
+                    "22x",
+                    "450x"
+                  ]
+                },
+                {
+                  "id": "row-6da891d6-ac5c-4e91-9770-b1f20a83301f",
+                  "cells": [
+                    "Candy Tree",
+                    "500Qa",
+                    "700Bx",
+                    "35x",
+                    "600x"
+                  ]
+                },
+                {
+                  "id": "row-00029dcc-a9b6-46cf-b24a-86842f00120b",
+                  "cells": [
+                    "Modified Palm Tree",
+                    "2.5Qi",
+                    "1Tx",
+                    "50x",
+                    "900x"
+                  ]
+                },
+                {
+                  "id": "row-bbc988e6-e4c1-49b0-9c76-00571bed6f7f",
+                  "cells": [
+                    "Fallen Giant",
+                    "15Qi",
+                    "40Tx",
+                    "75x",
+                    "1.2Kx"
+                  ]
+                },
+                {
+                  "id": "row-81d06028-2cc6-46c4-a6c4-b5e96052e8ca",
+                  "cells": [
+                    "Sky Tree",
+                    "100Qi",
+                    "100Tx",
+                    "125x",
+                    "1.8Kx"
+                  ]
+                },
+                {
+                  "id": "row-4f338f06-c341-4b14-b3e0-41a3fce7ce34",
+                  "cells": [
+                    "Magic Mushroom",
+                    "500Qi",
+                    "250T",
+                    "225x",
+                    "2.4Kx"
+                  ]
+                },
+                {
+                  "id": "row-e008ef0b-1c51-4369-8d63-3e78d834cbbe",
+                  "cells": [
+                    "Void Tree",
+                    "4Sx",
+                    "650Tx",
+                    "300x",
+                    "3.2Kx"
+                  ]
+                },
+                {
+                  "id": "row-54962ef9-6546-40a9-b35d-724a701b9ef2",
+                  "cells": [
+                    "Antique Tree",
+                    "25Sx",
+                    "1.3Qax",
+                    "425x",
+                    "3.2Kx"
+                  ]
+                },
+                {
+                  "id": "row-8502ba2f-27b9-4333-8149-005bac598acf",
+                  "cells": [
+                    "Retro Tree",
+                    "150Sx",
+                    "3Qax",
+                    "550x",
+                    "3.2Kx"
+                  ]
+                },
+                {
+                  "id": "row-47d9cb40-1529-4c84-bb1a-003085b3da0d",
+                  "cells": [
+                    "Buffed Mushroom",
+                    "1.25Sp",
+                    "6.5Qa",
+                    "625x",
+                    "3.2Kx"
+                  ]
+                },
+                {
+                  "id": "row-3cfd29b7-7e2d-4608-864b-0e3c5a38aa2e",
+                  "cells": [
+                    "Tiny Shadow Tree",
+                    "10Sp",
+                    "17.5Qax",
+                    "750x",
+                    "3.2Kx"
+                  ]
+                },
+                {
+                  "id": "row-1d16f357-7aaf-4f71-90f2-57bf20ce448c",
+                  "cells": [
+                    "Retro Pine",
+                    "60Sp",
+                    "???",
+                    "950x",
+                    "6Kx"
+                  ]
+                },
+                {
+                  "id": "row-c8586aba-7d53-4e8f-b97a-1cb8d4157526",
+                  "cells": [
+                    "Glitched Tree",
+                    "400Sp",
+                    "???",
+                    "1.25Kx",
+                    "7.2Kx"
+                  ]
+                },
+                {
+                  "id": "row-56a3b5e6-1987-434e-ba0f-4fde4a5735ad",
+                  "cells": [
+                    "Competitive Palm Tree",
+                    "2.5Oc",
+                    "???",
+                    "1.55Kx",
+                    "8.5Kx"
+                  ]
+                },
+                {
+                  "id": "row-112c4362-9943-42c0-8071-7656fd753693",
+                  "cells": [
+                    "Tiny Abstract Tree",
+                    "15Oc",
+                    "???",
+                    "1.825Kx",
+                    "10Kx"
+                  ]
+                },
+                {
+                  "id": "row-e77c0118-5e8e-4ecf-a472-a3efb2e62449",
+                  "cells": [
+                    "Essence Mushroom",
+                    "100Oc",
+                    "???",
+                    "2.25Kx",
+                    "10Kx"
+                  ]
+                }
+              ],
+              "text": ""
+            }
+          ]
         },
         {
           "id": "terraforming",
           "name": "Terraform",
-          "icon": "map-pin",
+          "icon": "game-icons:star-shuriken",
           "desc": "The Terraform board is Life Island’s upgrade hub, paid with Life Gems. Its 20 upgrades require Life levels and boost Life Gem income, Energy inflation, Research Points, Life Pack resources, Crystal Shards, Rune Luck, Money, Prestige Points, Emerald and Gold, Mining Damage, Red Liquid, Roots, Mining Ores, Mining Mastery, Tree Tier XP, Gemstones and Californium.",
           "highlights": [],
           "facts": [],
@@ -704,7 +1315,7 @@
             {
               "id": "terra-life",
               "name": "Life",
-              "icon": "leaf",
+              "icon": "game-icons:rose",
               "desc": "Life is the creation-tier stat shown on your nametag milestone. It rises every three lives created in Life Generation and gates Terraform upgrades, Life upgrade limits and the Fossil board. It can also be ranked up without losing progress by paying Eternal Shards.",
               "highlights": [],
               "facts": [],
@@ -714,7 +1325,7 @@
             {
               "id": "life-gems",
               "name": "Life Gems",
-              "icon": "heart",
+              "icon": "game-icons:dagger-rose",
               "desc": "Life Gems are Life Island’s main currency, earned passively and multiplied by Terraform income bonuses, Monster, Fossils and other upgrades. They pay for every Terraform upgrade and Advanced runes, and have a leaderboard for the highest amounts held.",
               "highlights": [],
               "facts": [],
@@ -738,7 +1349,7 @@
         {
           "id": "monster",
           "name": "Monster",
-          "icon": "skull",
+          "icon": "game-icons:monster-grasp",
           "desc": "The Monster is your dragon pet in the Terraform area. Clicking it feeds the monster and generates Monster Points, which multiply stats with soft caps. It grows through 20 tiers, from Tiny Egg to King Dragon at 1e200 points. Monster Upgrades boost Red Liquid, stat bonuses, Life Gems, tier bonuses, Energy, Money and Monster Perks.",
           "highlights": [],
           "facts": [],
@@ -746,7 +1357,7 @@
             {
               "id": "monster-evolution",
               "name": "Monster Evolution",
-              "icon": "refresh",
+              "icon": "game-icons:spiked-dragon-head",
               "desc": "Monster Evolution upgrades evolve your monster permanently. There are six evolutions with escalating prices; each multiplies monster gains, with the first five doubling it and the last ones growing by 25 percent. Every Monster Upgrade also requires a minimum evolution level, so evolving is mandatory for further upgrades.",
               "highlights": [],
               "facts": [],
@@ -756,7 +1367,7 @@
             {
               "id": "red-liquid",
               "name": "Red Liquid",
-              "icon": "drop",
+              "icon": "game-icons:bird-claw",
               "desc": "Red Liquid is the Monster area’s feed currency, earned through the monster and boosted by the first Monster Upgrade. The Terraform Red Liquid upgrade converts it into faster Monster Points gain, and the Level Perk Tree has a permanent Red Liquid perk.",
               "highlights": [],
               "facts": [],
@@ -777,7 +1388,7 @@
             {
               "id": "sacrifice",
               "name": "Sacrifice",
-              "icon": "skull",
+              "icon": "game-icons:broken-skull",
               "desc": "The Sacrifice board lets you sacrifice your monster for Dark Liquid. It shows the gain before confirmation and tracks every sacrifice. It unlocks through Terraform progression and has Sacrifice Upgrades that increase Dark Liquid gained per sacrifice.",
               "highlights": [],
               "facts": [],
@@ -811,7 +1422,7 @@
         {
           "id": "frost",
           "name": "Frost",
-          "icon": "wind",
+          "icon": "game-icons:frostfire",
           "desc": "The Frost area is Life Island’s frozen wing. Three machines produce IceShard every few seconds; Frost Upgrades improve income, machine speed, Tree Roots, Dark Liquid and Golden Research. The conversion chain turns IceShard into four higher frost tiers, each adding permanent global multipliers.",
           "highlights": [],
           "facts": [],
@@ -819,7 +1430,7 @@
             {
               "id": "frost-generators",
               "name": "Frost Generators",
-              "icon": "gauge",
+              "icon": "game-icons:ice-bolt",
               "desc": "Adjust generator levels and speed to calculate Frost output and the next upgrade costs.",
               "highlights": [],
               "facts": [],
@@ -840,7 +1451,7 @@
             {
               "id": "frost-conversion",
               "name": "Frost Conversion",
-              "icon": "refresh",
+              "icon": "game-icons:ice-cube",
               "desc": "All four Frost conversions and their current bonuses. Enter your owned amounts below.",
               "highlights": [],
               "facts": [],
@@ -850,6 +1461,29 @@
             }
           ],
           "sections": []
+        },
+        {
+          "id": "tree-essence",
+          "name": "Tree Essence",
+          "desc": "Tree Essence is he fourth Tree related stat, you obtain it with roots, and can get milestones up to 1M, whose boosts: Fossils, Logs, Researches and unlocks new upgrades!",
+          "icon": "game-icons:soul",
+          "highlights": [],
+          "facts": [],
+          "vitals": [],
+          "children": [
+            {
+              "id": "tree-essence-milestones",
+              "name": "Tree Essence Milestones",
+              "desc": "Milestones you unlock with defined amounts of Tree Essence!",
+              "icon": "game-icons:trophy",
+              "highlights": [],
+              "facts": [],
+              "vitals": [],
+              "children": [],
+              "contentKey": "life/tree-essence-milestones"
+            }
+          ],
+          "contentKey": "life/tree-essence"
         }
       ],
       "sections": []
@@ -858,7 +1492,7 @@
       "id": "money-island",
       "name": "Money Island",
       "desc": "Money Island is the third area, opened by the second stage gate for 5e29 Energy and 5 million Sap. It is the multiplier island: the 83-node Upgrade Tree is paid with Money, alongside Gold Bars, Emerald Coins, Golden Diamonds, Tree Ascension ranks and four special Energies. Each layer multiplies the previous one, rewarding you for stacking them.",
-      "icon": "coin",
+      "icon": "game-icons:cash",
       "tagline": "The money island: the 83-node Upgrade Tree, Gold Bars, Emeralds, Golden Diamond and the four special Energies.",
       "vitals": [
         {
@@ -986,7 +1620,7 @@
       "id": "mining",
       "name": "Mining",
       "desc": "Mining is the fourth area, opened by the fourth stage gate for 1e68 Energy and 500 Bluesteel. Break ores with your pickaxe across depth layers, earn Mining XP and Mining Perks, build Ore Mastery, collect Gemstones for the Forge and fight the Core. Breaking its first six stages removes the 6.25 million depth limit and opens the deepest layers.",
-      "icon": "pickaxe",
+      "icon": "game-icons:mining-helmet",
       "tagline": "Every ore, its upgrades and where to find them — plus mastery, layers and auto mining.",
       "vitals": [
         {
@@ -1138,7 +1772,7 @@
       "id": "dungeon",
       "name": "Dungeons",
       "desc": "The Dungeon is the combat area, opened by the fifth stage gate for 2.5e124 Energy and 1 million Uranium, plus Dungeon Rank 3. Train Strength and Health to rank up, fight enemies for Dungeon Coins, Bones and item drops, and defeat ten enemies at your highest unlocked level to unlock the next. Everything feeds the Souls reset.",
-      "icon": "castle",
+      "icon": "game-icons:dungeon-gate",
       "tagline": "Training, enemies and loot: everything inside the dungeons — areas, gear, drops and upgrades.",
       "vitals": [
         {
@@ -1342,7 +1976,7 @@
           "id": "souls",
           "name": "Souls",
           "icon": "drop",
-          "desc": "The Souls Reset consumes Dungeon Coins, Bones and Bone Dust and grants Souls, with a cooldown. Souls pay for 12 upgrades that boost Coins, Souls, Strength, Health, Bones, drop luck, Dungeon XP, Bone Dust and more. Equipping your best Souls accessory before resetting multiplies the gain; upgrades use Buy Max.",
+          "desc": "The Souls Reset consumes Dungeon Coins, Bones and Bone Dust and grants Souls, but drain 15% of your health and strength, with a 5 minutes cooldown. Souls pay for 12 upgrades that boost Coins, Souls, Strength, Health, Bones, drop luck, Dungeon XP, Bone Dust and more. Equipping your best Souls accessory before resetting multiplies the gain; upgrades use Buy Max.",
           "highlights": [],
           "facts": [],
           "children": [
@@ -1376,7 +2010,7 @@
       "id": "runes",
       "name": "Runes",
       "desc": "Runes are permanent stat multipliers bought at rune boards. Each rune type uses a different currency and each purchase rolls a random rarity from Basic to super-rare tiers. Runes permanently multiply stats on their boost list; higher rarities are dramatically rarer. Rune Luck from upgrades and items improves rolls, and the Golden rarity of the Bones rune also multiplies Runestone luck.",
-      "icon": "rune",
+      "icon": "game-icons:rune-stone",
       "tagline": "Socketable stones grouped into six families — Energetic, Sky, Riches, Earth, Advanced and Bones. Every roll is gated by Rune Luck.",
       "overview": {
         "desc": "\n",
@@ -1480,6 +2114,17 @@
           "facts": [],
           "sections": [],
           "contentKey": "runes/bones"
+        },
+        {
+          "id": "secret",
+          "name": "Secret",
+          "desc": "The Secret Rune is paid with Californium at 200B per roll. It boosts most stats for every stage, including Energy, Money, MinePerks, Bones, and Souls",
+          "icon": "sparkles",
+          "highlights": [],
+          "facts": [],
+          "vitals": [],
+          "children": [],
+          "contentKey": "runes/secret"
         }
       ],
       "sections": []
@@ -1488,7 +2133,7 @@
       "id": "perks",
       "name": "Perks",
       "desc": "Perks are permanent multipliers earned by leveling stats. Every major system has a level that pays its own perk currency and its own perk board. The main Level Perk Tree has 20 perk lines covering Energy, Crystals, Jewels, Platinum, Life Shards, Fossils, Research Points, Logs, Money, Stone, Perk Points, Opal, Crystal Shards, Adamantium, Californium, Life Gems, Golden Research, Sap, Roots and Red Liquid.",
-      "icon": "spark",
+      "icon": "game-icons:cursed-star",
       "tagline": "Permanent passives earned through play — one family per system: Perk, Crystal, Log, Sap, Monster, Mining and Merge.",
       "subcategories": [
         {
@@ -1835,6 +2480,20 @@
         "role": "Contributor",
         "avatar": "images/credits/otter.png",
         "banner": "#1A1D1F"
+      },
+      {
+        "name": "Nathy",
+        "handle": "",
+        "role": "Contributor",
+        "avatar": "nath",
+        "banner": "#FF003F"
+      },
+      {
+        "name": "Dest",
+        "handle": "",
+        "role": "Contributor",
+        "avatar": "dest",
+        "banner": "#be30ff"
       }
     ],
     "thanks": "To everyone in the RI Gaming community logging drops and sharing finds — this wiki runs on that."

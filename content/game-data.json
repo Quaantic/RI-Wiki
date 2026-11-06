@@ -421,14 +421,14 @@
           {
             "n": 1,
             "name": "More Energy",
-            "cap": 25,
+            "cap": 75,
             "price": "1+L/10",
             "multi": "1 + L / 10"
           },
           {
             "n": 2,
             "name": "More XP",
-            "cap": 99,
+            "cap": 149,
             "price": "1.15^L*(1+L/4)",
             "multi": "1.125 ^ L"
           },
@@ -442,21 +442,21 @@
           {
             "n": 4,
             "name": "Crystals",
-            "cap": 25,
+            "cap": 75,
             "price": "3+L/3",
             "multi": "1 + L / 10"
           },
           {
             "n": 5,
             "name": "Cells Boost",
-            "cap": 90,
+            "cap": 149,
             "price": "4+L/2",
             "multi": "1.1 ^ L"
           },
           {
             "n": 6,
             "name": "More Energy II",
-            "cap": 30,
+            "cap": 80,
             "price": "10+2L",
             "multi": "1 + L / 10"
           },
@@ -470,112 +470,112 @@
           {
             "n": 8,
             "name": "Life Shards",
-            "cap": 40,
+            "cap": 90,
             "price": "20+L^1.15",
             "multi": "1 + L / 10"
           },
           {
             "n": 9,
             "name": "Research II",
-            "cap": 25,
+            "cap": 75,
             "price": "30*1.5^L",
             "multi": "1 + L / 10"
           },
           {
             "n": 10,
             "name": "Fossils",
-            "cap": 30,
+            "cap": 80,
             "price": "45*1.25^L",
             "multi": "1.1 ^ L"
           },
           {
             "n": 11,
             "name": "Super Trees",
-            "cap": 40,
+            "cap": 90,
             "price": "60+2.5L",
             "multi": "1 + L / 10"
           },
           {
             "n": 12,
             "name": "More Research",
-            "cap": 40,
+            "cap": 90,
             "price": "90*1.45^L",
             "multi": "(1 + L * 0.125) * 1.075 ^ L"
           },
           {
             "n": 13,
             "name": "More Energy III",
-            "cap": 40,
+            "cap": 90,
             "price": "250+10L",
             "multi": "(1 + L * 0.075) * 1.025 ^ L"
           },
           {
             "n": 14,
             "name": "Sap",
-            "cap": 30,
+            "cap": 80,
             "price": "500*1.325^L",
             "multi": "1 + L * 0.15"
           },
           {
             "n": 15,
             "name": "Money Income",
-            "cap": 99,
+            "cap": 149,
             "price": "1000*1.225^L",
             "multi": "(1 + L * 0.07) * 1.03 ^ L"
           },
           {
             "n": 16,
             "name": "Crystal Expansion",
-            "cap": 99,
+            "cap": 149,
             "price": "2500*1.2^L",
             "multi": "1.125 ^ L"
           },
           {
             "n": 17,
             "name": "Super Life Shards",
-            "cap": 50,
+            "cap": 100,
             "price": "5000*(1.25+L/200)^L",
             "multi": "1.15 ^ L"
           },
           {
             "n": 18,
             "name": "Monster Feed",
-            "cap": 30,
+            "cap": 75,
             "price": "10000+250L",
             "multi": "(1 + L * 0.085) * 1.015 ^ L"
           },
           {
             "n": 19,
             "name": "Infi Energy",
-            "cap": 999,
+            "cap": 1050,
             "price": "15000*(1.25+L/200)^L",
             "multi": "(1 + L * 0.125) * 1.025 ^ L"
           },
           {
             "n": 20,
             "name": "Gold Bars",
-            "cap": 25,
+            "cap": 75,
             "price": "25000*(1.225+L/250)^L",
             "multi": "(1 + L / 20) * 1.05 ^ L"
           },
           {
             "n": 21,
             "name": "Mining Damage",
-            "cap": 99,
+            "cap": 150,
             "price": "50000*(1.225+L/125)^L",
             "multi": "1.125 ^ L"
           },
           {
             "n": 22,
             "name": "More Ores",
-            "cap": 30,
+            "cap": 80,
             "price": "100000*(1.45+L/125)^L",
             "multi": "1 + L / 10"
           },
           {
             "n": 23,
             "name": "More Depth",
-            "cap": 25,
+            "cap": 75,
             "price": "300000*(1.35+L/125)^L",
             "multi": "1 + L / 20"
           },
@@ -589,91 +589,91 @@
           {
             "n": 25,
             "name": "Infi Research",
-            "cap": 999,
+            "cap": 1050,
             "price": "1500000*1.5^L",
             "multi": "(1 + L * 0.175) * 1.025 ^ L"
           },
           {
             "n": 26,
             "name": "Adamantium",
-            "cap": 25,
+            "cap": 75,
             "price": "4000000*(1.45+L/75)^L",
             "multi": "(1 + L * 0.12) * 1.03 ^ L"
           },
           {
             "n": 27,
             "name": "Silver Energy",
-            "cap": 50,
+            "cap": 100,
             "price": "20000000*(1.75+L/55)^L",
             "multi": "(1 + L * 0.08) * 1.02 ^ L"
           },
           {
             "n": 28,
             "name": "Energy Shards",
-            "cap": 49,
+            "cap": 100,
             "price": "100000000*(1.25+L/50)^L",
             "multi": "(1 + L / 10) * 1.05 ^ L"
           },
           {
             "n": 29,
             "name": "Emerald Coins",
-            "cap": 25,
+            "cap": 75,
             "price": "400000000*(1.35+L/55)^L",
             "multi": "(1 + L / 20) * 1.05 ^ L"
           },
           {
             "n": 30,
             "name": "Crystal Shards",
-            "cap": 25,
+            "cap": 75,
             "price": "2000000000*(1.325+L/47)^L",
             "multi": "1.1 ^ L"
           },
           {
             "n": 31,
             "name": "Roots",
-            "cap": 35,
+            "cap": 85,
             "price": "10000000000*(1.45+L/45)^L",
             "multi": "1 + L / 10"
           },
           {
             "n": 32,
             "name": "Life Gem",
-            "cap": 40,
+            "cap": 90,
             "price": "50000000000*(1.55+L/40)^L",
             "multi": "1 + L / 15"
           },
           {
             "n": 33,
             "name": "Golden Energy",
-            "cap": 25,
+            "cap": 75,
             "price": "200000000000*(1.3+L/55)^L",
             "multi": "1 + L / 10"
           },
           {
             "n": 34,
             "name": "Bones",
-            "cap": 50,
+            "cap": 100,
             "price": "1000000000000*(1.45+L/55)^L",
             "multi": "(1 + L / 20) * 1.05 ^ L"
           },
           {
             "n": 35,
-            "name": "Souls",
-            "cap": 25,
+            "name": "Dungeon Coins",
+            "cap": 75,
             "price": "3000000000000*(1.4+L/55)^L",
             "multi": "1 + L / 10"
           },
           {
             "n": 36,
             "name": "Bluesteel",
-            "cap": 25,
+            "cap": 75,
             "price": "10000000000000*(1.475+L/50)^L",
             "multi": "1 + L / 10"
           },
           {
             "n": 37,
             "name": "Diamond Energy",
-            "cap": 25,
+            "cap": 75,
             "price": "20000000000000*(1.45+L/45)^L",
             "multi": "(1 + L / 20) * 1.05 ^ L"
           },
@@ -694,21 +694,21 @@
           {
             "n": 40,
             "name": "More Golden Research",
-            "cap": 40,
+            "cap": 90,
             "price": "1e22*1.75^L",
             "multi": "1 + L / 20"
           },
           {
             "n": 41,
             "name": "More Research",
-            "cap": 25,
+            "cap": 75,
             "price": "1e23*(1.75+L/30)^L",
             "multi": "(1 + L / 20) * 1.05 ^ L"
           },
           {
             "n": 42,
             "name": "Californium",
-            "cap": 25,
+            "cap": 75,
             "price": "3e23*(1.65+L/30)^L",
             "multi": "1 + L / 10"
           },
@@ -722,9 +722,65 @@
           {
             "n": 44,
             "name": "Mining Gemstones",
-            "cap": 25,
+            "cap": 75,
             "price": "1e24*(1.575+L/35)^L",
             "multi": "1 + L / 10"
+          },
+          {
+            "n": 45,
+            "name": "More Fossil",
+            "cap": "99",
+            "price": "3*L",
+            "multi": "1"
+          },
+          {
+            "n": 46,
+            "name": "More Souls ",
+            "cap": "99",
+            "price": "3*L",
+            "multi": "1+(0.1*L)"
+          },
+          {
+            "n": 47,
+            "name": "Increase Research upgrades cap",
+            "cap": "15",
+            "price": "3*L",
+            "multi": "+ 1*L"
+          },
+          {
+            "n": 48,
+            "name": "More Rare Saps",
+            "cap": "20",
+            "price": "3*L",
+            "multi": "1+(0.05*L)"
+          },
+          {
+            "n": 49,
+            "name": "More Astatine ",
+            "cap": "20",
+            "price": "3*L",
+            "multi": "1+(0.05*L)"
+          },
+          {
+            "n": 50,
+            "name": "More Tree Essence",
+            "cap": "20",
+            "price": "floor(5e30*(1.65 + L/65)^L)",
+            "multi": "1+(0.15*L)"
+          },
+          {
+            "n": 51,
+            "name": "Axe Damage",
+            "cap": "100",
+            "price": "5e30 * (1.25 + L/85)^L",
+            "multi": "(1 + L*0.1) * 1.05^L"
+          },
+          {
+            "n": 52,
+            "name": "Tree Tier XP",
+            "cap": "20",
+            "price": "5e30 * (1.45 + L/55)^L",
+            "multi": "1 + L*0.1"
           }
         ]
       },
@@ -828,6 +884,13 @@
             "cap": 50,
             "price": "1e40*(1+L/3)*(1.75+L/37)^L",
             "multi": "(1 + L * 0.08) * 1.02 ^ L"
+          },
+          {
+            "n": 15,
+            "name": "More Tree Essence",
+            "cap": "99",
+            "price": "floor(1e57 * (2.35 + L/75)^L)",
+            "multi": "1+(0.1*L)"
           }
         ]
       },
@@ -4897,9 +4960,9 @@
           },
           {
             "n": 12,
-            "name": "Secret Runes [SOON]",
+            "name": "Secret Runes",
             "cap": 8,
-            "price": "10000000000*100^L",
+            "price": "20000000*100^L",
             "multi": "L"
           }
         ]
@@ -4941,6 +5004,110 @@
             "cap": 13,
             "price": "Tabela por nivel",
             "multi": "Tabela por nivel"
+          }
+        ]
+      },
+      "life-tree-essence": {
+        "name": "Tree Essence",
+        "upgrades": [
+          {
+            "n": 1,
+            "name": "More Trees",
+            "cap": "5",
+            "price": "1*10^l",
+            "multi": "+l"
+          },
+          {
+            "n": 2,
+            "name": "More Logs",
+            "cap": "49",
+            "price": "((1 + l/4) * (1.25 + l/155)^l)",
+            "multi": "(1 + 0.2 * l) * 1.1^l"
+          },
+          {
+            "n": 3,
+            "name": "More Tree Damage",
+            "cap": "49",
+            "price": "(1 + l/4) * (1.315 + l/115)^l",
+            "multi": "(1 + 0.2 * l) * 1.05^l"
+          },
+          {
+            "n": 4,
+            "name": "More Tree Essence",
+            "cap": "99",
+            "price": "2 * (1 + l/2) * (1.34 + l/75)^l",
+            "multi": "(1 + 0.15 * l) * 2^floor(l/15)"
+          },
+          {
+            "n": 5,
+            "name": "More Roots",
+            "cap": "49",
+            "price": "3 * (1 + l/3) * (1.315 + l/110)^l",
+            "multi": "(1 + 0.25 * l) * 2^floor(l/15)"
+          },
+          {
+            "n": 6,
+            "name": "More Tree Tier XP",
+            "cap": "49",
+            "price": "5 * (1 + l/2.5) * (1.315 + l/105)^l",
+            "multi": "(1 + 0.1 * l) * 1.05^l"
+          },
+          {
+            "n": 7,
+            "name": "Sap Roots Gain",
+            "cap": "12",
+            "price": "10 * 2.25^l",
+            "multi": "1e28 * 4^l"
+          },
+          {
+            "n": 8,
+            "name": "Apple Bonus Cap",
+            "cap": "20",
+            "price": "25 * 2^l",
+            "multi": "1 + l/10"
+          },
+          {
+            "n": 9,
+            "name": "Rare Sap Chance",
+            "cap": "25",
+            "price": "50 * 2^l",
+            "multi": "1 + 0.1 * l"
+          },
+          {
+            "n": 10,
+            "name": "More Fossils",
+            "cap": "39",
+            "price": "50 * (1 + l/3) * (1.365 + l/100)^l",
+            "multi": "(1 + 0.05 * l) * 1.05^l",
+            "requirement": ""
+          },
+          {
+            "n": 11,
+            "name": "More Life Gems",
+            "cap": "25",
+            "price": "100 * (1 + l/3) * (1.365 + l/100)^l",
+            "multi": "(1 + 0.075 * l) * 1.05^l"
+          },
+          {
+            "n": 12,
+            "name": "Rare Sap Gain",
+            "cap": "15",
+            "price": "250 * 2^l",
+            "multi": "1 + l/10"
+          },
+          {
+            "n": 13,
+            "name": "Passive Roots",
+            "cap": "10",
+            "price": "500 * 5^l",
+            "multi": "0.5 * 2^l"
+          },
+          {
+            "n": 14,
+            "name": "More Research Cap",
+            "cap": "5",
+            "price": "1250 * 3^l",
+            "multi": "1 * l"
           }
         ]
       }
@@ -4991,7 +5158,8 @@
       "main/magnets-upgrades": "magnets-upgrades",
       "main/bluesteel-upgrades": "bluesteel-upgrades",
       "dungeon/souls-upgrades": "souls-upgrades",
-      "mining/auto-mining-drills": "auto-mining-drills"
+      "mining/auto-mining-drills": "auto-mining-drills",
+      "life/tree-essence": "life-tree-essence"
     }
   },
   "progression": {
@@ -6285,6 +6453,170 @@
                   "subs": []
                 }
               ]
+            }
+          }
+        ]
+      },
+      "life/tree-essence-milestones": {
+        "title": "Milestones",
+        "itemLabel": "Milestone",
+        "stages": [
+          {
+            "num": "1",
+            "requirements": [
+              "1 Tree Essence"
+            ],
+            "boosts": [
+              "5x Logs",
+              "5x Sap",
+              "5x Roots"
+            ],
+            "unlocks": {
+              "area": "",
+              "places": [],
+              "features": []
+            },
+            "title": "Milestone 1",
+            "boostsNote": ""
+          },
+          {
+            "title": "Milestone 2",
+            "num": "2",
+            "requirements": [
+              "100 Tree Essence"
+            ],
+            "boosts": [
+              "3x Tree Tier XP"
+            ],
+            "unlocks": {
+              "area": "",
+              "places": [],
+              "features": []
+            }
+          },
+          {
+            "title": "Milestone 3",
+            "num": "3",
+            "requirements": [
+              "300 Tree Essence"
+            ],
+            "boosts": [
+              "2x ALL Apples",
+              "1.25x Rare Sap"
+            ],
+            "unlocks": {
+              "area": "",
+              "places": [],
+              "features": []
+            }
+          },
+          {
+            "title": "Milestone 4",
+            "num": "4",
+            "requirements": [
+              "1.25K Tree Essence"
+            ],
+            "boosts": [],
+            "unlocks": {
+              "area": "",
+              "places": [],
+              "features": [
+                {
+                  "name": "New Research Upgrade",
+                  "subs": []
+                }
+              ]
+            }
+          },
+          {
+            "title": "Milestone 5",
+            "num": "5",
+            "requirements": [
+              "5K Tree Essence"
+            ],
+            "boosts": [
+              "1.5x Tree Essence",
+              "Expand Terraform Upgrades cap by 10"
+            ],
+            "unlocks": {
+              "area": "",
+              "places": [],
+              "features": []
+            }
+          },
+          {
+            "title": "Milestone 6",
+            "num": "6",
+            "requirements": [
+              "20K"
+            ],
+            "boosts": [
+              "5x Fossils"
+            ],
+            "unlocks": {
+              "area": "",
+              "places": [],
+              "features": [
+                {
+                  "name": "New Fossil Bonus",
+                  "subs": []
+                }
+              ]
+            }
+          },
+          {
+            "title": "Milestone 7",
+            "num": "7",
+            "requirements": [
+              "100K Tree Essence"
+            ],
+            "boosts": [
+              "4x Research"
+            ],
+            "unlocks": {
+              "area": "",
+              "places": [],
+              "features": [
+                {
+                  "name": "New Logs Upgrade",
+                  "subs": []
+                }
+              ]
+            }
+          },
+          {
+            "title": "Milestone 8",
+            "num": "8",
+            "requirements": [
+              "300K Tree Essence"
+            ],
+            "boosts": [
+              "1.5x Rare Saps"
+            ],
+            "unlocks": {
+              "area": "",
+              "places": [],
+              "features": [
+                {
+                  "name": "2 New Rare Saps",
+                  "subs": []
+                }
+              ]
+            }
+          },
+          {
+            "title": "Milestone 9",
+            "num": "9",
+            "requirements": [
+              "1M Tree Essence"
+            ],
+            "boosts": [
+              "2x Astatine"
+            ],
+            "unlocks": {
+              "area": "",
+              "places": [],
+              "features": []
             }
           }
         ]
@@ -11752,14 +12084,6 @@
         "defaultAmount": 0,
         "bonuses": []
       },
-      "life/tree-tier": {
-        "kind": "amount",
-        "title": "Tree Tier",
-        "amountLabel": "Tree Tier owned",
-        "showAmount": true,
-        "defaultAmount": 0,
-        "bonuses": []
-      },
       "life/roots": {
         "kind": "amount",
         "title": "Roots",
@@ -11977,6 +12301,239 @@
             ]
           }
         ]
+      },
+      "runes/secret": {
+        "kind": "amount-groups",
+        "title": "Secret",
+        "groups": [
+          {
+            "id": "group",
+            "name": "Dark -",
+            "color": "#555555",
+            "dropChance": "78%",
+            "amountLabel": "Amount owned",
+            "bonuses": [
+              {
+                "id": "b1",
+                "name": "Energy",
+                "value": "formula: ((amount / 2) + 1)^0.3",
+                "capUnit": "x",
+                "unit": "x"
+              },
+              {
+                "id": "b",
+                "name": "Bone Dust",
+                "value": "formula: ((amount / 4) + 1)^0.185",
+                "capUnit": "x",
+                "unit": "x"
+              },
+              {
+                "id": "b2",
+                "name": "Terraform Gem",
+                "value": "formula: ((amount / 6) + 1)^0.11",
+                "capUnit": "x",
+                "unit": "x"
+              }
+            ],
+            "description": ""
+          },
+          {
+            "id": "group2",
+            "name": "Void -",
+            "color": "#6550B8",
+            "dropChance": "13%",
+            "amountLabel": "Amount owned",
+            "bonuses": [
+              {
+                "id": "b1",
+                "name": "Money",
+                "value": "formula: ((amount / 1) + 1)^0.275",
+                "capUnit": "x",
+                "unit": "x"
+              },
+              {
+                "id": "b",
+                "name": "Bones",
+                "value": "formula: ((amount / 2) + 1)^0.245",
+                "capUnit": "x",
+                "unit": "x"
+              },
+              {
+                "id": "b2",
+                "name": "Reserch",
+                "value": "formula: ((amount / 4) + 1)^0.125",
+                "capUnit": "x",
+                "unit": "x"
+              }
+            ]
+          },
+          {
+            "id": "group3",
+            "name": "Unnatural -",
+            "color": "#A84747",
+            "dropChance": "4.83%",
+            "amountLabel": "Amount owned",
+            "bonuses": [
+              {
+                "id": "b1",
+                "name": "Strength",
+                "value": "formula: ((amount / 1) + 1)^0.175",
+                "capUnit": "x",
+                "unit": "x"
+              },
+              {
+                "id": "b",
+                "name": "Health",
+                "value": "formula: ((amount / 1) + 1)^0.175",
+                "capUnit": "x",
+                "unit": "x"
+              },
+              {
+                "id": "b2",
+                "name": "Soul",
+                "value": "formula: ((amount / 3) + 1)^0.125",
+                "capUnit": "x",
+                "unit": "x"
+              }
+            ]
+          },
+          {
+            "id": "group4",
+            "name": "Plasma -",
+            "color": "#A443F5",
+            "dropChance": "2.19%",
+            "amountLabel": "Amount owned",
+            "bonuses": [
+              {
+                "id": "b1",
+                "name": "Mine Damage",
+                "value": "formula: ((amount / 1) + 1)^0.3",
+                "capUnit": "x",
+                "unit": "x"
+              },
+              {
+                "id": "b",
+                "name": "Coins",
+                "value": "formula: ((amount / 1.5) + 1)^0.2",
+                "capUnit": "x",
+                "unit": "x"
+              },
+              {
+                "id": "b2",
+                "name": "Fossils",
+                "value": "formula: ((amount / 2) + 1)^0.175",
+                "capUnit": "x",
+                "unit": "x"
+              }
+            ]
+          },
+          {
+            "id": "group5",
+            "name": "Infernal -",
+            "color": "#FF173C",
+            "dropChance": "0.8%",
+            "amountLabel": "Amount owned",
+            "bonuses": [
+              {
+                "id": "b1",
+                "name": "iron",
+                "value": "formula: ((amount / 1) + 1)^0.1",
+                "capUnit": "x",
+                "unit": "x"
+              },
+              {
+                "id": "b",
+                "name": "Californium",
+                "value": "formula: ((amount / 1.5) + 1)^0.125",
+                "capUnit": "x",
+                "unit": "x"
+              },
+              {
+                "id": "b2",
+                "name": "Bluesteel",
+                "value": "formula: ((amount / 2) + 1)^0.2",
+                "capUnit": "x",
+                "unit": "x"
+              }
+            ]
+          },
+          {
+            "id": "group6",
+            "name": "Soul -",
+            "color": "#8035C8",
+            "dropChance": "0.31%",
+            "amountLabel": "Amount owned",
+            "bonuses": [
+              {
+                "id": "b1",
+                "name": "Mine Perks",
+                "value": "formula: ((amount / 0.75) + 1)^0.145",
+                "capUnit": "x",
+                "unit": "x"
+              },
+              {
+                "id": "b",
+                "name": "Tree Essence",
+                "value": "formula: ((amount / 1) + 1)^0.19",
+                "capUnit": "x",
+                "unit": "x"
+              },
+              {
+                "id": "b2",
+                "name": "Magnets",
+                "value": "formula: ((amount / 1.25) + 1)^0.13",
+                "capUnit": "x",
+                "unit": "x"
+              }
+            ]
+          },
+          {
+            "id": "group7",
+            "name": "Omnisou l-",
+            "color": "#43C944",
+            "dropChance": "0.12%",
+            "amountLabel": "Amount owned",
+            "bonuses": [
+              {
+                "id": "b1",
+                "name": "Astatine",
+                "value": "formula: ((amount / 0.5) + 1)^0.09",
+                "capUnit": "x",
+                "unit": "x"
+              },
+              {
+                "id": "b",
+                "name": "Rare Sap",
+                "value": "formula: ((amount / 0.75) + 1)^0.12",
+                "capUnit": "x",
+                "unit": "x"
+              },
+              {
+                "id": "b2",
+                "name": "Ruby Energy",
+                "value": "formula: ((amount / 1) + 1)^0.15",
+                "capUnit": "x",
+                "unit": "x"
+              }
+            ]
+          },
+          {
+            "id": "group8",
+            "name": "Omega -",
+            "color": "#2378E8",
+            "dropChance": "0.03%",
+            "amountLabel": "Amount owned",
+            "bonuses": [
+              {
+                "id": "b1",
+                "name": "Mastery",
+                "value": "formula: ((amount / 1) + 1)^0.075",
+                "capUnit": "x",
+                "unit": "x"
+              }
+            ]
+          }
+        ]
       }
     }
   },
@@ -12142,7 +12699,17 @@
       "Neutron Frost": "#00ffcc",
       "Frost Conversion": "#82f7e4",
       "Frost Generators": "#4db2ff",
-      "Golden points": "#ffee00"
+      "Golden points": "#ffee00",
+      "Secret": "#af1dd7",
+      "Dark": "#555555",
+      "Void": "#6550b8",
+      "Unnatural": "#a84747",
+      "Infernal": "#ff173c",
+      "Soul": "#8035c8",
+      "Omnisoul": "#43c944",
+      "Omega": "#2378e8",
+      "Tree Essence": "#00ffaa",
+      "Animal Tiers": "#618a4d"
     },
     "pageLinks": {
       "main": "#/main",
@@ -12269,7 +12836,23 @@
       "Neutron Frost": "#/life/frost-conversion",
       "Frost Conversion": "#/life/frost-conversion",
       "Frost Generators": "#/life/frost-generators",
-      "Golden points": "#/life/golden-points"
+      "Golden points": "#/life/golden-points",
+      "Secret": "#/runes/secret",
+      "Omega": "#/runes/secret",
+      "Omnisoul": "#/runes/secret",
+      "Void": "#/runes/secret",
+      "Soul": "#/runes/secret",
+      "Infernal": "#/runes/secret",
+      "Plasma": "#/runes/secret",
+      "Unnatural": "#/runes/secret",
+      "Dark": "#/runes/secret",
+      "Tree Essence": "#/life/tree-essence",
+      "Tree Tier": "#/life/tree-tier",
+      "Tree": "#/life/tree",
+      "Upgrade Tree": "#/money-island/upgrade-tree",
+      "Eternal Shards": "#/Miscellaneous/eternal-shards",
+      "Gamepasses": "#/Miscellaneous/Gamepasses",
+      "Gold Energy": "#/money-island/energies"
     }
   },
   "contentMigrations": [

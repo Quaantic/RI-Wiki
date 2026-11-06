@@ -1,6 +1,82 @@
 {
   "versions": [
     {
+      "version": "1.03",
+      "date": "2026-11-06",
+      "entries": [
+        {
+          "id": "entry-94ad59f9-1227-4aba-b0ee-cfe368e1edc7",
+          "context": "Feature",
+          "title": "Secret Runes",
+          "href": "",
+          "description": "added in 8 secret runes"
+        },
+        {
+          "id": "entry-b15bf40f-7e3f-4409-a8e1-b01be799cb33",
+          "context": "Feature",
+          "title": "Tree Essence",
+          "href": "",
+          "description": "Added 14 upgrades in tree essences and 8 new tree essences milestones."
+        },
+        {
+          "id": "entry-0c4daa65-21da-4f1e-ba45-030fd6465bd8",
+          "context": "UI",
+          "title": "New icons",
+          "href": "",
+          "description": "Added many new icons and descriptions"
+        },
+        {
+          "id": "entry-38c5454e-f637-47b0-a3a2-14b4c6b9e7a6",
+          "context": "Changes",
+          "title": "Research Upgrades",
+          "href": "",
+          "description": "3 New Research upgrades have been added and caps have been increased due to upgrades increasing Cap"
+        },
+        {
+          "id": "entry-e430d6a6-11d6-442f-a168-68a1df38f372",
+          "context": "Feature",
+          "title": "Animals Tiers",
+          "href": "",
+          "description": "Added Animal Tiers to the Cells tab!"
+        },
+        {
+          "id": "entry-d4ca3f4b-306d-4d59-bf7a-02beaddaccae",
+          "context": "Changes",
+          "title": "Log Upgrades",
+          "href": "",
+          "description": "Added new log upgrade to the wiki!"
+        },
+        {
+          "id": "entry-c67d43e6-e797-4e28-a49c-eb7f78f088f3",
+          "context": "Bugs",
+          "title": "Random Tabs",
+          "href": "",
+          "description": "Fixed random tabs disposed in places they don't make sense"
+        },
+        {
+          "id": "entry-147395b0-b50e-4f99-874c-e301d85e3872",
+          "context": "Changes",
+          "title": "New Contributors ",
+          "href": "",
+          "description": "Added our new contributors to credits."
+        },
+        {
+          "id": "entry-3587114f-fd07-4784-a477-8580611030ec",
+          "context": "Feature",
+          "title": "Trees",
+          "href": "",
+          "description": "Added all the 33 Types of trees and their bonuses."
+        },
+        {
+          "id": "entry-09a38892-babc-44dc-b1a1-98d0ade771f9",
+          "context": "Feature",
+          "title": "Cells",
+          "href": "",
+          "description": "Added cells tab to the Life Generation tab."
+        }
+      ]
+    },
+    {
       "version": "1.02",
       "date": "2026-11-05",
       "entries": [
