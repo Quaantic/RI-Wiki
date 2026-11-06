@@ -2,6 +2,86 @@
   "format": 1,
   "entries": [
     {
+      "id": "aecc3686-0cc9-4732-b598-b8b7584a8781",
+      "at": 1793979289490,
+      "kind": "content",
+      "text": "Updated 2 of \"row-879f4a74-92eb-4433-9d65-012b558509cb\": empty to 100T",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:35:14.779Z"
+    },
+    {
+      "id": "c30fc79c-c697-49de-9130-a541f2f0b4b5",
+      "at": 1793979289310,
+      "kind": "content",
+      "text": "Updated 1 of \"row-879f4a74-92eb-4433-9d65-012b558509cb\": empty to 12.5De",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:35:14.779Z"
+    },
+    {
+      "id": "b55fd25c-b4d8-4f7e-904b-954c7a4a7faf",
+      "at": 1793979271692,
+      "kind": "content",
+      "text": "Updated 2 of \"row-85e6b3d3-c37d-434d-a294-6bee528f6d82\": empty to 100T",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:35:14.779Z"
+    },
+    {
+      "id": "bc6a8893-d994-4fa5-8fc8-0fe835e03767",
+      "at": 1793979271505,
+      "kind": "content",
+      "text": "Updated 1 of \"row-85e6b3d3-c37d-434d-a294-6bee528f6d82\": empty to 600No",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:35:14.779Z"
+    },
+    {
+      "id": "b1fb13ef-1fd8-40cd-9d24-6cfb8b3b284c",
+      "at": 1793979256819,
+      "kind": "content",
+      "text": "Updated 2 of \"row-14273594-1196-4483-958d-fbc2ad66a94a\": empty to 12.5T",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:35:14.779Z"
+    },
+    {
+      "id": "5c301354-902f-455c-9a05-40474ad4a6fe",
+      "at": 1793979256657,
+      "kind": "content",
+      "text": "Updated 1 of \"row-14273594-1196-4483-958d-fbc2ad66a94a\": empty to 30No",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:35:14.779Z"
+    },
+    {
+      "id": "5f58a8a9-0a57-4ca1-83b3-7bd957f34efd",
+      "at": 1793979243193,
+      "kind": "content",
+      "text": "Updated 2 of \"row-2d76a623-bcf4-4651-8967-1940eaa5980e\": empty to 1.75T",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:35:14.779Z"
+    },
+    {
+      "id": "e1692ee0-90f6-427e-895b-7845a172e427",
+      "at": 1793979243032,
+      "kind": "content",
+      "text": "Updated 1 of \"row-2d76a623-bcf4-4651-8967-1940eaa5980e\": empty to 1.75No",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:35:14.779Z"
+    },
+    {
       "id": "9827858b-ae6a-4c81-8190-0b81b2cd0348",
       "at": 1793979228075,
       "kind": "content",
@@ -9,7 +89,7 @@
       "actor": "zzinss",
       "pending": false,
       "status": "saved",
-      "savedAt": "2026-11-06T15:33:50.447Z"
+      "savedAt": "2026-11-06T15:35:14.779Z"
     },
     {
       "id": "ae835ca1-73d0-4c35-b10d-1f95f8e9b652",
@@ -19,7 +99,7 @@
       "actor": "zzinss",
       "pending": false,
       "status": "saved",
-      "savedAt": "2026-11-06T15:33:50.447Z"
+      "savedAt": "2026-11-06T15:35:14.779Z"
     },
     {
       "id": "66ca96f1-c927-4bba-811e-d43b2f55e702",
@@ -29,7 +109,7 @@
       "actor": "zzinss",
       "pending": false,
       "status": "saved",
-      "savedAt": "2026-11-06T15:33:50.447Z"
+      "savedAt": "2026-11-06T15:35:14.779Z"
     },
     {
       "id": "f7f29d09-8f90-4c45-be7c-8f11fdcee916",
@@ -39,7 +119,7 @@
       "actor": "zzinss",
       "pending": false,
       "status": "saved",
-      "savedAt": "2026-11-06T15:33:50.447Z"
+      "savedAt": "2026-11-06T15:35:14.779Z"
     },
     {
       "id": "a0d2f4b8-de3d-4a79-9fb3-744734a9e9a8",
@@ -49,7 +129,7 @@
       "actor": "zzinss",
       "pending": false,
       "status": "saved",
-      "savedAt": "2026-11-06T15:33:50.447Z"
+      "savedAt": "2026-11-06T15:35:14.779Z"
     },
     {
       "id": "089363af-9c06-4615-9d08-c5bcef829e96",
@@ -59,7 +139,7 @@
       "actor": "zzinss",
       "pending": false,
       "status": "saved",
-      "savedAt": "2026-11-06T15:33:50.447Z"
+      "savedAt": "2026-11-06T15:35:14.779Z"
     },
     {
       "id": "dd514a36-5f16-4125-b352-1ca54e98ac60",
@@ -69,7 +149,7 @@
       "actor": "zzinss",
       "pending": false,
       "status": "saved",
-      "savedAt": "2026-11-06T15:33:50.447Z"
+      "savedAt": "2026-11-06T15:35:14.779Z"
     },
     {
       "id": "6aece174-3466-4b05-b82f-4646f56e320a",
@@ -79,7 +159,7 @@
       "actor": "zzinss",
       "pending": false,
       "status": "saved",
-      "savedAt": "2026-11-06T15:33:50.447Z"
+      "savedAt": "2026-11-06T15:35:14.779Z"
     },
     {
       "id": "dd0b4f0f-3de0-4292-a210-cf7777eb2508",
@@ -89,7 +169,7 @@
       "actor": "zzinss",
       "pending": false,
       "status": "saved",
-      "savedAt": "2026-11-06T15:33:50.447Z"
+      "savedAt": "2026-11-06T15:35:14.779Z"
     },
     {
       "id": "1ee8f480-ead9-48ff-8d3c-ec93b58758e4",
@@ -99,7 +179,7 @@
       "actor": "zzinss",
       "pending": false,
       "status": "saved",
-      "savedAt": "2026-11-06T15:33:50.447Z"
+      "savedAt": "2026-11-06T15:35:14.779Z"
     },
     {
       "id": "38750cc6-1eb4-4c55-9ab2-1411bc913f1f",
@@ -109,7 +189,7 @@
       "actor": "zzinss",
       "pending": false,
       "status": "saved",
-      "savedAt": "2026-11-06T15:33:50.447Z"
+      "savedAt": "2026-11-06T15:35:14.779Z"
     },
     {
       "id": "b81dcaa6-234b-4ecb-a037-22a9349253b8",
@@ -119,7 +199,7 @@
       "actor": "zzinss",
       "pending": false,
       "status": "saved",
-      "savedAt": "2026-11-06T15:33:50.447Z"
+      "savedAt": "2026-11-06T15:35:14.779Z"
     },
     {
       "id": "d12b74a9-c3b5-40c4-b0b3-1ae0ec3aadce",
@@ -129,7 +209,7 @@
       "actor": "zzinss",
       "pending": false,
       "status": "saved",
-      "savedAt": "2026-11-06T15:33:50.447Z"
+      "savedAt": "2026-11-06T15:35:14.779Z"
     },
     {
       "id": "35c7fd7a-3f89-4d7e-a9a2-2667a7602320",
@@ -139,7 +219,7 @@
       "actor": "zzinss",
       "pending": false,
       "status": "saved",
-      "savedAt": "2026-11-06T15:33:50.447Z"
+      "savedAt": "2026-11-06T15:35:14.779Z"
     },
     {
       "id": "3b014061-21e8-4678-a0d4-39e785a6eb28",
@@ -149,7 +229,7 @@
       "actor": "zzinss",
       "pending": false,
       "status": "saved",
-      "savedAt": "2026-11-06T15:33:50.447Z"
+      "savedAt": "2026-11-06T15:35:14.779Z"
     },
     {
       "id": "d9696716-32de-4ba7-bbfd-ddab4a5a4896",
@@ -159,7 +239,7 @@
       "actor": "zzinss",
       "pending": false,
       "status": "saved",
-      "savedAt": "2026-11-06T15:33:50.447Z"
+      "savedAt": "2026-11-06T15:35:14.779Z"
     },
     {
       "id": "fb23c2a6-17f2-440c-a451-95a3a37e54de",
@@ -169,7 +249,7 @@
       "actor": "zzinss",
       "pending": false,
       "status": "saved",
-      "savedAt": "2026-11-06T15:33:50.447Z"
+      "savedAt": "2026-11-06T15:35:14.779Z"
     },
     {
       "id": "598a73ea-0755-491a-925f-4c2bd7b3d569",
@@ -179,7 +259,7 @@
       "actor": "zzinss",
       "pending": false,
       "status": "saved",
-      "savedAt": "2026-11-06T15:33:50.447Z"
+      "savedAt": "2026-11-06T15:35:14.779Z"
     },
     {
       "id": "718becc0-26da-4577-b757-ca5dc560eb95",
@@ -189,7 +269,7 @@
       "actor": "zzinss",
       "pending": false,
       "status": "saved",
-      "savedAt": "2026-11-06T15:33:50.447Z"
+      "savedAt": "2026-11-06T15:35:14.779Z"
     },
     {
       "id": "543da897-d301-4d0b-aa83-de0d86e26d7e",
@@ -199,7 +279,7 @@
       "actor": "zzinss",
       "pending": false,
       "status": "saved",
-      "savedAt": "2026-11-06T15:33:50.447Z"
+      "savedAt": "2026-11-06T15:35:14.779Z"
     },
     {
       "id": "e1c85222-ab33-4b8d-91b9-6a1beffa9526",
@@ -209,7 +289,7 @@
       "actor": "zzinss",
       "pending": false,
       "status": "saved",
-      "savedAt": "2026-11-06T15:33:50.447Z"
+      "savedAt": "2026-11-06T15:35:14.779Z"
     },
     {
       "id": "47e92a04-ed5b-4084-80dd-1dcd721f607f",
@@ -219,7 +299,7 @@
       "actor": "zzinss",
       "pending": false,
       "status": "saved",
-      "savedAt": "2026-11-06T15:33:50.447Z"
+      "savedAt": "2026-11-06T15:35:14.779Z"
     },
     {
       "id": "297836d0-c6a3-429b-bc20-53958db089b9",
@@ -229,7 +309,7 @@
       "actor": "zzinss",
       "pending": false,
       "status": "saved",
-      "savedAt": "2026-11-06T15:33:50.447Z"
+      "savedAt": "2026-11-06T15:35:14.779Z"
     },
     {
       "id": "9c61df6d-eaca-4504-8190-d5ebeab8db03",
@@ -239,7 +319,7 @@
       "actor": "zzinss",
       "pending": false,
       "status": "saved",
-      "savedAt": "2026-11-06T15:33:50.447Z"
+      "savedAt": "2026-11-06T15:35:14.773Z"
     },
     {
       "id": "8988779d-9dd9-4de4-a80b-1de7fed31e80",
@@ -2920,86 +3000,6 @@
       "pending": false,
       "status": "saved",
       "savedAt": "2026-11-06T06:58:26.093Z"
-    },
-    {
-      "id": "36c5ce39-e2b0-4b52-9536-64ce0357bba9",
-      "at": 1793948265814,
-      "kind": "content",
-      "text": "Renamed \"New group\" to \"Omnisoul\"",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T06:58:26.093Z"
-    },
-    {
-      "id": "4f167b34-be12-494e-9791-e0e866e4a3fd",
-      "at": 1793948252676,
-      "kind": "content",
-      "text": "Renamed \"New group\" to \"Soul\"",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T06:58:26.093Z"
-    },
-    {
-      "id": "a17d9b43-1b5c-49b1-ac40-5f40bbac442c",
-      "at": 1793948245697,
-      "kind": "content",
-      "text": "Renamed \"New group\" to \"Infernal\"",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T06:58:26.093Z"
-    },
-    {
-      "id": "03409213-6be0-4584-9f3f-184953b7e376",
-      "at": 1793948221442,
-      "kind": "content",
-      "text": "Renamed \"New group\" to \"Plasma\"",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T06:58:26.093Z"
-    },
-    {
-      "id": "cd690563-4f81-4036-8244-72e228b12bf0",
-      "at": 1793948176902,
-      "kind": "content",
-      "text": "Updated drop Chance of \"New group\": empty to 0.03%",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T06:58:26.093Z"
-    },
-    {
-      "id": "fce82785-0e4c-4970-92a4-ce6b78b94cc8",
-      "at": 1793948170031,
-      "kind": "content",
-      "text": "Updated drop Chance of \"New group\": empty to 0.12%",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T06:56:10.648Z"
-    },
-    {
-      "id": "369e10d5-9602-49c3-b2db-5275ea92c5c4",
-      "at": 1793948152809,
-      "kind": "content",
-      "text": "Updated drop Chance of \"New group\": empty to 0.31%",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T06:56:10.648Z"
-    },
-    {
-      "id": "f37284c0-b05a-41b0-b422-55de9c29afcb",
-      "at": 1793948127560,
-      "kind": "content",
-      "text": "Updated drop Chance of \"New group\": empty to 0.8%",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T06:56:10.648Z"
     }
   ]
 }
