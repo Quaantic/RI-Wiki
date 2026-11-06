@@ -30,6 +30,14 @@ module.exports=async(req,res)=>{
    if(!value.saved)return res.status(409).json({message:'A collaborator saved a newer revision. Sync and merge your changes.',revision:value.revision});
    return res.status(200).json({saved:true,revision:value.revision});
   }
+  if(action==='presence'){
+   // Authenticated collaborators only. Keep this ephemeral state in Supabase,
+   // never in GitHub or a Vercel process-local memory map.
+   const page=String(body.page||'#/').slice(0,100);
+   if(!/^#\/[\w-]*(?:\/[\w-]+)?$/.test(page))throw error('Invalid editor page.');
+   await db.heartbeat(user.login,page);
+   return res.status(200).json({editors:(await db.presence()).map(x=>({editor:x.editor,page:x.page,updatedAt:x.updated_at}))});
+  }
   if(action==='history')return res.status(200).json({entries:await db.activities()});
   if(action==='versions')return res.status(200).json({versions:await db.versions()});
   if(action==='version'){
@@ -42,7 +50,11 @@ module.exports=async(req,res)=>{
   if(action==='snapshot'){
    const row=await db.row();
    if(!row.documents)throw error('Shared draft has not been initialized.',409);
-   const id=await db.snapshot(Number(row.revision),row.documents,user.login,body.versionAction==='publish'?'publish':'save');
+   // One manual/publish checkpoint per revision. An unchanged autosave is not a new version.
+   const action=body.versionAction==='publish'?'publish':'save';
+   const existing=(await db.versions()).find(item=>Number(item.revision)===Number(row.revision)&&item.action===action);
+   if(existing)return res.status(200).json({id:existing.id,reused:true});
+   const id=await db.snapshot(Number(row.revision),row.documents,user.login,action);
    return res.status(200).json({id});
   }
   throw error('Invalid collaboration action.');

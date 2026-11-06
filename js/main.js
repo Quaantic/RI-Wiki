@@ -6,6 +6,7 @@ import { initRouter } from './router.js';
 import { LATEST_UPDATE, LATEST_UPDATE_ID } from './data/update-log.js';
 import {formatReleaseVersion} from './releases.js';
 import { loadEditableContent } from './services.js';
+import { initNewBadges } from './new-badges.js';
 
 async function boot() {
   try {
@@ -53,6 +54,7 @@ async function boot() {
     console.error('[main] Inline edit mode failed to start:', error);
   }
   await initRouter();
+  void initNewBadges();
   restoreEditorForm?.();
 
   qs('#boot')?.classList.add('is-done');

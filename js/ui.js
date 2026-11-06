@@ -70,8 +70,8 @@ export function emblem(size = 32, cls = '') {
 
 // ==== REVEAL: entrada em sequencia (stagger) + escrita progressiva ====
 
-const REVEAL_STEP = 70;        // intervalo entre elementos que entram na tela juntos (ms)
-const REVEAL_MAX_STEPS = 9;    // limite do atraso acumulado (~630 ms)
+const REVEAL_STEP = 32;        // intervalo entre elementos que entram na tela juntos (ms)
+const REVEAL_MAX_STEPS = 5;    // limite do atraso acumulado (~630 ms)
 const TYPE_MS_PER_CHAR = 26;   // velocidade base da escrita
 const TYPE_MIN_MS = 450;       // textos curtos nao terminam em menos que isso
 const TYPE_MAX_MS = 1300;      // textos longos nao passam disso
@@ -95,7 +95,7 @@ const typePending = new Map();     // elemento -> job (esperando entrar na tela)
 const typeActive = new Set();      // jobs escrevendo agora
 
 const motionOff = () => document.documentElement.classList.contains('reduce-motion');
-const canTypeText = () => typeof Highlight === 'function' && !!(window.CSS && CSS.highlights);
+const canTypeText = () => false; // no per-frame text masking; keep page content immediately readable
 
 // Escrita progressiva SEM dividir o texto em elementos: o texto continua inteiro no DOM
 // (layout fixo, sem espacos artificiais) e um Range "esconde" so a parte ainda nao escrita.
@@ -436,7 +436,7 @@ export function buildNav() {
         </a>
         ${renderSubTree(c.id, c.subcategories, 1)}
       </div>`;
-    }).join('');
+    }).join('') + `<a class="nav-item ri-nav-tool" href="#/calculator">${icon('calculator',19)} <span class="nav-item__label">Upgrade Calculator</span></a>`;
 
   qsa('.nav-group',nav).forEach(el=>el.classList.toggle('open',openGroups.has(el.dataset.cat)));
   qsa('[data-parent-sub]',nav).forEach(el=>el.classList.toggle('open',openBranches.has(`${el.closest('.nav-group')?.dataset.cat}/${el.dataset.parentSub}`)));
@@ -508,14 +508,11 @@ function moveIndicator() {
     navIndicator.style.height = `${r.height}px`;
   };
   sync();
+  // Two measurements are enough to follow the sidebar accordion.
+  // The former 650ms requestAnimationFrame loop continuously forced layout.
   const token = ++indicatorToken;
-  const t0 = performance.now();
-  const step = () => {
-    if (token !== indicatorToken) return;
-    sync();
-    if (performance.now() - t0 < 650) requestAnimationFrame(step);
-  };
-  requestAnimationFrame(step);
+  requestAnimationFrame(() => { if (token === indicatorToken) sync(); });
+  setTimeout(() => { if (token === indicatorToken) sync(); }, 260);
 }
 
 export function setActiveNav(catId, subId = null) {

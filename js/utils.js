@@ -325,23 +325,24 @@ export function markMatches(text = '', query = '') {
 
 
 import { CATEGORIES } from './data/wiki-data.js';
-import { getInlineUpgradePages } from './data/formulas.js';
+import { getInlineUpgradePages, FORMULA_SECTIONS, FORMULA_PAGE_MAP } from './data/formulas.js';
 
 export function searchPages(query, { limit = 0, category = null } = {}) {
-  const q = String(query || '').trim().toLowerCase();
+  const normalize = (value) => String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+  const q = normalize(String(query || '').trim());
   if (!q) return [];
   const tokens = q.split(/\s+/).filter(Boolean);
   const results = [];
   const scoreItem = (name, description, categoryName = '') => {
-    const title = String(name || '').toLowerCase();
-    const content = String(description || '').toLowerCase();
+    const title = normalize(name);
+    const content = normalize(description);
     let score = title === q ? 100 : title.includes(q) ? 50 : 0;
     for (const token of tokens) {
       if (title.includes(token)) score += 12;
       if (content.includes(token)) score += 4;
     }
     if (content.includes(q)) score += 15;
-    if (categoryName.toLowerCase().includes(q)) score += 3;
+    if (normalize(categoryName).includes(q)) score += 3;
     return score;
   };
   const searchableText = (item) => [
@@ -366,6 +367,17 @@ export function searchPages(query, { limit = 0, category = null } = {}) {
       }
     };
     visit(c.subcategories);
+  }
+  // Index individual upgrades too. The existing search keeps priority title/rank sorting.
+  for (const [sectionId, section] of Object.entries(FORMULA_SECTIONS)) {
+    const route = Object.entries(FORMULA_PAGE_MAP).find(([, section]) => section === sectionId)?.[0];
+    const parent = CATEGORIES.find(c => c.id === route?.split('/')[0]) || CATEGORIES[0];
+    if(category && parent?.id !== category) continue;
+    for (const upgrade of section.upgrades || []) {
+      const score = scoreItem(upgrade.name, `${section.name} ${upgrade.price||''} ${upgrade.multi||''} ${upgrade.requirement||''}`, section.name);
+      if (!score) continue;
+      results.push({ cat:parent, sub:{name:`${upgrade.n}. ${upgrade.name}`,desc:`${section.name} · Upgrade calculator`}, score,href:`#/calculator?section=${encodeURIComponent(sectionId)}&upgrade=${encodeURIComponent(upgrade.n)}`,kind:'upgrade' });
+    }
   }
   results.sort((a, b) => b.score - a.score || a.sub.name.localeCompare(b.sub.name));
   return limit ? results.slice(0, limit) : results;

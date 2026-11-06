@@ -32,4 +32,11 @@ async function versions(){return request('ri_wiki_versions?select=id,revision,cr
 async function version(id){const list=await request(`ri_wiki_versions?select=documents&id=eq.${id}&limit=1`);return list?.[0]||null;}
 async function snapshot(revision,docs,actor,action){const list=await request('ri_wiki_versions?select=id',{method:'POST',prefer:'return=representation',body:{revision,documents:docs,created_by:actor,action}});return list?.[0]?.id;}
 async function activities(){return request('ri_wiki_activity?select=id,revision,created_at,editor,description,published&order=id.desc&limit=200');}
-module.exports={configured,row,save,published,versions,version,snapshot,activities};
+async function heartbeat(editor,page){
+ await request('ri_wiki_presence?on_conflict=editor',{method:'POST',prefer:'resolution=merge-duplicates,return=minimal',body:{editor,page,updated_at:new Date().toISOString()}});
+}
+async function presence(){
+ const cutoff=new Date(Date.now()-60000).toISOString();
+ return request(`ri_wiki_presence?select=editor,page,updated_at&updated_at=gte.${encodeURIComponent(cutoff)}&order=updated_at.desc&limit=20`);
+}
+module.exports={configured,row,save,published,versions,version,snapshot,activities,heartbeat,presence};

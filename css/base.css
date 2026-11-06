@@ -204,17 +204,17 @@ input {
 }
 
 @keyframes page-in {
-  from { opacity: 0; transform: translateY(24px); }
+  from { opacity: 0; transform: translateY(9px); }
   to { opacity: 1; transform: none; }
 }
 
 /* Entrada sequencial dos cards */
 @keyframes reveal-up {
-  from { opacity: 0; transform: translateY(24px); }
+  from { opacity: 0; transform: translateY(9px); }
 }
 
 .reveal {
-  animation: reveal-up 650ms var(--ease-out) var(--reveal-delay, 0ms) backwards paused;
+  animation: reveal-up 330ms var(--ease-out) var(--reveal-delay, 0ms) backwards paused;
 }
 
 .reveal.is-visible {
@@ -230,7 +230,7 @@ input {
 
 /* Page transition: so um fade curto, para nao esconder o stagger dos elementos */
 .page-enter {
-  animation: fade-in 220ms var(--ease-out) both;
+  animation: ri-page-arrive 195ms cubic-bezier(.22,1,.36,1) both;
 }
 
 /* ---------- Utilities ---------- */
@@ -327,3 +327,9 @@ input {
 
 /* "Latest" chip breathes */
 .upd-version__latest { animation: pulse-soft 2.6s ease-in-out infinite; }
+
+/* Lightweight, interruptible route change: no navigation wait, blur or layout animation. */
+@keyframes ri-page-arrive { from { opacity:.78; transform: translate3d(0,7px,0); } to { opacity:1; transform:translate3d(0,0,0); } }
+@media (prefers-reduced-motion: reduce) { .page-enter, .reveal, .hex-texture { animation:none !important; opacity:1 !important; transform:none !important; } }
+
+@media (max-width: 720px) { body { background-attachment: scroll; } body::before { background-attachment: scroll; } }

@@ -20,6 +20,8 @@ import { pinContentKeys, resolveContentKey } from '../page-content.js';
 import { nextReleaseVersion } from '../releases.js';
 import {readRecovery,storeFormRecovery,removeFormRecovery,isRecoveryStored} from './recovery.js';
 import {GENERATOR_FORMULAS} from '../data/generators.js';
+import { documentChanges, pageFromDocs } from './version-tools.js';
+import { live } from './live-client.js';
 
 
 const TOKEN_KEY = 'ri-edit-token';
@@ -286,6 +288,36 @@ function barStatus(text, kind = '') {
   chip.classList.toggle('is-busy', kind === 'busy');
 }
 
+let presenceTimer=null;
+let presenceUnavailable=false;
+async function updateLivePresence(){
+  if(!session.ready||!session.allowed||document.hidden||presenceUnavailable)return;
+  try{
+    const data=await live('presence',{page:location.hash.split('?')[0]||'#/'});
+    if(!session.ready)return;
+    const others=(data.editors||[]).filter(e=>e.editor!==session.user).slice(0,4);
+    const chip=layer.bar?.querySelector('[data-edit-presence]');if(!chip)return;
+    chip.hidden=false;
+    chip.innerHTML=`${icon('users',12)} <span>${others.length?`${others.length} other editor${others.length>1?'s':''} online`:'Only you online'}</span>${others.length?` <small>${others.map(e=>`@${esc(e.editor)} · ${esc(e.page)}`).join(' / ')}</small>`:''}`;
+  }catch(error){
+    // The optional presence table might not have been installed yet.
+    // Do not affect editing, autosave, permissions or Publish.
+    presenceUnavailable=true;
+    const chip=layer.bar?.querySelector('[data-edit-presence]');if(chip)chip.hidden=true;
+    console.info('[ri-presence] Optional presence needs setup/live-presence.sql.',error.message);
+  }
+}
+function startLivePresence(){
+  clearInterval(presenceTimer);
+  void updateLivePresence();
+  presenceTimer=setInterval(()=>void updateLivePresence(),18000);
+  if(!startLivePresence.wired){
+    startLivePresence.wired=true;
+    window.addEventListener('hashchange',()=>void updateLivePresence());
+    window.addEventListener('focus',()=>void updateLivePresence());
+  }
+}
+
 function updateToolbar() {
   if (!layer.bar) return;
   const localSaved=session.ready ? draft.persistLocalRecovery()!==false : true;
@@ -349,6 +381,7 @@ function buildToolbar() {
   layer.bar.innerHTML = `
     <span class="ri-edit-bar__brand">${icon('edit', 14)} Inline editor</span>
     <span class="chip ri-edit-bar__status" data-edit-status>Checking sign-in…</span>
+    <span class="ri-presence" data-edit-presence hidden title="Collaborators editing the wiki"></span>
     <span class="ri-edit-bar__spacer" style="flex:1"></span>
     <button class="btn btn--ghost btn--sm" data-edit-toggle title="Toggle between edit and preview (Alt+E)">
       <span data-edit-mode-label>Edit</span>
@@ -590,7 +623,8 @@ function onToolbarAction(button) {
         const message = draft.hasRestoredDraft()
           ? 'Publish this restored snapshot to the live Wiki? It may replace changes made after the download. A backup is created first.'
           : 'Publish the changes to the live Wiki? A backup is created first.';
-        if (!window.confirm(message)) return;
+        if (!(await showPublishPreview())) return;
+        if(await draft.remoteChanged(session.token)) throw new Error('A collaborator saved a newer draft while the Publish preview was open. Click Sync and review the new version before publishing.');
         if (popState) closePopover(true);
         barStatus('Syncing draft before publishing…', 'busy');
         cancelAutosave();
@@ -685,6 +719,7 @@ async function startSession(token, {deferRender=false}={}) {
     try{editing=sessionStorage.getItem(`ri-edit-mode:${session.user}`)!=='preview';}catch{}
     setEditing(editing);
     startSharedRefresh();
+    startLivePresence();
     const signinRow = qs('[data-ri-edit-signin]');
     if (signinRow) signinRow.hidden = true;
     installSidebarTools();
@@ -1377,12 +1412,14 @@ function installSidebarTools() {
       <button type="button" class="ri-nav-tool" data-ri-nav-tool="add">${icon('plus', 14)} Add pages</button>
       <button type="button" class="ri-nav-tool" data-ri-nav-tool="drag" aria-pressed="false">${icon('folder-tree', 14)} Reorder / nest</button>
       <button type="button" class="ri-nav-tool" data-ri-nav-tool="colors">${icon('palette', 14)} Colors</button>
+      <button type="button" class="ri-nav-tool" data-ri-nav-tool="bulk">${icon('layers', 14)} Bulk editor</button>
       <button type="button" class="ri-nav-tool" data-ri-nav-tool="versions">${icon('history', 14)} Versions</button>
       <small class="ri-nav-tools__hint" hidden>Drag a page between two items to reposition it — or drop it in the middle of a category/page header to nest it inside. Only in Edit mode.</small>`;
     nav.appendChild(box);
     box.querySelector('[data-ri-nav-tool="add"]').addEventListener('click', (event) => openManageAdd(event.currentTarget));
     box.querySelector('[data-ri-nav-tool="colors"]').addEventListener('click', () => openAdminPage('colors'));
     box.querySelector('[data-ri-nav-tool="versions"]').addEventListener('click', () => openAdminPage('versions'));
+    box.querySelector('[data-ri-nav-tool="bulk"]').addEventListener('click', () => openAdminPage('bulk'));
     box.querySelector('[data-ri-nav-tool="drag"]').addEventListener('click', () => {
       dragArmed = !dragArmed;
       if (dragArmed && !session.editing) setEditing(true);
@@ -1445,6 +1482,84 @@ const versionsView = {
 registerRoute(/^colors$/, colorsView);
 registerRoute(/^versions$/, versionsView);
 
+const bulkView={
+  title:()=> 'Bulk editor — RI Gaming Wiki',
+  crumbs:()=>[{label:'Main',href:'#/',icon:'compass'},{label:'Bulk editor',icon:'layers'}],
+  nav:()=>null,
+  render(root){
+    if(!editorPageShell(root,'layers','Bulk editor'))return;
+    if(popState)closePopover(true);
+    if(!session.editing)setEditing(true);
+    renderBulkEditor(root);
+  }
+};
+registerRoute(/^bulk$/,bulkView);
+
+function allBulkPages(){
+  const pages=[];
+  const walk=(items,parentPath,group)=>{
+    (items||[]).forEach((page,index)=>{
+      const path=`${parentPath}.${index}`;
+      pages.push({path,id:page.id,name:page.name,group});
+      walk(page.children,`${path}.children`,`${group} › ${page.name}`);
+    });
+  };
+  (draft.doc('wiki')?.categories||[]).forEach((cat,i)=>{
+    pages.push({path:`categories.${i}`,id:cat.id,name:cat.name,group:'Categories'});
+    walk(cat.subcategories,`categories.${i}.subcategories`,cat.name);
+  });
+  return pages;
+}
+
+function renderBulkEditor(root){
+  const pages=allBulkPages();
+  root.innerHTML=`<section class="section ri-admin-section ri-bulk">
+    <h2 class="ri-admin-section__title">${icon('layers',16)} Bulk edit pages</h2>
+    <p class="ri-review-hint">Select pages, choose one operation and review the count before applying. This stages ordinary draft edits with Undo and Supabase autosave; it does <b>not Publish</b>. IDs, names, children and page hierarchy are protected.</p>
+    <div class="ri-bulk__controls"><label>Filter pages <input type="search" class="input" data-bulk-filter placeholder="Search pages…" /></label><label>Operation<select class="input" data-bulk-action><option value="icon">Set icon</option><option value="desc">Set description</option><option value="replace">Find and replace descriptions</option></select></label></div>
+    <div class="ri-bulk__inputs"><label data-bulk-find-label hidden>Find text <input class="input" data-bulk-find placeholder="Existing phrase"></label><label>New value <input class="input" data-bulk-value placeholder="e.g. game-icons:leaf" /></label></div>
+    <div class="ri-bulk__select"><label><input type="checkbox" data-bulk-all> Select visible</label><span data-bulk-count>0 selected</span></div>
+    <div class="ri-bulk__list">${pages.map((p,i)=>`<label class="ri-bulk__page" data-bulk-row data-bulk-key="${i}"><input type="checkbox" data-bulk-check value="${i}"><span><b>${esc(p.name)}</b><small>${esc(p.group)}</small></span></label>`).join('')}</div>
+    <div class="ri-bulk__actions"><button class="btn btn--primary" type="button" data-bulk-apply disabled>${icon('check',15)} Apply to selected pages</button></div>
+  </section>`;
+  const filter=root.querySelector('[data-bulk-filter]'),action=root.querySelector('[data-bulk-action]'),value=root.querySelector('[data-bulk-value]'),find=root.querySelector('[data-bulk-find]'),count=root.querySelector('[data-bulk-count]'),apply=root.querySelector('[data-bulk-apply]'),all=root.querySelector('[data-bulk-all]'),rows=[...root.querySelectorAll('[data-bulk-row]')];
+  const selected=()=>rows.filter(row=>row.querySelector('[data-bulk-check]').checked).map(row=>pages[Number(row.dataset.bulkKey)]);
+  const refresh=()=>{const n=selected().length;count.textContent=`${n} page${n===1?'':'s'} selected`;apply.disabled=!n||!value.value.trim()||(action.value==='replace'&&!find.value);root.querySelector('[data-bulk-find-label]').hidden=action.value!=='replace';value.placeholder=action.value==='icon'?'e.g. game-icons:leaf':action.value==='desc'?'Description for every selected page':'Replacement phrase';};
+  filter.addEventListener('input',()=>{const q=filter.value.toLowerCase().trim();rows.forEach(row=>{const page=pages[Number(row.dataset.bulkKey)];row.hidden=!(page.name+' '+page.group).toLowerCase().includes(q);});});
+  all.addEventListener('change',()=>{rows.filter(row=>!row.hidden).forEach(row=>{row.querySelector('[data-bulk-check]').checked=all.checked;});refresh()});
+  root.querySelector('.ri-bulk__list').addEventListener('change',refresh);
+  [action,value,find].forEach(el=>el.addEventListener('input',refresh));
+  apply.addEventListener('click',async()=>{
+    const chosen=selected(),op=action.value,next=value.value,term=find.value;
+    if(!chosen.length||!next.trim()||chosen.length>250)return;
+    if(op==='replace'&&!term)return;
+    if(op==='icon'&&!/^[a-z0-9_:.-]{1,100}$/i.test(next.trim())){notify('Use a valid icon name (e.g. leaf or game-icons:leaf).',true);return;}
+    const changes=chosen.flatMap(page=>{
+      const data=draft.doc('wiki'),node=locate(data,page.path);
+      if(!node)return [];
+      const key=op==='icon'?'icon':'desc';
+      const original=String(node[key]||'');
+      const newValue=op==='replace'?original.split(term).join(next):next;
+      return newValue!==original?[{page,key,value:newValue}]:[];
+    });
+    if(!changes.length){notify('No matching pages need to be changed.');return;}
+    const approved=await editorReviewDialog('Confirm bulk edit',`<p>This will update <b>${changes.length} page${changes.length===1?'':'s'}</b> in your working draft, and Supabase autosave may share them with collaborators. It will <b>not Publish</b> to GitHub. Use Undo or a version to recover if needed.</p><p>Operation: <b>${esc(action.selectedOptions[0].textContent)}</b>.</p>`,{confirmText:`Apply ${changes.length} edits`});
+    if(!approved)return;
+    try{
+      // Validate the entire hypothetical edit before changing a single field.
+      const candidate=draft.snapshotDocs();
+      changes.forEach(item=>{const node=locate(candidate.wiki,item.page.path);if(!node)throw new Error('Page moved during bulk edit. Refresh and try again.');node[item.key]=item.value;});
+      validateDocuments(candidate);
+      changes.forEach(item=>draft.setValue('wiki',`${item.page.path}.${item.key}`,item.value));
+      draft.applyDraftToSite();buildNav();window.dispatchEvent(new CustomEvent('ri-edit-content'));
+      notify(`${changes.length} bulk edit(s) staged. Autosave will share; Publish is separate.`);
+      await rerender({scroll:'preserve'});
+    }catch(error){notify(error.message||'Bulk edit failed.',true)}
+  });
+  refresh();
+}
+
+
 function formatHistoryDate(at) {
   const date = new Date(at || 0);
   if (Number.isNaN(date.getTime())) return '';
@@ -1471,107 +1586,148 @@ function renderHistoryList(container, entries, filterKind) {
 
 function openAdminPage(kind) {
   if (!session.ready || !session.allowed) return;
-  window.location.hash = kind === 'colors' ? '#/colors' : '#/versions';
+  window.location.hash = kind === 'colors' ? '#/colors' : kind === 'bulk' ? '#/bulk' : '#/versions';
+}
+
+// Native modal: scrollable, keyboard dismissible and read-only until confirmed.
+function editorReviewDialog(title,body,{confirmText='',danger=false}={}) {
+  const node=document.createElement('dialog');node.className='ri-review-dialog';
+  node.innerHTML=`<div class="ri-review-dialog__head"><h2>${esc(title)}</h2><button type="button" class="btn btn--ghost btn--sm" data-review-cancel aria-label="Close">${icon('x',15)}</button></div><div class="ri-review-dialog__body">${body}</div><div class="ri-review-dialog__actions"><button type="button" class="btn btn--ghost btn--sm" data-review-cancel>${confirmText?'Cancel':'Close'}</button>${confirmText?`<button type="button" class="btn ${danger?'btn--danger':'btn--primary'} btn--sm" data-review-confirm>${esc(confirmText)}</button>`:''}</div>`;
+  document.body.appendChild(node);
+  return new Promise(resolve=>{
+    let settled=false;
+    const finish=value=>{if(settled)return;settled=true;node.close?.();node.remove();resolve(value);};
+    node.addEventListener('click',event=>{
+      if(event.target.closest('[data-review-cancel]'))finish(false);
+      if(event.target.closest('[data-review-confirm]'))finish(true);
+      if(event.target===node)finish(false);
+    });
+    node.addEventListener('cancel',event=>{event.preventDefault();finish(false)});
+    if(typeof node.showModal==='function')node.showModal();
+    else finish(window.confirm(title+'\n'+(confirmText||'Continue?')));
+  });
+}
+
+function diffRowsHTML(changes) {
+  if(!changes.length)return '<p class="ri-color-row__empty">No differences from the current shared draft.</p>';
+  return `<p class="ri-review-count">Showing ${changes.length} change${changes.length===1?'':'s'} (up to 40).</p><div class="ri-review-diffs">${changes.map(x=>`<article class="ri-review-diff"><b>${esc(x.path)}</b><div><span>Before</span><code>${esc(x.before)}</code></div><div><span>After</span><code>${esc(x.after)}</code></div></article>`).join('')}</div>`;
+}
+async function showPublishPreview() {
+  const published={wiki:draft.appPublishedDocs('wiki'),game:draft.appPublishedDocs('game'),updates:draft.appPublishedDocs('updates')};
+  const changed=documentChanges(published,draft.snapshotDocs(),40);
+  const warning=draft.hasRestoredDraft()?'<p class="ri-review-warning">This includes a restored snapshot. Confirm that no recent collaborator changes will be replaced.</p>':'';
+  return editorReviewDialog('Publish preview',`
+    <p>These changes will be sent to GitHub in one Publish commit. Vercel deployment happens separately. Autosave remains unpublished.</p>
+    ${warning}
+    <p class="ri-review-hint">Use the <b>Preview</b> toggle in the editor toolbar to see the current draft rendered exactly as a visitor would.</p>
+    ${diffRowsHTML(changed)}` ,{confirmText:'Confirm Publish'});
 }
 
 function renderVersionsPage(root) {
-  root.innerHTML = `
-    <section class="section ri-admin-section">
-      <div class="ri-versions-actions">
-        <button type="button" class="btn btn--ghost btn--sm" data-ri-versions-save>${icon('save', 13)} Create recovery version</button>
-      </div>
-      <div data-ri-versions-list><p class="ri-color-row__empty">Loading versions…</p></div>
-    </section>
-    <section class="section ri-admin-section">
-      <h2 class="ri-admin-section__title">${icon('history', 15)} Update History</h2>
-      <div data-ri-history><p class="ri-color-row__empty">Loading…</p></div>
-    </section>`;
+  root.innerHTML=`<section class="section ri-admin-section">
+    <h2 class="ri-admin-section__title">${icon('history',15)} Recovery versions</h2>
+    <p class="ri-review-hint">Autosave syncs your draft to Supabase every time you edit, <b>without creating a Version</b>. Versions are created only by <b>Publish</b> or by clicking the checkpoint button below. Restoring stages a local draft and never publishes. <b>Discard</b> only throws away edits on this device.</p>
+    <div class="ri-versions-actions"><button type="button" class="btn btn--ghost btn--sm" data-ri-versions-save>${icon('save',13)} Create manual checkpoint</button></div>
+    <div data-ri-versions-list><p class="ri-color-row__empty">Loading recovery checkpoints…</p></div>
+  </section>
+  <section class="section ri-admin-section"><h2 class="ri-admin-section__title">${icon('history',15)} Edit activity</h2><p class="ri-review-hint">Pending = only on your device, Saved = shared live draft, Published = live on GitHub (once deployed).</p><div data-ri-history><p class="ri-color-row__empty">Loading…</p></div></section>`;
 
-  const restoreFlow = async (name) => {
-    if (session.busy) return;
-    if (!session.canPublish) { notify('Only Quaantic and zzinss can stage full version restores.', true); return; }
-    if (!window.confirm(`Stage "${draft.versionLabel(name)}" into your local editor?\n\nThis does NOT publish to the live Wiki or save for everyone. Review the restored version first, then click Share restored draft when ready. Publish is a separate action.\n\nYour unsaved local edits will be replaced; download a recovery copy first if needed.`)) return;
-    session.busy = true;
-    try {
-      await draft.restoreVersion(session.token, name);
-      session.syncError = '';
-      buildNav();
-      window.dispatchEvent(new CustomEvent('ri-edit-content'));
-      updateToolbar();
-      await rerender({ scroll: 'preserve' });
-      notify(`Version staged locally: ${draft.versionLabel(name)}. Use Share restored draft to share changes; Publish is always separate.`);
-    } catch (error) {
-      notify(error.message || 'Restore failed.', true);
-    } finally {
-      session.busy = false;
-      updateToolbar();
-    }
+  const restoreFlow=async name=>{
+    if(session.busy)return;
+    if(!session.canPublish){notify('Only Quaantic and zzinss can stage full version restores.',true);return;}
+    if(!window.confirm(`Stage \"${draft.versionLabel(name)}\" into your local editor?\n\nThis does NOT publish or save for everyone. Your local draft will be replaced. Download a recovery copy first if necessary.`))return;
+    session.busy=true;
+    try{
+      await draft.restoreVersion(session.token,name);
+      session.syncError='';buildNav();window.dispatchEvent(new CustomEvent('ri-edit-content'));updateToolbar();
+      await rerender({scroll:'preserve'});notify('Version staged locally. Review it, then Share restored draft. Publish is always separate.');
+    }catch(error){notify(error.message||'Restore failed.',true)}
+    finally{session.busy=false;updateToolbar()}
+  };
+  const versionCompare=async name=>{
+    if(session.busy)return;
+    session.busy=true;updateToolbar();
+    try{
+      const old=await draft.readVersion(session.token,name);
+      const now=draft.snapshotDocs();
+      const changed=documentChanges(old,now,40);
+      const pages=collectPageRoutes().filter(r=>/^#\/[\w-]+(?:\/[\w-]+)?$/.test(r.route)&&!['#/updates','#/credits','#/feedback'].includes(r.route));
+      const html=`<p class="ri-review-hint">Compare a historical checkpoint against the current shared draft. This does not change anything.</p>${diffRowsHTML(changed)}
+        <div class="ri-review-page"><label for="ri-review-page-picker">Restore only one page (not its child pages)</label><select id="ri-review-page-picker" class="input"><option value="">Select an existing page…</option>${pages.map(r=>`<option value="${esc(r.route)}">${esc(r.label)}</option>`).join('')}</select><div class="ri-review-page__details" data-ri-page-changes></div><button type="button" class="btn btn--ghost btn--sm" data-ri-page-restore disabled>${icon('rotate-ccw',13)} Stage selected page locally</button></div>`;
+      const node=document.createElement('dialog');node.className='ri-review-dialog';
+      node.innerHTML=`<div class="ri-review-dialog__head"><h2>${icon('git-compare',16)} Compare version</h2><button type="button" class="btn btn--ghost btn--sm" data-close>Close</button></div><div class="ri-review-dialog__body">${html}</div>`;
+      document.body.appendChild(node);
+      const close=()=>{node.close?.();node.remove()};
+      node.querySelector('[data-close]').addEventListener('click',close);
+      node.addEventListener('cancel',e=>{e.preventDefault();close()});
+      const picker=node.querySelector('#ri-review-page-picker'),button=node.querySelector('[data-ri-page-restore]'),details=node.querySelector('[data-ri-page-changes]');
+      picker.addEventListener('change',()=>{
+        const [cat,sub]=picker.value.slice(2).split('/');
+        const previous=pageFromDocs(old,cat,sub),current=pageFromDocs(now,cat,sub);
+        if(!picker.value||!previous||!current){details.textContent='This page is unavailable in one version.';button.disabled=true;return;}
+        const snapshot=structuredClone(previous),working=structuredClone(current);
+        delete snapshot.children;delete working.children;delete snapshot.subcategories;delete working.subcategories;
+        const differences=documentChanges({wiki:snapshot},{wiki:working},20);
+        details.textContent=differences.length?`${differences.length} page field(s) differ. Check the version carefully before restoring.`:'No changes on this page.';
+        button.disabled=!differences.length;
+      });
+      button.addEventListener('click',async()=>{
+        if(!picker.value)return;
+        if(!window.confirm(`Stage ${picker.selectedOptions[0].textContent} from this checkpoint? Only fields on this page will be replaced. Collaborative autosave will share it, but Publish remains manual.`))return;
+        button.disabled=true;
+        try{
+          const [cat,sub]=picker.value.slice(2).split('/');
+          const changed=await draft.restorePageFromVersion(session.token,name,cat,sub||'');
+          if(changed){draft.applyDraftToSite();buildNav();window.dispatchEvent(new CustomEvent('ri-edit-content'));await rerender({scroll:'preserve'});notify('Page restored locally. Autosave will share it; Publish is separate.');}
+          else notify('This page already matches that checkpoint.');
+          close();
+        }catch(error){notify(error.message||'Page restore failed.',true)}
+      });
+      if(typeof node.showModal==='function')node.showModal();else{close();notify('Version compare requires an updated browser.',true)}
+    }catch(error){notify(error.message||'Compare failed.',true)}
+    finally{session.busy=false;updateToolbar()}
   };
 
-  qs('[data-ri-versions-save]', root).addEventListener('click', async () => {
-    if (session.busy) return;
-    session.busy = true;
-    updateToolbar();
-    try {
-      // A version file alone used to leave the real shared draft unsaved,
-      // so a refresh appeared to erase edits. Save and VERIFY the shared
-      // draft first; never claim success for a backup-only snapshot.
-      if(draft.hasRestoredDraft() && !window.confirm('Share this restored snapshot with all editors before creating a version?')) return;
-      const saved = await draft.saveDraft(session.token, confirmReleaseOrder, {automatic:true});
-      const name = await draft.createVersion(session.token, draft.snapshotDocs(), 'Manual version', 'save');
-      session.syncError = '';
-      draft.applyDraftToSite();
-      window.dispatchEvent(new CustomEvent('ri-edit-content'));
-      notify(`Saved for everyone + created version ${draft.versionLabel(name)}.${saved?.backupWarning ? ' Warning: automatic previous-version backup failed.' : ''}${saved?.historyWarning ? ' Update History could not sync.' : ''}`, Boolean(saved?.backupWarning));
-      renderVersionsPage(root);
-    } catch (error) {
-      notify(error.message || 'Shared draft was not saved; no version was created.', true);
-    } finally {
-      session.busy = false;
-      updateToolbar();
-    }
+  qs('[data-ri-versions-save]',root).addEventListener('click',async()=>{
+    if(session.busy)return;
+    session.busy=true;updateToolbar();
+    try{
+      if(draft.hasRestoredDraft()&&!window.confirm('Share restored snapshot with editors before checkpointing?'))return;
+      await draft.saveDraft(session.token,confirmReleaseOrder,{automatic:true});
+      const name=await draft.createVersion(session.token,draft.snapshotDocs(),'Manual checkpoint','save');
+      session.syncError='';draft.applyDraftToSite();window.dispatchEvent(new CustomEvent('ri-edit-content'));
+      notify(`Checkpoint created: ${draft.versionLabel(name)}. Not published.`);renderVersionsPage(root);
+    }catch(error){notify(error.message||'Checkpoint failed; the shared draft was not replaced.',true)}
+    finally{session.busy=false;updateToolbar()}
   });
-
-  void (async () => {
-    const list = qs('[data-ri-versions-list]', root);
-    const historyBox = qs('[data-ri-history]', root);
-    try {
-      const [versions, history] = await Promise.all([
-        draft.listVersions(session.token),
-        draft.listEditHistory(session.token).catch(() => []),
-      ]);
-      if (!root.isConnected) return;
-      if (!versions.length) {
-        list.innerHTML = '<p class="ri-color-row__empty">No versions yet. Publish an edit or click "Save version now".</p>';
-      } else {
-        list.innerHTML = versions.map((v) => `
-          <div class="ri-version-row">
-            <span class="ri-version-row__name" title="${esc(v.name)}">${esc(draft.versionLabel(v.name))}</span>
-            <button type="button" class="btn btn--ghost btn--sm" data-ri-version-recover="${esc(v.name)}" title="Add missing pages to your working draft; does not Publish">${icon('plus', 12)} Recover missing pages</button>
-            <button type="button" class="btn btn--ghost btn--sm" data-ri-version-restore="${esc(v.name)}" title="Load this backup into your local editor only (does NOT publish)" ${session.canPublish ? '' : 'disabled title="Only Quaantic and zzinss can stage restores"'}>${icon('rotate-ccw', 12)} Restore</button>
-          </div>`).join('');
-        list.querySelectorAll('[data-ri-version-restore]').forEach((btn) => {
-          btn.addEventListener('click', () => restoreFlow(btn.getAttribute('data-ri-version-restore')));
-        });
-        list.querySelectorAll('[data-ri-version-recover]').forEach((btn) => {
-          btn.addEventListener('click', async () => {
-            if (session.busy) return;
-            session.busy = true;
-            try {
-              const count = await draft.recoverMissingPages(session.token, btn.dataset.riVersionRecover);
-              draft.applyDraftToSite();
-              buildNav();
-              window.dispatchEvent(new CustomEvent('ri-edit-content'));
-              notify(`${count} missing page(s) recovered locally. They will be shared after confirmation.`);
-            } catch (error) { notify(error.message, true); }
-            finally { session.busy = false; updateToolbar(); }
-          });
-        });
-      }
-      renderHistoryList(historyBox, history);
-    } catch (error) {
-      list.innerHTML = `<p class="ri-color-row__empty">${esc(error.message || 'Failed to list versions.')}</p>`;
-    }
+  void(async()=>{
+    const list=qs('[data-ri-versions-list]',root),historyBox=qs('[data-ri-history]',root);
+    try{
+      const [versions,history]=await Promise.all([draft.listVersions(session.token),draft.listEditHistory(session.token).catch(()=>[])]);
+      if(!root.isConnected)return;
+      const group=(items,label,explanation)=>{
+        if(!items.length)return '';
+        return `<div class="ri-version-group"><h3>${esc(label)} <small>${items.length}</small></h3><p class="ri-review-hint">${esc(explanation)}</p>${items.map((v,i)=>`<div class="ri-version-row" ${i>=7?'hidden data-older-version':''}>
+          <div class="ri-version-row__details"><b>${esc(v.action==='publish'?'Published checkpoint':v.source==='supabase'?'Manual checkpoint':v.action==='save'?'Legacy save backup':'Backup')}</b><span>${esc(v.createdAt?formatHistoryDate(v.createdAt):draft.versionLabel(v.name))}</span><small>@${esc(v.actor||'unknown')} ${v.revision!=null?` · Revision ${v.revision}`:''} · ${esc(v.source==='supabase'?'Supabase':'GitHub archive')}</small></div>
+          <button type="button" class="btn btn--ghost btn--sm" data-ri-version-compare="${esc(v.name)}">${icon('git-compare',12)} Compare</button>
+          <button type="button" class="btn btn--ghost btn--sm" data-ri-version-recover="${esc(v.name)}">${icon('plus',12)} Recover missing</button>
+          <button type="button" class="btn btn--ghost btn--sm" data-ri-version-restore="${esc(v.name)}" ${session.canPublish?'':'disabled'}>${icon('rotate-ccw',12)} Restore all</button>
+        </div>`).join('')}${items.length>7?`<button type="button" class="btn btn--ghost btn--sm" data-ri-show-older>Show ${items.length-7} older versions</button>`:''}</div>`;
+      };
+      const active=versions.filter(v=>v.source==='supabase'),legacy=versions.filter(v=>v.source==='github');
+      list.innerHTML=versions.length?group(active,'Recent checkpoints','Created explicitly by Publish or Create manual checkpoint. Autosave does not create these.')+group(legacy,'Historical GitHub backups','Preserved from the older editor. Collapsed to keep the list readable; never automatically deleted.'):'<p class="ri-color-row__empty">No recovery checkpoints yet. Create a manual checkpoint or Publish.</p>';
+      list.addEventListener('click',e=>{
+        const btn=e.target.closest('[data-ri-version-compare],[data-ri-version-recover],[data-ri-version-restore],[data-ri-show-older]');if(!btn)return;
+        if(btn.hasAttribute('data-ri-show-older')){
+          const group=btn.closest('.ri-version-group');const hidden=group.querySelectorAll('[data-older-version]');const show=[...hidden].some(el=>el.hidden);
+          hidden.forEach(el=>el.hidden=!show);btn.textContent=show?'Hide older versions':`Show ${hidden.length} older versions`;return;
+        }
+        if(btn.dataset.riVersionCompare){void versionCompare(btn.dataset.riVersionCompare);return;}
+        if(btn.dataset.riVersionRestore){void restoreFlow(btn.dataset.riVersionRestore);return;}
+        if(btn.dataset.riVersionRecover){void(async()=>{if(session.busy)return;session.busy=true;try{const n=await draft.recoverMissingPages(session.token,btn.dataset.riVersionRecover);draft.applyDraftToSite();buildNav();window.dispatchEvent(new CustomEvent('ri-edit-content'));notify(`${n} missing page(s) staged locally. Publish remains manual.`);}catch(error){notify(error.message,true)}finally{session.busy=false;updateToolbar()}})();}
+      });
+      renderHistoryList(historyBox,history);
+    }catch(error){list.innerHTML=`<p class="ri-color-row__empty">${esc(error.message||'Could not load versions.')}</p>`;}
   })();
 }
 

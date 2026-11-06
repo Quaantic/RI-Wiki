@@ -1007,7 +1007,7 @@ export async function listEditHistory(token) {
   return [...entries.values()].sort((a, b) => (b.at || 0) - (a.at || 0)).slice(0, LOG_STORAGE_MAX);
 }
 
-// ==== VERSOES (backups no GitHub; substitui o painel /admin/) ====
+// ==== VERSOES: checkpoints Supabase + arquivos historicos GitHub ====
 // A lista vive em content/backups/; nenhuma versao e apagada
 // automaticamente para evitar perder trabalhos de contribuidores.
 
@@ -1053,9 +1053,10 @@ export async function listVersions(token) {
   const data=await live('versions');
   const versions=(data.versions||[]).map(row=>({
     name:`live-${row.action}_${row.created_by}_${row.created_at.replace('T',' ').slice(0,16)}_${row.id}`,
-    liveId:row.id, sha:String(row.id)
+    liveId:row.id, sha:String(row.id),source:'supabase',action:row.action,
+    actor:row.created_by,revision:Number(row.revision),createdAt:row.created_at,
   }));
-  // Historical GitHub backups remain available as read-only recovery copies.
+  // Historical GitHub backups are read-only recovery copies, not live autosaves.
   const old=await listLegacyVersions(token).catch(()=>[]);
   return [...versions,...old];
 }
@@ -1063,10 +1064,19 @@ async function listLegacyVersions(token) {
   const result = await githubRequest(githubContentsUrl(BACKUP_DIRECTORY), token, { allowNotFound: true });
   return Array.isArray(result)
     ? result
-        .filter((item) => item.type === 'file' && !['backup-inline-20261104T064959590Z.json', 'backup-inline-20261104T071338426Z.json'].includes(item.name) && (/^backup-.*\.json$/.test(item.name) || /^(?:save|publish)\.[a-zA-Z0-9_-]+\.(?:\d{8}T\d{6}\d{3}Z|\d{4}-\d{2}-\d{2}-\d{2}:\d{2}(?:-\d+)?)\.json$/.test(item.name)))
-        .map((item) => ({ name: item.name, sha: item.sha }))
-        .sort((a, b) => versionTimestamp(b.name).localeCompare(versionTimestamp(a.name)))
+        .filter(item => item.type === 'file' && !['backup-inline-20261104T064959590Z.json', 'backup-inline-20261104T071338426Z.json'].includes(item.name) && (/^backup-.*\.json$/.test(item.name) || /^(?:save|publish)\.[a-zA-Z0-9_-]+\.(?:\d{8}T\d{6}\d{3}Z|\d{4}-\d{2}-\d{2}-\d{2}:\d{2}(?:-\d+)?)\.json$/.test(item.name)))
+        .map(item => ({name:item.name,sha:item.sha,source:'github',action:item.name.startsWith('publish.')?'publish':'save',actor:/^(?:save|publish)\.([^.]+)\./.exec(item.name)?.[1]||'legacy'}))
+        .sort((a,b)=>versionTimestamp(b.name).localeCompare(versionTimestamp(a.name)))
     : [];
+}
+
+export async function readVersion(token,name) {
+  const backup=name.startsWith('live-')
+    ? {format:1,documents:(await live('version',{id:Number(name.split('_').at(-1))})).documents}
+    : JSON.parse(decodeBase64Content((await githubRequest(githubContentsUrl(`${BACKUP_DIRECTORY}/${encodeURIComponent(name)}`),token)).content));
+  if(backup.format!==1||!backup.documents?.wiki||!backup.documents?.updates||!backup.documents?.game) throw new Error('This version is incomplete or unsupported.');
+  validateDocuments(backup.documents);
+  return clone(backup.documents);
 }
 
 export async function pruneVersions(token, keep = VERSIONS_MAX) {
@@ -1120,13 +1130,7 @@ export async function restoreVersion(token, name) {
   if (await remoteChanged(token)) {
     throw new Error('Someone saved newer shared changes. Sync first and review them before staging a restore. Nothing was overwritten.');
   }
-  const backup=name.startsWith('live-')
-    ? {format:1, documents:(await live('version',{id:Number(name.split('_').at(-1))})).documents}
-    : JSON.parse(decodeBase64Content((await githubRequest(githubContentsUrl(`${BACKUP_DIRECTORY}/${encodeURIComponent(name)}`), token)).content));
-  if (backup.format !== 1 || !backup.documents?.wiki || !backup.documents?.updates || !backup.documents?.game) {
-    throw new Error('This version is incomplete or has an unsupported format.');
-  }
-  const restored = clone({ wiki: backup.documents.wiki, updates: backup.documents.updates, game: backup.documents.game });
+  const restored = await readVersion(token,name);
   validateDocuments(restored);
   // Preserve the shared baseline: this full-snapshot restore becomes a LOCAL
   // delta that will participate in three-way merge/explicit conflict review.
@@ -1234,4 +1238,40 @@ export function __testInjectDocs(docs) {
 // SOMENTE TESTES: descarta o diario pendente (para encadear cenarios).
 export function __testChangeLog() {
   return changeLog.map((entry) => ({ at: entry.at, kind: entry.kind, text: entry.text }));
+}
+
+// Stage a single existing wiki page from a historical checkpoint.
+// Never affects child pages, other contributors' fields or GitHub. Regular
+// collaborative autosave performs the next verified shared update.
+export async function restorePageFromVersion(token,versionName,catId,subId='') {
+  if(await remoteChanged(token)) throw new Error('New collaborator changes are available. Sync first, then review this page restore.');
+  const archive=await readVersion(token,versionName);
+  const oldCat=archive.wiki.categories.find(cat=>cat.id===catId);
+  const liveCatIndex=draftState.docs.wiki.categories.findIndex(cat=>cat.id===catId);
+  if(!oldCat||liveCatIndex<0)throw new Error('This category does not exist in both versions. Use full Restore to recover removed pages.');
+  const locatePage=(cat,sub)=>{
+    if(!sub)return {node:cat,path:''};
+    const visit=(items,path)=>{for(let i=0;i<(items||[]).length;i++){
+      const node=items[i],entry=`${path}.${i}`;
+      if(node.id===sub)return {node,path:entry};
+      const nested=visit(node.children,`${entry}.children`);
+      if(nested)return nested;
+    }return null;};
+    return visit(cat.subcategories,'subcategories');
+  };
+  const old=locatePage(oldCat,subId);
+  const current=locatePage(draftState.docs.wiki.categories[liveCatIndex],subId);
+  if(!old||!current)throw new Error('This page is missing in one version. Use Recover missing pages instead.');
+  const protectedKeys=subId?['children','id']:['subcategories','id'];
+  const edited=clone(current.node);
+  for(const key of new Set([...Object.keys(edited),...Object.keys(old.node)])){
+    if(protectedKeys.includes(key))continue;
+    if(Object.hasOwn(old.node,key))edited[key]=clone(old.node[key]);
+    else delete edited[key];
+  }
+  const path=`categories.${liveCatIndex}${current.path?'.'+current.path:''}`;
+  const changed=setValue('wiki',path,edited);
+  validateDocuments(draftState.docs);
+  persistLocalRecovery();
+  return changed;
 }

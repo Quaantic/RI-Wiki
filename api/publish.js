@@ -2,6 +2,7 @@ const {authorize,github,PREFIX,fail}=require('../server/editor-auth.cjs');
 const FILES={wiki:'content/wiki-data.json',updates:'content/update-log.json',game:'content/game-data.json'};
 const DRAFT='content/drafts/inline-draft.json';
 const live=require('../server/live-store.cjs');
+const {changeIndex}=require('../server/change-index.cjs');
 module.exports=async(req,res)=>{
  res.setHeader('Cache-Control','no-store');
  try{
@@ -25,6 +26,15 @@ module.exports=async(req,res)=>{
   })));
   const changed=Object.keys(FILES).filter(name=>JSON.stringify(docs[name])!==JSON.stringify(before[name]));
   const updates=changed.map(name=>({path:FILES[name],mode:'100644',type:'blob',content:JSON.stringify(docs[name],null,2)+'\n'}));
+  if(changed.length){
+   let previous={};
+   const currentIndex=entries.get('content/change-index.json');
+   if(currentIndex?.sha){
+    try{const blob=await github(token,`${PREFIX}/git/blobs/${currentIndex.sha}`);previous=JSON.parse(Buffer.from(blob.content,'base64').toString());}catch(error){console.warn('[ri-publish] Could not load previous NEW badges index:',error.message);}
+   }
+   const index=changeIndex(before,docs,previous);
+   updates.push({path:'content/change-index.json',mode:'100644',type:'blob',content:JSON.stringify(index,null,2)+'\n'});
+  }
   if(changed.length) {
    const actor=String(user.login || 'unknown').replace(/[^a-zA-Z0-9_-]/g,'_').slice(0,60);
    const parts=new Intl.DateTimeFormat('en-GB',{timeZone:'America/Sao_Paulo',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(new Date());
@@ -42,7 +52,13 @@ module.exports=async(req,res)=>{
   await github(token,`${PREFIX}/git/refs/heads/main`,'PATCH',{sha:nextCommit.sha,force:false});
   const shas=Object.fromEntries(Object.entries(FILES).map(([name,path])=>[name,nextTree.tree.find(item=>item.path===path)?.sha || entries.get(path).sha]));
   let ackWarning=false;
-  try {await live.published(body.revision);} catch(e){ackWarning=true;console.warn('[ri-publish] Published to GitHub, status ack failed',e);}
+  // A successful Publish is a real recovery checkpoint. It never creates a
+  // second commit: this snapshot lives only in Supabase.
+  try {
+   const existing=(await live.versions()).find(v=>Number(v.revision)===Number(body.revision)&&v.action==='publish');
+   if(!existing)await live.snapshot(body.revision,docs,user.login,'publish');
+  }catch(e){console.warn('[ri-publish] Non-blocking version checkpoint warning:',e.message);}
+  try {await live.published(body.revision);} catch(e){ackWarning=true;console.warn('[ri-publish] Published to GitHub, status ack failed',e);} 
   return res.status(200).json({shas,changed:!!changed.length,commit:nextCommit.sha,ackWarning,deployStatus:'pending'});
  }catch(error){fail(res,error);}
 };

@@ -8,6 +8,7 @@ import {
 } from './views.js';
 import { feedbackView } from './feedback.js';
 import {getCategory,getSubcategory} from './data/wiki-data.js';
+import { calculatorView } from './calculator.js';
 
 const ROUTES = [
   { pattern: /^$/, view: homeView },
@@ -15,6 +16,7 @@ const ROUTES = [
   { pattern: /^feedback$/, view: feedbackView },
   { pattern: /^credits$/, view: creditsView },
   { pattern: /^search$/, view: searchView },
+  { pattern: /^calculator$/, view: calculatorView },
 ];
 
 // Paginas genericas por id (categorias e subpaginas) casam por ULTIMO, para
@@ -83,8 +85,7 @@ async function renderView(view, params, query) {
     el.innerHTML = emblem(parseInt(el.dataset.emblem, 10) || 24);
   });
   viewEl.replaceChildren(container);
-  // Start reveal animations only after the rendered page is in the document.
-  initReveal(container);
+  // The container is now in the DOM; reveal gets one initialization below.
   container.classList.add('page-enter');
   if (window.__riFlashNext) {
     delete window.__riFlashNext;
@@ -100,6 +101,7 @@ async function renderView(view, params, query) {
   }
   resetReveal();
   initReveal(container);
+  window.dispatchEvent(new Event('ri-route-rendered'));
 }
 
 async function navigate(path, query) {
