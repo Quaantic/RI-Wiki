@@ -14321,17 +14321,21 @@
               "bonuses": [
                 {
                   "id": "b1",
-                  "name": "New bonus",
-                  "value": "formula: amount"
+                  "name": "Mine Perks",
+                  "value": "formula: amount",
+                  "capUnit": "x",
+                  "unit": "x"
                 },
                 {
                   "id": "b",
-                  "name": "New bonus",
-                  "value": "formula: amount"
+                  "name": "Tree Essence",
+                  "value": "formula: amount",
+                  "capUnit": "x",
+                  "unit": "x"
                 },
                 {
                   "id": "b2",
-                  "name": "New bonus",
+                  "name": "Magnets",
                   "value": "formula: amount"
                 }
               ]
@@ -14933,18 +14937,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.wiki.categories[life].subcategories[tree-essence].children": {
-      "actor": "Quaantic"
-    },
-    "content.wiki.categories[life].subcategories[tree-essence].children order": {
-      "actor": "Quaantic"
-    },
-    "content.wiki.categories[life].subcategories[tree-essence].children[tree-essence-milestones]": {
-      "actor": "Quaantic"
-    },
-    "content.wiki.categories[life].subcategories[tree-essence].children[tree-essence-milestones].id": {
-      "actor": "Quaantic"
-    },
     "content.wiki.categories[life].subcategories[tree-essence].children[tree-essence-milestones].name": {
       "actor": "Quaantic"
     },
@@ -15993,6 +15985,18 @@
       "actor": "Nathy365"
     },
     "content.game.calculators.pages.runes/secret.groups[group5].bonuses[b2].unit": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group6].bonuses[b1].capUnit": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group6].bonuses[b1].unit": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group6].bonuses[b].capUnit": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group6].bonuses[b].unit": {
       "actor": "Nathy365"
     }
   }
