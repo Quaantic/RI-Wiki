@@ -2,6 +2,56 @@
   "format": 1,
   "entries": [
     {
+      "id": "fce82785-0e4c-4970-92a4-ce6b78b94cc8",
+      "at": 1793948170031,
+      "kind": "content",
+      "text": "Updated drop Chance of \"New group\": empty to 0.12%",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T06:56:10.648Z"
+    },
+    {
+      "id": "369e10d5-9602-49c3-b2db-5275ea92c5c4",
+      "at": 1793948152809,
+      "kind": "content",
+      "text": "Updated drop Chance of \"New group\": empty to 0.31%",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T06:56:10.648Z"
+    },
+    {
+      "id": "f37284c0-b05a-41b0-b422-55de9c29afcb",
+      "at": 1793948127560,
+      "kind": "content",
+      "text": "Updated drop Chance of \"New group\": empty to 0.8%",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T06:56:10.648Z"
+    },
+    {
+      "id": "21c78654-db1e-4e51-b61f-72f0f6aa74f0",
+      "at": 1793948111951,
+      "kind": "content",
+      "text": "Added \"New bonus\"",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T06:56:10.648Z"
+    },
+    {
+      "id": "b3f75cb0-777f-4c70-999a-ae4bba36de28",
+      "at": 1793948109535,
+      "kind": "content",
+      "text": "Updated drop Chance of \"New group\": empty to 2.19%",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T06:56:10.648Z"
+    },
+    {
       "id": "390a4091-c20b-46f4-a72a-094482d85497",
       "at": 1793947875212,
       "kind": "content",
