@@ -2888,6 +2888,13 @@
               "cap": 25,
               "price": "1e24*(1.575+L/35)^L",
               "multi": "1 + L / 10"
+            },
+            {
+              "n": 45,
+              "name": "New upgrade",
+              "cap": null,
+              "price": "3*L",
+              "multi": "1"
             }
           ]
         },
@@ -14981,18 +14988,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.game.upgrades.sections.life-tree-essence.upgrades[9].multi": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[10]": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[10].n": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.life-tree-essence.upgrades[10].name": {
-      "actor": "Quaantic"
-    },
     "content.game.upgrades.sections.life-tree-essence.upgrades[10].cap": {
       "actor": "Quaantic"
     },
@@ -16041,6 +16036,33 @@
       "actor": "zzinss"
     },
     "content.game.upgrades.sections.life-tree-essence.upgrades[3].name": {
+      "actor": "zzinss"
+    },
+    "content.game.upgrades.sections.research": {
+      "actor": "zzinss"
+    },
+    "content.game.upgrades.sections.research.upgrades": {
+      "actor": "zzinss"
+    },
+    "content.game.upgrades.sections.research.upgrades order": {
+      "actor": "zzinss"
+    },
+    "content.game.upgrades.sections.research.upgrades[45]": {
+      "actor": "zzinss"
+    },
+    "content.game.upgrades.sections.research.upgrades[45].n": {
+      "actor": "zzinss"
+    },
+    "content.game.upgrades.sections.research.upgrades[45].name": {
+      "actor": "zzinss"
+    },
+    "content.game.upgrades.sections.research.upgrades[45].cap": {
+      "actor": "zzinss"
+    },
+    "content.game.upgrades.sections.research.upgrades[45].price": {
+      "actor": "zzinss"
+    },
+    "content.game.upgrades.sections.research.upgrades[45].multi": {
       "actor": "zzinss"
     }
   }
