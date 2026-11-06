@@ -2,6 +2,16 @@
   "format": 1,
   "entries": [
     {
+      "id": "fa3b20f3-5c2a-4108-93e9-267c294c9312",
+      "at": 1793948862558,
+      "kind": "content",
+      "text": "Updated value of \"Tree Essence\": formula: amount to formula: ((amount / 1) + 1)^0.19",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:07:45.965Z"
+    },
+    {
       "id": "f61d1dfc-3717-44f3-aaf6-2191e75d0d1d",
       "at": 1793948846247,
       "kind": "content",
