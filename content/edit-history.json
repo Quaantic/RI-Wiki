@@ -2,6 +2,16 @@
   "format": 1,
   "entries": [
     {
+      "id": "67c74873-d8fc-4db2-84c9-44ce5e076295",
+      "at": 1793963700673,
+      "kind": "content",
+      "text": "Renamed \"More Tree Damag\" to \"More Tree Damage\"",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T11:15:17.045Z"
+    },
+    {
       "id": "f4fe21b1-bc68-40db-be0f-299f206b2080",
       "at": 1793963664872,
       "kind": "content",
