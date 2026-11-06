@@ -1967,7 +1967,7 @@
           },
           {
             "id": "entry-0c4daa65-21da-4f1e-ba45-030fd6465bd8",
-            "context": "Feature",
+            "context": "UI",
             "title": "New icons",
             "href": "",
             "description": "Added many new icons to the stats description"
@@ -15060,36 +15060,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.game.progression.stages.life/tree-essence-milestones.stages[4].unlocks.places": {
-      "actor": "Quaantic"
-    },
-    "content.game.progression.stages.life/tree-essence-milestones.stages[4].unlocks.places order": {
-      "actor": "Quaantic"
-    },
-    "content.game.progression.stages.life/tree-essence-milestones.stages[4].unlocks.features": {
-      "actor": "Quaantic"
-    },
-    "content.game.progression.stages.life/tree-essence-milestones.stages[5]": {
-      "actor": "Quaantic"
-    },
-    "content.game.progression.stages.life/tree-essence-milestones.stages[5].title": {
-      "actor": "Quaantic"
-    },
-    "content.game.progression.stages.life/tree-essence-milestones.stages[5].num": {
-      "actor": "Quaantic"
-    },
-    "content.game.progression.stages.life/tree-essence-milestones.stages[5].requirements": {
-      "actor": "Quaantic"
-    },
-    "content.game.progression.stages.life/tree-essence-milestones.stages[5].boosts": {
-      "actor": "Quaantic"
-    },
-    "content.game.progression.stages.life/tree-essence-milestones.stages[5].unlocks": {
-      "actor": "Quaantic"
-    },
-    "content.game.progression.stages.life/tree-essence-milestones.stages[5].unlocks.area": {
-      "actor": "Quaantic"
-    },
     "content.game.progression.stages.life/tree-essence-milestones.stages[5].unlocks.places": {
       "actor": "Quaantic"
     },
@@ -15250,7 +15220,7 @@
       "actor": "Quaantic"
     },
     "content": {
-      "actor": "zzinss"
+      "actor": "Quaantic"
     },
     "content.wiki": {
       "actor": "zzinss"
@@ -15718,10 +15688,10 @@
       "actor": "Nathy365"
     },
     "content.updates": {
-      "actor": "Nathy365"
+      "actor": "Quaantic"
     },
     "content.updates.versions": {
-      "actor": "Nathy365"
+      "actor": "Quaantic"
     },
     "content.updates.versions[1.02]": {
       "actor": "Nathy365"
@@ -15754,7 +15724,7 @@
       "actor": "Nathy365"
     },
     "content.updates.versions[1.03]": {
-      "actor": "Nathy365"
+      "actor": "Quaantic"
     },
     "content.updates.versions[1.03].version": {
       "actor": "Nathy365"
@@ -15763,7 +15733,7 @@
       "actor": "Nathy365"
     },
     "content.updates.versions[1.03].entries": {
-      "actor": "Nathy365"
+      "actor": "Quaantic"
     },
     "content.updates.versions[1.03].entries order": {
       "actor": "Nathy365"
@@ -15805,13 +15775,13 @@
       "actor": "Nathy365"
     },
     "content.updates.versions[1.03].entries[entry-0c4daa65-21da-4f1e-ba45-030fd6465bd8]": {
-      "actor": "Nathy365"
+      "actor": "Quaantic"
     },
     "content.updates.versions[1.03].entries[entry-0c4daa65-21da-4f1e-ba45-030fd6465bd8].id": {
       "actor": "Nathy365"
     },
     "content.updates.versions[1.03].entries[entry-0c4daa65-21da-4f1e-ba45-030fd6465bd8].context": {
-      "actor": "Nathy365"
+      "actor": "Quaantic"
     },
     "content.updates.versions[1.03].entries[entry-0c4daa65-21da-4f1e-ba45-030fd6465bd8].title": {
       "actor": "Nathy365"
