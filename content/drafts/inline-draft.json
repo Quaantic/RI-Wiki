@@ -15263,10 +15263,10 @@
           },
           {
             "id": "entry-38c5454e-f637-47b0-a3a2-14b4c6b9e7a6",
-            "context": "Feature",
-            "title": "New update",
+            "context": "Changes",
+            "title": "Research Upgrades",
             "href": "",
-            "description": "What changed in the game."
+            "description": "3 New Research upgrades have been added and caps have been increased due to upgrades increasing Cap"
           }
         ]
       },
@@ -15500,39 +15500,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.game.upgrades.sections.research.upgrades[9].cap": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[10]": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[10].cap": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[11]": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[11].cap": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[12]": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[12].cap": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[13]": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[13].cap": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[14]": {
-      "actor": "Quaantic"
-    },
-    "content.game.upgrades.sections.research.upgrades[14].cap": {
-      "actor": "Quaantic"
-    },
     "content.game.upgrades.sections.research.upgrades[15]": {
       "actor": "Quaantic"
     },
