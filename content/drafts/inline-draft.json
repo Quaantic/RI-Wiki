@@ -14232,14 +14232,14 @@
                 {
                   "id": "b1",
                   "name": "Strength",
-                  "value": "formula: amount",
+                  "value": "formula: ((amount / 1) + 1)^0.175",
                   "capUnit": "x",
                   "unit": "x"
                 },
                 {
                   "id": "b",
                   "name": "Health",
-                  "value": "formula: amount",
+                  "value": "formula: ((amount / 1) + 1)^0.175",
                   "capUnit": "x",
                   "unit": "x"
                 },
@@ -14811,36 +14811,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.wiki.categories[runes].subcategories[secret].vitals": {
-      "actor": "Nathy365"
-    },
-    "content.wiki.categories[runes].subcategories[secret].vitals order": {
-      "actor": "Nathy365"
-    },
-    "content.wiki.categories[runes].subcategories[secret].children": {
-      "actor": "Nathy365"
-    },
-    "content.wiki.categories[runes].subcategories[secret].children order": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.kind": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.title": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups order": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group]": {
-      "actor": "Nathy365"
-    },
     "content.game.calculators.pages.runes/secret.groups[group].id": {
       "actor": "Nathy365"
     },
@@ -15889,6 +15859,12 @@
       "actor": "Nathy365"
     },
     "content.game.calculators.pages.runes/secret.groups[group3].bonuses[b2].unit": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups": {
       "actor": "Nathy365"
     }
   }
