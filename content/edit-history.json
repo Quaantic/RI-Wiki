@@ -2,6 +2,96 @@
   "format": 1,
   "entries": [
     {
+      "id": "f61d1dfc-3717-44f3-aaf6-2191e75d0d1d",
+      "at": 1793948846247,
+      "kind": "content",
+      "text": "Updated value of \"Mine Perks\": formula: amount to formula: ((amount / 0.75) + 1)^0.145",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:07:28.996Z"
+    },
+    {
+      "id": "ab4145b8-33a6-4a26-aa10-a286746f71df",
+      "at": 1793948828548,
+      "kind": "content",
+      "text": "Set unit of \"Rare Sap\" (x)",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:07:28.996Z"
+    },
+    {
+      "id": "8c7b6011-d281-4003-93b3-b8e039a3e95e",
+      "at": 1793948828502,
+      "kind": "content",
+      "text": "Set cap Unit of \"Rare Sap\" (x)",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:07:28.996Z"
+    },
+    {
+      "id": "d784ddf2-92be-475e-af89-c1617facb65c",
+      "at": 1793948825600,
+      "kind": "content",
+      "text": "Set unit of \"Ruby Energy\" (x)",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:07:28.996Z"
+    },
+    {
+      "id": "23285a7b-95ea-40fe-ac3f-e57447705fc8",
+      "at": 1793948825557,
+      "kind": "content",
+      "text": "Set cap Unit of \"Ruby Energy\" (x)",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:07:28.996Z"
+    },
+    {
+      "id": "ecc60adc-158e-48ca-90c4-befefe086c7f",
+      "at": 1793948822501,
+      "kind": "content",
+      "text": "Set unit of \"Mastry\" (x)",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:07:28.996Z"
+    },
+    {
+      "id": "1f7d2c8c-21be-4406-9e74-20d471db9883",
+      "at": 1793948822454,
+      "kind": "content",
+      "text": "Set cap Unit of \"Mastry\" (x)",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:07:28.996Z"
+    },
+    {
+      "id": "b7a98b78-8847-462d-aef9-6b0610ff1c46",
+      "at": 1793948818808,
+      "kind": "content",
+      "text": "Set unit of \"Astatine\" (x)",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:07:28.996Z"
+    },
+    {
+      "id": "7e459286-4400-409b-9c09-8c537926ed6e",
+      "at": 1793948818763,
+      "kind": "content",
+      "text": "Set cap Unit of \"Astatine\" (x)",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:07:28.996Z"
+    },
+    {
       "id": "f1343ee7-0743-4e8a-b99d-1bbb6d3840c5",
       "at": 1793948815771,
       "kind": "content",
