@@ -2,6 +2,16 @@
   "format": 1,
   "entries": [
     {
+      "id": "d4166ed0-5599-44f4-872b-e021bbba51fc",
+      "at": 1793967575049,
+      "kind": "content",
+      "text": "Updated multi of \"More Rare Saps\": 1 to 0.1*L",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T12:22:31.775Z"
+    },
+    {
       "id": "8c255e7c-9b64-4707-bee5-283f7a5e27e0",
       "at": 1793967536366,
       "kind": "content",
