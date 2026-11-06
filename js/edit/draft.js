@@ -485,16 +485,26 @@ export async function initSession(token, actor = '') {
     const recovery = readRecovery(recoveryKey());
     if (recovery?.docs && recovery?.sharedBase) {
       validateDocuments(recovery.docs);
-      recovered = true;
-      try {
-        draftState.docs = mergeDocuments(recovery.sharedBase, recovery.docs, draftState.docs);
-      } catch {
-        draftState.docs = recovery.docs;
-        draftState.sharedBase = recovery.sharedBase;
-        draftState.needsMerge = true;
-        recoveryConflict = true;
+      // GitHub's shared draft is the default view for EVERY collaborator.
+      // Never overlay stale browser recovery without an explicit choice.
+      const hasUnsharedWork = JSON.stringify(recovery.docs) !== JSON.stringify(draftState.docs)
+        || Array.isArray(recovery.entries) && recovery.entries.length > 0;
+      if (hasUnsharedWork && window.confirm(
+        'Unsaved edits were found only on this device.\n\nOK: restore and merge those edits with the latest shared GitHub draft.\n\nCancel: open the shared draft instead and discard this browser recovery. If your unsaved edits matter, choose OK.'
+      )) {
+        recovered = true;
+        try {
+          draftState.docs = mergeDocuments(recovery.sharedBase, recovery.docs, draftState.docs);
+        } catch {
+          draftState.docs = recovery.docs;
+          draftState.sharedBase = recovery.sharedBase;
+          draftState.needsMerge = true;
+          recoveryConflict = true;
+        }
+        changeLog.push(...(recovery.entries || []));
+      } else {
+        clearRecovery(recoveryKey());
       }
-      changeLog.push(...(recovery.entries || []));
     }
   } catch { /* storage unavailable or an invalid recovery copy */ }
   const contentImported = installImportedNotes(draftState.docs.wiki,draftState.docs.game);
@@ -537,6 +547,23 @@ async function backupInvalidDraft(token) {
   draftState.invalidDraftBackup = null;
 }
 
+const SAVE_COOLDOWN_MS = 60 * 1000;
+// Shared cooldown: consult commits touching the shared draft, not this
+// browser's clock or localStorage. The API repeats this check server-side
+// immediately before writing, so another contributor cannot bypass it.
+const SAVE_COMMIT_PATTERN = /^(?:RI Wiki: save editor data|Save inline draft)$/i;
+async function assertSharedSaveCooldown(token) {
+  const url = `https://api.github.com/repos/${REPOSITORY}/commits?path=${encodeURIComponent(DRAFT_FILE)}&per_page=15`;
+  const commits = await githubRequest(url, token);
+  if (!Array.isArray(commits)) throw new Error('Could not verify the shared cooldown; Save was cancelled to protect other edits.');
+  const latest = Math.max(0, ...commits
+    .filter((item) => SAVE_COMMIT_PATTERN.test(item?.commit?.message?.split('\n')[0]?.trim() || ''))
+    .map((item) => Date.parse(item?.commit?.committer?.date || item?.commit?.author?.date || ''))
+    .filter(Number.isFinite));
+  const remaining = SAVE_COOLDOWN_MS - (Date.now() - latest);
+  if (remaining > 0) throw new Error(`Save for Everyone is on a global 1-minute cooldown. Try again in ${Math.ceil(remaining / 1000)} seconds. Your edits are preserved.`);
+}
+
 async function saveChangedDraft(token, keepLocalOrder){
   for(let attempt=0;attempt<4;attempt++){
     await syncRemote(token, keepLocalOrder);
@@ -545,6 +572,7 @@ async function saveChangedDraft(token, keepLocalOrder){
     // Save is relative to the last shared revision, never a stale published
     // snapshot. An unchanged editor must not create a new shared revision.
     if(!draftState.sharedOrderNeedsSave && JSON.stringify(draftState.docs)===JSON.stringify(draftState.sharedBase))break;
+    await assertSharedSaveCooldown(token);
     const raw=currentDraftRaw();
     try{
       // Back up the previous shared state before replacing it. A Save is not a Publish.
@@ -572,10 +600,13 @@ async function saveChangedDraft(token, keepLocalOrder){
     }
   }
   // Diario: pendencias vao para o arquivo (marcadas "pending").
-  if (changeLog.length) {
-    const entries = changeLog.map((entry) => ({ ...entry, pending: true }));
+  {
+    const now = new Date().toISOString();
+    const entries = changeLog.length
+      ? changeLog.map((entry) => ({ ...entry, pending: false, status: 'saved', savedAt: now }))
+      : [{ id: `save-${now}-${draftState.actor}`, at: now, savedAt: now, actor: draftState.actor, kind: 'content', text: 'Shared draft saved', status: 'saved', pending: false }];
     await writeHistory(token, entries, true);
-    changeLog.splice(0, entries.length);
+    changeLog.splice(0, changeLog.length);
   }
   persistLocalRecovery();
 }
@@ -621,7 +652,7 @@ export async function publishChanges(token, keepLocalOrder) {
     draftState.savedDraftRaw='';
     draftState.sharedOrderNeedsSave=false;
     draftState.needsMerge=false;
-    const entries=changeLog.map(entry=>({...entry,pending:false}));
+    const entries=changeLog.map(entry=>({...entry,pending:false,status:'published'}));
     changeLog.length=0;
     history.length=0;
     persistLocalRecovery();
@@ -668,7 +699,7 @@ export async function publishChanges(token, keepLocalOrder) {
   if (changeLog.length) {
     // Diario definitivo: pendencias antigas do arquivo sao substituidas
     // pelas mesmas entradas agora marcadas como publicadas.
-    const published = changeLog.map((entry) => ({ ...entry, pending: false }));
+    const published = changeLog.map((entry) => ({ ...entry, pending: false, status: 'published' }));
     changeLog.length = 0;
     await writeHistory(token, published, false).catch(() => {});
   } else {
@@ -791,8 +822,8 @@ async function writeHistoryRevision(token,newEntries,pending,discard){
     } catch {
       older = [];
     }
-    if (discard) older = older.filter((entry) => !entry.pending);
-    else if (!pending) older = older.map((entry) => ({ ...entry, pending: false }));
+    if (discard) older = older.filter((entry) => entry.status !== 'saved' && !entry.pending);
+    else if (!pending) older = older.map((entry) => ({ ...entry, pending: false, status: 'published' }));
   }
   const byId = new Map([...older, ...newEntries].map((entry) => [entry.id || `${entry.at}:${entry.text}`, entry]));
   const entries = [...byId.values()]
@@ -822,7 +853,7 @@ export async function listEditHistory(token) {
       fileEntries = [];
     }
   }
-  const pending = changeLog.map((entry) => ({ ...entry, pending: true }));
+  const pending = changeLog.map((entry) => ({ ...entry, pending: true, status: 'pending' }));
   const entries = new Map([...fileEntries, ...pending].map((entry) => [entry.id || `${entry.at}:${entry.text}`, entry]));
   return [...entries.values()].sort((a, b) => (b.at || 0) - (a.at || 0)).slice(0, LOG_STORAGE_MAX);
 }
@@ -857,7 +888,7 @@ function versionTimestamp(name) {
 
 export function versionLabel(name) {
   const modern = /^(save|publish)\.([^.]+)\.(\d{4}-\d{2}-\d{2})-(\d{2}:\d{2})(?:-\d+)?\.json$/.exec(name);
-  if (modern) return `${modern[1] === 'save' ? 'Save' : 'Publish'} · @${modern[2]} · ${modern[3]} ${modern[4]} (Brasília)`;
+  if (modern) return `${modern[1] === 'save' ? 'Save' : 'Publish'} · @${modern[2]} · ${modern[3]} ${modern[4]}`;
   const timestamp = versionTimestamp(name);
   if (!timestamp) return name;
   const match = /^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})/.exec(timestamp);
@@ -872,7 +903,7 @@ export async function listVersions(token) {
   const result = await githubRequest(githubContentsUrl(BACKUP_DIRECTORY), token, { allowNotFound: true });
   return Array.isArray(result)
     ? result
-        .filter((item) => item.type === 'file' && (/^backup-.*\.json$/.test(item.name) || /^(?:save|publish)\.[a-zA-Z0-9_-]+\.(?:\d{8}T\d{6}\d{3}Z|\d{4}-\d{2}-\d{2}-\d{2}:\d{2}(?:-\d+)?)\.json$/.test(item.name)))
+        .filter((item) => item.type === 'file' && !['backup-inline-20261104T064959590Z.json', 'backup-inline-20261104T071338426Z.json'].includes(item.name) && (/^backup-.*\.json$/.test(item.name) || /^(?:save|publish)\.[a-zA-Z0-9_-]+\.(?:\d{8}T\d{6}\d{3}Z|\d{4}-\d{2}-\d{2}-\d{2}:\d{2}(?:-\d+)?)\.json$/.test(item.name)))
         .map((item) => ({ name: item.name, sha: item.sha }))
         .sort((a, b) => versionTimestamp(a.name).localeCompare(versionTimestamp(b.name)))
     : [];

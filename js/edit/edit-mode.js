@@ -302,6 +302,7 @@ function updateToolbar() {
 
   layer.bar.querySelector('[data-edit-toggle]').disabled = !ready;
   layer.bar.querySelector('[data-edit-undo]').disabled = !ready || !draft.canUndo();
+  layer.bar.querySelector('[data-edit-sync]').disabled = !ready;
   layer.bar.querySelector('[data-edit-save]').disabled = !ready;
   layer.bar.querySelector('[data-edit-publish]').disabled = !ready || !session.canPublish;
   layer.bar.querySelector('[data-edit-publish]').hidden = !session.canPublish;
@@ -330,7 +331,7 @@ function updateToolbar() {
   } else if (draftDirty) {
     barStatus(localSaved?'Saved on this device · not shared':'Local backup unavailable — download your draft', 'dirty');
   } else if (draftOnline) {
-    barStatus('Draft saved on GitHub (unpublished)');
+    barStatus('Shared GitHub draft · auto-sync every 15s');
   } else {
     barStatus('Everything saved');
   }
@@ -348,6 +349,7 @@ function buildToolbar() {
       <span data-edit-mode-label>Edit</span>
     </button>
     <button class="btn btn--ghost btn--sm" data-edit-undo title="Undo the last change in the draft (Ctrl+Z)">${icon('undo-2', 13)} Undo</button>
+    <button class="btn btn--ghost btn--sm" data-edit-sync title="Load your collaborators' latest shared changes from GitHub">${icon('refresh-cw', 13)} Sync</button>
     <button class="btn btn--ghost btn--sm" data-edit-save title="Merge the latest shared changes and save for all editors">${icon('save', 13)} <span class="ri-save-full">Save for everyone</span><span class="ri-save-short">Save</span></button>
     <button class="btn btn--ghost btn--sm" data-edit-download title="Download a recovery copy of your current draft">${icon('download', 13)} Download draft</button>
     <button class="btn btn--ghost btn--sm" data-edit-restore title="Open a downloaded wiki draft in this browser">${icon('upload', 13)} Restore draft</button>
@@ -364,7 +366,7 @@ function buildToolbar() {
   window.addEventListener('resize', resizeToolbar);
 
   layer.bar.addEventListener('click', (event) => {
-    const action = event.target.closest('[data-edit-toggle],[data-edit-undo],[data-edit-save],[data-edit-publish],[data-edit-discard],[data-edit-signout],[data-edit-download],[data-edit-restore],[data-edit-more],[data-edit-resume]');
+    const action = event.target.closest('[data-edit-toggle],[data-edit-undo],[data-edit-sync],[data-edit-save],[data-edit-publish],[data-edit-discard],[data-edit-signout],[data-edit-download],[data-edit-restore],[data-edit-more],[data-edit-resume]');
     if (!action) return;
     onToolbarAction(action);
   });
@@ -510,6 +512,10 @@ function onToolbarAction(button) {
   if(button.hasAttribute('data-edit-resume')){
     const saved=readRecovery(formRecoveryKey());
     if(saved)void(async()=>{setEditing(true);if(saved.hash!==location.hash)location.hash=saved.hash;await rerender({scroll:'preserve'});restoreForm();})();
+    return;
+  }
+  if (button.hasAttribute('data-edit-sync')) {
+    void syncSharedNow();
     return;
   }
   if (button.hasAttribute('data-edit-more')) {
@@ -716,6 +722,29 @@ function setEditing(on) {
 
 let sharedRefreshTimer;
 let sharedRefreshChecking = null;
+async function syncSharedNow() {
+  if (!session.ready || session.busy || sharedRefreshChecking) return;
+  if (popState && !window.confirm('Close the open editor form and sync changes from other contributors? Unapplied form fields remain locally recoverable.')) return;
+  session.busy = true;
+  if (popState) closePopover(true);
+  updateToolbar();
+  try {
+    const changed = await draft.syncRemote(session.token, confirmReleaseOrder);
+    session.syncError = '';
+    if (changed) {
+      draft.applyDraftToSite();
+      window.dispatchEvent(new CustomEvent('ri-edit-content'));
+      await rerender({ scroll: 'preserve' });
+    }
+    notify(changed ? 'Synced the shared GitHub draft. Your local edits were merged.' : 'Already using the latest shared version.');
+  } catch (error) {
+    session.syncError = 'Sync conflict — review before saving';
+    notify(error.message || 'Could not load the shared draft.', true);
+  } finally {
+    session.busy = false;
+    updateToolbar();
+  }
+}
 function startSharedRefresh() {
   clearInterval(sharedRefreshTimer);
   const refresh = async () => {
@@ -1352,7 +1381,7 @@ function renderHistoryList(container, entries, filterKind) {
       <span class="ri-history-row__kind ri-history-row__kind--${entry.kind === 'colors' ? 'colors' : 'content'}">${entry.kind === 'colors' ? 'Colors' : 'Content'}</span>
       <span class="ri-history-row__text">${esc(entry.text)}</span>
       <span class="ri-history-row__actor">${entry.actor ? `@${esc(entry.actor)}` : 'Legacy edit'}</span>
-      ${entry.pending ? '<span class="ri-history-row__pending">pending</span>' : ''}
+      <span class="ri-history-row__pending">${esc(entry.status || (entry.pending ? 'pending' : 'published'))}</span>
     </div>`).join('');
 }
 
