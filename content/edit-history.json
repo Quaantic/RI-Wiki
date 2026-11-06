@@ -2,6 +2,38 @@
   "format": 1,
   "entries": [
     {
+      "id": "268979e5-ce32-4521-bb48-42c976e62bbb",
+      "at": 1793932606161,
+      "kind": "content",
+      "text": "Updated banner of \"Nathy\": #355528 to #EACE09",
+      "actor": "Nathy365",
+      "pending": true
+    },
+    {
+      "id": "451a0834-83ce-456a-b2d7-b7ad347eaf1d",
+      "at": 1793932606141,
+      "kind": "content",
+      "text": "Updated handle of \"Nathy\": empty to Nathandylan9",
+      "actor": "Nathy365",
+      "pending": true
+    },
+    {
+      "id": "850989cd-f4a4-471d-a8cb-a4a5fc8e8747",
+      "at": 1793932606120,
+      "kind": "content",
+      "text": "Renamed \"New contributor\" to \"Nathy\"",
+      "actor": "Nathy365",
+      "pending": true
+    },
+    {
+      "id": "db7c195f-9768-4b94-9b8d-8f58d94f6652",
+      "at": 1793931933182,
+      "kind": "content",
+      "text": "Added \"New contributor\"",
+      "actor": "Nathy365",
+      "pending": true
+    },
+    {
       "id": "3d1a072e-bfae-4092-b9bc-6e4c10f95b19",
       "at": 1793931185985,
       "kind": "content",
@@ -279,6 +311,22 @@
       "kind": "content",
       "text": "Updated money-island/upgrade-tree of \"calculators\": {\"kind\":\"amount\",\"title\":\"Upgrade Tree\",\"am… to empty",
       "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "31eb52ca-f035-45e8-9cf3-22425fec8f98",
+      "at": 1793930755750,
+      "kind": "colors",
+      "text": "Removed the color of \"Dark Crystal\"",
+      "actor": "Nathy365",
+      "pending": true
+    },
+    {
+      "id": "a295a468-cfcf-4beb-bacc-2dc4747fe705",
+      "at": 1793930744326,
+      "kind": "colors",
+      "text": "Colored \"Dark Crystal\" (#86d62b)",
+      "actor": "Nathy365",
       "pending": true
     },
     {
@@ -2350,54 +2398,6 @@
       "at": 1793853684636,
       "kind": "content",
       "text": "Updated description of \"Background\": What changed in the game. to Added lightweight backgrounds and more cons…",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "0f5b12a7-1751-4ed4-a9a8-f349296775bb",
-      "at": 1793853684620,
-      "kind": "content",
-      "text": "Updated text of \"Background\": New update to Background",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "4dede273-a4c9-441c-b4a0-7491501fc709",
-      "at": 1793853684602,
-      "kind": "content",
-      "text": "Updated context of \"New update\": Feature to UI",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "f5ff48c6-1916-4280-abc2-dbca7a8a470f",
-      "at": 1793853678462,
-      "kind": "content",
-      "text": "Added \"New update\"",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "629f7861-a56c-4113-98b2-9ac7fbf35d46",
-      "at": 1793853669996,
-      "kind": "content",
-      "text": "Updated description of \"Brand New UpdateLog\": Refreshed the Update Log with collapsible F… to Updates with collapsible Features, Changes,…",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "c5024c78-4f6f-4e42-b2b6-6a426c8a1905",
-      "at": 1793853658430,
-      "kind": "content",
-      "text": "Updated text of \"Brand New UpdateLog\": Brand New Update LOG to Brand New UpdateLog",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "05b27d08-4f2a-4054-93b6-42ca22a515c1",
-      "at": 1793853651534,
-      "kind": "content",
-      "text": "Updated description of \"Brand New Update LOG\": What changed in the game. to Refreshed the Update Log with collapsible F…",
       "actor": "Quaantic",
       "pending": true
     }
