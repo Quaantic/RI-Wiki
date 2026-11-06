@@ -2,6 +2,36 @@
   "format": 1,
   "entries": [
     {
+      "id": "a09fa535-51df-46d3-884b-0263c5c274e7",
+      "at": 1793979898734,
+      "kind": "content",
+      "text": "Removed \"How does cells work?\"",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:45:15.341Z"
+    },
+    {
+      "id": "7d9e6da6-6afb-4d23-a191-65c831fb26af",
+      "at": 1793979894045,
+      "kind": "content",
+      "text": "Updated desc of \"Cells\": Cell is the passive earning stat of Life, a… to Cell is the passive earning stat of Life, a…",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:45:15.341Z"
+    },
+    {
+      "id": "79c5787c-2aeb-40c4-8aa4-78b20afe72f6",
+      "at": 1793979867753,
+      "kind": "content",
+      "text": "Updated columns of \"Animals\": [\"Tier\",\"Cells to create\",\"Life Shards obta… to [\"Tier\",\"Cells to create\",\"Base Life Shard …",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:45:15.341Z"
+    },
+    {
       "id": "faff1863-ff8d-495d-8145-1dd8590dfb94",
       "at": 1793979809861,
       "kind": "content",
@@ -2966,36 +2996,6 @@
       "at": 1793948635074,
       "kind": "content",
       "text": "Updated value of \"Bluesteel\": formula: amount to formula: ((amount / 2) + 1)^0.2",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T07:04:14.795Z"
-    },
-    {
-      "id": "166a00a1-e353-450c-bafb-06aece187897",
-      "at": 1793948582288,
-      "kind": "content",
-      "text": "Set unit of \"Californium\" (x)",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T07:04:14.795Z"
-    },
-    {
-      "id": "3bcb9089-9615-43ce-9c7d-d56e405e68a5",
-      "at": 1793948582241,
-      "kind": "content",
-      "text": "Set cap Unit of \"Californium\" (x)",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T07:04:14.795Z"
-    },
-    {
-      "id": "eeff4427-447e-429f-be7e-b6c1c2a89965",
-      "at": 1793948582197,
-      "kind": "content",
-      "text": "Updated value of \"Californium\": formula: amount to formula: ((amount / 1.5) + 1)^0.125",
       "actor": "Nathy365",
       "pending": false,
       "status": "saved",
