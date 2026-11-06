@@ -2,6 +2,16 @@
   "format": 1,
   "entries": [
     {
+      "id": "10884d5d-4ac8-4e0d-be14-53bf96c7947f",
+      "at": 1793968080548,
+      "kind": "content",
+      "text": "Updated multi of \"More Tree Essence\": 0.2*L to 1+(0.15*L)",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T12:28:17.009Z"
+    },
+    {
       "id": "35839af6-19b6-4720-8692-f4961bc163e1",
       "at": 1793967851333,
       "kind": "content",
