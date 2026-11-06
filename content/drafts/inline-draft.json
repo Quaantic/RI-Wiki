@@ -14856,12 +14856,12 @@
                   "unit": "x"
                 }
               ],
-              "description": "Energy\nBone Dust\nLife Gems"
+              "description": ""
             },
             {
               "id": "group2",
               "name": "Void -",
-              "color": "#86d62b",
+              "color": "#6550B8",
               "dropChance": "13%",
               "amountLabel": "Amount owned",
               "bonuses": [
@@ -14891,7 +14891,7 @@
             {
               "id": "group3",
               "name": "Unnatural -",
-              "color": "#86d62b",
+              "color": "#A84747",
               "dropChance": "4.83%",
               "amountLabel": "Amount owned",
               "bonuses": [
@@ -14920,8 +14920,8 @@
             },
             {
               "id": "group4",
-              "name": "Plasma-",
-              "color": "#86d62b",
+              "name": "Plasma -",
+              "color": "#A443F5",
               "dropChance": "2.19%",
               "amountLabel": "Amount owned",
               "bonuses": [
@@ -14950,8 +14950,8 @@
             },
             {
               "id": "group5",
-              "name": "Infernal-",
-              "color": "#86d62b",
+              "name": "Infernal -",
+              "color": "#FF173C",
               "dropChance": "0.8%",
               "amountLabel": "Amount owned",
               "bonuses": [
@@ -14980,8 +14980,8 @@
             },
             {
               "id": "group6",
-              "name": "Soul-",
-              "color": "#86d62b",
+              "name": "Soul -",
+              "color": "#8035C8",
               "dropChance": "0.31%",
               "amountLabel": "Amount owned",
               "bonuses": [
@@ -15010,8 +15010,8 @@
             },
             {
               "id": "group7",
-              "name": "Omnisoul-",
-              "color": "#86d62b",
+              "name": "Omnisou l-",
+              "color": "#43C944",
               "dropChance": "0.12%",
               "amountLabel": "Amount owned",
               "bonuses": [
@@ -15040,14 +15040,14 @@
             },
             {
               "id": "group8",
-              "name": "Omega-",
-              "color": "#86d62b",
+              "name": "Omega -",
+              "color": "#2378E8",
               "dropChance": "0.03%",
               "amountLabel": "Amount owned",
               "bonuses": [
                 {
                   "id": "b1",
-                  "name": "Mastry",
+                  "name": "Mastery",
                   "value": "formula: ((amount / 1) + 1)^0.075",
                   "capUnit": "x",
                   "unit": "x"
@@ -16738,6 +16738,69 @@
       "actor": "Quaantic"
     },
     "content.game.calculators.pages.runes/secret.groups[group3].name": {
+      "actor": "Quaantic"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group].description": {
+      "actor": "Quaantic"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group2].color": {
+      "actor": "Quaantic"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group3].color": {
+      "actor": "Quaantic"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group4]": {
+      "actor": "Quaantic"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group4].name": {
+      "actor": "Quaantic"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group4].color": {
+      "actor": "Quaantic"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group5]": {
+      "actor": "Quaantic"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group5].name": {
+      "actor": "Quaantic"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group5].color": {
+      "actor": "Quaantic"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group6]": {
+      "actor": "Quaantic"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group6].name": {
+      "actor": "Quaantic"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group6].color": {
+      "actor": "Quaantic"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group7]": {
+      "actor": "Quaantic"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group7].name": {
+      "actor": "Quaantic"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group7].color": {
+      "actor": "Quaantic"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group8]": {
+      "actor": "Quaantic"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group8].name": {
+      "actor": "Quaantic"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group8].color": {
+      "actor": "Quaantic"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group8].bonuses": {
+      "actor": "Quaantic"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group8].bonuses[b1]": {
+      "actor": "Quaantic"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group8].bonuses[b1].name": {
       "actor": "Quaantic"
     }
   }
