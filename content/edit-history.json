@@ -2,6 +2,36 @@
   "format": 1,
   "entries": [
     {
+      "id": "faff1863-ff8d-495d-8145-1dd8590dfb94",
+      "at": 1793979809861,
+      "kind": "content",
+      "text": "Updated description of \"Research Upgrades\": What changed in the game. to 3 New Research upgrades have been added and…",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:43:52.174Z"
+    },
+    {
+      "id": "2e9fc188-7d01-401e-9d68-4d394b05beef",
+      "at": 1793979809816,
+      "kind": "content",
+      "text": "Updated text of \"Research Upgrades\": New update to Research Upgrades",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:43:52.174Z"
+    },
+    {
+      "id": "4193d397-6eb3-4639-b7df-d534cc622b9a",
+      "at": 1793979809772,
+      "kind": "content",
+      "text": "Updated context of \"New update\": Feature to Changes",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T15:43:52.174Z"
+    },
+    {
       "id": "71230f75-84b9-44dc-95b2-7c3e38c51a82",
       "at": 1793979774526,
       "kind": "content",
@@ -2970,36 +3000,6 @@
       "pending": false,
       "status": "saved",
       "savedAt": "2026-11-06T07:04:14.795Z"
-    },
-    {
-      "id": "3f9c8141-ec78-4a1f-8e66-442b892c2a20",
-      "at": 1793948564215,
-      "kind": "content",
-      "text": "Set unit of \"iron\" (x)",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T07:03:01.446Z"
-    },
-    {
-      "id": "5cd5f6c0-c533-4b57-885c-b2705e7a276c",
-      "at": 1793948564170,
-      "kind": "content",
-      "text": "Set cap Unit of \"iron\" (x)",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T07:03:01.446Z"
-    },
-    {
-      "id": "93353313-a705-4477-b872-10adad1faf7d",
-      "at": 1793948556774,
-      "kind": "content",
-      "text": "Updated value of \"iron\": formula: amount to formula: ((amount / 1) + 1)^0.1",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T07:03:01.446Z"
     }
   ]
 }
