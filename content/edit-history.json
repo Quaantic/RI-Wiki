@@ -2,11 +2,219 @@
   "format": 1,
   "entries": [
     {
+      "id": "75d96dbf-d97d-44c3-95c6-49306b6aac6d",
+      "at": 1793931144661,
+      "kind": "content",
+      "text": "Updated cap of \"More Tree Essence\": empty to 20",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "8e7c9976-fb4b-45b0-9e1a-e306b0294fff",
+      "at": 1793931144596,
+      "kind": "content",
+      "text": "Renamed \"New upgrade\" to \"More Tree Essence\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "194f4437-6cff-4e14-b3fa-8435774397d0",
+      "at": 1793931133841,
+      "kind": "content",
+      "text": "Added \"New upgrade\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "299b498a-46d4-4e75-98a2-ed4c5f6556b2",
+      "at": 1793931130029,
+      "kind": "content",
+      "text": "Updated cap of \"More Astatine\": empty to 20",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "fa4a5c34-b7e8-44b5-9e58-d66afb4a317c",
+      "at": 1793931129959,
+      "kind": "content",
+      "text": "Renamed \"New upgrade\" to \"More Astatine\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "89440b5f-b9d7-4e75-9f97-6daa9df379be",
+      "at": 1793931121422,
+      "kind": "content",
+      "text": "Added \"New upgrade\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "e661edf8-e12a-4b5e-bbd5-addbb80f189d",
+      "at": 1793931119690,
+      "kind": "content",
+      "text": "Updated cap of \"More Rare Saps\": empty to 20",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "4aaa0d04-0849-48db-820d-b9c59adb781f",
+      "at": 1793931119621,
+      "kind": "content",
+      "text": "Renamed \"New upgrade\" to \"More Rare Saps\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "1c2c626d-6279-4b65-8b1e-9c41091e6c67",
+      "at": 1793931106866,
+      "kind": "content",
+      "text": "Added \"New upgrade\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "806086e8-432c-4b52-821e-0058b2ecea4d",
+      "at": 1793931104673,
+      "kind": "content",
+      "text": "Updated cap of \"More Research Upgrades Cap\": empty to 15",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "9b113574-cce6-424f-a5e8-09f7f9d3b7e9",
+      "at": 1793931104608,
+      "kind": "content",
+      "text": "Renamed \"New upgrade\" to \"More Research Upgrades Cap\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "68dfdc87-e5fa-4541-aa83-d1dec2e38091",
+      "at": 1793931091968,
+      "kind": "content",
+      "text": "Added \"New upgrade\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "ac5a71e9-4095-4665-98ef-d598ac742a80",
+      "at": 1793931080334,
+      "kind": "content",
+      "text": "Updated cap of \"More Souls\": empty to 55",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "7fcab043-14e3-4a56-ba62-0f93345896c7",
+      "at": 1793931080266,
+      "kind": "content",
+      "text": "Renamed \"New upgrade\" to \"More Souls\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "7c858916-64d3-4b6f-af59-325af29306b4",
+      "at": 1793931072460,
+      "kind": "content",
+      "text": "Added \"New upgrade\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "4dbf626b-b38e-4149-ad76-b5f381aff967",
+      "at": 1793931068775,
+      "kind": "content",
+      "text": "Updated cap of \"More Fossil\": empty to 60",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "7ff6441f-94ce-45cd-a78d-41310a10225c",
+      "at": 1793931068715,
+      "kind": "content",
+      "text": "Renamed \"New upgrade\" to \"More Fossil\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "bb442609-4f02-4b1f-8aa9-5f34951a307a",
+      "at": 1793931058404,
+      "kind": "content",
+      "text": "Added \"New upgrade\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "312e1724-205a-4913-828c-c89f640c01ce",
+      "at": 1793931053879,
+      "kind": "content",
+      "text": "Removed \"New page\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "a9e58a72-b74a-438b-a61f-d86a76965210",
+      "at": 1793931047431,
+      "kind": "content",
+      "text": "Added \"New page\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
       "id": "cf5df024-b11c-4d90-b175-b6e66d8ddfff",
       "at": 1793931028983,
       "kind": "content",
       "text": "Updated text of \"What game passes should I purchase with my token?\": Depends on what you need, most likely facto… to Depends on what you need, most likely Facto…",
       "actor": "destroyerboi99",
+      "pending": true
+    },
+    {
+      "id": "c9d9f89f-657a-45ed-b608-ecea4e92e572",
+      "at": 1793931027842,
+      "kind": "content",
+      "text": "Removed \"More Fossils\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "38f80932-89a1-4bd6-b4c8-879707a73f8a",
+      "at": 1793931013359,
+      "kind": "content",
+      "text": "Updated cap of \"More Fossils\": empty to 60",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "462ce265-4535-4858-af87-a9e016c3a577",
+      "at": 1793931013287,
+      "kind": "content",
+      "text": "Updated n of \"More Fossils\": 1 to 44",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "592e71f6-36a4-4a5b-8c3c-35c57a247566",
+      "at": 1793931013221,
+      "kind": "content",
+      "text": "Renamed \"New upgrade\" to \"More Fossils\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "25cb9e24-85d7-457f-a640-ba78954c3549",
+      "at": 1793930980459,
+      "kind": "content",
+      "text": "Set life/research of \"upgrades\" (life-research)",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "5de33b7c-31f1-4556-9fe4-ba8b50227f1a",
+      "at": 1793930980389,
+      "kind": "content",
+      "text": "Set life-research of \"upgrades\" ({\"name\":\"Research\",\"upgrades\":[{\"n\":1,\"name…)",
+      "actor": "zzinss",
       "pending": true
     },
     {
@@ -2190,214 +2398,6 @@
       "at": 1793853651495,
       "kind": "content",
       "text": "Updated context of \"New update\": Feature to UI",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "c2fcf66d-493f-48a9-ab58-314cfbde82fd",
-      "at": 1793853641452,
-      "kind": "content",
-      "text": "Added \"New update\"",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "f486f0a2-a299-4a37-82a8-1adeb4182603",
-      "at": 1793853632818,
-      "kind": "content",
-      "text": "Updated description of \"Mobiles\": What changed in the game. to Improved mobile layouts and reduced horizon…",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "f150902b-015d-4d79-91e4-caad70979d73",
-      "at": 1793853632802,
-      "kind": "content",
-      "text": "Updated text of \"Mobiles\": New update to Mobiles",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "d97a67c8-a36a-4253-8521-90b5adeec789",
-      "at": 1793853632785,
-      "kind": "content",
-      "text": "Updated context of \"New update\": Feature to UI",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "ffedff9b-bcfe-473b-ba69-979ed41a11bb",
-      "at": 1793853624312,
-      "kind": "content",
-      "text": "Added \"New update\"",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "0381aa0e-178a-4576-bd03-3454f0606629",
-      "at": 1793853618113,
-      "kind": "content",
-      "text": "Updated description of \"Stages\": mproved stage layouts to reduce empty space… to Improved \"stage typo\" layouts to reduce emp…",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "8ff4a7e3-f372-41b9-b68a-2faa0f73497f",
-      "at": 1793853598825,
-      "kind": "content",
-      "text": "Updated description of \"Stages\": What changed in the game. to mproved stage layouts to reduce empty space…",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "42284db4-67d2-4d56-8ea6-47de3ca01d8c",
-      "at": 1793853598810,
-      "kind": "content",
-      "text": "Updated text of \"Stages\": New update to Stages",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "0dabc84c-385f-4866-a0ee-6f7da4c53422",
-      "at": 1793853598794,
-      "kind": "content",
-      "text": "Updated context of \"New update\": Feature to UI",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "9a15bb6b-6620-41fa-9364-ec9f0b517c94",
-      "at": 1793853595055,
-      "kind": "content",
-      "text": "Added \"New update\"",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "3b3f8730-77bc-4e10-9786-9655e9f72feb",
-      "at": 1793853591165,
-      "kind": "content",
-      "text": "Updated context of \"Better UX\": Feature to UI",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "5182245b-3f7e-4af6-a175-219b4e508a13",
-      "at": 1793853586225,
-      "kind": "content",
-      "text": "Updated description of \"Better UX\": What changed in the game. to Made tiers and milestones more compact, wit…",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "d9a0ca9b-903f-4682-a535-d1c2b6b64939",
-      "at": 1793853586207,
-      "kind": "content",
-      "text": "Updated text of \"Better UX\": New update to Better UX",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "9814a947-46d4-4efb-8c83-d0f04d2bc1c1",
-      "at": 1793853580762,
-      "kind": "content",
-      "text": "Added \"New update\"",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "a0da3430-ec0d-4512-be15-b6181d704af7",
-      "at": 1793853574701,
-      "kind": "content",
-      "text": "Updated context of \"Cards\": Feature to Bugs",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "34c3906f-2c60-47c1-a68e-c3b79482cd98",
-      "at": 1793853566387,
-      "kind": "content",
-      "text": "Updated description of \"Cards\": What changed in the game. to Fixed some progression cards remaining invi…",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "25141d3d-cf9b-4f4c-997a-c29f14557928",
-      "at": 1793853566371,
-      "kind": "content",
-      "text": "Updated text of \"Cards\": New update to Cards",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "9d4e47de-7971-4a13-911a-6101b825aa0f",
-      "at": 1793853562623,
-      "kind": "content",
-      "text": "Added \"New update\"",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "03d52d6f-fb54-42ae-882f-75705a734c90",
-      "at": 1793853555408,
-      "kind": "content",
-      "text": "Updated description of \"Pages\": What changed in the game. to Fixed page content disappearing after movin…",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "1552c554-9aa5-4a2a-b44f-b6e5ce102e22",
-      "at": 1793853555392,
-      "kind": "content",
-      "text": "Updated text of \"Pages\": New update to Pages",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "a53aab0d-c67f-41b3-b933-4e52f6162cb1",
-      "at": 1793853555375,
-      "kind": "content",
-      "text": "Updated context of \"New update\": Feature to Bugs",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "fd10656e-6960-4d34-a66b-9f7d6d44f374",
-      "at": 1793853550601,
-      "kind": "content",
-      "text": "Added \"New update\"",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "8d25ef5e-dd14-4f21-aa82-a8c51219a5be",
-      "at": 1793853534732,
-      "kind": "content",
-      "text": "Updated description of \"Categories\": Fixed missing categories and nested pages i… to Fixed missing categories and nested pages i…",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "f90f4f39-ec00-46f5-a8f6-97bdeac6299c",
-      "at": 1793853526436,
-      "kind": "content",
-      "text": "Updated description of \"Categories\": Fixed missing categories and nested pages i… to Fixed missing categories and nested pages i…",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "c7785240-6f26-424d-82e7-d4580e263d54",
-      "at": 1793853522108,
-      "kind": "content",
-      "text": "Updated description of \"Categories\": Fixed missing categories and nested pages i… to Fixed missing categories and nested pages i…",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "c1ec7a50-c6f5-43c0-ad11-a935de42fe6a",
-      "at": 1793853509987,
-      "kind": "content",
-      "text": "Added \"New update\"",
       "actor": "Quaantic",
       "pending": true
     }
