@@ -3076,7 +3076,7 @@
               "name": "More Tree Essence",
               "cap": "99",
               "price": "floor(1e57 * (2.35 + L/75)^L)",
-              "multi": "* (1 + 0.1 * L)"
+              "multi": "1+(0.1*L)"
             }
           ]
         },
