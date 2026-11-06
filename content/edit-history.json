@@ -2,6 +2,86 @@
   "format": 1,
   "entries": [
     {
+      "id": "f1343ee7-0743-4e8a-b99d-1bbb6d3840c5",
+      "at": 1793948815771,
+      "kind": "content",
+      "text": "Set unit of \"Magnets\" (x)",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:06:57.507Z"
+    },
+    {
+      "id": "e4b5b4d9-2466-4aa2-8459-a42ea5df98ac",
+      "at": 1793948815726,
+      "kind": "content",
+      "text": "Set cap Unit of \"Magnets\" (x)",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:06:57.507Z"
+    },
+    {
+      "id": "334a4d36-4832-4de9-8d34-01922ddbbde6",
+      "at": 1793948799902,
+      "kind": "content",
+      "text": "Renamed \"Sap\" to \"Rare Sap\"",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:06:57.507Z"
+    },
+    {
+      "id": "6f391921-fd1d-43b9-8ffd-17fbe4c01037",
+      "at": 1793948789549,
+      "kind": "content",
+      "text": "Renamed \"New bonus\" to \"Astatine\"",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:06:57.507Z"
+    },
+    {
+      "id": "cd4e1828-840f-4174-9e7d-dd7d295d9c17",
+      "at": 1793948766033,
+      "kind": "content",
+      "text": "Renamed \"Sap3\" to \"Sap\"",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:06:57.507Z"
+    },
+    {
+      "id": "b9c67912-ab17-4c50-b8b5-fe9b99f4de26",
+      "at": 1793948762740,
+      "kind": "content",
+      "text": "Renamed \"New bonus\" to \"Sap3\"",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:06:57.507Z"
+    },
+    {
+      "id": "ac49c860-b7f6-49ae-84c9-ae849a3b9e17",
+      "at": 1793948752085,
+      "kind": "content",
+      "text": "Renamed \"New bonus\" to \"Ruby Energy\"",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:06:57.507Z"
+    },
+    {
+      "id": "99fd4549-4316-44e3-813b-1149d383d3d7",
+      "at": 1793948732343,
+      "kind": "content",
+      "text": "Renamed \"New bonus\" to \"Mastry\"",
+      "actor": "Nathy365",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T07:06:57.507Z"
+    },
+    {
       "id": "1f13e92b-912b-4960-a4e3-89c6a8ce97c5",
       "at": 1793948706245,
       "kind": "content",
