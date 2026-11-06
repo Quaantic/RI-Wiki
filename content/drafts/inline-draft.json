@@ -2965,7 +2965,7 @@
               "n": 50,
               "name": "More Tree Essence",
               "cap": "20",
-              "price": "3*L",
+              "price": "floor(5e30*(1.65 + L/65)^L)",
               "multi": "1+(0.15*L)"
             }
           ]
@@ -15060,42 +15060,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.game.calculators.pages.runes/secret.groups[group3].bonuses[b1].value": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group3].bonuses[b]": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group3].bonuses[b].id": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group3].bonuses[b].name": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group3].bonuses[b].value": {
-      "actor": "Nathy365"
-    },
-    "content.game": {
-      "actor": "Quaantic"
-    },
-    "content.game.calculators": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group3].bonuses[b1].capUnit": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group3].bonuses[b1].unit": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group3].bonuses[b].capUnit": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group3].bonuses[b].unit": {
-      "actor": "Nathy365"
-    },
     "content.game.calculators.pages.runes/secret.groups[group3].bonuses[b2]": {
       "actor": "Nathy365"
     },
@@ -15760,7 +15724,7 @@
       "actor": "zzinss"
     },
     "content.game.upgrades.sections.research.upgrades[50]": {
-      "actor": "zzinss"
+      "actor": "Quaantic"
     },
     "content.game.upgrades.sections.research.upgrades[50].n": {
       "actor": "zzinss"
@@ -15772,7 +15736,7 @@
       "actor": "zzinss"
     },
     "content.game.upgrades.sections.research.upgrades[50].price": {
-      "actor": "zzinss"
+      "actor": "Quaantic"
     },
     "content.game.upgrades.sections.research.upgrades[50].multi": {
       "actor": "zzinss"
@@ -16144,6 +16108,9 @@
       "actor": "Quaantic"
     },
     "content.game.upgrades.sections.research.upgrades[44].cap": {
+      "actor": "Quaantic"
+    },
+    "content.game": {
       "actor": "Quaantic"
     }
   }
