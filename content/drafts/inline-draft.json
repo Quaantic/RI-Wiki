@@ -14293,6 +14293,34 @@
                   "value": "formula: amount"
                 }
               ]
+            },
+            {
+              "id": "group7",
+              "name": "New group",
+              "color": "#86d62b",
+              "dropChance": "",
+              "amountLabel": "Amount owned",
+              "bonuses": [
+                {
+                  "id": "b1",
+                  "name": "New bonus",
+                  "value": "formula: amount"
+                }
+              ]
+            },
+            {
+              "id": "group8",
+              "name": "New group",
+              "color": "#86d62b",
+              "dropChance": "",
+              "amountLabel": "Amount owned",
+              "bonuses": [
+                {
+                  "id": "b1",
+                  "name": "New bonus",
+                  "value": "formula: amount"
+                }
+              ]
             }
           ]
         }
@@ -14853,42 +14881,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.game.calculators.pages.runes/secret.groups[group2].id": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group2].name": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group2].color": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group2].dropChance": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group2].amountLabel": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group2].bonuses": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group2].bonuses order": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group2].bonuses[b1]": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group2].bonuses[b1].id": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group2].bonuses[b1].name": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group2].bonuses[b1].value": {
-      "actor": "Nathy365"
-    },
-    "content.game.calculators.pages.runes/secret.groups[group2].bonuses[b1].capUnit": {
-      "actor": "Nathy365"
-    },
     "content.game.calculators.pages.runes/secret.groups[group2].bonuses[b1].unit": {
       "actor": "Nathy365"
     },
@@ -15937,6 +15929,78 @@
       "actor": "Nathy365"
     },
     "content.game.calculators.pages.runes/secret.groups[group6].bonuses[b1].value": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group7]": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group7].id": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group7].name": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group7].color": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group7].dropChance": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group7].amountLabel": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group7].bonuses": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group7].bonuses order": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group7].bonuses[b1]": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group7].bonuses[b1].id": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group7].bonuses[b1].name": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group7].bonuses[b1].value": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group8]": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group8].id": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group8].name": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group8].color": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group8].dropChance": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group8].amountLabel": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group8].bonuses": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group8].bonuses order": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group8].bonuses[b1]": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group8].bonuses[b1].id": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group8].bonuses[b1].name": {
+      "actor": "Nathy365"
+    },
+    "content.game.calculators.pages.runes/secret.groups[group8].bonuses[b1].value": {
       "actor": "Nathy365"
     }
   }
