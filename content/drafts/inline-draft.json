@@ -484,6 +484,16 @@
                   }
                 ],
                 "sections": []
+              },
+              {
+                "id": "cells",
+                "name": "Cells",
+                "desc": "Cell is the passive earning stat of Life, and it is used to created animals to earn Life Shards. With them, you can unlock new animals after a determined amount of the previous animal created.",
+                "icon": "game-icons:ball-pyramid",
+                "highlights": [],
+                "facts": [],
+                "vitals": [],
+                "children": []
               }
             ],
             "sections": []
@@ -871,7 +881,8 @@
                 "highlights": [],
                 "facts": [],
                 "vitals": [],
-                "children": []
+                "children": [],
+                "contentKey": "life/tree-essence-milestones"
               }
             ],
             "contentKey": "life/tree-essence"
@@ -1514,7 +1525,8 @@
             "highlights": [],
             "facts": [],
             "vitals": [],
-            "children": []
+            "children": [],
+            "contentKey": "runes/secret"
           }
         ],
         "sections": []
@@ -15023,12 +15035,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.game.progression.stages.life/tree-essence-milestones.stages[2].num": {
-      "actor": "Quaantic"
-    },
-    "content.game.progression.stages.life/tree-essence-milestones.stages[2].requirements": {
-      "actor": "Quaantic"
-    },
     "content.game.progression.stages.life/tree-essence-milestones.stages[2].boosts": {
       "actor": "Quaantic"
     },
@@ -16077,6 +16083,66 @@
       "actor": "zzinss"
     },
     "content.wiki.categories[life].subcategories[life-generation].desc": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children order": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[runes]": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[runes].subcategories": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[runes].subcategories[secret]": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells]": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].id": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].name": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].desc": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].icon": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].highlights": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].highlights order": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].facts": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].facts order": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].vitals": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].vitals order": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].children": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].children order": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[tree-essence].children[tree-essence-milestones].contentKey": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[runes].subcategories[secret].contentKey": {
       "actor": "zzinss"
     }
   }
