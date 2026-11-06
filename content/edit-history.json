@@ -2,6 +2,76 @@
   "format": 1,
   "entries": [
     {
+      "id": "82476605-241c-4d36-9946-84d332389824",
+      "at": 1793975034042,
+      "kind": "content",
+      "text": "Updated icon of \"Monster\": skull to game-icons:monster-grasp",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:24:10.489Z"
+    },
+    {
+      "id": "e0f04e8a-76fa-4aaf-9897-7e271a9e7056",
+      "at": 1793975024525,
+      "kind": "content",
+      "text": "Updated icon of \"Frost\": wind to game-icons:frostfire",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:24:10.489Z"
+    },
+    {
+      "id": "b5d26521-36a2-416b-a7c5-835e3673280a",
+      "at": 1793974922539,
+      "kind": "content",
+      "text": "Updated icon of \"Tree\": game-icons:upgrade to game-icons:fruit-tree",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:24:10.489Z"
+    },
+    {
+      "id": "1e448279-3b35-4c96-adb7-243037d069d2",
+      "at": 1793974912128,
+      "kind": "content",
+      "text": "Updated icon of \"Tree\": branch to game-icons:upgrade",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:24:10.489Z"
+    },
+    {
+      "id": "4d166e0b-9857-4189-b61e-658cba1e3741",
+      "at": 1793974882863,
+      "kind": "content",
+      "text": "Updated icon of \"Life Generation\": refresh to game-icons:paw-heart",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:24:10.489Z"
+    },
+    {
+      "id": "4382aa17-cbf1-41dd-bae3-ba516b050be6",
+      "at": 1793974855534,
+      "kind": "content",
+      "text": "Updated icon of \"Power of Fossils\": chart to game-icons:ammonite-fossil",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:24:10.489Z"
+    },
+    {
+      "id": "f4a0d6b5-1403-4882-a003-825430ae62a2",
+      "at": 1793974839781,
+      "kind": "content",
+      "text": "Updated icon of \"Fossil\": hex to game-icons:fossil",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T14:24:10.489Z"
+    },
+    {
       "id": "b072f208-84ed-4d3f-a3e0-2214278cdd36",
       "at": 1793974551419,
       "kind": "content",
@@ -2883,76 +2953,6 @@
       "pending": false,
       "status": "saved",
       "savedAt": "2026-11-06T06:47:11.375Z"
-    },
-    {
-      "id": "704ebcc0-3ed5-4690-91d1-ac48cd4d99e4",
-      "at": 1793947594779,
-      "kind": "content",
-      "text": "Set unit of \"Strength\" (x)",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T06:47:11.375Z"
-    },
-    {
-      "id": "313f1b77-91cf-4c63-9de9-a9e59a482911",
-      "at": 1793947594730,
-      "kind": "content",
-      "text": "Set cap Unit of \"Strength\" (x)",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T06:47:11.375Z"
-    },
-    {
-      "id": "192620e0-8aab-46d8-bd2f-3ad9c185bb7b",
-      "at": 1793947594690,
-      "kind": "content",
-      "text": "Renamed \"New bonus\" to \"Strength\"",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T06:47:11.375Z"
-    },
-    {
-      "id": "fff689ec-8413-4da7-978e-8e40cde05604",
-      "at": 1793947542229,
-      "kind": "content",
-      "text": "Updated drop Chance of \"Unnatural\": empty to 4.83%",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T06:46:00.541Z"
-    },
-    {
-      "id": "066d65d4-f5e2-4955-b73e-251f7dc0ecf3",
-      "at": 1793947542182,
-      "kind": "content",
-      "text": "Renamed \"New group\" to \"Unnatural\"",
-      "actor": "Nathy365",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T06:46:00.541Z"
-    },
-    {
-      "id": "324d5ef1-aa46-4ef4-b19b-1e8c5356a465",
-      "at": 1793947502201,
-      "kind": "content",
-      "text": "Updated avatar of \"Dest\": empty to dest",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T06:45:18.125Z"
-    },
-    {
-      "id": "6d7c8f93-ffca-44d2-825d-de4dc0dc0e4f",
-      "at": 1793947502157,
-      "kind": "content",
-      "text": "Renamed \"New contributor\" to \"Dest\"",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T06:45:18.125Z"
     }
   ]
 }
