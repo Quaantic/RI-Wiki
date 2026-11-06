@@ -679,7 +679,8 @@
                     "contentKey": "life/roots-upgrades"
                   }
                 ],
-                "sections": []
+                "sections": [],
+                "contentKey": "life/roots"
               },
               {
                 "id": "apples",
@@ -689,7 +690,8 @@
                 "highlights": [],
                 "facts": [],
                 "children": [],
-                "sections": []
+                "sections": [],
+                "contentKey": "life/apples"
               }
             ],
             "sections": []
@@ -1472,6 +1474,16 @@
             "facts": [],
             "sections": [],
             "contentKey": "runes/bones"
+          },
+          {
+            "id": "secret-runes",
+            "name": "Secret ",
+            "desc": "The Secret rune is a special rune acquired with Souls, that costs 200B Californium. Rune Luck and Bulk doesn't work on it, but Rune Hunter Gamepass and Secret Runes Upgrade from Souls gives you more bulk on it!",
+            "icon": "loader-pinwheel",
+            "highlights": [],
+            "facts": [],
+            "vitals": [],
+            "children": []
           }
         ],
         "sections": []
@@ -14056,6 +14068,238 @@
               ]
             }
           ]
+        },
+        "runes/secret-runes": {
+          "kind": "amount-groups",
+          "title": "Secret ",
+          "groups": [
+            {
+              "id": "g1",
+              "name": "Dark",
+              "color": "#86d62b",
+              "dropChance": "xx%",
+              "amountLabel": "Amount owned",
+              "bonuses": [
+                {
+                  "id": "b1",
+                  "name": "Energy ",
+                  "value": "formula: amount",
+                  "capUnit": "x",
+                  "unit": "x"
+                },
+                {
+                  "id": "b",
+                  "name": "Dust",
+                  "value": "formula: amount",
+                  "capUnit": "x",
+                  "unit": "x"
+                },
+                {
+                  "id": "b2",
+                  "name": "Life Gem",
+                  "value": "formula: amount",
+                  "capUnit": "x",
+                  "unit": "x"
+                }
+              ]
+            },
+            {
+              "id": "group",
+              "name": "Void",
+              "color": "#86d62b",
+              "dropChance": "xx%",
+              "amountLabel": "Amount owned",
+              "bonuses": [
+                {
+                  "id": "b1",
+                  "name": "Money",
+                  "value": "formula: amount",
+                  "capUnit": "x",
+                  "unit": "x"
+                },
+                {
+                  "id": "b",
+                  "name": "Bones",
+                  "value": "formula: amount",
+                  "capUnit": "x",
+                  "unit": "x"
+                },
+                {
+                  "id": "b2",
+                  "name": "Research ",
+                  "value": "formula: amount",
+                  "capUnit": "x",
+                  "unit": "x"
+                }
+              ]
+            },
+            {
+              "id": "group2",
+              "name": "Unnatural ",
+              "color": "#86d62b",
+              "dropChance": "xx%",
+              "amountLabel": "Amount owned",
+              "bonuses": [
+                {
+                  "id": "b1",
+                  "name": "Strength ",
+                  "value": "formula: amount",
+                  "capUnit": "x",
+                  "unit": "x"
+                },
+                {
+                  "id": "b",
+                  "name": "Health",
+                  "value": "formula: amount",
+                  "capUnit": "x",
+                  "unit": "x"
+                },
+                {
+                  "id": "b2",
+                  "name": "Souls",
+                  "value": "formula: amount",
+                  "capUnit": "x",
+                  "unit": "x"
+                }
+              ]
+            },
+            {
+              "id": "group3",
+              "name": "Plasma",
+              "color": "#86d62b",
+              "dropChance": "xx%",
+              "amountLabel": "Amount owned",
+              "bonuses": [
+                {
+                  "id": "b1",
+                  "name": "Mine Damage",
+                  "value": "formula: amount",
+                  "capUnit": "x",
+                  "unit": "x"
+                },
+                {
+                  "id": "b",
+                  "name": "Coins",
+                  "value": "formula: amount",
+                  "capUnit": "x",
+                  "unit": "x"
+                },
+                {
+                  "id": "b2",
+                  "name": "Fossils",
+                  "value": "formula: amount",
+                  "capUnit": "x",
+                  "unit": "x"
+                }
+              ]
+            },
+            {
+              "id": "group4",
+              "name": "Infernal",
+              "color": "#86d62b",
+              "dropChance": "xx%",
+              "amountLabel": "Amount owned",
+              "bonuses": [
+                {
+                  "id": "b1",
+                  "name": "Iron",
+                  "value": "formula: amount",
+                  "capUnit": "x",
+                  "unit": "x"
+                },
+                {
+                  "id": "b",
+                  "name": "Californium ",
+                  "value": "formula: amount",
+                  "capUnit": "x",
+                  "unit": "x"
+                },
+                {
+                  "id": "b2",
+                  "name": "Bluesteel ",
+                  "value": "formula: amount",
+                  "capUnit": "x",
+                  "unit": "x"
+                }
+              ]
+            },
+            {
+              "id": "group5",
+              "name": "Soul",
+              "color": "#86d62b",
+              "dropChance": "xx%",
+              "amountLabel": "Amount owned",
+              "bonuses": [
+                {
+                  "id": "b1",
+                  "name": "Mining Perks",
+                  "value": "formula: amount",
+                  "capUnit": "x",
+                  "unit": "x"
+                },
+                {
+                  "id": "b",
+                  "name": "Tree Essence",
+                  "value": "formula: amount",
+                  "capUnit": "x",
+                  "unit": "x"
+                },
+                {
+                  "id": "b2",
+                  "name": "Magnets",
+                  "value": "formula: amount",
+                  "capUnit": "x",
+                  "unit": "x"
+                }
+              ]
+            },
+            {
+              "id": "group6",
+              "name": "Omnisoul",
+              "color": "#86d62b",
+              "dropChance": "xx%",
+              "amountLabel": "Amount owned",
+              "bonuses": [
+                {
+                  "id": "b1",
+                  "name": "Astatine",
+                  "value": "formula: amount",
+                  "capUnit": "x",
+                  "unit": "x"
+                },
+                {
+                  "id": "b",
+                  "name": "Rare Sap 3",
+                  "value": "formula: amount",
+                  "capUnit": "x",
+                  "unit": "x"
+                },
+                {
+                  "id": "b2",
+                  "name": "Ruby Energy ",
+                  "value": "formula: amount",
+                  "capUnit": "x",
+                  "unit": "x"
+                }
+              ]
+            },
+            {
+              "id": "group7",
+              "name": "Omega",
+              "color": "#86d62b",
+              "dropChance": "xx%",
+              "amountLabel": "Amount owned",
+              "bonuses": [
+                {
+                  "id": "b1",
+                  "name": "Mastery",
+                  "value": "formula: amount",
+                  "capUnit": "x",
+                  "unit": "x"
+                }
+              ]
+            }
+          ]
         }
       }
     },
@@ -14358,8 +14602,8 @@
     ]
   },
   "_baseShas": {
-    "wiki": "9589980a426f5352a7de8f3e444221f5b6374636",
     "updates": "0eb97556919ed433f706883ac61ad637d09334ca",
+    "wiki": "9589980a426f5352a7de8f3e444221f5b6374636",
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   }
 }
