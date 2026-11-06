@@ -2,6 +2,46 @@
   "format": 1,
   "entries": [
     {
+      "id": "e70b4d8f-316c-45ad-a417-148c45c6ee19",
+      "at": 1793980954586,
+      "kind": "content",
+      "text": "Updated color of \"Dark -\": #86d62b to #555555",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T16:02:35.327Z"
+    },
+    {
+      "id": "b99bde54-1a0a-4a0f-bcbe-69e1cd76cdb6",
+      "at": 1793980897137,
+      "kind": "content",
+      "text": "Renamed \"Unnatural-\" to \"Unnatural -\"",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T16:02:35.327Z"
+    },
+    {
+      "id": "8daad8e9-e0f8-4ae4-a625-1a68b45b31c3",
+      "at": 1793980893044,
+      "kind": "content",
+      "text": "Renamed \"Void-\" to \"Void -\"",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T16:02:35.327Z"
+    },
+    {
+      "id": "eb926360-a423-41b7-99a5-440594223bd4",
+      "at": 1793980890617,
+      "kind": "content",
+      "text": "Renamed \"Dark-\" to \"Dark -\"",
+      "actor": "Quaantic",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T16:02:35.327Z"
+    },
+    {
       "id": "e9f5ae73-cbe8-4384-ab1b-204efed41313",
       "at": 1793980701716,
       "kind": "content",
@@ -2956,46 +2996,6 @@
       "at": 1793973475798,
       "kind": "content",
       "text": "Updated cap of \"Monster Feed\": 30 to 75",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T14:01:13.906Z"
-    },
-    {
-      "id": "f5f4a7fd-271c-418b-9a5c-f010cf6ec4c5",
-      "at": 1793973471112,
-      "kind": "content",
-      "text": "Updated cap of \"Super Life Shards\": 50 to 100",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T14:01:13.906Z"
-    },
-    {
-      "id": "9a62bd2c-a6bb-4d61-a694-eeecc1acf3e5",
-      "at": 1793973466563,
-      "kind": "content",
-      "text": "Updated cap of \"Crystal Expansion\": 99 to 149",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T14:01:13.906Z"
-    },
-    {
-      "id": "236fcd93-88ca-46e7-af23-d3bac8723fa3",
-      "at": 1793973462470,
-      "kind": "content",
-      "text": "Updated cap of \"Money Income\": 99 to 149",
-      "actor": "Quaantic",
-      "pending": false,
-      "status": "saved",
-      "savedAt": "2026-11-06T14:01:13.906Z"
-    },
-    {
-      "id": "2a3a0cdf-f5cf-426b-a37b-4c6c0baaafab",
-      "at": 1793973457239,
-      "kind": "content",
-      "text": "Updated cap of \"Sap\": 30 to 80",
       "actor": "Quaantic",
       "pending": false,
       "status": "saved",
