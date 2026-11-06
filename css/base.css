@@ -328,13 +328,57 @@ input {
 /* "Latest" chip breathes */
 .upd-version__latest { animation: pulse-soft 2.6s ease-in-out infinite; }
 
-/* Motion is attached by the router to real page elements, not a permanent CSS loop. */
-.ri-motion-managed .reveal { animation:none; }
-.ri-motion-managed .hero__badge,
-.ri-motion-managed .hero__title,
-.ri-motion-managed .hero__sub,
-.ri-motion-managed .hero__search,
-.ri-motion-managed .hero__chips { animation:none; }
 @media(prefers-reduced-motion:reduce) { .reveal, .page-enter, .hex-texture { animation:none!important; opacity:1!important; transform:none!important; } }
 
 @media (max-width: 720px) { body { background-attachment: scroll; } body::before { background-attachment: scroll; } }
+
+/* ===== V3 · Route entrance system =====
+   Deliberately CSS-first: no JS frame loop, no layout-thrashing or library.
+   Applied on each navigation AFTER insertion and after the boot splash. */
+@keyframes ri-route-arrive {
+  from { opacity: 0; transform: translate3d(0, 15px, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes ri-item-arrive {
+  from { opacity: 0; transform: translate3d(0, 20px, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes ri-surface-arrive {
+  from { opacity: .25; transform: translate3d(0, 12px, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+.ri-page-motion.ri-motion-start {
+  animation: ri-route-arrive 620ms cubic-bezier(.2,.75,.2,1) both;
+}
+.ri-page-motion.ri-motion-start [data-ri-enter="surface"] {
+  animation: ri-surface-arrive 630ms cubic-bezier(.2,.75,.2,1) var(--ri-enter-delay, 0ms) both;
+}
+.ri-page-motion.ri-motion-start [data-ri-enter="intro"],
+.ri-page-motion.ri-motion-start [data-ri-enter="block"] {
+  animation: ri-item-arrive 590ms cubic-bezier(.2,.75,.2,1) var(--ri-enter-delay, 0ms) both;
+}
+/* Replace old paused .reveal animation *only* on v3-managed pages. */
+.ri-page-motion .reveal { animation: none; }
+.ri-page-motion.ri-motion-start .reveal[data-ri-enter] {
+  animation: ri-item-arrive 590ms cubic-bezier(.2,.75,.2,1) var(--ri-enter-delay, 0ms) both;
+}
+.ri-page-motion.ri-motion-start .reveal[data-ri-enter="surface"] {
+  animation: ri-surface-arrive 630ms cubic-bezier(.2,.75,.2,1) var(--ri-enter-delay, 0ms) both;
+}
+/* Offscreen content is animated only when scrolled into view. */
+.ri-page-motion [data-ri-enter="scroll"]:not(.ri-entered) { opacity: 0; }
+.ri-page-motion.ri-motion-start [data-ri-enter="scroll"].ri-entered,
+.ri-page-motion.ri-motion-start .reveal[data-ri-enter="scroll"].ri-entered {
+  animation: ri-item-arrive 590ms cubic-bezier(.2,.75,.2,1) var(--ri-enter-delay, 0ms) both;
+}
+.ri-page-motion .ri-search-reenter {
+  animation: ri-item-arrive 420ms cubic-bezier(.2,.75,.2,1) var(--ri-enter-delay, 0ms) both;
+}
+
+:root.reduce-motion .ri-page-motion,
+:root.reduce-motion .ri-page-motion [data-ri-enter] { animation: none !important; opacity: 1 !important; transform: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  .ri-page-motion, .ri-page-motion [data-ri-enter] {
+    animation: none !important; opacity: 1 !important; transform: none !important;
+  }
+}

@@ -1,157 +1,141 @@
-// Route transitions for the static RI Wiki (no animation library required).
-// All transitions are compositor-friendly (opacity + transform), interruptible,
-// and never delay navigation, input, or rendering. Works in the inline Admin too.
+// RI Wiki page motion v3.
+// A reliable CSS-first entrance on EVERY hash route (including on first boot),
+// plus optional IntersectionObserver reveals for below-the-fold content.
+// No animation library, no text-by-text rewriting and no layout animation.
 
-const EASE = 'cubic-bezier(0.22, 1, 0.36, 1)';
-const SURFACES = '.hero, .cat-hero, .upd-hero, .page-head, .ri-admin-section, .notfound';
-const INTRO = [
+const INTRO_SELECTORS = [
   '.hero__badge', '.hero__title', '.hero__sub', '.hero__search',
   '.hero__chips', '.hero__art', '.hero__stats',
-  '.cat-hero__crumbs', '.cat-hero__title', '.cat-hero__tagline',
-  '.cat-hero__facts', '.cat-hero .vitals',
-  '.page-head h1', '.page-head p',
-  '.ri-page-content-tools', '.sub-pills-wrap', '.search-hero',
-].join(',');
-const BLOCKS = [
-  '.section-head', '.section-title', '.cat-card', '.info-card', '.sub-link',
-  '.upgrade-card', '.stage-card', '.milestone-card', '.rune-card',
-  '.ore-card', '.layer-card', '.area-card', '.gear-card',
-  '.reset-calc-card', '.table-wrap', '.result-item', '.ri-text-section',
-  '.ri-faq-item', '.upd-version', '.upd-group', '.empty-state',
-  '.stat-card', '.feature-card', '.reveal',
-].join(',');
+  '.cat-hero__crumbs', '.cat-hero__icon', '.cat-hero__name',
+  '.cat-hero__tagline', '.cat-hero__description', '.cat-hero__facts',
+  '.cat-hero .vitals', '.page-head h1', '.page-head p',
+  '.sub-pills-wrap', '.search-hero', '.ri-page-content-tools',
+].join(', ');
 
-let current = null;
+const CONTENT_SELECTORS = [
+  '.section-head', '.section-title', '.cat-card', '.info-card',
+  '.sub-link', '.upgrade-card', '.stage-card', '.milestone-card',
+  '.rune-card', '.ore-card', '.layer-card', '.area-card',
+  '.gear-card', '.reset-calc-card', '.table-wrap', '.result-item',
+  '.ri-text-section', '.ri-faq-item', '.upd-version', '.upd-group',
+  '.empty-state', '.stat-card', '.feature-card', '.sub-pager',
+  '.section > p', '.section > h2', '.section > h3',
+].join(', ');
 
-function disabled() {
+let active = null;
+
+function motionDisabled() {
   return document.documentElement.classList.contains('reduce-motion') ||
     (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false);
 }
 
-function schedule(state, el, delay = 0, kind = 'block') {
-  if (!el?.isConnected || state.cancelled || disabled() || typeof el.animate !== 'function') return;
-  const compact = window.matchMedia?.('(max-width: 720px)').matches ?? false;
-  const mobileDistance = compact ? 13 : 20;
-  const distance = kind === 'surface' ? mobileDistance : Math.round(mobileDistance * .8);
-  const duration = compact ? 365 : kind === 'surface' ? 470 : 430;
-  const frames = kind === 'surface'
-    ? [{ opacity: .12, transform: `translate3d(0,${distance}px,0)` }, { opacity: 1, transform: 'translate3d(0,0,0)' }]
-    : [{ opacity: 0, transform: `translate3d(0,${distance}px,0)` }, { opacity: 1, transform: 'translate3d(0,0,0)' }];
-  const animation = el.animate(frames, { duration, delay, easing: EASE, fill: 'both' });
-  state.animations.add(animation);
-  const cleanup = () => {
-    state.animations.delete(animation);
-    // Base CSS remains visible: do not leave a lingering fill layer or transform.
-    animation.cancel();
-  };
-  animation.addEventListener('finish', cleanup, { once: true });
+function disconnect() {
+  if (!active) return;
+  active.cancelled = true;
+  active.observer?.disconnect();
+  active.bootObserver?.disconnect();
+  if (active.failsafe) clearTimeout(active.failsafe);
+  active = null;
 }
 
-function begin(state, root) {
-  if (state.cancelled || !root.isConnected || disabled()) return;
-  const viewport = window.innerHeight || 800;
-  const seen = new Set();
+export function clearPageMotion() { disconnect(); }
 
-  // The hero's background enters first; then each piece of content arrives in
-  // a visibly ordered sequence. Only the visible portion animates at load.
-  const surfaces = [...root.querySelectorAll(SURFACES)].filter(el => {
-    const r = el.getBoundingClientRect();
-    return r.bottom >= -30 && r.top <= viewport + 40;
-  }).slice(0, 3);
-  surfaces.forEach((el, i) => { seen.add(el); schedule(state, el, i * 45, 'surface'); });
-
-  let introIndex = 0;
-  for (const el of root.querySelectorAll(INTRO)) {
-    if (seen.has(el) || el.closest('[hidden]')) continue;
-    const r = el.getBoundingClientRect();
-    if (r.bottom < -30 || r.top > viewport + 65) continue;
-    seen.add(el);
-    schedule(state, el, 65 + Math.min(introIndex++, 7) * 62, 'intro');
-    if (introIndex >= 12) break;
-  }
-
-  // The observer only schedules elements as they enter the viewport. Large
-  // upgrade grids don't create hundreds of concurrent animations.
-  const candidates = [];
-  for (const el of root.querySelectorAll(BLOCKS)) {
-    if (seen.has(el) || el.closest('[hidden]')) continue;
-    // When a text section has animated descendants, animate the section only.
-    if (el.closest('.ri-text-section') && !el.classList.contains('ri-text-section')) continue;
-    seen.add(el);
-    candidates.push(el);
-  }
-  if (!candidates.length) return;
-
-  // Animate what is already on screen *synchronously*, before the first paint.
-  // Waiting for an IntersectionObserver callback here made cards flash fully
-  // visible for a frame, which looked like there was no transition.
-  const immediate = [], deferred = [];
-  for (const el of candidates) {
-    const r = el.getBoundingClientRect();
-    (r.bottom >= -25 && r.top <= viewport + 65 ? immediate : deferred).push(el);
-  }
-  immediate.sort((a, b) => {
-    const aa = a.getBoundingClientRect(), bb = b.getBoundingClientRect();
-    return aa.top - bb.top || aa.left - bb.left;
-  });
-  immediate.slice(0, 28).forEach((el, i) => schedule(state, el, 105 + Math.min(i, 7) * 53));
-  if (!deferred.length) return;
-
-  const cap = 180;
-  if (typeof IntersectionObserver !== 'function') return;
-  state.observer = new IntersectionObserver(entries => {
-    if (state.cancelled) return;
-    const entering = entries.filter(entry => entry.isIntersecting)
-      .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top || a.boundingClientRect.left - b.boundingClientRect.left);
-    entering.forEach((entry, i) => {
-      state.observer?.unobserve(entry.target);
-      const el = entry.target;
-      // All blocks in a single entering group get a bounded cascade.
-      schedule(state, el, Math.min(i, 7) * 56 + 90);
-    });
-  }, { root: null, rootMargin: '0px 0px 65px 0px', threshold: 0.025 });
-  for (const el of deferred.slice(0, cap)) state.observer.observe(el);
-}
-
-export function clearPageMotion() {
-  if (!current) return;
-  current.cancelled = true;
-  current.observer?.disconnect();
-  current.bootObserver?.disconnect();
-  for (const animation of current.animations) animation.cancel();
-  current.animations.clear();
-  current = null;
-}
-
+// Called after the new page is inserted, in the same JavaScript task as the DOM
+// replacement. Attributes/classes are added BEFORE the browser's next paint,
+// so they cannot flash as unanimated content for a frame.
 export function mountPageMotion(root, { animate = true } = {}) {
-  clearPageMotion();
-  root.classList.add('ri-motion-managed');
-  // Legacy cards have a paused reveal by default. The router now owns their
-  // entrance, but every card remains readable if animations are disabled.
+  disconnect();
   root.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
-  if (!animate || disabled() || typeof root.animate !== 'function') return;
+  if (!animate || motionDisabled() || !root.isConnected) return;
 
-  const state = { animations: new Set(), observer: null, bootObserver: null, cancelled: false };
-  current = state;
+  const state = { cancelled: false, observer: null, bootObserver: null, failsafe: null };
+  active = state;
+  root.classList.add('ri-page-motion');
+  const viewport = Math.max(window.innerHeight || 700, 400);
+  const seen = new Set();
+  const visible = [];
+  const offscreen = [];
+
+  const add = (el, priority) => {
+    if (!el || !el.isConnected || seen.has(el) || el.closest('[hidden], details:not([open])')) return;
+    // Avoid animating the internal elements of a card twice.
+    if (!priority && el.closest('.ri-text-section') && !el.classList.contains('ri-text-section')) return;
+    seen.add(el);
+    const box = el.getBoundingClientRect();
+    if (box.bottom < -30) return;
+    if (box.top <= viewport + 65) visible.push({ el, priority, top: box.top, left: box.left });
+    else offscreen.push(el);
+  };
+
+  root.querySelectorAll('.hero, .cat-hero, .upd-hero, .page-head, .notfound').forEach(el => add(el, 0));
+  root.querySelectorAll(INTRO_SELECTORS).forEach(el => add(el, 1));
+  root.querySelectorAll(CONTENT_SELECTORS).forEach(el => add(el, 2));
+
+  // Order by actual visual position, not DOM nesting. Delay is bounded: large
+  // upgrade grids never become a several-second cascade.
+  visible.sort((a, b) => a.top - b.top || a.left - b.left || a.priority - b.priority);
+  let n = 0;
+  for (const { el, priority } of visible.slice(0, 46)) {
+    const delay = priority === 0 ? 50 : 135 + Math.min(n++, 8) * 75;
+    el.style.setProperty('--ri-enter-delay', `${delay}ms`);
+    el.dataset.riEnter = priority === 0 ? 'surface' : priority === 1 ? 'intro' : 'block';
+  }
+  // Only elements that will be observed are hidden. Avoid hiding hundreds of
+  // cards on a long upgrades page or creating a fallback that needs a timer.
+  if ('IntersectionObserver' in window) {
+    const targets = offscreen.slice(0, 150);
+    targets.forEach(el => { el.dataset.riEnter = 'scroll'; });
+    if (targets.length) {
+      state.observer = new IntersectionObserver(entries => {
+        if (state.cancelled) return;
+        const entering = entries.filter(entry => entry.isIntersecting).sort((a,b) =>
+          a.boundingClientRect.top - b.boundingClientRect.top || a.boundingClientRect.left - b.boundingClientRect.left);
+        entering.forEach((entry,i) => {
+          state.observer?.unobserve(entry.target);
+          entry.target.style.setProperty('--ri-enter-delay', `${Math.min(i, 6) * 65}ms`);
+          entry.target.classList.add('ri-entered');
+        });
+      }, { rootMargin: '0px 0px 70px 0px', threshold: 0.02 });
+      targets.forEach(el => state.observer.observe(el));
+      // Safety: if the observer never fires (tab suspension etc.), content
+      // is always made visible eventually, without requiring user input.
+      state.failsafe = setTimeout(() => {
+        if (state.cancelled) return;
+        targets.forEach(el => { el.style.animation = 'none'; el.classList.add('ri-entered'); });
+        state.observer?.disconnect();
+      }, 20000);
+    }
+  }
+
+  const start = () => {
+    if (state.cancelled || !root.isConnected) return;
+    state.bootObserver?.disconnect();
+    // This CSS class triggers route and individual element animations. Unlike
+    // the old Web Animations API implementation, no el.animate() call is needed.
+    root.classList.add('ri-motion-start');
+  };
   const boot = document.getElementById('boot');
   if (boot && !boot.classList.contains('is-done')) {
+    // Initial site load: the splash obscures the first ~half second. Wait
+    // until it begins fading so the visitor actually sees the entrance.
     state.bootObserver = new MutationObserver(() => {
-      if (!boot.classList.contains('is-done')) return;
-      state.bootObserver?.disconnect();
-      if (!state.cancelled) begin(state, root);
+      if (boot.classList.contains('is-done')) start();
     });
     state.bootObserver.observe(boot, { attributes: true, attributeFilter: ['class'] });
   } else {
-    begin(state, root);
+    start();
   }
 }
 
-// Search results can be replaced without a hash navigation.
 export function animateDynamicContent(root) {
-  if (disabled() || !root?.isConnected) return;
-  const state = current;
-  if (!state || state.cancelled) return;
+  if (!root?.isConnected || motionDisabled()) return;
   root.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
-  [...root.querySelectorAll('.result-item, .reveal')].slice(0, 16)
-    .forEach((el, i) => schedule(state, el, Math.min(i, 7) * 48, 'block'));
+  // Search results are regenerated without a route change. Keep the same
+  // compositor-only reveal, without modifying the actual search results.
+  for (const [i, el] of [...root.querySelectorAll('.result-item')].slice(0, 16).entries()) {
+    el.style.setProperty('--ri-enter-delay', `${Math.min(i, 7) * 55}ms`);
+    el.classList.remove('ri-search-reenter');
+    void el.offsetWidth;
+    el.classList.add('ri-search-reenter');
+  }
 }

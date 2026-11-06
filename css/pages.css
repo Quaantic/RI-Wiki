@@ -2427,3 +2427,18 @@ html:not(.ri-edit-on) [data-release-empty] { display:none; }
 
 /* Home hero retains its original gradients and illustration, without the large animated honeycomb overlay. */
 .hero__hex { display:none; }
+
+/* FAQ v3: every answer is collapsed until the question is clicked. */
+.ri-faq-item summary { min-height: 38px; user-select: none; }
+.ri-faq-item summary:hover .ri-faq-question { color: var(--c-accent); }
+.ri-faq-item[open] .ri-text-section__body {
+  animation: ri-faq-open 240ms cubic-bezier(.2,.8,.2,1) both;
+}
+@keyframes ri-faq-open {
+  from { opacity: 0; transform: translate3d(0,-7px,0); }
+  to   { opacity: 1; transform: translate3d(0,0,0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ri-faq-item[open] .ri-text-section__body { animation: none; }
+}
+:root.reduce-motion .ri-faq-item[open] .ri-text-section__body { animation: none; }
