@@ -2901,7 +2901,7 @@
               "name": "More Souls ",
               "cap": "55",
               "price": "3*L",
-              "multi": "1"
+              "multi": "1+(0.1*L)"
             },
             {
               "n": 47,
