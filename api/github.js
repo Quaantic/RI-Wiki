@@ -24,23 +24,21 @@ module.exports=async(req,res)=>{
    || method==='PUT' && /^images\/credits\/[a-zA-Z0-9-]+\.(png|jpg|jpeg|webp|gif)$/.test(content||'') && !body?.sha;
   if(!allowed || !['PUT','DELETE'].includes(method) || body?.branch!=='main') throw Object.assign(Error('Permission denied. Publishing requires the protected Publish endpoint.'),{status:403});
   if(method==='PUT' && content==='content/drafts/inline-draft.json') {
-    // All contributors share ONE cooldown. Protect the write on the server,
-    // not only in the editor UI where a second browser could skip the check.
-    let decoded;
+    // All editors use the same GitHub SHA compare-and-swap. The browser
+    // performs a three-way merge. No global cooldown: autosave must accept
+    // independent edits from different collaborators promptly.
     try {
-      decoded=JSON.parse(Buffer.from(body?.content || '', 'base64').toString('utf8'));
+      const decoded=JSON.parse(Buffer.from(body?.content || '', 'base64').toString('utf8'));
       const {validateDocuments}=await import('../js/content-schema.js');
       validateDocuments(decoded);
     } catch {
-      throw Object.assign(Error('Invalid shared draft data. Save cancelled to protect the wiki.'),{status:400});
+      throw Object.assign(Error('Invalid shared draft data. Nothing was written; your local edits are preserved.'),{status:400});
     }
-    const recent=await github(token,`${PREFIX}/commits?path=${encodeURIComponent(content)}&per_page=15`);
-    const saves=recent.filter(item=>/^(RI Wiki: save editor data|Save inline draft)$/i.test(item?.commit?.message?.split('\n')[0]?.trim()||''));
-    const last=Math.max(0,...saves.map(item=>Date.parse(item?.commit?.committer?.date||item?.commit?.author?.date||'')).filter(Number.isFinite));
-    const remaining=60_000-(Date.now()-last);
-    if(remaining>0) {
-      res.setHeader('Retry-After',String(Math.ceil(remaining/1000)));
-      throw Object.assign(Error(`Save for Everyone is on a global 1-minute cooldown. Try again in ${Math.ceil(remaining/1000)} seconds. No edits were overwritten.`),{status:429});
+    if (typeof body?.sha !== 'string' || !/^[a-f0-9]{40}$/i.test(body.sha)) {
+      // For a new file the client may omit sha; make sure no draft exists
+      // before accepting an initial write.
+      const existing=await github(token,`${PREFIX}/contents/content/drafts/inline-draft.json?ref=main`).catch(e=>{if(e.status===404)return null;throw e;});
+      if(existing) throw Object.assign(Error('Shared draft exists; Sync before saving. No data was overwritten.'),{status:409});
     }
   }
   const safe={branch:'main',message:'RI Wiki: save editor data',...(body.sha?{sha:body.sha}:{}),...(method==='PUT'?{content:body.content}:{})};

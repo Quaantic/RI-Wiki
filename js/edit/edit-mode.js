@@ -304,7 +304,12 @@ function updateToolbar() {
   layer.bar.querySelector('[data-edit-undo]').disabled = !ready || !draft.canUndo();
   layer.bar.querySelector('[data-edit-sync]').disabled = !ready;
   layer.bar.querySelector('[data-edit-save]').disabled = !ready;
-  layer.bar.querySelector('[data-edit-publish]').disabled = !ready || !session.canPublish;
+  // Restore/dowloaded snapshots require an explicit Share click; ordinary
+  // editing is automatic and shows only Publish.
+  layer.bar.querySelector('[data-edit-save]').hidden = !draft.hasRestoredDraft();
+  const saveLabel=layer.bar.querySelector('[data-edit-save] .ri-save-full');
+  if(saveLabel)saveLabel.textContent=draft.hasRestoredDraft()?'Share restored draft':'Save for everyone';
+  layer.bar.querySelector('[data-edit-publish]').disabled = !ready || !session.canPublish || draftDirty || Boolean(autosaveWorking) || Boolean(autosaveTimer);
   layer.bar.querySelector('[data-edit-publish]').hidden = !session.canPublish;
   layer.bar.querySelector('[data-edit-discard]').disabled = !ready;
   layer.bar.querySelector('[data-edit-restore]').disabled = !ready;
@@ -329,9 +334,9 @@ function updateToolbar() {
   } else if(readRecovery(formRecoveryKey())) {
     barStatus('Unfinished edits saved on this device','dirty');
   } else if (draftDirty) {
-    barStatus(localSaved?'Saved on this device · not shared':'Local backup unavailable — download your draft', 'dirty');
+    barStatus(draft.hasRestoredDraft() ? 'Restored snapshot staged · not shared' : (localSaved ? 'Unsynced edits · autosave pending' : 'Local backup unavailable — download your draft'), 'dirty');
   } else if (draftOnline) {
-    barStatus('Shared GitHub draft · auto-sync every 15s');
+    barStatus('All edits synced · GitHub shared draft');
   } else {
     barStatus('Everything saved');
   }
@@ -350,7 +355,7 @@ function buildToolbar() {
     </button>
     <button class="btn btn--ghost btn--sm" data-edit-undo title="Undo the last change in the draft (Ctrl+Z)">${icon('undo-2', 13)} Undo</button>
     <button class="btn btn--ghost btn--sm" data-edit-sync title="Load your collaborators' latest shared changes from GitHub">${icon('refresh-cw', 13)} Sync</button>
-    <button class="btn btn--ghost btn--sm" data-edit-save title="Merge the latest shared changes and save for all editors">${icon('save', 13)} <span class="ri-save-full">Save for everyone</span><span class="ri-save-short">Save</span></button>
+    <button class="btn btn--ghost btn--sm" data-edit-save hidden title="Merge the latest shared changes and save for all editors">${icon('save', 13)} <span class="ri-save-full">Save for everyone</span><span class="ri-save-short">Save</span></button>
     <button class="btn btn--ghost btn--sm" data-edit-download title="Download a recovery copy of your current draft">${icon('download', 13)} Download draft</button>
     <button class="btn btn--ghost btn--sm" data-edit-restore title="Open a downloaded wiki draft in this browser">${icon('upload', 13)} Restore draft</button>
     <input type="file" accept=".json,application/json" data-edit-restore-file hidden>
@@ -587,6 +592,9 @@ function onToolbarAction(button) {
           : 'Publish the changes to the live Wiki? A backup is created first.';
         if (!window.confirm(message)) return;
         if (popState) closePopover(true);
+        barStatus('Syncing draft before publishing…', 'busy');
+        cancelAutosave();
+        await draft.saveDraft(session.token, confirmReleaseOrder, {automatic:true});
         barStatus('Publishing…', 'busy');
         await draft.publishChanges(session.token, confirmReleaseOrder);
         session.syncError = '';
@@ -604,7 +612,7 @@ function onToolbarAction(button) {
         notify('Draft discarded. The published content is showing.');
       }
     } catch (error) {
-      if (error.name === 'SyncConflict') session.syncError = error.release ? 'Update Log order conflict' : 'Sync conflict — Save to choose versions';
+      if (error.name === 'SyncConflict') session.syncError = error.release ? 'Update Log order conflict' : 'Sync conflict — click Sync to review';
       notify(error.message || 'Operation failed.', true);
     } finally {
       session.busy = false;
@@ -658,10 +666,10 @@ async function startSession(token, {deferRender=false}={}) {
     }
     barStatus('Loading repository content…', 'busy');
     const info = await draft.initSession(token, user.login);
-    if (info.invalidSharedDraft) session.syncError = 'Shared draft is invalid — Save can repair it after making a backup';
-    if (info.contentConflict) session.syncError = 'Draft conflict — open Save to choose versions';
+    if (info.invalidSharedDraft) session.syncError = 'Shared draft cannot be loaded — keep your downloaded recovery copy';
+    if (info.contentConflict) session.syncError = 'Draft conflict — click Sync to review';
     else if (info.orderConflict) session.syncError = 'Update Log order conflict';
-    else if (info.recoveryConflict) session.syncError = 'Sync conflict — Save to choose versions';
+    else if (info.recoveryConflict) session.syncError = 'Sync conflict — click Sync to review';
     if (info.sanitized) {
       notify(`${info.sanitized} invalid resource entr${info.sanitized === 1 ? 'y was' : 'ies were'} removed from your draft to keep editing working.`, true);
     }
@@ -686,6 +694,7 @@ async function startSession(token, {deferRender=false}={}) {
     }
     updateToolbar();
     if(!deferRender&&session.editing)restoreForm();
+    if(info.recovered && !info.invalidSharedDraft)queueAutosave(12000);
   } catch (error) {
     notify(error.message || 'Failed to load the editing session.', true);
     barStatus('Failed to load editing session');
@@ -723,6 +732,39 @@ function setEditing(on) {
   applyDragMode();
 }
 
+// Auto-save shared drafts after a pause in editing. This does NOT Publish.
+// 10s debounce keeps GitHub commits under control and each PUT uses the
+// remote SHA to prevent one contributor from overwriting another.
+let autosaveTimer=null, autosaveWorking=null, autosaveFailures=0;
+function cancelAutosave(){clearTimeout(autosaveTimer);autosaveTimer=null;}
+function queueAutosave(delay=10000){
+  if(!session.ready||!session.allowed||!draft.draftDirty()||draft.hasRestoredDraft())return;
+  cancelAutosave();
+  autosaveTimer=setTimeout(()=>{autosaveTimer=null;void runAutosave();},delay);
+  updateToolbar();
+}
+async function runAutosave(){
+  if(!session.ready||!session.allowed||!draft.draftDirty()||draft.hasRestoredDraft()||autosaveWorking)return;
+  if(session.busy||popState||dragSource||document.hidden){queueAutosave(6000);return;}
+  autosaveWorking=(async()=>{
+    try{
+      barStatus('Saving changes for everyone…','busy');
+      // Unresolved conflicts must not be chosen silently by background saves.
+      await draft.saveDraft(session.token, undefined,{automatic:true});
+      autosaveFailures=0;
+      session.syncError='';
+      if(draft.draftDirty())queueAutosave(4000);
+    }catch(error){
+      autosaveFailures=Math.min(autosaveFailures+1,5);
+      session.syncError=error?.name==='SyncConflict'?'Editing conflict · use Sync to review':'Autosave failed · local recovery kept';
+      console.warn('[editor-autosave]',error.message);
+      // Preserve unsaved work. Do not flood Vercel/GitHub on an outage.
+      if(error.name!=='SyncConflict')queueAutosave(Math.min(120000,12000*2**(autosaveFailures-1)));
+    }finally{autosaveWorking=null;updateToolbar();}
+  })();
+  return autosaveWorking;
+}
+window.addEventListener('ri-editor-dirty',()=>queueAutosave());
 let sharedRefreshTimer;
 let sharedRefreshChecking = null;
 async function syncSharedNow() {
@@ -760,19 +802,19 @@ function startSharedRefresh() {
         notify('Synced your collaborators’ changes. Your unsaved edits are still here.');
       }
     } catch (error) {
-      console.warn('[editor-sync]', error.message);
+      if (!refresh._lastWarn || Date.now()-refresh._lastWarn>60000) {console.warn('[editor-sync]',error.message);refresh._lastWarn=Date.now();}
       session.syncError = error.release ? 'Update Log order conflict'
-        : error.name === 'SyncConflict' ? 'Sync conflict — Save to choose versions' : 'Sync unavailable — local edits kept';
+        : error.name === 'SyncConflict' ? 'Sync conflict — click Sync to review' : 'Sync unavailable — local edits kept';
     } finally {
       sharedRefreshChecking = null;
       updateToolbar();
     }
   };
   const check = () => {
-    if (!session.ready || session.busy || sharedRefreshChecking || popState || dragSource || document.hidden) return;
+    if (!session.ready || session.busy || sharedRefreshChecking || autosaveWorking || popState || dragSource || document.hidden) return;
     sharedRefreshChecking = refresh();
   };
-  sharedRefreshTimer = setInterval(check, 15000);
+  sharedRefreshTimer = setInterval(check, 30000);
   window.addEventListener('focus', check);
 }
 
@@ -794,6 +836,7 @@ async function doUndo() {
     draft.applyDraftToSite();
     await rerender({ scroll: 'preserve' });
     window.dispatchEvent(new CustomEvent('ri-edit-content'));
+    window.dispatchEvent(new CustomEvent('ri-editor-dirty'));
     updateToolbar();
     notify(`Undone: ${result.message}.`);
   } catch (error) {
@@ -1435,7 +1478,7 @@ function renderVersionsPage(root) {
   root.innerHTML = `
     <section class="section ri-admin-section">
       <div class="ri-versions-actions">
-        <button type="button" class="btn btn--ghost btn--sm" data-ri-versions-save>${icon('save', 13)} Save for everyone + version</button>
+        <button type="button" class="btn btn--ghost btn--sm" data-ri-versions-save>${icon('save', 13)} Create recovery version</button>
       </div>
       <div data-ri-versions-list><p class="ri-color-row__empty">Loading versions…</p></div>
     </section>
@@ -1473,7 +1516,8 @@ function renderVersionsPage(root) {
       // A version file alone used to leave the real shared draft unsaved,
       // so a refresh appeared to erase edits. Save and VERIFY the shared
       // draft first; never claim success for a backup-only snapshot.
-      const saved = await draft.saveDraft(session.token, confirmReleaseOrder);
+      if(draft.hasRestoredDraft() && !window.confirm('Share this restored snapshot with all editors before creating a version?')) return;
+      const saved = await draft.saveDraft(session.token, confirmReleaseOrder, {automatic:true});
       const name = await draft.createVersion(session.token, draft.snapshotDocs(), 'Manual version', 'save');
       session.syncError = '';
       draft.applyDraftToSite();

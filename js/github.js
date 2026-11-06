@@ -22,7 +22,14 @@ export async function githubRequest(url, token, options = {}) {
   const response = token === 'ri-session'
     ? await fetch(`${SITE_ORIGIN}/api/github`, { method:'POST', credentials:'include', cache:'no-store', headers:{'Content-Type':'application/json','X-RI-Editor':'1'}, body:JSON.stringify({url,method:requestOptions.method || 'GET',body:requestOptions.body}) })
     : await fetch(url, { cache: 'no-store', ...requestOptions, headers: { ...githubHeaders(token, Boolean(requestOptions.body)), ...requestOptions.headers } });
-  const payload = await response.json().catch(() => ({}));
+  const responseText = await response.text();
+  let payload;
+  try { payload = responseText ? JSON.parse(responseText) : {}; }
+  catch {
+    const error = new Error(`GitHub proxy returned an invalid response (HTTP ${response.status}). Your local edits are safe; retry when the connection recovers.`);
+    error.status = response.status;
+    throw error;
+  }
   if (response.status === 404 && allowNotFound) {
     // Recurso realmente inexistente (ex.: o esboco inline ainda nao foi
     // salvo). Erros de autenticacao/permissao chegam aqui como 401/403 e
@@ -43,6 +50,17 @@ export async function githubRequest(url, token, options = {}) {
     }
     fail(message);
   }
+  // GitHub Contents API omits the base64 body for files > 1 MB and sends
+  // {content:'', encoding:'none', git_url}. An empty value is NOT corrupt JSON.
+  // Fetch the actual blob before the draft/session code attempts to parse it.
+  if (payload?.type === 'file' && payload.sha && (!payload.content || payload.encoding === 'none')) {
+    const blobUrl = `https://api.github.com/repos/${REPOSITORY}/git/blobs/${encodeURIComponent(payload.sha)}`;
+    const blob = await githubRequest(blobUrl, token);
+    if (blob.encoding !== 'base64' || !blob.content) {
+      throw new Error('GitHub did not return the complete file. Your local edits are safe; retry Sync later.');
+    }
+    return { ...payload, content: blob.content, encoding: 'base64' };
+  }
   return payload;
 }
 
@@ -55,7 +73,7 @@ export async function githubUser(token) {
 
 export async function publishDocuments(body) {
   const response=await fetch(`${SITE_ORIGIN}/api/publish`, {method:'POST',credentials:'include',cache:'no-store',headers:{'Content-Type':'application/json','X-RI-Editor':'1'},body:JSON.stringify(body)});
-  const result=await response.json();
+  const result=await response.json().catch(()=>({message:`Publish is unavailable (HTTP ${response.status}); no confirmation was received.`}));
   if(!response.ok) throw Object.assign(new Error(result.message || 'Publish failed. Your draft is preserved.'),{status:response.status});
   return result;
 }

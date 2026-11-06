@@ -19,7 +19,9 @@ html.ri-edit-bar .sidebar { top: var(--ri-edit-bar-h); }
 .ri-edit-popover__warn[hidden],
 #ri-edit-chip[hidden],
 #ri-edit-bar[hidden],
-.ri-edit-toast[hidden] { display: none !important; }
+.ri-edit-toast[hidden],
+.ri-edit-bar [data-edit-save][hidden],
+.ri-edit-bar [data-edit-publish][hidden] { display: none !important; }
 
 .ri-edit-bar {
   position: fixed;

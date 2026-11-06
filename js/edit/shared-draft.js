@@ -6,6 +6,7 @@ import { mergeDocuments } from './merge.js';
 // changed. Otherwise the next session replays the same stale draft delta.
 export function sharedDraftNeedsRebase(file, shas) {
   if (!file) return false;
+  if (!file?.content || file.encoding === 'none') throw new Error('GitHub did not return the complete shared draft. Please retry; do not overwrite it.');
   const payload = JSON.parse(decodeBase64Content(file.content));
   return Object.keys(FILES).some((name) => payload._baseShas?.[name] !== shas[name]);
 }
@@ -13,6 +14,7 @@ export function sharedDraftNeedsRebase(file, shas) {
 // The shared draft records the published blob SHAs it was based on. This
 // preserves new site content when a collaborator keeps editing an older draft.
 export async function readSharedDraft(file, published, shas, token, keepSharedOrder) {
+  if (!file?.content || file.encoding === 'none') throw new Error('GitHub did not return the complete shared draft. Please retry; do not overwrite it.');
   const payload = JSON.parse(decodeBase64Content(file.content));
   const docs = { wiki: payload.wiki, game: payload.game, updates: payload.updates };
   validateDocuments(docs);

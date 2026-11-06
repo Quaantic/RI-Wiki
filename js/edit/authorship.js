@@ -14,9 +14,9 @@ function values(value, path = 'content', result = {}) {
   return result;
 }
 export function authorsForChanges(base, docs, authors = {}, actor = '') {
-  const before = values(base), after = values(docs), next = { ...authors };
+  const before = values(base), after = values(docs), next = Object.fromEntries(Object.entries(authors).slice(-350).map(([path, info]) => [path, {actor:String(info?.actor || '').slice(0,80)}]));
   for (const path of new Set([...Object.keys(before), ...Object.keys(after)])) {
-    if (before[path] !== after[path]) next[path] = { actor, value: after[path] ?? 'undefined' };
+    if (before[path] !== after[path]) next[path] = { actor: String(actor).slice(0,80) };
   }
   return next;
 }

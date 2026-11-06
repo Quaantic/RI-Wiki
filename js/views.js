@@ -89,9 +89,9 @@ function runePlaceholderSection(sub) {
     <section class="section">
       <div class="empty-state">
         ${icon('rune', 26)}
-        <h3>${esc(sub.name)} rune cards coming soon</h3>
-        <p style="max-width:46ch">Riches is the first family using the full card layout — ${esc(sub.name)} gets the same treatment next. Fill its runes in <code>js/data/runes.js</code>.</p>
-        <a class="btn btn--ghost" href="#/runes/money">${icon('arrow-right', 15)} See the Riches layout</a>
+        <h3>Article coming soon</h3>
+        <p style="max-width:46ch">We're preparing a detailed guide to ${esc(sub.name)} runes, including rarities, requirements, and the bonuses each rune provides. Check back soon!</p>
+        <a class="btn btn--ghost" href="#/runes">${icon('arrow-right', 15)} Explore other runes</a>
       </div>
     </section>`;
 }
@@ -1157,8 +1157,8 @@ export const subcategoryView = {
           <section class="section">
             <div class="empty-state">
               ${icon('info', 26)}
-              <h3>More details coming soon</h3>
-              <p style="max-width:42ch">This Wiki page is ready for more information. Its description and key details are available above.</p>
+              <h3>Article coming soon</h3>
+              <p style="max-width:42ch">We're working on this guide! You'll find useful tips, progression details, requirements, and bonuses here as the article is completed.</p>
               <a class="btn btn--ghost" href="#/${cat.id}">${icon('arrow-right', 15)} Back to ${esc(cat.name)}</a>
             </div>
           </section>

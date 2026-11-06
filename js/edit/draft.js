@@ -140,7 +140,9 @@ function fieldWord(key) {
 function logChange(kind, text) {
   changeLog.push({ id: crypto.randomUUID(), at: Date.now(), kind, text, actor: draftState.actor });
   if (changeLog.length > CHANGE_LOG_MAX) changeLog.shift();
-  return persistLocalRecovery();
+  const stored = persistLocalRecovery();
+  if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('ri-editor-dirty'));
+  return stored;
 }
 
 function describeSet(name, path, prev, value) {
@@ -352,7 +354,7 @@ export function draftOnline() {
 
 export function draftDirty() {
   if (!draftState.docs) return false;
-  return draftState.savedDraftRaw ? currentDraftRaw() !== draftState.savedDraftRaw : changedFiles().length > 0;
+  return JSON.stringify(draftState.docs) !== JSON.stringify(draftState.sharedBase);
 }
 
 export function changedCount() {
@@ -524,9 +526,9 @@ export function persistLocalRecovery() {
 }
 
 let savePromise;
-export async function saveDraft(token, keepLocalOrder) {
+export async function saveDraft(token, keepLocalOrder, { automatic = false } = {}) {
   if(savePromise)return savePromise;
-  savePromise=saveChangedDraft(token, keepLocalOrder);
+  savePromise=saveChangedDraft(token, keepLocalOrder, automatic);
   try{return await savePromise;}finally{savePromise=null;}
 }
 
@@ -548,24 +550,7 @@ async function backupInvalidDraft(token) {
   draftState.invalidDraftBackup = null;
 }
 
-const SAVE_COOLDOWN_MS = 60 * 1000;
-// Shared cooldown: consult commits touching the shared draft, not this
-// browser's clock or localStorage. The API repeats this check server-side
-// immediately before writing, so another contributor cannot bypass it.
-const SAVE_COMMIT_PATTERN = /^(?:RI Wiki: save editor data|Save inline draft)$/i;
-async function assertSharedSaveCooldown(token) {
-  const url = `https://api.github.com/repos/${REPOSITORY}/commits?path=${encodeURIComponent(DRAFT_FILE)}&per_page=15`;
-  const commits = await githubRequest(url, token);
-  if (!Array.isArray(commits)) throw new Error('Could not verify the shared cooldown; Save was cancelled to protect other edits.');
-  const latest = Math.max(0, ...commits
-    .filter((item) => SAVE_COMMIT_PATTERN.test(item?.commit?.message?.split('\n')[0]?.trim() || ''))
-    .map((item) => Date.parse(item?.commit?.committer?.date || item?.commit?.author?.date || ''))
-    .filter(Number.isFinite));
-  const remaining = SAVE_COOLDOWN_MS - (Date.now() - latest);
-  if (remaining > 0) throw new Error(`Save for Everyone is on a global 1-minute cooldown. Try again in ${Math.ceil(remaining / 1000)} seconds. Your edits are preserved.`);
-}
-
-async function saveChangedDraft(token, keepLocalOrder){
+async function saveChangedDraft(token, keepLocalOrder, automatic = false){
   let backupWarning = false;
   for(let attempt=0;attempt<4;attempt++){
     await syncRemote(token, keepLocalOrder);
@@ -574,7 +559,6 @@ async function saveChangedDraft(token, keepLocalOrder){
     // Save is relative to the last shared revision, never a stale published
     // snapshot. An unchanged editor must not create a new shared revision.
     if(!draftState.sharedOrderNeedsSave && JSON.stringify(draftState.docs)===JSON.stringify(draftState.sharedBase))break;
-    await assertSharedSaveCooldown(token);
     const raw=currentDraftRaw();
     const previousShared = clone(draftState.sharedBase);
     try{
@@ -598,7 +582,11 @@ async function saveChangedDraft(token, keepLocalOrder){
       draftState.draftSha = writtenSha;
       const verified = await githubRequest(githubContentsUrl(DRAFT_FILE), token, { cache: 'no-store' });
       if (verified?.sha !== writtenSha || !verified.content) {
-        throw new Error('The shared draft changed during Save. Your work remains locally recoverable; Sync and check before retrying.');
+        // Remote advanced after our PUT: re-read and merge rather than
+        // discarding a collaborator's later change.
+        const error = new Error('Shared draft advanced during verification. Rebasing.');
+        error.status = 409;
+        throw error;
       }
       const stored = JSON.parse(decodeBase64Content(verified.content));
       const expected = JSON.parse(raw);
@@ -612,7 +600,7 @@ async function saveChangedDraft(token, keepLocalOrder){
       // The shared draft has been verified on GitHub. Now back up its prior
       // contents. A backup failure must NEVER turn a completed Save into a
       // misleading failure that tempts users to overwrite it again.
-      try { await createVersion(token, previousShared, 'save', 'save'); }
+      try { if (!automatic) await createVersion(token, previousShared, 'save', 'save'); }
       catch (backupError) {
         backupWarning = true;
         console.warn('[inline-editor] Shared draft saved, but previous-version backup failed.', backupError);
@@ -623,6 +611,23 @@ async function saveChangedDraft(token, keepLocalOrder){
       if(!isRevisionConflict(error)||attempt===3)throw error;
       // Re-read and rebase only our delta, using the new SHA for the retry.
     }
+  }
+  // Autosave commits are already in GitHub history. Avoid writing a second
+  // history/backup commit every few seconds; manual Versions remain available.
+  if (automatic) {
+    const entries=changeLog.map(entry=>({...entry,pending:false,status:'saved',savedAt:new Date().toISOString()}));
+    let historyWarning=false;
+    if(entries.length) {
+      try {
+        await writeHistory(token,entries,true);
+        changeLog.splice(0,entries.length);
+      } catch(error) {
+        historyWarning=true;
+        console.warn('[inline-editor] Draft saved; activity log could not sync.',error);
+      }
+    }
+    persistLocalRecovery();
+    return {saved:true, automatic:true, historyWarning, backupWarning};
   }
   // Diario: pendencias vao para o arquivo (marcadas "pending").
   {

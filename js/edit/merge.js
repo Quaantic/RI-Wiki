@@ -7,8 +7,8 @@ const object = (value) => value !== null && typeof value === 'object' && !Array.
 export class SyncConflict extends Error {
   constructor(path, release) {
     super(release
-      ? `Update Log ${release} has competing entry orders. Your edits are still here. Use Save for everyone or Publish to resolve the order.`
-      : `Both editors changed ${path}. Your work is still here. Use Save for everyone or Publish to choose which version to keep; cancel to continue editing.`);
+      ? `Update Log ${release} has competing entry orders. Your edits are still here. Use Sync to review the conflict before publishing.`
+      : `Both editors changed ${path}. Your work is still here. Use Sync to choose which version to keep; cancel to continue editing.`);
     this.name = 'SyncConflict';
     this.path = path;
     this.release = release;
