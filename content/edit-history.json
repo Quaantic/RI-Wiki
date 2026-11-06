@@ -2,6 +2,26 @@
   "format": 1,
   "entries": [
     {
+      "id": "60df7d2a-919f-4c94-b01b-0d6455aad84f",
+      "at": 1793967048178,
+      "kind": "content",
+      "text": "Updated multi of \"More Tree Essence\": +0.2x to 0.2*L",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T12:12:23.802Z"
+    },
+    {
+      "id": "3d53f3f1-01d2-451e-b221-316fb4d133dd",
+      "at": 1793967036266,
+      "kind": "content",
+      "text": "Updated multi of \"More Tree Essence\": 1 to +0.2x",
+      "actor": "zzinss",
+      "pending": false,
+      "status": "saved",
+      "savedAt": "2026-11-06T12:12:23.796Z"
+    },
+    {
       "id": "bb7c6209-9794-4627-a897-fc07b2731e04",
       "at": 1793966736029,
       "kind": "content",
