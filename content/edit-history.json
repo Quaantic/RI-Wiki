@@ -2,6 +2,22 @@
   "format": 1,
   "entries": [
     {
+      "id": "3d1a072e-bfae-4092-b9bc-6e4c10f95b19",
+      "at": 1793931185985,
+      "kind": "content",
+      "text": "Removed \"New upgrade\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
+      "id": "3ed27e9d-eeb4-4c30-a78a-c32bfc592b6d",
+      "at": 1793931177386,
+      "kind": "content",
+      "text": "Added \"New upgrade\"",
+      "actor": "zzinss",
+      "pending": true
+    },
+    {
       "id": "75d96dbf-d97d-44c3-95c6-49306b6aac6d",
       "at": 1793931144661,
       "kind": "content",
@@ -2382,22 +2398,6 @@
       "at": 1793853651534,
       "kind": "content",
       "text": "Updated description of \"Brand New Update LOG\": What changed in the game. to Refreshed the Update Log with collapsible F…",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "2a3f83af-85e4-4190-861b-fcaafb61c23d",
-      "at": 1793853651515,
-      "kind": "content",
-      "text": "Updated text of \"Brand New Update LOG\": New update to Brand New Update LOG",
-      "actor": "Quaantic",
-      "pending": true
-    },
-    {
-      "id": "7306fb7f-14ef-455d-ac2b-ef925a6b2323",
-      "at": 1793853651495,
-      "kind": "content",
-      "text": "Updated context of \"New update\": Feature to UI",
       "actor": "Quaantic",
       "pending": true
     }
