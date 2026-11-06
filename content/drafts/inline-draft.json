@@ -493,7 +493,14 @@
                 "highlights": [],
                 "facts": [],
                 "vitals": [],
-                "children": []
+                "children": [],
+                "sections": [
+                  {
+                    "id": "text-28143f5e-1e05-4b3b-a479-ca861c4a3edc",
+                    "title": "How does cells work?",
+                    "text": "They are gained passively each tick (time pre-defined by game that sets how much it takes to get it again), and is used to get life, or animals. They have a softcap, which is shown on the cells progression bar, and it works as a slowdown point, which, after you pass that amount, your gain is drastically decreased, so it gets way harder to get animals that are much above your softcap."
+                  }
+                ]
               }
             ],
             "sections": []
@@ -15035,66 +15042,6 @@
     "game": "374ecc59119bdfd3bcd236fb859889dcb3a75cba"
   },
   "_authors": {
-    "content.game.progression.stages.life/tree-essence-milestones.stages[2].boosts": {
-      "actor": "Quaantic"
-    },
-    "content.game.progression.stages.life/tree-essence-milestones.stages[2].unlocks": {
-      "actor": "Quaantic"
-    },
-    "content.game.progression.stages.life/tree-essence-milestones.stages[2].unlocks.area": {
-      "actor": "Quaantic"
-    },
-    "content.game.progression.stages.life/tree-essence-milestones.stages[2].unlocks.places": {
-      "actor": "Quaantic"
-    },
-    "content.game.progression.stages.life/tree-essence-milestones.stages[2].unlocks.places order": {
-      "actor": "Quaantic"
-    },
-    "content.game.progression.stages.life/tree-essence-milestones.stages[2].unlocks.features": {
-      "actor": "Quaantic"
-    },
-    "content.game.progression.stages.life/tree-essence-milestones.stages[2].unlocks.features order": {
-      "actor": "Quaantic"
-    },
-    "content.game.progression.stages.life/tree-essence-milestones.stages[3]": {
-      "actor": "Quaantic"
-    },
-    "content.game.progression.stages.life/tree-essence-milestones.stages[3].title": {
-      "actor": "Quaantic"
-    },
-    "content.game.progression.stages.life/tree-essence-milestones.stages[3].num": {
-      "actor": "Quaantic"
-    },
-    "content.game.progression.stages.life/tree-essence-milestones.stages[3].requirements": {
-      "actor": "Quaantic"
-    },
-    "content.game.progression.stages.life/tree-essence-milestones.stages[3].boosts": {
-      "actor": "Quaantic"
-    },
-    "content.game.progression.stages.life/tree-essence-milestones.stages[3].unlocks": {
-      "actor": "Quaantic"
-    },
-    "content.game.progression.stages.life/tree-essence-milestones.stages[3].unlocks.area": {
-      "actor": "Quaantic"
-    },
-    "content.game.progression.stages.life/tree-essence-milestones.stages[3].unlocks.places": {
-      "actor": "Quaantic"
-    },
-    "content.game.progression.stages.life/tree-essence-milestones.stages[3].unlocks.places order": {
-      "actor": "Quaantic"
-    },
-    "content.game.progression.stages.life/tree-essence-milestones.stages[3].unlocks.features": {
-      "actor": "Quaantic"
-    },
-    "content.game.progression.stages.life/tree-essence-milestones.stages[3].unlocks.features order": {
-      "actor": "Quaantic"
-    },
-    "content.game.progression.stages.life/tree-essence-milestones.stages[4]": {
-      "actor": "Quaantic"
-    },
-    "content.game.progression.stages.life/tree-essence-milestones.stages[4].title": {
-      "actor": "Quaantic"
-    },
     "content.game.progression.stages.life/tree-essence-milestones.stages[4].num": {
       "actor": "Quaantic"
     },
@@ -16143,6 +16090,24 @@
       "actor": "zzinss"
     },
     "content.wiki.categories[runes].subcategories[secret].contentKey": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].sections": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].sections order": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[text-28143f5e-1e05-4b3b-a479-ca861c4a3edc]": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[text-28143f5e-1e05-4b3b-a479-ca861c4a3edc].id": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[text-28143f5e-1e05-4b3b-a479-ca861c4a3edc].title": {
+      "actor": "zzinss"
+    },
+    "content.wiki.categories[life].subcategories[life-generation].children[cells].sections[text-28143f5e-1e05-4b3b-a479-ca861c4a3edc].text": {
       "actor": "zzinss"
     }
   }
