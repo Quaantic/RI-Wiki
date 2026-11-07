@@ -22,6 +22,7 @@ import {readRecovery,storeFormRecovery,removeFormRecovery,isRecoveryStored} from
 import {GENERATOR_FORMULAS} from '../data/generators.js';
 import { documentChanges, pageFromDocs } from './version-tools.js';
 import { live } from './live-client.js';
+import { parseBulkUpdates } from './bulk-updates.js';
 
 
 const TOKEN_KEY = 'ri-edit-token';
@@ -2549,6 +2550,105 @@ function buildAddValue(docName, trail, template) {
   return null;
 }
 
+// Resolve a human-readable wiki page, a category title, or an explicit hash route.
+// Never silently attach an update to the wrong page when names are ambiguous.
+function resolveBulkPage(input) {
+  const name=String(input||'').trim();
+  if (!name) return '';
+  if (/^#\/[\w-]+(?:\/[\w-]+)*$/.test(name)) return name;
+  const key=name.toLowerCase().replace(/\s+/g,' ').trim();
+  const routes=[
+    ['Upgrade Calculator','#/calculator'],['Update Log','#/updates'],
+    ['Feedback','#/feedback'],['Credits','#/credits'],['Home','#/'],
+  ];
+  for(const category of CATEGORIES){
+    routes.push([category.name,`#/${category.id}`],[category.id,`#/${category.id}`]);
+    const walk=nodes=>{
+      for(const item of nodes||[]){
+        const route=`#/${category.id}/${item.id}`;
+        routes.push([item.name,route],[item.id,route],[`${category.name} > ${item.name}`,route]);
+        walk(item.children);
+      }
+    };
+    walk(category.subcategories);
+  }
+  const matches=[...new Set(routes.filter(([title])=>title.toLowerCase().replace(/\s+/g,' ').trim()===key).map(([,route])=>route))];
+  if(matches.length===1)return matches[0];
+  if(matches.length>1)throw new Error(`Page "${name}" is ambiguous. Use an exact #/route instead.`);
+  if(/^\/?[\w-]+(?:\/[\w-]+)*$/.test(name))return `#/${name.replace(/^\//,'')}`;
+  throw new Error(`Page "${name}" not found. Use a page name or a #/route (or leave empty).`);
+}
+
+async function openBulkUpdates(trigger){
+  const releaseIndex=Number(trigger.dataset.bulkUpdates);
+  const path=`versions.${releaseIndex}.entries`;
+  const release=draft.getValue('updates',`versions.${releaseIndex}`);
+  if(!Number.isInteger(releaseIndex)||!release||!Array.isArray(release.entries)){
+    notify('This release is no longer available.',true);return;
+  }
+  if(popState)closePopover(true);
+  const dialog=document.createElement('dialog');
+  dialog.className='ri-review-dialog ri-bulk-dialog';
+  dialog.innerHTML=`<div class="ri-review-dialog__head"><h2>${icon('list-plus',17)} Bulk Update — ${esc(release.version)}</h2><button type="button" class="btn btn--ghost btn--sm" data-bulk-close aria-label="Close">${icon('x',15)}</button></div>
+    <div class="ri-review-dialog__body">
+      <p class="ri-review-hint">One update per line: <b>category;page;title;description</b>. Allowed categories: Feature, Changes, UI, Bugs. A blank category uses Changes; a blank page means no link. You may enter a wiki page name or a <code>#/route</code>.</p>
+      <p class="ri-review-hint"><b>Multiline descriptions:</b> just continue writing on the following lines. A new entry begins only with a new valid 4-field header. Semicolons within the description are preserved.</p>
+      <textarea class="ri-bulk-input" aria-label="Updates to import" spellcheck="false" placeholder="UI;;Smarter mobile navigation;Tap once to expand the main category.&#10;Subcategories still open with one tap.&#10;Feature;Upgrade Calculator;Target Effect Calculator;Find the level needed to reach your target effect."></textarea>
+      <div class="ri-bulk-status" aria-live="polite">Paste your updates to preview them.</div>
+      <div class="ri-bulk-preview"></div>
+    </div>
+    <div class="ri-review-dialog__actions"><button type="button" class="btn btn--ghost btn--sm" data-bulk-close>Cancel</button><button type="button" class="btn btn--primary btn--sm" data-bulk-confirm disabled>Add updates to draft</button></div>`;
+  document.body.appendChild(dialog);
+  const input=dialog.querySelector('textarea');
+  const status=dialog.querySelector('.ri-bulk-status');
+  const preview=dialog.querySelector('.ri-bulk-preview');
+  const confirm=dialog.querySelector('[data-bulk-confirm]');
+  let valid=[];
+  function refresh(){
+    const parsed=parseBulkUpdates(input.value);
+    const errors=[...parsed.errors];
+    valid=[];
+    for(const item of parsed.entries){
+      try {valid.push({...item,href:resolveBulkPage(item.page)});}
+      catch(error){errors.push(`Line ${item.line}: ${error.message}`);}
+    }
+    confirm.disabled=!!errors.length||!valid.length;
+    status.textContent=errors.length?`${errors.length} issue(s) — fix before importing.`:`${valid.length} update(s) ready to add to release ${release.version}.`;
+    preview.innerHTML=errors.length
+      ? `<ul class="ri-bulk-errors">${errors.map(message=>`<li>${esc(message)}</li>`).join('')}</ul>`
+      : valid.map(item=>`<article class="ri-bulk-row"><b>${esc(item.context)} · ${esc(item.title)}</b>${item.href?`<small>${esc(item.href)}</small>`:''}<p>${esc(item.description)}</p></article>`).join('');
+  }
+  let closed=false;
+  const close=()=>{if(closed)return;closed=true;dialog.close?.();dialog.remove();};
+  dialog.addEventListener('click',event=>{
+    if(event.target.closest('[data-bulk-close]')||event.target===dialog)close();
+  });
+  dialog.addEventListener('cancel',event=>{event.preventDefault();close();});
+  input.addEventListener('input',refresh);
+  confirm.addEventListener('click',async()=>{
+    refresh();
+    if(confirm.disabled||session.busy||!session.editing)return;
+    if(!draft.getValue('updates',path)){notify('Release changed. Please reopen Bulk Update.',true);close();return;}
+    confirm.disabled=true;
+    try{
+      for(const item of valid)draft.pushValue('updates',path,{
+        id:`entry-${crypto.randomUUID()}`,context:item.context,title:item.title,href:item.href,description:item.description,
+      });
+      draft.applyDraftToSite();
+      window.dispatchEvent(new CustomEvent('ri-edit-content'));
+      const count=valid.length;
+      close();
+      await rerender({scroll:'preserve'});
+      updateToolbar();
+      notify(`${count} update(s) added to the draft. Save and Publish when ready.`);
+    }catch(error){notify(error.message||'Could not import updates.',true);}
+  });
+  if(typeof dialog.showModal==='function')dialog.showModal();
+  else {notify('Bulk Update requires a browser with dialog support.',true);close();return;}
+  input.focus();
+  refresh();
+}
+
 async function addItemFromTrigger(trigger) {
   const bindingPath = trigger.getAttribute('data-edit-add') || '';
   const template = trigger.getAttribute('data-edit-add-template') || '';
@@ -2670,6 +2770,11 @@ function installInteraction() {
       return;
     }
 
+    const bulkTrigger = event.target.closest('[data-bulk-updates]');
+    if (bulkTrigger && session.editing) {
+      event.preventDefault();event.stopPropagation();
+      void openBulkUpdates(bulkTrigger);return;
+    }
     const moveTrigger = event.target.closest('[data-update-move]');
     if (moveTrigger && session.editing) {
       event.preventDefault(); event.stopPropagation();

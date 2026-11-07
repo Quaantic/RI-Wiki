@@ -7,6 +7,7 @@ import { LATEST_UPDATE, LATEST_UPDATE_ID } from './data/update-log.js';
 import {formatReleaseVersion} from './releases.js';
 import { loadEditableContent } from './services.js';
 import { initNewBadges } from './new-badges.js';
+import { initReadingTools } from './reading-tools.js';
 
 async function boot() {
   try {
@@ -23,6 +24,7 @@ async function boot() {
   }
 
   initShell();
+  initReadingTools();
   qs('#wiki-version').textContent = formatReleaseVersion(LATEST_UPDATE?.version);
   initUpdateBadge(LATEST_UPDATE_ID);
 

@@ -3,6 +3,7 @@
 import { qs } from './utils.js';
 import { setCrumbs, setActiveNav, emblem } from './ui.js';
 import { mountPageMotion, clearPageMotion } from './page-motion.js';
+import { mountReadingTools } from './reading-tools.js';
 import {
   homeView, categoryView, subcategoryView,
   searchView, updatesView, creditsView, notFoundView,
@@ -53,6 +54,24 @@ function parseHash() {
 
 let renderSeq = 0;
 let pendingScrollAfterRender = null;
+// Store each page's reading position for Back/Forward in this browser tab.
+const SCROLL_KEY = 'ri-wiki-reading-positions-v1';
+const storedPositions = (() => {
+  try { return JSON.parse(sessionStorage.getItem(SCROLL_KEY) || '{}') || {}; }
+  catch { return {}; }
+})();
+let renderedHash = location.hash || '#/';
+let historyTraversal = false;
+let scrollSaveTimer;
+function saveReadingPosition(route = renderedHash, position = window.scrollY) {
+  if (!route) return;
+  storedPositions[route] = Math.max(0, Math.round(position));
+  // Prevent an unbounded sessionStorage map during long wiki visits.
+  const keys = Object.keys(storedPositions);
+  for (const old of keys.slice(0, Math.max(0, keys.length - 80))) delete storedPositions[old];
+  try { sessionStorage.setItem(SCROLL_KEY, JSON.stringify(storedPositions)); } catch {}
+}
+
 
 async function renderView(view, params, query, opts = {}) {
   // A removed/old bookmark is a normal missing route, not a failed renderer.
@@ -88,6 +107,7 @@ async function renderView(view, params, query, opts = {}) {
   });
   clearPageMotion();
   viewEl.replaceChildren(container);
+  mountReadingTools(container, window.location.hash.replace(/^#\/?/, '').split('?')[0]);
   // The view is swapped immediately; animations never delay navigation.
   if (window.__riFlashNext) {
     delete window.__riFlashNext;
@@ -97,11 +117,40 @@ async function renderView(view, params, query, opts = {}) {
   if (pendingScrollAfterRender === 'preserve') {
     pendingScrollAfterRender = null;
   } else {
-    const target = pendingScrollAfterRender?.top;
+    const target = pendingScrollAfterRender?.top ?? opts.restoreScroll;
     pendingScrollAfterRender = null;
     window.scrollTo({ top: target ?? 0, behavior: 'instant' });
+    // Layout settles after DOM attachment; restore again on the next frame if
+    // this is a browser history traversal rather than a fresh navigation.
+    if (Number.isFinite(opts.restoreScroll) && opts.restoreScroll > 0) {
+      requestAnimationFrame(() => {
+        if (seq === renderSeq) window.scrollTo({ top: opts.restoreScroll, behavior: 'instant' });
+      });
+    }
   }
   mountPageMotion(container, { animate: opts.animate !== false });
+  // Upgrade results are deep links to their normal wiki cards, not the Calculator.
+  // Run after the async view has mounted so newly-rendered cards can be found.
+  const upgradeNumber = query.get('upgrade');
+  if (upgradeNumber !== null) {
+    const upgradeName = query.get('upgradeName');
+    const cards = [...container.querySelectorAll('[data-upgrade-number]')];
+    const match = cards.find(card =>
+      card.dataset.upgradeNumber === upgradeNumber &&
+      (upgradeName === null || card.dataset.upgradeName === upgradeName)
+    );
+    if (match) {
+      requestAnimationFrame(() => {
+        if (seq !== renderSeq || !match.isConnected) return;
+        match.scrollIntoView({ block: 'center', behavior: 'instant' });
+        // Restart the 3s flash when the same upgrade is selected again.
+        match.classList.remove('upgrade-card--search-target');
+        void match.offsetWidth;
+        match.classList.add('upgrade-card--search-target');
+        setTimeout(() => match.classList.remove('upgrade-card--search-target'), 3000);
+      });
+    }
+  }
   window.dispatchEvent(new Event('ri-route-rendered'));
 }
 
@@ -138,14 +187,28 @@ export async function rerender(opts = {}) {
 }
 
 export async function initRouter() {
+  renderedHash = location.hash || '#/';
+  // Browser-native scroll restoration can race with our async view renderer.
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  window.addEventListener('scroll', () => {
+    clearTimeout(scrollSaveTimer);
+    scrollSaveTimer = setTimeout(() => saveReadingPosition(), 130);
+  }, { passive: true });
+  window.addEventListener('pagehide', () => saveReadingPosition());
+  window.addEventListener('popstate', () => { historyTraversal = true; });
   window.addEventListener('hashchange', () => {
+    clearTimeout(scrollSaveTimer);
+    saveReadingPosition(renderedHash, window.scrollY);
+    renderedHash = location.hash || '#/';
+    const restoreScroll = historyTraversal ? storedPositions[renderedHash] : undefined;
+    historyTraversal = false;
     const { path, query } = parseHash();
-    void navigate(path, query);
+    void navigate(path, query, { restoreScroll });
   });
   window.addEventListener('ri-number-format-change', () => {
     const { path, query } = parseHash();
     void navigate(path, query, { animate: false });
   });
   const { path, query } = parseHash();
-  await navigate(path, query);
+  await navigate(path, query, { restoreScroll: storedPositions[renderedHash] });
 }

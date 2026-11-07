@@ -301,8 +301,41 @@ function renderSubTree(catId, items, depth) {
 }
 
 let navWired = false;
-const branchStates=new Map();
-const branchKey=el=>`${el.closest('.nav-group')?.dataset.cat}/${el.dataset.parentSub}`;
+const NAV_STATE_KEY = 'ri-sidebar-state-v1';
+const savedNavState = (() => {
+  try { return JSON.parse(localStorage.getItem(NAV_STATE_KEY) || '{}') || {}; }
+  catch { return {}; }
+})();
+const expandedGroups = new Set(Array.isArray(savedNavState.groups) ? savedNavState.groups : []);
+const branchStates = new Map(Array.isArray(savedNavState.branches) ? savedNavState.branches : []);
+let sidebarScrollTop = Math.max(0, Number(savedNavState.scrollTop) || 0);
+let navSaveTimer;
+let lastCategoryTap = null;
+const branchKey = el => `${el.closest('.nav-group')?.dataset.cat}/${el.dataset.parentSub}`;
+const onMobileNav = () => window.matchMedia('(max-width: 920px)').matches;
+function persistNavState() {
+  clearTimeout(navSaveTimer);
+  navSaveTimer = setTimeout(() => {
+    try { localStorage.setItem(NAV_STATE_KEY, JSON.stringify({
+      groups: [...expandedGroups], branches: [...branchStates], scrollTop: sidebarScrollTop,
+    })); } catch { /* storage disabled */ }
+  }, 100);
+}
+function syncGroupUI() {
+  qsa('#sidebar-nav .nav-group').forEach(group => {
+    const open = expandedGroups.has(group.dataset.cat);
+    group.classList.toggle('open', open);
+    group.querySelector(':scope > [data-toggle-cat]')?.setAttribute('aria-expanded', String(open));
+    group.querySelector(':scope > .nav-item')?.setAttribute('aria-expanded', String(open));
+  });
+  moveIndicator();
+}
+function setGroupExpanded(catId, expanded) {
+  if (!catId) return;
+  if (expanded) expandedGroups.add(catId); else expandedGroups.delete(catId);
+  syncGroupUI();
+  persistNavState();
+}
 
 // Keep the sidebar's fixed community links in sync with Colors in the editor.
 // Match by linked route first (works even when the color entry has a custom
@@ -329,8 +362,10 @@ export function syncFooterResourceColors() {
 export function buildNav() {
   const nav = qs('#sidebar-nav');
   if (!nav) return;
-  const openGroups=new Set(qsa('.nav-group.open',nav).map(el=>el.dataset.cat));
-  const openBranches=new Set(qsa('[data-parent-sub].open',nav).map(el=>`${el.closest('.nav-group')?.dataset.cat}/${el.dataset.parentSub}`));
+  const oldScrollTop = nav.scrollTop || sidebarScrollTop;
+  // Rebuilds (including live editor sync) preserve open/closed branches.
+  qsa('.nav-group.open', nav).forEach(el => expandedGroups.add(el.dataset.cat));
+  qsa('[data-parent-sub].open', nav).forEach(el => branchStates.set(branchKey(el), true));
   nav.innerHTML =
     '<span class="sidebar__label">Categories</span>' +
     CATEGORIES.map((c) => {
@@ -338,57 +373,91 @@ export function buildNav() {
       const iconStyle = color ? ` style="color:${color}"` : '';
       return `
       <div class="nav-group" data-cat="${c.id}">
-        <a class="nav-item" data-cat="${c.id}" href="#/${c.id}">
+        <a class="nav-item" data-cat="${c.id}" href="#/${c.id}" aria-expanded="false">
           <span class="nav-item__icon"${iconStyle}>${icon(c.icon, 19)}</span>
           <span class="nav-item__label">${colorizeResources(esc(c.name))}</span>
-          ${icon('chevron-down', 15, 'nav-item__chev')}
         </a>
+        <button type="button" class="nav-item__expand" aria-label="Toggle ${esc(c.name)} subsections" aria-expanded="false" data-toggle-cat="${esc(c.id)}">${icon('chevron-down', 15)}</button>
         ${renderSubTree(c.id, c.subcategories, 1)}
       </div>`;
     }).join('');
 
   syncFooterResourceColors();
-  qsa('.nav-group',nav).forEach(el=>el.classList.toggle('open',openGroups.has(el.dataset.cat)));
-  qsa('[data-parent-sub]',nav).forEach(el=>el.classList.toggle('open',openBranches.has(`${el.closest('.nav-group')?.dataset.cat}/${el.dataset.parentSub}`)));
+  qsa('[data-parent-sub]', nav).forEach(el => el.classList.toggle('open', branchStates.get(branchKey(el)) === true));
+  syncGroupUI();
+  nav.scrollTop = oldScrollTop;
+  sidebarScrollTop = oldScrollTop;
   // Saves and live sync rebuild this tree after the router has highlighted
   // the page. Reapply its full ancestor chain so nested pages stay visible.
   const [catId,subId]=(window.location.hash||'').replace(/^#\/?/,'').split('?')[0].split('/');
   setActiveNav(CATEGORIES.some(cat=>cat.id===catId)?catId:null,subId||null);
   if (navWired) return;
   navWired = true;
+  nav.addEventListener('scroll', () => {
+    sidebarScrollTop = nav.scrollTop;
+    persistNavState();
+  }, { passive: true });
   nav.addEventListener('click', (e) => {
+    const toggle = e.target.closest('[data-toggle-cat]');
+    if (toggle) {
+      e.preventDefault();
+      lastCategoryTap = null;
+      setGroupExpanded(toggle.dataset.toggleCat, !expandedGroups.has(toggle.dataset.toggleCat));
+      return;
+    }
     const link = e.target.closest('a.nav-item, a[data-sub]');
     if (!link) return;
-
     const item = e.target.closest('.nav-item');
     if (item) {
+      const catId = item.dataset.cat;
+      if (onMobileNav()) {
+        // First tap expands without leaving the drawer. A second tap on the
+        // same category within 1.2s opens its actual overview page.
+        const secondTap = lastCategoryTap?.id === catId &&
+          Date.now() - lastCategoryTap.time < 1200;
+        if (!secondTap) {
+          e.preventDefault();
+          lastCategoryTap = { id: catId, time: Date.now() };
+          setGroupExpanded(catId, true);
+          return;
+        }
+        lastCategoryTap = null;
+        setGroupExpanded(catId, true);
+        return; // let the link navigate; the drawer closes on navigation
+      }
+      lastCategoryTap = null;
       if (item.classList.contains('active')) {
         e.preventDefault();
         openGroup(null);
         window.location.hash = '#/';
         return;
       }
-      openGroup(item.dataset.cat);
+      openGroup(catId);
       return;
     }
-
-    const subId=link.dataset.sub;
-    const wrapper=qsa('[data-parent-sub]',link.closest('.nav-group')).find(el=>el.dataset.parentSub===subId);
-    if(wrapper){
-      e.preventDefault();
-      const open=!wrapper.classList.contains('open');
-      wrapper.classList.toggle('open',open);
-      branchStates.set(branchKey(wrapper),open);
-      link.setAttribute('aria-expanded',String(open));
-      if(link.hash!==window.location.hash)window.location.hash=link.hash;
+    lastCategoryTap = null;
+    const subId = link.dataset.sub;
+    const wrapper = qsa('[data-parent-sub]', link.closest('.nav-group'))
+      .find(el => el.dataset.parentSub === subId);
+    if (wrapper) {
+      // Subcategories retain their single-click navigation behavior.
+      const open = !wrapper.classList.contains('open');
+      wrapper.classList.toggle('open', open);
+      branchStates.set(branchKey(wrapper), open);
+      persistNavState();
+      link.setAttribute('aria-expanded', String(open));
+      if (link.hash === window.location.hash) e.preventDefault();
       return;
     }
-    if(link.hash===window.location.hash)e.preventDefault();
+    if (link.hash === window.location.hash) e.preventDefault();
   });
 }
 
 export function openGroup(catId) {
-  qsa('.nav-group').forEach((g) => g.classList.toggle('open', g.dataset.cat === catId));
+  if (catId) expandedGroups.add(catId);
+  else expandedGroups.clear();
+  syncGroupUI();
+  persistNavState();
 }
 
 // ==== Indicador deslizante da categoria (a "linha verde") ====
@@ -445,6 +514,7 @@ export function setActiveNav(catId, subId = null) {
       link?.setAttribute('aria-expanded',String(el.classList.contains('open')));
     }
   });
+  persistNavState();
   moveIndicator();
   clearTimeout(navScrollTimer);
   // Search can open a new nested page below the sidebar's visible area.
@@ -483,6 +553,7 @@ export function setupDrawer() {
   };
 
   const open = () => {
+    if (sidebar.classList.contains('is-open')) return;
     sidebar.classList.add('is-open');
     menuBtn.setAttribute('aria-expanded', 'true');
     const backdrop = document.createElement('div');
@@ -496,7 +567,8 @@ export function setupDrawer() {
   });
 
   sidebar.addEventListener('click', (e) => {
-    if (e.target.closest('a')) close();
+    // A prevented mobile category tap only expands; it must not close.
+    if (e.target.closest('a') && !e.defaultPrevented) close();
   });
 
   document.addEventListener('keydown', (e) => {
@@ -520,6 +592,8 @@ export function setupDrawer() {
     const t = e.touches[0];
     const isOpen = sidebar.classList.contains('is-open');
     if (!isOpen && t.clientX > EDGE) return;
+    // Do not steal slider/input movement; only respond to a clear horizontal swipe.
+    if (e.target.closest('input, textarea, select, [data-upgrade-slider]')) return;
     touch = { x: t.clientX, y: t.clientY, isOpen };
   }, { passive: true });
 

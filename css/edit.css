@@ -791,3 +791,16 @@ html.ri-icon-browser-open { overflow: hidden; }
 .ri-version-row[hidden] { display:none!important; }
 
 @media(max-width:650px) { .ri-review-dialog__head,.ri-review-dialog__body { padding:12px; }.ri-presence small { display:none; } }
+
+/* Bulk Update modal for the Update Log editor. */
+.ri-bulk-dialog .ri-review-dialog__body { display:grid; gap:12px; }
+.ri-bulk-input { display:block; width:100%; min-height:200px; padding:12px 14px; resize:vertical; border:1px solid var(--c-border); border-radius:9px; background:var(--c-bg); color:var(--c-text); font:12px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace; box-sizing:border-box; }
+.ri-bulk-input:focus { outline:2px solid var(--c-accent); outline-offset:1px; }
+.ri-bulk-status { font-size:12px; color:var(--c-text-2); }
+.ri-bulk-preview { max-height:220px; overflow:auto; display:grid; gap:7px; }
+.ri-bulk-row { border:1px solid var(--c-border); border-radius:8px; padding:9px 12px; }
+.ri-bulk-row b { font-size:12px; color:var(--c-text); }
+.ri-bulk-row small { display:block; color:var(--c-text-3); }
+.ri-bulk-row p { font-size:12px; color:var(--c-text-2); white-space:pre-line; margin:5px 0 0; }
+.ri-bulk-errors { margin:0; padding:8px 8px 8px 28px; color:#ffb2a9; font-size:12px; }
+.upd-entry__description { white-space:pre-line; }

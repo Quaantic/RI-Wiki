@@ -311,7 +311,7 @@ function upgradeCard(u, i, priceTable, itemPath = '') {
   const priceAttr = priceTable ? '' : ` data-price="${esc(u.price || '')}"`;
   const tableAttr = priceTable ? ` data-price-table="${esc(priceTable)}" data-n="${n}"` : '';
   return `
-        <article class="upgrade-card reveal" data-upgrade data-cap="${capMax}" data-multi="${esc(u.multi || '')}"${priceAttr}${tableAttr}${itemPath ? ed(itemPath, 'game:upgrade', esc(u.name)) : ''} style="--reveal-delay:${Math.min(i * 45, 400)}ms">
+        <article class="upgrade-card reveal" data-upgrade data-upgrade-number="${esc(String(n))}" data-upgrade-name="${esc(u.name)}" data-cap="${capMax}" data-multi="${esc(u.multi || '')}"${priceAttr}${tableAttr}${itemPath ? ed(itemPath, 'game:upgrade', esc(u.name)) : ''} style="--reveal-delay:${Math.min(i * 45, 400)}ms">
       <header class="upgrade-card__head">
         <b><span class="upgrade-card__n">${n}.</span> ${colorizeResources(esc(u.name))}</b>
         <span class="upgrade-card__val"><b data-lvl>0</b> / ${u.cap == null ? '—' : esc(fmtValue(u.cap))}</span>
@@ -1387,6 +1387,7 @@ export const updatesView = {
             <span class="upd-version__count">${v.entries.length} ${v.entries.length === 1 ? 'update' : 'updates'}</span>
             ${vi === 0 ? '<span class="chip chip--accent upd-version__latest">Latest</span>' : ''}
             <button type="button" class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="updates:versions.${docIndex}.entries" data-edit-add-template="entry">${icon('plus', 12)} Add update</button>
+            <button type="button" class="btn btn--ghost btn--sm ri-edit-add" data-bulk-updates="${docIndex}">${icon('list-plus', 12)} Bulk Update</button>
             ${icon('chevron-down',16,'upd-collapse-icon')}
           </summary><div class="upd-version__body">
 
