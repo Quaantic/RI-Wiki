@@ -36,7 +36,7 @@ function play(state, el, delay = 0) {
   } catch { /* Animation support is optional; content stays visible. */ }
 }
 
-function collect(state, initial = false, animateVisible = true) {
+function collect(state, initial = false, animateVisible = true, startDelay = 0) {
   if (active !== state || !state.root.isConnected || reduced()) return;
   // Search can replace results without changing routes. Don't retain detached
   // offscreen results in IntersectionObserver during a long editing session.
@@ -70,7 +70,7 @@ function collect(state, initial = false, animateVisible = true) {
     }
   }
   visible.sort((a,b) => priority(a)-priority(b));
-  visible.slice(0,32).forEach((el,i) => play(state, el, initial ? Math.min(i,7)*55 : Math.min(i,4)*45));
+  visible.slice(0,32).forEach((el,i) => play(state, el, startDelay + (initial ? Math.min(i,7)*55 : Math.min(i,4)*45)));
 }
 
 function priority(el) {
@@ -99,12 +99,12 @@ export function mountPageMotion(root, { animate = true } = {}) {
   state.media?.addEventListener('change',state.onPreference);
   state.settings = new MutationObserver(state.onPreference);
   state.settings.observe(document.documentElement,{attributes:true,attributeFilter:['class']});
-  const start = () => {
+  const start = (startDelay = 0) => {
     if (active !== state || !root.isConnected) return;
     state.started = true;
     // In-place saves keep visible content still; offscreen blocks still reveal
     // on their first scroll into view after the refresh.
-    collect(state,true,animate);
+    collect(state,true,animate,startDelay);
     state.mutations = new MutationObserver(records=>{
       // Calculator text and counters don't need another geometry scan.
       if (records.some(record=>record.type === 'attributes' || [...record.addedNodes,...record.removedNodes].some(node=>
@@ -116,15 +116,19 @@ export function mountPageMotion(root, { animate = true } = {}) {
   const boot = document.getElementById('boot');
   const afterBoot = () => {
     state.boot?.disconnect();
-    // Wait for the splash's actual exit, rather than guessing a timeout.
-    Promise.allSettled((boot?.getAnimations?.() || []).map(animation=>animation.finished)).then(()=>{
-      if (active === state) state.frame=requestAnimationFrame(start);
-    });
+    // Schedule before the splash fades. Backwards fill holds each element
+    // at its starting opacity until the splash transition has finished.
+    const transitions = boot?.getAnimations?.() || [];
+    const delay = transitions.reduce((remaining, animation) => {
+      const end = animation.effect?.getComputedTiming().endTime;
+      return Number.isFinite(end) ? Math.max(remaining, end - (animation.currentTime ?? 0)) : remaining;
+    }, 0);
+    start(delay);
   };
   if (boot && !boot.classList.contains('is-done')) {
     state.boot=new MutationObserver(()=>{if(boot.classList.contains('is-done'))afterBoot();});
     state.boot.observe(boot,{attributes:true,attributeFilter:['class']});
-  } else start();
+  } else afterBoot();
 }
 
 export function animateDynamicContent(root) {
