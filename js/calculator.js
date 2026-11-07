@@ -5,6 +5,24 @@ import { icon } from './ui.js';
 
 const integer = (value, fallback=0) => Number.isFinite(Number(value)) ? Math.max(0,Math.min(100000,Math.floor(Number(value)))) : fallback;
 const show = (n) => n == null ? 'Formula not supported' : Number.isFinite(n) ? fmtCalculatorNumber(n) : n===Infinity ? '∞' : 'Formula not supported';
+// The source field is named "multi". It represents a multiplier for most
+// upgrades, but some unlock/count effects have different semantics.
+const effectKind = (upgrade) => {
+  const name = String(upgrade?.name || '').toLowerCase();
+  if (/unlock|slot|level perk|auto cut|bulk|count|capacity|maximum|limit/.test(name)) return 'value';
+  return 'multiplier';
+};
+const effectLabel = (upgrade, value) => value == null || !Number.isFinite(value)
+  ? show(value) : `${effectKind(upgrade)==='multiplier'?'× ':''}${show(value)}`;
+const effectExplanation = (upgrade, calc) => {
+  if(!Number.isFinite(calc.effect)||!Number.isFinite(calc.previousEffect)) return 'This effect cannot be compared using the available formula.';
+  const delta=calc.effect-calc.previousEffect;
+  if(calc.to===calc.from) return 'Choose a higher target level to see what changes.';
+  if(effectKind(upgrade)!=='multiplier') return `This upgrade changes the calculated effect by ${delta>=0?'+':''}${show(delta)} (${effectLabel(upgrade,calc.previousEffect)} → ${effectLabel(upgrade,calc.effect)}).`;
+  if(calc.previousEffect<=0) return `Calculated multiplier: ${effectLabel(upgrade,calc.previousEffect)} → ${effectLabel(upgrade,calc.effect)}. A percentage increase cannot be calculated from zero.`;
+  const percent=(calc.effect/calc.previousEffect-1)*100;
+  return `Your calculated gain multiplier increases by ${percent>=0?'+':''}${show(percent)}% (${effectLabel(upgrade,calc.previousEffect)} → ${effectLabel(upgrade,calc.effect)}). This is the change in the upgrade effect, not your total in-game gains.`;
+};
 export function calculateUpgrade(upgrade, from, to) {
   const cap = Number.isFinite(Number(upgrade.cap)) ? Math.min(100000,Math.floor(Number(upgrade.cap))) : 100000;
   from = Math.min(integer(from), cap);
@@ -18,8 +36,9 @@ export function calculateUpgrade(upgrade, from, to) {
     if(!Number.isFinite(total)) {overflow=true;break;}
   }
   const effect=evalFormula(upgrade.multi,{L:to});
+  const previousEffect=evalFormula(upgrade.multi,{L:from});
   const next=to<cap ? evalFormula(upgrade.price,{L:to}) : null;
-  return {from,to,cap,total:missing||overflow?null:total,effect,next,missing,overflow};
+  return {from,to,cap,total:missing||overflow?null:total,effect,previousEffect,next,missing,overflow};
 }
 
 export const calculatorView = {
@@ -38,7 +57,7 @@ export const calculatorView = {
       </div>
       <div class="ri-calc__results" aria-live="polite" id="ri-calc-results"></div>
       <div class="ri-calc__formulas" id="ri-calc-formulas"></div>
-      <p class="ri-calc__hint">Results use up to two decimal places (comma separator). Total cost sums the prices at your current level through the level before the target. Values are estimates from documented formulas, not your in-game modifiers.</p>
+      <p class="ri-calc__hint">Multiplier effects are marked with ×; unlocks and counts display their raw effect value. Results use up to two decimal places (comma separator). Total cost sums the prices at your current level through the level before the target. Values are estimates from documented formulas, not your in-game modifiers.</p>
     </section>`;
     const sec=qs('#ri-calc-section',root),upgradeEl=qs('#ri-calc-upgrade',root),fromEl=qs('#ri-calc-from',root),toEl=qs('#ri-calc-to',root),results=qs('#ri-calc-results',root),formulas=qs('#ri-calc-formulas',root);
     const upgrades=()=>FORMULA_SECTIONS[sec.value]?.upgrades||[];
@@ -50,8 +69,9 @@ export const calculatorView = {
       results.innerHTML=calc.invalid?`<p>${esc(calc.invalid)}</p>`:`
         <div class="ri-calc__result"><small>Levels to buy</small><strong>${calc.to-calc.from}</strong></div>
         <div class="ri-calc__result"><small>Total cost</small><strong>${show(calc.total)}</strong></div>
-        <div class="ri-calc__result"><small>Effect at level ${calc.to}</small><strong>${show(calc.effect)}</strong></div>
-        <div class="ri-calc__result"><small>Cost of next level</small><strong>${calc.to>=calc.cap?'Max level':show(calc.next)}</strong></div>`;
+        <div class="ri-calc__result"><small>Effect at level ${calc.to}</small><strong>${effectLabel(u,calc.effect)}</strong></div>
+        <div class="ri-calc__result"><small>Cost of next level</small><strong>${calc.to>=calc.cap?'Max level':show(calc.next)}</strong></div>
+        <div class="ri-calc__insight">${icon('trending-up',17)} <span>${esc(effectExplanation(u,calc))}</span></div>`;
       formulas.innerHTML=`<div><b>Price formula</b><code>${esc(u.price||'—')}</code></div><div><b>Effect formula</b><code>${esc(u.multi||'—')}</code></div>${u.requirement?`<p>Requirement: ${esc(u.requirement)}</p>`:''}`;
     };
     const populate=()=>{

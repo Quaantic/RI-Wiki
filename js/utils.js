@@ -397,7 +397,8 @@ export function searchPages(query, { limit = 0, category = null } = {}) {
     for (const upgrade of section.upgrades || []) {
       const score = scoreItem(upgrade.name, `${section.name} ${upgrade.price||''} ${upgrade.multi||''} ${upgrade.requirement||''}`, section.name);
       if (!score) continue;
-      results.push({ cat:parent, sub:{name:`${upgrade.n}. ${upgrade.name}`,desc:`${section.name} · Upgrade calculator`}, score,href:`#/calculator?section=${encodeURIComponent(sectionId)}&upgrade=${encodeURIComponent(upgrade.n)}`,kind:'upgrade' });
+      if(!route)continue;
+      results.push({ cat:parent, sub:{name:`${upgrade.n}. ${upgrade.name}`,desc:`${section.name} · Upgrade`}, score,href:`#/${route}`,kind:'upgrade' });
     }
   }
   results.sort((a, b) => b.score - a.score || a.sub.name.localeCompare(b.sub.name));

@@ -2473,9 +2473,10 @@ html:not(.ri-edit-on) [data-release-empty] { display:none; }
 :root.reduce-motion .ri-faq-item[open] .ri-text-section__body { animation: none; }
 
 /* Community tools — calculator and newly published page badges */
-.foot-link--calculator { color: var(--c-accent); background: var(--c-accent-soft); }
-.foot-link--calculator .nav-item__icon svg { color: var(--c-accent); }
-.foot-link--calculator:hover { background: var(--c-accent-soft-2); }
+.foot-link--calculator { color: var(--c-text); background: transparent; }
+.foot-link--calculator .nav-item__icon svg { color: var(--c-text-3); }
+.foot-link--calculator:hover { background: var(--c-accent-soft); }
+.foot-link--calculator.active { background: var(--c-accent-soft); color: var(--c-accent); }
 .ri-new-tag {
   display: inline-flex;
   align-items: center;
@@ -2514,3 +2515,6 @@ html:not(.ri-edit-on) [data-release-empty] { display:none; }
   .ri-calc__form, .ri-calc__results { grid-template-columns: minmax(0, 1fr); }
   .ri-calc__form { padding: 16px; }
 }
+
+.ri-calc__insight { grid-column: 1/-1; display: flex; align-items: flex-start; gap: 12px; padding: 15px 18px; border-radius: var(--r-md); background: var(--c-bg-2); border: 1px solid var(--c-border-accent); color: var(--c-text-2); font: 13px/1.7 var(--font-display); }
+.ri-calc__insight svg { color: var(--c-accent); flex: none; margin-top: 2px; }

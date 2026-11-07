@@ -983,3 +983,16 @@ a.tag:hover, button.tag:hover {
 .sidebar__brand [data-emblem] svg {
   animation: glow-breathe 5s ease-in-out infinite;
 }
+
+/* Command-palette search results: grouped navigation + contextual content. */
+.searchbox__panel { max-height: min(70vh, 560px); padding: 0; overflow-y: auto; }
+.searchbox__panel .dropdown__label { padding: 13px 16px 8px; margin-top: 4px; border-top: 1px solid var(--c-border); color: var(--c-text-3); font: 600 11px/1.4 var(--font-display); letter-spacing: .03em; }
+.searchbox__panel .dropdown__label:first-child { border-top: 0; }
+.searchbox__panel .searchbox__item { margin: 2px 7px; padding: 9px 11px; align-items: center; }
+.searchbox__copy { min-width: 0; flex: 1; }
+.searchbox__path { color: var(--c-text-3); white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
+.searchbox__chevron { color: var(--c-text-4); }
+.searchbox__description { color: var(--c-text-4); margin-top: 2px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
+.searchbox__footer { margin-top: 8px; padding: 5px 9px 8px; }
+.searchbox__shortcuts { display:flex; flex-wrap:wrap; align-items:center; gap:5px; padding: 5px 10px; font: 11px/1.5 var(--font-display); color: var(--c-text-4); }
+.searchbox__panel mark { background: transparent; color: var(--c-accent); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }

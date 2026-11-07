@@ -1,3 +1,4 @@
+import { CATEGORIES } from './data/wiki-data.js';
 // Per-visitor read receipts for newly published page changes. Nothing is sent
 // to the backend; the user can clear localStorage to see badges again.
 const STORAGE='ri-seen-content-revisions-v1';
@@ -6,7 +7,7 @@ const safeRoute=(href)=>{
   return /^#\/[\w-]+(?:\/[\w-]+)?$/.test(hash)?hash:null;
  }catch{return null;}
 };
-let latest={};let seen={};
+let latest={};let seen={};let ancestorsOfChanges={};
 try{seen=JSON.parse(localStorage.getItem(STORAGE)||'{}')||{};}catch{seen={};}
 function remember(route){
  if(!route||!latest[route]||seen[route]===latest[route])return;
@@ -18,7 +19,10 @@ function decorate(){
  for(const link of document.querySelectorAll('a[href^="#/"]')){
   if(link.closest('.ri-edit-bar,.ri-edit-popover,[data-ri-nav-tools],.ri-review-dialog'))continue;
   const route=safeRoute(link.getAttribute('href')||'');
-  const unread=route&&latest[route]&&latest[route]!==seen[route];
+  const selfUnread=route&&latest[route]&&latest[route]!==seen[route];
+  // Parent categories/sections stay NEW until every changed child was visited.
+  const descendants=route&&ancestorsOfChanges[route]||[];
+  const unread=selfUnread||descendants.some(child=>latest[child]&&seen[child]!==latest[child]);
   const badge=link.querySelector(':scope > .ri-new-tag');
   if(unread){
     if(!badge){const tag=document.createElement('span');tag.className='ri-new-tag';tag.textContent='NEW';tag.setAttribute('aria-label','Updated since your last visit');link.appendChild(tag);}
@@ -32,6 +36,21 @@ export async function initNewBadges(){
   const payload=await res.json();
   if(payload.format!==1||!payload.routes||typeof payload.routes!=='object')return;
   latest=Object.fromEntries(Object.entries(payload.routes).filter(([route,stamp])=>safeRoute(route)&&typeof stamp==='string'));
+  // Resolve nested wiki hierarchy; routes are flattened as #/category/page.
+  const ancestors = {};
+  for(const category of CATEGORIES){
+    const traverse=(pages, parents=[])=>{
+      for(const page of pages||[]){
+        const route=`#/${category.id}/${page.id}`;
+        for(const parent of [`#/${category.id}`,...parents]){
+          (ancestors[parent] ||= []).push(route);
+        }
+        traverse(page.children,[...parents,route]);
+      }
+    };
+    traverse(category.subcategories);
+  }
+  ancestorsOfChanges=ancestors;
   remember(safeRoute(location.hash));decorate();
   window.addEventListener('hashchange',()=>{remember(safeRoute(location.hash));requestAnimationFrame(decorate)});
   window.addEventListener('ri-route-rendered',decorate);

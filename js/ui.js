@@ -157,24 +157,61 @@ export function mountSearchBox(root) {
     if (!query) { close(); return; }
     open();
 
-    if (!results.length) {
+    if (!results.length && !['dashboard','update log','updates','upgrade calculator','calculator','feedback'].some(label => label.includes(query.toLowerCase()))) {
       panel.innerHTML = `<div class="searchbox__empty">No results for <b>"${esc(query)}"</b>.<br><small>Try a keyword like "voidstone", "respawn" or "crit".</small></div>`;
       return;
     }
-    const body = `<div class="dropdown__label">${icon('grid', 12)} Pages &amp; upgrades</div>${results.map((result) => `
-        <a class="searchbox__item" role="option" href="${esc(result.href)}">
-          <span class="searchbox__item-icon">${icon(result.cat.icon, 15)}</span>
-          <span>
-            <b>${colorizeResources(markMatches(result.sub.name, query))}</b>
-            <small>${colorizeResources(esc(result.cat.name))} · ${colorizeResources(markMatches(result.sub.desc || result.sub.tagline || '', query))}</small>
-          </span>
-        </a>`).join('')}`;
-
-    panel.innerHTML = body + `
+    // A command-palette style preview: navigation first, content results second.
+    // Upgrades stay linked to their original wiki page, never to the Calculator.
+    const quickLinks = [
+      { name: 'Dashboard', href: '#/', icon: 'layout-dashboard', path: 'Navigation' },
+      { name: 'Update Log', href: '#/updates', icon: 'scroll', path: 'Tools' },
+      { name: 'Upgrade Calculator', href: '#/calculator', icon: 'calculator', path: 'Tools' },
+      { name: 'Feedback', href: '#/feedback', icon: 'heart', path: 'Tools' },
+    ];
+    const lower = query.toLowerCase();
+    const navigation = [
+      ...quickLinks.filter(item => item.name.toLowerCase().includes(lower)),
+      ...results.filter(item => item.kind === 'category').map(item => ({
+        name: item.sub.name, href: item.href, icon: item.cat.icon, path: 'Categories',
+      })),
+    ];
+    const content = results.filter(item => item.kind !== 'category');
+    const crumbsFor = (result) => {
+      const findPath = (pages, id, trail = []) => {
+        for (const page of pages || []) {
+          const next = [...trail, page.name];
+          if (page.id === id) return next;
+          const found = findPath(page.children, id, next);
+          if (found) return found;
+        }
+        return null;
+      };
+      if (result.kind === 'upgrade') return [result.cat.name, result.sub.desc?.split(' · ')[0] || 'Upgrades'];
+      const trail = findPath(result.cat.subcategories, result.sub.id);
+      return [result.cat.name, ...(trail || []).slice(0, -1)];
+    };
+    const navHTML = navigation.length ? `<div class="dropdown__label">Navigation</div>${navigation.slice(0, 6).map(item => `
+      <a class="searchbox__item" role="option" href="${esc(item.href)}">
+        <span class="searchbox__item-icon">${icon(item.icon, 16)}</span>
+        <span class="searchbox__copy"><b>${markMatches(item.name, query)}</b>
+          <small class="searchbox__path">${esc(item.path)}</small></span>
+      </a>`).join('')}` : '';
+    const contentHTML = content.length ? `<div class="dropdown__label">Content Search</div>${content.slice(0, 9).map(result => `
+      <a class="searchbox__item" role="option" href="${esc(result.href)}">
+        <span class="searchbox__item-icon">${icon(result.cat.icon, 16)}</span>
+        <span class="searchbox__copy">
+          <b>${colorizeResources(markMatches(result.sub.name, query))}</b>
+          <small class="searchbox__path">${crumbsFor(result).map(segment => colorizeResources(esc(segment))).join('<span class="searchbox__chevron"> » </span>')}${result.kind === 'upgrade' ? ' · Upgrade' : ''}</small>
+          ${result.sub.desc || result.sub.tagline ? `<small class="searchbox__description">${colorizeResources(markMatches(result.sub.desc || result.sub.tagline, query))}</small>` : ''}
+        </span>
+      </a>`).join('')}` : '';
+    panel.innerHTML = navHTML + contentHTML + `
       <div class="searchbox__footer">
         <a href="#/search?q=${encodeURIComponent(query)}">
-          See all ${results.length} result${results.length === 1 ? '' : 's'} for "${esc(query)}" ${icon('arrow-right', 13)}
+          See all search results for "${esc(query)}" ${icon('arrow-right', 13)}
         </a>
+        <div class="searchbox__shortcuts">${icon('arrow-up', 12)} ${icon('arrow-down', 12)} Navigate &nbsp; ${icon('corner-down-left', 12)} Select &nbsp; Esc Close</div>
       </div>`;
 
     items = [...panel.querySelectorAll('.searchbox__item')].map((el) => ({ el, href: el.getAttribute('href') }));
