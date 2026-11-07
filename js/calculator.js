@@ -1,10 +1,10 @@
 // Public calculator: existing wiki formulas only. No eval(), no external dependencies.
-import { esc, qs, evalFormula, fmtValue } from './utils.js';
+import { esc, qs, evalFormula, fmtCalculatorNumber } from './utils.js';
 import { FORMULA_SECTIONS } from './data/formulas.js';
 import { icon } from './ui.js';
 
 const integer = (value, fallback=0) => Number.isFinite(Number(value)) ? Math.max(0,Math.min(100000,Math.floor(Number(value)))) : fallback;
-const show = (n) => n == null ? 'Formula not supported' : Number.isFinite(n) ? fmtValue(n) : n===Infinity ? '∞' : 'Formula not supported';
+const show = (n) => n == null ? 'Formula not supported' : Number.isFinite(n) ? fmtCalculatorNumber(n) : n===Infinity ? '∞' : 'Formula not supported';
 export function calculateUpgrade(upgrade, from, to) {
   const cap = Number.isFinite(Number(upgrade.cap)) ? Math.min(100000,Math.floor(Number(upgrade.cap))) : 100000;
   from = Math.min(integer(from), cap);
@@ -38,7 +38,7 @@ export const calculatorView = {
       </div>
       <div class="ri-calc__results" aria-live="polite" id="ri-calc-results"></div>
       <div class="ri-calc__formulas" id="ri-calc-formulas"></div>
-      <p class="ri-calc__hint">Total cost sums the prices at your current level through the level before the target. Values are estimates from documented formulas, not your in-game modifiers.</p>
+      <p class="ri-calc__hint">Results use up to two decimal places (comma separator). Total cost sums the prices at your current level through the level before the target. Values are estimates from documented formulas, not your in-game modifiers.</p>
     </section>`;
     const sec=qs('#ri-calc-section',root),upgradeEl=qs('#ri-calc-upgrade',root),fromEl=qs('#ri-calc-from',root),toEl=qs('#ri-calc-to',root),results=qs('#ri-calc-results',root),formulas=qs('#ri-calc-formulas',root);
     const upgrades=()=>FORMULA_SECTIONS[sec.value]?.upgrades||[];

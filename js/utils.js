@@ -151,6 +151,27 @@ export function fmtSuffix(n) {
   return str + SUFFIXES[tier];
 }
 
+// Calculator display only: preserve numeric precision internally, but show
+// at most two decimal places using a comma. Truncate rather than round so
+// e.g. 123.876 displays as 123,87 (as requested by the wiki).
+export function fmtCalculatorNumber(value) {
+  if (!Number.isFinite(value)) return String(value);
+  if (value === 0) return '0';
+  const abs = Math.abs(value);
+  const tier = abs >= 1000
+    ? Math.min(Math.floor(Math.log10(abs) / 3), SUFFIXES.length - 1)
+    : 0;
+  const scaled = value / Math.pow(1000, tier);
+  // Compensate for tiny floating-point errors around exact hundredths.
+  const scaledAbs = Math.abs(scaled);
+  const truncated = Math.floor(scaledAbs * 100 + Number.EPSILON * scaledAbs * 100) / 100;
+  if (truncated === 0 && scaledAbs > 0) return (scaled < 0 ? '>−0,01' : '<0,01') + SUFFIXES[tier];
+  const formatted = new Intl.NumberFormat('pt-BR', {
+    useGrouping: false, maximumFractionDigits: 2,
+  }).format((scaled < 0 ? -1 : 1) * truncated);
+  return formatted + SUFFIXES[tier];
+}
+
 // Formata valores que podem vir crus do data ("9,975,712" | 9975712) ou ja
 // textuais ("No cap", "—", "Player's max", "∆", "1/185K"), que passam direto.
 export function fmtValue(v) {

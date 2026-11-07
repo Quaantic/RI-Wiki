@@ -161,7 +161,7 @@ export function mountSearchBox(root) {
       panel.innerHTML = `<div class="searchbox__empty">No results for <b>"${esc(query)}"</b>.<br><small>Try a keyword like "voidstone", "respawn" or "crit".</small></div>`;
       return;
     }
-    const body = `<div class="dropdown__label">${icon('grid', 12)} Wiki pages</div>${results.map((result) => `
+    const body = `<div class="dropdown__label">${icon('grid', 12)} Pages &amp; upgrades</div>${results.map((result) => `
         <a class="searchbox__item" role="option" href="${esc(result.href)}">
           <span class="searchbox__item-icon">${icon(result.cat.icon, 15)}</span>
           <span>
@@ -367,7 +367,8 @@ function moveIndicator() {
 
 export function setActiveNav(catId, subId = null) {
   qsa('.nav-item').forEach((el) => {
-    el.classList.toggle('active', el.dataset.cat === catId);
+    el.classList.toggle('active', el.classList.contains('nav-item--calculator')
+      ? window.location.hash.startsWith('#/calculator') : !!catId && el.dataset.cat === catId);
   });
   qsa('[data-sub]').forEach((el) => {
     el.classList.toggle('active', !!catId && el.closest('.nav-group')?.dataset.cat===catId && el.dataset.sub === subId);

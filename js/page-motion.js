@@ -1,11 +1,11 @@
 // One route-scoped controller. Content is visible by default; only running
 // native animations supply the temporary entrance opacity/transform.
 const BREADCRUMBS = '#crumbs, .cat-hero__crumbs';
-const ICONS = '.cat-hero__icon, .hero__art, .notfound > [data-emblem]';
+const ICONS = '.cat-hero__icon, .hero__art, .ri-calc__intro > svg, .notfound > [data-emblem]';
 const HEADINGS = 'h1, .ri-admin-section__title';
-const DESCRIPTIONS = '.hero__sub, .cat-hero__tagline, .cat-hero__description, .page-head p, .notfound p, .upd-hero__intro p, .search-page__head > p';
+const DESCRIPTIONS = '.hero__sub, .cat-hero__tagline, .cat-hero__description, .page-head p, .notfound p, .upd-hero__intro p, .search-page__head > p, .ri-calc__intro p';
 const CONTROLS = '.hero__badge, .hero__search, .hero__chips > *, .hero__stat, .cat-hero__facts > *, .vitals > *, .pill-nav > .pill, .ri-page-content-tools, .upd-filters > *, .search-page__input, .filters-row > :not(.pill-nav), .reset-tier-head, .reset-calc-power, .upd-hero__eyebrow';
-const BLOCKS = '.section-head, .section-title, .cat-card, .info-card, .sub-link, .upgrade-card, .stage-card, .milestone-card, .rune-card, .ore-card, .layer-card, .area-card, .gear-card, .reset-calc-card, .table-wrap, .result-item, .ri-text-section, .ri-faq-item, .upd-version__head, .upd-group__label, .upd-entry, .empty-state, .stat-card, .feature-card, .sub-pager, .formula-group, .formula-card, .callout, .fb-cat, .fb-form, .section > p, .section > h2, .section > h3, .reveal';
+const BLOCKS = '.section-head, .section-title, .cat-card, .info-card, .sub-link, .upgrade-card, .stage-card, .milestone-card, .rune-card, .ore-card, .layer-card, .area-card, .gear-card, .reset-calc-card, .table-wrap, .result-item, .ri-text-section, .ri-faq-item, .upd-version__head, .upd-group__label, .upd-entry, .empty-state, .stat-card, .feature-card, .sub-pager, .formula-group, .formula-card, .ri-calc__form, .ri-calc__result, .ri-calc__formulas, .callout, .fb-cat, .fb-form, .section > p, .section > h2, .section > h3, .reveal';
 const SELECTORS = [BREADCRUMBS, ICONS, HEADINGS, DESCRIPTIONS, CONTROLS, BLOCKS].join(',');
 let active = null;
 const reduced = () => document.documentElement.classList.contains('reduce-motion') || window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;

@@ -8,6 +8,7 @@ import {
   searchView, updatesView, creditsView, notFoundView,
 } from './views.js';
 import { feedbackView } from './feedback.js';
+import { calculatorView } from './calculator.js';
 import {getCategory,getSubcategory} from './data/wiki-data.js';
 
 const ROUTES = [
@@ -16,6 +17,7 @@ const ROUTES = [
   { pattern: /^feedback$/, view: feedbackView },
   { pattern: /^credits$/, view: creditsView },
   { pattern: /^search$/, view: searchView },
+  { pattern: /^calculator$/, view: calculatorView },
 ];
 
 // Paginas genericas por id (categorias e subpaginas) casam por ULTIMO, para

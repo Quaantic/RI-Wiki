@@ -2,6 +2,7 @@ const {authorize,github,PREFIX,fail}=require('../server/editor-auth.cjs');
 const FILES={wiki:'content/wiki-data.json',updates:'content/update-log.json',game:'content/game-data.json'};
 const DRAFT='content/drafts/inline-draft.json';
 const live=require('../server/live-store.cjs');
+const {changeIndex}=require('../server/change-index.cjs');
 module.exports=async(req,res)=>{
  res.setHeader('Cache-Control','no-store');
  try{
@@ -25,6 +26,19 @@ module.exports=async(req,res)=>{
   })));
   const changed=Object.keys(FILES).filter(name=>JSON.stringify(docs[name])!==JSON.stringify(before[name]));
   const updates=changed.map(name=>({path:FILES[name],mode:'100644',type:'blob',content:JSON.stringify(docs[name],null,2)+'\n'}));
+  // Publish the NEW-badge change index in the same commit as the content.
+  // A code deployment alone does not mark anything NEW; a manual Publish does.
+  if (changed.length) {
+   const indexPath='content/change-index.json';
+   let previous={format:1,routes:{}};
+   if(entries.has(indexPath)) {
+    const blob=await github(token,`${PREFIX}/git/blobs/${entries.get(indexPath).sha}`);
+    try { previous=JSON.parse(Buffer.from(blob.content,'base64').toString()); }
+    catch { previous={format:1,routes:{}}; }
+   }
+   const index=changeIndex(before,docs,previous,new Date().toISOString());
+   updates.push({path:indexPath,mode:'100644',type:'blob',content:JSON.stringify(index,null,2)+'\n'});
+  }
   if(changed.length) {
    const actor=String(user.login || 'unknown').replace(/[^a-zA-Z0-9_-]/g,'_').slice(0,60);
    const parts=new Intl.DateTimeFormat('en-GB',{timeZone:'America/Sao_Paulo',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(new Date());

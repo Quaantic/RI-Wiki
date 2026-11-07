@@ -1167,13 +1167,19 @@ export const subcategoryView = {
   ${inlineUpgradeSections}
 
       ${(sub.prev || sub.next) ? `
-      <nav class="sub-pager">
+      <nav class="sub-pager" aria-label="Adjacent wiki pages">
         ${sub.prev
-          ? `<a href="#/${cat.id}/${sub.prev.id}"><small>Previous</small><b>${icon('arrow-right', 13)} ${esc(sub.prev.name)}</b></a>`
-          : '<span></span>'}
+          ? `<a class="sub-pager__link sub-pager__link--prev" href="#/${esc(cat.id)}/${esc(sub.prev.id)}" aria-label="Previous page: ${esc(sub.prev.name)}">
+              <span class="sub-pager__arrow" aria-hidden="true">${icon('arrow-left', 19)}</span>
+              <span class="sub-pager__copy"><small>Previous page</small><b>${esc(sub.prev.name)}</b></span>
+            </a>`
+          : ''}
         ${sub.next
-          ? `<a href="#/${cat.id}/${sub.next.id}"><small>Next</small><b>${esc(sub.next.name)} ${icon('arrow-right', 13)}</b></a>`
-          : '<span></span>'}
+          ? `<a class="sub-pager__link sub-pager__link--next" href="#/${esc(cat.id)}/${esc(sub.next.id)}" aria-label="Next page: ${esc(sub.next.name)}">
+              <span class="sub-pager__copy"><small>Next page</small><b>${esc(sub.next.name)}</b></span>
+              <span class="sub-pager__arrow" aria-hidden="true">${icon('arrow-right', 19)}</span>
+            </a>`
+          : ''}
       </nav>` : ''}
     `;
 
@@ -1283,7 +1289,7 @@ export const searchView = {
         <div class="result-list">
           ${results.map((result, i) => `
             <a class="result-item reveal" style="--reveal-delay:${Math.min(i * 40, 320)}ms" href="${esc(result.href)}">
-              <div class="result-item__top">${icon(result.cat.icon, 12)} ${esc(result.cat.name)} ${result.kind === 'category' ? 'category' : 'page'}</div>
+              <div class="result-item__top">${icon(result.cat.icon, 12)} ${esc(result.cat.name)} ${result.kind === 'category' ? 'category' : result.kind === 'upgrade' ? 'upgrade' : 'page'}</div>
               <div class="result-item__title">${colorizeResources(markMatches(result.sub.name, st.q))}</div>
               <div class="result-item__snippet">${colorizeResources(markMatches(result.sub.desc || result.sub.tagline || '', st.q))}</div>
             </a>`).join('')}
