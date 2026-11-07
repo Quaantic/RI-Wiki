@@ -13,7 +13,7 @@ import {
 import { CONTEXTS,validateDocuments } from '../content-schema.js';
 import { searchIcons } from '../icon-catalog.js';
 import { CATEGORIES, getSubcategory, getSubcategoryDocPath, collectSubtreeIds } from '../data/wiki-data.js';
-import { buildNav } from '../ui.js';
+import { buildNav, syncFooterResourceColors } from '../ui.js';
 import * as draft from './draft.js';
 import { rerender, registerRoute } from '../router.js';
 import { pinContentKeys, resolveContentKey } from '../page-content.js';
@@ -1917,6 +1917,7 @@ function applyResourceChange(name, { color, link } = {}, { rerenderPage = true }
     if (!legacy || legacy.key !== name) draft.setValue('game', `resources.pageLinks.${name}`, undefined);
   }
   draft.applyDraftToSite();
+  syncFooterResourceColors();
   if (rerenderPage) void rerender({ scroll: 'preserve' });
   updateToolbar();
 }

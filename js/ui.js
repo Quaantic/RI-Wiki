@@ -4,7 +4,7 @@ import { qs, qsa, esc, html, debounce, markMatches } from './utils.js';
 import { animateDynamicContent } from './page-motion.js';
 import { CATEGORIES, getSubcategory } from './data/wiki-data.js';
 import { getInlineUpgradePages } from './data/formulas.js';
-import { colorizeResources, resourceColor } from './data/resource-colors.js';
+import { colorizeResources, resourceColor, RESOURCE_COLORS, PAGE_LINKS } from './data/resource-colors.js';
 import { dataProvider } from './services.js';
 import { ed } from './edit/ed-attr.js';
 import { formatReleaseVersion } from './releases.js';
@@ -304,6 +304,28 @@ let navWired = false;
 const branchStates=new Map();
 const branchKey=el=>`${el.closest('.nav-group')?.dataset.cat}/${el.dataset.parentSub}`;
 
+// Keep the sidebar's fixed community links in sync with Colors in the editor.
+// Match by linked route first (works even when the color entry has a custom
+// name), then by the visible link name. Nothing is hardcoded to a color.
+export function syncFooterResourceColors() {
+  const entries = Object.entries(RESOURCE_COLORS);
+  const routeByName = new Map(Object.entries(PAGE_LINKS).map(([name, route]) => [name.toLowerCase(), route]));
+  for (const link of qsa('.sidebar__foot a.foot-link[href]')) {
+    const route = link.getAttribute('href');
+    const label = link.querySelector('span:not(.nav-item__icon):not(.nav-badge)')?.textContent?.trim() || '';
+    const byRoute = entries.find(([name]) => routeByName.get(name.toLowerCase()) === route);
+    const byName = entries.find(([name]) => name.toLowerCase() === label.toLowerCase());
+    const color = (byRoute || byName)?.[1];
+    if (color) {
+      link.style.setProperty('--ri-editor-link-color', color);
+      link.classList.add('foot-link--custom-color');
+    } else {
+      link.style.removeProperty('--ri-editor-link-color');
+      link.classList.remove('foot-link--custom-color');
+    }
+  }
+}
+
 export function buildNav() {
   const nav = qs('#sidebar-nav');
   if (!nav) return;
@@ -325,6 +347,7 @@ export function buildNav() {
       </div>`;
     }).join('');
 
+  syncFooterResourceColors();
   qsa('.nav-group',nav).forEach(el=>el.classList.toggle('open',openGroups.has(el.dataset.cat)));
   qsa('[data-parent-sub]',nav).forEach(el=>el.classList.toggle('open',openBranches.has(`${el.closest('.nav-group')?.dataset.cat}/${el.dataset.parentSub}`)));
   // Saves and live sync rebuild this tree after the router has highlighted

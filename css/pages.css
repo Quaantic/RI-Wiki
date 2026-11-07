@@ -2518,3 +2518,10 @@ html:not(.ri-edit-on) [data-release-empty] { display:none; }
 
 .ri-calc__insight { grid-column: 1/-1; display: flex; align-items: flex-start; gap: 12px; padding: 15px 18px; border-radius: var(--r-md); background: var(--c-bg-2); border: 1px solid var(--c-border-accent); color: var(--c-text-2); font: 13px/1.7 var(--font-display); }
 .ri-calc__insight svg { color: var(--c-accent); flex: none; margin-top: 2px; }
+
+/* Color entries assigned to wiki routes automatically tint matching footer links.
+   The CSS variable is refreshed as soon as Colors is edited. */
+.sidebar__foot .foot-link--custom-color,
+.sidebar__foot .foot-link--custom-color.active { color: var(--ri-editor-link-color); }
+.sidebar__foot .foot-link--custom-color .nav-item__icon,
+.sidebar__foot .foot-link--custom-color .nav-item__icon svg { color: var(--ri-editor-link-color); }
