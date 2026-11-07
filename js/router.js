@@ -58,6 +58,7 @@ async function renderView(view, params, query, opts = {}) {
     params=[params.join('/')];view=notFoundView;
   }
   const seq = ++renderSeq;
+  clearPageMotion();
   const viewEl = qs('#view');
   const nav = view.nav ? view.nav(params, query) : null;
   setActiveNav(Array.isArray(nav) ? nav[0] : nav, Array.isArray(nav) ? nav[1] : null);
