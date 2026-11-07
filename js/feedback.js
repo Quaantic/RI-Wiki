@@ -5,6 +5,7 @@ import { icon, initReveal } from './ui.js';
 
 const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwMYl1sTsZIKio0tcpzxWyBO5x7v7PUlnXQAuasCJwFEXoKntLykba4-59JTqck2S27/exec';
 const MIN_CHARS = 30;
+const MAX_CHARS = 3500; // Matches the Discord embed description limit used by Apps Script.
 
 const CATEGORIES = [
   {
@@ -60,8 +61,9 @@ export const feedbackView = {
             <span class="fb-form__icon">${icon(CATEGORIES[0].icon, 18)}</span>
             <b data-cat-name>${esc(CATEGORIES[0].name)}</b>
           </div>
-          <label class="fb-form__label" for="fb-msg">Message <small>(min ${MIN_CHARS} characters)</small></label>
-          <textarea class="fb-form__msg" id="fb-msg" rows="7" data-msg placeholder="${esc(CATEGORIES[0].template)}"></textarea>
+          <label class="fb-form__label" for="fb-msg">Message <small>(${MIN_CHARS}–${MAX_CHARS} characters)</small></label>
+          <textarea class="fb-form__msg" id="fb-msg" rows="7" maxlength="${MAX_CHARS}" data-msg placeholder="${esc(CATEGORIES[0].template)}"></textarea>
+          <div class="fb-form__counter" data-counter aria-live="polite">0 / ${MAX_CHARS}</div>
           <label class="fb-form__label" for="fb-name">Your name <small>(optional)</small></label>
           <input class="fb-form__name" id="fb-name" type="text" maxlength="40" placeholder="Discord username…" data-name>
           <div class="fb-form__foot">
@@ -78,6 +80,9 @@ export const feedbackView = {
     const msg = qs('[data-msg]', root);
     const name = qs('[data-name]', root);
     const status = qs('[data-status]', root);
+    const counter = qs('[data-counter]', root);
+    const updateCounter = () => { counter.textContent = `${msg.value.length} / ${MAX_CHARS}`; };
+    msg.addEventListener('input', updateCounter);
     const send = qs('[data-send]', root);
     const catName = qs('[data-cat-name]', root);
     const catIcon = qs('.fb-form__icon', root);
@@ -91,6 +96,7 @@ export const feedbackView = {
         catName.textContent = selected.name;
         catIcon.innerHTML = icon(selected.icon, 18);
         msg.value = '';
+        updateCounter();
         msg.placeholder = selected.template;
         status.textContent = '';
         status.className = 'fb-form__status';
@@ -106,6 +112,11 @@ export const feedbackView = {
         status.className = 'fb-form__status is-error';
         return;
       }
+      if (text.length > MAX_CHARS) {
+        status.textContent = `Message must be ${MAX_CHARS} characters or less.`;
+        status.className = 'fb-form__status is-error';
+        return;
+      }
       send.disabled = true;
       status.textContent = 'Sending…';
       status.className = 'fb-form__status';
@@ -117,6 +128,7 @@ export const feedbackView = {
             category: selected.id,
             message: text,
             name: name.value.trim() || 'anonymous',
+            page: window.location.hash || '#/feedback',
           }),
         });
         const data = await res.json().catch(() => null);
@@ -124,8 +136,9 @@ export const feedbackView = {
           status.textContent = 'Feedback sent successfully! Thank you for helping the wiki grow.';
           status.className = 'fb-form__status is-ok';
           msg.value = '';
+          updateCounter();
         } else {
-          status.textContent = 'Failed to send feedback. Please try again.';
+          status.textContent = data?.error ? `Could not send: ${data.error}` : 'Failed to send feedback. Please try again.';
           status.className = 'fb-form__status is-error';
         }
       } catch {

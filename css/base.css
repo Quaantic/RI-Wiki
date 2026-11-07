@@ -56,7 +56,7 @@ body::before {
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background-image: url("../images/texture-leaves.png");
+  background-image: url("../images/texture-leaves.jpg");
   background-size: 640px auto;
   background-attachment: fixed;
   opacity: var(--tex-leaves);

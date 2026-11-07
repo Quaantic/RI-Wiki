@@ -950,6 +950,27 @@ function subCrumbParts(sub) {
   return [...head, ...mids, { label: sub.name }];
 }
 
+// Previous/Next follows the same *visible* page tree as the sidebar.
+// Inline upgrade children render inside their parent and must not become
+// standalone pager destinations (e.g. Log Upgrades / Roots Upgrades).
+export function visiblePageNeighbors(cat, currentId) {
+  const pages = [];
+  const walk = (nodes) => {
+    for (const node of nodes || []) {
+      if (PAGE_REDIRECTS[`${cat.id}/${node.id}`]) continue;
+      pages.push(node);
+      const hidden = new Set(getInlineUpgradePages(cat.id, node).map(({ child }) => child.id));
+      walk((node.children || []).filter(child => !hidden.has(child.id)));
+    }
+  };
+  walk(cat.subcategories);
+  const index = pages.findIndex(page => page.id === currentId);
+  return index < 0 ? { prev: null, next: null } : {
+    prev: pages[index - 1] || null,
+    next: pages[index + 1] || null,
+  };
+}
+
 export const subcategoryView = {
   title: (p) => {
     const sub = getSubcategory(p[0], p[1]);
@@ -973,6 +994,7 @@ export const subcategoryView = {
       return;
     }
     const cat = sub.category;
+    const pager = visiblePageNeighbors(cat, sub.id);
     if (cat.id !== params[0] || sub.id !== params[1]) { window.location.hash = `#/${cat.id}/${sub.id}`; return; }
     const gameKey = resolveContentKey(cat.id, sub.id);
     const ci = CATEGORIES.findIndex((c) => c.id === cat.id);
@@ -1166,17 +1188,17 @@ export const subcategoryView = {
 
   ${inlineUpgradeSections}
 
-      ${(sub.prev || sub.next) ? `
+      ${(pager.prev || pager.next) ? `
       <nav class="sub-pager" aria-label="Adjacent wiki pages">
-        ${sub.prev
-          ? `<a class="sub-pager__link sub-pager__link--prev" href="#/${esc(cat.id)}/${esc(sub.prev.id)}" aria-label="Previous page: ${esc(sub.prev.name)}">
+        ${pager.prev
+          ? `<a class="sub-pager__link sub-pager__link--prev" href="#/${esc(cat.id)}/${esc(pager.prev.id)}" aria-label="Previous page: ${esc(pager.prev.name)}">
               <span class="sub-pager__arrow" aria-hidden="true">${icon('arrow-left', 19)}</span>
-              <span class="sub-pager__copy"><small>Previous page</small><b>${esc(sub.prev.name)}</b></span>
+              <span class="sub-pager__copy"><small>Previous page</small><b>${esc(pager.prev.name)}</b></span>
             </a>`
           : ''}
-        ${sub.next
-          ? `<a class="sub-pager__link sub-pager__link--next" href="#/${esc(cat.id)}/${esc(sub.next.id)}" aria-label="Next page: ${esc(sub.next.name)}">
-              <span class="sub-pager__copy"><small>Next page</small><b>${esc(sub.next.name)}</b></span>
+        ${pager.next
+          ? `<a class="sub-pager__link sub-pager__link--next" href="#/${esc(cat.id)}/${esc(pager.next.id)}" aria-label="Next page: ${esc(pager.next.name)}">
+              <span class="sub-pager__copy"><small>Next page</small><b>${esc(pager.next.name)}</b></span>
               <span class="sub-pager__arrow" aria-hidden="true">${icon('arrow-right', 19)}</span>
             </a>`
           : ''}

@@ -64,7 +64,7 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background-image: url("../images/texture-grid.png");
+  background-image: url("../images/texture-grid.jpg");
   background-size: 520px auto;
   opacity: calc(var(--tex-grid) * 2.2);
   mask-image: radial-gradient(560px 320px at 72% 20%, black, transparent 78%);
@@ -353,7 +353,7 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background-image: url("../images/texture-topo.png");
+  background-image: url("../images/texture-topo.jpg");
   background-size: 520px auto;
   background-position: right -40px center;
   opacity: calc(var(--tex-topo) * 0.14);
@@ -2650,3 +2650,6 @@ html:not(.ri-edit-on) [data-release-empty] { display:none; }
 .ri-calc__form label { gap: 4px; margin: 0; }
 .ri-calc__form .input { margin: 0; }
 @media(max-width:620px) { .ri-calc__form { padding: 10px; gap: 8px; } }
+
+/* Feedback: visible length limit for Discord reports. */
+.fb-form__counter { text-align: right; color: var(--c-text-3); font-size: .75rem; margin-top: -.35rem; margin-bottom: .5rem; font-variant-numeric: tabular-nums; }
