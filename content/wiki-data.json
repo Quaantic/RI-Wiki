@@ -2524,7 +2524,7 @@
         {
           "id": "eternal-shards",
           "desc": "Eternal Shards are the premium slow currency. They accumulate automatically in real time and can also be bought with Robux. Their main use is skipping resets: pay shards to rank up Stage, Terraform, Dungeon, Barn or Tree Ascension without losing progress. They also buy the 21 Eternal Tree upgrades and store potions.",
-          "icon": "fuck",
+          "icon": "game-icons:crystal-shrine",
           "name": "Eternal Shards",
           "facts": [],
           "children": [
@@ -2545,7 +2545,7 @@
         {
           "id": "Gamepasses",
           "desc": "See here the gamepass boosts, a tier of which ones are best to buy, and tips on which ones to buy based on your focus!",
-          "icon": "hand-coins",
+          "icon": "game-icons:take-my-money",
           "name": "Gamepasses",
           "facts": [],
           "vitals": [],

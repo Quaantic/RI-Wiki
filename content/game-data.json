@@ -2806,13 +2806,16 @@
             "upgrades": [
               {
                 "cap": 124800,
+                "req": null,
                 "effect": "25x Gold"
               },
               {
+                "cap": "1k",
                 "req": 15,
                 "effect": "1.75x Ores"
               },
               {
+                "cap": null,
                 "req": 60,
                 "effect": "Gold Bars"
               }
@@ -2906,13 +2909,16 @@
             "upgrades": [
               {
                 "cap": 124800,
+                "req": null,
                 "effect": "25x Diamond"
               },
               {
-                "req": 5,
+                "cap": 50000,
+                "req": null,
                 "effect": "1.5x Ores"
               },
               {
+                "cap": null,
                 "req": 50,
                 "effect": "Energy Shard"
               }
@@ -2926,14 +2932,17 @@
             "upgrades": [
               {
                 "cap": 124800,
+                "req": null,
                 "effect": "25x Tanzanite"
               },
               {
-                "req": 15,
+                "cap": "20k",
+                "req": null,
                 "effect": "2x Rune Luck"
               },
               {
                 "cap": 1600,
+                "req": null,
                 "effect": "3x Rune Bulk"
               }
             ]
@@ -2946,14 +2955,17 @@
             "upgrades": [
               {
                 "cap": 124800,
+                "req": null,
                 "effect": "25x Plutonium"
               },
               {
+                "cap": "20k",
                 "req": 30,
                 "effect": "2x Damage"
               },
               {
                 "cap": 5100,
+                "req": null,
                 "effect": "5x Forge Quality"
               }
             ]
@@ -3066,13 +3078,16 @@
             "upgrades": [
               {
                 "cap": 124800,
+                "req": null,
                 "effect": "25x Topaz"
               },
               {
+                "cap": "1k",
                 "req": 15,
                 "effect": "2x Gemstones"
               },
               {
+                "cap": null,
                 "req": 55,
                 "effect": "Life Shards"
               }
@@ -3086,14 +3101,17 @@
             "upgrades": [
               {
                 "cap": 124800,
+                "req": null,
                 "effect": "25x Mithril"
               },
               {
+                "cap": 45,
                 "req": 45,
                 "effect": "2x Ore Spawn Speed"
               },
               {
                 "cap": 2110000,
+                "req": null,
                 "effect": "15x Mining Damage"
               }
             ]
@@ -9129,7 +9147,8 @@
       "Golden Research": "#FFD34D",
       "Life Generation": "#f70606",
       "Frost Conversion": "#82f7e4",
-      "Frost Generators": "#4db2ff"
+      "Frost Generators": "#4db2ff",
+      "Upgrade Calculator": "#ff006f"
     },
     "pageLinks": {
       "FAQ": "#/FAQ",

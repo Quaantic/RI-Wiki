@@ -4,6 +4,103 @@
       "date": "2026-11-07",
       "entries": [
         {
+          "id": "entry-3eaf5651-2651-4813-8da8-61daa0caf2ae",
+          "href": "",
+          "title": "Smart Mobile Sidebar",
+          "context": "UI",
+          "description": "Tap a main category once to expand it and twice to open its page. Subcategories still open with one tap."
+        },
+        {
+          "id": "entry-f89a7f24-2ffe-4b41-a5b9-54f970de7c96",
+          "href": "",
+          "title": "Search This Page",
+          "context": "UI",
+          "description": "Quickly find upgrades, answers, and specific information without leaving the current page."
+        },
+        {
+          "id": "entry-4fd918ca-786d-404b-98cd-6e692e1456a6",
+          "href": "",
+          "title": "Recently Updated Pages",
+          "context": "UI",
+          "description": "See which pages changed directly inside their main category dropdown."
+        },
+        {
+          "id": "entry-34857fe9-9e24-4a08-b73c-3b6bf3ce10b7",
+          "href": "",
+          "title": "Upgrade Level Breakdown",
+          "context": "UI",
+          "description": "View individual level costs, effects, and accumulated costs."
+        },
+        {
+          "id": "entry-e4fabebe-58c4-428c-acc5-1490ba6b81ba",
+          "href": "",
+          "title": "Target Effect Calculator",
+          "context": "UI",
+          "description": "Find the level needed to reach a desired effect when supported by the formula."
+        },
+        {
+          "id": "entry-3d0a8099-9e73-46f3-8728-fc1a4ba1b2fb",
+          "href": "",
+          "title": "Remembered Navigation",
+          "context": "UI",
+          "description": "The sidebar saves open categories, nested sections, and scroll position."
+        },
+        {
+          "id": "entry-b377e234-9396-4038-92f6-5f18d6065612",
+          "href": "",
+          "title": "Return to Reading",
+          "context": "UI",
+          "description": "Going Back restores your previous position on the page."
+        },
+        {
+          "id": "entry-80dee892-3110-41fb-a61b-62fd61180e00",
+          "href": "",
+          "title": "Back to Search",
+          "context": "UI",
+          "description": "Return to your previous search results with one tap."
+        },
+        {
+          "id": "entry-0e327fc6-d0b4-4793-9ae2-4ddd42b50d32",
+          "href": "",
+          "title": "Better Mobile Gestures",
+          "context": "UI",
+          "description": "Swipe to close the sidebar without interfering with interactive controls."
+        },
+        {
+          "id": "entry-e8cfd24f-a645-4abd-97da-ba22c517e7a6",
+          "href": "",
+          "title": "Direct Upgrade Navigation",
+          "context": "UI",
+          "description": "Search results scroll to the selected upgrade with a red highlight that fades after 3 seconds."
+        },
+        {
+          "id": "entry-e3cd69ad-c00e-4ecd-9ba0-9813acfdc885",
+          "href": "",
+          "title": "Cleaner Calculator Layout",
+          "context": "UI",
+          "description": "Improved spacing for a more compact interface."
+        },
+        {
+          "id": "entry-3374e212-b8f2-4c15-b906-dd0f16781f60",
+          "href": "",
+          "title": "NEW Badge Fix",
+          "context": "Bugs",
+          "description": "Fixed deep-linked pages not marking their NEW updates as viewed."
+        },
+        {
+          "id": "entry-dc0d760f-c9f1-4681-a646-b225fc2f0baf",
+          "href": "",
+          "title": "Mobile Category Navigation Fix",
+          "context": "Bugs",
+          "description": "Fixed opening category dropdowns on mobile immediately closing the sidebar."
+        }
+      ],
+      "version": "1.03.2"
+    },
+    {
+      "date": "2026-11-07",
+      "entries": [
+        {
           "id": "entry-ed9c4c01-1cb4-43e3-bcab-7ce5ee60c2e8",
           "href": "#/FAQ",
           "title": "FAQ ",
@@ -61,7 +158,7 @@
         },
         {
           "id": "entry-aa791451-7c3d-4dc4-bb02-6f187fcbf2cd",
-          "href": "",
+          "href": "#/calculator",
           "title": "Upgrade Calculator",
           "context": "Feature",
           "description": "A brand-new tool that lets you calculate upgrade values and costs."
@@ -81,7 +178,7 @@
           "description": "Improved navigation card alignment on smaller screens."
         }
       ],
-      "version": "1.03.2"
+      "version": "1.03.1"
     },
     {
       "date": "2026-11-06",
