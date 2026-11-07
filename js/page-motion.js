@@ -26,7 +26,7 @@ export function clearPageMotion() {
   state.animations.clear();
 }
 
-function play(state, el, delay = 0, duration = 380) {
+function play(state, el, delay = 0, duration = 140) {
   if (active !== state || !el.isConnected || reduced()) return;
   // No persistent hidden classes or fill-forwards: failure/cancellation exposes
   // the normal CSS immediately and doesn't replace hover transforms afterward.
@@ -97,8 +97,8 @@ function schedule(state, elements, initial = false, startDelay = 0) {
   if (initial) {
     for (let phase = 0; phase < 5; phase++) {
       const group = elements.filter(el => priority(el) === phase);
-      const duration = [240, 280, 420, 460, 280][phase];
-      const stagger = phase === 0 ? 0 : phase === 4 ? 70 : duration;
+      const duration = [70, 80, 120, 140, 100][phase];
+      const stagger = phase === 0 ? 0 : phase === 4 ? Math.min(16, 120 / Math.max(1, group.length - 1)) : duration;
       group.forEach((el, i) => play(state, el, cursor - now + i * stagger, duration));
       if (group.length) cursor += (group.length - 1) * stagger + duration;
     }
@@ -109,7 +109,7 @@ function schedule(state, elements, initial = false, startDelay = 0) {
   const content = initial ? elements.filter(el => priority(el) === 5) : elements;
   content.slice(0, 32).forEach(el => {
     play(state, el, cursor - now);
-    cursor += 80;
+    cursor += 32;
   });
   state.nextContent = cursor;
 }
