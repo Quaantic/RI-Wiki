@@ -3,6 +3,7 @@ import { esc, qs, evalFormula, fmtCalculatorNumber, parseGameNumber } from './ut
 import { FORMULA_SECTIONS } from './data/formulas.js';
 import { icon } from './ui.js';
 
+const groupDisplayName = (name) => String(name ?? '').replace(/\s*\([^)]*\)/g, '').trim();
 const integer = (value, fallback=0) => Number.isFinite(Number(value)) ? Math.max(0,Math.min(100000,Math.floor(Number(value)))) : fallback;
 const show = (n) => n == null ? 'Formula not supported' : Number.isFinite(n) ? fmtCalculatorNumber(n) : n===Infinity ? '∞' : 'Formula not supported';
 // The source field is named "multi". It represents a multiplier for most
@@ -109,7 +110,7 @@ export const calculatorView = {
     root.innerHTML=`<section class="section ri-calc">
       <div class="ri-calc__intro">${icon('calculator',24)} <div><h1>Upgrade Calculator</h1><p>Plan upgrade costs and effects directly from the Wiki formulas. Results may be unavailable for game-dependent formulas.</p></div></div>
       <div class="ri-calc__form">
-        <label>Upgrade group <select class="input" id="ri-calc-section">${sections.map(([id,data])=>`<option value="${esc(id)}" ${id===initialSection?'selected':''}>${esc(data.name||id)}</option>`).join('')}</select></label>
+        <label>Upgrade group <select class="input" id="ri-calc-section">${sections.map(([id,data])=>`<option value="${esc(id)}" ${id===initialSection?'selected':''}>${esc(groupDisplayName(data.name||id))}</option>`).join('')}</select></label>
         <label>Upgrade <select class="input" id="ri-calc-upgrade"></select></label>
         <label>Current level <input id="ri-calc-from" class="input" type="number" min="0" max="100000" step="1" value="0"></label>
         <label>Target level <input id="ri-calc-to" class="input" type="number" min="0" max="100000" step="1" value="10"></label>

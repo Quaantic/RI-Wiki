@@ -2641,3 +2641,12 @@ html:not(.ri-edit-on) [data-release-empty] { display:none; }
 @media(prefers-reduced-motion:reduce) {
   .nav-item__expand svg { transition: none; }
 }
+
+/* v10: the page finder uses the global search palette; no extra floating button. */
+.searchbox__panel button.searchbox__local { width: calc(100% - 14px); text-align: left; font: inherit; border: 0; cursor: pointer; background: transparent; color: inherit; }
+.searchbox__panel button.searchbox__local:hover, .searchbox__panel button.searchbox__local.is-focused { background: var(--c-accent-soft); }
+/* Remove excess form gutters while retaining comfortable touch targets. */
+.ri-calc__form { gap: 8px 10px; padding: 10px; align-items: stretch; }
+.ri-calc__form label { gap: 4px; margin: 0; }
+.ri-calc__form .input { margin: 0; }
+@media(max-width:620px) { .ri-calc__form { padding: 10px; gap: 8px; } }

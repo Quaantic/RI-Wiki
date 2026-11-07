@@ -73,87 +73,31 @@ function revealAndScrollTo(element) {
   setTimeout(() => element.classList.remove('ri-reading-tools__target'), 2200);
 }
 
+// The page finder is now part of the normal global search palette.
+// No floating page-search button or second search interface.
+export function getCurrentPageMatches(term, limit = 6) {
+  const root = document.querySelector('#view');
+  if (!root || !term || term.trim().length < 2) return [];
+  return findOnPage(root, term).slice(0, limit).map((element, index) => ({
+    element,
+    label: element.matches('[data-upgrade-number]')
+      ? `${element.dataset.upgradeNumber}. ${element.dataset.upgradeName || 'Upgrade'}`
+      : (element.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 120),
+    index,
+  }));
+}
+
+export function focusCurrentPageMatch(element) {
+  revealAndScrollTo(element);
+}
+
 export function mountReadingTools(viewRoot, routePath) {
   activePanelController?.abort();
-  const controller = new AbortController();
-  activePanelController = controller;
+  activePanelController = null;
   document.querySelector('.ri-return-search')?.remove();
   clearTimeout(returnTimer);
-  if (!/^[\w-]+(?:\/[\w-]+)?$/.test(routePath) ||
-      ['search', 'calculator', 'updates', 'feedback', 'credits'].includes(routePath)) return;
-
-  const bar = document.createElement('div');
-  bar.className = 'ri-reading-tools';
-  bar.innerHTML = `
-    <button type="button" class="ri-reading-tools__btn" aria-expanded="false" aria-controls="ri-find-panel">
-      ${icon('search', 14)} Search this page
-    </button>
-    <div class="ri-reading-tools__panel" id="ri-find-panel" hidden>
-      <div class="ri-reading-tools__search">
-        ${icon('search', 16)} <input type="search" class="ri-reading-tools__input" placeholder="Find an upgrade or text…" aria-label="Find text on this page" autocomplete="off" />
-        <button type="button" class="ri-reading-tools__close" aria-label="Close page search">${icon('x', 16)}</button>
-      </div>
-      <div class="ri-reading-tools__count" role="status">Type to search this page</div>
-      <div class="ri-reading-tools__results"></div>
-      <div class="ri-reading-tools__nav">
-        <button type="button" data-ri-prev aria-label="Previous match">${icon('arrow-up', 13)} Previous</button>
-        <button type="button" data-ri-next aria-label="Next match">Next ${icon('arrow-down', 13)}</button>
-      </div>
-    </div>`;
-  viewRoot.prepend(bar);
-  const toggle = bar.querySelector('.ri-reading-tools__btn');
-  const panel = bar.querySelector('.ri-reading-tools__panel');
-  const input = bar.querySelector('.ri-reading-tools__input');
-  const count = bar.querySelector('.ri-reading-tools__count');
-  const results = bar.querySelector('.ri-reading-tools__results');
-  let matches = [];
-  let selected = -1;
-  const close = () => { panel.hidden = true; toggle.setAttribute('aria-expanded', 'false'); };
-  const open = () => { panel.hidden = false; toggle.setAttribute('aria-expanded', 'true'); input.focus(); };
-  function select(index) {
-    if (!matches.length) return;
-    selected = (index + matches.length) % matches.length;
-    [...results.children].forEach((child, i) => child.classList.toggle('is-selected', i === selected));
-    count.textContent = `${selected + 1} of ${matches.length} matches`;
-    revealAndScrollTo(matches[selected]);
+  if (/^[\w-]+(?:\/[\w-]+)?$/.test(routePath) &&
+      !['search', 'calculator', 'updates', 'feedback', 'credits'].includes(routePath)) {
+    showReturnToSearch();
   }
-  function search() {
-    matches = findOnPage(viewRoot, input.value);
-    selected = -1;
-    results.replaceChildren();
-    if (!input.value.trim()) { count.textContent = 'Type to search this page'; return; }
-    count.textContent = `${matches.length} ${matches.length === 1 ? 'match' : 'matches'} on this page`;
-    if (!matches.length) { results.innerHTML = '<div class="ri-reading-tools__empty">No matches in this page.</div>'; return; }
-    for (const [idx, match] of matches.slice(0, 150).entries()) {
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.className = 'ri-reading-tools__result';
-      const label = match.matches('[data-upgrade-number]') ? `Upgrade ${match.dataset.upgradeNumber}: ` : '';
-      button.textContent = (label + match.textContent.replace(/\s+/g, ' ').trim()).slice(0, 150);
-      button.title = button.textContent;
-      button.addEventListener('click', () => select(idx));
-      results.appendChild(button);
-    }
-    if (matches.length > 150) {
-      const info = document.createElement('div'); info.className = 'ri-reading-tools__empty';
-      info.textContent = 'Showing the first 150 matches. Refine your search to see more.';
-      results.appendChild(info);
-    }
-  }
-  toggle.addEventListener('click', () => panel.hidden ? open() : close());
-  bar.querySelector('.ri-reading-tools__close').addEventListener('click', close);
-  input.addEventListener('input', search);
-  input.addEventListener('keydown', event => {
-    if (event.key === 'Enter') { event.preventDefault(); select(selected + (event.shiftKey ? -1 : 1)); }
-    if (event.key === 'Escape') { event.preventDefault(); close(); toggle.focus(); }
-  });
-  bar.querySelector('[data-ri-prev]').addEventListener('click', () => select(selected - 1));
-  bar.querySelector('[data-ri-next]').addEventListener('click', () => select(selected + 1));
-  document.addEventListener('click', event => {
-    if (!bar.contains(event.target)) close();
-  }, { signal: controller.signal });
-  document.addEventListener('keydown', event => {
-    if (event.key === 'Escape' && !panel.hidden) close();
-  }, { signal: controller.signal });
-  showReturnToSearch();
 }

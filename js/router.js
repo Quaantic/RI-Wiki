@@ -143,6 +143,8 @@ async function renderView(view, params, query, opts = {}) {
       requestAnimationFrame(() => {
         if (seq !== renderSeq || !match.isConnected) return;
         match.scrollIntoView({ block: 'center', behavior: 'instant' });
+        // Recenter after entrance animations and layout settle.
+        setTimeout(() => { if (seq === renderSeq && match.isConnected) match.scrollIntoView({ block: 'center', behavior: 'instant' }); }, 350);
         // Restart the 3s flash when the same upgrade is selected again.
         match.classList.remove('upgrade-card--search-target');
         void match.offsetWidth;

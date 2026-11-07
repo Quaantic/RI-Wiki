@@ -2,6 +2,7 @@
 
 import { qs, qsa, esc, html, debounce, markMatches } from './utils.js';
 import { animateDynamicContent } from './page-motion.js';
+import { getCurrentPageMatches, focusCurrentPageMatch } from './reading-tools.js';
 import { CATEGORIES, getSubcategory } from './data/wiki-data.js';
 import { getInlineUpgradePages } from './data/formulas.js';
 import { colorizeResources, resourceColor, RESOURCE_COLORS, PAGE_LINKS } from './data/resource-colors.js';
@@ -133,6 +134,7 @@ export function mountSearchBox(root) {
   let items = [];
   let focusedIdx = -1;
   let reqToken = 0;
+  let localMatches = [];
 
   const close = () => {
     panel.hidden = true;
@@ -157,7 +159,7 @@ export function mountSearchBox(root) {
     if (!query) { close(); return; }
     open();
 
-    if (!results.length && !['dashboard','update log','updates','upgrade calculator','calculator','feedback'].some(label => label.includes(query.toLowerCase()))) {
+    if (!results.length && !getCurrentPageMatches(query).length && !['dashboard','update log','updates','upgrade calculator','calculator','feedback'].some(label => label.includes(query.toLowerCase()))) {
       panel.innerHTML = `<div class="searchbox__empty">No results for <b>"${esc(query)}"</b>.<br><small>Try a keyword like "voidstone", "respawn" or "crit".</small></div>`;
       return;
     }
@@ -191,6 +193,13 @@ export function mountSearchBox(root) {
       const trail = findPath(result.cat.subcategories, result.sub.id);
       return [result.cat.name, ...(trail || []).slice(0, -1)];
     };
+    // Search the current page in the same dropdown, before wiki-wide results.
+    localMatches = getCurrentPageMatches(query, 7);
+    const localHTML = localMatches.length ? `<div class="dropdown__label">This Page</div>${localMatches.map((item, i) => `
+      <button type="button" class="searchbox__item searchbox__local" role="option" data-local-index="${i}">
+        <span class="searchbox__item-icon">${icon('locate-fixed', 16)}</span>
+        <span class="searchbox__copy"><b>${markMatches(item.label, query)}</b><small class="searchbox__path">Jump to match on this page</small></span>
+      </button>`).join('')}` : '';
     const navHTML = navigation.length ? `<div class="dropdown__label">Navigation</div>${navigation.slice(0, 6).map(item => `
       <a class="searchbox__item" role="option" href="${esc(item.href)}">
         <span class="searchbox__item-icon">${icon(item.icon, 16)}</span>
@@ -206,7 +215,7 @@ export function mountSearchBox(root) {
           ${result.sub.desc || result.sub.tagline ? `<small class="searchbox__description">${colorizeResources(markMatches(result.sub.desc || result.sub.tagline, query))}</small>` : ''}
         </span>
       </a>`).join('')}` : '';
-    panel.innerHTML = navHTML + contentHTML + `
+    panel.innerHTML = localHTML + navHTML + contentHTML + `
       <div class="searchbox__footer">
         <a href="#/search?q=${encodeURIComponent(query)}">
           See all search results for "${esc(query)}" ${icon('arrow-right', 13)}
@@ -214,7 +223,7 @@ export function mountSearchBox(root) {
         <div class="searchbox__shortcuts">${icon('arrow-up', 12)} ${icon('arrow-down', 12)} Navigate &nbsp; ${icon('corner-down-left', 12)} Select &nbsp; Esc Close</div>
       </div>`;
 
-    items = [...panel.querySelectorAll('.searchbox__item')].map((el) => ({ el, href: el.getAttribute('href') }));
+    items = [...panel.querySelectorAll('.searchbox__item')].map((el) => ({ el, href: el.getAttribute('href'), localIndex: el.dataset.localIndex }));
   };
 
   const runSearch = debounce(async () => {
@@ -241,12 +250,19 @@ export function mountSearchBox(root) {
     else if (e.key === 'Enter') {
       e.preventDefault();
       const target = items[focusedIdx] || items[0];
-      if (target) { window.location.hash = target.href.slice(1); close(); input.blur(); }
+      if (target) { if (target.localIndex !== undefined) { focusCurrentPageMatch(localMatches[Number(target.localIndex)]?.element); } else if (target.href) { window.location.hash = target.href.slice(1); } close(); input.blur(); }
       else if (input.value.trim()) { window.location.hash = `/search?q=${encodeURIComponent(input.value.trim())}`; close(); }
     } else if (e.key === 'Escape') { close(); input.blur(); }
   });
 
-  panel.addEventListener('click', () => close());
+  panel.addEventListener('click', event => {
+    const local = event.target.closest('[data-local-index]');
+    if (local) {
+      event.preventDefault();
+      focusCurrentPageMatch(localMatches[Number(local.dataset.localIndex)]?.element);
+    }
+    close();
+  });
 
   document.addEventListener('click', (e) => {
     if (!root.contains(e.target)) close();

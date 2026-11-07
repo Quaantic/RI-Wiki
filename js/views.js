@@ -964,12 +964,12 @@ export const subcategoryView = {
 
   async render(root, params) {
     const redirect = PAGE_REDIRECTS[params.join('/')];
-    if (redirect && /^#\/[\w-]+\/[\w-]+$/.test(redirect) && redirect !== `#/${params.join('/')}`) { window.location.hash = redirect; return; }
+    if (redirect && /^#\/[\w-]+\/[\w-]+$/.test(redirect) && redirect !== `#/${params.join('/')}`) { window.location.hash = redirect + (window.location.hash.includes('?') ? window.location.hash.slice(window.location.hash.indexOf('?')) : ''); return; }
     const sub = getSubcategory(params[0], params[1]);
     if (!sub) throw new Error(`Unknown subcategory: ${params.join('/')}`);
     const inlineUpgradeParent = sub.parentId && getSubcategory(sub.category.id, sub.parentId);
     if (inlineUpgradeParent && getInlineUpgradePages(sub.category.id, inlineUpgradeParent).some(({ child }) => child.id === sub.id)) {
-      window.location.hash = `#/${sub.category.id}/${inlineUpgradeParent.id}`;
+      window.location.hash = `#/${sub.category.id}/${inlineUpgradeParent.id}${window.location.hash.includes('?') ? window.location.hash.slice(window.location.hash.indexOf('?')) : ''}`;
       return;
     }
     const cat = sub.category;
