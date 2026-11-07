@@ -1,6 +1,89 @@
 {
   "versions": [
     {
+      "date": "2026-11-07",
+      "entries": [
+        {
+          "id": "entry-ed9c4c01-1cb4-43e3-bcab-7ce5ee60c2e8",
+          "href": "#/FAQ",
+          "title": "FAQ ",
+          "context": "Changes",
+          "description": "Officially added some questions to the FAQ tab!"
+        },
+        {
+          "id": "entry-46baa640-fa19-4fec-a27e-d60081c8389a",
+          "href": "#/perks/mining",
+          "title": "New Upgrades ",
+          "context": "Changes",
+          "description": "Added new Mining Perks Upgrades."
+        },
+        {
+          "id": "entry-d87a065a-f1d9-4675-a0f3-6848a09f5283",
+          "href": "",
+          "title": "Typos and misspells.",
+          "context": "Bugs",
+          "description": "Fixed typos in some tabs."
+        },
+        {
+          "id": "entry-2a2496af-7ad4-44bc-bd52-c126189d189a",
+          "href": "",
+          "title": "Icons",
+          "context": "UI",
+          "description": "Fixed wrong icons."
+        },
+        {
+          "id": "entry-bbbe5ac8-dc39-48d2-9fa8-b53903dbfb6e",
+          "href": "",
+          "title": "Next | Previous",
+          "context": "Bugs",
+          "description": "Fixed Next / Previous displaying wrong arrows"
+        },
+        {
+          "id": "entry-43e56e03-9774-4543-8383-c9a98a74b02c",
+          "href": "",
+          "title": "Animation",
+          "context": "UI",
+          "description": "Improved website animation"
+        },
+        {
+          "id": "entry-9a7fddbb-57cb-458a-aacf-b5a5bec3ea90",
+          "href": "",
+          "title": "NEW Badges",
+          "context": "Feature",
+          "description": "Recently updated wiki pages are highlighted so visitors can easily discover new content."
+        },
+        {
+          "id": "entry-63cc51c5-c791-4144-8025-9b2513306574",
+          "href": "",
+          "title": "Improved Global Search",
+          "context": "Changes",
+          "description": "You can now search for upgrades directly from the Global Search."
+        },
+        {
+          "id": "entry-aa791451-7c3d-4dc4-bb02-6f187fcbf2cd",
+          "href": "",
+          "title": "Upgrade Calculator",
+          "context": "Feature",
+          "description": "A brand-new tool that lets you calculate upgrade values and costs."
+        },
+        {
+          "id": "entry-f3c1a010-543c-4870-955c-0dc1d336b18a",
+          "href": "",
+          "title": "Redesigned Navigation Buttons",
+          "context": "UI",
+          "description": "Cleaner navigation cards with improved positioning, arrows, spacing, and mobile responsiveness."
+        },
+        {
+          "id": "entry-b9cc3ae2-d2b7-4420-8b65-891323b67f37",
+          "href": "",
+          "title": "Card Alignment",
+          "context": "Bugs",
+          "description": "Improved navigation card alignment on smaller screens."
+        }
+      ],
+      "version": "1.03.2"
+    },
+    {
       "date": "2026-11-06",
       "entries": [
         {

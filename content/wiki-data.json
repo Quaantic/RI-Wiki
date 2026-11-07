@@ -2306,6 +2306,36 @@
               "id": "text-dff3ecf7-3a3c-44ba-88b6-5b6de0217d87",
               "text": "100T californium milestone and it’s a base 0.5% chance from a crystal.",
               "title": "How do I get Astatine?"
+            },
+            {
+              "id": "text-4c51a0fb-439f-4e19-85ec-aeffc3ed4f0b",
+              "text": "Its board is right next to californium board, and has 4 sections. You first need 100T californium to unlock them.",
+              "title": "Where is Astatine?"
+            },
+            {
+              "id": "text-fb844be7-036c-4d97-a569-82bd725f6573",
+              "text": "Astatine's crystals are meant to don't be collected by auto collect in the box, so you need to manually click it to redeem the astatine produced until your box fill up (yes, it does stop other crystals production)",
+              "title": "Why isn't Astatine getting auto collected?"
+            },
+            {
+              "id": "text-6aecceeb-b397-4937-ab24-d9bec7cfe34b",
+              "text": "Focus on getting more special gears, runes that multiply it and afk. With all that, you surely will get rich in gears!",
+              "title": "How to get more Gears?"
+            },
+            {
+              "id": "text-fde0cca2-e1e5-4ab0-b511-480d09a2eb51",
+              "text": "Make sure to grind a lot of Basic Rune in Energetic, minimax everything possible and get as much coal mastery and compact frost you can!",
+              "title": "How to get more Energy?"
+            },
+            {
+              "id": "text-0c4109d1-6b3e-4fd9-97a0-da89b2cc7e89",
+              "text": "No, runes aren't reseted at any time in the game, that means you can get as much possible before moving into the next stage!",
+              "title": "Does Stages reset runes?"
+            },
+            {
+              "id": "text-74be68a8-9eae-4c79-b243-18779aa73fcd",
+              "text": "Barn resets everything in main islands besides machines, gears and tycoon buttons.",
+              "title": "What does Barn reset?"
             }
           ],
           "highlights": []
@@ -2321,8 +2351,28 @@
           "sections": [
             {
               "id": "text-9e36661b-2fb6-411d-9792-740d6772bfb4",
-              "text": "Always try to achieve the milestones, as they are permanent.",
+              "text": "Aim for the milestones, preferably the 400+ milestones, as they are permanent and will boost your Log, SAP, Roots and even Essence itself!",
               "title": "How much Tree Essence should I get on my first reset?"
+            },
+            {
+              "id": "text-39d782b2-00b7-4020-8c57-d93478f2380f",
+              "text": "SAP is obtained thru a Log reset, and its unlocked by 5 tycoon buttons that costs Log. They appear in the bridge right next to the tree, and after you buy all them, you unlock SAP!",
+              "title": "Where is Sap?"
+            },
+            {
+              "id": "text-ed5508d9-1d38-4406-9359-29d351e0ab4d",
+              "text": "Grind as much Rare SAP3 (when tier 12 is obtained), compact frost, diamond and void apples and fossil power you can, as all of them boosts your tree XP and will accelerate your progression!",
+              "title": "How to get more Tree XP?"
+            },
+            {
+              "id": "text-f2ec9996-ac1c-4f9b-84ac-8f567571619e",
+              "text": "They're boost stats that are obtained through breaking the tree, and their board is next apple chances, exactly in its left!",
+              "title": "Where are Rare Saps?"
+            },
+            {
+              "id": "text-e256ddb1-ae82-48e1-8832-1cd997b152e8",
+              "text": "No, as we all know, they dont cap at any point, or they cap is at a really high amount of fossil!",
+              "title": "Does Power of Fossils boosts have a cap?"
             }
           ],
           "highlights": []
@@ -2335,7 +2385,18 @@
           "facts": [],
           "vitals": [],
           "children": [],
-          "sections": [],
+          "sections": [
+            {
+              "id": "text-bedf63cc-e57d-4dda-b93c-ce54885d30b0",
+              "text": "Yes, they all do, but you can increase it with tree upgrades or feature upgrades.",
+              "title": "Does Energies have caps?"
+            },
+            {
+              "id": "text-37a2da6e-01ea-470d-9817-d9bfdf9300b3",
+              "text": "You should always go for your highest possible, but aim for amounts that'll make you able to buy upgrades, such as Emerald/ Gold Bar Passive Earning, More Money, and others alike.",
+              "title": "How much Golden Diamonds should i go for?"
+            }
+          ],
           "highlights": []
         },
         {
@@ -2346,7 +2407,28 @@
           "facts": [],
           "vitals": [],
           "children": [],
-          "sections": [],
+          "sections": [
+            {
+              "id": "text-f21d2f03-b514-425e-adf7-a4487c978525",
+              "text": "The Core and its layers are a seperate \"mine\" that use their own mining damage that is influenced by upgrades to it, normal mining strength, and strength, as well as after getting to \"Layer 7\" unlocking depths \"6.5MM\" to \"250MM\" which have 5 new ores",
+              "title": "How does the Core and Core Layers work?"
+            },
+            {
+              "id": "text-eb44f069-be54-4e61-a041-a5f4986c8996",
+              "text": "It is currently 250MM!",
+              "title": "What's the highest layer you can get?"
+            },
+            {
+              "id": "text-baaad08b-84f2-4f80-977d-ad4274f40a8c",
+              "text": "Earth Rune is located on top of a mountain, where you climb a ladder made of mountain layers just to the right of the crafting station.",
+              "title": "Where is Earth Rune?"
+            },
+            {
+              "id": "text-68098228-eebc-4b61-a824-bc12a5bef994",
+              "text": "Their nerfs are informed in the mining UI, and it changes according to the layers it is working on. But, all layers get a 10x less mastery with Auto Mining.",
+              "title": "What does Auto Mining nerfs?"
+            }
+          ],
           "highlights": []
         },
         {
@@ -2357,7 +2439,33 @@
           "facts": [],
           "vitals": [],
           "children": [],
-          "sections": [],
+          "sections": [
+            {
+              "id": "text-4b0674ad-c911-48f3-803b-d3c577a7c9bf",
+              "text": "You have to stand within a Training Area of the amount of Strength you have or amount of Health you have (ex. the 0 strength area needs 0 strength, if you go there you get a 1x boost to Strength, but the 10T/1e13 Strength area gives a 2.5kx boost, the same with Health areas)",
+              "title": "How does Training work?"
+            },
+            {
+              "id": "text-8db262af-2b13-4b3d-9abe-0fdf28acc799",
+              "text": "It is recommended to have, at least, Trillions of Bones to be able to open the Rune without troubles and actually gaining a real amount of Runes.",
+              "title": "How much do I need to grind Bone Rune?"
+            },
+            {
+              "id": "text-aa344a7b-e512-4ecc-a533-e80d318cef61",
+              "text": "Souls reset all your Coins, Bones and Bonedust in exchange for Souls, alongside with a 15% decrease of your current Health and Strength.",
+              "title": "How Souls Reset works?"
+            },
+            {
+              "id": "text-8d313e5b-a0b8-49e6-a76f-e01c1b53d2e7",
+              "text": "Right next to the Souls board, infront of its exchanging spot.",
+              "title": "Where is Secret Rune?"
+            },
+            {
+              "id": "text-fe0b31f3-dedb-45b7-896c-7e09440d9436",
+              "text": "Get more of the \"Secret Rune\" Upgrade in Souls, as they multiply your bulk slightly.",
+              "title": "How can i get more Secret Rune Bulk?"
+            }
+          ],
           "highlights": []
         },
         {
@@ -2370,24 +2478,29 @@
           "children": [],
           "sections": [
             {
-              "id": "text-5cc7cd6b-610d-41eb-9fb9-839010af26a0",
-              "text": "Secret runes are located next to souls upgrades, at dungeon island.",
-              "title": "Where are Secret Runes"
-            },
-            {
               "id": "text-b4b23578-baa4-4843-a7aa-4893f19c74bf",
-              "text": "Yes because even though they may take a while, they’re buffs are nice to get while you go on and once you’ve started slowing down",
-              "title": "Should I do runes"
+              "text": "Yes, because even though they may take a while, their buffs are nice to get while you go on and once you’ve started slowing down",
+              "title": "Should I do Runes?"
             },
             {
               "id": "text-310e8dd7-42f4-4c0e-a2c3-f4ef212308d9",
-              "text": "Yes, there’s rune luck and bulk upgrades starting about stage 3 with money and across stage 3-6 as well as sprinkled in life and factory that can help buff the rune luck and bulk, and the gamepass",
-              "title": "Can I get more than 1 rune?"
+              "text": "Yes, there’s Rune Luck and Rune Bulk upgrades starting about Stage 3 with Money and across Stage 3-6 as well as sprinkled in Life and Factory that can help buff the Rune Luck and Rune Bulk, and the Rune Hunter gamepass",
+              "title": "Can I get more than 1 Rune at once?"
             },
             {
               "id": "text-0ab7d3fd-db4a-4205-a6f0-cfba44cac142",
-              "text": "Depends on what you need, most likely factory master / barn if you want to grind for leaderboard, eternal boost if you afk a lot, and a specific boost (like dunegeon hunter) for buffs in a specific area you need",
-              "title": "What gamepass should i get with my token?"
+              "text": "Depends on what you need, most likely Factory Master / Barn Master if you want to grind for leaderboard, Eternal Boost if you AFK a lot, and a specific boost (like Dungeon Hunter) for buffs in a specific area you need",
+              "title": "What gamepass should I get with my token?"
+            },
+            {
+              "id": "text-27ec3fd5-75a5-4c63-bd8d-e1cd73dafdb1",
+              "text": "It is a bug, that is already being fixed by the dev team, try rejoining or joining a private server to see if it fixes!",
+              "title": "Why is my Eternal Shard gain at 0?"
+            },
+            {
+              "id": "text-fd030254-5d05-47f8-8d22-00f0007afe05",
+              "text": "In the \"Rewards\" area right outside the Factory building near the Energetic Rune, and you can claim Codes, Group/Like/Favorite Rewards, and Daily Rewards which are needed to reset the timer of Eternal Shard Gain",
+              "title": "Where can I enter Codes and get my Daily Reward?"
             }
           ],
           "highlights": []

@@ -3223,7 +3223,7 @@
     }
   },
   "uiCopy": {
-    "heroSub": "Everything in Regrowht Incremental documented, and searchable. \nBuilt by the community\n",
+    "heroSub": "Everything in Regrowth Incremental documented, and searchable. \nBuilt by the community\n",
     "heroTitle": "Grow your knowledge."
   },
   "dungeon": {
@@ -6873,6 +6873,46 @@
             "name": "More Rune Luck",
             "multi": "1+L*0.05",
             "price": "100*(1+L/4)*(1+L/14)^3.55*1.15^L"
+          },
+          {
+            "n": 18,
+            "cap": "150",
+            "name": "Pickaxe XP",
+            "multi": "1+(0.1*L)",
+            "price": "1000000 * (1 + l / 10) * (1 + l / 14) ^ 3.55 * 1.14 ^ l",
+            "requirement": ""
+          },
+          {
+            "n": 19,
+            "cap": "150",
+            "name": "Californium",
+            "multi": "1+(0.15*L)",
+            "price": "3000000 * (1 + L / 10) * (1 + L / 14) ^ 3.55 * 1.16 ^ L",
+            "requirement": ""
+          },
+          {
+            "n": 20,
+            "cap": "150",
+            "name": "Ruby Energy",
+            "multi": "1+(0.1*L)",
+            "price": "10000000 * (1 + L / 8) * (1 + L / 14) ^ 3.55 * 1.17 ^ L",
+            "requirement": ""
+          },
+          {
+            "n": 21,
+            "cap": "150",
+            "name": "Rare Diamonds",
+            "multi": "1+(0.1*L)",
+            "price": "40000000 * (1 + L / 6) * (1 + L / 14) ^ 3.55 * 1.225 ^ L",
+            "requirement": ""
+          },
+          {
+            "n": 22,
+            "cap": "150",
+            "name": "Astatine",
+            "multi": "1+(0.5*L)",
+            "price": "250000000 * (1 + L / 3) * (1 + L / 14) ^ 3.55 * 1.165 ^ L",
+            "requirement": ""
           }
         ]
       },
@@ -9618,7 +9658,7 @@
           },
           {
             "id": "group7",
-            "name": "Omnisou l-",
+            "name": "Omnisoul -",
             "color": "#43C944",
             "bonuses": [
               {
@@ -9859,6 +9899,7 @@
           {
             "id": "u1",
             "name": "Energy",
+            "color": "#9003fc",
             "bonuses": [
               {
                 "id": "u1",
@@ -9876,6 +9917,7 @@
           {
             "id": "u2",
             "name": "Research Points",
+            "color": "#03e3fc",
             "bonuses": [
               {
                 "id": "u2",
@@ -9892,6 +9934,7 @@
           {
             "id": "u3",
             "name": "Money",
+            "color": "#13fc03",
             "bonuses": [
               {
                 "id": "u3",
@@ -9909,6 +9952,7 @@
           {
             "id": "u4",
             "name": "Life Gem",
+            "color": "#03fc9d",
             "bonuses": [
               {
                 "id": "u4",
@@ -9925,6 +9969,7 @@
           {
             "id": "u5",
             "name": "Mining Damage",
+            "color": "#8f8f8f",
             "bonuses": [
               {
                 "id": "u5",
@@ -9942,6 +9987,7 @@
           {
             "id": "u6",
             "name": "Glacier",
+            "color": "#5bf5eb",
             "bonuses": [
               {
                 "id": "u6",
