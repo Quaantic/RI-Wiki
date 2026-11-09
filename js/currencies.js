@@ -4,8 +4,9 @@ import { esc, fmtCalculatorNumber } from './utils.js';
 import { FORMULA_SECTIONS } from './data/formulas.js';
 import { calculateUpgrade, findTargetEffectLevel } from './calculator.js';
 import { icon, namedIcon } from './ui.js';
-import { mergeCurrencySources } from './data/currency-auto.js';
+import { buildManualCurrencySources } from './data/currency-benefits.js';
 import { FORMULA_PAGE_MAP } from './data/formulas.js';
+import { CATEGORIES } from './data/wiki-data.js';
 import { ed } from './edit/ed-attr.js';
 import { resourceColor } from './data/resource-colors.js';
 
@@ -19,12 +20,12 @@ export function setCurrencyData(data) {
   for (const key of Object.keys(EMPTY)) {
     CURRENCY_DATA[key] = Array.isArray(EMPTY[key]) ? (Array.isArray(next[key]) ? next[key] : []) : String(next[key] ?? EMPTY[key]);
   }
-  currentSources = mergeCurrencySources(latestGame, CURRENCY_DATA.entries, CURRENCY_DATA.sources);
+  currentSources = buildManualCurrencySources(latestGame, CURRENCY_DATA.entries, CURRENCY_DATA.sources, CATEGORIES);
 }
 
 export function setCurrencySourceGame(game) {
  latestGame = game;
- currentSources = mergeCurrencySources(game, CURRENCY_DATA.entries, CURRENCY_DATA.sources);
+ currentSources = buildManualCurrencySources(game, CURRENCY_DATA.entries, CURRENCY_DATA.sources, CATEGORIES);
 }
 // Source categories are editorial and reusable across the same draft / publish system.
 const TYPES = [
@@ -50,7 +51,7 @@ const color = (entry) => (entry?.color && /^#[0-9a-fA-F]{3,8}$/.test(entry.color
 const related = (links) => (Array.isArray(links) ? links : []).filter((x) => href(x.href)).map((x) => `<a href="${esc(href(x.href))}" class="cur-link">${icon('book-open',13)} ${label(x.label || 'Article')}</a>`).join('');
 const tabs = (active) => `<nav class="cur-switch" aria-label="Explorer sections"><a href="#/explorer?tab=catalog" ${active==='list'?'aria-current="page"':''}>${icon('coins',17)} Currencies</a><a href="#/explorer?tab=sources" ${active==='explore'?'aria-current="page"':''}>${icon('sliders-horizontal',17)} Bonus Explorer</a></nav>`;
 const add = (path, template, text) => `<button class="cur-edit cur-add" type="button" data-edit-add="game:${path}" data-edit-add-template="${template}">${icon('plus',14)} ${text}</button>`;
-const edit = (path, kind, text) => `<button type="button" class="cur-edit" ${ed(`game:${path}`,kind,text)}>${icon('pencil',13)} ${text}</button>`;
+const edit = (path, kind, text) => `<button type="button" class="cur-edit" ${ed(path.includes(':') ? path : `game:${path}`,kind,text)}>${icon('pencil',13)} ${text}</button>`;
 const entryIndex = (entry) => entries().indexOf(entry);
 const groupsIndex = (group) => groups().indexOf(group);
 const sourceIndex = (source) => CURRENCY_DATA.sources.findIndex(x => x.id === source.id);
@@ -116,7 +117,7 @@ function sourceCard(s, hidden = false) {
   ${link ? `<a class="cur-source-link" href="${esc(link)}" title="${label(s.name)}" aria-label="Open article: ${label(s.name)}">` : '<span class="cur-source-link">'}
     <span class="cur-source-icon">${namedIcon(String(s.name||'').split(' · ').at(-1),s.icon || group[2],18)}</span><strong>${label(s.name)}</strong>${link ? icon('arrow-up-right',14) : ''}
   ${link ? '</a>' : '</span>'}
-  ${s._upgradePath ? edit(s._upgradePath,'game:upgrade','Edit upgrade') : i>=0 ? edit(`currencies.sources.${i}`,'game:currency-source','Edit') : ''}
+  ${s._editPath ? edit(s._editPath, s._editKind, 'Edit benefits') : i>=0 ? edit(`currencies.sources.${i}`,'game:currency-source','Edit source') : ''}
  </article>`;
 }
 
@@ -127,8 +128,8 @@ export const explorerView = {
   const start = activeCurrency(query?.get('currency'));
   root.innerHTML = `<section class="cur-page cur-explorer">${header(CURRENCY_DATA.explorerTitle,CURRENCY_DATA.explorerDescription,'explore','currencies.explorerTitle','currencies.explorerDescription')}
    <div class="cur-controls"><label>Currency<select class="cur-select" id="cur-choice">${entries().map(e=>`<option value="${label(e.id)}" ${e===start?'selected':''}>${label(e.name)}</option>`).join('')}</select></label><label>Source type<select class="cur-select" id="cur-type"><option value="all">All sources</option>${TYPES.map(([id,text])=>`<option value="${id}">${text}</option>`).join('')}</select></label><label>Find source<input type="search" id="cur-search" placeholder="Search sources…"></label></div>
-   <div id="cur-overview"></div><div class="cur-main-grid"><div id="cur-source-sections"></div><aside id="cur-calculator-panel" aria-label="Compact upgrade calculator"></aside></div>
-   <div class="cur-page-actions">${add('currencies.sources','currency-source','Add exceptional source')}${add('currencies.entries','currency-entry','Add currency')}</div>${iconRulesManager()}
+   <p class="cur-manual-note">Sources are listed only when an editor fills in <strong>What It Benefits</strong> on the upgrade or source group. Enter one currency name per line.</p><div id="cur-overview"></div><div class="cur-main-grid"><div id="cur-source-sections"></div><aside id="cur-calculator-panel" aria-label="Compact upgrade calculator"></aside></div>
+   <div class="cur-page-actions">${add('currencies.sources','currency-source','Add manual source')}${add('currencies.entries','currency-entry','Add currency')}</div>${iconRulesManager()}
   </section>`;
   const choice=root.querySelector('#cur-choice'),type=root.querySelector('#cur-type'),search=root.querySelector('#cur-search');
   const expandedTypes = new Set();
@@ -141,7 +142,7 @@ export const explorerView = {
    const types=(type.value==='all'?TYPES:TYPES.filter(([id])=>id===type.value))
       .filter(([id]) => type.value!=='all' || matches.some(s=>s.type===id));
    const expandResults = Boolean(search.value.trim());
-   root.querySelector('#cur-source-sections').innerHTML=`<div class="cur-source-summary"><strong>${matches.length}</strong> ${matches.length===1?'source':'sources'} found</div>${!types.length ? '<p class="cur-muted">No sources match your filters. Add a bonus source from the editor if you have a documented effect.</p>' : ''}${types.map(([id,text,ic])=>{
+   root.querySelector('#cur-source-sections').innerHTML=`<div class="cur-source-summary"><strong>${matches.length}</strong> ${matches.length===1?'source':'sources'} found</div>${!types.length ? '<p class="cur-muted">No manually assigned sources match. In Edit mode, add currency names under What It Benefits on the relevant upgrade or group.</p>' : ''}${types.map(([id,text,ic])=>{
     const collection=matches.filter(s=>s.type===id);
     const showAll = expandResults || expandedTypes.has(id);
     const visibleCount=24;
@@ -176,7 +177,7 @@ function renderMiniCalculator(root, current) {
   const panel = root.querySelector('#cur-calculator-panel');
   if (!panel) return;
   const candidates = sources().filter(s => ['upgrade','perk'].includes(s.type) && (s.currencyIds || []).includes(current.id)).flatMap(source => {
-    const match = String(source.id).match(/^upgrade-(.+)-(\d+)$/);
+    const match = String(source.id).match(/^(?:manual-)?upgrade-(.+)-(\d+)$/);
     if (!match) return [];
     const section = FORMULA_SECTIONS[match[1]];
     const upgrade = (section?.upgrades || []).find(item => Number(item.n) === Number(match[2]));
@@ -187,7 +188,7 @@ function renderMiniCalculator(root, current) {
    <div class="cur-calc-row"><label class="cur-calc-field">Current level<input type="number" min="0" step="1" value="0" data-cur-level-from></label><label class="cur-calc-field">Target level<input type="number" min="0" step="1" value="10" data-cur-level-to></label></div>
    <div class="cur-calc-cap" data-cur-cap></div><div class="cur-calc-results" data-cur-results></div>
    <label class="cur-calc-field cur-calc-target">Find level for target effect<input type="number" min="0" step="any" placeholder="Enter desired multiplier or value" data-cur-effect-target></label><div class="cur-calc-target-result" data-cur-effect-result>Enter a target effect to estimate the required level.</div>
-   <details class="cur-calc-breakdown"><summary>Upgrade Level Breakdown</summary><div data-cur-breakdown></div></details>` : `<p class="cur-muted">No upgrade formula has been indexed for this currency yet. Add a source in Edit mode or use the full calculator.</p>`}
+   <details class="cur-calc-breakdown"><summary>Upgrade Level Breakdown</summary><div data-cur-breakdown></div></details>` : `<p class="cur-muted">No upgrade has been manually assigned to this currency yet. Edit an upgrade and fill in What It Benefits, or use the full calculator.</p>`}
   </div>`;
   if (!candidates.length) return;
   const select=panel.querySelector('[data-cur-calc-select]');

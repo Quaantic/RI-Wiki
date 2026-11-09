@@ -1,7 +1,7 @@
 // ==== VIEWS: PAGINAS DO SITE ====
 
-import { html, esc, qs, qsa, debounce, fmtDate, fmtValue, fmtSuffix, parseGameNumber, evalFormula, markMatches } from './utils.js';
-import { icon, namedIcon, emblem, categoryCard, infoCard, sectionHead, setCrumbs, setActiveNav, markUpdateSeen, resourceAsset } from './ui.js';
+import { html, esc, qs, qsa, debounce, countUp, fmtDate, fmtValue, fmtSuffix, parseGameNumber, evalFormula, markMatches } from './utils.js';
+import { icon, namedIcon, emblem, categoryCard, infoCard, sectionHead, initReveal, setCrumbs, setActiveNav, markUpdateSeen, resourceAsset } from './ui.js';
 import { dataProvider, getCategory, getSubcategory } from './services.js';
 import { withFocusHref } from './reading-tools.js';
 import { CATEGORIES, CREDITS, PAGE_REDIRECTS, getSubcategoryDocPath } from './data/wiki-data.js';
@@ -241,7 +241,7 @@ function areaCard(a, i, itemPath = '') {
 function trainingSections(groups, listPath = '') {
   return groups.map((g, gi) => `
     <section class="section">
-      ${sectionHead(g.name)}
+      <div ${listPath ? ed(`${listPath}.${gi}`, 'game:training-group', g.name) : ''}>${sectionHead(g.name)}</div>
       ${listPath ? `<button type="button" class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="${listPath}.${gi}.areas" data-edit-add-template="area">${icon('plus',13)} Add training area</button>` : ''}
       <div class="rune-grid area-grid">
         ${g.areas.map((a, i) => areaCard(a, i, itemListPath(listPath, gi) ? `${itemListPath(listPath, gi)}.areas.${i}` : '')).join('')}
@@ -493,9 +493,9 @@ function wireGenerators(root,page) {
 }
 
 function resetLayerSections(page, basePath = '') {
-  if(page.kind==='generators') return generatorSections(page,basePath);
+  if(page.kind==='generators') return `${basePath ? `<button class="btn btn--ghost btn--sm ri-edit-add" ${ed(basePath,'game:calculator-settings','Generator settings and benefits')}>${icon('settings',13)} Edit benefits</button>` : ''}${generatorSections(page,basePath)}`;
   if (page.kind === 'amount-groups' && !page.groups?.length) return basePath ? `<div class="ri-add-row"><button class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="${esc(basePath)}.groups" data-edit-add-template="bonus-group">${icon('plus',13)} Add group</button></div>` : '';
-  if (['amount', 'bonuses'].includes(page.kind) && !page.bonuses?.length) return basePath ? `<div class="ri-add-row"><button class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="${esc(basePath)}.bonuses" data-edit-add-template="bonus">${icon('plus',13)} Add bonus</button></div>` : '';
+  if (['amount', 'bonuses'].includes(page.kind) && !page.bonuses?.length) return basePath ? `<div class="ri-add-row"><button class="btn btn--ghost btn--sm ri-edit-add" ${ed(basePath,'game:calculator-settings','Calculator settings and benefits')}>${icon('settings',13)} Edit benefits</button><button class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="${esc(basePath)}.bonuses" data-edit-add-template="bonus">${icon('plus',13)} Add bonus</button></div>` : '';
 
   const bonusHeading = `<div class="progression-headline">${icon('sparkles',21)}${sectionHead(page.title)}</div>`;
   const inputs = (page.inputs || []).map((input, i) => `<label class="reset-calc-power"><span ${basePath ? ed(`${basePath}.inputs.${i}.label`, 'text', 'Calculator input label') : ''}>${esc(input.label)}</span><input class="input reset-calc-input" value="${esc(String(input.default || 0))}" inputmode="decimal" data-calc-variable="${esc(input.id)}" aria-label="${esc(input.label)}"></label>`).join('');
@@ -822,11 +822,17 @@ export const homeView = {
               <button class="btn btn--primary" type="submit">Search</button>
             </form>
           </div>
+          <!-- Restored pre-redesign ambient hero artwork; never affects content. -->
+          <div class="ri-hero-orbit" aria-hidden="true">
+            <span class="ri-hero-orbit__ring ri-hero-orbit__ring--outer"></span>
+            <span class="ri-hero-orbit__ring ri-hero-orbit__ring--inner"></span>
+            <img class="ri-hero-orbit__emblem" src="images/favicon.svg" width="116" height="116" alt="" decoding="async">
+          </div>
         </div>
         <div class="hero__stats">
-          <span><b>${stats.pages}</b> reference pages</span>
-          <span><b>${stats.categories}</b> chapters</span>
-          <span><b>${stats.updateCount}</b> logged changes</span>
+          <span><b data-count="${stats.pages}">${stats.pages}</b> reference pages</span>
+          <span><b data-count="${stats.categories}">${stats.categories}</b> chapters</span>
+          <span><b data-count="${stats.updateCount}">${stats.updateCount}</b> logged changes</span>
           <a href="#/updates">Latest update <b>${esc(formatReleaseVersion(stats.updateVersion))}</b></a>
         </div>
       </section>
@@ -867,7 +873,18 @@ export const homeView = {
       const q = e.target.querySelector('input').value.trim();
       window.location.hash = q ? `/search?q=${encodeURIComponent(q)}` : '/search';
     });
-
+    // Bring back the pre-redesign live stats, with reduced-motion support.
+    const noMotion = document.documentElement.classList.contains('reduce-motion') ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!noMotion) {
+      const counters = [...root.querySelectorAll('[data-count]')];
+      window.setTimeout(() => {
+        if (!root.isConnected) return;
+        counters.forEach((el, i) => window.setTimeout(() => {
+          if (el.isConnected) countUp(el, Number(el.dataset.count), {duration:850});
+        }, i * 120));
+      }, 350);
+    }
   },
 };
 
@@ -897,6 +914,7 @@ export const categoryView = {
             <h1 class="cat-hero__name" ${ed(`${catPath}.name`, 'text', `${cat.name} · page title`)}>${colorizeResources(esc(cat.name))}</h1>
           </div>
           <p class="cat-hero__tagline" data-resource-links ${ed(`${catPath}.tagline`, 'long', `${cat.name} · tagline`)}>${colorizeResources(esc(cat.tagline))}</p>
+          <div class="ri-add-row"><button class="btn btn--ghost btn--sm ri-edit-add" ${ed(catPath, 'category-card', `${cat.name} · Explorer benefits`)}>${icon('sliders-horizontal',13)} Edit Explorer benefits</button></div>
           ${cat.desc ? `<p class="cat-hero__description" data-resource-links ${ed(`${catPath}.desc`, 'long', `${cat.name} · description`)}>${colorizeResources(esc(cat.desc))}</p>` : ''}
           <div class="cat-hero__facts">
             <span class="chip">${icon('layers', 13)} ${cat.subcategories.length} subsections</span>
@@ -1093,6 +1111,7 @@ export const subcategoryView = {
       <div class="ri-page-content-tools">
         <div><b>Page content</b><small>Add information to this page. Each section can be edited or removed.</small></div>
         <button class="btn btn--ghost btn--sm" ${ed(`${wikiPath}.desc`, 'long', 'Page description')}>${icon('pencil', 13)} Edit description</button>
+        <button class="btn btn--ghost btn--sm ri-edit-add" ${ed(wikiPath, 'sub-card', 'Page and Explorer benefits')}>${icon('sliders-horizontal', 13)} Edit Explorer benefits</button>
         <details class="ri-content-menu"><summary class="btn btn--primary btn--sm">${icon('plus', 13)} Add content</summary>
           <div class="ri-content-menu__items">${[
             ['text', 'Text / FAQ', 'A heading and a normal description or answer'],
@@ -1309,7 +1328,7 @@ export const searchView = {
             </a>`).join('')}
         </div>
       `;
-
+      initReveal(target);
     }
 
     const liveSearch = debounce(runSearch, 220);

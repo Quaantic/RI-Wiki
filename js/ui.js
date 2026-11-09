@@ -1,6 +1,7 @@
 // ==== UI: ICONES, COMPONENTES E SHELL (nao precisa editar) ====
 
 import { qs, qsa, esc, html, debounce, markMatches } from './utils.js';
+import { animateDynamicContent } from './page-motion.js';
 import { getCurrentPageMatches, focusCurrentPageMatch, withFocusHref } from './reading-tools.js';
 import { CATEGORIES, getSubcategory, getSubcategoryDocPath } from './data/wiki-data.js';
 import { getInlineUpgradePages } from './data/formulas.js';
@@ -58,6 +59,12 @@ export function namedIcon(name, fallback = '', size = 20, cls = '') {
 
 export function emblem(size = 32, cls = '') {
   return `<img class="wiki-icon ${esc(cls)}" src="${esc(iconAssetURL('images/favicon.svg'))}" width="${size}" height="${size}" alt="">`;
+}
+
+// Restored from the pre-redesign wiki: reveal newly inserted results, while
+// the page-motion controller prevents duplicate animations and rerender flicker.
+export function initReveal(root = document) {
+  if (root.isConnected) animateDynamicContent(root);
 }
 
 export function reveal(index = 0, extra = '') {
@@ -307,7 +314,7 @@ const savedNavState = (() => {
   try { return JSON.parse(localStorage.getItem(NAV_STATE_KEY) || '{}') || {}; }
   catch { return {}; }
 })();
-const expandedGroups = new Set(Array.isArray(savedNavState.groups) ? savedNavState.groups.slice(0,1) : []);
+const expandedGroups = new Set(Array.isArray(savedNavState.groups) ? savedNavState.groups : []);
 const branchStates = new Map(Array.isArray(savedNavState.branches) ? savedNavState.branches : []);
 let sidebarScrollTop = Math.max(0, Number(savedNavState.scrollTop) || 0);
 let navSaveTimer;
@@ -354,7 +361,7 @@ function syncGroupUI() {
 }
 function setGroupExpanded(catId, expanded) {
   if (!catId) return;
-  if (expanded) { expandedGroups.clear(); expandedGroups.add(catId); } else expandedGroups.delete(catId);
+  if (expanded) expandedGroups.add(catId); else expandedGroups.delete(catId);
   syncGroupUI();
   persistNavState();
 }
@@ -386,9 +393,8 @@ export function buildNav() {
   if (!nav) return;
   const oldScrollTop = nav.scrollTop || sidebarScrollTop;
   // Rebuilds (including live editor sync) preserve open/closed branches.
-  // Keep the last open category; v7 only allows one top-level accordion.
-  const previousOpen = [...qsa('.nav-group.open', nav)].at(-1);
-  if (previousOpen) { expandedGroups.clear(); expandedGroups.add(previousOpen.dataset.cat); }
+  // Keep all opened categories when the sidebar is rebuilt in edit mode.
+  qsa('.nav-group.open', nav).forEach(el => expandedGroups.add(el.dataset.cat));
   qsa('[data-parent-sub].open', nav).forEach(el => branchStates.set(branchKey(el), true));
   nav.innerHTML =
     '<span class="sidebar__label">Categories</span>' +
@@ -402,6 +408,7 @@ export function buildNav() {
           <span class="nav-item__label">${navColorize(c.name)}</span>
         </a>
         <button type="button" class="nav-item__expand" aria-label="Toggle ${esc(c.name)} subsections" aria-expanded="false" data-toggle-cat="${esc(c.id)}"><span class="nav-expand-line" aria-hidden="true"></span></button>
+        <div class="nav-mobile-overview" data-overview-for="${esc(c.id)}"><a href="#/${esc(c.id)}" aria-label="Open ${esc(c.name)} overview page">${icon('book-open', 15)} <span>${esc(c.name)} overview</span> ${icon('arrow-up-right',13)}</a></div>
         ${renderSubTree(c.id, c.subcategories, 1)}
       </div>`;
     }).join('');
@@ -435,19 +442,20 @@ export function buildNav() {
     if (item) {
       const catId = item.dataset.cat;
       if (onMobileNav()) {
-        // First tap expands without leaving the drawer. A second tap on the
-        // same category within 1.2s opens its actual overview page.
+        // Legacy QoL: first tap expands the category without opening its page,
+        // second quick tap opens the overview. Keep an explicit Overview link
+        // for slower browsing and keyboard/screen-reader navigation too.
         const secondTap = lastCategoryTap?.id === catId &&
-          Date.now() - lastCategoryTap.time < 1200;
+          Date.now() - lastCategoryTap.time < 1800;
         if (!secondTap) {
           e.preventDefault();
-          lastCategoryTap = { id: catId, time: Date.now() };
+          lastCategoryTap = { id:catId, time:Date.now() };
           setGroupExpanded(catId, true);
           return;
         }
         lastCategoryTap = null;
         setGroupExpanded(catId, true);
-        return; // let the link navigate; the drawer closes on navigation
+        return;
       }
       lastCategoryTap = null;
       if (item.classList.contains('active')) {
@@ -479,8 +487,8 @@ export function buildNav() {
 }
 
 export function openGroup(catId) {
-  expandedGroups.clear();
   if (catId) expandedGroups.add(catId);
+  else expandedGroups.clear();
   syncGroupUI();
   persistNavState();
 }

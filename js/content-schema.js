@@ -3,6 +3,7 @@
 
 import { evaluateExpression } from './utils.js';
 import { normalizeReleases } from './releases.js';
+import { validateBenefitNames } from './data/currency-benefits.js';
 
 export const REPOSITORY = 'Quaantic/RI-Wiki';
 export const BRANCH = 'main';
@@ -74,6 +75,7 @@ export function validateDocuments(documents) {
   const game = documents?.game;
   if (!Array.isArray(categories) || !Array.isArray(versions)) throw new Error('A content file is missing its expected list.');
   validateGameData(game);
+  validateBenefitNames(game, documents?.wiki);
   const categoryIds = new Set();
   for (const category of categories) {
     if (!/^[\w-]+$/.test(category.id || '') || !category.name?.trim() || typeof category.desc !== 'string' || typeof category.tagline !== 'string') {
@@ -156,6 +158,8 @@ function validateGameData(game) {
       }
     }
   }
+  // Manual Explorer lists must reference real, explicitly named currencies.
+  validateBenefitNames(game);
   const sections = game.upgrades?.sections;
   for (const [sectionId, section] of Object.entries(sections || {})) {
     if (!section.name?.trim() || !Array.isArray(section.upgrades)) throw new Error(`Upgrade section "${sectionId}" needs a name and upgrades list.`);

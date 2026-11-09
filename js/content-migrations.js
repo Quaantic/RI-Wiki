@@ -1,6 +1,5 @@
 import { IMPORTED_NOTES } from './data/imported-notes.js';
 import { refineImportedContent } from './content-presentation.js';
-import { augmentCurrencyExplorerSources } from './data/currency-index-v5.js';
 
 const clone = (value) => structuredClone(value);
 const find = (nodes,id) => {
@@ -148,7 +147,6 @@ export function installImportedNotes(wiki,game) {
   const applesChanged = consolidateApples(wiki, game);
   const nameRulesMissing = !Array.isArray(game.iconNameRules);
   if (nameRulesMissing) game.iconNameRules = [];
-  const currenciesChanged = augmentCurrencyExplorerSources(game);
   const notesChanged = refineImportedContent(wiki,game);
-  return notesChanged || currenciesChanged || applesChanged || changed || nameRulesMissing;
+  return notesChanged || applesChanged || changed || nameRulesMissing;
 }

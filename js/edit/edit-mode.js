@@ -84,6 +84,23 @@ const LIST_PARSERS = {
       return { label, href };
     }).filter(Boolean),
   },
+  'currency-name-list': {
+    print: (ids) => {
+      const names = new Map((draft.doc('game')?.currencies?.entries || []).map(entry => [entry.id, entry.name]));
+      return (ids || []).map(id => names.get(id) || id).join('\n');
+    },
+    parse: (text) => {
+      const entries = draft.doc('game')?.currencies?.entries || [];
+      const options = new Map(entries.map(entry => [String(entry.name).normalize('NFKC').trim().replace(/\s+/g, ' ').toLocaleLowerCase(),entry.id]));
+      const result = new Set();
+      for (const line of text.split('\n').map(line=>line.trim()).filter(Boolean)) {
+        const id = options.get(line.normalize('NFKC').replace(/\s+/g,' ').toLocaleLowerCase());
+        if (!id) throw new Error(`Unknown currency: "${line}". Use its exact name from Explorer → Currencies.`);
+        result.add(id);
+      }
+      return [...result];
+    },
+  },
   'features-list': {
     print: (v) => (Array.isArray(v) ? v.map((f) => [f.name, ...(f.subs || [])].join(' ;; ')).join('\n') : ''),
     parse: (text) => text.split('\n').map((line) => {
@@ -101,6 +118,9 @@ const SINGLE_TYPES = {
   long: { type: 'area', labelSuffix: 'description' },
   num: { type: 'line', labelSuffix: 'value' },
 };
+
+const WHAT_IT_BENEFITS = { key: 'whatItBenefits', label: 'What It Benefits (one currency name per line)', type: 'area-list' };
+const EXPLORER_SOURCE_TYPE = { key: 'explorerSourceType', label: 'Explorer source category (optional)', type: 'select', options:()=>['other','bonus','board','rune','milestone','perk','mastery','core','stage','upgrade'].map(id=>({id,label:id.charAt(0).toUpperCase()+id.slice(1)})) };
 
 const SCHEMAS = {
   'game:icon-name-rule': [
@@ -125,7 +145,7 @@ const SCHEMAS = {
   'game:currency-source': [
     { key:'name',label:'Source name',type:'line' },
     { key:'type',label:'Source type',type:'select',options:()=>[['rune','Runes'],['bonus','Bonuses'],['upgrade','Upgrades'],['mastery','Masteries'],['milestone','Milestones'],['perk','Perks'],['core','Cores'],['stage','Stages & Ranks'],['board','Boards'],['other','Other sources']].map(([id,label])=>({id,label})) },
-    { key:'currencyIds',label:'Which currencies does this affect?',type:'currency-picker' },
+    { key:'currencyIds',label:'What It Benefits (one currency name per line)',type:'currency-name-list' },
     { key:'icon',label:'Custom source icon',type:'line',picker:'icon' },
     { key:'effect',label:'Documented effect (optional)',type:'area' },
     { key:'href',label:'Article link (optional)',type:'line' },
@@ -134,6 +154,7 @@ const SCHEMAS = {
     {key:'name',label:'Name',type:'line'},
     ...['unlockCost','startIncome','startTime','scale','maxLevel','maxSpeed','maxTier','tierPrice','levelPrice','speedPrice'].map(key=>({key,label:key.replace(/([A-Z])/g,' $1'),type:'line',numeric:true})),
     ...Object.entries(GENERATOR_FORMULAS).map(([key,fallback])=>({key,label:key.replace(/([A-Z])/g,' $1'),type:'formula',advanced:true,fallback})),
+    WHAT_IT_BENEFITS,
   ],
   pair: [
     { key: 'label', label: 'Label', type: 'line' },
@@ -149,12 +170,16 @@ const SCHEMAS = {
     { key: 'name', label: 'Name', type: 'line' },
     { key: 'tagline', label: 'Tagline', type: 'area' },
     { key: 'icon', label: 'Icon', type: 'line', mono: true, picker: 'icon' },
+    WHAT_IT_BENEFITS,
+    EXPLORER_SOURCE_TYPE,
   ],
   'sub-card': [
     { key: 'id', label: 'URL id (letters, numbers, -)', type: 'line', mono: true },
     { key: 'name', label: 'Name', type: 'line' },
     { key: 'desc', label: 'Description', type: 'area' },
     { key: 'icon', label: 'Icon', type: 'line', mono: true, picker: 'icon' },
+    WHAT_IT_BENEFITS,
+    EXPLORER_SOURCE_TYPE,
   ],
   entry: [
     { key: 'context', label: 'Category', type: 'select', options: () => CONTEXTS.map((id) => ({ id, label: id })) },
@@ -191,6 +216,7 @@ const SCHEMAS = {
     { key:'icon',label:'Icon',type:'line',picker:'icon' },
     { key:'color',label:'Color',type:'line' },
     { key:'upgrades',label:'Upgrades (one per line: effect | cap | requirement)',type:'mastery-list' },
+    WHAT_IT_BENEFITS,
   ],
   'game:stage': [
     { key: 'title', label: 'Title', type: 'line' },
@@ -202,17 +228,23 @@ const SCHEMAS = {
     { key: 'unlocks.places', label: 'Unlocked places (one per line)', type: 'area-list' },
     { key: 'unlocks.features', label: 'Unlock features (one per line: Name ;; sub ;; sub)', type: 'features-list' },
   ],
+  'game:training-group': [
+    { key: 'name', label: 'Group name', type: 'line' },
+    WHAT_IT_BENEFITS,
+  ],
   'game:area': [
     { key: 'name', label: 'Name', type: 'line' },
     { key: 'reqT1', label: 'T1 requirement', type: 'line' },
     { key: 'multiT1', label: 'T1 multiplier', type: 'line' },
     { key: 'reqT2', label: 'T2 requirement', type: 'line' },
     { key: 'multiT2', label: 'T2 multiplier', type: 'line' },
+    WHAT_IT_BENEFITS,
   ],
   'game:gear': [
     { key: 'name', label: 'Name', type: 'line' },
     { key: 'rarity', label: 'Rarity', type: 'line' },
     { key: 'stats', label: 'Stats (one per line: name | multiplier)', type: 'stats-list' },
+    WHAT_IT_BENEFITS,
   ],
   'game:upgrade': [
     { key: 'name', label: 'Name', type: 'line' },
@@ -222,6 +254,7 @@ const SCHEMAS = {
     { key: 'price', label: 'Price formula (L = level)', type: 'line', mono: true },
     { key: 'multi', label: 'Effect formula (L = level)', type: 'line', mono: true },
     { key: 'requirement', label: 'Unlock requirement (optional)', type: 'line' },
+    WHAT_IT_BENEFITS,
   ],
   'game:perk-controls': [
     { key: 'treeUpgrade15.label', label: 'Tree Upgrade 15 label', type: 'line', fallback: 'Tree Upgrade 15' },
@@ -237,6 +270,7 @@ const SCHEMAS = {
     { key: 'baseChance', label: 'Base chance', type: 'line' },
     { key: 'recChance', label: 'Chance at rec. luck', type: 'line' },
     { key: 'boosts', label: 'Boosts (Target | multiplier | caps at, one per line)', type: 'boost-list' },
+    WHAT_IT_BENEFITS,
   ],
   'game:bonus': [
     { key: 'name', label: 'Name', type: 'line' },
@@ -260,12 +294,14 @@ const SCHEMAS = {
   'game:progression-page': [
     { key: 'title', label: 'Section heading (Stages, Evolutions, Milestones…)', type: 'line' },
     { key: 'itemLabel', label: 'Item name (Stage, Evolution, Milestone…)', type: 'line' },
+    WHAT_IT_BENEFITS,
   ],
   'game:calculator-settings': [
     { key: 'title', label: 'Calculator heading', type: 'line' },
     { key: 'amountLabel', label: 'Owned amount label (optional)', type: 'line' },
     { key: 'showAmount', label: 'Owned amount field', type: 'select', options: () => [{ id: 'true', label: 'Show input' }, { id: 'false', label: 'Hide input — use the default amount' }] },
     { key: 'defaultAmount', label: 'Default amount', type: 'line', numeric: true },
+    WHAT_IT_BENEFITS,
   ],
   'game:bonus-group': [
     { key: 'name', label: 'Name', type: 'line' },
@@ -273,9 +309,11 @@ const SCHEMAS = {
     { key: 'dropChance', label: 'Drop chance', type: 'line' },
     { key: 'amountLabel', label: 'Amount label', type: 'line' },
     { key: 'description', label: 'Notes (optional)', type: 'area' },
+    WHAT_IT_BENEFITS,
   ],
   'game:tier': [
     { key: 'name', label: 'Name', type: 'line' },
+    WHAT_IT_BENEFITS,
   ],
 };
 
@@ -2479,7 +2517,7 @@ function buildAddValue(docName, trail, template) {
     const param=new URLSearchParams((window.location.hash.split('?')[1]||''));
     const id=param.get('currency');
     const selected=(doc.currencies?.entries||[]).some(e=>e.id===id)?id:doc.currencies?.entries?.[0]?.id;
-    return {id:uniqueIn('new-source',used),name:'New source',type:'bonus',currencyIds:selected?[selected]:[],icon:'sparkles',effect:'Describe the exact buff and its conditions.',href:'',status:'documented'};
+    return {id:uniqueIn('new-source',used),name:'New source',type:'bonus',currencyIds:selected?[selected]:[],manualTarget:true,icon:'sparkles',effect:'Describe the exact buff and its conditions.',href:'',status:'documented'};
   }
   if(template==='generator') return {id:`generator${crypto.randomUUID().replaceAll('-','')}`,name:'New generator',unlockCost:0,startIncome:1,startTime:5,scale:1,maxLevel:50,maxSpeed:10,maxTier:3,tierPrice:50,levelPrice:5,speedPrice:10};
   const simple = {
