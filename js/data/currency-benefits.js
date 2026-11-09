@@ -126,8 +126,6 @@ export function buildManualCurrencySources(game, entries, authoredSources = [], 
   // Generic wiki pages can document boards, perks and other bonus sources
   // without adding a duplicate special-purpose record to game data.
   for (const [ci,category] of (wikiCategories||[]).entries()) {
-    add(category,`manual-wiki-category-${category.id}`,category.name,
-      category.explorerSourceType||'other',category.id,`wiki:categories.${ci}`,category.icon||'book-open');
     const walk = (nodes,prefix) => {
       for (const [i,page] of (nodes||[]).entries()) {
         const itemPath=`${prefix}.${i}`;

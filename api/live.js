@@ -35,8 +35,14 @@ module.exports=async(req,res)=>{
    // never in GitHub or a Vercel process-local memory map.
    const page=String(body.page||'#/').slice(0,100);
    if(!/^#\/[\w-]*(?:\/[\w-]+)?$/.test(page))throw error('Invalid editor page.');
-   await db.heartbeat(user.login,page);
-   return res.status(200).json({editors:(await db.presence()).map(x=>({editor:x.editor,page:x.page,updatedAt:x.updated_at}))});
+   try {
+    await db.heartbeat(user.login,page);
+    return res.status(200).json({available:true,editors:(await db.presence()).map(x=>({editor:x.editor,page:x.page,updatedAt:x.updated_at}))});
+   } catch (presenceError) {
+    // Presence is optional; it must never interfere with shared drafts.
+    if (presenceError.storage) return res.status(200).json({available:false,editors:[]});
+    throw presenceError;
+   }
   }
   if(action==='history')return res.status(200).json({entries:await db.activities()});
   if(action==='versions')return res.status(200).json({versions:await db.versions()});

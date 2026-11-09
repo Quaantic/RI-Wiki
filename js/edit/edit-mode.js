@@ -170,8 +170,6 @@ const SCHEMAS = {
     { key: 'name', label: 'Name', type: 'line' },
     { key: 'tagline', label: 'Tagline', type: 'area' },
     { key: 'icon', label: 'Icon', type: 'line', mono: true, picker: 'icon' },
-    WHAT_IT_BENEFITS,
-    EXPLORER_SOURCE_TYPE,
   ],
   'sub-card': [
     { key: 'id', label: 'URL id (letters, numbers, -)', type: 'line', mono: true },
@@ -372,6 +370,7 @@ async function updateLivePresence(){
   if(!session.ready||!session.allowed||document.hidden||presenceUnavailable)return;
   try{
     const data=await live('presence',{page:location.hash.split('?')[0]||'#/'});
+    if(data.available===false){presenceUnavailable=true;return;}
     if(!session.ready)return;
     const others=(data.editors||[]).filter(e=>e.editor!==session.user).slice(0,4);
     const chip=layer.bar?.querySelector('[data-edit-presence]');if(!chip)return;
@@ -382,7 +381,7 @@ async function updateLivePresence(){
     // Do not affect editing, autosave, permissions or Publish.
     presenceUnavailable=true;
     const chip=layer.bar?.querySelector('[data-edit-presence]');if(chip)chip.hidden=true;
-    console.info('[ri-presence] Optional presence needs setup/live-presence.sql.',error.message);
+    // Presence unavailable; the editor and local backup continue normally.
   }
 }
 function startLivePresence(){

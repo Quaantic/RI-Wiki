@@ -26,7 +26,10 @@
             "recPct": 72,
             "basePct": 72,
             "recChance": "72%",
-            "baseChance": "72%"
+            "baseChance": "72%",
+            "whatItBenefits": [
+              "Life Shards"
+            ]
           },
           {
             "id": "rain",
@@ -48,7 +51,11 @@
             "recPct": 59,
             "basePct": 18,
             "recChance": "59%",
-            "baseChance": "18%"
+            "baseChance": "18%",
+            "whatItBenefits": [
+              "Fossil",
+              "Logs"
+            ]
           },
           {
             "id": "stormy",
@@ -65,7 +72,10 @@
             "recPct": 51,
             "basePct": 5.69,
             "recChance": "51%",
-            "baseChance": "5.69%"
+            "baseChance": "5.69%",
+            "whatItBenefits": [
+              "Research"
+            ]
           },
           {
             "id": "sandstorm",
@@ -87,7 +97,11 @@
             "recPct": 56,
             "basePct": 2.2,
             "recChance": "56%",
-            "baseChance": "2.2%"
+            "baseChance": "2.2%",
+            "whatItBenefits": [
+              "Sap",
+              "Roots"
+            ]
           },
           {
             "id": "hurricane",
@@ -104,7 +118,10 @@
             "recPct": 69,
             "basePct": 0.8,
             "recChance": "69%",
-            "baseChance": "0.8%"
+            "baseChance": "0.8%",
+            "whatItBenefits": [
+              "Life Gems"
+            ]
           },
           {
             "id": "tornado",
@@ -131,7 +148,12 @@
             "recPct": 80,
             "basePct": 0.21,
             "recChance": "80%",
-            "baseChance": "0.21%"
+            "baseChance": "0.21%",
+            "whatItBenefits": [
+              "Life Shards",
+              "Logs",
+              "Research"
+            ]
           },
           {
             "id": "inferno",
@@ -158,7 +180,12 @@
             "recPct": 87,
             "basePct": 0.04,
             "recChance": "87%",
-            "baseChance": "0.04%"
+            "baseChance": "0.04%",
+            "whatItBenefits": [
+              "Sap",
+              "Life Shards",
+              "Red Liquid"
+            ]
           },
           {
             "id": "darkness",
@@ -186,7 +213,12 @@
             "basePct": null,
             "special": true,
             "recChance": "∆",
-            "baseChance": "1/21.5K"
+            "baseChance": "1/21.5K",
+            "whatItBenefits": [
+              "Log Perks",
+              "Sap Perks",
+              "Red Perks"
+            ]
           }
         ]
       },
@@ -212,7 +244,11 @@
             "recPct": 99,
             "basePct": 99,
             "recChance": "99%",
-            "baseChance": "99%"
+            "baseChance": "99%",
+            "whatItBenefits": [
+              "Health",
+              "Strength"
+            ]
           },
           {
             "id": "shiny",
@@ -239,7 +275,12 @@
             "recPct": 57,
             "basePct": 0.04,
             "recChance": "57%",
-            "baseChance": "0.04%"
+            "baseChance": "0.04%",
+            "whatItBenefits": [
+              "Bones",
+              "Bluesteel",
+              "Californium"
+            ]
           },
           {
             "id": "metallic",
@@ -266,7 +307,12 @@
             "recPct": 71,
             "basePct": 0.01,
             "recChance": "71%",
-            "baseChance": "0.01%"
+            "baseChance": "0.01%",
+            "whatItBenefits": [
+              "Gears",
+              "Drop Luck",
+              "Bone Dust"
+            ]
           },
           {
             "id": "golden",
@@ -293,7 +339,12 @@
             "recPct": 85,
             "basePct": null,
             "recChance": "85%",
-            "baseChance": "1/27.5K"
+            "baseChance": "1/27.5K",
+            "whatItBenefits": [
+              "Ores",
+              "Rune Luck",
+              "Coins"
+            ]
           },
           {
             "id": "platinum",
@@ -321,7 +372,12 @@
             "basePct": null,
             "special": true,
             "recChance": "∆",
-            "baseChance": "1/215K"
+            "baseChance": "1/215K",
+            "whatItBenefits": [
+              "Souls",
+              "Health",
+              "Strength"
+            ]
           },
           {
             "id": "diamond",
@@ -349,7 +405,12 @@
             "basePct": null,
             "special": true,
             "recChance": "∆",
-            "baseChance": "1/1.5M"
+            "baseChance": "1/1.5M",
+            "whatItBenefits": [
+              "Souls",
+              "Bones",
+              "Coins"
+            ]
           },
           {
             "id": "shadow",
@@ -387,7 +448,14 @@
             "basePct": null,
             "special": true,
             "recChance": "∆",
-            "baseChance": "1/17.5M"
+            "baseChance": "1/17.5M",
+            "whatItBenefits": [
+              "Bones",
+              "Golden Diamond",
+              "Rune Bulk",
+              "Californium",
+              "Bone Dust"
+            ]
           }
         ]
       },
@@ -408,7 +476,10 @@
             "recPct": 93,
             "basePct": 93,
             "recChance": "93%",
-            "baseChance": "93%"
+            "baseChance": "93%",
+            "whatItBenefits": [
+              "Mining Damage"
+            ]
           },
           {
             "id": "stone",
@@ -425,7 +496,10 @@
             "recPct": 60,
             "basePct": 4.46,
             "recChance": "60%",
-            "baseChance": "4.46%"
+            "baseChance": "4.46%",
+            "whatItBenefits": [
+              "Ores"
+            ]
           },
           {
             "id": "granite",
@@ -442,7 +516,10 @@
             "recPct": 75,
             "basePct": 1.53,
             "recChance": "75%",
-            "baseChance": "1.53%"
+            "baseChance": "1.53%",
+            "whatItBenefits": [
+              "Mining Damage"
+            ]
           },
           {
             "id": "basalt",
@@ -459,7 +536,10 @@
             "recPct": 72,
             "basePct": 0.31,
             "recChance": "72%",
-            "baseChance": "0.31%"
+            "baseChance": "0.31%",
+            "whatItBenefits": [
+              "Mine Perks"
+            ]
           },
           {
             "id": "magma",
@@ -476,7 +556,10 @@
             "recPct": 63,
             "basePct": 0.06,
             "recChance": "63%",
-            "baseChance": "0.06%"
+            "baseChance": "0.06%",
+            "whatItBenefits": [
+              "Mastery"
+            ]
           },
           {
             "id": "bedrock",
@@ -503,7 +586,12 @@
             "recPct": 80,
             "basePct": 0.02,
             "recChance": "80%",
-            "baseChance": "0.02%"
+            "baseChance": "0.02%",
+            "whatItBenefits": [
+              "Ores",
+              "Depth",
+              "Mining Damage"
+            ]
           },
           {
             "id": "ultradense",
@@ -525,7 +613,11 @@
             "recPct": 83,
             "basePct": null,
             "recChance": "83%",
-            "baseChance": "1/27.5K"
+            "baseChance": "1/27.5K",
+            "whatItBenefits": [
+              "Forge Time",
+              "Spawn Time"
+            ]
           },
           {
             "id": "strange",
@@ -553,7 +645,12 @@
             "basePct": null,
             "special": true,
             "recChance": "∆",
-            "baseChance": "1/185K"
+            "baseChance": "1/185K",
+            "whatItBenefits": [
+              "Mine Perks",
+              "Depth",
+              "Mining Damage"
+            ]
           }
         ]
       },
@@ -574,7 +671,10 @@
             "recPct": 86,
             "basePct": 86,
             "recChance": "86%",
-            "baseChance": "86%"
+            "baseChance": "86%",
+            "whatItBenefits": [
+              "Money"
+            ]
           },
           {
             "id": "dollar",
@@ -591,7 +691,10 @@
             "recPct": 63,
             "basePct": 9.6,
             "recChance": "63%",
-            "baseChance": "9.6%"
+            "baseChance": "9.6%",
+            "whatItBenefits": [
+              "Money"
+            ]
           },
           {
             "id": "card",
@@ -613,7 +716,11 @@
             "recPct": 58,
             "basePct": 2.74,
             "recChance": "58%",
-            "baseChance": "2.74%"
+            "baseChance": "2.74%",
+            "whatItBenefits": [
+              "Energy",
+              "Energy Shards"
+            ]
           },
           {
             "id": "contract",
@@ -645,7 +752,13 @@
             "recPct": 57,
             "basePct": 0.87,
             "recChance": "57%",
-            "baseChance": "0.87%"
+            "baseChance": "0.87%",
+            "whatItBenefits": [
+              "Life Shards",
+              "Energy",
+              "Money",
+              "Crystals"
+            ]
           },
           {
             "id": "gold",
@@ -667,7 +780,11 @@
             "recPct": 45,
             "basePct": 0.26,
             "recChance": "45%",
-            "baseChance": "0.26%"
+            "baseChance": "0.26%",
+            "whatItBenefits": [
+              "Sap",
+              "Gold Bars"
+            ]
           },
           {
             "id": "jewel",
@@ -689,7 +806,11 @@
             "recPct": 70,
             "basePct": 0.12,
             "recChance": "70%",
-            "baseChance": "0.12%"
+            "baseChance": "0.12%",
+            "whatItBenefits": [
+              "Emeralds",
+              "Mining Damage"
+            ]
           },
           {
             "id": "diamond",
@@ -716,7 +837,12 @@
             "recPct": 81,
             "basePct": 0.03,
             "recChance": "81%",
-            "baseChance": "0.03%"
+            "baseChance": "0.03%",
+            "whatItBenefits": [
+              "Money",
+              "Rune Luck",
+              "Rune Bulk"
+            ]
           },
           {
             "id": "wealth",
@@ -748,7 +874,13 @@
             "recPct": 90,
             "basePct": 0.01,
             "recChance": "90%",
-            "baseChance": "0.01%"
+            "baseChance": "0.01%",
+            "whatItBenefits": [
+              "Money",
+              "Energy",
+              "Gold Bars",
+              "Emeralds"
+            ]
           },
           {
             "id": "power",
@@ -786,7 +918,14 @@
             "basePct": null,
             "special": true,
             "recChance": "∆",
-            "baseChance": "1/185K"
+            "baseChance": "1/185K",
+            "whatItBenefits": [
+              "Perks",
+              "Log Perks",
+              "Sap Perks",
+              "Crystal Perks",
+              "Mine Perks"
+            ]
           }
         ]
       },
@@ -817,7 +956,12 @@
             "recPct": 98,
             "basePct": 98,
             "recChance": "98%",
-            "baseChance": "98%"
+            "baseChance": "98%",
+            "whatItBenefits": [
+              "Energy",
+              "Life Gems",
+              "Money"
+            ]
           },
           {
             "id": "hydra",
@@ -844,7 +988,12 @@
             "recPct": 78,
             "basePct": 1.33,
             "recChance": "78%",
-            "baseChance": "1.33%"
+            "baseChance": "1.33%",
+            "whatItBenefits": [
+              "Quartz",
+              "Adamantium",
+              "Californium"
+            ]
           },
           {
             "id": "omega",
@@ -871,7 +1020,12 @@
             "recPct": 77,
             "basePct": 0.24,
             "recChance": "77%",
-            "baseChance": "0.24%"
+            "baseChance": "0.24%",
+            "whatItBenefits": [
+              "Perks",
+              "Crystal Perks",
+              "Mine Perks"
+            ]
           },
           {
             "id": "quantic",
@@ -898,7 +1052,12 @@
             "recPct": 80,
             "basePct": 0.05,
             "recChance": "80%",
-            "baseChance": "0.05%"
+            "baseChance": "0.05%",
+            "whatItBenefits": [
+              "Research",
+              "Golden Research",
+              "Dark Crystals"
+            ]
           },
           {
             "id": "omni",
@@ -925,7 +1084,12 @@
             "recPct": 81,
             "basePct": 0.01,
             "recChance": "81%",
-            "baseChance": "0.01%"
+            "baseChance": "0.01%",
+            "whatItBenefits": [
+              "Energy",
+              "Rune Luck",
+              "Rune Bulk"
+            ]
           },
           {
             "id": "transcend",
@@ -952,7 +1116,12 @@
             "recPct": 87,
             "basePct": null,
             "recChance": "87%",
-            "baseChance": "1/76.5K"
+            "baseChance": "1/76.5K",
+            "whatItBenefits": [
+              "Ores",
+              "Mastery",
+              "Depth"
+            ]
           },
           {
             "id": "neutron",
@@ -985,7 +1154,13 @@
             "basePct": null,
             "special": true,
             "recChance": "∆",
-            "baseChance": "1/575K"
+            "baseChance": "1/575K",
+            "whatItBenefits": [
+              "Research",
+              "Adamantium",
+              "Californium",
+              "Golden Research"
+            ]
           }
         ]
       },
@@ -1006,7 +1181,10 @@
             "recPct": 56,
             "basePct": 56,
             "recChance": "56%",
-            "baseChance": "56%"
+            "baseChance": "56%",
+            "whatItBenefits": [
+              "Energy"
+            ]
           },
           {
             "id": "charged",
@@ -1023,7 +1201,10 @@
             "recPct": 58,
             "basePct": 28,
             "recChance": "58%",
-            "baseChance": "28%"
+            "baseChance": "28%",
+            "whatItBenefits": [
+              "Crystals"
+            ]
           },
           {
             "id": "voltic",
@@ -1045,7 +1226,11 @@
             "recPct": 63,
             "basePct": 10,
             "recChance": "63%",
-            "baseChance": "10%"
+            "baseChance": "10%",
+            "whatItBenefits": [
+              "Energy",
+              "Perks"
+            ]
           },
           {
             "id": "special",
@@ -1067,7 +1252,11 @@
             "recPct": 69,
             "basePct": 3.3,
             "recChance": "69%",
-            "baseChance": "3.3%"
+            "baseChance": "3.3%",
+            "whatItBenefits": [
+              "Jewels",
+              "Platinum"
+            ]
           },
           {
             "id": "hexa",
@@ -1094,7 +1283,12 @@
             "recPct": 78,
             "basePct": 0.87,
             "recChance": "78%",
-            "baseChance": "0.87%"
+            "baseChance": "0.87%",
+            "whatItBenefits": [
+              "Crystal Shards",
+              "Quartz",
+              "Energy"
+            ]
           },
           {
             "id": "dark",
@@ -1116,7 +1310,11 @@
             "recPct": 80,
             "basePct": 0.16,
             "recChance": "80%",
-            "baseChance": "0.16%"
+            "baseChance": "0.16%",
+            "whatItBenefits": [
+              "Adamantium",
+              "Californium"
+            ]
           },
           {
             "id": "omega",
@@ -1143,7 +1341,12 @@
             "recPct": 87,
             "basePct": 0.03,
             "recChance": "87%",
-            "baseChance": "0.03%"
+            "baseChance": "0.03%",
+            "whatItBenefits": [
+              "Life Gems",
+              "Perks",
+              "Crystal Perks"
+            ]
           },
           {
             "id": "prismatic",
@@ -1171,7 +1374,12 @@
             "basePct": null,
             "special": true,
             "recChance": "∆",
-            "baseChance": "1/27.5K"
+            "baseChance": "1/27.5K",
+            "whatItBenefits": [
+              "Energy",
+              "Rune Luck",
+              "Rune Bulk"
+            ]
           }
         ]
       }
@@ -2742,6 +2950,10 @@
                 "req": 75,
                 "effect": "Prestige"
               }
+            ],
+            "whatItBenefits": [
+              "Ores",
+              "Energy"
             ]
           },
           {
@@ -2762,6 +2974,10 @@
                 "req": 100,
                 "effect": "Stone"
               }
+            ],
+            "whatItBenefits": [
+              "Ores",
+              "Stone"
             ]
           },
           {
@@ -2782,6 +2998,10 @@
                 "req": 65,
                 "effect": "Mastery"
               }
+            ],
+            "whatItBenefits": [
+              "Ores",
+              "Mastery"
             ]
           },
           {
@@ -2802,6 +3022,10 @@
                 "req": 75,
                 "effect": "Depth"
               }
+            ],
+            "whatItBenefits": [
+              "Ores",
+              "Depth"
             ]
           },
           {
@@ -2822,6 +3046,10 @@
                 "req": 50,
                 "effect": "Silver E."
               }
+            ],
+            "whatItBenefits": [
+              "Ores",
+              "Silver Energy"
             ]
           },
           {
@@ -2845,6 +3073,10 @@
                 "req": 60,
                 "effect": "Gold Bars"
               }
+            ],
+            "whatItBenefits": [
+              "Ores",
+              "Gold Bars"
             ]
           },
           {
@@ -2865,6 +3097,12 @@
                 "req": 35,
                 "effect": "Mine Perks"
               }
+            ],
+            "whatItBenefits": [
+              "Ores",
+              "Sap",
+              "Perks",
+              "Mine Perks"
             ]
           },
           {
@@ -2885,6 +3123,9 @@
                 "req": 45,
                 "effect": "Crit Dmg"
               }
+            ],
+            "whatItBenefits": [
+              "Ores"
             ]
           },
           {
@@ -2905,6 +3146,11 @@
                 "req": 25,
                 "effect": "Emerald Coins"
               }
+            ],
+            "whatItBenefits": [
+              "Ores",
+              "Money",
+              "Emeralds"
             ]
           },
           {
@@ -2925,6 +3171,10 @@
                 "cap": 87100,
                 "effect": "10x Ore Luck"
               }
+            ],
+            "whatItBenefits": [
+              "Ores",
+              "Crystal Shards"
             ]
           },
           {
@@ -2948,6 +3198,10 @@
                 "req": 50,
                 "effect": "Energy Shard"
               }
+            ],
+            "whatItBenefits": [
+              "Ores",
+              "Energy"
             ]
           },
           {
@@ -2971,6 +3225,11 @@
                 "req": null,
                 "effect": "3x Rune Bulk"
               }
+            ],
+            "whatItBenefits": [
+              "Ores",
+              "Rune Luck",
+              "Rune Bulk"
             ]
           },
           {
@@ -2994,6 +3253,9 @@
                 "req": null,
                 "effect": "5x Forge Quality"
               }
+            ],
+            "whatItBenefits": [
+              "Ores"
             ]
           },
           {
@@ -3014,6 +3276,11 @@
                 "cap": 1200,
                 "effect": "5x Forge Time"
               }
+            ],
+            "whatItBenefits": [
+              "Ores",
+              "Depth",
+              "Forge Time"
             ]
           },
           {
@@ -3034,6 +3301,11 @@
                 "req": 100,
                 "effect": "Mine Perks"
               }
+            ],
+            "whatItBenefits": [
+              "Ores",
+              "Perks",
+              "Mine Perks"
             ]
           },
           {
@@ -3054,6 +3326,11 @@
                 "req": 40,
                 "effect": "Quartz"
               }
+            ],
+            "whatItBenefits": [
+              "Ores",
+              "Research",
+              "Quartz"
             ]
           },
           {
@@ -3074,6 +3351,10 @@
                 "req": 100,
                 "effect": "Uncapped Golden R."
               }
+            ],
+            "whatItBenefits": [
+              "Ores",
+              "Life Gems"
             ]
           },
           {
@@ -3094,6 +3375,10 @@
                 "req": 100,
                 "effect": "1.35x Eternal Shards"
               }
+            ],
+            "whatItBenefits": [
+              "Ores",
+              "Eternal Shards"
             ]
           },
           {
@@ -3117,6 +3402,12 @@
                 "req": 55,
                 "effect": "Life Shards"
               }
+            ],
+            "whatItBenefits": [
+              "Ores",
+              "Life Shards",
+              "Stone",
+              "Jewels"
             ]
           },
           {
@@ -3140,6 +3431,10 @@
                 "req": null,
                 "effect": "15x Mining Damage"
               }
+            ],
+            "whatItBenefits": [
+              "Ores",
+              "Mining Damage"
             ]
           },
           {
@@ -3160,6 +3455,11 @@
                 "cap": 670900,
                 "effect": "5x Gemstones"
               }
+            ],
+            "whatItBenefits": [
+              "Ores",
+              "Stone",
+              "Jewels"
             ]
           },
           {
@@ -3180,6 +3480,10 @@
                 "cap": 147600,
                 "effect": "10x Mining Damage"
               }
+            ],
+            "whatItBenefits": [
+              "Ores",
+              "Mining Damage"
             ]
           },
           {
@@ -3200,6 +3504,10 @@
                 "cap": 1500000,
                 "effect": "5x Depth"
               }
+            ],
+            "whatItBenefits": [
+              "Ores",
+              "Depth"
             ]
           },
           {
@@ -3220,6 +3528,10 @@
                 "cap": 361200,
                 "effect": "5x Forge Quality"
               }
+            ],
+            "whatItBenefits": [
+              "Ores",
+              "Bones"
             ]
           },
           {
@@ -3240,6 +3552,12 @@
                 "cap": 76800,
                 "effect": "4x Ruby Energy"
               }
+            ],
+            "whatItBenefits": [
+              "Ores",
+              "Souls",
+              "Energy",
+              "Ruby Energy"
             ]
           },
           {
@@ -3260,6 +3578,10 @@
                 "cap": 76800,
                 "effect": "3x Rare Diamonds"
               }
+            ],
+            "whatItBenefits": [
+              "Ores",
+              "Rune Luck"
             ]
           }
         ]
@@ -3280,7 +3602,11 @@
               "Bones": 1.1,
               "Dungeon Coins": 1.1
             },
-            "rarity": 35
+            "rarity": 35,
+            "whatItBenefits": [
+              "Bones",
+              "Dungeon Coins"
+            ]
           },
           {
             "name": "Kit",
@@ -3288,7 +3614,11 @@
               "Health": 1.05,
               "Strength": 1.05
             },
-            "rarity": 65
+            "rarity": 65,
+            "whatItBenefits": [
+              "Health",
+              "Strength"
+            ]
           },
           {
             "name": "Orb",
@@ -3296,7 +3626,11 @@
               "Money": 1.2,
               "Energy": 1.2
             },
-            "rarity": 125
+            "rarity": 125,
+            "whatItBenefits": [
+              "Money",
+              "Energy"
+            ]
           },
           {
             "name": "Wand",
@@ -3305,7 +3639,12 @@
               "Souls": 1.1,
               "Energy": 1.3
             },
-            "rarity": 200
+            "rarity": 200,
+            "whatItBenefits": [
+              "Bones",
+              "Souls",
+              "Energy"
+            ]
           },
           {
             "name": "Suit",
@@ -3322,7 +3661,10 @@
               "Iron": 1.2,
               "Bones": 1.5
             },
-            "rarity": 550
+            "rarity": 550,
+            "whatItBenefits": [
+              "Bones"
+            ]
           },
           {
             "name": "Vibranium",
@@ -3330,7 +3672,11 @@
               "Bluesteel": 1.4,
               "Californium": 1.35
             },
-            "rarity": 900
+            "rarity": 900,
+            "whatItBenefits": [
+              "Bluesteel",
+              "Californium"
+            ]
           },
           {
             "icon": "images/icons/custom/Main/Crystals.svg",
@@ -3339,7 +3685,11 @@
               "Money": 1.6,
               "Energy": 1.6
             },
-            "rarity": 1850
+            "rarity": 1850,
+            "whatItBenefits": [
+              "Money",
+              "Energy"
+            ]
           },
           {
             "name": "Healing Stone",
@@ -3347,7 +3697,10 @@
               "Health": 1.5,
               "Defense": 1.5
             },
-            "rarity": 3000
+            "rarity": 3000,
+            "whatItBenefits": [
+              "Health"
+            ]
           },
           {
             "icon": "images/icons/custom/Mining/Ores/Silver.svg",
@@ -3356,7 +3709,11 @@
               "Bones": 1.5,
               "Dungeon Coins": 1.4
             },
-            "rarity": 4750
+            "rarity": 4750,
+            "whatItBenefits": [
+              "Bones",
+              "Dungeon Coins"
+            ]
           },
           {
             "name": "Pheonix Tooth",
@@ -3364,7 +3721,10 @@
               "Power": 1.75,
               "Strength": 1.75
             },
-            "rarity": 7950
+            "rarity": 7950,
+            "whatItBenefits": [
+              "Strength"
+            ]
           },
           {
             "icon": "images/icons/custom/Runes/Bones/Golden.svg",
@@ -3373,7 +3733,10 @@
               "Iron": 1.35,
               "Dungeon Coins": 1.75
             },
-            "rarity": 15000
+            "rarity": 15000,
+            "whatItBenefits": [
+              "Dungeon Coins"
+            ]
           },
           {
             "name": "Talisman",
@@ -3381,7 +3744,11 @@
               "Souls": 1.55,
               "Dungeon Coins": 1.75
             },
-            "rarity": 30500
+            "rarity": 30500,
+            "whatItBenefits": [
+              "Souls",
+              "Dungeon Coins"
+            ]
           },
           {
             "icon": "images/icons/custom/Mining/Ores/Ruby.svg",
@@ -3390,7 +3757,11 @@
               "Energy": 2.25,
               "Ruby Energy": 1.35
             },
-            "rarity": 57500
+            "rarity": 57500,
+            "whatItBenefits": [
+              "Energy",
+              "Ruby Energy"
+            ]
           },
           {
             "name": "Broken Combine",
@@ -3399,7 +3770,11 @@
               "Souls": 1.75,
               "Energy": 2.5
             },
-            "rarity": 107500
+            "rarity": 107500,
+            "whatItBenefits": [
+              "Souls",
+              "Energy"
+            ]
           },
           {
             "name": "Super Bandages",
@@ -3407,7 +3782,11 @@
               "Bones": 2,
               "Dungeon Coins": 2
             },
-            "rarity": 225000
+            "rarity": 225000,
+            "whatItBenefits": [
+              "Bones",
+              "Dungeon Coins"
+            ]
           },
           {
             "icon": "images/icons/custom/Mining/Ores/Diamond.svg",
@@ -3416,7 +3795,11 @@
               "Bones": 2,
               "Dungeon Coins": 2.35
             },
-            "rarity": 375000
+            "rarity": 375000,
+            "whatItBenefits": [
+              "Bones",
+              "Dungeon Coins"
+            ]
           },
           {
             "name": "Lunar Stone",
@@ -3425,7 +3808,12 @@
               "Bluesteel": 1.75,
               "Californium": 1.85
             },
-            "rarity": 500000
+            "rarity": 500000,
+            "whatItBenefits": [
+              "Souls",
+              "Bluesteel",
+              "Californium"
+            ]
           },
           {
             "name": "Radioactive Barrel",
@@ -3433,7 +3821,11 @@
               "Health": 2.5,
               "Strength": 2.5
             },
-            "rarity": 1000000
+            "rarity": 1000000,
+            "whatItBenefits": [
+              "Health",
+              "Strength"
+            ]
           },
           {
             "name": "Combine",
@@ -3442,7 +3834,11 @@
               "Souls": 2.5,
               "Energy": 4
             },
-            "rarity": 2150000
+            "rarity": 2150000,
+            "whatItBenefits": [
+              "Souls",
+              "Energy"
+            ]
           }
         ]
       },
@@ -3454,7 +3850,10 @@
               "Health": 1.05,
               "Defense": 1.25
             },
-            "rarity": 6
+            "rarity": 6,
+            "whatItBenefits": [
+              "Health"
+            ]
           },
           {
             "name": "Wooden Shield",
@@ -3462,7 +3861,10 @@
               "Health": 1.12,
               "Defense": 1.65
             },
-            "rarity": 25
+            "rarity": 25,
+            "whatItBenefits": [
+              "Health"
+            ]
           },
           {
             "name": "Hard Wood Shield",
@@ -3470,7 +3872,10 @@
               "Health": 1.2,
               "Defense": 2.5
             },
-            "rarity": 85
+            "rarity": 85,
+            "whatItBenefits": [
+              "Health"
+            ]
           },
           {
             "name": "Copper Shield",
@@ -3478,7 +3883,10 @@
               "Health": 1.35,
               "Defense": 4.25
             },
-            "rarity": 325
+            "rarity": 325,
+            "whatItBenefits": [
+              "Health"
+            ]
           },
           {
             "name": "Stone Shield",
@@ -3486,7 +3894,10 @@
               "Health": 1.6,
               "Defense": 7
             },
-            "rarity": 1250
+            "rarity": 1250,
+            "whatItBenefits": [
+              "Health"
+            ]
           },
           {
             "name": "Metal Shield",
@@ -3494,7 +3905,10 @@
               "Health": 2,
               "Defense": 11
             },
-            "rarity": 6250
+            "rarity": 6250,
+            "whatItBenefits": [
+              "Health"
+            ]
           },
           {
             "name": "Iron Shield",
@@ -3502,7 +3916,10 @@
               "Health": 2.5,
               "Defense": 25
             },
-            "rarity": 25000
+            "rarity": 25000,
+            "whatItBenefits": [
+              "Health"
+            ]
           },
           {
             "name": "Titanium Shield",
@@ -3510,7 +3927,10 @@
               "Health": 3.25,
               "Defense": 75
             },
-            "rarity": 100000
+            "rarity": 100000,
+            "whatItBenefits": [
+              "Health"
+            ]
           }
         ]
       },
@@ -3522,7 +3942,10 @@
               "Power": 1.25,
               "Strength": 1.05
             },
-            "rarity": 5
+            "rarity": 5,
+            "whatItBenefits": [
+              "Strength"
+            ]
           },
           {
             "name": "Steel Sword",
@@ -3530,7 +3953,10 @@
               "Power": 1.6,
               "Strength": 1.12
             },
-            "rarity": 25
+            "rarity": 25,
+            "whatItBenefits": [
+              "Strength"
+            ]
           },
           {
             "name": "Iron Sword",
@@ -3538,7 +3964,10 @@
               "Power": 2.5,
               "Strength": 1.3
             },
-            "rarity": 85
+            "rarity": 85,
+            "whatItBenefits": [
+              "Strength"
+            ]
           },
           {
             "name": "Titanium Sword",
@@ -3546,7 +3975,10 @@
               "Power": 4.25,
               "Strength": 1.35
             },
-            "rarity": 325
+            "rarity": 325,
+            "whatItBenefits": [
+              "Strength"
+            ]
           },
           {
             "icon": "images/icons/custom/Mining/Ores/Silver.svg",
@@ -3555,7 +3987,10 @@
               "Power": 7,
               "Strength": 1.6
             },
-            "rarity": 1250
+            "rarity": 1250,
+            "whatItBenefits": [
+              "Strength"
+            ]
           },
           {
             "icon": "images/icons/custom/Runes/Bones/Golden.svg",
@@ -3564,7 +3999,10 @@
               "Power": 11,
               "Strength": 2
             },
-            "rarity": 6250
+            "rarity": 6250,
+            "whatItBenefits": [
+              "Strength"
+            ]
           },
           {
             "icon": "images/icons/custom/Main/Platinum.svg",
@@ -3573,7 +4011,10 @@
               "Power": 25,
               "Strength": 2.5
             },
-            "rarity": 25000
+            "rarity": 25000,
+            "whatItBenefits": [
+              "Strength"
+            ]
           },
           {
             "icon": "images/icons/custom/Mining/Ores/Cobalt.svg",
@@ -3582,7 +4023,10 @@
               "Power": 75,
               "Strength": 3.25
             },
-            "rarity": 100000
+            "rarity": 100000,
+            "whatItBenefits": [
+              "Strength"
+            ]
           }
         ]
       }
@@ -3926,7 +4370,10 @@
             "icon": "images/icons/custom/LifeIsland/Axe.svg",
             "name": "Axe Damage",
             "multi": "1.125 ^ L",
-            "price": "100*1.725^L"
+            "price": "100*1.725^L",
+            "whatItBenefits": [
+              "Axe Damage"
+            ]
           },
           {
             "n": 7,
@@ -3934,7 +4381,10 @@
             "icon": "images/icons/custom/LifeIsland/Tree.svg",
             "name": "Tree Level Perks",
             "multi": "3 + L",
-            "price": "1000*50^L"
+            "price": "1000*50^L",
+            "whatItBenefits": [
+              "Tree Level Perks"
+            ]
           },
           {
             "n": 8,
@@ -4056,7 +4506,10 @@
             "icon": "images/icons/custom/Main/EnergyShard.svg",
             "name": "Energy Shards",
             "multi": "1.25 ^ L",
-            "price": "250*(1.6+L/100)^L"
+            "price": "250*(1.6+L/100)^L",
+            "whatItBenefits": [
+              "Energy Shards"
+            ]
           },
           {
             "n": 6,
@@ -4085,7 +4538,10 @@
             "cap": 20,
             "name": "Rune Bulk",
             "multi": "1 + L * 0.05",
-            "price": "2500*2^L"
+            "price": "2500*2^L",
+            "whatItBenefits": [
+              "Rune Bulk"
+            ]
           },
           {
             "n": 9,
@@ -4216,7 +4672,10 @@
             "icon": "images/icons/custom/LifeIsland/LifeGem.svg",
             "name": "Life Gem",
             "multi": "1 + L * 0.125",
-            "price": "10000000000000*(3+L/35)^L"
+            "price": "10000000000000*(3+L/35)^L",
+            "whatItBenefits": [
+              "Life Gems"
+            ]
           },
           {
             "n": 12,
@@ -4257,7 +4716,10 @@
             "icon": "images/icons/custom/LifeIsland/Axe.svg",
             "name": "Axe Damage",
             "multi": "(1 + L / 4) * 2 ^ math.floor(L / 15)",
-            "price": "L<50: 50*(1+L/4)*(1.25+L/90)^L | L>=50: 1e41*2.5^(L-45)"
+            "price": "L<50: 50*(1+L/4)*(1.25+L/90)^L | L>=50: 1e41*2.5^(L-45)",
+            "whatItBenefits": [
+              "Axe Damage"
+            ]
           },
           {
             "n": 4,
@@ -4339,7 +4801,10 @@
             "icon": "images/icons/custom/LifeIsland/LogPerks.svg",
             "name": "More Log Perks",
             "multi": "1 + L * 0.15",
-            "price": "10000000000000*1.9^L"
+            "price": "10000000000000*1.9^L",
+            "whatItBenefits": [
+              "Log Perks"
+            ]
           },
           {
             "n": 13,
@@ -4358,7 +4823,10 @@
             "icon": "images/icons/custom/LifeIsland/TreeTier.svg",
             "name": "Tree Tier XP",
             "multi": "(1 + L * 0.08) * 1.02 ^ L",
-            "price": "1e40*(1+L/3)*(1.75+L/37)^L"
+            "price": "1e40*(1+L/3)*(1.75+L/37)^L",
+            "whatItBenefits": [
+              "Tree Tier XP"
+            ]
           },
           {
             "n": 15,
@@ -4424,7 +4892,10 @@
             "icon": "images/icons/custom/Main/Platinum.svg",
             "name": "Platinum",
             "multi": "1 + L / 4",
-            "price": "200*(2-L/250)^L"
+            "price": "200*(2-L/250)^L",
+            "whatItBenefits": [
+              "Platinum"
+            ]
           },
           {
             "n": 6,
@@ -4470,7 +4941,10 @@
             "icon": "images/icons/custom/Perks/CrystalPerk.svg",
             "name": "Crystal Perks",
             "multi": "1 + L / 10",
-            "price": "100000*2^L"
+            "price": "100000*2^L",
+            "whatItBenefits": [
+              "Crystal Perks"
+            ]
           },
           {
             "n": 11,
@@ -4489,7 +4963,10 @@
             "icon": "images/icons/custom/Main/Platinum.svg",
             "name": "More Platinum",
             "multi": "1.1 ^ L * (1 + L / 10)",
-            "price": "500000*(1.6+L/65)^L"
+            "price": "500000*(1.6+L/65)^L",
+            "whatItBenefits": [
+              "Platinum"
+            ]
           },
           {
             "n": 13,
@@ -4497,7 +4974,10 @@
             "icon": "images/icons/custom/Main/Adamantium.svg",
             "name": "More Adamantium",
             "multi": "1.1 ^ L * (1 + L / 10)",
-            "price": "10000000*(1.85+L/55)^L"
+            "price": "10000000*(1.85+L/55)^L",
+            "whatItBenefits": [
+              "Adamantium"
+            ]
           },
           {
             "n": 14,
@@ -4505,7 +4985,10 @@
             "icon": "images/icons/custom/Main/Californium.svg",
             "name": "More Californium",
             "multi": "1.07 ^ L * (1 + L / 10)",
-            "price": "1000000000*(2.1+L/45)^L"
+            "price": "1000000000*(2.1+L/45)^L",
+            "whatItBenefits": [
+              "Californium"
+            ]
           },
           {
             "n": 15,
@@ -4565,7 +5048,10 @@
             "icon": "images/icons/custom/Dungeon/Strength.svg",
             "name": "More Strength",
             "multi": "(1 + L * 0.075) * 1.025 ^ L",
-            "price": "5000*(1+L/4)*(1.35+L/85)^L"
+            "price": "5000*(1+L/4)*(1.35+L/85)^L",
+            "whatItBenefits": [
+              "Strength"
+            ]
           },
           {
             "n": 5,
@@ -4573,7 +5059,10 @@
             "icon": "images/icons/custom/Dungeon/Health.svg",
             "name": "More Health",
             "multi": "(1 + L * 0.075) * 1.025 ^ L",
-            "price": "5000*(1+L/4)*(1.35+L/85)^L"
+            "price": "5000*(1+L/4)*(1.35+L/85)^L",
+            "whatItBenefits": [
+              "Health"
+            ]
           },
           {
             "n": 6,
@@ -4608,7 +5097,10 @@
             "icon": "images/icons/custom/Runes/RuneLuck.svg",
             "name": "Rune Luck",
             "multi": "1 + L / 10",
-            "price": "1000000*2.5^L"
+            "price": "1000000*2.5^L",
+            "whatItBenefits": [
+              "Rune Luck"
+            ]
           },
           {
             "n": 10,
@@ -4616,7 +5108,10 @@
             "icon": "images/icons/custom/Dungeon/Coins.svg",
             "name": "More Coins",
             "multi": "(1 + L * 0.03) * 1.07 ^ L",
-            "price": "2500000*(1+L/2)*(1.6+L/55)^L"
+            "price": "2500000*(1+L/2)*(1.6+L/55)^L",
+            "whatItBenefits": [
+              "Coins"
+            ]
           }
         ]
       },
@@ -4637,7 +5132,10 @@
             "icon": "images/icons/custom/Dungeon/Strength.svg",
             "name": "Strength Bonus",
             "multi": "(1+0.08L)*1.02^L",
-            "price": "200*(1+L/4)*(1.32+L/75)^L"
+            "price": "200*(1+L/4)*(1.32+L/75)^L",
+            "whatItBenefits": [
+              "Strength"
+            ]
           },
           {
             "n": 3,
@@ -4645,7 +5143,10 @@
             "icon": "images/icons/custom/Dungeon/Health.svg",
             "name": "Health Bonus",
             "multi": "(1+0.08L)*1.02^L",
-            "price": "200*(1+L/3)*(1.32+L/75)^L"
+            "price": "200*(1+L/3)*(1.32+L/75)^L",
+            "whatItBenefits": [
+              "Health"
+            ]
           },
           {
             "n": 4,
@@ -4693,7 +5194,10 @@
             "icon": "images/icons/custom/LifeIsland/Roots.svg",
             "name": "Tree Roots",
             "multi": "(1 + L / 10) * 1.05 ^ L",
-            "price": "500*(1.6+L/100)^L"
+            "price": "500*(1.6+L/100)^L",
+            "whatItBenefits": [
+              "Roots"
+            ]
           },
           {
             "n": 4,
@@ -4712,7 +5216,10 @@
             "icon": "images/icons/custom/LifeIsland/GoldenResearch.svg",
             "name": "Golden Research",
             "multi": "1 + L / 20",
-            "price": "2500*(1.65+L/85)^L"
+            "price": "2500*(1.65+L/85)^L",
+            "whatItBenefits": [
+              "Golden Research"
+            ]
           },
           {
             "n": 6,
@@ -4720,7 +5227,10 @@
             "icon": "images/icons/custom/LifeIsland/LifeGem.svg",
             "name": "Life Gem",
             "multi": "(1 + L / 20) * 1.05 ^ L",
-            "price": "12500*(1.675+L/80)^L"
+            "price": "12500*(1.675+L/80)^L",
+            "whatItBenefits": [
+              "Life Gems"
+            ]
           },
           {
             "n": 7,
@@ -4789,7 +5299,10 @@
             "icon": "images/icons/custom/LifeIsland/GoldenApple.svg",
             "name": "Golden Apple",
             "multi": "L * 0.5",
-            "price": "25*4^L"
+            "price": "25*4^L",
+            "whatItBenefits": [
+              "Golden Apples"
+            ]
           },
           {
             "n": 6,
@@ -4797,7 +5310,10 @@
             "icon": "images/icons/custom/LifeIsland/LogPerks.svg",
             "name": "Log Perks",
             "multi": "1.15 ^ L",
-            "price": "50*1.5^L"
+            "price": "50*1.5^L",
+            "whatItBenefits": [
+              "Log Perks"
+            ]
           },
           {
             "n": 7,
@@ -4805,7 +5321,10 @@
             "icon": "images/icons/custom/LifeIsland/SapPerk.svg",
             "name": "Sap Perks",
             "multi": "1.15 ^ L",
-            "price": "50*2^L"
+            "price": "50*2^L",
+            "whatItBenefits": [
+              "Sap Perks"
+            ]
           },
           {
             "n": 8,
@@ -4824,7 +5343,10 @@
             "icon": "images/icons/custom/LifeIsland/LifeGem.svg",
             "name": "Life Gem",
             "multi": "1 + L * 0.1",
-            "price": "250*(1+L/3)*(1.8+L/75)^L"
+            "price": "250*(1+L/3)*(1.8+L/75)^L",
+            "whatItBenefits": [
+              "Life Gems"
+            ]
           },
           {
             "n": 10,
@@ -4840,7 +5362,10 @@
             "icon": "images/icons/custom/LifeIsland/TreeTier.svg",
             "name": "Tree Tier XP",
             "multi": "(1 + L * 0.08) * 1.02 ^ L",
-            "price": "100000000*(1+L/3)*(1.75+L/50)^L"
+            "price": "100000000*(1+L/3)*(1.75+L/50)^L",
+            "whatItBenefits": [
+              "Tree Tier XP"
+            ]
           },
           {
             "n": 12,
@@ -4848,7 +5373,10 @@
             "icon": "images/icons/custom/LifeIsland/GoldenApple.svg",
             "name": "More Golden Apples",
             "multi": "(1 + L * 0.08) * 1.02 ^ L",
-            "price": "100000*10^L"
+            "price": "100000*10^L",
+            "whatItBenefits": [
+              "Golden Apples"
+            ]
           },
           {
             "n": 13,
@@ -4864,7 +5392,10 @@
             "icon": "images/icons/custom/LifeIsland/GoldenResearch.svg",
             "name": "Golden Research",
             "multi": "1 + L / 50",
-            "price": "100000000*(2.45+L/75)^L"
+            "price": "100000000*(2.45+L/75)^L",
+            "whatItBenefits": [
+              "Golden Research"
+            ]
           },
           {
             "n": 15,
@@ -5039,7 +5570,10 @@
             "icon": "images/icons/custom/Perks/PerkXp.svg",
             "name": "More XP",
             "multi": "(1 + L / 20) * 1.05 ^ L",
-            "price": "100*(1.55+L/75)^L"
+            "price": "100*(1.55+L/75)^L",
+            "whatItBenefits": [
+              "XP"
+            ]
           },
           {
             "n": 6,
@@ -5058,7 +5592,10 @@
             "icon": "images/icons/custom/Main/Platinum.svg",
             "name": "Platinum Gain",
             "multi": "1 + L",
-            "price": "5000*10^L"
+            "price": "5000*10^L",
+            "whatItBenefits": [
+              "Platinum"
+            ]
           },
           {
             "n": 8,
@@ -5254,7 +5791,10 @@
             "cap": 10,
             "name": "Rune Bulk",
             "multi": "1 + L * 0.1",
-            "price": "Tabela por nivel / (1+MiningUpgrade28/10) de desconto"
+            "price": "Tabela por nivel / (1+MiningUpgrade28/10) de desconto",
+            "whatItBenefits": [
+              "Rune Bulk"
+            ]
           },
           {
             "n": 21,
@@ -5262,7 +5802,10 @@
             "icon": "images/icons/custom/LifeIsland/LifeGem.svg",
             "name": "Life Gem",
             "multi": "(1 + L * 0.12) * 1.03 ^ L",
-            "price": "Tabela por nivel / (1+MiningUpgrade28/10) de desconto"
+            "price": "Tabela por nivel / (1+MiningUpgrade28/10) de desconto",
+            "whatItBenefits": [
+              "Life Gems"
+            ]
           },
           {
             "n": 22,
@@ -5312,7 +5855,10 @@
             "icon": "images/icons/custom/LifeIsland/GoldenResearch.svg",
             "name": "Golden Research",
             "multi": "1 + L * 0.075",
-            "price": "Tabela por nivel / (1+MiningUpgrade28/10) de desconto"
+            "price": "Tabela por nivel / (1+MiningUpgrade28/10) de desconto",
+            "whatItBenefits": [
+              "Golden Research"
+            ]
           },
           {
             "n": 28,
@@ -5342,7 +5888,10 @@
             "icon": "images/icons/custom/Dungeon/Training.svg",
             "name": "Training Stats",
             "multi": "(1 + L * 0.08) * 1.02 ^ L",
-            "price": "Tabela por nivel / (1+MiningUpgrade28/10) de desconto"
+            "price": "Tabela por nivel / (1+MiningUpgrade28/10) de desconto",
+            "whatItBenefits": [
+              "Training Stats"
+            ]
           },
           {
             "n": 32,
@@ -5724,7 +6273,10 @@
             "icon": "images/icons/custom/Perks/PerkXp.svg",
             "name": "More XP",
             "multi": "(1 + L / 20) * 1.05 ^ L",
-            "price": "100*(1.6+L/65)^L"
+            "price": "100*(1.6+L/65)^L",
+            "whatItBenefits": [
+              "XP"
+            ]
           },
           {
             "n": 6,
@@ -5797,7 +6349,10 @@
             "icon": "images/icons/custom/Perks/CrystalPerk.svg",
             "name": "Crystal Perks",
             "multi": "1 + L / 2",
-            "price": "100000000000000*(1+2L)*2.25^L"
+            "price": "100000000000000*(1+2L)*2.25^L",
+            "whatItBenefits": [
+              "Crystal Perks"
+            ]
           }
         ]
       },
@@ -5833,7 +6388,10 @@
             "icon": "images/icons/custom/Mining/Ores/Emerald.svg",
             "name": "Emerald Coins",
             "multi": "(1 + L * 0.06) * 1.065 ^ L",
-            "price": "5*(1.35+L/100)^L"
+            "price": "5*(1.35+L/100)^L",
+            "whatItBenefits": [
+              "Emeralds"
+            ]
           },
           {
             "n": 4,
@@ -5863,7 +6421,10 @@
             "icon": "images/icons/custom/Main/EnergyShard.svg",
             "name": "Energy Shards",
             "multi": "1.5 ^ L",
-            "price": "35*1.85^L"
+            "price": "35*1.85^L",
+            "whatItBenefits": [
+              "Energy Shards"
+            ]
           },
           {
             "n": 7,
@@ -5871,7 +6432,10 @@
             "icon": "images/icons/custom/Mining/Mining.svg",
             "name": "Mining Ores",
             "multi": "1 + L / 50",
-            "price": "100*1.25^L"
+            "price": "100*1.25^L",
+            "whatItBenefits": [
+              "Ores"
+            ]
           },
           {
             "n": 8,
@@ -5920,7 +6484,10 @@
             "icon": "images/icons/custom/Runes/RuneLuck.svg",
             "name": "Rune Luck",
             "multi": "1 + L / 20",
-            "price": "25000*1.375^L"
+            "price": "25000*1.375^L",
+            "whatItBenefits": [
+              "Rune Luck"
+            ]
           },
           {
             "n": 13,
@@ -5939,7 +6506,10 @@
             "icon": "images/icons/custom/LifeIsland/LifeGem.svg",
             "name": "Life Gem",
             "multi": "1 + L / 10",
-            "price": "1000000*1.265^L"
+            "price": "1000000*1.265^L",
+            "whatItBenefits": [
+              "Life Gems"
+            ]
           },
           {
             "n": 15,
@@ -6032,7 +6602,10 @@
             "icon": "images/icons/custom/LifeIsland/LifeGem.svg",
             "name": "Life Gem",
             "multi": "(1 + L * 0.07) * 1.03 ^ L",
-            "price": "5000*1.95^L"
+            "price": "5000*1.95^L",
+            "whatItBenefits": [
+              "Life Gems"
+            ]
           },
           {
             "n": 4,
@@ -6077,7 +6650,10 @@
             "icon": "images/icons/custom/Perks/PerkXp.svg",
             "name": "Monster Perks",
             "multi": "(1 + L * 0.05) * 1.05 ^ L",
-            "price": "500000000000*(2.25+L/15)^L"
+            "price": "500000000000*(2.25+L/15)^L",
+            "whatItBenefits": [
+              "Monster Perks"
+            ]
           }
         ]
       },
@@ -6123,7 +6699,10 @@
             "icon": "images/icons/custom/Main/Astatine.svg",
             "name": "More Astatine",
             "multi": "1+L*0.15",
-            "price": "(5+L/3)*1.445^L"
+            "price": "(5+L/3)*1.445^L",
+            "whatItBenefits": [
+              "Astatine"
+            ]
           },
           {
             "n": 6,
@@ -6247,7 +6826,10 @@
             "icon": "images/icons/custom/Main/Adamantium.svg",
             "name": "Adamantium",
             "multi": "(1 + L / 20) * 1.05 ^ L",
-            "price": "1000*1.25^L"
+            "price": "1000*1.25^L",
+            "whatItBenefits": [
+              "Adamantium"
+            ]
           },
           {
             "n": 10,
@@ -6277,7 +6859,13 @@
             "name": "Starter Kit",
             "multi": "L",
             "price": "5",
-            "priceRoundDown": true
+            "priceRoundDown": true,
+            "whatItBenefits": [
+              "Energy",
+              "Money",
+              "XP",
+              "Crystals"
+            ]
           },
           {
             "n": 2,
@@ -6286,7 +6874,10 @@
             "name": "More Prestige",
             "multi": "1 + L/2 * 2^floor(L/15)",
             "price": "25 * 1.35^L",
-            "priceRoundDown": true
+            "priceRoundDown": true,
+            "whatItBenefits": [
+              "Prestige Points"
+            ]
           },
           {
             "n": 3,
@@ -6295,7 +6886,10 @@
             "name": "Super Prestige",
             "multi": "1.125^L",
             "price": "1e17 * (1.65 + L/200)^L",
-            "priceRoundDown": true
+            "priceRoundDown": true,
+            "whatItBenefits": [
+              "Prestige Points"
+            ]
           },
           {
             "n": 4,
@@ -6303,7 +6897,10 @@
             "name": "XP Spike",
             "multi": "1.15^L",
             "price": "10 * 1.25^L",
-            "priceRoundDown": true
+            "priceRoundDown": true,
+            "whatItBenefits": [
+              "XP"
+            ]
           },
           {
             "n": 5,
@@ -6312,7 +6909,10 @@
             "name": "Level Perks",
             "multi": "1 + L/10",
             "price": "50 * 1.5^L",
-            "priceRoundDown": true
+            "priceRoundDown": true,
+            "whatItBenefits": [
+              "Level Perks"
+            ]
           },
           {
             "n": 6,
@@ -6321,7 +6921,10 @@
             "name": "Money Bonus I",
             "multi": "1 + L*0.25",
             "price": "10 * (1 + L/2) * 1.225^L",
-            "priceRoundDown": true
+            "priceRoundDown": true,
+            "whatItBenefits": [
+              "Money"
+            ]
           },
           {
             "n": 7,
@@ -6330,7 +6933,10 @@
             "name": "Money Bonus II",
             "multi": "1 + L*0.1",
             "price": "25 * (1 + L/4) * 1.15^L",
-            "priceRoundDown": true
+            "priceRoundDown": true,
+            "whatItBenefits": [
+              "Money"
+            ]
           },
           {
             "n": 8,
@@ -6374,7 +6980,10 @@
             "name": "Energy Bonus",
             "multi": "1 + L/4",
             "price": "2500 * (1 + L/5) * 1.25^L",
-            "priceRoundDown": true
+            "priceRoundDown": true,
+            "whatItBenefits": [
+              "Energy"
+            ]
           },
           {
             "n": 12,
@@ -6395,7 +7004,10 @@
             "name": "Crystal Shard",
             "multi": "1 + L*0.15",
             "price": "25000 * (1 + L/3) * 1.29^L",
-            "priceRoundDown": true
+            "priceRoundDown": true,
+            "whatItBenefits": [
+              "Crystal Shards"
+            ]
           },
           {
             "n": 14,
@@ -6404,7 +7016,10 @@
             "name": "Platinum",
             "multi": "1 + L*0.1",
             "price": "75000 * (1 + L/5) * 1.425^L",
-            "priceRoundDown": true
+            "priceRoundDown": true,
+            "whatItBenefits": [
+              "Platinum"
+            ]
           },
           {
             "n": 15,
@@ -6536,7 +7151,10 @@
             "name": "Life Gem",
             "multi": "1 + L*0.1",
             "price": "4e11 * (1.55 + L/150)^L",
-            "priceRoundDown": true
+            "priceRoundDown": true,
+            "whatItBenefits": [
+              "Life Gems"
+            ]
           },
           {
             "n": 29,
@@ -6584,7 +7202,10 @@
             "name": "Pickaxe Damage",
             "multi": "(1 + L*0.05) * 1.05^L",
             "price": "1e11 * (1.425 + L/145)^L",
-            "priceRoundDown": true
+            "priceRoundDown": true,
+            "whatItBenefits": [
+              "Pickaxe Damage"
+            ]
           },
           {
             "n": 34,
@@ -6592,7 +7213,10 @@
             "name": "More Depth",
             "multi": "1 + L*0.05",
             "price": "1e12 * 2^L",
-            "priceRoundDown": true
+            "priceRoundDown": true,
+            "whatItBenefits": [
+              "Depth"
+            ]
           },
           {
             "n": 35,
@@ -6609,7 +7233,10 @@
             "name": "Forge Power",
             "multi": "1 + L*0.15",
             "price": "1e14 * (1.55 + L/145)^L",
-            "priceRoundDown": true
+            "priceRoundDown": true,
+            "whatItBenefits": [
+              "Forge Power"
+            ]
           },
           {
             "n": 37,
@@ -6641,7 +7268,10 @@
             "cap": 149,
             "name": "More XP",
             "multi": "1.125 ^ L",
-            "price": "1.15^L*(1+L/4)"
+            "price": "1.15^L*(1+L/4)",
+            "whatItBenefits": [
+              "XP"
+            ]
           },
           {
             "n": 3,
@@ -6816,7 +7446,10 @@
             "icon": "images/icons/custom/Mining/Mining.svg",
             "name": "Mining Damage",
             "multi": "1.125 ^ L",
-            "price": "50000*(1.225+L/125)^L"
+            "price": "50000*(1.225+L/125)^L",
+            "whatItBenefits": [
+              "Mining Damage"
+            ]
           },
           {
             "n": 22,
@@ -6835,7 +7468,10 @@
             "icon": "images/icons/custom/Mining/Depth.svg",
             "name": "More Depth",
             "multi": "1 + L / 20",
-            "price": "300000*(1.35+L/125)^L"
+            "price": "300000*(1.35+L/125)^L",
+            "whatItBenefits": [
+              "Depth"
+            ]
           },
           {
             "n": 24,
@@ -6859,7 +7495,10 @@
             "icon": "images/icons/custom/Main/Adamantium.svg",
             "name": "Adamantium",
             "multi": "(1 + L * 0.12) * 1.03 ^ L",
-            "price": "4000000*(1.45+L/75)^L"
+            "price": "4000000*(1.45+L/75)^L",
+            "whatItBenefits": [
+              "Adamantium"
+            ]
           },
           {
             "n": 27,
@@ -6878,7 +7517,10 @@
             "icon": "images/icons/custom/Main/EnergyShard.svg",
             "name": "Energy Shards",
             "multi": "(1 + L / 10) * 1.05 ^ L",
-            "price": "100000000*(1.25+L/50)^L"
+            "price": "100000000*(1.25+L/50)^L",
+            "whatItBenefits": [
+              "Energy Shards"
+            ]
           },
           {
             "n": 29,
@@ -6886,7 +7528,10 @@
             "icon": "images/icons/custom/MoneyIsland/Emeralds.svg",
             "name": "Emerald Coins",
             "multi": "(1 + L / 20) * 1.05 ^ L",
-            "price": "400000000*(1.35+L/55)^L"
+            "price": "400000000*(1.35+L/55)^L",
+            "whatItBenefits": [
+              "Emeralds"
+            ]
           },
           {
             "n": 30,
@@ -6916,7 +7561,10 @@
             "icon": "images/icons/custom/LifeIsland/LifeGem.svg",
             "name": "Life Gem",
             "multi": "1 + L / 15",
-            "price": "50000000000*(1.55+L/40)^L"
+            "price": "50000000000*(1.55+L/40)^L",
+            "whatItBenefits": [
+              "Life Gems"
+            ]
           },
           {
             "n": 33,
@@ -6992,7 +7640,10 @@
             "icon": "images/icons/custom/LifeIsland/GoldenResearch.svg",
             "name": "More Golden Research",
             "multi": "1 + L / 20",
-            "price": "1e22*1.75^L"
+            "price": "1e22*1.75^L",
+            "whatItBenefits": [
+              "Golden Research"
+            ]
           },
           {
             "n": 41,
@@ -7011,7 +7662,10 @@
             "icon": "images/icons/custom/Main/Californium.svg",
             "name": "Californium",
             "multi": "1 + L / 10",
-            "price": "3e23*(1.65+L/30)^L"
+            "price": "3e23*(1.65+L/30)^L",
+            "whatItBenefits": [
+              "Californium"
+            ]
           },
           {
             "n": 43,
@@ -7019,7 +7673,10 @@
             "icon": "images/icons/custom/Runes/Energetic/Voltic.svg",
             "name": "Rune Bulk",
             "multi": "1 + L / 20",
-            "price": "5e23*(1.85+L/20)^L"
+            "price": "5e23*(1.85+L/20)^L",
+            "whatItBenefits": [
+              "Rune Bulk"
+            ]
           },
           {
             "n": 44,
@@ -7073,7 +7730,10 @@
             "icon": "images/icons/custom/Main/Astatine.svg",
             "name": "More Astatine ",
             "multi": "1+(0.05*L)",
-            "price": "3*L"
+            "price": "3*L",
+            "whatItBenefits": [
+              "Astatine"
+            ]
           },
           {
             "n": 50,
@@ -7092,7 +7752,10 @@
             "icon": "images/icons/custom/LifeIsland/Axe.svg",
             "name": "Axe Damage",
             "multi": "(1 + L*0.1) * 1.05^L",
-            "price": "5e30 * (1.25 + L/85)^L"
+            "price": "5e30 * (1.25 + L/85)^L",
+            "whatItBenefits": [
+              "Axe Damage"
+            ]
           },
           {
             "n": 52,
@@ -7100,7 +7763,10 @@
             "icon": "images/icons/custom/LifeIsland/TreeTier.svg",
             "name": "Tree Tier XP",
             "multi": "1 + L*0.1",
-            "price": "5e30 * (1.45 + L/55)^L"
+            "price": "5e30 * (1.45 + L/55)^L",
+            "whatItBenefits": [
+              "Tree Tier XP"
+            ]
           }
         ]
       },
@@ -7114,7 +7780,10 @@
             "icon": "images/icons/custom/Dungeon/Strength.svg",
             "name": "Strength Bonus",
             "multi": "1 + L / 10",
-            "price": "3000*(1+L/4)*(1.35+L/200)^L"
+            "price": "3000*(1+L/4)*(1.35+L/200)^L",
+            "whatItBenefits": [
+              "Strength"
+            ]
           },
           {
             "n": 2,
@@ -7122,7 +7791,10 @@
             "icon": "images/icons/custom/Dungeon/Health.svg",
             "name": "Health Bonus",
             "multi": "1 + L / 10",
-            "price": "5000*(1+L/4)*(1.35+L/200)^L"
+            "price": "5000*(1+L/4)*(1.35+L/200)^L",
+            "whatItBenefits": [
+              "Health"
+            ]
           },
           {
             "n": 3,
@@ -7211,7 +7883,10 @@
             "icon": "images/icons/custom/LifeIsland/LogPerks.svg",
             "name": "Log Perks",
             "multi": "(1+L/20)*1.05^L",
-            "price": "(1+L/10)*(1+L/20)^3*1.3^L"
+            "price": "(1+L/10)*(1+L/20)^3*1.3^L",
+            "whatItBenefits": [
+              "Log Perks"
+            ]
           },
           {
             "n": 6,
@@ -7258,7 +7933,10 @@
             "icon": "images/icons/custom/LifeIsland/SapPerk.svg",
             "name": "Sap Perks",
             "multi": "1.5^L*(1+L/2)",
-            "price": "10^L*1.15^L"
+            "price": "10^L*1.15^L",
+            "whatItBenefits": [
+              "Sap Perks"
+            ]
           },
           {
             "n": 4,
@@ -7274,7 +7952,10 @@
             "icon": "images/icons/custom/LifeIsland/Roots.svg",
             "name": "Tree Roots",
             "multi": "(1+L/10)*1.05^L",
-            "price": "(2+L/12)*(1+L/15)^3*1.05^L*1.15^L"
+            "price": "(2+L/12)*(1+L/15)^3*1.05^L*1.15^L",
+            "whatItBenefits": [
+              "Roots"
+            ]
           },
           {
             "n": 6,
@@ -7282,7 +7963,10 @@
             "icon": "images/icons/custom/LifeIsland/LifeGem.svg",
             "name": "Life Gem",
             "multi": "(1+L/12)^2",
-            "price": "(5+L/10)*(1+L/20)^3.25*1.15^L"
+            "price": "(5+L/10)*(1+L/20)^3.25*1.15^L",
+            "whatItBenefits": [
+              "Life Gems"
+            ]
           },
           {
             "n": 7,
@@ -7353,7 +8037,10 @@
             "icon": "images/icons/custom/Runes/RuneLuck.svg",
             "name": "Rune Luck",
             "multi": "1 + L * 0.075",
-            "price": "1000000*2^L"
+            "price": "1000000*2^L",
+            "whatItBenefits": [
+              "Rune Luck"
+            ]
           },
           {
             "n": 8,
@@ -7379,7 +8066,10 @@
             "icon": "images/icons/custom/MoneyIsland/Prestige.svg",
             "name": "Prestige Points",
             "multi": "1.1 ^ L",
-            "price": "1000000000*1.95^L"
+            "price": "1000000000*1.95^L",
+            "whatItBenefits": [
+              "Prestige Points"
+            ]
           },
           {
             "n": 11,
@@ -7402,7 +8092,10 @@
             "icon": "images/icons/custom/Mining/Mining.svg",
             "name": "Mining Damage",
             "multi": "(1 + L * 0.15) * 1.05 ^ L",
-            "price": "100000*1.875^L"
+            "price": "100000*1.875^L",
+            "whatItBenefits": [
+              "Mining Damage"
+            ]
           },
           {
             "n": 14,
@@ -7432,7 +8125,10 @@
             "icon": "images/icons/custom/Mining/Mining.svg",
             "name": "Mining Ores",
             "multi": "1 + L * 0.02",
-            "price": "1e20*2.25^L"
+            "price": "1e20*2.25^L",
+            "whatItBenefits": [
+              "Ores"
+            ]
           },
           {
             "n": 17,
@@ -7448,7 +8144,10 @@
             "icon": "images/icons/custom/LifeIsland/TreeTier.svg",
             "name": "Tree Tier XP",
             "multi": "(1 + L * 0.08) * 1.02 ^ L",
-            "price": "5e25*(1.75+L/55)^L"
+            "price": "5e25*(1.75+L/55)^L",
+            "whatItBenefits": [
+              "Tree Tier XP"
+            ]
           },
           {
             "n": 19,
@@ -7456,7 +8155,10 @@
             "icon": "images/icons/custom/Mining/Gemstones.svg",
             "name": "Gemstones",
             "multi": "1 + L * 0.075",
-            "price": "1e26*(2.15+L/45)^L"
+            "price": "1e26*(2.15+L/45)^L",
+            "whatItBenefits": [
+              "Jewels"
+            ]
           },
           {
             "n": 20,
@@ -7464,7 +8166,10 @@
             "icon": "images/icons/custom/Main/Californium.svg",
             "name": "Californium",
             "multi": "(1 + L * 0.07) * 1.03 ^ L",
-            "price": "1e27*(2.55+L/55)^L"
+            "price": "1e27*(2.55+L/55)^L",
+            "whatItBenefits": [
+              "Californium"
+            ]
           },
           {
             "n": 21,
@@ -7472,7 +8177,10 @@
             "icon": "images/icons/custom/LifeIsland/GoldenResearch.svg",
             "name": "Golden Research",
             "multi": "1 + L * 0.05",
-            "price": "1e29*1.9^L"
+            "price": "1e29*1.9^L",
+            "whatItBenefits": [
+              "Golden Research"
+            ]
           }
         ]
       },
@@ -7513,7 +8221,10 @@
             "icon": "images/icons/custom/Perks/CrystalPerk.svg",
             "name": "Crystal Perks",
             "multi": "1 + L * 0.15",
-            "price": "(3+L/2)*1.25^L"
+            "price": "(3+L/2)*1.25^L",
+            "whatItBenefits": [
+              "Crystal Perks"
+            ]
           },
           {
             "n": 5,
@@ -7521,7 +8232,10 @@
             "icon": "images/icons/custom/Main/Platinum.svg",
             "name": "More Platinum",
             "multi": "(1 + L * 0.1) * 1.1 ^ L",
-            "price": "(5+L/3)*1.325^L"
+            "price": "(5+L/3)*1.325^L",
+            "whatItBenefits": [
+              "Platinum"
+            ]
           },
           {
             "n": 6,
@@ -7575,7 +8289,10 @@
             "icon": "images/icons/custom/Main/Californium.svg",
             "name": "More Californium",
             "multi": "1 + L * 0.125",
-            "price": "150*1.35^L"
+            "price": "150*1.35^L",
+            "whatItBenefits": [
+              "Californium"
+            ]
           },
           {
             "n": 12,
@@ -7608,7 +8325,10 @@
             "icon": "images/icons/custom/Mining/MiningXP.svg",
             "name": "Mining XP",
             "multi": "1.1^L*(1+L/10)",
-            "price": "(1+L/7.5)*(1+L/20)^3*1.15^L"
+            "price": "(1+L/7.5)*(1+L/20)^3*1.15^L",
+            "whatItBenefits": [
+              "XP"
+            ]
           },
           {
             "n": 2,
@@ -7616,7 +8336,10 @@
             "icon": "images/icons/custom/Mining/Mining.svg",
             "name": "Mining Damage",
             "multi": "1.05^L*(1+L/10)",
-            "price": "(1+L/6)*(1+L/15)^3*1.15^L"
+            "price": "(1+L/6)*(1+L/15)^3*1.15^L",
+            "whatItBenefits": [
+              "Mining Damage"
+            ]
           },
           {
             "n": 3,
@@ -7677,7 +8400,10 @@
             "icon": "images/icons/custom/LifeIsland/LifeGem.svg",
             "name": "Life Gem",
             "multi": "(1+L/20)^1.85",
-            "price": "5*(1+L/7)*(1+L/16)^3.25*1.15^L"
+            "price": "5*(1+L/7)*(1+L/16)^3.25*1.15^L",
+            "whatItBenefits": [
+              "Life Gems"
+            ]
           },
           {
             "n": 10,
@@ -7685,7 +8411,10 @@
             "icon": "images/icons/custom/Mining/Gemstones.svg",
             "name": "Gemstones",
             "multi": "1+L",
-            "price": "10*3^L*1.15^L"
+            "price": "10*3^L*1.15^L",
+            "whatItBenefits": [
+              "Jewels"
+            ]
           },
           {
             "n": 11,
@@ -7729,7 +8458,10 @@
             "cap": 150,
             "name": "Mastery",
             "multi": "1+L*0.05",
-            "price": "30*(1+L/6)*(1+L/15)^3.35*1.15^L"
+            "price": "30*(1+L/6)*(1+L/15)^3.35*1.15^L",
+            "whatItBenefits": [
+              "Mastery"
+            ]
           },
           {
             "n": 16,
@@ -7737,7 +8469,10 @@
             "icon": "images/icons/custom/Runes/RuneLuck.svg",
             "name": "Rune Luck",
             "multi": "1+L*0.075",
-            "price": "100*(1+L/5)*(1+L/15)^3.35*1.15^L"
+            "price": "100*(1+L/5)*(1+L/15)^3.35*1.15^L",
+            "whatItBenefits": [
+              "Rune Luck"
+            ]
           },
           {
             "n": 17,
@@ -7745,7 +8480,10 @@
             "icon": "images/icons/custom/Runes/RuneLuck.svg",
             "name": "More Rune Luck",
             "multi": "1+L*0.05",
-            "price": "100*(1+L/4)*(1+L/14)^3.55*1.15^L"
+            "price": "100*(1+L/4)*(1+L/14)^3.55*1.15^L",
+            "whatItBenefits": [
+              "Rune Luck"
+            ]
           },
           {
             "n": 18,
@@ -7762,7 +8500,10 @@
             "name": "Californium",
             "multi": "1+(0.15*L)",
             "price": "3000000 * (1 + L / 10) * (1 + L / 14) ^ 3.55 * 1.16 ^ L",
-            "requirement": ""
+            "requirement": "",
+            "whatItBenefits": [
+              "Californium"
+            ]
           },
           {
             "n": 20,
@@ -7792,7 +8533,10 @@
             "name": "Astatine",
             "multi": "1+(0.5*L)",
             "price": "250000000 * (1 + L / 3) * (1 + L / 14) ^ 3.55 * 1.165 ^ L",
-            "requirement": ""
+            "requirement": "",
+            "whatItBenefits": [
+              "Astatine"
+            ]
           }
         ]
       },
@@ -8007,7 +8751,10 @@
             "icon": "images/icons/custom/Main/Adamantium.svg",
             "name": "More Adamantium",
             "multi": "1.1 ^ L",
-            "price": "(1+L/2)*1.525^L"
+            "price": "(1+L/2)*1.525^L",
+            "whatItBenefits": [
+              "Adamantium"
+            ]
           },
           {
             "n": 3,
@@ -8048,7 +8795,10 @@
             "icon": "images/icons/custom/LifeIsland/LifeGem.svg",
             "name": "Life Gem",
             "multi": "1 + L * 0.1",
-            "price": "(5+L/3)*1.615^L"
+            "price": "(5+L/3)*1.615^L",
+            "whatItBenefits": [
+              "Life Gems"
+            ]
           },
           {
             "n": 7,
@@ -8056,7 +8806,10 @@
             "icon": "images/icons/custom/Mining/Mining.svg",
             "name": "Mining Damage",
             "multi": "(1 + L * 0.1) * 1.05 ^ L",
-            "price": "(7+L/4)*1.475^L"
+            "price": "(7+L/4)*1.475^L",
+            "whatItBenefits": [
+              "Mining Damage"
+            ]
           },
           {
             "n": 8,
@@ -8143,7 +8896,10 @@
             "icon": "images/icons/custom/Main/Platinum.svg",
             "name": "PLATINUM",
             "multi": "MaxTier = min(70+10*TreeUpgrade51, AbsoluteMax 70)",
-            "price": "round(max(5*30^tier/1.1^TreeUpgrade15,1))"
+            "price": "round(max(5*30^tier/1.1^TreeUpgrade15,1))",
+            "whatItBenefits": [
+              "Platinum"
+            ]
           },
           {
             "n": 5,
@@ -8243,7 +8999,10 @@
             "icon": "images/icons/custom/Main/Adamantium.svg",
             "name": "ADAMANTIUM",
             "multi": "MaxTier = min(70+10*TreeUpgrade51, AbsoluteMax 50)",
-            "price": "round(max(1000*200^tier/1.1^TreeUpgrade15,1))"
+            "price": "round(max(1000*200^tier/1.1^TreeUpgrade15,1))",
+            "whatItBenefits": [
+              "Adamantium"
+            ]
           },
           {
             "n": 15,
@@ -8251,7 +9010,10 @@
             "icon": "images/icons/custom/Main/Californium.svg",
             "name": "CALIFORNIUM",
             "multi": "MaxTier = min(70+10*TreeUpgrade51, AbsoluteMax 40)",
-            "price": "round(max(5000*1000^tier/1.1^TreeUpgrade15,1))"
+            "price": "round(max(5000*1000^tier/1.1^TreeUpgrade15,1))",
+            "whatItBenefits": [
+              "Californium"
+            ]
           },
           {
             "n": 16,
@@ -8259,7 +9021,10 @@
             "icon": "images/icons/custom/LifeIsland/LifeGem.svg",
             "name": "LIFE GEM",
             "multi": "MaxTier = min(70+10*TreeUpgrade51, AbsoluteMax 40)",
-            "price": "round(max(1000*200^tier/1.1^TreeUpgrade15,1))"
+            "price": "round(max(1000*200^tier/1.1^TreeUpgrade15,1))",
+            "whatItBenefits": [
+              "Life Gems"
+            ]
           },
           {
             "n": 17,
@@ -8267,7 +9032,10 @@
             "icon": "images/icons/custom/LifeIsland/GoldenResearch.svg",
             "name": "GOLDEN RESEARCH",
             "multi": "MaxTier = min(70+10*TreeUpgrade51, AbsoluteMax 20)",
-            "price": "round(max(1000000000000*10000^tier/1.1^TreeUpgrade15,1))"
+            "price": "round(max(1000000000000*10000^tier/1.1^TreeUpgrade15,1))",
+            "whatItBenefits": [
+              "Golden Research"
+            ]
           },
           {
             "n": 18,
@@ -8319,7 +9087,10 @@
             "icon": "images/icons/custom/MoneyIsland/Prestige.svg",
             "name": "PRESTIGE POINTS",
             "multi": "MaxTier = min(70+10*TreeUpgrade51, AbsoluteMax 90)",
-            "price": "round(max(500*50^tier/1.1^TreeUpgrade15,1))"
+            "price": "round(max(500*50^tier/1.1^TreeUpgrade15,1))",
+            "whatItBenefits": [
+              "Prestige Points"
+            ]
           },
           {
             "n": 23,
@@ -8327,7 +9098,10 @@
             "icon": "images/icons/custom/Mining/Ores/Emerald.svg",
             "name": "EMERALD COINS",
             "multi": "MaxTier = min(70+10*TreeUpgrade51, AbsoluteMax 50)",
-            "price": "round(max(5000*500^tier/1.1^TreeUpgrade15,1))"
+            "price": "round(max(5000*500^tier/1.1^TreeUpgrade15,1))",
+            "whatItBenefits": [
+              "Emeralds"
+            ]
           },
           {
             "n": 24,
@@ -8378,7 +9152,10 @@
             "icon": "images/icons/custom/Perks/CrystalPerk.svg",
             "name": "Crystal Perks",
             "multi": "(1+L/12)^1.25",
-            "price": "(1+L/10)*(1+L/20)^2.8*1.15^L"
+            "price": "(1+L/10)*(1+L/20)^2.8*1.15^L",
+            "whatItBenefits": [
+              "Crystal Perks"
+            ]
           },
           {
             "n": 5,
@@ -8418,7 +9195,10 @@
             "icon": "images/icons/custom/Perks/PerkXp.svg",
             "name": "Monster Perks",
             "multi": "(1 + L / 20) * 1.05 ^ L",
-            "price": "2*(1.375+L/100)^L"
+            "price": "2*(1.375+L/100)^L",
+            "whatItBenefits": [
+              "Monster Perks"
+            ]
           },
           {
             "n": 4,
@@ -8437,7 +9217,10 @@
             "icon": "images/icons/custom/LifeIsland/GoldenResearch.svg",
             "name": "Golden Research",
             "multi": "1 + L / 30",
-            "price": "15*(1.65+L/125)^L"
+            "price": "15*(1.65+L/125)^L",
+            "whatItBenefits": [
+              "Golden Research"
+            ]
           },
           {
             "n": 6,
@@ -8517,7 +9300,10 @@
             "cap": 30,
             "name": "Pickaxe Damage",
             "multi": "1+0.2*L",
-            "price": "25+7.5*L"
+            "price": "25+7.5*L",
+            "whatItBenefits": [
+              "Pickaxe Damage"
+            ]
           },
           {
             "n": 7,
@@ -8577,7 +9363,10 @@
             "icon": "images/icons/custom/Perks/PerkXp.svg",
             "name": "More Perks",
             "multi": "1+0.1*L",
-            "price": "(30+10*L)*1.1^L"
+            "price": "(30+10*L)*1.1^L",
+            "whatItBenefits": [
+              "Perks"
+            ]
           },
           {
             "n": 14,
@@ -8593,7 +9382,10 @@
             "icon": "images/icons/custom/LifeIsland/LifeGem.svg",
             "name": "Life Gem Bonus",
             "multi": "1+0.2*L",
-            "price": "20+5*L"
+            "price": "20+5*L",
+            "whatItBenefits": [
+              "Life Gems"
+            ]
           },
           {
             "n": 16,
@@ -8623,7 +9415,10 @@
             "icon": "images/icons/custom/LifeIsland/GoldenResearch.svg",
             "name": "Golden Research",
             "multi": "1+0.15*L",
-            "price": "25+25*L"
+            "price": "25+25*L",
+            "whatItBenefits": [
+              "Golden Research"
+            ]
           },
           {
             "n": 19,
@@ -8631,7 +9426,10 @@
             "icon": "images/icons/custom/MoneyIsland/Prestige.svg",
             "name": "Prestige Points",
             "multi": "1+0.2*L",
-            "price": "30+10*L"
+            "price": "30+10*L",
+            "whatItBenefits": [
+              "Prestige Points"
+            ]
           },
           {
             "n": 20,
@@ -8834,7 +9632,10 @@
             "icon": "images/icons/custom/Runes/RuneLuck.svg",
             "name": "Rune Luck",
             "multi": "1 + L * 0.05",
-            "price": "5000000*1.825^L"
+            "price": "5000000*1.825^L",
+            "whatItBenefits": [
+              "Rune Luck"
+            ]
           },
           {
             "n": 22,
@@ -8892,7 +9693,10 @@
             "icon": "images/icons/custom/Main/EnergyShard.svg",
             "name": "More Energy Shards",
             "multi": "1.5 ^ L",
-            "price": "60000000000*3^L"
+            "price": "60000000000*3^L",
+            "whatItBenefits": [
+              "Energy Shards"
+            ]
           },
           {
             "n": 29,
@@ -8997,7 +9801,10 @@
             "icon": "images/icons/custom/Mining/Mining.svg",
             "name": "Mining Damage",
             "multi": "1 + L * 0.15",
-            "price": "1e22*2^L"
+            "price": "1e22*2^L",
+            "whatItBenefits": [
+              "Mining Damage"
+            ]
           },
           {
             "n": 42,
@@ -9220,7 +10027,10 @@
             "icon": "images/icons/custom/Dungeon/Strength.svg",
             "name": "Strength",
             "multi": "1 + L / 10",
-            "price": "1e57*(3.5+L/10)^L"
+            "price": "1e57*(3.5+L/10)^L",
+            "whatItBenefits": [
+              "Strength"
+            ]
           },
           {
             "n": 69,
@@ -9228,7 +10038,10 @@
             "icon": "images/icons/custom/Dungeon/Health.svg",
             "name": "Health",
             "multi": "1 + L / 10",
-            "price": "1e57*(3.5+L/10)^L"
+            "price": "1e57*(3.5+L/10)^L",
+            "whatItBenefits": [
+              "Health"
+            ]
           },
           {
             "n": 70,
@@ -9275,7 +10088,10 @@
             "icon": "images/icons/custom/Mining/Gemstones.svg",
             "name": "Gemstones",
             "multi": "(1 + L * 0.085) * 1.015 ^ L",
-            "price": "1e53*(2.5+L/10)^L"
+            "price": "1e53*(2.5+L/10)^L",
+            "whatItBenefits": [
+              "Jewels"
+            ]
           },
           {
             "n": 76,
@@ -9401,7 +10217,10 @@
             "icon": "images/icons/custom/LifeIsland/LifeGem.svg",
             "name": "Life Gem",
             "multi": "(1+L/14)^1.5",
-            "price": "(2+L/12)*(1+L/15)^3*1.05^L*1.15^L"
+            "price": "(2+L/12)*(1+L/15)^3*1.05^L*1.15^L",
+            "whatItBenefits": [
+              "Life Gems"
+            ]
           }
         ]
       },
@@ -9450,7 +10269,10 @@
             "icon": "images/icons/custom/Perks/CrystalPerk.svg",
             "name": "More Crystal Perks",
             "multi": "1 + L / 5",
-            "price": "500*(1+L/3)*(1.725+L/65)^L"
+            "price": "500*(1+L/3)*(1.725+L/65)^L",
+            "whatItBenefits": [
+              "Crystal Perks"
+            ]
           },
           {
             "n": 6,
@@ -9485,7 +10307,10 @@
             "icon": "images/icons/custom/Perks/CrystalPerk.svg",
             "name": "Crystal Perks",
             "multi": "4 + L",
-            "price": "1000000000*1000^L"
+            "price": "1000000000*1000^L",
+            "whatItBenefits": [
+              "Crystal Perks"
+            ]
           },
           {
             "n": 10,
@@ -9493,7 +10318,10 @@
             "icon": "images/icons/custom/LifeIsland/LifeGem.svg",
             "name": "Life Gem",
             "multi": "1 + L * 0.1",
-            "price": "10000000000*(1+L/4)*(1.95+L/75)^L"
+            "price": "10000000000*(1+L/4)*(1.95+L/75)^L",
+            "whatItBenefits": [
+              "Life Gems"
+            ]
           },
           {
             "n": 11,
@@ -9586,7 +10414,10 @@
             "icon": "images/icons/custom/Mining/Ores/Emerald.svg",
             "name": "Emerald Coins",
             "multi": "(1 + L * 0.085) * 1.065 ^ L",
-            "price": "5*(1.35+L/100)^L"
+            "price": "5*(1.35+L/100)^L",
+            "whatItBenefits": [
+              "Emeralds"
+            ]
           },
           {
             "n": 4,
@@ -9594,7 +10425,10 @@
             "icon": "images/icons/custom/MoneyIsland/GoldenDiamond.svg",
             "name": "Golden Diamonds",
             "multi": "(1 + L * 0.08) * 1.02 ^ L",
-            "price": "25*(1.425+L/85)^L"
+            "price": "25*(1.425+L/85)^L",
+            "whatItBenefits": [
+              "Golden Diamond"
+            ]
           },
           {
             "n": 5,
@@ -9704,7 +10538,10 @@
             "cap": 49,
             "name": "Coins",
             "multi": "(1+L*0.15)*1.05^L",
-            "price": "5*(1+L/4)*(1.26+L/75)^L"
+            "price": "5*(1+L/4)*(1.26+L/75)^L",
+            "whatItBenefits": [
+              "Coins"
+            ]
           },
           {
             "n": 2,
@@ -9723,7 +10560,10 @@
             "icon": "images/icons/custom/Dungeon/Strength.svg",
             "name": "Strength",
             "multi": "(1+L*0.065)*1.035^L",
-            "price": "25*(1+L/5)*(1.365+L/75)^L"
+            "price": "25*(1+L/5)*(1.365+L/75)^L",
+            "whatItBenefits": [
+              "Strength"
+            ]
           },
           {
             "n": 4,
@@ -9731,7 +10571,10 @@
             "icon": "images/icons/custom/Dungeon/Health.svg",
             "name": "Health",
             "multi": "(1+L*0.065)*1.035^L",
-            "price": "25*(1+L/5)*(1.365+L/75)^L"
+            "price": "25*(1+L/5)*(1.365+L/75)^L",
+            "whatItBenefits": [
+              "Health"
+            ]
           },
           {
             "n": 5,
@@ -9749,7 +10592,10 @@
             "cap": 50,
             "name": "Drop Luck",
             "multi": "1+L*0.15",
-            "price": "200*2^L"
+            "price": "200*2^L",
+            "whatItBenefits": [
+              "Drop Luck"
+            ]
           },
           {
             "n": 7,
@@ -9826,7 +10672,10 @@
             "icon": "images/icons/custom/LifeIsland/GoldenResearch.svg",
             "name": "Golden Research",
             "multi": "1+L/10",
-            "price": "2*(1.35+L/40)^L"
+            "price": "2*(1.35+L/40)^L",
+            "whatItBenefits": [
+              "Golden Research"
+            ]
           },
           {
             "n": 4,
@@ -9892,7 +10741,10 @@
             "icon": "images/icons/custom/Perks/MergePerks.svg",
             "name": "Merge Perks",
             "multi": "(1+L/20)*1.05^L",
-            "price": "10*(1+L/3)*(1.415+L/100)^L"
+            "price": "10*(1+L/3)*(1.415+L/100)^L",
+            "whatItBenefits": [
+              "Merge Perks"
+            ]
           },
           {
             "n": 5,
@@ -10025,7 +10877,10 @@
             "icon": "images/icons/custom/LifeIsland/TreeTier.svg",
             "name": "More Tree Tier XP",
             "multi": "(1 + 0.1 * l) * 1.05^l",
-            "price": "5 * (1 + l/2.5) * (1.315 + l/105)^l"
+            "price": "5 * (1 + l/2.5) * (1.315 + l/105)^l",
+            "whatItBenefits": [
+              "Tree Tier XP"
+            ]
           },
           {
             "n": 7,
@@ -10198,7 +11053,10 @@
             "icon": "images/icons/custom/Perks/MergePerks.svg",
             "name": "Merge Perks",
             "multi": "1+L*0.15",
-            "price": "1000*(1.85+L/100)^L"
+            "price": "1000*(1.85+L/100)^L",
+            "whatItBenefits": [
+              "Merge Perks"
+            ]
           },
           {
             "n": 7,
@@ -10580,6 +11438,11 @@
       {
         "id": "perks",
         "name": "Perks",
+        "icon": "sparkles"
+      },
+      {
+        "id": "stats",
+        "name": "Bonus Stats",
         "icon": "sparkles"
       }
     ],
@@ -11135,16 +11998,21 @@
         "name": "Perks",
         "group": "perks",
         "icon": "sparkles",
-        "description": "",
+        "description": "Perk upgrades and bonuses listed in the wiki.",
         "primaryUse": "",
-        "relatedLinks": []
+        "relatedLinks": [
+          {
+            "label": "Perk upgrades",
+            "href": "#/perks/perk"
+          }
+        ]
       },
       {
         "id": "log-perks",
         "name": "Log Perks",
         "group": "perks",
         "icon": "sparkles",
-        "description": "",
+        "description": "Perk upgrades and bonuses listed in the wiki.",
         "primaryUse": "",
         "relatedLinks": []
       },
@@ -11153,7 +12021,7 @@
         "name": "Sap Perks",
         "group": "perks",
         "icon": "sparkles",
-        "description": "",
+        "description": "Perk upgrades and bonuses listed in the wiki.",
         "primaryUse": "",
         "relatedLinks": []
       },
@@ -11162,7 +12030,7 @@
         "name": "Mine Perks",
         "group": "perks",
         "icon": "sparkles",
-        "description": "",
+        "description": "Perk upgrades and bonuses listed in the wiki.",
         "primaryUse": "",
         "relatedLinks": []
       },
@@ -11171,7 +12039,7 @@
         "name": "Level Perks",
         "group": "perks",
         "icon": "sparkles",
-        "description": "",
+        "description": "Perk upgrades and bonuses listed in the wiki.",
         "primaryUse": "",
         "relatedLinks": []
       },
@@ -11180,7 +12048,7 @@
         "name": "Merge Perks",
         "group": "perks",
         "icon": "sparkles",
-        "description": "",
+        "description": "Perk upgrades and bonuses listed in the wiki.",
         "primaryUse": "",
         "relatedLinks": []
       },
@@ -11189,7 +12057,7 @@
         "name": "Crystal Perks",
         "group": "perks",
         "icon": "sparkles",
-        "description": "",
+        "description": "Perk upgrades and bonuses listed in the wiki.",
         "primaryUse": "",
         "relatedLinks": []
       },
@@ -11198,14 +12066,284 @@
         "name": "Monster Perks",
         "group": "perks",
         "icon": "sparkles",
-        "description": "",
+        "description": "Perk upgrades and bonuses listed in the wiki.",
+        "primaryUse": "",
+        "relatedLinks": []
+      },
+      {
+        "id": "prestige-points",
+        "name": "Prestige Points",
+        "group": "main",
+        "icon": "award",
+        "description": "Prestige points earned when prestiging.",
+        "primaryUse": "",
+        "relatedLinks": []
+      },
+      {
+        "id": "platinum",
+        "name": "Platinum",
+        "group": "main",
+        "icon": "images/icons/custom/Main/Platinum.svg",
+        "description": "Resource in the Crystalization chain.",
+        "primaryUse": "",
+        "relatedLinks": []
+      },
+      {
+        "id": "adamantium",
+        "name": "Adamantium",
+        "group": "main",
+        "icon": "images/icons/custom/Main/Adamantium.svg",
+        "description": "Advanced Crystalization resource.",
+        "primaryUse": "",
+        "relatedLinks": []
+      },
+      {
+        "id": "californium",
+        "name": "Californium",
+        "group": "main",
+        "icon": "images/icons/custom/Main/Californium.svg",
+        "description": "Advanced Crystalization resource.",
+        "primaryUse": "",
+        "relatedLinks": []
+      },
+      {
+        "id": "astatine",
+        "name": "Astatine",
+        "group": "main",
+        "icon": "images/icons/custom/Main/Astatine.svg",
+        "description": "Late-game Crystalization resource.",
+        "primaryUse": "",
+        "relatedLinks": []
+      },
+      {
+        "id": "energy-shards",
+        "name": "Energy Shards",
+        "group": "main",
+        "icon": "images/icons/custom/Main/EnergyShard.svg",
+        "description": "Energy-related resource.",
+        "primaryUse": "",
+        "relatedLinks": []
+      },
+      {
+        "id": "dark-crystals",
+        "name": "Dark Crystals",
+        "group": "main",
+        "icon": "gem",
+        "description": "Dark crystal resource.",
+        "primaryUse": "",
+        "relatedLinks": []
+      },
+      {
+        "id": "golden-research",
+        "name": "Golden Research",
+        "group": "life",
+        "icon": "images/icons/custom/LifeIsland/GoldenResearch.svg",
+        "description": "Golden Research progression.",
+        "primaryUse": "",
+        "relatedLinks": []
+      },
+      {
+        "id": "red-perks",
+        "name": "Red Perks",
+        "group": "perks",
+        "icon": "sparkles",
+        "description": "Red Perks bonus.",
+        "primaryUse": "",
+        "relatedLinks": []
+      },
+      {
+        "id": "tree-level-perks",
+        "name": "Tree Level Perks",
+        "group": "perks",
+        "icon": "sparkles",
+        "description": "Tree leveling perks.",
+        "primaryUse": "",
+        "relatedLinks": []
+      },
+      {
+        "id": "xp",
+        "name": "XP",
+        "group": "stats",
+        "icon": "star",
+        "description": "Experience gained in the game.",
+        "primaryUse": "",
+        "relatedLinks": []
+      },
+      {
+        "id": "health",
+        "name": "Health",
+        "group": "stats",
+        "icon": "images/icons/custom/Dungeon/Health.svg",
+        "description": "Health bonus.",
+        "primaryUse": "",
+        "relatedLinks": []
+      },
+      {
+        "id": "strength",
+        "name": "Strength",
+        "group": "stats",
+        "icon": "images/icons/custom/Dungeon/Strength.svg",
+        "description": "Strength bonus.",
+        "primaryUse": "",
+        "relatedLinks": []
+      },
+      {
+        "id": "mining-damage",
+        "name": "Mining Damage",
+        "group": "stats",
+        "icon": "pickaxe",
+        "description": "Mining damage bonus.",
+        "primaryUse": "",
+        "relatedLinks": []
+      },
+      {
+        "id": "axe-damage",
+        "name": "Axe Damage",
+        "group": "stats",
+        "icon": "images/icons/custom/LifeIsland/Axe.svg",
+        "description": "Tree cutting damage bonus.",
+        "primaryUse": "",
+        "relatedLinks": []
+      },
+      {
+        "id": "pickaxe-damage",
+        "name": "Pickaxe Damage",
+        "group": "stats",
+        "icon": "pickaxe",
+        "description": "Pickaxe damage bonus.",
+        "primaryUse": "",
+        "relatedLinks": []
+      },
+      {
+        "id": "depth",
+        "name": "Depth",
+        "group": "stats",
+        "icon": "images/icons/custom/Mining/Depth.svg",
+        "description": "Mining depth bonus.",
+        "primaryUse": "",
+        "relatedLinks": []
+      },
+      {
+        "id": "mastery",
+        "name": "Mastery",
+        "group": "stats",
+        "icon": "images/icons/custom/Mining/Mastery.svg",
+        "description": "Mining mastery bonus.",
+        "primaryUse": "",
+        "relatedLinks": []
+      },
+      {
+        "id": "drop-luck",
+        "name": "Drop Luck",
+        "group": "stats",
+        "icon": "clover",
+        "description": "Drop luck bonus.",
+        "primaryUse": "",
+        "relatedLinks": []
+      },
+      {
+        "id": "rune-bulk",
+        "name": "Rune Bulk",
+        "group": "stats",
+        "icon": "gem",
+        "description": "Rune bulk bonus.",
+        "primaryUse": "",
+        "relatedLinks": []
+      },
+      {
+        "id": "forge-time",
+        "name": "Forge Time",
+        "group": "stats",
+        "icon": "clock",
+        "description": "Forge time bonus.",
+        "primaryUse": "",
+        "relatedLinks": []
+      },
+      {
+        "id": "spawn-time",
+        "name": "Spawn Time",
+        "group": "stats",
+        "icon": "clock",
+        "description": "Spawn time bonus.",
+        "primaryUse": "",
+        "relatedLinks": []
+      },
+      {
+        "id": "training-stats",
+        "name": "Training Stats",
+        "group": "stats",
+        "icon": "dumbbell",
+        "description": "Dungeon training bonuses.",
+        "primaryUse": "",
+        "relatedLinks": []
+      },
+      {
+        "id": "tree-tier-xp",
+        "name": "Tree Tier XP",
+        "group": "stats",
+        "icon": "trees",
+        "description": "Tree Tier experience bonus.",
+        "primaryUse": "",
+        "relatedLinks": []
+      },
+      {
+        "id": "forge-power",
+        "name": "Forge Power",
+        "group": "stats",
+        "icon": "hammer",
+        "description": "Forge power bonus.",
+        "primaryUse": "",
+        "relatedLinks": []
+      },
+      {
+        "id": "coins",
+        "name": "Coins",
+        "group": "stats",
+        "icon": "coins",
+        "description": "Coin-related bonus; distinct from Dungeon Coins and Money.",
+        "primaryUse": "",
+        "relatedLinks": []
+      },
+      {
+        "id": "terraform-gem",
+        "name": "Terraform Gem",
+        "group": "life",
+        "icon": "gem",
+        "description": "Terraform gem bonus.",
+        "primaryUse": "",
+        "relatedLinks": []
+      },
+      {
+        "id": "golden-apples",
+        "name": "Golden Apples",
+        "group": "life",
+        "icon": "apple",
+        "description": "Golden Apples resource.",
+        "primaryUse": "",
+        "relatedLinks": []
+      },
+      {
+        "id": "red-apples",
+        "name": "Red Apples",
+        "group": "life",
+        "icon": "apple",
+        "description": "Red Apples resource.",
+        "primaryUse": "",
+        "relatedLinks": []
+      },
+      {
+        "id": "void-apples",
+        "name": "Void Apples",
+        "group": "life",
+        "icon": "apple",
+        "description": "Void Apples resource.",
         "primaryUse": "",
         "relatedLinks": []
       }
     ],
     "description": "Game currencies and resources, organized by island. Open a resource to find related articles and documented buffs.",
     "explorerTitle": "Currency Explorer",
-    "explorerDescription": "Explore runes, bonuses, upgrades, masteries, milestones, perks, cores and stages. Open sources or edit their relationships in the existing wiki editor.",
+    "explorerDescription": "Find documented sources for currencies, perks and other bonuses throughout the wiki.",
     "sources": []
   },
   "calculators": {
@@ -11269,7 +12407,14 @@
                 "unlockAt": 250
               }
             ],
-            "amountLabel": "Red Apples owned"
+            "amountLabel": "Red Apples owned",
+            "whatItBenefits": [
+              "Logs",
+              "Sap",
+              "Apples",
+              "Log Perks",
+              "Sap Perks"
+            ]
           },
           {
             "id": "apple-golden",
@@ -11320,7 +12465,14 @@
                 "unlockAt": 1000
               }
             ],
-            "amountLabel": "Golden Apples owned"
+            "amountLabel": "Golden Apples owned",
+            "whatItBenefits": [
+              "Red Apples",
+              "Axe Damage",
+              "Roots",
+              "Golden Apples",
+              "Life Gems"
+            ]
           },
           {
             "id": "apple-diamond",
@@ -11365,7 +12517,12 @@
                 "unlockAt": 250000
               }
             ],
-            "amountLabel": "Diamond Apples owned"
+            "amountLabel": "Diamond Apples owned",
+            "whatItBenefits": [
+              "Research",
+              "Golden Research",
+              "Void Apples"
+            ]
           },
           {
             "id": "apple-void",
@@ -11422,7 +12579,13 @@
                 "unlockAt": 1000
               }
             ],
-            "amountLabel": "Void Apples owned"
+            "amountLabel": "Void Apples owned",
+            "whatItBenefits": [
+              "Tree Tier XP",
+              "Frost",
+              "Californium",
+              "Dark Liquid"
+            ]
           }
         ],
         "inputs": []
@@ -11463,7 +12626,12 @@
             ],
             "dropChance": "78%",
             "amountLabel": "Amount owned",
-            "description": ""
+            "description": "",
+            "whatItBenefits": [
+              "Energy",
+              "Bone Dust",
+              "Terraform Gem"
+            ]
           },
           {
             "id": "group2",
@@ -11496,7 +12664,12 @@
               }
             ],
             "dropChance": "13%",
-            "amountLabel": "Amount owned"
+            "amountLabel": "Amount owned",
+            "whatItBenefits": [
+              "Money",
+              "Bones",
+              "Research"
+            ]
           },
           {
             "id": "group3",
@@ -11530,7 +12703,12 @@
               }
             ],
             "dropChance": "4.83%",
-            "amountLabel": "Amount owned"
+            "amountLabel": "Amount owned",
+            "whatItBenefits": [
+              "Strength",
+              "Health",
+              "Souls"
+            ]
           },
           {
             "id": "group4",
@@ -11562,7 +12740,12 @@
               }
             ],
             "dropChance": "2.19%",
-            "amountLabel": "Amount owned"
+            "amountLabel": "Amount owned",
+            "whatItBenefits": [
+              "Mining Damage",
+              "Coins",
+              "Fossil"
+            ]
           },
           {
             "id": "group5",
@@ -11595,7 +12778,11 @@
               }
             ],
             "dropChance": "0.8%",
-            "amountLabel": "Amount owned"
+            "amountLabel": "Amount owned",
+            "whatItBenefits": [
+              "Californium",
+              "Bluesteel"
+            ]
           },
           {
             "id": "group6",
@@ -11629,7 +12816,12 @@
               }
             ],
             "dropChance": "0.31%",
-            "amountLabel": "Amount owned"
+            "amountLabel": "Amount owned",
+            "whatItBenefits": [
+              "Mine Perks",
+              "Tree Essence",
+              "Magnets"
+            ]
           },
           {
             "id": "group7",
@@ -11663,7 +12855,11 @@
               }
             ],
             "dropChance": "0.12%",
-            "amountLabel": "Amount owned"
+            "amountLabel": "Amount owned",
+            "whatItBenefits": [
+              "Astatine",
+              "Ruby Energy"
+            ]
           },
           {
             "id": "group8",
@@ -11680,7 +12876,10 @@
               }
             ],
             "dropChance": "0.03%",
-            "amountLabel": "Amount owned"
+            "amountLabel": "Amount owned",
+            "whatItBenefits": [
+              "Mastery"
+            ]
           }
         ]
       },
@@ -11720,7 +12919,12 @@
               }
             ],
             "dropChance": "1 / 100",
-            "amountLabel": "Silver Sap owned"
+            "amountLabel": "Silver Sap owned",
+            "whatItBenefits": [
+              "Logs",
+              "Axe Damage",
+              "Energy"
+            ]
           },
           {
             "id": "golden-sap",
@@ -11754,7 +12958,12 @@
               }
             ],
             "dropChance": "1 / 500",
-            "amountLabel": "Golden Sap owned"
+            "amountLabel": "Golden Sap owned",
+            "whatItBenefits": [
+              "Sap",
+              "Life Gems",
+              "Fossil"
+            ]
           },
           {
             "id": "diamond-sap",
@@ -11788,7 +12997,12 @@
               }
             ],
             "dropChance": "1 / 1,500",
-            "amountLabel": "Diamond Sap owned"
+            "amountLabel": "Diamond Sap owned",
+            "whatItBenefits": [
+              "Roots",
+              "Mining Damage",
+              "Tree Tier XP"
+            ]
           },
           {
             "id": "amethyst-sap",
@@ -11821,7 +13035,12 @@
               }
             ],
             "dropChance": "1 / 5,000",
-            "amountLabel": "Amethyst Sap owned"
+            "amountLabel": "Amethyst Sap owned",
+            "whatItBenefits": [
+              "Void Apples",
+              "Astatine",
+              "Mastery"
+            ]
           }
         ]
       },
@@ -11865,7 +13084,14 @@
           }
         ],
         "powerLevelMax": 6,
-        "powerFromLevel": "formula: 1 + level / 10"
+        "powerFromLevel": "formula: 1 + level / 10",
+        "whatItBenefits": [
+          "Bones",
+          "Coins",
+          "Strength",
+          "Health",
+          "Souls"
+        ]
       },
       "life/apples-golden": {
         "kind": "amount-groups",
@@ -11889,7 +13115,10 @@
             ],
             "dropChance": "",
             "amountLabel": "Amount owned",
-            "description": ""
+            "description": "",
+            "whatItBenefits": [
+              "Logs"
+            ]
           }
         ]
       },
@@ -11915,7 +13144,10 @@
               }
             ],
             "amountLabel": "Energy owned",
-            "description": "Invest at least 1 Golden Points."
+            "description": "Invest at least 1 Golden Points.",
+            "whatItBenefits": [
+              "Energy"
+            ]
           },
           {
             "id": "u2",
@@ -11934,7 +13166,10 @@
               }
             ],
             "amountLabel": "Research Points owned",
-            "description": "Invest at least 10 Golden Points."
+            "description": "Invest at least 10 Golden Points.",
+            "whatItBenefits": [
+              "Research"
+            ]
           },
           {
             "id": "u3",
@@ -11954,7 +13189,10 @@
               }
             ],
             "amountLabel": "Money owned",
-            "description": "Invest at least 25 Golden Points."
+            "description": "Invest at least 25 Golden Points.",
+            "whatItBenefits": [
+              "Money"
+            ]
           },
           {
             "id": "u4",
@@ -11973,7 +13211,10 @@
               }
             ],
             "amountLabel": "Life Gem owned",
-            "description": "Invest at least 50 Golden Points. Requires Unlocker level 2."
+            "description": "Invest at least 50 Golden Points. Requires Unlocker level 2.",
+            "whatItBenefits": [
+              "Life Gems"
+            ]
           },
           {
             "id": "u5",
@@ -11993,7 +13234,10 @@
               }
             ],
             "amountLabel": "Mining Damage owned",
-            "description": "Invest at least 100 Golden Points. Requires Unlocker level 3."
+            "description": "Invest at least 100 Golden Points. Requires Unlocker level 3.",
+            "whatItBenefits": [
+              "Mining Damage"
+            ]
           },
           {
             "id": "u6",
@@ -12159,7 +13403,12 @@
               }
             ],
             "amountLabel": "Astatine owned",
-            "description": "Power unlocks at Astatine Milestone 7. Cap multipliers unlock at Milestone 8."
+            "description": "Power unlocks at Astatine Milestone 7. Cap multipliers unlock at Milestone 8.",
+            "whatItBenefits": [
+              "Adamantium",
+              "Californium",
+              "Platinum"
+            ]
           },
           {
             "id": "californium",
@@ -12210,7 +13459,15 @@
               }
             ],
             "amountLabel": "Californium owned",
-            "description": "Unlocks at Astatine milestone 4. Californium Bonuses unlocks additional boosts."
+            "description": "Unlocks at Astatine milestone 4. Californium Bonuses unlocks additional boosts.",
+            "whatItBenefits": [
+              "Crystal Shards",
+              "Training Stats",
+              "Golden Diamond",
+              "Magnets",
+              "Dark Crystals",
+              "Astatine"
+            ]
           }
         ],
         "inputs": [
@@ -12288,7 +13545,17 @@
           }
         ],
         "maxLevel": 10000,
-        "xpToNextLevel": "formula: Math.floor(20 * (level / 2 + 1) ** 1.5 * 1.04 ** level)"
+        "xpToNextLevel": "formula: Math.floor(20 * (level / 2 + 1) ** 1.5 * 1.04 ** level)",
+        "whatItBenefits": [
+          "Souls",
+          "Bones",
+          "Strength",
+          "Health",
+          "Bone Dust",
+          "Energy",
+          "Ores",
+          "Ruby Energy"
+        ]
       },
       "life/frost-conversion": {
         "kind": "amount-groups",
@@ -12309,7 +13576,10 @@
               }
             ],
             "amountLabel": "Packed Frost (Frost2) owned",
-            "description": "10,000,000 Frost → 1 Frost2."
+            "description": "10,000,000 Frost → 1 Frost2.",
+            "whatItBenefits": [
+              "Frost"
+            ]
           },
           {
             "id": "frost3",
@@ -12333,7 +13603,11 @@
               }
             ],
             "amountLabel": "Dense Frost (Frost3) owned",
-            "description": "10,000 Frost2 → 1 Frost3."
+            "description": "10,000 Frost2 → 1 Frost3.",
+            "whatItBenefits": [
+              "Frost",
+              "Life Gems"
+            ]
           },
           {
             "id": "frost4",
@@ -12363,7 +13637,10 @@
               }
             ],
             "amountLabel": "Compact Frost (Frost4) owned",
-            "description": "25,000 Frost3 → 1 Frost4. Its Frost boost uses your Frost3 balance, not Frost4."
+            "description": "25,000 Frost3 → 1 Frost4. Its Frost boost uses your Frost3 balance, not Frost4.",
+            "whatItBenefits": [
+              "Energy"
+            ]
           },
           {
             "id": "frost5",
@@ -12387,7 +13664,11 @@
               }
             ],
             "amountLabel": "Neutron Frost (Frost5) owned",
-            "description": "1M Frost4 per conversion; 70% conversion yield."
+            "description": "1M Frost4 per conversion; 70% conversion yield.",
+            "whatItBenefits": [
+              "Frost",
+              "Golden Research"
+            ]
           }
         ]
       },
@@ -12517,7 +13798,13 @@
             "unlockLabel": "1e47"
           }
         ],
-        "amountLabel": "Total Fossils owned"
+        "amountLabel": "Total Fossils owned",
+        "whatItBenefits": [
+          "Life Gems",
+          "Tree Tier XP",
+          "Fossil",
+          "Void Apples"
+        ]
       },
       "money-island/energies": {
         "kind": "amount-groups",
@@ -12558,7 +13845,13 @@
               }
             ],
             "amountLabel": "Silver Energy owned",
-            "description": "\n"
+            "description": "\n",
+            "whatItBenefits": [
+              "Money",
+              "Energy",
+              "Crystals",
+              "Crystal Shards"
+            ]
           },
           {
             "id": "golden",
@@ -12602,7 +13895,14 @@
               }
             ],
             "amountLabel": "Golden Energy owned",
-            "description": ""
+            "description": "",
+            "whatItBenefits": [
+              "Money",
+              "Gold Bars",
+              "Prestige Points",
+              "Sap",
+              "Research"
+            ]
           },
           {
             "id": "diamond",
@@ -12647,7 +13947,13 @@
               }
             ],
             "amountLabel": "Diamond Energy owned",
-            "description": ""
+            "description": "",
+            "whatItBenefits": [
+              "Money",
+              "Emeralds",
+              "Life Gems",
+              "Rune Stone"
+            ]
           },
           {
             "id": "ruby",
@@ -12704,7 +14010,12 @@
               }
             ],
             "amountLabel": "Ruby Energy owned",
-            "description": ""
+            "description": "",
+            "whatItBenefits": [
+              "Money",
+              "Golden Diamond",
+              "Gears"
+            ]
           }
         ],
         "inputs": [
@@ -13003,6 +14314,23 @@
               "209 Eternal Shards (no reset)"
             ]
           }
+        ],
+        "whatItBenefits": [
+          "Crystals",
+          "Jewels",
+          "Platinum",
+          "Energy",
+          "Crystal Shards",
+          "Perks",
+          "Energy Shards",
+          "Crystal Perks",
+          "Life Gems",
+          "Money",
+          "Adamantium",
+          "Mining Damage",
+          "Ores",
+          "Quartz",
+          "Californium"
         ]
       }
     },
@@ -13177,6 +14505,12 @@
               "9DTg"
             ]
           }
+        ],
+        "whatItBenefits": [
+          "Energy",
+          "Money",
+          "Ores",
+          "Ruby Energy"
         ]
       }
     },
@@ -13308,6 +14642,15 @@
               "No Reset: 119 Eternal Shards"
             ]
           }
+        ],
+        "whatItBenefits": [
+          "Strength",
+          "Health",
+          "Energy",
+          "Money",
+          "Mining Damage",
+          "Coins",
+          "Bones"
         ]
       }
     },
@@ -13637,6 +14980,24 @@
               "1M Uranium"
             ]
           }
+        ],
+        "whatItBenefits": [
+          "Energy",
+          "Perks",
+          "Crystals",
+          "Jewels",
+          "Platinum",
+          "Life Shards",
+          "Fossil",
+          "Logs",
+          "Sap",
+          "Research",
+          "Gears",
+          "Red Liquid",
+          "Money",
+          "Energy Shards",
+          "Gold Bars",
+          "Silver Energy"
         ]
       },
       "life/tree-tier": {
@@ -13944,7 +15305,12 @@
             ]
           }
         ],
-        "itemLabel": "Tiers"
+        "itemLabel": "Tiers",
+        "whatItBenefits": [
+          "Logs",
+          "Roots",
+          "Apples"
+        ]
       },
       "main/astatine-power": {
         "title": "Astatine Milestones",
@@ -14079,7 +15445,14 @@
             ]
           }
         ],
-        "itemLabel": "Milestone"
+        "itemLabel": "Milestone",
+        "whatItBenefits": [
+          "Astatine",
+          "Californium",
+          "Adamantium",
+          "Crystals",
+          "Depth"
+        ]
       },
       "life/monster-evolution": {
         "title": "Evolutions",
@@ -14273,6 +15646,12 @@
               "250Qa Red Liquid"
             ]
           }
+        ],
+        "whatItBenefits": [
+          "Red Liquid",
+          "Energy",
+          "Life Gems",
+          "Monster Perks"
         ]
       },
       "main/californium-milestones": {
@@ -14535,7 +15914,17 @@
             ]
           }
         ],
-        "itemLabel": "Milestone"
+        "itemLabel": "Milestone",
+        "whatItBenefits": [
+          "Adamantium",
+          "Platinum",
+          "Crystal Perks",
+          "Californium",
+          "Crystals",
+          "Bluesteel",
+          "Golden Research",
+          "Rune Bulk"
+        ]
       },
       "life/tree-essence-milestones": {
         "title": "Milestones",
@@ -14703,7 +16092,18 @@
             ]
           }
         ],
-        "itemLabel": "Milestone"
+        "itemLabel": "Milestone",
+        "whatItBenefits": [
+          "Logs",
+          "Sap",
+          "Roots",
+          "Tree Tier XP",
+          "Apples",
+          "Tree Essence",
+          "Fossil",
+          "Research",
+          "Astatine"
+        ]
       },
       "life/golden-research-milestones": {
         "title": "Golden Research Milestones",
@@ -14821,7 +16221,13 @@
             ]
           }
         ],
-        "itemLabel": "Milestone"
+        "itemLabel": "Milestone",
+        "whatItBenefits": [
+          "Research",
+          "Life Gems",
+          "Frost",
+          "Californium"
+        ]
       }
     },
     "lifeRanks": {
@@ -15017,6 +16423,19 @@
               "No Reset: 149 Eternal Shards"
             ]
           }
+        ],
+        "whatItBenefits": [
+          "Life Shards",
+          "Research",
+          "Energy",
+          "Money",
+          "Prestige Points",
+          "Jewels",
+          "Ores",
+          "Golden Research",
+          "Rune Bulk",
+          "Fossil",
+          "Training Stats"
         ]
       }
     },
@@ -15081,6 +16500,15 @@
               "No Reset: 149 Eternal Shards"
             ]
           }
+        ],
+        "whatItBenefits": [
+          "Money",
+          "Energy",
+          "Prestige Points",
+          "Gold Bars",
+          "Emeralds",
+          "Ores",
+          "Golden Diamond"
         ]
       }
     }

@@ -129,14 +129,14 @@ export const explorerView = {
   root.innerHTML = `<section class="cur-page cur-explorer">${header(CURRENCY_DATA.explorerTitle,CURRENCY_DATA.explorerDescription,'explore','currencies.explorerTitle','currencies.explorerDescription')}
    <div class="cur-controls"><label>Currency<select class="cur-select" id="cur-choice">${entries().map(e=>`<option value="${label(e.id)}" ${e===start?'selected':''}>${label(e.name)}</option>`).join('')}</select></label><label>Source type<select class="cur-select" id="cur-type"><option value="all">All sources</option>${TYPES.map(([id,text])=>`<option value="${id}">${text}</option>`).join('')}</select></label><label>Find source<input type="search" id="cur-search" placeholder="Search sources…"></label></div>
    <div id="cur-overview"></div><div class="cur-main-grid"><div id="cur-source-sections"></div><aside id="cur-calculator-panel" aria-label="Compact upgrade calculator"></aside></div>
-   <div class="cur-page-actions">${add('currencies.sources','currency-source','Add manual source')}${add('currencies.entries','currency-entry','Add currency')}</div>${iconRulesManager()}
+   <div class="cur-page-actions">${add('currencies.entries','currency-entry','Add currency')}</div>${iconRulesManager()}
   </section>`;
   const choice=root.querySelector('#cur-choice'),type=root.querySelector('#cur-type'),search=root.querySelector('#cur-search');
   const expandedTypes = new Set();
   const foldedTypes = new Set();
   function paint() {
    const current=activeCurrency(choice.value);
-   if (!current) {root.querySelector('#cur-overview').textContent='No currencies yet. Use Add currency in the editor.';return;}
+   if (!current) {root.querySelector('#cur-overview').textContent='No entries found.';return;}
    const matches=sources().filter(s=>Array.isArray(s.currencyIds)&&s.currencyIds.includes(current.id) && (type.value==='all'||s.type===type.value) && (!search.value||(`${s.name} ${s.effect} ${s.type}`).toLocaleLowerCase().includes(search.value.toLocaleLowerCase())));
    root.querySelector('#cur-overview').innerHTML=`<section class="cur-overview" style="--cur-color:${esc(color(current))}">${svg(current.icon,74,current.name)}<div><h2>${label(current.name)}</h2><p>${label(current.description)}</p>${current.primaryUse?`<span class="cur-tag">${label(current.primaryUse)}</span>`:''}<div class="cur-links">${related(current.relatedLinks)}</div></div><div class="cur-overview-edit">${edit(path(current),'game:currency-entry','Edit currency')}</div></section>`;
    const types=(type.value==='all'?TYPES:TYPES.filter(([id])=>id===type.value))
@@ -188,7 +188,7 @@ function renderMiniCalculator(root, current) {
    <div class="cur-calc-row"><label class="cur-calc-field">Current level<input type="number" min="0" step="1" value="0" data-cur-level-from></label><label class="cur-calc-field">Target level<input type="number" min="0" step="1" value="10" data-cur-level-to></label></div>
    <div class="cur-calc-cap" data-cur-cap></div><div class="cur-calc-results" data-cur-results></div>
    <label class="cur-calc-field cur-calc-target">Find level for target effect<input type="number" min="0" step="any" placeholder="Enter desired multiplier or value" data-cur-effect-target></label><div class="cur-calc-target-result" data-cur-effect-result>Enter a target effect to estimate the required level.</div>
-   <details class="cur-calc-breakdown"><summary>Upgrade Level Breakdown</summary><div data-cur-breakdown></div></details>` : `<p class="cur-muted">No upgrade has been manually assigned to this currency yet. Edit an upgrade and fill in What It Benefits, or use the full calculator.</p>`}
+   <details class="cur-calc-breakdown"><summary>Upgrade Level Breakdown</summary><div data-cur-breakdown></div></details>` : `<p class="cur-muted">No documented upgrade calculator for this bonus.</p>`}
   </div>`;
   if (!candidates.length) return;
   const select=panel.querySelector('[data-cur-calc-select]');

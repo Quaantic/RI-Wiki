@@ -914,7 +914,6 @@ export const categoryView = {
             <h1 class="cat-hero__name" ${ed(`${catPath}.name`, 'text', `${cat.name} · page title`)}>${colorizeResources(esc(cat.name))}</h1>
           </div>
           <p class="cat-hero__tagline" data-resource-links ${ed(`${catPath}.tagline`, 'long', `${cat.name} · tagline`)}>${colorizeResources(esc(cat.tagline))}</p>
-          <div class="ri-add-row"><button class="btn btn--ghost btn--sm ri-edit-add" ${ed(catPath, 'category-card', `${cat.name} · Explorer benefits`)}>${icon('sliders-horizontal',13)} Edit Explorer benefits</button></div>
           ${cat.desc ? `<p class="cat-hero__description" data-resource-links ${ed(`${catPath}.desc`, 'long', `${cat.name} · description`)}>${colorizeResources(esc(cat.desc))}</p>` : ''}
           <div class="cat-hero__facts">
             <span class="chip">${icon('layers', 13)} ${cat.subcategories.length} subsections</span>
