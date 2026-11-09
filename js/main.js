@@ -58,16 +58,21 @@ async function boot() {
     location.hash = link.dataset.href;
   });
 
-  // Restore the original Settings > Sign in to edit entry.
-  // Initializing the editor does not grant edit access: all tools remain
-  // hidden until GitHub OAuth and server-side write permissions succeed.
+  // Public wiki: never load editor UI unless the server confirms the
+  // short-lived gate cookie issued through the private access URL.
+  // The server separately enforces this gate for OAuth, drafts and publishing.
   let restoreEditorForm;
   try {
-    const editor = await import('./edit/edit-mode.js');
-    await editor.initEditMode({ deferRender: true });
-    restoreEditorForm = editor.restoreEditorForm;
+    const gate = await fetch('/api/editor-access', { credentials: 'same-origin', cache: 'no-store' });
+    const access = gate.ok ? await gate.json() : null;
+    if (access?.allowed === true) {
+      const editor = await import('./edit/edit-mode.js');
+      await editor.initEditMode({ deferRender: true });
+      restoreEditorForm = editor.restoreEditorForm;
+    }
   } catch (error) {
-    console.error('[main] Inline edit mode failed to start:', error);
+    // Fail closed: wiki reading stays available, admin UI stays hidden.
+    console.warn('[main] Private editor access unavailable:', error);
   }
   await initRouter();
   void initNewBadges();

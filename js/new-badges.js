@@ -31,10 +31,16 @@ function descendantRevision(route) {
 function remember(route){
  if(!route)return;
  let changed=false;
- if(latest[route]&&seen[route]!==latest[route]){
-  seen[route]=latest[route];changed=true;
-  try{localStorage.setItem(STORAGE,JSON.stringify(seen));}catch{}
+ // Opening a parent page acknowledges the updates inside that branch as well.
+ // This keeps the Recently Updated list in sync with the NEW indicators,
+ // instead of leaving invisible child updates behind after visiting a parent.
+ const visited=[route,...(ancestorsOfChanges[route]||[])];
+ for(const child of visited){
+  if(latest[child]&&seen[child]!==latest[child]){
+   seen[child]=latest[child];changed=true;
+  }
  }
+ if(changed)try{localStorage.setItem(STORAGE,JSON.stringify(seen));}catch{}
  const revision=descendantRevision(route);
  if(revision&&seenParents[route]!==revision){
   seenParents[route]=revision;changed=true;
@@ -49,7 +55,7 @@ function syncRecentlyUpdated(){
   const categoryId=group.dataset.cat;
   const prefix=`#/${categoryId}/`;
   const unread=Object.entries(latest)
-   .filter(([route,stamp])=>route.startsWith(prefix)&&seen[route]!==stamp)
+   .filter(([route,stamp])=>route.startsWith(prefix)&&seen[route]!==stamp&&getSubcategory(categoryId,route.slice(prefix.length)))
    .sort((a,b)=>String(b[1]).localeCompare(String(a[1])));
   const existing=group.querySelector(':scope > .ri-recent-updates');
   if(!unread.length){existing?.remove();continue;}

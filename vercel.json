@@ -6,5 +6,11 @@
       "includeFiles": "images/icons/custom/**"
     }
   },
-  "buildCommand": "node server/generate-icon-index.cjs"
+  "buildCommand": "node server/generate-icon-index.cjs",
+  "rewrites": [
+    {
+      "source": "/_ri-arcane-vault/:code",
+      "destination": "/api/editor-entry?code=:code"
+    }
+  ]
 }

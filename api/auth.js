@@ -1,11 +1,19 @@
 const SITE_ORIGIN = 'https://regrowthinc.vercel.app';
 const SITE_ID = new URL(SITE_ORIGIN).host;
 const { createState } = require('./oauth-state');
+const {hasGate} = require('../server/editor-gate.cjs');
 
 module.exports = function auth(req, res) {
   if (req.method !== 'GET') {
     res.setHeader('Allow', 'GET');
     res.status(405).send('Method not allowed.');
+    return;
+  }
+
+  // No OAuth entry point from the public wiki or from a guessed URL.
+  if (!hasGate(req)) {
+    res.setHeader('Cache-Control', 'no-store');
+    res.status(404).send('Not found.');
     return;
   }
 

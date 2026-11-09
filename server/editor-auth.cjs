@@ -1,4 +1,5 @@
 const crypto = require('node:crypto');
+const {requireGate} = require('./editor-gate.cjs');
 const ORIGIN = 'https://regrowthinc.vercel.app';
 const REPO = 'Quaantic/RI-Wiki';
 const PREFIX = `/repos/${REPO}`;
@@ -40,6 +41,9 @@ async function github(token, path, method='GET', body) {
   return data;
 }
 async function authorize(req, publish=false) {
+  // A valid GitHub session alone is insufficient: the private editor URL
+  // must have been visited in this browser within the gate lifetime.
+  requireGate(req);
   checkRequest(req);
   const cookies = Object.fromEntries((req.headers.cookie || '').split(';').map(item=>item.trim().split('=')));
   const token = unseal(cookies[COOKIE] || '');

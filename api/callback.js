@@ -1,5 +1,6 @@
 const SITE_ORIGIN = 'https://regrowthinc.vercel.app';
 const { verifyState } = require('./oauth-state');
+const {hasGate} = require('../server/editor-gate.cjs');
 
 // GitHub sends iss per RFC 9207. Its issuer is https://github.com/login/oauth
 // (older redirects used https://github.com). Both are accepted; nothing else is.
@@ -37,6 +38,11 @@ module.exports = async function callback(req, res) {
   if (req.method !== 'GET') {
     res.setHeader('Allow', 'GET');
     res.status(405).send('Method not allowed.');
+    return;
+  }
+
+  if (!hasGate(req)) {
+    sendPopup(res, { message: 'Private editor access has expired. Open your private editor URL again.' }, 403);
     return;
   }
 
