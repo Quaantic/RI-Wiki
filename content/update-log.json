@@ -1,6 +1,103 @@
 {
   "versions": [
     {
+      "date": "2026-11-09",
+      "entries": [
+        {
+          "id": "entry-f816a6f2-c8ad-4d85-82ca-d7b8cc334f3c",
+          "href": "#/explorer",
+          "title": "Explorer",
+          "context": "Feature",
+          "description": "Currencies and Bonus Explorer in one place. Browse 39 resources and find bonuses from upgrades, runes, milestones, perks, masteries, boards and more."
+        },
+        {
+          "id": "entry-0c1a015e-3db3-47da-8393-a9a29ebcb8f3",
+          "href": "",
+          "title": "Advanced Search",
+          "context": "Feature",
+          "description": "Global search, Search This Page and direct links to matching entries."
+        },
+        {
+          "id": "entry-ae8d46b5-7af5-4830-8246-41c4261e67c1",
+          "href": "#/calculator",
+          "title": "Upgrade Calculator",
+          "context": "Feature",
+          "description": "Costs, levels, effects, Target Effect Calculator and expandable level-by-level breakdown."
+        },
+        {
+          "id": "entry-2c7d8ac9-b448-44b8-9c75-b666896b93f5",
+          "href": "",
+          "title": "Ingame Icons",
+          "context": "Feature",
+          "description": "Added RI Official icons [All Icons credits goes to Tutili and his team]."
+        },
+        {
+          "id": "entry-5524e5a5-30a0-49a1-9653-020e05938240",
+          "href": "#/money-island/prestige",
+          "title": "Prestige",
+          "context": "Changes",
+          "description": "37 documented upgrades with costs, effects, formulas and caps; Better Silver supports Silver Energy input."
+        },
+        {
+          "id": "entry-11826b03-554c-4843-ad18-563d254c6318",
+          "href": "",
+          "title": "General Updates",
+          "context": "Changes",
+          "description": "Expanded Golden Research, Golden Points, Rare Saps, Apples and Special Energies information."
+        },
+        {
+          "id": "entry-f402dcac-f66f-4da9-b66c-e898ce268aed",
+          "href": "",
+          "title": "General Updates",
+          "context": "Changes",
+          "description": "Updated stage, core, rank, milestone and rune information, including recommended luck and boosts at cap."
+        },
+        {
+          "id": "entry-e4d0904d-12ff-4da9-bf62-ff35d4f96624",
+          "href": "",
+          "title": "General Updates",
+          "context": "Changes",
+          "description": "Expanded coverage across Main, Life Island, Money Island, Mining, Dungeons and Perks."
+        },
+        {
+          "id": "entry-cb45ea04-3358-4086-862c-4a555ff43200",
+          "href": "",
+          "title": "Navigation",
+          "context": "UI",
+          "description": "Contextual Go Back prompt, saved reading position, recently updated pages and NEW indicators."
+        },
+        {
+          "id": "entry-b290b72c-c7a4-47a7-8897-e713fa72794b",
+          "href": "",
+          "title": "Visual Overhaul",
+          "context": "UI",
+          "description": "Full dark-theme redesign: colors, typography, spacing, layout and improved readability."
+        },
+        {
+          "id": "entry-0f5ec00f-b2e7-47b2-a242-346912139bb2",
+          "href": "",
+          "title": "Sidebar & Top Nav",
+          "context": "UI",
+          "description": "Reorganized, color-coded sidebar and simplified top navigation."
+        },
+        {
+          "id": "entry-d099ce0e-0095-44c5-84ce-e28695c886b5",
+          "href": "",
+          "title": "Cards & Icons",
+          "context": "UI",
+          "description": "New responsive upgrade, milestone and rune cards with clearer information and larger custom SVG icons."
+        },
+        {
+          "id": "entry-8329bbe1-244a-4843-9530-9c00460d41cb",
+          "href": "",
+          "title": "Responsive & Layout",
+          "context": "UI",
+          "description": "Improved mobile layouts, filters, forms, interactions and Update Log design."
+        }
+      ],
+      "version": "1.04"
+    },
+    {
       "date": "2026-11-07",
       "entries": [
         {
@@ -262,223 +359,6 @@
         }
       ],
       "version": "1.03"
-    },
-    {
-      "date": "2026-11-05",
-      "entries": [
-        {
-          "id": "entry-c8d9f72b-c7a9-45ab-8a6b-fd97b6cafe37",
-          "href": "",
-          "title": "Frequently Asked Questions [FAQ]",
-          "context": "Feature",
-          "description": "Your most frequently made questions are now answered in FAQ (WIP), leave us a feedback!"
-        },
-        {
-          "id": "entry-5f705e92-adb7-489a-92e2-bcdc95fc9b36",
-          "href": "#/life/apples",
-          "title": "Apples",
-          "context": "Feature",
-          "description": "Added the 4 types of Apples and their bonuses"
-        },
-        {
-          "id": "entry-8eacbe44-9775-41cf-b747-99d9e261e621",
-          "href": "",
-          "title": "Eternal Shard Moved ",
-          "context": "Changes",
-          "description": "Eternal Shards category was moved from Main to Miscellaneous tab."
-        },
-        {
-          "id": "entry-3f61b2bc-2f6b-4734-bed8-42b7c5c03960",
-          "href": "#/life/tree-tier",
-          "title": "Tree Tiers",
-          "context": "Feature",
-          "description": "Added the 12 Tree Tiers and their bonuses "
-        },
-        {
-          "id": "entry-789ebe48-e15f-4664-938f-13aff11b7cef",
-          "href": "#/life/golden-research",
-          "title": "Golden Research",
-          "context": "Feature",
-          "description": "Added Golden Research Milestones and Golden Points bonuses."
-        },
-        {
-          "id": "entry-e6a8b792-16ec-4767-866b-d292378a3ba2",
-          "href": "#/money-island/energies",
-          "title": "Special Energies",
-          "context": "Feature",
-          "description": "Added all 4 types of energies: Silver Energy | Gold Energy | Diamond Energy & Ruby Energy"
-        },
-        {
-          "id": "entry-82acfc87-90e5-4d36-b958-d17d5a14bfc1",
-          "href": "#/life/frost",
-          "title": "Frost Expansion",
-          "context": "Feature",
-          "description": "Added Frost Generators and all 4 types of Frost Conversions."
-        },
-        {
-          "id": "entry-b25b1c07-44b9-4e36-9b4a-53a2497fb508",
-          "href": "#/life/monster-evolution",
-          "title": "Monster",
-          "context": "Feature",
-          "description": "Added all 6 Monster Evolutions and their bonuses"
-        },
-        {
-          "id": "entry-1962aaa4-ffd1-4837-ac0b-244994a8b538",
-          "href": "#/main/astatine",
-          "title": "Astatine",
-          "context": "Feature",
-          "description": "Added Astatine Powers and Milestones."
-        },
-        {
-          "id": "entry-c75c2bc8-0444-4ab2-8587-e68adc857736",
-          "href": "#/main/californium-milestones",
-          "title": "Californium",
-          "context": "Feature",
-          "description": "Added Californium Milestones."
-        },
-        {
-          "id": "entry-dada62bf-3028-4064-bac1-ddc4bbc50e30",
-          "href": "",
-          "title": "Miscellaneous",
-          "context": "Feature",
-          "description": "A New Miscellaneous tab was created: it contains informations of game side-stats or paid-resources!"
-        },
-        {
-          "id": "entry-3f67d361-7416-482b-89d9-a20633dd5a84",
-          "href": "",
-          "title": "Gamepasses",
-          "context": "Feature",
-          "description": "Added Gamepasses Prices and Boosts in the wiki."
-        },
-        {
-          "id": "entry-2d3a8d0c-e2b0-47fb-804f-65d182ea8c5a",
-          "href": "",
-          "title": "Typos",
-          "context": "Bugs",
-          "description": "Fixed typos and wrong informations."
-        },
-        {
-          "id": "entry-1ed190dd-f75c-4250-8e06-0d9a32a386fd",
-          "href": "",
-          "title": "Categories",
-          "context": "Bugs",
-          "description": "Fixed missing categories and nested pages in the sidebar and category branches sometimes refusing to collapse."
-        },
-        {
-          "id": "entry-3ad3acb8-02b3-4f1d-8340-570ba34613d7",
-          "href": "",
-          "title": "Pages",
-          "context": "Bugs",
-          "description": "Fixed page content disappearing after moving pages between categories."
-        },
-        {
-          "id": "entry-9a05453c-d663-4456-9836-7aed7e02ffa5",
-          "href": "",
-          "title": "Cards",
-          "context": "Bugs",
-          "description": "Fixed some progression cards remaining invisible until scrolling."
-        },
-        {
-          "id": "entry-b9094f46-acb0-45cc-81da-cd47b04c4ff0",
-          "href": "",
-          "title": "Better UX",
-          "context": "UI",
-          "description": "Made tiers and milestones more compact, with aligned cards and clearer Requirements, Boosts, and Unlocks labels."
-        },
-        {
-          "id": "entry-18fed434-ba97-4b0e-9306-65513e7b4958",
-          "href": "",
-          "title": "Stages",
-          "context": "UI",
-          "description": "Improved \"stage typo\" layouts to reduce empty space and keep related information together."
-        },
-        {
-          "id": "entry-57320250-0815-4878-9511-b78a40f84f27",
-          "href": "",
-          "title": "Mobiles",
-          "context": "UI",
-          "description": "Improved mobile layouts and reduced horizontal overflow."
-        },
-        {
-          "id": "entry-a18552c6-29c5-4c53-96e6-116d918dffaa",
-          "href": "",
-          "title": "Brand New UpdateLog",
-          "context": "UI",
-          "description": "Updates with collapsible Features, Changes, UI, and Bugs sections, plus release filters."
-        },
-        {
-          "id": "entry-0f9cf1c9-db12-4a8c-a301-c63c98dc669a",
-          "href": "",
-          "title": "Background",
-          "context": "UI",
-          "description": "Added lightweight backgrounds and more consistent styling across the wiki."
-        },
-        {
-          "id": "entry-0011c252-d46e-453a-bc8e-d3eca0eed22d",
-          "href": "",
-          "title": "New Colors",
-          "context": "UI",
-          "description": "A lot of texts got new colors."
-        },
-        {
-          "id": "entry-328e6823-6d9a-4ced-bf7b-269f9790c0ca",
-          "href": "#/life/terra-life",
-          "title": "Life",
-          "context": "Changes",
-          "description": "Added Life 6."
-        }
-      ],
-      "version": "1.02"
-    },
-    {
-      "date": "2026-11-03",
-      "entries": [
-        {
-          "id": "entry-a67b5755-0",
-          "href": "#/life/rare-saps",
-          "title": "Rare Saps",
-          "context": "Feature",
-          "description": "Added Silver, Golden, Diamond and Amethyst Sap with separate owned-amount calculators, three bonuses each and their tree-cutting drop chances."
-        },
-        {
-          "id": "entry-5263f34f-0",
-          "href": "#/life/power-of-fossils",
-          "title": "Power of Fossils",
-          "context": "Feature",
-          "description": "Added seven permanent Fossil milestone bonuses, including More Life Gems and More Void Apples."
-        },
-        {
-          "id": "entry-a1e3a61c-0",
-          "title": "Named Sap and Fossil effects",
-          "context": "Changes",
-          "description": "Bonus cards now show their real effects, including More Logs, Axe Damage, Better Sap Chance, More Research Cap and Mastery."
-        },
-        {
-          "id": "entry-aeda91a8-0",
-          "title": "Fossil calculator input",
-          "context": "Bugs",
-          "description": "Fixed empty Fossil amounts being rejected; an empty field now correctly behaves as zero, and game-number input is accepted."
-        },
-        {
-          "id": "entry-bba41a2-0",
-          "title": "Bonus card overflow and resource links",
-          "context": "Bugs",
-          "description": "Fixed cramped text and overflowing bonus cards. Colored resource names in the calculators now navigate to their matching wiki pages."
-        },
-        {
-          "id": "entry-d2efda4e-0",
-          "title": "Rare Sap colors and layout",
-          "context": "UI",
-          "description": "Grouped the four Rare Saps on one page, color-coded by type, and adjusted the bonus grids for desktop and mobile screens."
-        },
-        {
-          "id": "entry-6d8a12de-0",
-          "title": "A refreshed Update Log",
-          "context": "UI",
-          "description": "Added a version overview, entry counts, category filters and colorful, clickable resource references throughout the release notes."
-        }
-      ],
-      "version": "1.01"
     }
   ]
 }

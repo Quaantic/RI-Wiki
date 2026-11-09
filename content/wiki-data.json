@@ -59,6 +59,7 @@
     "life/apples-void": "#/life/apples",
     "life/dense-frost": "#/life/frost-conversion",
     "life/packed-frost": "#/life/frost-conversion",
+    "main/eternal-tree": "#/Miscellaneous/eternal-tree",
     "life/apples-golden": "#/life/apples",
     "life/compact-frost": "#/life/frost-conversion",
     "life/neutron-frost": "#/life/frost-conversion",
@@ -67,8 +68,7 @@
     "money-island/gold-energy": "#/money-island/energies",
     "money-island/ruby-energy": "#/money-island/energies",
     "money-island/silver-energy": "#/money-island/energies",
-    "money-island/diamond-energy": "#/money-island/energies",
-    "main/eternal-tree": "#/Miscellaneous/eternal-tree"
+    "money-island/diamond-energy": "#/money-island/energies"
   },
   "categories": [
     {
@@ -118,7 +118,7 @@
             {
               "id": "factory",
               "desc": "The Factory is a tycoon building with six Energy-paid upgrades: Furnace, Pipes, Filtering, Overclock, Storage and Automator. Each multiplies the Energy production chain; Furnace and Overclock are the strongest, and Automator can reach level 150. It is also one of the first systems Automation can buy for you.",
-              "icon": "factory",
+              "icon": "images/icons/custom/Main/FactoryIcon.svg",
               "name": "Factory",
               "facts": [],
               "sections": [],
@@ -1368,7 +1368,7 @@
             {
               "id": "terra-life",
               "desc": "Life is the creation-tier stat shown on your nametag milestone. It rises every three lives created in Life Generation and gates Terraform upgrades, Life upgrade limits and the Fossil board. It can also be ranked up without losing progress by paying Eternal Shards.",
-              "icon": "game-icons:rose",
+              "icon": "images/icons/custom/LifeIsland/Tree.svg",
               "name": "Life",
               "facts": [],
               "sections": [],
@@ -1410,7 +1410,7 @@
             {
               "id": "monster-evolution",
               "desc": "Monster Evolution upgrades evolve your monster permanently. There are six evolutions with escalating prices; each multiplies monster gains, with the first five doubling it and the last ones growing by 25 percent. Every Monster Upgrade also requires a minimum evolution level, so evolving is mandatory for further upgrades.",
-              "icon": "game-icons:spiked-dragon-head",
+              "icon": "images/icons/custom/LifeIsland/RedLiquid.svg",
               "name": "Monster Evolution",
               "facts": [],
               "sections": [],
@@ -1420,7 +1420,7 @@
             {
               "id": "red-liquid",
               "desc": "Red Liquid is the Monster area’s feed currency, earned through the monster and boosted by the first Monster Upgrade. The Terraform Red Liquid upgrade converts it into faster Monster Points gain, and the Level Perk Tree has a permanent Red Liquid perk.",
-              "icon": "game-icons:bird-claw",
+              "icon": "images/icons/custom/LifeIsland/RedLiquid.svg",
               "name": "Red Liquid",
               "facts": [],
               "children": [
@@ -1441,14 +1441,14 @@
             {
               "id": "sacrifice",
               "desc": "The Sacrifice board lets you sacrifice your monster for Dark Liquid. It shows the gain before confirmation and tracks every sacrifice. It unlocks through Terraform progression and has Sacrifice Upgrades that increase Dark Liquid gained per sacrifice.",
-              "icon": "game-icons:broken-skull",
+              "icon": "images/icons/custom/LifeIsland/DarkLiquid.svg",
               "name": "Sacrifice",
               "facts": [],
               "children": [
                 {
                   "id": "dark-liquid",
                   "desc": "Dark Liquid is the currency earned by sacrificing monsters. It pays for the separate Dark Monster Upgrades board, which further boosts the monster area, and is tracked in your Life Island inventory.",
-                  "icon": "drop",
+                  "icon": "images/icons/custom/LifeIsland/DarkLiquid.svg",
                   "name": "Dark Liquid",
                   "facts": [],
                   "sections": [],
@@ -1568,9 +1568,9 @@
         },
         {
           "id": "prestige",
-          "name": "Prestige",
-          "icon": "images/icons/custom/MoneyIsland/Prestige.svg",
           "desc": "Prestige Upgrades — 37 documented upgrades with their prices, effects and level caps. Better Silver depends on your current Silver Energy.",
+          "icon": "images/icons/custom/MoneyIsland/Prestige.svg",
+          "name": "Prestige",
           "facts": [],
           "children": [],
           "sections": [],
@@ -1643,7 +1643,7 @@
         {
           "id": "ascensions",
           "desc": "Tree Ascension is Money Island’s rank system, paid in Money. Rank 1 costs 1e51 Money and unlocks Golden Diamonds plus five tree upgrades; Rank 2 costs 1e72 and unlocks Ruby Energy plus seven more upgrades. Further ranks are coming soon. Ranks appear on your nametag and can be bought without resetting by paying Eternal Shards.",
-          "icon": "game-icons:medal",
+          "icon": "images/icons/custom/MoneyIsland/Ascension.svg",
           "name": "Ascensions",
           "facts": [],
           "sections": [],
