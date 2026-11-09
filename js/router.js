@@ -148,7 +148,7 @@ async function renderView(view, params, query, opts = {}) {
 }
 
 function pathLabel(view, params, query) {
-  const edition = 'RI Wiki — Redesign Test v8';
+  const edition = 'Regrowth Incremental - WIKI';
   if (view === homeView || !view.title) return edition;
   return `${view.title(params, query).split(' — ')[0]} | ${edition}`;
 }
