@@ -2901,9 +2901,8 @@ export async function initEditMode({deferRender=false}={}) {
     applyDragMode();
   });
   layer.bar.classList.add('is-hidden');
-  // The editor module only loads when ?editor=1 is present.
-  // Offer the GitHub sign-in button there even in production mode;
-  // access to editing and publishing is checked by the server.
+  // The sign-in link belongs in Settings for everyone, as in the original wiki.
+  // Authentication and repository write access are required before editing.
   installSigninButton();
   try {
     const stored = sessionStorage.getItem(TOKEN_KEY);

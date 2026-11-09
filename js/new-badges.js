@@ -2,19 +2,45 @@ import { CATEGORIES, getSubcategory } from './data/wiki-data.js';
 // Per-visitor read receipts for newly published page changes. Nothing is sent
 // to the backend; the user can clear localStorage to see badges again.
 const STORAGE='ri-seen-content-revisions-v1';
+const PARENT_STORAGE='ri-seen-parent-revisions-v1';
 const safeRoute=(href)=>{
  try{const hash=href.startsWith('#')?href:new URL(href,location.href).hash;
   const match=hash.match(/^(#\/[\w-]+(?:\/[\w-]+)?)(?:\?.*)?$/);
   return match ? match[1] : null;
  }catch{return null;}
 };
-let latest={};let seen={};let ancestorsOfChanges={};
+let latest={};let seen={};let seenParents={};let ancestorsOfChanges={};
 try{seen=JSON.parse(localStorage.getItem(STORAGE)||'{}')||{};}catch{seen={};}
+try{seenParents=JSON.parse(localStorage.getItem(PARENT_STORAGE)||'{}')||{};}catch{seenParents={};}
+
+// A parent badge summarizes children, but visiting the parent acknowledges
+// that summary without marking any of its individual child pages as read.
+// Include each child's revision so a new publish makes the parent NEW again.
+function descendantRevision(route) {
+ const children=ancestorsOfChanges[route]||[];
+ let hash=2166136261, count=0;
+ for(const child of children){
+  if(!latest[child])continue;
+  count++;
+  for(const char of `${child}@${latest[child]};`){
+   hash=Math.imul(hash^char.charCodeAt(0),16777619)>>>0;
+  }
+ }
+ return count?`${count}:${hash.toString(16)}`:'';
+}
 function remember(route){
- if(!route||!latest[route]||seen[route]===latest[route])return;
- seen[route]=latest[route];
- try{localStorage.setItem(STORAGE,JSON.stringify(seen));}catch{}
- decorate();
+ if(!route)return;
+ let changed=false;
+ if(latest[route]&&seen[route]!==latest[route]){
+  seen[route]=latest[route];changed=true;
+  try{localStorage.setItem(STORAGE,JSON.stringify(seen));}catch{}
+ }
+ const revision=descendantRevision(route);
+ if(revision&&seenParents[route]!==revision){
+  seenParents[route]=revision;changed=true;
+  try{localStorage.setItem(PARENT_STORAGE,JSON.stringify(seenParents));}catch{}
+ }
+ if(changed)decorate();
 }
 // The sidebar also answers "which pages in this category were updated?".
 // It lists only unread, published changes and refreshes after each visit.
@@ -60,9 +86,11 @@ function decorate(){
   if(link.closest('.ri-edit-bar,.ri-edit-popover,[data-ri-nav-tools],.ri-review-dialog')||link.querySelector('[data-update-badge]'))continue;
   const route=safeRoute(link.getAttribute('href')||'');
   const selfUnread=route&&latest[route]&&latest[route]!==seen[route];
-  // Parent categories/sections stay NEW until every changed child was visited.
+  // A visited parent stops showing NEW, while unread children keep their
+  // individual badges. A newly published child reactivates the parent badge.
   const descendants=route&&ancestorsOfChanges[route]||[];
-  const unread=selfUnread||descendants.some(child=>latest[child]&&seen[child]!==latest[child]);
+  const hasUnreadChildren=descendants.some(child=>latest[child]&&seen[child]!==latest[child]);
+  const unread=selfUnread||(hasUnreadChildren&&seenParents[route]!==descendantRevision(route));
   const badge=link.querySelector(':scope > .ri-new-tag');
   if(unread){
     if(!badge){const tag=document.createElement('span');tag.className='ri-new-tag';tag.textContent='NEW';tag.setAttribute('aria-label','Updated since your last visit');link.appendChild(tag);}

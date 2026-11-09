@@ -58,19 +58,16 @@ async function boot() {
     location.hash = link.dataset.href;
   });
 
-  // Public visitors never load the editor or see its sign-in controls.
-  // Staff may explicitly request it with ?editor=1, but must still pass
-  // server-side GitHub OAuth and repository write-permission checks.
+  // Restore the original Settings > Sign in to edit entry.
+  // Initializing the editor does not grant edit access: all tools remain
+  // hidden until GitHub OAuth and server-side write permissions succeed.
   let restoreEditorForm;
-  if (new URLSearchParams(window.location.search).get('editor') === '1') {
-    try {
-      const editor = await import('./edit/edit-mode.js');
-      // Only authenticated staff can load and edit the shared draft.
-      await editor.initEditMode({ deferRender: true });
-      restoreEditorForm = editor.restoreEditorForm;
-    } catch (error) {
-      console.error('[main] Inline edit mode failed to start:', error);
-    }
+  try {
+    const editor = await import('./edit/edit-mode.js');
+    await editor.initEditMode({ deferRender: true });
+    restoreEditorForm = editor.restoreEditorForm;
+  } catch (error) {
+    console.error('[main] Inline edit mode failed to start:', error);
   }
   await initRouter();
   void initNewBadges();
