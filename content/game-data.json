@@ -10576,6 +10576,11 @@
         "id": "misc",
         "icon": "sparkles",
         "name": "Miscellaneous"
+      },
+      {
+        "id": "perks",
+        "name": "Perks",
+        "icon": "sparkles"
       }
     ],
     "entries": [
@@ -11124,6 +11129,78 @@
             "label": "Wiki article"
           }
         ]
+      },
+      {
+        "id": "perks",
+        "name": "Perks",
+        "group": "perks",
+        "icon": "sparkles",
+        "description": "",
+        "primaryUse": "",
+        "relatedLinks": []
+      },
+      {
+        "id": "log-perks",
+        "name": "Log Perks",
+        "group": "perks",
+        "icon": "sparkles",
+        "description": "",
+        "primaryUse": "",
+        "relatedLinks": []
+      },
+      {
+        "id": "sap-perks",
+        "name": "Sap Perks",
+        "group": "perks",
+        "icon": "sparkles",
+        "description": "",
+        "primaryUse": "",
+        "relatedLinks": []
+      },
+      {
+        "id": "mine-perks",
+        "name": "Mine Perks",
+        "group": "perks",
+        "icon": "sparkles",
+        "description": "",
+        "primaryUse": "",
+        "relatedLinks": []
+      },
+      {
+        "id": "level-perks",
+        "name": "Level Perks",
+        "group": "perks",
+        "icon": "sparkles",
+        "description": "",
+        "primaryUse": "",
+        "relatedLinks": []
+      },
+      {
+        "id": "merge-perks",
+        "name": "Merge Perks",
+        "group": "perks",
+        "icon": "sparkles",
+        "description": "",
+        "primaryUse": "",
+        "relatedLinks": []
+      },
+      {
+        "id": "crystal-perks",
+        "name": "Crystal Perks",
+        "group": "perks",
+        "icon": "sparkles",
+        "description": "",
+        "primaryUse": "",
+        "relatedLinks": []
+      },
+      {
+        "id": "monster-perks",
+        "name": "Monster Perks",
+        "group": "perks",
+        "icon": "sparkles",
+        "description": "",
+        "primaryUse": "",
+        "relatedLinks": []
       }
     ],
     "description": "Game currencies and resources, organized by island. Open a resource to find related articles and documented buffs.",

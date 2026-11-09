@@ -26,7 +26,8 @@
   background: var(--c-bg);
   transition: opacity var(--t-slow) var(--ease-out), visibility var(--t-slow);
 }
-.boot.is-done { display: none; }
+.boot.is-done { opacity: 0; visibility: hidden; pointer-events: none; }
+@media (prefers-reduced-motion: reduce) { .boot { transition: none; } }
 .boot__label {
   font-family: var(--font-display);
   font-size: 11px;

@@ -9,7 +9,12 @@
 /* Sem layout shift: offsets de sidebar/topbar enquanto a barra existe. */
 html.ri-edit-bar .app-shell { padding-top: var(--ri-edit-bar-h); }
 html.ri-edit-bar .topbar { top: var(--ri-edit-bar-h); }
-html.ri-edit-bar .sidebar { top: calc(var(--ri-edit-bar-h) + var(--topbar-h)); }
+/* Desktop sidebar starts under the editor bar. On mobile the topbar also
+   sits above the drawer, so its height is added only at that breakpoint. */
+html.ri-edit-bar .sidebar { top: var(--ri-edit-bar-h); }
+@media (max-width: 920px) {
+  html.ri-edit-bar .sidebar { top: calc(var(--ri-edit-bar-h) + var(--topbar-h)); }
+}
 
 /* ---------- Barra fixa ---------- */
 
@@ -657,3 +662,31 @@ html.ri-edit-bar .sub-pills-wrap { top: auto; }
 .ri-bulk-row p { font-size:12px; color:var(--c-text-2); white-space:pre-line; margin:5px 0 0; }
 .ri-bulk-errors { margin:0; padding:8px 8px 8px 28px; color:#ffb2a9; font-size:12px; }
 .upd-entry__description { white-space:pre-line; }
+
+/* Restored mobile editor usability (old editor behavior, adapted to the new UI).
+   The bar is measured in JS; do not use a fixed pixel offset for its height. */
+@media (max-width: 720px) {
+  html.ri-edit-bar .main-col { min-width: 0; }
+  .ri-edit-bar { padding-top: max(8px, env(safe-area-inset-top)); }
+  .ri-edit-bar [data-edit-toggle],
+  .ri-edit-bar [data-edit-save],
+  .ri-edit-bar [data-edit-publish],
+  .ri-edit-bar [data-edit-more] { min-width: 0; white-space: nowrap; }
+  .ri-edit-popover:not([hidden]) {
+    inset-inline: max(8px, env(safe-area-inset-left)) max(8px, env(safe-area-inset-right)) !important;
+    bottom: max(8px, env(safe-area-inset-bottom)) !important;
+    top: auto !important;
+    height: auto;
+    max-height: min(calc(100dvh - var(--ri-edit-bar-h) - 16px), 78dvh);
+  }
+  .ri-edit-popover__body { overflow-y: auto; -webkit-overflow-scrolling: touch; }
+  .ri-edit-popover__foot { position: relative; z-index: 1; background: var(--c-panel, #121812); }
+  .ri-edit-popover :is(input,textarea,select) { max-width: 100%; font-size: 16px; }
+  .ri-edit-on [data-edit] { touch-action: manipulation; }
+}
+@media (max-width: 380px) {
+  .ri-edit-bar { padding-inline: 6px; gap: 4px; }
+  .ri-edit-bar .btn { font-size: 11px; }
+  .ri-edit-popover__foot { gap: 6px; }
+  .ri-edit-popover__foot .btn { flex: 1; }
+}

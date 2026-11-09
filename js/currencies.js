@@ -128,7 +128,7 @@ export const explorerView = {
   const start = activeCurrency(query?.get('currency'));
   root.innerHTML = `<section class="cur-page cur-explorer">${header(CURRENCY_DATA.explorerTitle,CURRENCY_DATA.explorerDescription,'explore','currencies.explorerTitle','currencies.explorerDescription')}
    <div class="cur-controls"><label>Currency<select class="cur-select" id="cur-choice">${entries().map(e=>`<option value="${label(e.id)}" ${e===start?'selected':''}>${label(e.name)}</option>`).join('')}</select></label><label>Source type<select class="cur-select" id="cur-type"><option value="all">All sources</option>${TYPES.map(([id,text])=>`<option value="${id}">${text}</option>`).join('')}</select></label><label>Find source<input type="search" id="cur-search" placeholder="Search sources…"></label></div>
-   <p class="cur-manual-note">Sources are listed only when an editor fills in <strong>What It Benefits</strong> on the upgrade or source group. Enter one currency name per line.</p><div id="cur-overview"></div><div class="cur-main-grid"><div id="cur-source-sections"></div><aside id="cur-calculator-panel" aria-label="Compact upgrade calculator"></aside></div>
+   <div id="cur-overview"></div><div class="cur-main-grid"><div id="cur-source-sections"></div><aside id="cur-calculator-panel" aria-label="Compact upgrade calculator"></aside></div>
    <div class="cur-page-actions">${add('currencies.sources','currency-source','Add manual source')}${add('currencies.entries','currency-entry','Add currency')}</div>${iconRulesManager()}
   </section>`;
   const choice=root.querySelector('#cur-choice'),type=root.querySelector('#cur-type'),search=root.querySelector('#cur-search');
@@ -142,7 +142,7 @@ export const explorerView = {
    const types=(type.value==='all'?TYPES:TYPES.filter(([id])=>id===type.value))
       .filter(([id]) => type.value!=='all' || matches.some(s=>s.type===id));
    const expandResults = Boolean(search.value.trim());
-   root.querySelector('#cur-source-sections').innerHTML=`<div class="cur-source-summary"><strong>${matches.length}</strong> ${matches.length===1?'source':'sources'} found</div>${!types.length ? '<p class="cur-muted">No manually assigned sources match. In Edit mode, add currency names under What It Benefits on the relevant upgrade or group.</p>' : ''}${types.map(([id,text,ic])=>{
+   root.querySelector('#cur-source-sections').innerHTML=`<div class="cur-source-summary"><strong>${matches.length}</strong> ${matches.length===1?'source':'sources'} found</div>${!types.length ? '<p class="cur-muted">No sources found for this selection.</p>' : ''}${types.map(([id,text,ic])=>{
     const collection=matches.filter(s=>s.type===id);
     const showAll = expandResults || expandedTypes.has(id);
     const visibleCount=24;

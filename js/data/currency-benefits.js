@@ -138,5 +138,7 @@ export function buildManualCurrencySources(game, entries, authoredSources = [], 
     };
     walk(category.subcategories,`categories.${ci}.subcategories`);
   }
+
+  // Legacy source records are not used. Sources come exclusively from What It Benefits.
   return result;
 }
