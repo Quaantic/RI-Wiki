@@ -1,10 +1,9 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#171B18" />
+  <meta name="theme-color" content="#171d19" />
 
   <!-- SEO -->
   <meta
@@ -49,7 +48,8 @@
     content="https://regrowthinc.vercel.app/images/embed.jpg"
   />
 
-  <title>Regrowth Incremental - WIKI</title>
+  <title>RI Wiki — Redesign Test v9</title>
+  <meta name="robots" content="noindex" />
   <link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
 
   <!-- Tema aplicado antes do CSS para nao piscar (padrao: dark) -->
@@ -63,14 +63,6 @@
     } catch (e) {}
   </script>
 
-  <!-- ================= Fonts ================= -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
-    rel="stylesheet"
-  />
-
   <link rel="stylesheet" href="css/tokens.css" />
   <link rel="stylesheet" href="css/base.css" />
   <link rel="stylesheet" href="css/components.css" />
@@ -78,69 +70,28 @@
   <link rel="stylesheet" href="css/pages.css" />
   <link rel="stylesheet" href="css/adaptive.css" />
   <link rel="stylesheet" href="css/edit.css" />
+  <link rel="stylesheet" href="css/icon-picker.css" />
+  <link rel="stylesheet" href="css/currencies.css" />
 </head>
 <body>
   <a class="skip-link" href="#view">Skip to content</a>
 
-  <div class="app-shell">
-
-    <!-- ================= Sidebar ================= -->
-    <aside class="sidebar" id="sidebar" aria-label="Main navigation">
-      <a class="sidebar__brand" href="#/">
+      <header class="topbar">      <a class="header-brand" href="#/">
         <span data-emblem="32"></span>
         <span class="sidebar__wordmark">
           <b>RI&nbsp;Wiki</b>
-          <span>REGROWTH INCREMENTAL</span>
+          <span>Regrowth Incremental</span>
         </span>
       </a>
-
-      <nav class="sidebar__nav" id="sidebar-nav" aria-label="Wiki categories">
-        <span class="sidebar__label">Categories</span>
-      </nav>
-
-      <div class="sidebar__foot">
-        <a class="nav-item nav-item--calculator foot-link foot-link--calculator" href="#/calculator">
-          <span class="nav-item__icon" data-icon="calculator"></span>
-          <span>Upgrade Calculator</span>
-        </a>
-        <a class="nav-item foot-link foot-link--updates" href="#/updates">
-          <span class="nav-item__icon" data-icon="scroll"></span>
-          <span>Update Log</span>
-          <span class="nav-badge" data-update-badge hidden></span>
-        </a>
-        <a class="nav-item foot-link foot-link--feedback" href="#/feedback">
-          <span class="nav-item__icon" data-icon="heart"></span>
-          <span>Feedback</span>
-        </a>
-        <a class="nav-item foot-link foot-link--credits" href="#/credits">
-          <span class="nav-item__icon" data-icon="star"></span>
-          <span>Credits</span>
-        </a>
-        <div class="sidebar__version">
-          <span>Wiki build</span>
-          <b id="wiki-version">v1</b>
-        </div>
-      </div>
-    </aside>
-
-    <!-- ================= Main column ================= -->
-    <div class="main-col">
-
-      <header class="topbar">
-        <button class="icon-btn topbar__menu" id="menu-btn" aria-label="Open navigation menu" aria-expanded="false">
+        <button class="icon-btn topbar__menu" id="menu-btn" aria-controls="sidebar" aria-label="Open navigation menu" aria-expanded="false">
           <span data-icon="menu"></span>
         </button>
 
-        <nav class="crumbs topbar__crumbs" id="crumbs" aria-label="Breadcrumb"></nav>
+        <nav class="primary-nav" aria-label="Primary navigation"><a href="#/" data-primary=""><span data-icon="book-open"></span><span>Wiki</span></a><a href="#/calculator" data-primary="calculator"><span data-icon="calculator"></span><span>Calculators</span></a><a href="#/explorer" data-primary="explorer"><span data-icon="compass"></span><span>Explorer</span></a><a href="#/updates" data-primary="updates"><span data-icon="scroll"></span><span>Update Log</span></a><a href="#/feedback" data-primary="feedback"><span data-icon="message-square"></span><span>Feedback</span></a><a href="#/credits" data-primary="credits"><span data-icon="star"></span><span>Credits</span></a></nav>
 
         <div class="topbar__search" id="search-root"></div>
 
         <div class="topbar__actions topbar__hide-sm">
-          <a class="icon-btn topbar__updates" href="#/updates" aria-label="Update Log" title="Update Log">
-            <span data-icon="scroll" aria-hidden="true"></span>
-            <span class="nav-badge" data-update-badge hidden></span>
-          </a>
-          <a class="icon-btn" href="#/feedback" data-icon-link="heart" aria-label="Feedback" title="Feedback"></a>
           <div class="settings-wrap">
             <button class="icon-btn" id="settings-btn" aria-haspopup="true" aria-expanded="false" aria-label="Settings" title="Settings">
               <span data-icon="settings"></span>
@@ -174,7 +125,29 @@
           </div>
         </div>
       </header>
+  <div class="app-shell">
 
+    <!-- ================= Sidebar ================= -->
+    <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+
+
+      <nav class="sidebar__nav" id="sidebar-nav" aria-label="Wiki categories">
+        <span class="sidebar__label">Categories</span>
+      </nav>
+
+      <div class="sidebar__foot sidebar__foot--version-only">
+        <div class="sidebar__version">
+          <span>Redesign Test v9</span><b id="wiki-version">v1</b>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ================= Main column ================= -->
+    <div class="main-col">
+
+
+
+      <nav class="crumbs page-crumbs" id="crumbs" aria-label="Breadcrumb"></nav>
       <main class="page" id="view" tabindex="-1"></main>
 
       <footer class="site-footer">
@@ -189,9 +162,6 @@
           <a href="#/dungeon">Dungeons</a>
           <a href="#/runes">Runes</a>
           <a href="#/perks">Perks</a>
-          <a href="#/updates">Update Log</a>
-          <a href="#/feedback">Feedback</a>
-          <a href="#/credits">Credits</a>
         </nav>
         <span>Community wiki · Regrowth Incremental</span>
       </footer>

@@ -1,7 +1,8 @@
+import { REDESIGN_TEST } from './redesign-test.js';
 // ==== FEEDBACK (rota #/feedback) ====
 
 import { html, esc, qs, qsa } from './utils.js';
-import { icon, initReveal } from './ui.js';
+import { icon } from './ui.js';
 
 const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwMYl1sTsZIKio0tcpzxWyBO5x7v7PUlnXQAuasCJwFEXoKntLykba4-59JTqck2S27/exec';
 const MIN_CHARS = 30;
@@ -67,7 +68,7 @@ export const feedbackView = {
           <label class="fb-form__label" for="fb-name">Your name <small>(optional)</small></label>
           <input class="fb-form__name" id="fb-name" type="text" maxlength="40" placeholder="Discord username…" data-name>
           <div class="fb-form__foot">
-            <span class="fb-form__status" data-status></span>
+            <span class="fb-form__status" data-status role="status"></span>
             <button class="btn fb-send" type="button" data-send>${icon('arrow-right', 15)} Send</button>
           </div>
         </div>
@@ -117,6 +118,13 @@ export const feedbackView = {
         status.className = 'fb-form__status is-error';
         return;
       }
+      if (REDESIGN_TEST) {
+        status.textContent = 'Test submission accepted. No message was sent.';
+        status.className = 'fb-form__status is-ok';
+        msg.value = '';
+        updateCounter();
+        return;
+      }
       send.disabled = true;
       status.textContent = 'Sending…';
       status.className = 'fb-form__status';
@@ -148,6 +156,5 @@ export const feedbackView = {
       send.disabled = false;
     });
 
-    initReveal(root);
   },
 };

@@ -2,6 +2,7 @@
 import { esc, qs, evalFormula, fmtCalculatorNumber, parseGameNumber } from './utils.js';
 import { FORMULA_SECTIONS } from './data/formulas.js';
 import { icon } from './ui.js';
+import { resourceColor } from './data/resource-colors.js';
 
 const groupDisplayName = (name) => String(name ?? '').replace(/\s*\([^)]*\)/g, '').trim();
 const integer = (value, fallback=0) => Number.isFinite(Number(value)) ? Math.max(0,Math.min(100000,Math.floor(Number(value)))) : fallback;
@@ -24,31 +25,33 @@ const effectExplanation = (upgrade, calc) => {
   const percent=(calc.effect/calc.previousEffect-1)*100;
   return `Your calculated gain multiplier increases by ${percent>=0?'+':''}${show(percent)}% (${effectLabel(upgrade,calc.previousEffect)} → ${effectLabel(upgrade,calc.effect)}). This is the change in the upgrade effect, not your total in-game gains.`;
 };
-export function calculateUpgrade(upgrade, from, to) {
+export function calculateUpgrade(upgrade, from, to, context = {}) {
   const cap = Number.isFinite(Number(upgrade.cap)) ? Math.min(100000,Math.floor(Number(upgrade.cap))) : 100000;
   from = Math.min(integer(from), cap);
   to = Math.min(Math.max(from, integer(to,from)),cap);
   let total=0, missing=false, overflow=false;
   if(to-from>500) return {from,to,invalid:'Limit: calculate up to 500 levels at a time.'};
   for(let level=from;level<to;level++) {
-    const price=evalFormula(upgrade.price,{L:level});
+    const rawPrice=evalFormula(upgrade.price,{...context,L:level});
+    const price=rawPrice!=null && upgrade.priceRoundDown ? Math.floor(rawPrice) : rawPrice;
     if(price===null || !Number.isFinite(price) || price<0) { missing=true; break; }
     total+=price;
     if(!Number.isFinite(total)) {overflow=true;break;}
   }
-  const effect=evalFormula(upgrade.multi,{L:to});
-  const previousEffect=evalFormula(upgrade.multi,{L:from});
-  const next=to<cap ? evalFormula(upgrade.price,{L:to}) : null;
+  const effect=evalFormula(upgrade.multi,{...context,L:to});
+  const previousEffect=evalFormula(upgrade.multi,{...context,L:from});
+  const rawNext=to<cap ? evalFormula(upgrade.price,{...context,L:to}) : null;
+  const next=rawNext!=null && upgrade.priceRoundDown ? Math.floor(rawNext) : rawNext;
   return {from,to,cap,total:missing||overflow?null:total,effect,previousEffect,next,missing,overflow};
 }
 
 // Find the first reachable level whose effect meets the requested target.
 // Only use a monotonic numeric formula; never guess for unsupported formulas.
-export function findTargetEffectLevel(upgrade, from, target) {
+export function findTargetEffectLevel(upgrade, from, target, context = {}) {
   const cap = Number.isFinite(Number(upgrade.cap)) ? Math.max(0, Math.min(100000, Math.floor(Number(upgrade.cap)))) : 100000;
   from = Math.min(integer(from), cap);
   if (!Number.isFinite(target) || target < 0) return { error: 'Enter a valid non-negative target effect.' };
-  const start = evalFormula(upgrade.multi, { L: from });
+  const start = evalFormula(upgrade.multi, { ...context, L: from });
   if (start == null || !Number.isFinite(start)) return { error: 'The effect formula cannot be evaluated for this upgrade.' };
   if (start >= target) return { level: from, levels: 0, effect: start, reached: true };
   // Expand outward until the target is crossed. Evaluating directly at level
@@ -56,17 +59,17 @@ export function findTargetEffectLevel(upgrade, from, target) {
   let low = from, high = from, last = start, step = 1;
   while (high < cap && last < target) {
     const nextLevel = Math.min(cap, high + step);
-    const value = evalFormula(upgrade.multi, { L: nextLevel });
+    const value = evalFormula(upgrade.multi, { ...context, L: nextLevel });
     if (value == null || !Number.isFinite(value)) {
       // Formula overflow: locate the last finite interval; do not invent a value.
       let left = high, right = nextLevel;
       while (left + 1 < right) {
         const middle = Math.floor((left + right) / 2);
-        const middleValue = evalFormula(upgrade.multi, { L: middle });
+        const middleValue = evalFormula(upgrade.multi, { ...context, L: middle });
         if (middleValue != null && Number.isFinite(middleValue)) left = middle;
         else right = middle;
       }
-      const maxFinite = evalFormula(upgrade.multi, { L: left });
+      const maxFinite = evalFormula(upgrade.multi, { ...context, L: left });
       if (maxFinite == null || maxFinite < target) return { error: 'The documented effect formula overflows before reaching the requested target.' };
       low = high; high = left; last = maxFinite;
       break;
@@ -79,24 +82,24 @@ export function findTargetEffectLevel(upgrade, from, target) {
   }
   if (last < target) return { error: `Target not reachable by the documented maximum level (${cap}).`, maxEffect: last };
   // Verify monotonicity over the bounded search interval.
-  let previous = evalFormula(upgrade.multi, { L: low });
+  let previous = evalFormula(upgrade.multi, { ...context, L: low });
   for (let i = 1; i <= 8; i++) {
     const level = low + Math.floor((high - low) * i / 8);
-    const value = evalFormula(upgrade.multi, { L: level });
+    const value = evalFormula(upgrade.multi, { ...context, L: level });
     if (value == null || !Number.isFinite(value) || value < previous) return { error: 'The effect formula is not consistently increasing, so the target cannot be estimated safely.' };
     previous = value;
   }
   while (low < high) {
     const mid = Math.floor((low + high) / 2);
-    const value = evalFormula(upgrade.multi, { L: mid });
+    const value = evalFormula(upgrade.multi, { ...context, L: mid });
     if (value == null || !Number.isFinite(value)) return { error: 'Effect formula unavailable at an intermediate level.' };
     if (value >= target) high = mid;
     else low = mid + 1;
   }
-  const effect = evalFormula(upgrade.multi, { L: low });
+  const effect = evalFormula(upgrade.multi, { ...context, L: low });
   if (effect == null || !Number.isFinite(effect)) return { error: 'Could not evaluate the target level.' };
   const count = low - from;
-  const cost = count <= 500 ? calculateUpgrade(upgrade, from, low).total : null;
+  const cost = count <= 500 ? calculateUpgrade(upgrade, from, low, context).total : null;
   return { level: low, levels: count, effect, cost, costLimited: count > 500, reached: true };
 }
 
@@ -107,31 +110,34 @@ export const calculatorView = {
   render(root,params,query){
     const sections=Object.entries(FORMULA_SECTIONS).filter(([,data])=>Array.isArray(data?.upgrades)&&data.upgrades.length);
     const initialSection=sections.some(([id])=>id===query.get('section'))?query.get('section'):(sections[0]?.[0]||'');
-    root.innerHTML=`<section class="section ri-calc">
+    root.innerHTML=`<section class="section ri-calc" style="--calc-color:${esc(resourceColor('Upgrade Calculator') || '#ff006f')}">
       <div class="ri-calc__intro">${icon('calculator',24)} <div><h1>Upgrade Calculator</h1><p>Plan upgrade costs and effects directly from the Wiki formulas. Results may be unavailable for game-dependent formulas.</p></div></div>
       <div class="ri-calc__form">
         <label>Upgrade group <select class="input" id="ri-calc-section">${sections.map(([id,data])=>`<option value="${esc(id)}" ${id===initialSection?'selected':''}>${esc(groupDisplayName(data.name||id))}</option>`).join('')}</select></label>
         <label>Upgrade <select class="input" id="ri-calc-upgrade"></select></label>
         <label>Current level <input id="ri-calc-from" class="input" type="number" min="0" max="100000" step="1" value="0"></label>
         <label>Target level <input id="ri-calc-to" class="input" type="number" min="0" max="100000" step="1" value="10"></label>
+        <label id="ri-calc-silver-label" hidden>Current Silver Energy (S)<input id="ri-calc-silver" class="input" type="number" min="0" step="any" value="0" aria-label="Current Silver Energy"></label>
       </div>
       <div class="ri-calc__results" aria-live="polite" id="ri-calc-results"></div>
-      <section class="ri-calc__panel" aria-labelledby="ri-calc-breakdown-title">
-        <div class="ri-calc__panel-heading"><div><h2 id="ri-calc-breakdown-title">Upgrade Level Breakdown</h2><p>Cost and effect of each level purchased, based on documented formulas.</p></div></div>
-        <div id="ri-calc-breakdown"></div>
-        <button type="button" class="ri-calc__more" id="ri-calc-more" hidden>Show more levels</button>
-      </section>
       <section class="ri-calc__panel" aria-labelledby="ri-calc-target-title">
         <div class="ri-calc__panel-heading"><div><h2 id="ri-calc-target-title">Target Effect Calculator</h2><p>Find the minimum level needed to reach a desired effect value.</p></div></div>
         <div class="ri-calc__target-input"><label for="ri-calc-target-effect">Desired effect</label><div class="ri-calc__target-row"><input id="ri-calc-target-effect" class="input" type="text" inputmode="decimal" placeholder="e.g. 100, 1K, 1.5M" autocomplete="off"><button type="button" id="ri-calc-target-find" class="ri-calc__more">Find level</button></div></div>
         <div id="ri-calc-target-results" aria-live="polite"></div>
       </section>
+      <details class="ri-calc__panel ri-calc__disclosure" aria-labelledby="ri-calc-breakdown-title">
+        <summary class="ri-calc__panel-heading"><div><h2 id="ri-calc-breakdown-title">Upgrade Level Breakdown</h2><p>Cost and effect of each level purchased, based on documented formulas.</p></div><span class="ri-calc__disclosure-caret" aria-hidden="true">▾</span></summary>
+        <div id="ri-calc-breakdown"></div>
+        <button type="button" class="ri-calc__more" id="ri-calc-more" hidden>Show more levels</button>
+      </details>
       <div class="ri-calc__formulas" id="ri-calc-formulas"></div>
       <p class="ri-calc__hint">Multiplier effects are marked with ×; unlocks and counts display their raw effect value. Results use up to two decimal places (comma separator). Total cost sums the prices at your current level through the level before the target. Values are estimates from documented formulas, not your in-game modifiers.</p>
     </section>`;
     const sec=qs('#ri-calc-section',root),upgradeEl=qs('#ri-calc-upgrade',root),fromEl=qs('#ri-calc-from',root),toEl=qs('#ri-calc-to',root),results=qs('#ri-calc-results',root),formulas=qs('#ri-calc-formulas',root),breakdown=qs('#ri-calc-breakdown',root),more=qs('#ri-calc-more',root),targetInput=qs('#ri-calc-target-effect',root),targetButton=qs('#ri-calc-target-find',root),targetResults=qs('#ri-calc-target-results',root);
+    const silverEl=qs('#ri-calc-silver',root), silverLabel=qs('#ri-calc-silver-label',root);
     const upgrades=()=>FORMULA_SECTIONS[sec.value]?.upgrades||[];
     const selected=()=>upgrades().find(u=>String(u.n)===upgradeEl.value)||upgrades()[0];
+    const variables=()=> /\bS\b/.test(String(selected()?.multi || '')) ? {S:Math.max(0,Number(silverEl.value)||0)} : {}; 
     let visibleRows=12;
     let currentCalc=null;
     const renderBreakdown=()=>{
@@ -143,9 +149,10 @@ export const calculatorView = {
       let runningTotal=0;
       const rows=[];
       for(let level=calc.from;level<calc.from+count;level++){
-        const price=evalFormula(u.price,{L:level});
-        const before=evalFormula(u.multi,{L:level});
-        const after=evalFormula(u.multi,{L:level+1});
+        const rawPrice=evalFormula(u.price,{...variables(),L:level});
+        const price=rawPrice!=null && u.priceRoundDown ? Math.floor(rawPrice) : rawPrice;
+        const before=evalFormula(u.multi,{...variables(),L:level});
+        const after=evalFormula(u.multi,{...variables(),L:level+1});
         const validPrice=price!=null&&Number.isFinite(price)&&price>=0;
         if(validPrice&&runningTotal!==null) runningTotal+=price;
         else runningTotal=null;
@@ -163,13 +170,14 @@ export const calculatorView = {
       const target=parseGameNumber(normalized);
       const u=selected();
       if(!u){targetResults.textContent='Select an upgrade first.';return;}
-      const found=findTargetEffectLevel(u,fromEl.value,target);
+      const found=findTargetEffectLevel(u,fromEl.value,target,variables());
       if(found.error){targetResults.innerHTML=`<p class="ri-calc__empty">${esc(found.error)}${found.maxEffect!=null?` Highest calculated effect: ${esc(effectLabel(u,found.maxEffect))}.`:''}</p>`;return;}
       targetResults.innerHTML=`<div class="ri-calc__target-result"><div><small>Required level</small><strong>${found.level}</strong></div><div><small>Levels to buy</small><strong>${found.levels}</strong></div><div><small>Achieved effect</small><strong>${esc(effectLabel(u,found.effect))}</strong></div><div><small>Estimated total cost</small><strong>${found.costLimited?'Over 500 levels — calculate in shorter ranges':found.cost==null?'Formula unavailable':show(found.cost)}</strong></div></div><button type="button" class="ri-calc__more ri-calc__target-apply" data-target-level="${found.level}">Use level ${found.level} as target</button>`;
     };
     const update=()=>{
       const u=selected();if(!u){results.textContent='No upgrades in this group.';return;}
-      const calc=calculateUpgrade(u,fromEl.value,toEl.value);
+      silverLabel.hidden=!/\bS\b/.test(String(u.multi || ''));
+      const calc=calculateUpgrade(u,fromEl.value,toEl.value,variables());
       currentCalc=calc;
       fromEl.max=toEl.max=String(calc.cap??100000);
       results.innerHTML=calc.invalid?`<p>${esc(calc.invalid)}</p>`:`
@@ -194,7 +202,7 @@ export const calculatorView = {
     targetResults.addEventListener('click',event=>{const button=event.target.closest('[data-target-level]');if(!button)return;toEl.value=button.dataset.targetLevel;visibleRows=12;update();});
     sec.addEventListener('change',()=>{visibleRows=12;populate();});
     upgradeEl.addEventListener('change',()=>{visibleRows=12;update();});
-    [fromEl,toEl].forEach(input=>input.addEventListener('input',()=>{visibleRows=12;update();}));
+    [fromEl,toEl,silverEl].forEach(input=>input.addEventListener('input',()=>{visibleRows=12;update();}));
     populate();
   }
 };

@@ -1,3 +1,6 @@
+import { REDESIGN_TEST, publishedTestDocuments } from './redesign-test.js';
+import { setCurrencyData, setCurrencySourceGame } from './currencies.js';
+import { setIconNameRules } from './icon-catalog.js';
 // ==== SERVICES: DATA PROVIDER (fonte unica de dados) + EXCEL (futuro) ====
 
 import { UPDATE_LOG, LATEST_UPDATE, setUpdateLog } from './data/update-log.js';
@@ -81,6 +84,9 @@ export function applyGameData(data) {
   replaceObject(GEARS, data.dungeon?.gear, 'Dungeon gear');
   setResetLayerPages(data.calculators?.pages);
   setResourceColors(data.resources?.colors, data.resources?.pageLinks);
+  setCurrencyData(data.currencies);
+  setCurrencySourceGame(data);
+  setIconNameRules(data.iconNameRules);
   setUiCopy(data.uiCopy);
   setContentKeys(data);
 }
@@ -134,11 +140,13 @@ export function applyUpdateContent(versions) {
 }
 
 export async function loadEditableContent() {
-  const [wikiContent, updateContent, gameData] = await Promise.all([
-    fetchContent('../content/wiki-data.json'),
-    fetchContent('../content/update-log.json'),
-    fetchContent('../content/game-data.json'),
-  ]);
+  const [wikiContent, updateContent, gameData] = REDESIGN_TEST
+    ? await publishedTestDocuments().then(({wiki, updates, game}) => [wiki, updates, game])
+    : await Promise.all([
+      fetchContent('../content/wiki-data.json'),
+      fetchContent('../content/update-log.json'),
+      fetchContent('../content/game-data.json'),
+    ]);
 
   installImportedNotes(wikiContent,gameData);
   applyWikiContent(wikiContent);

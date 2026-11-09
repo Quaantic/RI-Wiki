@@ -38,11 +38,7 @@ body {
   font-size: 15px;
   line-height: 1.65;
   color: var(--c-text-2);
-  background:
-    radial-gradient(1100px 480px at 88% -12%, rgba(168, 239, 69, 0.055), transparent 62%),
-    radial-gradient(900px 460px at -12% 18%, rgba(168, 239, 69, 0.035), transparent 58%),
-    var(--c-bg);
-  background-attachment: fixed;
+  background: var(--c-bg);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   position: relative;
@@ -56,7 +52,7 @@ body::before {
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background-image: url("../images/texture-leaves.jpg");
+  background-image: url("../images/texture-leaves.png");
   background-size: 640px auto;
   background-attachment: fixed;
   opacity: var(--tex-leaves);
@@ -77,7 +73,7 @@ h1, h2, h3, h4 {
   text-wrap: balance;
 }
 
-h1 { font-size: clamp(1.75rem, 3.4vw, 2.45rem); }
+h1 { font-family: var(--font-heading); font-weight: 600; font-size: clamp(1.75rem, 3.4vw, 2.45rem); }
 h2 { font-size: clamp(1.3rem, 2.2vw, 1.6rem); }
 h3 { font-size: 1.13rem; }
 h4 { font-size: 1rem; }
@@ -278,6 +274,8 @@ input {
 :root.reduce-motion *,
 :root.reduce-motion *::before,
 :root.reduce-motion *::after {
+  animation-delay: 0ms !important;
+  transition-delay: 0ms !important;
   animation-duration: 0.01ms !important;
   animation-iteration-count: 1 !important;
   transition-duration: 0.01ms !important;
@@ -310,9 +308,20 @@ input {
 }
 
 /* "Latest" chip breathes */
-.upd-version__latest { animation: pulse-soft 2.6s ease-in-out infinite; }
 
-@media(prefers-reduced-motion:reduce) { .reveal, .page-enter, .hex-texture { animation:none!important; opacity:1!important; transform:none!important; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-delay: 0ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal, .page-enter, .hex-texture { animation:none!important; opacity:1!important; transform:none!important; }
+}
 
 @media (max-width: 720px) { body { background-attachment: scroll; } body::before { background-attachment: scroll; } }
 
+
+:where(a, button, input, textarea, select, summary):focus-visible { outline: 2px solid var(--c-brass); outline-offset: 3px; }

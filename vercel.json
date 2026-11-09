@@ -1,4 +1,10 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "ignoreCommand": "node server/vercel-ignore.cjs"
+  "ignoreCommand": "node server/vercel-ignore.cjs",
+  "functions": {
+    "api/icons.js": {
+      "includeFiles": "images/icons/custom/**"
+    }
+  },
+  "buildCommand": "node server/generate-icon-index.cjs"
 }

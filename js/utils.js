@@ -237,6 +237,7 @@ export function evalFormula(expr, vars = {}) {
     const value = parseGameNumber(`${amount}${suffix}`);
     return value == null ? token : `(${value})`;
   });
+  if (/\bS\b/.test(s) && vars.S == null) return null;
   const js = s
     .replace(/\bmath\.(floor|ceil|min|max|round|abs|pow|log10|sqrt)\b/gi, (m, f) => `Math.${f.toLowerCase()}`)
     .replace(/(?<![\w.])(floor|ceil|min|max|round|abs|pow|log10|sqrt)\(/g, (m, f) => `Math.${f}(`)
@@ -246,7 +247,7 @@ export function evalFormula(expr, vars = {}) {
     .replace(/(\d)\s*([A-Za-z(])/g, '$1*$2')
     .replace(/__SCI__/g, 'e');
   try {
-    const v = evaluateExpression(js, { L: vars.L || 0, tier: vars.tier || 0, N: vars.N || 0 });
+    const v = evaluateExpression(js, { L: vars.L || 0, S: vars.S ?? 0, tier: vars.tier || 0, N: vars.N || 0 });
     return Number.isFinite(v) ? v : null;
   } catch {
     return null;

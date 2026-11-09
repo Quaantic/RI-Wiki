@@ -1,8 +1,9 @@
-// ==== GITHUB: OAuth e API compartilhados (Studio + Editor inline) ====
+import { REDESIGN_TEST, publishedTestDocuments, publishTestDraft } from './redesign-test.js';
+// ==== GITHUB: OAuth e API compartilhados (Editor inline) ====
 // O Client ID/Secret OAuth ficam apenas no servidor da Vercel (api/*);
 // aqui entramos pelo mesmo fluxo de popup usado pelo Decap-style sign-in.
 
-import { REPOSITORY, BRANCH } from './content-schema.js';
+import { REPOSITORY, BRANCH, FILES, encodeBase64Content } from './content-schema.js';
 
 export const SITE_ORIGIN = 'https://regrowthinc.vercel.app';
 
@@ -18,6 +19,22 @@ export function githubHeaders(token, json = false) {
 
 export async function githubRequest(url, token, options = {}) {
   const { allowNotFound = false, ...requestOptions } = options;
+  if (REDESIGN_TEST) {
+    if (token !== 'ri-test-session' || (requestOptions.method && requestOptions.method !== 'GET')) {
+      throw new Error('Repository changes are disabled in Redesign Test.');
+    }
+    const endpoint = new URL(url).pathname;
+    if (endpoint === '/user') return { id: 0, login: 'redesign-test', canPublish: true };
+    if (endpoint.endsWith('/collaborators/redesign-test/permission')) return { permission: 'write' };
+    const prefix = `/repos/${REPOSITORY}/contents/`;
+    const doc = Object.keys(FILES).find(name => endpoint === prefix + FILES[name]);
+    if (doc) {
+      const documents = await publishedTestDocuments();
+      return { type: 'file', sha: 'local', content: encodeBase64Content(JSON.stringify(documents[doc])) };
+    }
+    if (allowNotFound) return null;
+    throw new Error('This repository action is unavailable in Redesign Test.');
+  }
   if (typeof window !== 'undefined' && token !== 'ri-session') throw new Error('Sign in again to use the protected editor session. Your draft is preserved.');
   const response = token === 'ri-session'
     ? await fetch(`${SITE_ORIGIN}/api/github`, { method:'POST', credentials:'include', cache:'no-store', headers:{'Content-Type':'application/json','X-RI-Editor':'1'}, body:JSON.stringify({url,method:requestOptions.method || 'GET',body:requestOptions.body}) })
@@ -72,6 +89,7 @@ export async function githubUser(token) {
 }
 
 export async function publishDocuments(body) {
+  if (REDESIGN_TEST) return publishTestDraft(body.revision);
   const response=await fetch(`${SITE_ORIGIN}/api/publish`, {method:'POST',credentials:'include',cache:'no-store',headers:{'Content-Type':'application/json','X-RI-Editor':'1'},body:JSON.stringify(body)});
   const result=await response.json().catch(()=>({message:`Publish is unavailable (HTTP ${response.status}); no confirmation was received.`}));
   if(!response.ok) throw Object.assign(new Error(result.message || 'Publish failed. Your draft is preserved.'),{status:response.status});
@@ -90,6 +108,7 @@ export const hasWriteAccess = (permission) => ['admin', 'write'].includes(permis
  * recebe "authorization:github:success:{token}" via postMessage e resolve.
  */
 export function githubSignIn() {
+  if (REDESIGN_TEST) return Promise.resolve('ri-test-session');
   const popup = window.open(
     `${SITE_ORIGIN}/api/auth?provider=github&site_id=${encodeURIComponent(new URL(SITE_ORIGIN).host)}`,
     'RIWikiAuthorization',

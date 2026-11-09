@@ -2,6 +2,7 @@
 
 import { esc, qs } from './utils.js';
 import { initShell, initUpdateBadge, buildNav } from './ui.js';
+import { refreshLocalIcons } from './icon-catalog.js';
 import { initRouter } from './router.js';
 import { LATEST_UPDATE, LATEST_UPDATE_ID } from './data/update-log.js';
 import {formatReleaseVersion} from './releases.js';
@@ -11,6 +12,8 @@ import { initReadingTools } from './reading-tools.js';
 
 async function boot() {
   try {
+    // Load actual icon files before rendering the sidebar and editor.
+    await refreshLocalIcons();
     await loadEditableContent();
   } catch (error) {
     console.error('[main] Failed to load editable site content:', error);
@@ -24,6 +27,16 @@ async function boot() {
   }
 
   initShell();
+  const header = qs('.topbar');
+  new ResizeObserver(() => document.documentElement.style.setProperty('--topbar-h', header.offsetHeight + 'px')).observe(header);
+  document.querySelectorAll('.primary-nav a').forEach(a => a.setAttribute('aria-label',a.textContent.trim()));
+
+  qs('.skip-link').addEventListener('click', event => {
+    event.preventDefault();
+    const content = qs('#view');
+    content.focus({ preventScroll: true });
+    content.scrollIntoView({ block: 'start', behavior: 'instant' });
+  });
   initReadingTools();
   qs('#wiki-version').textContent = formatReleaseVersion(LATEST_UPDATE?.version);
   initUpdateBadge(LATEST_UPDATE_ID);

@@ -1,8 +1,9 @@
 // ==== VIEWS: PAGINAS DO SITE ====
 
-import { html, esc, qs, qsa, debounce, countUp, fmtDate, fmtValue, fmtSuffix, parseGameNumber, evalFormula, markMatches } from './utils.js';
-import { icon, emblem, categoryCard, infoCard, sectionHead, initReveal, setCrumbs, setActiveNav, markUpdateSeen } from './ui.js';
+import { html, esc, qs, qsa, debounce, fmtDate, fmtValue, fmtSuffix, parseGameNumber, evalFormula, markMatches } from './utils.js';
+import { icon, namedIcon, emblem, categoryCard, infoCard, sectionHead, setCrumbs, setActiveNav, markUpdateSeen, resourceAsset } from './ui.js';
 import { dataProvider, getCategory, getSubcategory } from './services.js';
+import { withFocusHref } from './reading-tools.js';
 import { CATEGORIES, CREDITS, PAGE_REDIRECTS, getSubcategoryDocPath } from './data/wiki-data.js';
 import { ed } from './edit/ed-attr.js';
 import { getRuneFamily, FAMILY_COLORS } from './data/runes.js';
@@ -26,13 +27,12 @@ function runeCard(r, i, color, itemPath = '') {
   return `
     <article class="rune-card${r.special ? ' rune-card--special' : ''} reveal" ${itemPath ? ed(itemPath, 'game:rune', esc(r.name)) : ''} style="--reveal-delay:${Math.min(i * 50, 400)}ms">
       <header class="rune-card__head">
-        <span class="rune-card__icon" style="color:${esc(color)}">${icon(r.icon, 20)}</span>
+        <span class="rune-card__icon" style="color:${esc(color)}">${namedIcon(r.name, r.icon, 32)}</span>
         <span class="rune-card__name" style="color:${esc(color)}"><b>${esc(r.name)}</b></span>
-        <span class="rune-card__luck">Recommended Luck: ${esc(fmtValue(r.luck))}</span>
       </header>
       <div class="rune-card__chances">
         <div><span>Base chance</span><b>${esc(r.baseChance)}</b></div>
-        <div><span>Chance at recommended luck</span><b>${esc(r.recChance)}</b></div>
+        <div><span>Recommended Luck</span><b>${esc(r.recChance)}</b></div>
       </div>
       <div class="rune-card__boosts">
         <span class="rune-card__boosts-label">Boosts at cap</span>
@@ -50,7 +50,7 @@ function runeTableHTML(runes, listPath = '') {
   return `
     <div class="table-wrap"><table class="data-table">
       <thead><tr>
-        <th>Rune</th><th>Req. luck</th><th>Base chance</th><th>Chance at rec. luck</th><th>Boosts at cap</th>
+        <th>Rune</th><th>Req. luck</th><th>Base chance</th><th>Recommended Luck</th><th>Boosts at cap</th>
       </tr></thead>
       <tbody>
         ${runes.map((r, i) => `
@@ -66,6 +66,10 @@ function runeTableHTML(runes, listPath = '') {
 }
 
 function runeFamilySections(runes, slug, familyKey = '') {
+  if (!Array.isArray(runes) || !runes.length) {
+    const path = familyKey ? `game:runes.families.${familyKey}.runes` : '';
+    return path ? `<div class="ri-add-row"><button type="button" class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="${esc(path)}" data-edit-add-template="rune">${icon('plus',13)} Add rune</button></div>` : '';
+  }
   // familyKey e a chave REAL em game-data.json (ex.: "runes/sky") — o slug
   // so resolve a cor da familia em FAMILY_COLORS.
   const color = FAMILY_COLORS[slug] || 'var(--c-accent)';
@@ -73,6 +77,7 @@ function runeFamilySections(runes, slug, familyKey = '') {
   return `
     <section class="section">
       ${sectionHead('The runes')}
+      ${listPath ? `<div class="ri-add-row"><button type="button" class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="${listPath}" data-edit-add-template="rune">${icon('plus',13)} Add rune</button></div>` : ''}
       <div class="rune-grid">
         ${runes.map((r, i) => runeCard(r, i, color, itemListPath(listPath, i))).join('')}
       </div>
@@ -107,7 +112,7 @@ function oreCard(o, i, itemPath = '') {
   return `
     <article class="ore-card reveal" ${itemPath ? ed(itemPath, 'game:ore', esc(o.name)) : ''} style="--reveal-delay:${Math.min(i * 50, 400)}ms">
       <header class="ore-card__head">
-        <span class="ore-card__icon" style="color:${esc(o.color)}">${icon(o.icon, 20)}</span>
+        <span class="ore-card__icon" style="color:${esc(o.color)}">${namedIcon(o.name, o.icon, 20)}</span>
         <span class="ore-card__name" style="color:${esc(o.color)}">${esc(o.name)}</span>
         <span class="ore-card__where">Depth ${esc(fmtValue(o.depth))} · Luck ${esc(fmtValue(o.luck))}</span>
       </header>
@@ -129,7 +134,7 @@ function oreTableHTML(ores, listPath = '') {
       <tbody>
         ${ores.map((o, i) => `
           <tr ${itemListPath(listPath, i) ? ed(itemListPath(listPath, i), 'game:ore', esc(o.name)) : ''}>
-            <td class="cell-strong"><span class="ore-cell-name" style="color:${esc(o.color)}">${icon(o.icon, 14)} ${esc(o.name)}</span></td>
+            <td class="cell-strong"><span class="ore-cell-name" style="color:${esc(o.color)}">${namedIcon(o.name,o.icon,14)} ${esc(o.name)}</span></td>
             <td class="num">${esc(fmtValue(o.depth))}</td>
             <td class="num">${esc(fmtValue(o.luck))}</td>
           </tr>`).join('')}
@@ -159,7 +164,7 @@ function masteryCard(o, i, itemPath = '') {
   return `
     <article class="ore-card mastery-card reveal" ${itemPath ? ed(itemPath, 'game:mastery', esc(o.name)) : ''} style="--reveal-delay:${Math.min(i * 50, 400)}ms">
       <header class="ore-card__head">
-        <span class="ore-card__icon" style="color:${esc(o.color)}">${icon(o.icon, 20)}</span>
+        <span class="ore-card__icon" style="color:${esc(o.color)}">${namedIcon(o.name, o.icon, 20)}</span>
         <span class="ore-card__name" style="color:${esc(o.color)}">${esc(o.name)}</span>
       </header>
       <div class="ore-card__upgrades">
@@ -307,16 +312,18 @@ function upgradeCard(u, i, priceTable, itemPath = '') {
   const perkTier = String(u.multi || '').match(/MaxTier\s*=\s*min\([^,]+,\s*AbsoluteMax\s+(\d+)\)/i);
   const capMax = u.cap ?? 499;
   const n = u.n ?? i + 1;
+  const needsSilverEnergy = /\bS\b/.test(String(u.multi || ''));
   const rawMulti = !perkTier && u.multi && u.multi !== '-' && evalFormula(u.multi, { L: 0 }) == null ? u.multi : '';
   const priceAttr = priceTable ? '' : ` data-price="${esc(u.price || '')}"`;
   const tableAttr = priceTable ? ` data-price-table="${esc(priceTable)}" data-n="${n}"` : '';
   return `
-        <article class="upgrade-card reveal" data-upgrade data-upgrade-number="${esc(String(n))}" data-upgrade-name="${esc(u.name)}" data-cap="${capMax}" data-multi="${esc(u.multi || '')}"${priceAttr}${tableAttr}${itemPath ? ed(itemPath, 'game:upgrade', esc(u.name)) : ''} style="--reveal-delay:${Math.min(i * 45, 400)}ms">
+        <article class="upgrade-card reveal" data-upgrade data-upgrade-number="${esc(String(n))}" data-upgrade-name="${esc(u.name)}" data-cap="${capMax}" data-multi="${esc(u.multi || '')}" data-floor-price="${u.priceRoundDown ? 'true' : 'false'}"${priceAttr}${tableAttr}${itemPath ? ed(itemPath, 'game:upgrade', esc(u.name)) : ''} style="--reveal-delay:${Math.min(i * 45, 400)}ms">
       <header class="upgrade-card__head">
-        <b><span class="upgrade-card__n">${n}.</span> ${colorizeResources(esc(u.name))}</b>
+        <b>${namedIcon(u.name,u.icon || 'trending-up',40,'upgrade-art')}<span class="upgrade-card__n">${n}.</span> ${colorizeResources(esc(u.name))}</b>
         <span class="upgrade-card__val"><b data-lvl>0</b> / ${u.cap == null ? '—' : esc(fmtValue(u.cap))}</span>
       </header>
       ${u.requirement ? `<p class="ri-form-help">Requires ${esc(u.requirement)}</p>` : ''}
+      ${needsSilverEnergy ? `<label class="upgrade-card__silver-field">Silver Energy (S)<input type="number" min="0" step="any" value="0" data-upgrade-silver aria-label="Current Silver Energy"></label>` : ''}
       <div class="upgrade-card__slider-row">
         <input class="upgrade-card__slider" type="range" min="0" max="${capMax}" step="1" value="0" data-upgrade-slider aria-label="Level of ${esc(u.name)}">
         <input class="upgrade-card__num" type="number" min="0" max="${capMax}" step="1" value="0" data-upgrade-num aria-label="Type the level of ${esc(u.name)}">
@@ -345,6 +352,8 @@ function wireUpgrades(root) {
     const multiOut = card.querySelector('[data-multi-out]');
     const update = (source) => {
       const isPerkTiered = card.dataset.perkTiered === 'true';
+      const silverInput = card.querySelector('[data-upgrade-silver]');
+      const S = silverInput ? Math.max(0, Number(silverInput.value) || 0) : undefined;
       const cap = Number(card.dataset.cap) || 0;
       let L = Math.round(Number(slider.value) || 0);
       if (source === 'num') L = Math.round(Number(num.value) || 0);
@@ -376,18 +385,19 @@ function wireUpgrades(root) {
           priceOut.classList.remove('has-res');
         } else {
           const p = evalFormula(rawPrice, {
-            L,
+            L, S,
             tier: isPerkTiered ? L + 1 : 0,
             TreeUpgrade15: readTreeLevel(treeUpgrade15),
           });
-          priceOut.innerHTML = p != null ? esc(fmtSuffix(p)) : `<small class="upgrade-card__raw">${esc(rawPrice || '—')}</small>`;
+          priceOut.innerHTML = p != null ? esc(fmtSuffix(card.dataset.floorPrice === 'true' ? Math.floor(p) : p)) : `<small class="upgrade-card__raw">${esc(rawPrice || '—')}</small>`;
           priceOut.classList.remove('has-res');
         }
       }
       const maxTier = Math.min(70 + 10 * readTreeLevel(treeUpgrade51), Number(card.dataset.perkAbsCap));
-      const m = isPerkTiered ? maxTier : evalFormula(card.dataset.multi, { L });
+      const m = isPerkTiered ? maxTier : evalFormula(card.dataset.multi, { L, S });
       multiOut.innerHTML = m != null ? esc(fmtSuffix(m)) : `<small class="upgrade-card__raw">${esc(card.dataset.multi || '—')}</small>`;
     };
+    card.querySelector('[data-upgrade-silver]')?.addEventListener('input', () => update('silver'));
     slider.addEventListener('input', () => update('slider'));
     num.addEventListener('input', () => update('num'));
     update();
@@ -400,6 +410,10 @@ function wireUpgrades(root) {
 }
 
 function formulaSections(section, listPath = '') {
+  // Deleting every upgrade must not leave an orphaned section heading.
+  if (!section || !Array.isArray(section.upgrades) || !section.upgrades.length) {
+    return listPath ? `<div class="ri-add-row"><button type="button" class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="${esc(listPath)}" data-edit-add-template="upgrade">${icon('plus', 13)} New upgrade</button></div>` : '';
+  }
   const isLevelPerks = section.upgrades.some((upgrade) => /MaxTier\s*=\s*min\(/i.test(upgrade.multi || ''));
   const controlsPath = listPath.replace(/\.upgrades$/, '.perkControls');
   const { treeUpgrade15 = {}, treeUpgrade51 = {} } = section.perkControls || {};
@@ -426,7 +440,7 @@ function resetCalcCard(bonus, requiredLabel, index, amountMode = false, accentCo
   return `
     <article class="reset-calc-card${amountMode ? ' reset-calc-card--amount' : ''} reveal" ${amountMode ? 'data-resource-links' : ''} data-reset-calculator data-bonus-id="${esc(bonus.id)}" data-required-label="${esc(requiredLabel)}" style="--reveal-delay:${Math.min(index * 45, 360)}ms;${accentColor ? `--reset-bonus-color:${esc(accentColor)};` : ''}" ${itemPath ? ed(itemPath, 'game:bonus', esc(bonus.name)) : ''}>
       <header class="reset-calc-card__head">
-        <b>${colorizeResources(esc(bonus.name))}</b>
+        <b class="reset-calc-card__name">${icon(bonus.icon || resourceAsset(bonus.name) || 'sparkles', 36, 'bonus-art')}${colorizeResources(esc(bonus.name))}</b>
         ${bonus.cap != null ? `<small>Cap: ${esc(fmtSuffix(bonus.cap))} ${esc(bonus.capUnit || 'x')}</small>` : ''}
         ${!amountMode && bonus.unlockAt ? `<small>unlocks at ${esc(fmtSuffix(bonus.unlockAt))} ${esc(bonus.unlockResource || requiredLabel)}</small>` : ''}
       </header>
@@ -480,6 +494,10 @@ function wireGenerators(root,page) {
 
 function resetLayerSections(page, basePath = '') {
   if(page.kind==='generators') return generatorSections(page,basePath);
+  if (page.kind === 'amount-groups' && !page.groups?.length) return basePath ? `<div class="ri-add-row"><button class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="${esc(basePath)}.groups" data-edit-add-template="bonus-group">${icon('plus',13)} Add group</button></div>` : '';
+  if (['amount', 'bonuses'].includes(page.kind) && !page.bonuses?.length) return basePath ? `<div class="ri-add-row"><button class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="${esc(basePath)}.bonuses" data-edit-add-template="bonus">${icon('plus',13)} Add bonus</button></div>` : '';
+
+  const bonusHeading = `<div class="progression-headline">${icon('sparkles',21)}${sectionHead(page.title)}</div>`;
   const inputs = (page.inputs || []).map((input, i) => `<label class="reset-calc-power"><span ${basePath ? ed(`${basePath}.inputs.${i}.label`, 'text', 'Calculator input label') : ''}>${esc(input.label)}</span><input class="input reset-calc-input" value="${esc(String(input.default || 0))}" inputmode="decimal" data-calc-variable="${esc(input.id)}" aria-label="${esc(input.label)}"></label>`).join('');
   const settings = basePath ? `<button class="btn btn--ghost btn--sm ri-edit-add" ${ed(basePath, 'game:calculator-settings', 'Calculator settings')}>${icon('settings', 13)} Calculator settings</button>` : '';
   const bonusAdd = (listPath) => listPath
@@ -488,7 +506,7 @@ function resetLayerSections(page, basePath = '') {
   if (page.kind === 'amount-groups') {
     return `
       <section class="section reset-layer-page">
-        ${sectionHead(page.title)}${settings}${inputs}
+        ${bonusHeading}${settings}${inputs}
         ${basePath ? `<div class="ri-add-row"><button type="button" class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="${esc(basePath)}.groups" data-edit-add-template="bonus-group">${icon('plus', 13)} Add group</button></div>` : ''}
         <div class="bonus-groups-grid">${page.groups.map((group, gi) => `
           <section class="reset-layer-tier rare-sap-group" style="--rare-sap-color:${esc(group.color || '#86d62b')}">
@@ -514,7 +532,7 @@ function resetLayerSections(page, basePath = '') {
   if (page.kind === 'amount') {
     return `
       <section class="section reset-layer-page">
-        ${sectionHead(page.title)}${settings}${inputs}
+        ${bonusHeading}${settings}${inputs}
         <div class="ri-add-row">${bonusAdd(basePath ? `${basePath}.bonuses` : '')}</div>
         <label class="reset-calc-power" ${page.showAmount === false ? 'hidden' : ''}>
           <span ${basePath ? ed(`${basePath}.amountLabel`, 'text', 'Owned amount label') : ''}>${esc(page.amountLabel)}</span>
@@ -529,7 +547,7 @@ function resetLayerSections(page, basePath = '') {
   if (page.kind === 'gears') {
     return `
       <section class="section reset-layer-page">
-        ${sectionHead(page.title)}
+        ${bonusHeading}
         ${page.tiers.map((tier, ti) => `
           <section class="reset-layer-tier" ${basePath ? ed(`${basePath}.tiers.${ti}`, 'game:tier', esc(tier.name)) : ''}>
             <div class="reset-tier-head">
@@ -546,7 +564,7 @@ function resetLayerSections(page, basePath = '') {
   if (page.kind === 'bone-dust') {
     return `
       <section class="section reset-layer-page">
-        ${sectionHead(page.title)}
+        ${bonusHeading}
         <label class="reset-calc-power">
           <span>Souls Upgrade 11 level</span>
           <input class="input reset-calc-input" type="number" min="0" max="${page.powerLevelMax}" step="1" value="0" data-dust-power-level>
@@ -560,7 +578,7 @@ function resetLayerSections(page, basePath = '') {
 
   return `
     <section class="section reset-layer-page">
-      ${sectionHead(page.title)}
+      ${bonusHeading}
       <div class="ri-add-row">${bonusAdd(basePath ? `${basePath}.bonuses` : '')}</div>
       <div class="reset-calc-grid">
         ${page.bonuses.map((bonus, i) => resetCalcCard(bonus, 'Dungeon Level', i, false, '', itemListPath(basePath ? `${basePath}.bonuses` : '', i))).join('')}
@@ -571,6 +589,8 @@ function resetLayerSections(page, basePath = '') {
 function wireResetCalculators(root, page) {
   if (!page) return;
   if(page.kind==='generators') { wireGenerators(root,page); return; }
+  if (page.kind === 'amount' && !page.bonuses?.length) return;
+  if (page.kind === 'amount-groups' && !page.groups?.length) return;
   const cards = qsa('[data-reset-calculator]', root);
   const powerInput = qs('[data-dust-power-level]', root);
 
@@ -622,6 +642,7 @@ function wireResetCalculators(root, page) {
       updateAll();
     } else {
       const amountInput = qs('[data-reset-amount]', root);
+      if (!amountInput) return;
       const updatePage = () => updateAmounts(amountInput, null, context());
       amountInput.addEventListener('input', updatePage);
       updatePage();
@@ -707,7 +728,6 @@ function stageCard(s, i, itemPath = '', uniform = false) {
   return `
     <article class="stage-card stage-card--${size}" ${itemPath ? ed(itemPath, 'game:stage', esc(s.title || `Stage ${s.num}`)) : ''}>
       <header class="stage-card__head">
-        <span class="stage-card__num">${esc(s.num)}</span>
         <b class="stage-card__title">${esc(s.title || `Stage ${s.num}`)}</b>
       </header>
       <div class="stage-card__cols${hasUnlocks ? '' : ' stage-card__cols--two'}" data-resource-links>
@@ -745,12 +765,18 @@ function stageCard(s, i, itemPath = '', uniform = false) {
 }
 
 function stagePageSections(stages, title = 'Stages', twoCol = false, listPath = '', uniform = false) {
+  if (!Array.isArray(stages) || !stages.length) {
+    return listPath ? `<div class="ri-add-row"><button type="button" class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="${esc(listPath)}" data-edit-add-template="stage">${icon('plus',13)} Add progression</button></div>` : '';
+  }
   if(/milestones/i.test(title)) return `<section class="section compact-progression">
-    <div ${listPath ? ed(listPath.replace(/\.(stages|ranks)$/,''),'game:progression-page','Milestone heading') : ''}>${sectionHead(title)}</div>
+    <div ${listPath ? ed(listPath.replace(/\.(stages|ranks)$/,''),'game:progression-page','Milestone heading') : ''}>${`<div class="progression-headline">${icon('trophy',21)} ${sectionHead(title)}</div>`}</div>
     ${listPath ? `<button type="button" class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="${esc(listPath)}" data-edit-add-template="stage">${icon('plus',13)} New milestone</button>` : ''}
     <div class="milestone-grid">${stages.map((stage,i)=>`<article class="milestone-card" aria-label="${esc(stage.title||`Milestone ${stage.num}`)}" ${listPath ? ed(itemListPath(listPath,i),'game:stage',stage.title||`Milestone ${stage.num}`) : ''}>
-      <header><span class="milestone-card__num">${esc(stage.num)}</span><b data-resource-links>${colorizeResources(esc((stage.requirements||[]).join(' · ')))}</b></header>
-      <div data-resource-links>${(stage.boosts||[]).map(boost=>`<p>${colorizeResources(esc(boost))}</p>`).join('')}${stage.unlocks?.area ? `<p>${esc(stage.unlocks.area)}</p>` : ''}${(stage.unlocks?.places||[]).map(place=>`<p>${esc(place)}</p>`).join('')}${(stage.unlocks?.features||[]).map(feature=>`<p>${esc(feature.name)} ${esc((feature.subs||[]).join(' · '))}</p>`).join('')}</div>
+      <header class="milestone-card__head">
+        <b class="milestone-card__title">${icon('flag-triangle-right',16,'milestone-card__icon')}${esc(stage.title || `Milestone ${stage.num}`)}</b>
+        <div class="milestone-card__requirements" data-resource-links>${icon('coins',13,'milestone-meta-icon')}${(stage.requirements||[]).map(req=>`<span>${colorizeResources(esc(req))}</span>`).join('')}</div>
+      </header>
+      <div class="milestone-card__effects" data-resource-links>${icon('sparkles',13,'milestone-meta-icon')}<div class="milestone-effect-lines">${(stage.boosts||[]).map(boost=>`<p>${colorizeResources(esc(boost))}</p>`).join('')}${stage.unlocks?.area ? `<p>${esc(stage.unlocks.area)}</p>` : ''}${(stage.unlocks?.places||[]).map(place=>`<p>${esc(place)}</p>`).join('')}${(stage.unlocks?.features||[]).map(feature=>`<p>${esc(feature.name)} ${esc((feature.subs||[]).join(' · '))}</p>`).join('')}</div></div>
     </article>`).join('')}</div></section>`;
   const cards = stages.map((s, i) => stageCard(s, i, itemListPath(listPath, i), uniform)).join('');
   const label = `New ${title.replace(/s$/, '').toLowerCase()}`;
@@ -782,44 +808,34 @@ export const homeView = {
     const CONTEXT_ICONS = { Feature: 'spark', UI: 'grid', Bugs: 'alert', Changes: 'refresh' };
 
     root.innerHTML = html`
-      <!-- ============ Hero ============ -->
       <section class="hero">
         <div class="hero__inner">
-          <div>
-            <span class="hero__badge" ${ed('game:uiCopy.heroBadge', 'text', 'Hero badge')}><span class="hex-dot"></span> ${esc(UI_COPY.heroBadge || `Regrowth Incremental · Community Wiki`)}</span>
-            <h1 class="hero__title" ${ed('game:uiCopy.heroTitle', 'long', 'Hero title')}>${esc(UI_COPY.heroTitle || 'Grow your knowledge\nalongside your valley.').replace('\n', '<br />')}</h1>
-            <p class="hero__sub" ${ed('game:uiCopy.heroSub', 'long', 'Hero description')}>
-              ${esc(UI_COPY.heroSub || `Every ore, rune, boss and perk — documented, cross-linked and searchable. Built by the community, verified against ${formatReleaseVersion(latest.version)}.`).replace('\n', '<br />')}
-            </p>
-            <form class="hero__search" id="hero-search">
+          <div class="hero__copy">
+            <p class="hero__badge" ${ed('game:uiCopy.heroBadge', 'text', 'Hero badge')}>${esc(UI_COPY.heroBadge || 'The community field guide')}</p>
+            <h1 class="hero__title" ${ed('game:uiCopy.heroTitle', 'long', 'Hero title')}><span class="hero__game-name">Regrowth Incremental</span><span class="hero__edition">${esc(UI_COPY.heroTitle || 'Grow your knowledge.')}</span></h1>
+            <p class="hero__sub" ${ed('game:uiCopy.heroSub', 'long', 'Hero description')}>${esc(UI_COPY.heroSub || 'Explore the islands, upgrades, ores and runes documented by the community.')}</p>
+            <form class="hero__search" id="hero-search" role="search" aria-label="Search from home">
               <div class="input-wrap">
                 ${icon('search', 19)}
-                <input class="input" type="search" placeholder="Search ores, bosses, runes…" aria-label="Search the wiki" />
+                <input class="input" type="search" name="q" placeholder="Search the wiki…" aria-label="Search the wiki" autocomplete="off">
               </div>
+              <button class="btn btn--primary" type="submit">Search</button>
             </form>
-            <div class="hero__chips">
-              ${CATEGORIES.map((c, i) => `
-                <a class="chip chip--accent" href="#/${c.id}" ${ed(`wiki:categories.${i}`, 'category-card', c.name)}>${icon(c.icon, 13)} ${c.name}</a>`).join('')}
-            </div>
-          </div>
-          <div class="hero__art" aria-hidden="true">
-            <div class="hero__art-rings"></div>
-            <span class="hero__emblem">${emblem(132)}</span>
           </div>
         </div>
         <div class="hero__stats">
-          <div class="hero__stat"><b data-count="${stats.pages}">0</b><span>Wiki pages</span></div>
-          <div class="hero__stat"><b data-count="${stats.categories}">0</b><span>Categories</span></div>
-          <div class="hero__stat"><b>${esc(formatReleaseVersion(stats.updateVersion))}</b><span>Latest update</span></div>
-          <div class="hero__stat"><b data-count="${stats.updateCount}">0</b><span>Logged changes</span></div>
+          <span><b>${stats.pages}</b> reference pages</span>
+          <span><b>${stats.categories}</b> chapters</span>
+          <span><b>${stats.updateCount}</b> logged changes</span>
+          <a href="#/updates">Latest update <b>${esc(formatReleaseVersion(stats.updateVersion))}</b></a>
         </div>
       </section>
 
       <!-- ============ Quick access ============ -->
       <section class="section">
-        ${sectionHead('Explore the wiki')}
-        <div class="grid grid--cards">
-          ${cats.map((c, i) => categoryCard(c, i)).join('')}
+        ${sectionHead('Browse the field guide')}
+        <div class="chapter-index">
+          ${cats.map(categoryCard).join('')}
           <button type="button" class="btn btn--ghost btn--sm ri-edit-add" data-edit-add="wiki:categories" data-edit-add-template="category" style="align-self:center;justify-content:center;">
             ${icon('plus', 14)} New category
           </button>
@@ -852,11 +868,6 @@ export const homeView = {
       window.location.hash = q ? `/search?q=${encodeURIComponent(q)}` : '/search';
     });
 
-    root.querySelectorAll('[data-count]').forEach((el, i) => {
-      setTimeout(() => countUp(el, parseInt(el.dataset.count, 10)), 350 + i * 120);
-    });
-
-    initReveal(root);
   },
 };
 
@@ -876,7 +887,7 @@ export const categoryView = {
     const hasOverview = overview.desc || overview.highlights?.length || overview.facts?.length;
 
     root.innerHTML = html`
-      <section class="cat-hero${cat.vitals?.length ? ' cat-hero--split' : ''}">
+      <section class="cat-hero" data-chapter="${esc(cat.id)}">
         <div class="cat-hero__main">
           <div class="cat-hero__crumbs crumbs">
             <a href="#/">Main</a> ${icon('chevron-right', 12)} <span class="crumbs__current">${colorizeResources(esc(cat.name))}</span>
@@ -891,15 +902,6 @@ export const categoryView = {
             <span class="chip">${icon('layers', 13)} ${cat.subcategories.length} subsections</span>
           </div>
         </div>
-        ${cat.vitals?.length ? `
-        <aside class="vitals" aria-label="Key information">
-          <span class="vitals__label">Key info</span>
-          ${cat.vitals.map((v, vi) => `
-            <div class="vitals__row" ${ed(`${catPath}.vitals.${vi}`, 'pair', `Key info · ${esc(v.label)}`)}>
-              <span class="vitals__key">${esc(v.label)}</span>
-              <span class="vitals__val">${colorizeResources(esc(v.value))}</span>
-            </div>`).join('')}
-        </aside>` : ''}
       </section>
 
       ${hasOverview ? `
@@ -937,7 +939,6 @@ export const categoryView = {
 
     `;
 
-    initReveal(root);
   },
 };
 
@@ -1025,7 +1026,7 @@ export const subcategoryView = {
     const lifeRankPage = getLifeRankPage(cat.id, sub.id);
     const corePage = getCorePage(cat.id, sub.id);
     const isDustPage = sub.id === 'bone-dust';
-    let familyBody = family?.runes?.length
+    let familyBody = family && Array.isArray(family.runes)
       ? runeFamilySections(family.runes, sub.id, gameKey)
       : orePage?.ores?.length
         ? orePageSections(orePage.ores, `game:mining.ores.${gameKey}.ores`)
@@ -1061,7 +1062,6 @@ export const subcategoryView = {
     }
     if (resetLayerPage) familyBody = `${resetLayerSections(resetLayerPage, resetLayerPath)}${resetLayerPage.kind === 'bone-dust' ? dustSections() : ''}${familyBody}`;
     for (const [container, list, template, label] of [
-      [family,`runes.families.${gameKey}.runes`,'rune','Add rune'],
       [orePage,`mining.ores.${gameKey}.ores`,'ore','Add ore'],
       [masteryPage,`mining.mastery.${gameKey}.ores`,'mastery-ore','Add mastery ore'],
       [layerPage,`mining.layers.${gameKey}.layers`,'layer','Add layer'],
@@ -1072,7 +1072,7 @@ export const subcategoryView = {
     window.__riPageNames = [cat.name, sub.name, ...(sub.parentChain || []).map((p) => p.name)];
 
     root.innerHTML = html`
-      <section class="cat-hero${familyBody ? ' cat-hero--data' : ''}${sub.vitals?.length ? ' cat-hero--split' : ''}" data-backdrop="${ci%3}">
+      <section class="cat-hero${familyBody ? ' cat-hero--data' : ''}" data-chapter="${esc(cat.id)}">
         <div class="cat-hero__main">
           <div class="cat-hero__crumbs crumbs">
             ${subCrumbParts(sub).slice(0, -1).map((c) => `
@@ -1088,15 +1088,6 @@ export const subcategoryView = {
             ${(sub.facts || []).map((f, fi) => `<span class="chip" ${ed(`${wikiPath}.facts.${fi}`, 'pair', `Fact · ${esc(f.label)}`)}>${esc(f.label)}: <b style="color:var(--c-text)">&nbsp;${esc(f.value)}</b></span>`).join('')}
           </div>
         </div>
-        ${sub.vitals?.length ? `
-        <aside class="vitals" aria-label="Key information">
-          <span class="vitals__label">Key info</span>
-          ${sub.vitals.map((v, vi) => `
-            <div class="vitals__row" ${ed(`${wikiPath}.vitals.${vi}`, 'pair', `Key info · ${esc(v.label)}`)}>
-              <span class="vitals__key">${esc(v.label)}</span>
-              <span class="vitals__val">${colorizeResources(esc(v.value))}</span>
-            </div>`).join('')}
-        </aside>` : ''}
       </section>
 
       <div class="ri-page-content-tools">
@@ -1111,6 +1102,7 @@ export const subcategoryView = {
             ['table', 'Table', 'Editable columns and rows for prices, machines or comparisons'],
             ['stages', 'Stage / evolution / milestone', 'One progression section with a customizable heading'],
             ['upgrades', 'Upgrade', 'Price and effect formulas'],
+            ['runes', 'Rune', 'A rune with chances and boosts (add more in the rune list)'],
             ['calc-amount', 'Bonus', 'A bonus based on an owned amount'],
             ['calc-groups', 'Grouped bonuses', 'Several resources and their bonuses together on this page'],
           ].map(([type, label, help]) => `<button type="button" data-page-content="${type}" data-page-key="${esc(gameKey)}" data-wiki-path="${esc(wikiPath.slice(5))}"><b>${label}</b><small>${help}</small></button>`).join('')}</div>
@@ -1144,7 +1136,7 @@ export const subcategoryView = {
       </section>` : ''}
 
       ${familyBody || ''}
-      ${sub.sections?.length?'<div class="content-sections-grid">':''}${(sub.sections || []).map((section, i) => `
+      ${sub.sections?.length?'<div class="content-sections-grid">':''}${(sub.sections || []).map((section, i) => (!String(section.text || '').trim() && !(section.rows || []).length) ? (document.documentElement.classList.contains('ri-edit-on') ? `<div class="ri-add-row"><button class="btn btn--ghost btn--sm ri-edit-add" ${ed(`${wikiPath}.sections.${i}`, section.columns ? 'table-section' : 'text-section', 'Edit empty section')}>${icon('pencil',13)} Edit empty section</button></div>` : '') : `
         <section class="section ri-text-section${section.columns || (section.text||'').length>900?' ri-text-section--full':(section.text||'').length>350?' ri-text-section--wide':''}">
           ${!section.columns && ((cat.id || '').toLowerCase() === 'faq' || /\?$/.test((section.title || '').trim())) ? `<details class="ri-faq-item"><summary ${ed(`${wikiPath}.sections.${i}`, 'text-section', section.title || 'FAQ question')}><span class="ri-faq-question">${colorizeResources(esc(section.title || ''))}</span>${icon('chevron-down', 16)}</summary><div class="ri-text-section__body" data-resource-links ${ed(`${wikiPath}.sections.${i}.text`, 'long', 'FAQ answer')}>${colorizeResources(esc(section.text || ''))}</div></details>` : `
           <div ${ed(`${wikiPath}.sections.${i}`, section.columns ? 'table-section' : 'text-section', section.title || 'Text / FAQ')}>${sectionHead(section.title || '')}</div>
@@ -1207,7 +1199,7 @@ export const subcategoryView = {
 
     qsa('[data-upgrade-section]', root).forEach(wireUpgrades);
     wireResetCalculators(root, resetLayerPage);
-    initReveal(root);
+
   },
 };
 
@@ -1310,15 +1302,14 @@ export const searchView = {
         <p class="result-count" style="margin-bottom:12px">${results.length} Wiki result${results.length === 1 ? '' : 's'}${st.cat ? ` in <b style="color:var(--c-accent)">${esc(CATEGORIES.find((c) => c.id === st.cat)?.name)}</b>` : ''} · sorted by "${esc(SORTS.find((s) => s.id === st.sort)?.label)}"</p>
         <div class="result-list">
           ${results.map((result, i) => `
-            <a class="result-item reveal" style="--reveal-delay:${Math.min(i * 40, 320)}ms" href="${esc(result.href)}">
+            <a class="result-item reveal" style="--reveal-delay:${Math.min(i * 40, 320)}ms" href="${esc(withFocusHref(result.href, result.sub.name, result.kind))}">
               <div class="result-item__top">${icon(result.cat.icon, 12)} ${esc(result.cat.name)} ${result.kind === 'category' ? 'category' : result.kind === 'upgrade' ? 'upgrade' : 'page'}</div>
               <div class="result-item__title">${colorizeResources(markMatches(result.sub.name, st.q))}</div>
               <div class="result-item__snippet">${colorizeResources(markMatches(result.sub.desc || result.sub.tagline || '', st.q))}</div>
             </a>`).join('')}
         </div>
       `;
-      initReveal(target);
-      void import('./page-motion.js').then(({animateDynamicContent})=>animateDynamicContent(target));
+
     }
 
     const liveSearch = debounce(runSearch, 220);
@@ -1457,7 +1448,7 @@ export const updatesView = {
     });
 
     markVisibleReleaseSeen();
-    initReveal(root);
+
   },
 };
 
@@ -1532,9 +1523,8 @@ export const creditsView = {
           ${CREDITS.thanks}
         </div>
       </div>
-      <p class="credits-icon-attribution"><small>Game icons by the <a href="https://game-icons.net/" target="_blank" rel="noopener noreferrer">Game-icons.net artists</a>, licensed under <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="noopener noreferrer">CC BY 3.0</a>. <a href="images/icons/game-icons/LICENSE.txt" target="_blank" rel="noopener noreferrer">Full author credits</a>. Interface icons by <a href="https://lucide.dev/" target="_blank" rel="noopener noreferrer">Lucide</a>.</small></p>
+      <p class="credits-icon-attribution"><small>All icons created by <strong>Tutili</strong> and <strong>Grind To Ascend Team</strong>.</small></p>
     `;
 
-    initReveal(root);
   },
 };

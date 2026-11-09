@@ -1,15 +1,16 @@
 // ==== ROUTER ====
 
 import { qs } from './utils.js';
-import { setCrumbs, setActiveNav, emblem } from './ui.js';
+import { setCrumbs, setActiveNav, emblem, decorateWiki } from './ui.js';
 import { mountPageMotion, clearPageMotion } from './page-motion.js';
-import { mountReadingTools } from './reading-tools.js';
+import { mountReadingTools, focusIncomingSource } from './reading-tools.js';
 import {
   homeView, categoryView, subcategoryView,
   searchView, updatesView, creditsView, notFoundView,
 } from './views.js';
 import { feedbackView } from './feedback.js';
 import { calculatorView } from './calculator.js';
+import { currenciesView, explorerView, explorerHubView } from './currencies.js';
 import {getCategory,getSubcategory} from './data/wiki-data.js';
 
 const ROUTES = [
@@ -19,6 +20,9 @@ const ROUTES = [
   { pattern: /^credits$/, view: creditsView },
   { pattern: /^search$/, view: searchView },
   { pattern: /^calculator$/, view: calculatorView },
+  { pattern: /^explorer$/, view: explorerHubView },
+  { pattern: /^currencies$/, view: currenciesView },
+  { pattern: /^currency-explorer$/, view: explorerView },
 ];
 
 // Paginas genericas por id (categorias e subpaginas) casam por ULTIMO, para
@@ -84,7 +88,14 @@ async function renderView(view, params, query, opts = {}) {
   const nav = view.nav ? view.nav(params, query) : null;
   setActiveNav(Array.isArray(nav) ? nav[0] : nav, Array.isArray(nav) ? nav[1] : null);
   setCrumbs(view.crumbs ? view.crumbs(params, query) : []);
-  document.title = view.title ? view.title(params, query) : 'RI Gaming Wiki';
+  document.querySelectorAll('.primary-nav a[data-primary]').forEach(link => {
+    const route = (location.hash.split('?')[0] || '#/').replace(/^#\/?/,'');
+    const target = link.dataset.primary;
+    link.classList.toggle('active', target === route || (target === 'explorer' && ['currencies','currency-explorer'].includes(route)) || (target === '' && route === ''));
+    if (link.classList.contains('active')) link.setAttribute('aria-current','page');
+    else link.removeAttribute('aria-current');
+  });
+  document.title = pathLabel(view, params, query);
 
   const container = document.createElement('div');
   try {
@@ -107,6 +118,7 @@ async function renderView(view, params, query, opts = {}) {
   });
   clearPageMotion();
   viewEl.replaceChildren(container);
+  decorateWiki();
   mountReadingTools(container, window.location.hash.replace(/^#\/?/, '').split('?')[0]);
   // The view is swapped immediately; animations never delay navigation.
   if (window.__riFlashNext) {
@@ -129,31 +141,16 @@ async function renderView(view, params, query, opts = {}) {
     }
   }
   mountPageMotion(container, { animate: opts.animate !== false });
-  // Upgrade results are deep links to their normal wiki cards, not the Calculator.
-  // Run after the async view has mounted so newly-rendered cards can be found.
-  const upgradeNumber = query.get('upgrade');
-  if (upgradeNumber !== null) {
-    const upgradeName = query.get('upgradeName');
-    const cards = [...container.querySelectorAll('[data-upgrade-number]')];
-    const match = cards.find(card =>
-      card.dataset.upgradeNumber === upgradeNumber &&
-      (upgradeName === null || card.dataset.upgradeName === upgradeName)
-    );
-    if (match) {
-      requestAnimationFrame(() => {
-        if (seq !== renderSeq || !match.isConnected) return;
-        match.scrollIntoView({ block: 'center', behavior: 'instant' });
-        // Recenter after entrance animations and layout settle.
-        setTimeout(() => { if (seq === renderSeq && match.isConnected) match.scrollIntoView({ block: 'center', behavior: 'instant' }); }, 350);
-        // Restart the 3s flash when the same upgrade is selected again.
-        match.classList.remove('upgrade-card--search-target');
-        void match.offsetWidth;
-        match.classList.add('upgrade-card--search-target');
-        setTimeout(() => match.classList.remove('upgrade-card--search-target'), 3000);
-      });
-    }
-  }
+  // The same red outline + scroll applies to upgrades, runes, stages,
+  // milestones, cores, perks, bonuses and search matches.
+  focusIncomingSource(container,query);
   window.dispatchEvent(new Event('ri-route-rendered'));
+}
+
+function pathLabel(view, params, query) {
+  const edition = 'RI Wiki — Redesign Test v8';
+  if (view === homeView || !view.title) return edition;
+  return `${view.title(params, query).split(' — ')[0]} | ${edition}`;
 }
 
 async function navigate(path, query, opts = {}) {

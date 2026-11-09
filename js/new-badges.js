@@ -57,7 +57,7 @@ function syncRecentlyUpdated(){
 function decorate(){
  syncRecentlyUpdated();
  for(const link of document.querySelectorAll('a[href^="#/"]')){
-  if(link.closest('.ri-edit-bar,.ri-edit-popover,[data-ri-nav-tools],.ri-review-dialog'))continue;
+  if(link.closest('.ri-edit-bar,.ri-edit-popover,[data-ri-nav-tools],.ri-review-dialog')||link.querySelector('[data-update-badge]'))continue;
   const route=safeRoute(link.getAttribute('href')||'');
   const selfUnread=route&&latest[route]&&latest[route]!==seen[route];
   // Parent categories/sections stay NEW until every changed child was visited.

@@ -107,6 +107,55 @@ function validateGameData(game) {
       throw new Error(`${group.label} is missing or invalid.`);
     }
   }
+  if (game.iconNameRules != null) {
+    if (!Array.isArray(game.iconNameRules)) throw new Error('Named icons must be a list.');
+    const names = new Set();
+    for (const rule of game.iconNameRules) {
+      const key = String(rule?.name || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]/g, '');
+      if (!key || names.has(key) || !String(rule?.icon || '').trim()) throw new Error('Each named icon needs a unique name and an icon.');
+      names.add(key);
+    }
+  }
+  // Additional currency pages are stored in the same game document and
+  // validated before the existing Save/Publish flow accepts them.
+  if (game.currencies != null) {
+    const currencies = game.currencies;
+    if (!Array.isArray(currencies.groups) || !Array.isArray(currencies.entries) || !Array.isArray(currencies.sources)) {
+      throw new Error('Currencies must include groups, entries and bonus sources.');
+    }
+    for (const field of ['title','description','explorerTitle','explorerDescription']) {
+      if (typeof currencies[field] !== 'string') throw new Error(`Currencies ${field} must be text.`);
+    }
+    const groupIds = new Set(), currencyIds = new Set(), sourceIds = new Set();
+    const validId = (id) => typeof id === 'string' && /^[a-z0-9][a-z0-9-]*$/.test(id);
+    const unique = (list, id, what) => {
+      if (!validId(id) || list.has(id)) throw new Error(`${what} has a missing or repeated ID: ${id}`);
+      list.add(id);
+    };
+    const validLink = (route) => /^#\/[\w-]+(?:\/[\w-]+)*(?:\?[\w%=&+().-]*)?$/.test(route);
+    for (const group of currencies.groups) {
+      unique(groupIds, group?.id, 'Currency group');
+      if (!group.name?.trim() || typeof group.icon !== 'string') throw new Error('A currency group needs a name and icon.');
+    }
+    for (const entry of currencies.entries) {
+      unique(currencyIds,entry?.id,'Currency');
+      if (!groupIds.has(entry.group)) throw new Error(`Currency ${entry.name} has an unknown group.`);
+      if (!entry.name?.trim() || typeof entry.description !== 'string' || typeof entry.icon !== 'string'
+        || !Array.isArray(entry.relatedLinks || [])) throw new Error('Currency must have a name, description, icon and article links.');
+      if (entry.color && !/^#(?:[a-f0-9]{3}|[a-f0-9]{6})$/i.test(entry.color)) throw new Error(`Invalid currency color for ${entry.name}.`);
+      for (const link of entry.relatedLinks || []) {
+        if (!link.label?.trim() || !validLink(link.href)) throw new Error(`Invalid article link for ${entry.name}.`);
+      }
+    }
+    for (const source of currencies.sources) {
+      unique(sourceIds,source?.id,'Currency source');
+      if (!source.name?.trim() || !['rune','bonus','upgrade','mastery','milestone','perk','core','stage','board','other'].includes(source.type)
+        || typeof source.effect !== 'string' || !Array.isArray(source.currencyIds) || !source.currencyIds.length
+        || source.currencyIds.some(id => !currencyIds.has(id)) || (source.href && !validLink(source.href))) {
+        throw new Error(`Invalid currency source: ${source?.name || source?.id}. Check affected currency IDs and link.`);
+      }
+    }
+  }
   const sections = game.upgrades?.sections;
   for (const [sectionId, section] of Object.entries(sections || {})) {
     if (!section.name?.trim() || !Array.isArray(section.upgrades)) throw new Error(`Upgrade section "${sectionId}" needs a name and upgrades list.`);

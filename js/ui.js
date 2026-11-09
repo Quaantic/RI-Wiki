@@ -1,9 +1,8 @@
 // ==== UI: ICONES, COMPONENTES E SHELL (nao precisa editar) ====
 
 import { qs, qsa, esc, html, debounce, markMatches } from './utils.js';
-import { animateDynamicContent } from './page-motion.js';
-import { getCurrentPageMatches, focusCurrentPageMatch } from './reading-tools.js';
-import { CATEGORIES, getSubcategory } from './data/wiki-data.js';
+import { getCurrentPageMatches, focusCurrentPageMatch, withFocusHref } from './reading-tools.js';
+import { CATEGORIES, getSubcategory, getSubcategoryDocPath } from './data/wiki-data.js';
 import { getInlineUpgradePages } from './data/formulas.js';
 import { colorizeResources, resourceColor, RESOURCE_COLORS, PAGE_LINKS } from './data/resource-colors.js';
 import { dataProvider } from './services.js';
@@ -11,7 +10,7 @@ import { ed } from './edit/ed-attr.js';
 import { formatReleaseVersion } from './releases.js';
 
 import { LUCIDE_ICONS } from './lib/lucide-data.js';
-import { gameIconReference } from './icon-catalog.js';
+import { gameIconReference, localIconReference, iconAssetURL, namedIconReference, customIconEntries } from './icon-catalog.js';
 
 const ICON_ALIASES = {
   rune: 'hexagon',
@@ -40,8 +39,10 @@ function iconNode(name) {
 }
 
 export function icon(name, size = 20, cls = '') {
+  const asset = localIconReference(name);
+  if (asset) return `<img class="wiki-icon${cls ? ` ${esc(cls)}` : ''}" src="${esc(iconAssetURL(asset))}" width="${size}" height="${size}" alt="" decoding="async">`;
   const gameReference = gameIconReference(name);
-  if (gameReference) return `<svg ${cls ? `class="${esc(cls)}" ` : ''}width="${size}" height="${size}" viewBox="0 0 512 512" fill="currentColor" stroke="none" aria-hidden="true" focusable="false"><use href="${gameReference}" /></svg>`;
+  if (gameReference) return `<svg ${cls ? `class="${esc(cls)}" ` : ''}width="${size}" height="${size}" viewBox="0 0 512 512" fill="currentColor" stroke="none" aria-hidden="true" focusable="false"><use href="${esc(iconAssetURL(gameReference))}" /></svg>`;
   const body = iconNode(name)
     .map(([tag, attrs]) => {
       const a = Object.entries(attrs).map(([k, v]) => ` ${k}="${v}"`).join('');
@@ -51,50 +52,31 @@ export function icon(name, size = 20, cls = '') {
   return `<svg ${cls ? `class="${cls}" ` : ''}width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${ICON_STROKE}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${body}</svg>`;
 }
 
-let uid = 0;
-
-export function emblem(size = 32, cls = '') {
-  const id = `ri-grad-${++uid}`;
-  return `
-<svg ${cls ? `class="${cls}" ` : ''}width="${size}" height="${size}" viewBox="0 0 64 64" fill="none" aria-hidden="true" focusable="false">
-  <defs>
-    <linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#C9FF74"/>
-      <stop offset="1" stop-color="#86D62B"/>
-    </linearGradient>
-  </defs>
-  <path d="M32 3.5 57.5 18.25v27.5L32 60.5 6.5 45.75v-27.5Z" fill="#1D241F" stroke="url(#${id})" stroke-width="3" stroke-linejoin="round"/>
-  <path d="M32 46V29" stroke="#A8EF45" stroke-width="4" stroke-linecap="round"/>
-  <path d="M32 34c0-8-5.5-12.5-14-12.5 0 8.5 5.5 12.5 14 12.5Z" fill="#A8EF45"/>
-  <path d="M32 29c0-7 5-11 13-11 0 7.5-5 11-13 11Z" fill="#C9FF74"/>
-</svg>`;
+export function namedIcon(name, fallback = '', size = 20, cls = '') {
+  return icon(namedIconReference(name, fallback), size, cls);
 }
 
-// Entrance animation is owned by the mounted route (page-motion.js).
-
-export function initReveal(root = document) {
-  // Views render off-DOM; the router owns the entrance after insertion.
-  // Connected search results use the same controller, never a second observer.
-  if (root.isConnected) animateDynamicContent(root);
+export function emblem(size = 32, cls = '') {
+  return `<img class="wiki-icon ${esc(cls)}" src="${esc(iconAssetURL('images/favicon.svg'))}" width="${size}" height="${size}" alt="">`;
 }
 
 export function reveal(index = 0, extra = '') {
   return `class="reveal ${extra}" style="--reveal-delay: ${Math.min(index * 55, 500)}ms"`;
 }
 
-export function categoryCard(cat, i = 0) {
+export function categoryCard(cat) {
   const countPages = (pages) => pages.reduce((count, page) => count + 1 + countPages(page.children || []), 0);
   const totalPages = countPages(cat.subcategories || []);
   const ci = CATEGORIES.indexOf(cat);
   return `
-  <a ${`class="cat-card reveal" style="--reveal-delay: ${Math.min(i * 50, 400)}ms"`}${ed(`wiki:categories.${ci}`, 'category-card', cat.name || 'Category')} href="#/${esc(cat.id)}">
-    <span class="cat-card__top">
-      <span class="cat-card__icon">${icon(cat.icon, 22)}</span>
-      ${icon('arrow-right', 18, 'cat-card__arrow')}
+  <a class="cat-card" data-chapter="${esc(cat.id)}" ${ed(`wiki:categories.${ci}`, 'category-card', cat.name || 'Category')} href="#/${esc(cat.id)}">
+    <span class="cat-card__icon">${namedIcon(cat.name, cat.icon, 34)}</span>
+    <span class="cat-card__text">
+      <strong class="cat-card__name">${esc(cat.name)}</strong>
+      <span class="cat-card__blurb">${esc(cat.tagline?.split('.')[0] || cat.desc || '')}</span>
     </span>
-    <span class="cat-card__name">${esc(cat.name)}</span>
-    <span class="cat-card__blurb">${esc(cat.tagline.split('.')[0])}.</span>
-    <span class="cat-card__count">${totalPages} wiki pages</span>
+    <span class="cat-card__count">${totalPages} ${totalPages === 1 ? 'page' : 'pages'}</span>
+    ${icon('chevron-right', 16, 'cat-card__arrow')}
   </a>`;
 }
 
@@ -207,7 +189,7 @@ export function mountSearchBox(root) {
           <small class="searchbox__path">${esc(item.path)}</small></span>
       </a>`).join('')}` : '';
     const contentHTML = content.length ? `<div class="dropdown__label">Content Search</div>${content.slice(0, 9).map(result => `
-      <a class="searchbox__item" role="option" href="${esc(result.href)}">
+      <a class="searchbox__item" role="option" href="${esc(withFocusHref(result.href,result.sub.name,result.kind))}">
         <span class="searchbox__item-icon">${icon(result.cat.icon, 16)}</span>
         <span class="searchbox__copy">
           <b>${colorizeResources(markMatches(result.sub.name, query))}</b>
@@ -293,6 +275,11 @@ export function fillStaticIcons() {
   qsa('[data-emblem]').forEach((el) => { el.innerHTML = emblem(parseInt(el.dataset.emblem, 10) || 24); });
 }
 
+// The sidebar keeps each resource's own color even when it becomes active.
+// This scoped colorization avoids the generic page-level `.active .res` override.
+const navColorize = (name) => colorizeResources(esc(name))
+  .replace(/style="color:(#[0-9a-fA-F]{3,8})"/g, 'style="color:$1 !important"');
+
 function renderSubTree(catId, items, depth) {
   const boxCls = depth === 1 ? 'nav-sub' : `nav-sub${Math.min(depth,3)}`;
   const itemCls = depth === 1 ? 'nav-sub__item' : `nav-sub${Math.min(depth,3)}__item`;
@@ -302,14 +289,12 @@ function renderSubTree(catId, items, depth) {
         ${items.map((s) => {
           const inlineUpgradeIds = new Set(getInlineUpgradePages(catId, s).map(({ child }) => child.id));
           const children = (s.children || []).filter((child) => !inlineUpgradeIds.has(child.id));
-          const color = resourceColor(s.name);
-          const dotStyle = color ? ` style="background:${color}"` : '';
           return `
-          <a class="${itemCls}" data-sub="${s.id}" href="#/${catId}/${s.id}">
-            <span class="nav-sub__dot"${dotStyle}></span><span class="nav-sub__label">${colorizeResources(esc(s.name))}</span>
+          <a class="${itemCls}${children.length ? ' nav-has-children' : ''}" style="--nav-node:${esc(resourceColor(s.name) || resourceColor(s.__parentName) || resourceColor(CATEGORIES.find(c=>c.id===catId)?.name) || '#a8ef45')}" data-depth="${depth}" data-sub="${s.id}" href="#/${catId}/${s.id}"${children.length ? ' aria-expanded="false"' : ''}>
+            <span class="nav-sub__icon">${namedIcon(s.name, s.icon, 25)}</span><span class="nav-sub__label">${navColorize(s.name)}</span>
           </a>
           ${children.length
-            ? renderSubTree(catId, children.map((c) => ({ ...c, __parentId: s.id })), depth + 1)
+            ? renderSubTree(catId, children.map((c) => ({ ...c, __parentId: s.id, __parentName: s.name })), depth + 1)
             : ''}`;
         }).join('')}
       </div>
@@ -317,12 +302,12 @@ function renderSubTree(catId, items, depth) {
 }
 
 let navWired = false;
-const NAV_STATE_KEY = 'ri-sidebar-state-v1';
+const NAV_STATE_KEY = 'ri-sidebar-state-v2';
 const savedNavState = (() => {
   try { return JSON.parse(localStorage.getItem(NAV_STATE_KEY) || '{}') || {}; }
   catch { return {}; }
 })();
-const expandedGroups = new Set(Array.isArray(savedNavState.groups) ? savedNavState.groups : []);
+const expandedGroups = new Set(Array.isArray(savedNavState.groups) ? savedNavState.groups.slice(0,1) : []);
 const branchStates = new Map(Array.isArray(savedNavState.branches) ? savedNavState.branches : []);
 let sidebarScrollTop = Math.max(0, Number(savedNavState.scrollTop) || 0);
 let navSaveTimer;
@@ -337,18 +322,39 @@ function persistNavState() {
     })); } catch { /* storage disabled */ }
   }, 100);
 }
+// Mark every opened and current ancestor, not only the deepest selected page.
+function syncSidebarHierarchy() {
+  const nav = qs('#sidebar-nav');
+  if (!nav) return;
+  qsa('.nav-group', nav).forEach(group => {
+    group.classList.toggle('is-current-branch', !!group.querySelector('[data-sub].active, :scope > .nav-item.active'));
+    qsa('a[data-sub]', group).forEach(link => {
+      const branch = link.nextElementSibling;
+      if (!branch?.matches('.nav-sub2,.nav-sub3')) return;
+      const expanded = branch.classList.contains('open');
+      const ancestor = !!branch.querySelector('a[data-sub].active');
+      link.classList.toggle('is-branch-open', expanded);
+      link.classList.toggle('is-ancestor', ancestor);
+      link.setAttribute('aria-expanded', String(expanded));
+    });
+  });
+}
+
 function syncGroupUI() {
   qsa('#sidebar-nav .nav-group').forEach(group => {
     const open = expandedGroups.has(group.dataset.cat);
     group.classList.toggle('open', open);
+    const submenu = group.querySelector(':scope > .nav-sub');
+    if (submenu) submenu.inert = !open;
     group.querySelector(':scope > [data-toggle-cat]')?.setAttribute('aria-expanded', String(open));
     group.querySelector(':scope > .nav-item')?.setAttribute('aria-expanded', String(open));
   });
+  syncSidebarHierarchy();
   moveIndicator();
 }
 function setGroupExpanded(catId, expanded) {
   if (!catId) return;
-  if (expanded) expandedGroups.add(catId); else expandedGroups.delete(catId);
+  if (expanded) { expandedGroups.clear(); expandedGroups.add(catId); } else expandedGroups.delete(catId);
   syncGroupUI();
   persistNavState();
 }
@@ -380,7 +386,9 @@ export function buildNav() {
   if (!nav) return;
   const oldScrollTop = nav.scrollTop || sidebarScrollTop;
   // Rebuilds (including live editor sync) preserve open/closed branches.
-  qsa('.nav-group.open', nav).forEach(el => expandedGroups.add(el.dataset.cat));
+  // Keep the last open category; v7 only allows one top-level accordion.
+  const previousOpen = [...qsa('.nav-group.open', nav)].at(-1);
+  if (previousOpen) { expandedGroups.clear(); expandedGroups.add(previousOpen.dataset.cat); }
   qsa('[data-parent-sub].open', nav).forEach(el => branchStates.set(branchKey(el), true));
   nav.innerHTML =
     '<span class="sidebar__label">Categories</span>' +
@@ -388,12 +396,12 @@ export function buildNav() {
       const color = resourceColor(c.name);
       const iconStyle = color ? ` style="color:${color}"` : '';
       return `
-      <div class="nav-group" data-cat="${c.id}">
+      <div class="nav-group" data-cat="${c.id}" data-chapter="${esc(c.id)}" style="--nav-branch:${esc(color || '#a8ef45')}">
         <a class="nav-item" data-cat="${c.id}" href="#/${c.id}" aria-expanded="false">
-          <span class="nav-item__icon"${iconStyle}>${icon(c.icon, 19)}</span>
-          <span class="nav-item__label">${colorizeResources(esc(c.name))}</span>
+          <span class="nav-item__icon"${iconStyle}>${namedIcon(c.name, c.icon, 30)}</span>
+          <span class="nav-item__label">${navColorize(c.name)}</span>
         </a>
-        <button type="button" class="nav-item__expand" aria-label="Toggle ${esc(c.name)} subsections" aria-expanded="false" data-toggle-cat="${esc(c.id)}">${icon('chevron-down', 15)}</button>
+        <button type="button" class="nav-item__expand" aria-label="Toggle ${esc(c.name)} subsections" aria-expanded="false" data-toggle-cat="${esc(c.id)}"><span class="nav-expand-line" aria-hidden="true"></span></button>
         ${renderSubTree(c.id, c.subcategories, 1)}
       </div>`;
     }).join('');
@@ -462,6 +470,7 @@ export function buildNav() {
       branchStates.set(branchKey(wrapper), open);
       persistNavState();
       link.setAttribute('aria-expanded', String(open));
+      syncSidebarHierarchy();
       if (link.hash === window.location.hash) e.preventDefault();
       return;
     }
@@ -470,8 +479,8 @@ export function buildNav() {
 }
 
 export function openGroup(catId) {
+  expandedGroups.clear();
   if (catId) expandedGroups.add(catId);
-  else expandedGroups.clear();
   syncGroupUI();
   persistNavState();
 }
@@ -521,16 +530,21 @@ export function setActiveNav(catId, subId = null) {
   if (catId) openGroup(catId);
   qsa('[data-parent-sub]').forEach((el) => {
     const key=branchKey(el);
-    if(el.querySelector('[data-sub].active')){
-      el.classList.add('open');branchStates.set(key,true);
-    }else if(branchStates.has(key))el.classList.toggle('open',branchStates.get(key));
-    else if(el.closest('.nav-group')?.dataset.cat===catId&&el.dataset.parentSub===subId)el.classList.add('open');
+    const inCurrentCategory = !!catId && el.closest('.nav-group')?.dataset.cat===catId;
+    const onSelectedPath = inCurrentCategory && !!el.querySelector('[data-sub].active');
+    const isSelectedParent = inCurrentCategory && el.dataset.parentSub===subId;
+    // Only the active trail remains expanded after navigation, avoiding
+    // stale colored/open siblings such as Californium while viewing Jewels.
+    const expanded = onSelectedPath || (isSelectedParent && branchStates.get(key)===true);
+    el.classList.toggle('open', expanded);
+    branchStates.set(key,expanded);
     if(el.dataset.parentSub){
       const link=qsa('[data-sub]',el.closest('.nav-group')).find(link=>link.dataset.sub===el.dataset.parentSub);
       link?.setAttribute('aria-expanded',String(el.classList.contains('open')));
     }
   });
   persistNavState();
+  syncSidebarHierarchy();
   moveIndicator();
   clearTimeout(navScrollTimer);
   // Search can open a new nested page below the sidebar's visible area.
@@ -761,4 +775,62 @@ export function initShell() {
   setupSettings();
   window.addEventListener('resize', moveIndicator);
   if (document.fonts?.ready) document.fonts.ready.then(moveIndicator);
+}
+
+let cachedCustomEntries = null;
+let resourceAssets = [];
+export function resourceAsset(text) {
+  const entries = customIconEntries();
+  if (cachedCustomEntries !== entries) {
+    cachedCustomEntries = entries;
+    resourceAssets = entries.filter(entry => !entry.id.includes('/Runes/')).map(entry => ({
+      path: entry.id, name: entry.name.toLowerCase(),
+    })).sort((a,b) => b.name.length-a.name.length);
+  }
+  const value = String(text || '').toLowerCase();
+  return resourceAssets.find(entry => new RegExp('(^|[^a-z])'+entry.name.replace(/s$/, '')+'s?([^a-z]|$)').test(value))?.path;
+}
+function routePage(href) {
+  const [catId, subId] = String(href).replace(/^#\//,'').split('?')[0].split('/');
+  const cat = CATEGORIES.find(c=>c.id===catId);
+  return subId ? getSubcategory(catId,subId) : cat;
+}
+function selectionColor(name, href) {
+  return resourceColor(name) || Object.entries(PAGE_LINKS)
+    .filter(([,route])=>route===href).map(([name])=>resourceColor(name)).find(Boolean) || 'var(--c-accent)';
+}
+export function decorateWiki() {
+  const route = location.hash.split('?')[0] || '#/';
+  for (const a of document.querySelectorAll('.nav-item[href], [data-sub][href], .pill[href], .sub-pager a[href], .primary-nav a')) {
+    const href = a.getAttribute('href');
+    const page = routePage(href);
+    a.style.setProperty('--selection',selectionColor(page?.name || a.textContent.trim(),href));
+    if (a.matches('.pill[href]') && page && !a.querySelector('.page-nav-icon')) {
+      a.insertAdjacentHTML('afterbegin','<span class="page-nav-icon">'+namedIcon(page.name,page.icon,28)+'</span>');
+    }
+    if (a.matches('.primary-nav a')) {
+      const selected = a.dataset.primary ? route==='#/'+a.dataset.primary : !['calculator','updates','feedback','credits'].some(r=>route==='#/'+r);
+      a.classList.toggle('active',selected);
+    }
+    if (a.matches('.active')) a.setAttribute('aria-current','page');
+    else a.removeAttribute('aria-current');
+  }
+  const page = routePage(route);
+  const hero = document.querySelector('#view .cat-hero');
+  if(hero && page) {
+    hero.style.setProperty('--selection',selectionColor(page.name,route));
+
+
+  }
+  for(const card of document.querySelectorAll('[data-upgrade-name]')) {
+    const name = card.dataset.upgradeName;
+    const linked = Object.entries(PAGE_LINKS).sort((a,b)=>b[0].length-a[0].length).find(([term])=>name.toLowerCase().includes(term.toLowerCase()));
+    const asset=resourceAsset(name) || routePage(linked?.[1])?.icon || 'trending-up';
+    const heading=card.querySelector('.upgrade-card__head > b');
+    if(asset && heading && !heading.querySelector('.upgrade-art')) heading.insertAdjacentHTML('afterbegin',namedIcon(name,asset,40,'upgrade-art'));
+    const cost=card.querySelector('.upgrade-card__row--price .upgrade-card__rowlabel');
+    const currency=resourceAsset(page?.name);
+    if(cost && currency) { const old=cost.querySelector('svg,img');if(old)old.outerHTML=namedIcon(page?.name,currency,18); }
+    card.style.setProperty('--selection',selectionColor(page?.name || '',route));
+  }
 }

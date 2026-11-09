@@ -1,3 +1,4 @@
+import { REDESIGN_TEST } from '../redesign-test.js';
 // ==== EDIT MODE: sessao, barra, chips e popover de edicao inline ====
 
 import { esc, qs, qsa } from '../utils.js';
@@ -11,7 +12,7 @@ import {
   hasWriteAccess,
 } from '../github.js';
 import { CONTEXTS,validateDocuments } from '../content-schema.js';
-import { searchIcons } from '../icon-catalog.js';
+import { makeIconPicker } from '../icon-picker.js';
 import { CATEGORIES, getSubcategory, getSubcategoryDocPath, collectSubtreeIds } from '../data/wiki-data.js';
 import { buildNav, syncFooterResourceColors } from '../ui.js';
 import * as draft from './draft.js';
@@ -74,6 +75,15 @@ const LIST_PARSERS = {
       return boost;
     }).filter(Boolean),
   },
+  'currency-links': {
+    print: (value) => (Array.isArray(value) ? value.map(item => `${item.label || ''} | ${item.href || ''}`).join('\n') : ''),
+    parse: (text) => text.split('\n').map(line => {
+      const [label, href] = line.split('|').map(part => part.trim());
+      if (!label && !href) return null;
+      if (!label || !/^#\/[\w-]+(?:\/[\w-]+)*$/.test(href)) throw new Error('Use one article per line: Title | #/category/page');
+      return { label, href };
+    }).filter(Boolean),
+  },
   'features-list': {
     print: (v) => (Array.isArray(v) ? v.map((f) => [f.name, ...(f.subs || [])].join(' ;; ')).join('\n') : ''),
     parse: (text) => text.split('\n').map((line) => {
@@ -93,6 +103,33 @@ const SINGLE_TYPES = {
 };
 
 const SCHEMAS = {
+  'game:icon-name-rule': [
+    { key:'name',label:'Name to match everywhere (e.g. Life Island or Sap)',type:'line' },
+    { key:'icon',label:'Icon to show for this name',type:'line',picker:'icon' },
+  ],
+  'game:currency-group': [
+    { key:'id', label:'Group ID (no spaces; changing may require updating linked currencies)',type:'line' },
+    { key:'name', label:'Section name',type:'line' },
+    { key:'icon', label:'Section icon',type:'line',picker:'icon' },
+  ],
+  'game:currency-entry': [
+    { key:'id', label:'Currency ID (unique, lowercase, hyphens)',type:'line' },
+    { key:'name', label:'Currency name',type:'line' },
+    { key:'group', label:'Island / group',type:'select',options:()=> (draft.doc('game')?.currencies?.groups||[]).map(g=>({id:g.id,label:g.name})) },
+    { key:'icon', label:'Custom SVG icon',type:'line',picker:'icon' },
+    { key:'color', label:'Optional hex color (blank = resource color)',type:'line' },
+    { key:'description', label:'Description',type:'area' },
+    { key:'primaryUse',label:'Usage tag',type:'line' },
+    { key:'relatedLinks',label:'Related articles (Title | #/category/page per line)',type:'currency-links' },
+  ],
+  'game:currency-source': [
+    { key:'name',label:'Source name',type:'line' },
+    { key:'type',label:'Source type',type:'select',options:()=>[['rune','Runes'],['bonus','Bonuses'],['upgrade','Upgrades'],['mastery','Masteries'],['milestone','Milestones'],['perk','Perks'],['core','Cores'],['stage','Stages & Ranks'],['board','Boards'],['other','Other sources']].map(([id,label])=>({id,label})) },
+    { key:'currencyIds',label:'Which currencies does this affect?',type:'currency-picker' },
+    { key:'icon',label:'Custom source icon',type:'line',picker:'icon' },
+    { key:'effect',label:'Documented effect (optional)',type:'area' },
+    { key:'href',label:'Article link (optional)',type:'line' },
+  ],
   'game:generator': [
     {key:'name',label:'Name',type:'line'},
     ...['unlockCost','startIncome','startTime','scale','maxLevel','maxSpeed','maxTier','tierPrice','levelPrice','speedPrice'].map(key=>({key,label:key.replace(/([A-Z])/g,' $1'),type:'line',numeric:true})),
@@ -179,6 +216,7 @@ const SCHEMAS = {
   ],
   'game:upgrade': [
     { key: 'name', label: 'Name', type: 'line' },
+    { key: 'icon', label: 'Upgrade icon', type: 'line', mono: true, picker: 'icon' },
     { key: 'n', label: 'Number (#)', type: 'line' },
     { key: 'cap', label: 'Cap (empty = no cap)', type: 'line' },
     { key: 'price', label: 'Price formula (L = level)', type: 'line', mono: true },
@@ -202,6 +240,7 @@ const SCHEMAS = {
   ],
   'game:bonus': [
     { key: 'name', label: 'Name', type: 'line' },
+    { key: 'icon', label: 'Bonus icon', type: 'line', mono: true, picker: 'icon' },
     { key: 'value', label: 'Bonus formula', type: 'formula', mono: true },
     { key: 'unit', label: 'Display as', type: 'select', options: () => [
       { id: '', label: 'Number' }, { id: 'x', label: 'Multiplier (×)' },
@@ -395,7 +434,7 @@ function buildToolbar() {
     <input type="file" accept=".json,application/json" data-edit-restore-file hidden>
     <button class="btn btn--ghost btn--sm" data-edit-resume hidden>Resume edit</button>
     <button class="btn btn--ghost btn--sm" data-edit-discard title="Discard the draft and return to the published content">${icon('rotate-ccw', 13)} Discard</button>
-    <button class="btn btn--primary btn--sm" data-edit-publish title="Publish the changes to the live Wiki (creates a backup first)">${icon('upload', 13)} Publish</button>
+    <button class="btn btn--primary btn--sm" data-edit-publish title="${REDESIGN_TEST ? 'Publish to this browser' : 'Publish changes to the live wiki'}">${icon('upload', 13)} ${REDESIGN_TEST ? 'Publish test' : 'Publish'}</button>
     <button class="btn btn--ghost btn--sm ri-edit-more" data-edit-more aria-expanded="false">${icon('menu', 13)} More</button>
     <span class="ri-edit-bar__user" data-edit-user hidden></span>
     <button class="btn btn--ghost btn--sm" data-edit-signout title="End this edit session">${icon('log-out', 13)} Sign out</button>`;
@@ -637,7 +676,7 @@ function onToolbarAction(button) {
         buildNav();
         await rerender({ scroll: 'preserve' });
         window.dispatchEvent(new CustomEvent('ri-edit-content'));
-        notify('Published to GitHub. The live site updates only after Vercel finishes deployment. Check Vercel if the site stays unchanged.');
+        notify(REDESIGN_TEST ? 'Published to this browser.' : 'Published to GitHub. The live site updates after Vercel deploys.');
       } else {
         if (!window.confirm('Discard only your unsynced edits and reload the latest shared draft? Other contributors will not be affected.')) return;
         if (popState) closePopover(true);
@@ -669,7 +708,7 @@ function installSigninButton() {
   const row = document.createElement('button');
   row.className = 'settings-row settings-row--btn';
   row.setAttribute('data-ri-edit-signin', '');
-  row.innerHTML = `<span class="settings-row__label">${icon('pencil', 13)} Sign in to edit</span>`;
+  row.innerHTML = `<span class="settings-row__label">${icon('pencil', 13)} ${REDESIGN_TEST ? 'Edit test wiki' : 'Sign in to edit'}</span>`;
   menu.appendChild(row);
   row.addEventListener('click', () => {
     menu.hidden = true;
@@ -959,7 +998,7 @@ function restoreMatchingFields(){
   if(match)restoreFields(match.fields);
 }
 function restoreFields(fields=[]){
-  const inputs=[...layer.popover.querySelectorAll('input,textarea,select')].filter(input=>input.type!=='file');
+  const inputs=[...layer.popover.querySelectorAll('input,textarea,select')].filter(input=>input.type!=='file' && !input.hasAttribute('data-edit-no-recovery'));
   for(const field of fields){
     if(field.value===field.original)continue;
     const input=field.path?inputs.find(item=>item.dataset.editFieldPath===field.path)||inputs[field.index]:inputs[field.index];
@@ -968,7 +1007,7 @@ function restoreFields(fields=[]){
 }
 function persistForm(){
   if(!popState||!session.user)return isRecoveryStored(formRecoveryKey());
-  const fields=[...layer.popover.querySelectorAll('input,textarea,select')].filter(input=>input.type!=='file').map((input,index)=>({index,path:input.dataset.editFieldPath,value:input.value,original:input.dataset.recoveryOriginal??input.defaultValue??''}));
+  const fields=[...layer.popover.querySelectorAll('input,textarea,select')].filter(input=>input.type!=='file' && !input.hasAttribute('data-edit-no-recovery')).map((input,index)=>({index,path:input.dataset.editFieldPath,value:input.value,original:input.dataset.recoveryOriginal??input.defaultValue??''}));
   const {docName,valuePath,kind,label,manage}=popState;
   const value=docName&&valuePath?draft.getValue(docName,valuePath):null;
   const targetId=popState.recoveryTargetId??value?.id;
@@ -1010,6 +1049,20 @@ async function deletePopoverItem() {
     notify('Only list items can be deleted.', true);
     return;
   }
+  if (state.kind === 'game:currency-entry') {
+    const currency = draft.getValue('game', path);
+    if ((draft.doc('game')?.currencies?.sources || []).some(source => (source.currencyIds || []).includes(currency?.id))) {
+      notify('Remove or reassign the buff sources linked to this currency before deleting it.', true);
+      return;
+    }
+  }
+  if (state.kind === 'game:currency-group') {
+    const group = draft.getValue('game', path);
+    if ((draft.doc('game')?.currencies?.entries || []).some(entry => entry.group === group?.id)) {
+      notify('Move or reassign this section’s currencies before deleting it.', true);
+      return;
+    }
+  }
   const okDelete = window.confirm(`Remove "${state.label || 'this item'}" from the list? It stays in the draft until you publish.`);
   if (!okDelete) return;
   try {
@@ -1037,6 +1090,7 @@ function readValueForInput(type, original) {
 
 function createField(meta, path, docName) {
   if (meta.picker === 'icon') return createIconField(meta, path, docName);
+  if (meta.type === 'currency-picker') return createCurrencyPickerField(meta, path, docName);
   const original = draft.getValue(docName, path) ?? meta.fallback;
   const wrap = document.createElement('label');
   wrap.className = 'ri-edit-field';
@@ -1094,122 +1148,59 @@ function createField(meta, path, docName) {
   return wrap;
 }
 
-// Campo com o seletor visual de ícones: mostra o ícone atual e abre uma
-// Official Game Icons and existing Lucide icons, with searchable previews.
-export function makeIconPicker(initialValue) {
-  const row = document.createElement('div');
-  row.className = 'ri-icon-row';
-
-  const preview = document.createElement('span');
-  preview.className = 'ri-icon-row__preview';
-  preview.innerHTML = icon(initialValue || 'circle', 22);
-
-  const input = document.createElement('input');
-  input.type = 'text';
-  input.className = 'input';
-  input.value = String(initialValue || '');
-  input.placeholder = 'circle';
-
-  const browse = document.createElement('button');
-  browse.type = 'button';
-  browse.className = 'btn btn--ghost btn--sm';
-  browse.textContent = 'Browse';
-
-  row.appendChild(preview);
-  row.appendChild(input);
-  row.appendChild(browse);
-
-  const panel = document.createElement('div');
-  panel.className = 'ri-icon-picker';
-  panel.hidden = true;
-  panel.setAttribute('role', 'dialog');
-  panel.setAttribute('aria-modal', 'true');
-  panel.setAttribute('aria-label', 'Browse wiki icons');
-  panel.innerHTML = `
-    <div class="ri-icon-picker__header"><strong>Browse icons</strong><button type="button" class="btn btn--ghost btn--sm ri-icon-picker__close" aria-label="Close icon browser">Close ✕</button></div>
-    <div class="ri-icon-picker__search">
-      <input class="input" type="search" placeholder="Search: fire, sword, crystal, fogo…" aria-label="Search icons" />
-      <select class="input" aria-label="Icon collection"><option value="all">All icons</option><option value="game">Game Icons — game items & fantasy</option><option value="lucide">Lucide — interface & outlines</option></select>
-      <small class="ri-icon-picker__count" role="status" aria-live="polite"></small>
-    </div>
-    <div class="ri-icon-picker__grid"></div>
-    <button type="button" class="btn btn--ghost btn--sm ri-icon-picker__more" hidden>Show more</button>
-    <small class="ri-icon-picker__source">Icons by <a href="https://game-icons.net/" target="_blank" rel="noopener noreferrer">Game-icons.net</a> · <a href="images/icons/game-icons/LICENSE.txt" target="_blank" rel="noopener noreferrer">Authors / CC BY 3.0</a> · <a href="https://lucide.dev/" target="_blank" rel="noopener noreferrer">Lucide</a></small>`;
-
-  const grid = panel.querySelector('.ri-icon-picker__grid');
-  const search = panel.querySelector('input');
-  const collection = panel.querySelector('select');
-  const count = panel.querySelector('.ri-icon-picker__count');
-  const more = panel.querySelector('.ri-icon-picker__more');
-  let limit = 64;
-  const renderGrid = () => {
-    const matches = searchIcons(search.value, collection.value);
-    const visible = matches.slice(0, limit);
-    count.textContent = matches.length ? `${visible.length} of ${matches.length} icons · click to select` : 'No icons found. Try fire, sword, crystal or fogo.';
-    grid.innerHTML = visible.map(({id,name,source}) => `<button type="button" class="ri-icon-cell${id === input.value ? ' is-on' : ''}" aria-label="${esc(name)} (${source === 'game' ? 'Game Icons' : 'Lucide'})" aria-pressed="${id === input.value}" title="${esc(name)} — ${source === 'game' ? 'Game Icons' : 'Lucide'}" data-icon-name="${esc(id)}">${icon(id, 28)}<span>${esc(name.replaceAll('-', ' '))}</span></button>`).join('');
-    more.hidden = visible.length >= matches.length;
-  };
-  const resetGrid = () => { limit = 64; renderGrid(); grid.scrollTop = 0; };
-
-  grid.addEventListener('click', (event) => {
-    const cell = event.target.closest('[data-icon-name]');
-    if (!cell) return;
-    input.value = cell.dataset.iconName;
-    input.dispatchEvent(new Event('input', { bubbles: true }));
-    preview.innerHTML = icon(input.value || 'circle', 22);
-    grid.querySelectorAll('.ri-icon-cell').forEach((el) => { el.classList.toggle('is-on', el === cell); el.setAttribute('aria-pressed', String(el === cell)); });
-    // Selecting an icon returns to the form, where Apply commits the edit.
-    closeBrowser();
+function createCurrencyPickerField(meta, path, docName) {
+  const wrap = document.createElement('div');
+  wrap.className = 'ri-edit-field';
+  const heading = document.createElement('span');
+  heading.className = 'ri-edit-field__label';
+  heading.textContent = meta.label;
+  wrap.appendChild(heading);
+  const current = draft.getValue(docName,path);
+  const selected = new Set(Array.isArray(current) ? current : []);
+  const area = document.createElement('textarea');
+  area.value = [...selected].join('\n');
+  area.rows = 1;
+  area.hidden = true;
+  area.dataset.editFieldPath = path.replace(/\./g,'·');
+  area.dataset.editFieldDoc = docName;
+  area.dataset.editFieldType = 'area-list';
+  area.dataset.editFieldNumeric = '0';
+  wrap.appendChild(area);
+  const search = document.createElement('input');
+  search.type = 'search';
+  search.className = 'input';
+  search.placeholder = 'Find currency by name…';
+  search.setAttribute('aria-label','Filter currencies');
+  search.setAttribute('data-edit-no-recovery','');
+  wrap.appendChild(search);
+  const list = document.createElement('div');
+  list.className = 'ri-currency-picker';
+  list.setAttribute('role','group');
+  list.setAttribute('aria-label',meta.label || 'Currencies');
+  const options = draft.doc('game')?.currencies?.entries || [];
+  const buttons = options.map(entry => {
+    const button=document.createElement('button');
+    button.type='button';
+    button.className='ri-currency-choice';
+    button.dataset.currencyId=entry.id;
+    button.textContent=entry.name;
+    button.setAttribute('aria-pressed',String(selected.has(entry.id)));
+    button.addEventListener('click',() => {
+      if(selected.has(entry.id)) selected.delete(entry.id);
+      else selected.add(entry.id);
+      button.setAttribute('aria-pressed',String(selected.has(entry.id)));
+      area.value=[...selected].join('\n');
+      area.dispatchEvent(new Event('input',{bubbles:true}));
+    });
+    list.appendChild(button);
+    return button;
   });
-
-  input.addEventListener('input', () => {
-    preview.innerHTML = icon(input.value.trim() || 'circle', 22);
+  search.addEventListener('input',() => {
+    const q=search.value.toLocaleLowerCase().trim();
+    for(const button of buttons) button.hidden=!!q && !button.textContent.toLocaleLowerCase().includes(q);
   });
-  // Move the browser outside the small clipped editor popover so it can
-  // occupy the whole viewport. Keep input/preview in the original form.
-  let home = null;
-  let previousFocus = null;
-  const closeBrowser = () => {
-    if (panel.hidden) return;
-    panel.hidden = true;
-    panel.classList.remove('ri-icon-picker--fullscreen');
-    if (home?.isConnected) home.appendChild(panel);
-    else panel.remove();
-    document.documentElement.classList.remove('ri-icon-browser-open');
-    document.removeEventListener('keydown', onBrowserKeydown, true);
-    if (previousFocus?.isConnected) previousFocus.focus({ preventScroll: true });
-  };
-  const onBrowserKeydown = (event) => {
-    if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); closeBrowser(); }
-  };
-  browse.addEventListener('click', (event) => {
-    event.preventDefault();
-    if (!panel.hidden) { closeBrowser(); return; }
-    // Close any other icon browser first, including one left open by a
-    // previous form. The full-screen panel is always a single active dialog.
-    document.querySelectorAll('.ri-icon-picker--fullscreen').forEach(el => el.dispatchEvent(new Event('ri-picker-close')));
-    home = panel.parentElement;
-    previousFocus = document.activeElement;
-    document.body.appendChild(panel);
-    panel.hidden = false;
-    panel.classList.add('ri-icon-picker--fullscreen');
-    document.documentElement.classList.add('ri-icon-browser-open');
-    document.addEventListener('keydown', onBrowserKeydown, true);
-    search.value = '';
-    resetGrid();
-    search.focus({ preventScroll: true });
-  });
-  // This modal lives under <body> while open, outside the edit popover.
-  // Stop its events before the page-level edit click handler can cancel them.
-  panel.addEventListener('click', (event) => event.stopPropagation());
-  panel.addEventListener('pointerdown', (event) => event.stopPropagation());
-  panel.addEventListener('ri-picker-close', closeBrowser);
-  panel.querySelector('.ri-icon-picker__close').addEventListener('click', (event) => { event.preventDefault(); event.stopPropagation(); closeBrowser(); });
-  search.addEventListener('input', resetGrid);
-  collection.addEventListener('change', resetGrid);
-  more.addEventListener('click', (event) => { event.preventDefault(); event.stopPropagation(); limit += 64; renderGrid(); });
-
-  return { row, panel, input, preview };
+  wrap.appendChild(list);
+  return wrap;
 }
 
 function createIconField(meta, path, docName) {
@@ -1245,7 +1236,7 @@ function positionPopover(el) {
 }
 
 function closePopover(silent = false,discard = false) {
-  document.querySelectorAll('.ri-icon-picker--fullscreen').forEach(el => el.dispatchEvent(new Event('ri-picker-close')));
+  document.querySelectorAll('.ri-icon-picker').forEach(el => el.dispatchEvent(new Event('ri-picker-close')));
   if (!popState) return;
   if(discard)removeFormRecovery(formRecoveryKey(),{hash:popState.hash,binding:popState,targetId:popState.recoveryTargetId??draft.getValue(popState.docName,popState.valuePath)?.id});else persistForm();
   popState = null;
@@ -1298,6 +1289,8 @@ async function applyPopover() {
       if (state.kind === 'game:bonus' && /\.(unlockAt|unlockLevel)$/.test(path)) writes.push([docName, `${state.valuePath}.unlockLabel`, undefined]);
       if (state.kind === 'game:bonus' && path.endsWith('.unit')) writes.push([docName, `${state.valuePath}.capUnit`, value === 'cap' ? 'CAP' : value || 'x']);
       writes.push([docName,path,value]);
+      if (state.kind === 'game:currency-source' && path.endsWith('.currencyIds'))
+        writes.push([docName,`${state.valuePath}.manualTarget`,true]);
     }
     const candidate=draft.snapshotDocs();
     for(const[name,path,value]of writes){
@@ -1539,7 +1532,7 @@ async function showPublishPreview() {
   const changed=documentChanges(published,draft.snapshotDocs(),40);
   const warning=draft.hasRestoredDraft()?'<p class="ri-review-warning">This includes a restored snapshot. Confirm that no recent collaborator changes will be replaced.</p>':'';
   return editorReviewDialog('Publish preview',`
-    <p>These changes will be sent to GitHub in one Publish commit. Vercel deployment happens separately. Autosave remains unpublished.</p>
+    <p>${REDESIGN_TEST ? 'These changes will appear in the test wiki on this browser.' : 'These changes will be sent to GitHub in one Publish commit. Vercel deployment happens separately. Autosave remains unpublished.'}</p>
     ${warning}
     <p class="ri-review-hint">Use the <b>Preview</b> toggle in the editor toolbar to see the current draft rendered exactly as a visitor would.</p>
     ${diffRowsHTML(changed)}` ,{confirmText:'Confirm Publish'});
@@ -1548,7 +1541,7 @@ async function showPublishPreview() {
 function renderVersionsPage(root) {
   root.innerHTML=`<section class="section ri-admin-section">
     <h2 class="ri-admin-section__title">${icon('history',15)} Recovery versions</h2>
-    <p class="ri-review-hint">Autosave syncs your draft to Supabase every time you edit, <b>without creating a Version</b>. Versions are created only by <b>Publish</b> or by clicking the checkpoint button below. Restoring stages a local draft and never publishes. <b>Discard</b> only throws away edits on this device.</p>
+    <p class="ri-review-hint">${REDESIGN_TEST ? 'The three latest checkpoints are stored in this browser. Restoring a checkpoint stages a draft for review.' : 'Autosave syncs the draft to Supabase. Use Publish or Create manual checkpoint to create a version.'}</p>
     <div class="ri-versions-actions"><button type="button" class="btn btn--ghost btn--sm" data-ri-versions-save>${icon('save',13)} Create manual checkpoint</button></div>
     <div data-ri-versions-list><p class="ri-color-row__empty">Loading recovery checkpoints…</p></div>
   </section>
@@ -1630,7 +1623,7 @@ function renderVersionsPage(root) {
       const group=(items,label,explanation)=>{
         if(!items.length)return '';
         return `<div class="ri-version-group"><h3>${esc(label)} <small>${items.length}</small></h3><p class="ri-review-hint">${esc(explanation)}</p>${items.map((v,i)=>`<div class="ri-version-row" ${i>=7?'hidden data-older-version':''}>
-          <div class="ri-version-row__details"><b>${esc(v.action==='publish'?'Published checkpoint':v.source==='supabase'?'Manual checkpoint':v.action==='save'?'Legacy save backup':'Backup')}</b><span>${esc(v.createdAt?formatHistoryDate(v.createdAt):draft.versionLabel(v.name))}</span><small>@${esc(v.actor||'unknown')} ${v.revision!=null?` · Revision ${v.revision}`:''} · ${esc(v.source==='supabase'?'Supabase':'GitHub archive')}</small></div>
+          <div class="ri-version-row__details"><b>${esc(v.action==='publish'?'Published checkpoint':v.source==='supabase'?'Manual checkpoint':v.action==='save'?'Legacy save backup':'Backup')}</b><span>${esc(v.createdAt?formatHistoryDate(v.createdAt):draft.versionLabel(v.name))}</span><small>@${esc(v.actor||'unknown')} ${v.revision!=null?` · Revision ${v.revision}`:''} · ${esc(REDESIGN_TEST ? 'This browser' : v.source==='supabase'?'Supabase':'GitHub archive')}</small></div>
           <button type="button" class="btn btn--ghost btn--sm" data-ri-version-compare="${esc(v.name)}">${icon('git-compare',12)} Compare</button>
           <button type="button" class="btn btn--ghost btn--sm" data-ri-version-recover="${esc(v.name)}">${icon('plus',12)} Recover missing</button>
           <button type="button" class="btn btn--ghost btn--sm" data-ri-version-restore="${esc(v.name)}" ${session.canPublish?'':'disabled'}>${icon('rotate-ccw',12)} Restore all</button>
@@ -1967,6 +1960,7 @@ function openManageAdd(anchor = null) {
     ['lifeRanks', 'Life ranks page'],
     ['cores', 'Core ranks page'],
     ['upgrades', 'Upgrades page (price/effect formulas)'],
+    ['runes', 'Rune family (runes, luck and boosts)'],
     ['calc-amount', 'Bonus calculator (single total)'],
     ['calc-groups', 'Grouped bonus calculator (like Rare Saps)'],
     ['calc-level', 'Level calculator (like Dungeon Level)'],
@@ -2133,6 +2127,7 @@ const PAGE_TYPE_LABELS = {
   lifeRanks: 'a Life Ranks list',
   cores: 'a Core Ranks list',
   upgrades: 'an Upgrades (formulas) page',
+  runes: 'a Runes list',
   'calc-amount': 'a bonus calculator',
   'calc-groups': 'a grouped bonus calculator',
   'calc-level': 'a level calculator',
@@ -2151,6 +2146,12 @@ function createGamePageContainer(gameKey, pageName, type) {
     const listKey = bucket === 'stages' || bucket === 'barns' ? 'stages' : 'ranks';
     const itemLabel = type === 'evolutions' || /evolution/i.test(pageName) ? 'Evolution' : /milestone/i.test(pageName) ? 'Milestone' : ({ barns:'Barn',ranks:'Rank',ascensions:'Ascension',lifeRanks:'Life Rank',cores:'Core Rank' }[type] || 'Stage');
     draft.setValue('game', path, { title: `${itemLabel}s`, itemLabel, [listKey]: [{ ...STAGE_TEMPLATE(), title: `${itemLabel} 1` }] });
+    return 'created';
+  }
+  if (type === 'runes') {
+    const path = `runes.families.${gameKey}`;
+    if (existing(path)) return 'exists';
+    draft.setValue('game', path, { runes: [buildAddValue('game', `${path}.runes`, 'rune')] });
     return 'created';
   }
   if (type === 'upgrades') {
@@ -2323,7 +2324,6 @@ function planCategoryToPage(srcIndex, toPath, toIndex, dstCatId) {
     children: Array.isArray(cat.subcategories) ? cat.subcategories : [],
     highlights: Array.isArray(cat.overview?.highlights) ? cat.overview.highlights : [],
     facts: Array.isArray(cat.overview?.facts) ? cat.overview.facts : [],
-    vitals: Array.isArray(cat.vitals) ? cat.vitals : [],
   };
   delete converted.subcategories;
   return {
@@ -2463,6 +2463,24 @@ function uniqueIn(base, used) {
 function buildAddValue(docName, trail, template) {
   const doc = draft.doc(docName);
   if (!doc) return null;
+  if(template==='icon-name-rule') {
+    return {name:'New name',icon:'gem'};
+  }
+  if(template==='currency-group') {
+    const used=new Set((doc.currencies?.groups||[]).map(g=>g.id));
+    return {id:uniqueIn('new-group',used),name:'New section',icon:'coins'};
+  }
+  if(template==='currency-entry') {
+    const used=new Set((doc.currencies?.entries||[]).map(e=>e.id));
+    return {id:uniqueIn('new-currency',used),name:'New currency',group:doc.currencies?.groups?.[0]?.id||'main',icon:'coins',description:'Describe what this currency does.',primaryUse:'',relatedLinks:[]};
+  }
+  if(template==='currency-source') {
+    const used=new Set((doc.currencies?.sources||[]).map(e=>e.id));
+    const param=new URLSearchParams((window.location.hash.split('?')[1]||''));
+    const id=param.get('currency');
+    const selected=(doc.currencies?.entries||[]).some(e=>e.id===id)?id:doc.currencies?.entries?.[0]?.id;
+    return {id:uniqueIn('new-source',used),name:'New source',type:'bonus',currencyIds:selected?[selected]:[],icon:'sparkles',effect:'Describe the exact buff and its conditions.',href:'',status:'documented'};
+  }
   if(template==='generator') return {id:`generator${crypto.randomUUID().replaceAll('-','')}`,name:'New generator',unlockCost:0,startIncome:1,startTime:5,scale:1,maxLevel:50,maxSpeed:10,maxTier:3,tierPrice:50,levelPrice:5,speedPrice:10};
   const simple = {
     ore: { name:'New ore',icon:'gem',color:'#86d62b',depth:'0',luck:'0' },
@@ -2484,7 +2502,6 @@ function buildAddValue(docName, trail, template) {
       desc: 'Overview of this new category.',
       tagline: 'What this category is about.',
       icon: 'sprout',
-      vitals: [],
       subcategories: [],
       overview: { desc: '', facts: [], highlights: [] },
     };
@@ -2500,7 +2517,6 @@ function buildAddValue(docName, trail, template) {
       icon: 'sparkles',
       highlights: [],
       facts: [],
-      vitals: [],
       children: [],
     };
   }
@@ -2558,7 +2574,7 @@ function resolveBulkPage(input) {
   if (/^#\/[\w-]+(?:\/[\w-]+)*$/.test(name)) return name;
   const key=name.toLowerCase().replace(/\s+/g,' ').trim();
   const routes=[
-    ['Upgrade Calculator','#/calculator'],['Update Log','#/updates'],
+    ['Upgrade Calculator','#/calculator'],['Explorer','#/explorer'],['Update Log','#/updates'],
     ['Feedback','#/feedback'],['Credits','#/credits'],['Home','#/'],
   ];
   for(const category of CATEGORIES){
@@ -2712,6 +2728,9 @@ export function addContentToPage(gameKey, wikiPath, type) {
   if (type === 'stages' || type === 'evolutions') {
     listPath = `progression.stages.${gameKey}.stages`;
     kind = 'game:stage'; label = type === 'evolutions' ? 'Evolution' : 'Stage';
+  } else if (type === 'runes') {
+    listPath = `runes.families.${gameKey}.runes`;
+    kind = 'game:rune'; label = 'Rune';
   } else if (type === 'upgrades') {
     const section = draft.getValue('game', `upgrades.routes.${gameKey}`);
     listPath = `upgrades.sections.${section}.upgrades`;
@@ -2730,7 +2749,7 @@ export function addContentToPage(gameKey, wikiPath, type) {
   } else throw new Error('Choose a supported content type.');
   let index = 0;
   if (created === 'exists') {
-    const template = type === 'upgrades' ? 'upgrade' : type === 'calc-amount' ? 'bonus' : 'stage';
+    const template = type === 'upgrades' ? 'upgrade' : type === 'calc-amount' ? 'bonus' : type === 'runes' ? 'rune' : 'stage';
     const value = buildAddValue('game', listPath, template);
     if (type === 'evolutions') value.title = `Evolution ${value.num}`;
     index = draft.pushValue('game', listPath, value);
@@ -2756,7 +2775,7 @@ function installInteraction() {
   document.addEventListener('click', (event) => {
     if (!session.ready || !session.allowed) return;
     if (session.busy || sharedRefreshChecking) return;
-    if (event.target.closest('#ri-edit-bar, .ri-edit-popover, .ri-edit-chip, .ri-icon-picker--fullscreen')) return;
+    if (event.target.closest('#ri-edit-bar, .ri-edit-popover, .ri-edit-chip, .ri-icon-picker')) return;
     if(popState){
       // A mouse-up outside a textarea can produce a click on the page. It
       // must never cancel the form or open a different editor underneath it.
@@ -2834,6 +2853,7 @@ function installInteraction() {
   });
 
   document.addEventListener('keydown', (event) => {
+    if (event.target.closest?.('.ri-icon-picker[open]')) return;
     if (event.key === 'Escape') {
       if (popState) { closePopover(true); return; }
       if (session.editing) setEditing(false);
@@ -2881,6 +2901,7 @@ export async function initEditMode({deferRender=false}={}) {
     applyDragMode();
   });
   layer.bar.classList.add('is-hidden');
+  if (REDESIGN_TEST) installSigninButton();
   try {
     const stored = sessionStorage.getItem(TOKEN_KEY);
     if (stored) await startSession(stored,{deferRender});

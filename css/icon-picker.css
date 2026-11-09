@@ -1,0 +1,58 @@
+.wiki-icon { display: inline-block; flex: none; vertical-align: middle; object-fit: contain; }
+.ri-icon-row { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.ri-icon-row > input { flex: 1; min-width: 0; }
+.ri-icon-row__preview {
+  flex: 0 0 40px; height: 40px; display: grid; place-items: center;
+  color: var(--c-accent); background: var(--c-inset); border: 1px solid var(--c-border);
+  border-radius: var(--r-xs);
+}
+.ri-icon-picker {
+  width: min(860px, calc(100% - 24px)); max-height: calc(100dvh - 24px);
+  margin: auto; padding: clamp(12px, 3vw, 26px); box-sizing: border-box;
+  color: var(--c-text); background: var(--c-bg-2); border: 1px solid var(--c-border-2);
+  border-radius: var(--r-md); font: 14px/1.5 var(--font-body);
+}
+.ri-icon-picker[open] { display: grid; grid-template-rows: auto auto auto minmax(0,1fr) auto; gap: 12px; }
+.ri-icon-picker::backdrop { background: #0b110ec9; }
+html:has(.ri-icon-picker[open]) { overflow: hidden !important; }
+.ri-icon-picker__header, .ri-icon-picker__footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.ri-icon-picker__header h2 { margin: 0; font: 600 1.7rem/1.15 var(--font-heading); }
+.ri-icon-picker__header p { margin: 4px 0 0; }
+.ri-icon-picker__header p, .ri-icon-picker__count, .ri-icon-picker__footer { color: var(--c-text-3); font-size: .84rem; }
+.ri-icon-picker__footer a { color: inherit; text-decoration: underline; }
+.ri-icon-picker__footer [data-more] { margin-inline-start: auto; }
+.ri-icon-picker [hidden] { display: none !important; }
+.ri-icon-picker__search { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; }
+.ri-icon-picker .input, .ri-icon-button {
+  min-height: 42px; border: 1px solid var(--c-border-2); border-radius: var(--r-xs);
+  padding: 7px 11px; background: var(--c-inset); color: var(--c-text); font: inherit;
+}
+.ri-icon-button { cursor: pointer; white-space: nowrap; }
+.ri-icon-button:hover { border-color: var(--c-accent); background: var(--c-card-hover); }
+.ri-icon-picker__grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(102px, 1fr)); gap: 6px;
+  padding: 3px; align-content: start; overflow: auto; overscroll-behavior: contain;
+}
+.ri-icon-cell {
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  min-height: 94px; min-width: 0; padding: 10px 4px; border: 1px solid var(--c-border);
+  background: var(--c-bg); color: var(--c-text); border-radius: var(--r-xs); cursor: pointer;
+  font: 600 12px/1.3 var(--font-body); overflow-wrap: anywhere;
+}
+.ri-icon-cell svg { color: var(--c-accent); }
+.ri-icon-cell small { color: var(--c-text-3); font-weight: 400; }
+.ri-icon-cell:hover, .ri-icon-cell[aria-pressed="true"] { background: var(--c-card-hover); border-color: var(--c-accent); }
+.ri-icon-picker :focus-visible, .ri-icon-button:focus-visible { outline: 2px solid var(--c-accent); outline-offset: 2px; }
+@media (max-width: 520px) {
+  .ri-icon-picker__search { grid-template-columns: minmax(0,1fr); }
+  .ri-icon-picker .input { width: 100%; font-size: 16px; }
+  .ri-icon-picker__grid { grid-template-columns: repeat(auto-fill, minmax(83px, 1fr)); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  html:not(.reduce-motion) .ri-icon-picker[open] { animation: icon-library-in 140ms ease-out both; }
+}
+@keyframes icon-library-in { from { opacity: .5; transform: translateY(5px); } }
+
+/* The original art remains transparent and keeps its SVG colors. */
+.ri-icon-cell .wiki-icon { width:54px; height:54px; }
+.ri-icon-row__preview .wiki-icon { width:35px; height:35px; }
