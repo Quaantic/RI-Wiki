@@ -1,7 +1,7 @@
 import { FILES, validateDocuments } from './content-schema.js';
 
-// Leave enabled on this isolated copy, including any test deployment.
-export const REDESIGN_TEST = true;
+// Production mode: disable anonymous browser-only test sessions.
+export const REDESIGN_TEST = false; // Production: GitHub authentication is mandatory.
 const key = 'ri-redesign-test-v9';
 const read = () => JSON.parse(localStorage.getItem(key) || '{}');
 const write = data => localStorage.setItem(key, JSON.stringify(data));
