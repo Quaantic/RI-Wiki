@@ -408,7 +408,7 @@ export function buildNav() {
           <span class="nav-item__label">${navColorize(c.name)}</span>
         </a>
         <button type="button" class="nav-item__expand" aria-label="Toggle ${esc(c.name)} subsections" aria-expanded="false" data-toggle-cat="${esc(c.id)}"><span class="nav-expand-line" aria-hidden="true"></span></button>
-        <div class="nav-mobile-overview" data-overview-for="${esc(c.id)}"><a href="#/${esc(c.id)}" aria-label="Open ${esc(c.name)} overview page">${icon('book-open', 15)} <span>${esc(c.name)} overview</span> ${icon('arrow-up-right',13)}</a></div>
+
         ${renderSubTree(c.id, c.subcategories, 1)}
       </div>`;
     }).join('');
@@ -443,8 +443,7 @@ export function buildNav() {
       const catId = item.dataset.cat;
       if (onMobileNav()) {
         // Legacy QoL: first tap expands the category without opening its page,
-        // second quick tap opens the overview. Keep an explicit Overview link
-        // for slower browsing and keyboard/screen-reader navigation too.
+        // second quick tap opens the category page.
         const secondTap = lastCategoryTap?.id === catId &&
           Date.now() - lastCategoryTap.time < 1800;
         if (!secondTap) {

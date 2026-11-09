@@ -285,3 +285,82 @@ html.ri-edit-on .vitals--editing-only { display:block; }
  .nav-sub__icon,.nav-sub__icon .wiki-icon { width:30px; height:30px; }
  .cat-hero__icon .wiki-icon,.cat-hero__icon svg { width:64px; height:64px; }
 }
+
+/* Pre-redesign QoL restored without replacing the redesigned atlas theme.
+   Motion is progressive enhancement; all content stays visible without JS. */
+@media (max-width: 920px) {
+  .sidebar { overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+  #sidebar-nav :is(.nav-item,.nav-sub__item,.nav-sub2__item,.nav-sub3__item) { min-height: 44px; }
+  .sidebar__nav { padding-bottom: max(20px, env(safe-area-inset-bottom)); }
+}
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+  html:not(.reduce-motion) :is(.info-card,.sub-link,.upgrade-card,.stage-card,.milestone-card,.rune-card,.ore-card,.generator-card,.cat-card,.upd-mini,.result-item,.formula-card) {
+    transition: transform 220ms cubic-bezier(.2,.7,.3,1), border-color 220ms ease,
+                box-shadow 220ms ease, background-color 220ms ease;
+  }
+  html:not(.reduce-motion) :is(.info-card,.sub-link,.upgrade-card,.stage-card,.milestone-card,.rune-card,.ore-card,.generator-card,.cat-card,.upd-mini,.result-item,.formula-card):hover {
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--selection,var(--chapter,var(--c-accent))) 45%, var(--c-border));
+    box-shadow: 0 10px 25px rgba(0,0,0,.16);
+  }
+  html:not(.reduce-motion) :is(.cat-card__icon,.sub-link>.wiki-icon,.upgrade-art,.nav-sub__icon .wiki-icon,.nav-item__icon .wiki-icon) {
+    transition: transform 240ms cubic-bezier(.22,.68,0,1);
+  }
+  html:not(.reduce-motion) .cat-card:hover .cat-card__icon { transform: scale(1.08) rotate(-3deg); }
+  html:not(.reduce-motion) .upgrade-card:hover .upgrade-art,
+  html:not(.reduce-motion) .sub-link:hover > .wiki-icon { transform: scale(1.07); }
+  html:not(.reduce-motion) :is(.nav-item,.nav-sub__item,.nav-sub2__item,.nav-sub3__item):hover .wiki-icon { transform: scale(1.1); }
+  html:not(.reduce-motion) .pill-nav .pill[href]:not(.active):hover { transform: translateY(-2px); }
+  html:not(.reduce-motion) .btn:not(:disabled):hover { filter: brightness(1.07); }
+}
+@media (prefers-reduced-motion: reduce) {
+  :is(.info-card,.sub-link,.upgrade-card,.stage-card,.milestone-card,.rune-card,.ore-card,.generator-card,.cat-card,.upd-mini,.result-item,.formula-card) { transition: none !important; }
+}
+
+/* Scrollable resource tabs on narrow screens instead of a tall stack. */
+@media (max-width: 600px) {
+  .pill-nav {
+    display: flex; flex-wrap: nowrap; overflow-x: auto; overflow-y: hidden;
+    max-width: 100%; gap: 8px; padding-block: 10px 12px;
+    scroll-snap-type: x proximity; overscroll-behavior-x: contain;
+    scrollbar-width: thin; -webkit-overflow-scrolling: touch;
+  }
+  .pill-nav .pill[href], .pill-nav > .pill {
+    flex: 0 0 auto; scroll-snap-align: start; min-height: 44px;
+  }
+  .ri-page-content-tools, .ri-calc__form, .filters-row { min-width: 0; }
+  .data-table { max-width: 100%; }
+}
+
+/* Animated home emblem, adapted from the original rotating hero rings. */
+.ri-hero-orbit { display: none; pointer-events: none; }
+@media (min-width: 1150px) {
+  .hero__inner { grid-template-columns: minmax(0, 1fr) minmax(205px, 265px); }
+  .ri-hero-orbit {
+    display: grid; position: relative; width: min(100%, 265px); height: 240px;
+    place-items: center; isolation: isolate; justify-self: center;
+  }
+  .ri-hero-orbit__ring {
+    display: block; position: absolute; left: 50%; top: 50%;
+    border-radius: 50%; transform: translate(-50%, -50%);
+    border: 1px solid color-mix(in srgb, var(--c-brass) 37%, transparent);
+  }
+  .ri-hero-orbit__ring--outer { width: 222px; height: 222px; border-style: dashed; }
+  .ri-hero-orbit__ring--inner { width: 163px; height: 163px; border-color: color-mix(in srgb, var(--c-accent) 28%, transparent); }
+  .ri-hero-orbit__emblem {
+    position: relative; width: 116px; height: 116px; object-fit: contain;
+    filter: drop-shadow(0 12px 18px rgba(0,0,0,.18));
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html:not(.reduce-motion) .ri-hero-orbit__ring--outer { animation: ri-hero-ring-outer 50s linear infinite; }
+    html:not(.reduce-motion) .ri-hero-orbit__ring--inner { animation: ri-hero-ring-inner 32s linear infinite; }
+    html:not(.reduce-motion) .ri-hero-orbit__emblem { animation: ri-hero-float 6s ease-in-out infinite; }
+  }
+}
+@keyframes ri-hero-ring-outer { to { transform: translate(-50%, -50%) rotate(360deg); } }
+@keyframes ri-hero-ring-inner { to { transform: translate(-50%, -50%) rotate(-360deg); } }
+@keyframes ri-hero-float { 50% { transform: translateY(-8px); } }
+/* The previous loading emblem also pulsed instead of abruptly appearing. */
+@media (prefers-reduced-motion: no-preference) {
+  html:not(.reduce-motion) .boot__emblem { animation: pulse-soft 1.6s ease-in-out infinite; }
+}
